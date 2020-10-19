@@ -1,0 +1,30 @@
+// 버튼 default
+%btn-default
+    +box-sizing()
+    display: block
+    border: 0
+    background: none
+    font-family: $font-family-base
+    text-align: center
+    text-decoration: none
+    outline: none
+    cursor: pointer
+
+%btn-page
+    background: $page-color
+
+@mixin btn($type: null, $border: null, $radius: null)
+    @extend %btn-default
+
+    @if $type == page-fill
+        @extend %btn-page
+
+    @if $border != null
+        @include border($border)
+    @else
+        @include border(0)
+
+    @if $radius != null
+        @include border-radius($radius)
+    @else
+        @include border-radius(0)
