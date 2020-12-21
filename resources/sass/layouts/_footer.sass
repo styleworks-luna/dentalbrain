@@ -1,0 +1,100 @@
+.footer
+    +border(1px solid #e6e6e6, top)
+
+    .container
+        height: 133px
+
+        .footer-logo-wrap
+            +padding(top 41px)
+            float: left
+
+            .footer-logo
+                +background('/images/global/footer-logo.png')
+                width: 90px
+                height: 25px
+                background-size: cover
+
+        .footer-left
+            +padding(26px 0 0 50px)
+            overflow: hidden
+            float: left
+            width: 543px
+
+            li
+                +padding(right 30px)
+                display: inline-block
+                position: relative
+
+                p
+                    font-size: 13px
+                    color: #777777
+                    letter-spacing: -0.15px
+                    line-height: 1.54
+
+            li::after
+                content: ''
+                position: absolute
+                right: 11px
+                top: 3px
+                width: 1px
+                height: 15px
+                background: #777777
+
+            li:nth-child(2)::after
+                right: 12px
+
+            li:nth-child(3)::after
+                width: 0
+                height: 0
+
+            li:nth-child(4)::after
+                right: 12px
+
+            li:nth-child(5)::after
+                width: 0
+                height: 0
+
+            .office-address
+                font-size: 13px
+                color: #777777
+                line-height: 1.54
+
+        .footer-right
+            overflow: hidden
+            float: right
+            padding: 40px 13px
+
+            li
+                float: left
+
+                .footer-right-brainspec
+                    +background('/images/global/logo-brainspec.png')
+                    display: block
+                    width: 123px
+                    height: 25px
+                    margin-top: 2px
+                    margin-right: 31px
+                    background-size: cover
+
+                .footer-right-ohc
+                    +background('/images/global/logo-ohc.png')
+                    display: block
+                    width: 86px
+                    height: 26px
+                    margin-right: 39px
+                    background-size: cover
+
+                .footer-right-kadh
+                    +background('/images/global/logo-kadh.png')
+                    display: block
+                    width: 59px
+                    height: 31px
+                    margin-right: 36px
+                    background-size: cover
+
+                .footer-right-kdma
+                    +background('/images/global/logo-kdma.png')
+                    display: block
+                    width: 101px
+                    height: 27px
+                    background-size: cover

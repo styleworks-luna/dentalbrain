@@ -1,0 +1,96 @@
+//header
+.header
+    +border(1px solid #e6e6e6, bottom)
+    border-bottom: 1px solid #e6e6e6
+
+    .container
+        height: 140px
+
+        .header-logo-wrap
+            .header-logo
+                +margin(0 auto)
+                +padding(top 30px)
+                +background('/images/global/logo.png', no-repeat, 0 30px)
+                width: 100px
+                height: 70px
+
+        .login-menu
+            position: absolute
+            top: 10px
+            right: 0
+
+            .user-name, .login-btn
+                display: inline-block
+                font-size: 12px
+                color: #777777
+
+            .user-name
+                padding-right: 17px
+
+                em
+                    font-style: normal
+                    font-weight: bold
+
+        .header-left
+            position: absolute
+            bottom: 21px
+            left: 10px
+
+            li
+                +padding(right 37px)
+                display: inline-block
+
+                a
+                    font-size: 16px
+                    color: #222
+
+            li:last-child
+                +padding(right 0)
+
+
+
+        .header-right
+            position: absolute
+            bottom: 31px
+            right: 5px
+
+            li
+                +padding(right 34px)
+                display: inline-block
+
+                .header-mypage, .header-cs
+                    display: block
+                    position: relative
+                    font-size: 12px
+                    color: #222
+
+                .header-mypage::before
+                    +background('/images/global/icon-header-mypage.png')
+                    content: ''
+                    display: block
+                    position: absolute
+                    bottom: 20px
+                    left: 13px
+                    width: 28px
+                    height: 28px
+                    background-size: cover
+
+                .header-mypage:hover::before
+                    +background('/images/global/icon-header-mypage-ov.png')
+
+                .header-cs::before
+                    +background('/images/global/icon-header-cs.png')
+                    content: ''
+                    display: block
+                    position: absolute
+                    bottom: 20px
+                    left: 8px
+                    width: 28px
+                    height: 28px
+                    background-size: cover
+
+                .header-cs:hover::before
+                    +background('/images/global/icon-header-cs-ov.png')
+
+            li:last-child
+                +padding(right 0)
