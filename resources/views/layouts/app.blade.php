@@ -29,8 +29,6 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @yield('style','')
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="{{ asset('css/webfont.css') }}">
 </head>
 <body>
 <div id="app">
