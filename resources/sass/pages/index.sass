@@ -1,3 +1,262 @@
 @import '../helpers/_variables.sass'
 @import '../helpers/_extends.sass'
 @import '../helpers/_mixins.scss'
+
+.banner
+    +margin(top 40px)
+
+    .swiper-slide
+        img
+            width: 1280px
+            height: 400px
+
+.lecture
+    +margin(top 80px)
+
+    .lecture-menu
+        +margin(0 auto)
+        overflow: hidden
+
+        li
+            +margin(right 38px)
+            float: left
+
+            a
+                +padding(25px 29px 25px 67px)
+                +border(1px solid #d8d8d8)
+                +border-radius(35px)
+                +background('/images/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
+                display: block
+                font-size: 20px
+                color: #777
+
+            a:hover
+                +padding(24px 28px 24px 66px)
+                +border(2px solid $dbv-blue)
+                +background('/images/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
+                color: #222
+
+        li:nth-child(2)
+            a
+                +background('/images/lecture/lecture_menu_icon_2.png')
+
+        li:nth-child(3)
+            a
+                +background('/images/lecture/lecture_menu_icon_3.png')
+
+        li:nth-child(4)
+            a
+                +background('/images/lecture/lecture_menu_icon_4.png')
+
+        li:nth-child(5)
+            a
+                +background('/images/lecture/lecture_menu_icon_5.png')
+
+        li:nth-child(6)
+            +margin(right 0)
+            a
+                +background('/images/lecture/lecture_menu_icon_6.png')
+
+        li:nth-child(2):hover
+            a
+                +background('/images/lecture/lecture_menu_icon_on_2.png')
+
+        li:nth-child(3):hover
+            a
+                +background('/images/lecture/lecture_menu_icon_on_3.png')
+
+        li:nth-child(4):hover
+            a
+                +background('/images/lecture/lecture_menu_icon_on_4.png')
+
+        li:nth-child(5):hover
+            a
+                +background('/images/lecture/lecture_menu_icon_on_5.png')
+
+        li:nth-child(6):hover
+            a
+                +background('/images/lecture/lecture_menu_icon_on_6.png')
+
+    .lecture-contents
+        overflow: hidden
+
+        .lecture-card
+            +margin(40px 40px 0 0)
+            float: left
+
+            img
+                +border(1px solid rgba(0, 0, 0, 0.1))
+                +border-radius(5px)
+                width: 398px
+                height: 300px
+
+            .lecture-description
+                width: 400px
+
+                .lecture-description-sub
+                    +margin(top 20px)
+                    overflow: hidden
+                    color: #777777
+
+                    .lecture-type
+                        float: left
+                        font-size: 14px
+
+                    .lecture-time
+                        float: right
+                        font-size: 14px
+
+                .lecture-name
+                    +margin(top 12px)
+                    display: block
+                    font-size: 20px
+                    line-height: 1.5
+
+                .lecture-price
+                    +margin(top 19px)
+                    font-size: 18px
+                    color: $dbv-blue
+
+        .lecture-card:nth-child(3n)
+            +margin(right 0px)
+
+.ad
+    +margin(top 100px)
+
+    img
+        width: 1280px
+        height: 120px
+
+.swiper-button-prev,
+.swiper-button-next
+    +border-radius(50%)
+    width: 30px
+    height: 30px
+
+.swiper-button-prev
+    +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,rgba(0, 0, 0, 0.4))
+    left: -20px
+
+.swiper-button-next
+    +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,rgba(0, 0, 0, 0.4))
+    right: -20px
+
+.swiper-button-prev:after,
+.swiper-button-next:after
+    content: ''
+
+.banner-02
+    +margin(80px auto 0 auto)
+    width: 1240px
+    text-align: center
+
+    h2
+        font-size: 30px
+        font-weight: bold
+
+    .swiper-container2
+        +margin(top 40px)
+        position: relative
+
+        .swiper-slide
+            img
+                width: 232px
+                height: 232px
+
+.banner-03
+    +margin(140px auto 0 auto)
+    width: 1240px
+
+    .swiper-container3
+        position: relative
+
+        .swiper-slide
+            img
+                width: 610px
+                height: 200px
+
+.community
+    +margin(top 140px)
+    +background(null,null,null,#fdf8ff)
+    height: 238px
+
+    .community-wrap
+        +padding(top 48px)
+
+        .community-common
+            float: left
+            position: relative
+            width: 310px
+
+            h2
+                font-size: 20px
+
+            ul
+                +margin(top 30px)
+
+                li
+                    +margin(top 20px)
+                    +padding(left 8px)
+                    +ellipse()
+                    position: relative
+                    width: 300px
+
+                    a
+                        font-size: 14px
+
+            .btn-more
+                +background('/images/global/icon_plus.png',no-repeat, 45px center)
+                display: block
+                position: absolute
+                top: 0
+                right: 0
+                width: 56px
+                color: $gray-700
+
+            .btn-more:hover
+                +background('/images/global/icon_plus_on.png')
+
+        .notice
+            +margin(right 80px)
+
+        .community-menu
+            float: right
+
+            li
+                +margin(right 30px)
+                float: left
+                text-align: center
+
+                a::before
+                    +margin(bottom 20px)
+                    +border-radius(50%)
+                    +border(1px solid #ece6ec)
+                    +background(null, no-repeat, center center, $white)
+                    display: block
+                    content: ''
+                    width: 90px
+                    height: 90px
+
+            li:nth-child(1)
+                a::before
+                    +background('/images/global/icon_foot_mypage.png')
+
+                a:hover::before
+                    +background('/images/global/icon_foot_mypage_on.png')
+
+            li:nth-child(2)
+                a::before
+                    +background('/images/global/icon_foot_cs.png')
+
+                a:hover::before
+                    +background('/images/global/icon_foot_cs_on.png')
+
+            li:nth-child(3)
+                a::before
+                    +background('/images/global/icon_foot_lecture.png')
+
+                a:hover::before
+                    +background('/images/global/icon_foot_lecture_on.png')
+
+            li:last-child
+                +margin(0)
