@@ -19,3 +19,8 @@ Route::get('/', function () {
 Route::get('introduce',function () {
     return view('pages.introduce.about_us');
 });
+
+//강사 소개 (임시)
+Route::get('instructor',function () {
+    return view('pages.introduce.instructor');
+});

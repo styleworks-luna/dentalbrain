@@ -1,0 +1,70 @@
+@import '../../helpers/_variables.sass'
+@import '../../helpers/_extends.sass'
+@import '../../helpers/_mixins.scss'
+
+.instructor-title-wrap
+    +background('/images/instructor/top-image.png',no-repeat,center center)
+    height: 300px
+    text-align: center
+
+    h1
+        +margin(0 auto)
+        +padding(126px 0 0 20px)
+        width: 240px
+        font-size: 48px
+        font-weight: bold
+
+.instructor-content-wrap
+    +margin(top 100px)
+    overflow: hidden
+
+    .instructor-content
+        +margin(top 30px)
+        overflow: hidden
+        float: left
+        width: 614px
+        height: 400px
+
+        .instructor-photo
+            +border-radius(50%)
+            float: left
+            width: 200px
+            height: 200px
+
+        .instructor-description
+            float: left
+            width: 414px
+
+            .instructor-name
+                +padding(20px 0 0 40px)
+                font-size: 24px
+
+            .instructor-career
+                +padding(20px 0 0 40px)
+                font-size: 15px
+                line-height: 1.53
+
+                li
+                    +padding(left 15px)
+                    position: relative
+
+    .instructor-content:nth-child(1),
+    .instructor-content:nth-child(2)
+        +margin(0)
+
+    .instructor-content:nth-child(2n)
+        float: right
+        width: 601px
+
+        .instructor-description
+            width: 395px
+
+    .instructor-content li::before
+        +border-radius(50%)
+        +background(null,null,null, $font-color-base)
+        position: absolute
+        top: 10px
+        left: 6px
+        content: ''
+        width: 3px
+        height: 3px
