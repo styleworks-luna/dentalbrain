@@ -238,14 +238,12 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">변지은</h2>
                             <ul class="instructor-career">
-                                <li>(현)브레인스펙 전문강사</li>
-                                <li>(현)고려대학교 보건대학원 보건정책 및 병원관리학과
-                                    석사과정중
-                                </li>
-                                <li>경희대학교 메디컬 최고위 과정 수료</li>
-                                <li>cs서비스강사 과정수료</li>
-                                <li>(현)분당태재한의원 총괄실장</li>
-                                <li>분야 : 병원CS, 병원경영 및 서비스마인드, 환자응대CS</li>
+                                <li>브레인스펙 교육개발원 임상강사</li>
+                                <li>서울 더좋은 치과 근무</li>
+                                <li>충청대학교 치위생과 겸임교수</li>
+                                <li>백석문화대학교 치위생과 시간강사</li>
+                                <li>연세대학교 치의학 석사</li>
+                                <li>분야 : 치과임상재료</li>
                             </ul>
                         </div>
                     </li>
