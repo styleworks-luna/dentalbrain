@@ -25,8 +25,19 @@
                         <div class="swiper-slide">
                             <img src="public/images/banner/test2.jpg" alt="">
                         </div>
+                        <div class="swiper-slide">
+                            <img src="public/images/banner/test2.jpg" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="public/images/banner/test2.jpg" alt="">
+                        </div>
                     </div>
-                    <div class="swiper-pagination"></div>
+                    <div class="swiper-controller-wrap">
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-scrollbar"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
                 </div>
             </section>
             <section class="lecture">
@@ -167,8 +178,8 @@
                             <img src="public/images/banner/test2.jpg" alt="">
                         </div>
                     </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev swiper-button-prev-common"></div>
+                    <div class="swiper-button-next swiper-button-next-common"></div>
                 </div>
             </section>
             <section class="banner-03">
@@ -181,8 +192,8 @@
                             <img src="public/images/banner/test2.jpg" alt="">
                         </div>
                     </div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev swiper-button-prev-common"></div>
+                    <div class="swiper-button-next swiper-button-next-common"></div>
                 </div>
             </section>
         </div>

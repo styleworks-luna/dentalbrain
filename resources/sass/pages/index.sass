@@ -2,23 +2,76 @@
 @import '../helpers/_extends.sass'
 @import '../helpers/_mixins.scss'
 
+.swiper-button-prev:after,
+.swiper-button-next:after
+    content: ''
+
 .banner
     +margin(top 40px)
+    .swiper-container
+        position: relative
 
     .swiper-slide
         img
             width: 1280px
             height: 400px
 
+    .swiper-controller-wrap
+        +border-radius(15px)
+        +background(null,null,null,rgba(0,0,0,0.2))
+        position: absolute
+        bottom: 51px
+        right: 206px
+        width: 354px
+        height: 30px
+
+        .swiper-pagination-fraction
+            bottom: 8px
+            left: 18px
+            width: 48px
+            color: $white
+
+            .swiper-pagination-current
+                +padding(right 14px)
+                font-weight: normal
+
+            .pagination-bar
+                +background(null,null,null,rgba(255,255,255,0.5))
+                position: absolute
+                top: 2px
+                left: 24px
+                content: ''
+                width: 1px
+                height: 10px
+
+        .swiper-scrollbar
+            +background(null,null,null,rgba(255,255,255,0.2))
+            position: absolute
+            top: 15px
+            left: 80px
+            width: 200px
+            height: 2px
+
+            .swiper-scrollbar-drag
+                +background(null,null,null,$white)
+
+        .swiper-button-prev
+            +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,null)
+            transform: translateX(284px)
+
+        .swiper-button-next
+            +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,null)
+            transform: translateX(-4px)
+
 .lecture
-    +margin(top 80px)
+    +margin(top 78px)
 
     .lecture-menu
         +margin(0 auto)
         overflow: hidden
 
         li
-            +margin(right 38px)
+            +margin(right 40px)
             float: left
 
             a
@@ -78,10 +131,11 @@
                 +background('/images/lecture/lecture_menu_icon_on_6.png')
 
     .lecture-contents
+        +margin(top 38px)
         overflow: hidden
 
         .lecture-card
-            +margin(40px 40px 0 0)
+            +margin(80px 40px 0 0)
             float: left
 
             img
@@ -107,7 +161,7 @@
                         font-size: 14px
 
                 .lecture-name
-                    +margin(top 12px)
+                    +margin(top 9px)
                     display: block
                     font-size: 20px
                     line-height: 1.5
@@ -115,35 +169,38 @@
                 .lecture-price
                     +margin(top 19px)
                     font-size: 18px
+                    font-weight: bold
                     color: $dbv-blue
+                    letter-spacing: 0.8px
 
         .lecture-card:nth-child(3n)
             +margin(right 0px)
 
+        .lecture-card:nth-child(1),
+        .lecture-card:nth-child(2),
+        .lecture-card:nth-child(3)
+            +margin(top 0)
 .ad
-    +margin(top 100px)
+    +margin(top 104px)
 
     img
         width: 1280px
         height: 120px
 
-.swiper-button-prev,
-.swiper-button-next
+.swiper-button-prev-common,
+.swiper-button-next-common
+    +margin(top -14px)
     +border-radius(50%)
     width: 30px
     height: 30px
 
-.swiper-button-prev
+.swiper-button-prev-common
     +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,rgba(0, 0, 0, 0.4))
     left: -20px
 
-.swiper-button-next
+.swiper-button-next-common
     +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,rgba(0, 0, 0, 0.4))
     right: -20px
-
-.swiper-button-prev:after,
-.swiper-button-next:after
-    content: ''
 
 .banner-02
     +margin(80px auto 0 auto)
@@ -171,7 +228,9 @@
         position: relative
 
         .swiper-slide
+
             img
+                +border-radius(8px)
                 width: 610px
                 height: 200px
 
@@ -190,13 +249,15 @@
 
             h2
                 font-size: 20px
+                font-weight: bold
+                letter-spacing: 0.9px
 
             ul
                 +margin(top 30px)
 
                 li
-                    +margin(top 20px)
-                    +padding(left 8px)
+                    +margin(top 22px)
+                    +padding(left 10px)
                     +ellipse()
                     position: relative
                     width: 300px
@@ -204,13 +265,23 @@
                     a
                         font-size: 14px
 
+                li::before
+                    +background(null,null,null,#222222)
+                    position: absolute
+                    top: 6px
+                    left: 0
+                    content: ''
+                    width: 2px
+                    height: 2px
+
             .btn-more
-                +background('/images/global/icon_plus.png',no-repeat, 45px center)
+                +background('/images/global/icon_plus.png',no-repeat, 42px center)
                 display: block
                 position: absolute
-                top: 0
-                right: 0
+                top: 4px
+                right: -4px
                 width: 56px
+                font-size: 13px
                 color: $gray-700
 
             .btn-more:hover
@@ -224,8 +295,12 @@
 
             li
                 +margin(right 30px)
+                position: relative
                 float: left
                 text-align: center
+
+                a
+                    font-size: 16px
 
                 a::before
                     +margin(bottom 20px)
@@ -234,8 +309,8 @@
                     +background(null, no-repeat, center center, $white)
                     display: block
                     content: ''
-                    width: 90px
-                    height: 90px
+                    width: 88px
+                    height: 88px
 
             li:nth-child(1)
                 a::before
