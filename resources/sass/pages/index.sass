@@ -81,13 +81,13 @@
                 +background('/images/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
                 display: block
                 font-size: 20px
-                color: #777
+                color: $gray-700
 
             a:hover
                 +padding(24px 28px 24px 66px)
-                +border(2px solid $dbv-blue)
+                +border(2px solid $page-color)
                 +background('/images/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
-                color: #222
+                color: $font-color-base
 
         li:nth-child(2)
             a
@@ -150,7 +150,7 @@
                 .lecture-description-sub
                     +margin(top 20px)
                     overflow: hidden
-                    color: #777777
+                    color: $gray-700
 
                     .lecture-type
                         float: left
@@ -170,7 +170,7 @@
                     +margin(top 19px)
                     font-size: 18px
                     font-weight: bold
-                    color: $dbv-blue
+                    color: $page-color
                     letter-spacing: 0.8px
 
         .lecture-card:nth-child(3n)
