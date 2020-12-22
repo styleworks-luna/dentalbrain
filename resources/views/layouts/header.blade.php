@@ -1,7 +1,9 @@
 <header class="header">
     <div class="container">
             <div class="header-logo-wrap">
-                <a href="" class="ir_pm header-logo">logo</a>
+                <a href="" class="ir_pm header-logo">
+                    <img src="{{ asset('/images/global/logo.png') }}" alt="덴탈브레인">
+                </a>
             </div>
             <div class="login-menu">
                 <p class="user-name"><em>홍길동</em> 님</p>

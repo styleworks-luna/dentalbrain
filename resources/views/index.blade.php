@@ -13,23 +13,23 @@
 @section('content')
     <section class="content">
         <div class="container">
-            <section class="banner">
+            <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
                     </div>
                     <div class="swiper-controller-wrap">
@@ -54,7 +54,7 @@
                 <div class="lecture-contents">
                     <ul>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -65,7 +65,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -76,7 +76,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -87,7 +87,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -98,7 +98,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -109,7 +109,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -120,7 +120,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -131,7 +131,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -142,7 +142,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="./public/images/lecture/test.png" alt=""></a>
+                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>
@@ -156,45 +156,91 @@
                 </div>
             </section>
             <section class="ad">
-                <img src="" alt="">
+                <a href="">
+                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                </a>
             </section>
-            <section class="banner-02">
+            <section class="middle-banner">
                 <h2>추천강의</h2>
-                <div class="swiper-container2">
+                <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
+                            </a>
                         </div>
                     </div>
-                    <div class="swiper-button-prev swiper-button-prev-common"></div>
-                    <div class="swiper-button-next swiper-button-next-common"></div>
                 </div>
+                <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
+                <div class="middle-swiper-button-next swiper-button-next-common"></div>
             </section>
-            <section class="banner-03">
-                <div class="swiper-container3">
+            <section class="bottom-banner">
+                <div class="bottom-swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                            </a>
                         </div>
                         <div class="swiper-slide">
-                            <img src="public/images/banner/test2.jpg" alt="">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                            </a>
                         </div>
                     </div>
-                    <div class="swiper-button-prev swiper-button-prev-common"></div>
-                    <div class="swiper-button-next swiper-button-next-common"></div>
                 </div>
+                <div class="bottom-swiper-button-prev swiper-button-prev-common"></div>
+                <div class="bottom-swiper-button-next swiper-button-next-common"></div>
             </section>
         </div>
         <section class="community">

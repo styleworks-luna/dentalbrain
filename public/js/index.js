@@ -38,21 +38,21 @@ $(function () {
         },
     });
 
-    var mySwiper = new Swiper('.swiper-container2', {
+   var mySwiper = new Swiper('.middle-swiper-container', {
         slidesPerView: 5,
         spaceBetween: 20,
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.middle-swiper-button-next',
+            prevEl: '.middle-swiper-button-prev',
         },
     });
 
-    var mySwiper = new Swiper('.swiper-container3', {
+    var mySwiper = new Swiper('.bottom-swiper-container', {
         slidesPerView: 2,
         spaceBetween: 20,
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.bottom-swiper-button-next',
+            prevEl: '.bottom-swiper-button-prev',
         },
     });
 });

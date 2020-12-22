@@ -6,7 +6,7 @@
 .swiper-button-next:after
     content: ''
 
-.banner
+.top-banner
     +margin(top 40px)
     .swiper-container
         position: relative
@@ -24,6 +24,7 @@
         right: 206px
         width: 354px
         height: 30px
+        z-index: 100
 
         .swiper-pagination-fraction
             bottom: 8px
@@ -163,6 +164,7 @@
                 .lecture-name
                     +margin(top 9px)
                     display: block
+                    height: 60px
                     font-size: 20px
                     line-height: 1.5
 
@@ -184,6 +186,7 @@
     +margin(top 104px)
 
     img
+        +border-radius(5px)
         width: 1280px
         height: 120px
 
@@ -191,8 +194,15 @@
 .swiper-button-next-common
     +margin(top -14px)
     +border-radius(50%)
+    position: absolute
     width: 30px
     height: 30px
+    z-index: 100
+    cursor: pointer
+
+.swiper-button-prev-common:focus,
+.swiper-button-next-common:focus
+    outline: none
 
 .swiper-button-prev-common
     +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,rgba(0, 0, 0, 0.4))
@@ -202,8 +212,9 @@
     +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,rgba(0, 0, 0, 0.4))
     right: -20px
 
-.banner-02
+.middle-banner
     +margin(80px auto 0 auto)
+    position: relative
     width: 1240px
     text-align: center
 
@@ -211,28 +222,43 @@
         font-size: 30px
         font-weight: bold
 
-    .swiper-container2
+    .middle-swiper-container
         +margin(top 40px)
-        position: relative
+        overflow: hidden
 
         .swiper-slide
             img
+                +border-radius(8px)
                 width: 232px
                 height: 232px
 
-.banner-03
+    .middle-swiper-button-prev
+        top: 186px
+
+    .middle-swiper-button-next
+        top: 186px
+        right: -20px
+
+.bottom-banner
     +margin(140px auto 0 auto)
+    position: relative
     width: 1240px
 
-    .swiper-container3
-        position: relative
+    .bottom-swiper-container
+        overflow: hidden
 
         .swiper-slide
-
             img
                 +border-radius(8px)
                 width: 610px
                 height: 200px
+
+    .bottom-swiper-button-prev
+        top: 100px
+
+    .bottom-swiper-button-next
+        top: 100px
+        right: -20px
 
 .community
     +margin(top 140px)

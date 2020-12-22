@@ -1,7 +1,9 @@
 <footer class="footer">
     <div class="container">
             <div class="footer-logo-wrap">
-                <a href="" class="footer-logo ir_pm">logo</a>
+                <a href="" class="footer-logo">
+                    <img src="{{ asset('/images/global/footer-logo.png') }}" alt="덴탈브레인">
+                </a>
             </div>
             <div class="footer-left">
                 <ul>
@@ -25,10 +27,26 @@
             </div>
             <div class="footer-right">
                 <ul>
-                    <li><a href="" class="footer-right-brainspec"></a></li>
-                    <li><a href="" class="footer-right-ohc"></a></li>
-                    <li><a href="" class="footer-right-kadh"></a></li>
-                    <li><a href="" class="footer-right-kdma"></a></li>
+                    <li>
+                        <a href="" class="footer-right-brainspec">
+                            <img src="{{ asset('/images/global/logo-brainspec.png') }}" alt="brainspec">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="footer-right-ohc">
+                            <img src="{{ asset('/images/global/logo-ohc.png') }}" alt="ohc 칫솔샵">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="footer-right-kadh">
+                            <img src="{{ asset('/images/global/logo-kadh.png') }}" alt="KADH 대한치과위생학회">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="footer-right-kdma">
+                            <img src="{{ asset('/images/global/logo-kdma.png') }}" alt="KDMA 대한치과경영관리협회">
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
