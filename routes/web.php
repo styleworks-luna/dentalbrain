@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('index');
 });
+
+//회사 소개 (임시)
+Route::get('introduce',function () {
+    return view('pages.introduce.about_us');
+});

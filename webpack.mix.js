@@ -15,3 +15,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.sass', 'public/css');
 
 mix.sass('resources/sass/pages/index.sass', 'public/css/pages');
+mix.sass('resources/sass/pages/introduce/about_us.sass', 'public/css/pages/introduce');

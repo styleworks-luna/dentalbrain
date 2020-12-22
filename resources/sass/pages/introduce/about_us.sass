@@ -1,0 +1,42 @@
+@import '../../helpers/_variables.sass'
+@import '../../helpers/_extends.sass'
+@import '../../helpers/_mixins.scss'
+
+.title-wrap
+    +background(null,null,null,#fdf8ff)
+    height: 300px
+    text-align: center
+
+    h1
+        +margin(0 auto)
+        +padding(126px 0 0 20px)
+        width: 240px
+        font-size: 48px
+        font-weight: bold
+
+.introduce-description
+    +margin(80px auto 160px auto)
+    width: 680px
+
+    em
+        font-size: 20px
+        font-weight: bold
+
+    h2
+        +padding(top 19px)
+        font-size: 40px
+        font-weight: bold
+        color: $page-color
+
+    strong
+        +padding(top 23px)
+        display: block
+        font-size: 18px
+        font-weight: bold
+        letter-spacing: 0.1px
+
+    p
+        +padding(top 80px)
+        display: block
+        font-size: 16px
+        line-height: 1.5
