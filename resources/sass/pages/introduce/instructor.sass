@@ -23,7 +23,7 @@
         overflow: hidden
         float: left
         width: 614px
-        height: 400px
+        height: 398px
 
         .instructor-photo
             +border-radius(50%)
@@ -36,11 +36,11 @@
             width: 414px
 
             .instructor-name
-                +padding(20px 0 0 40px)
+                +padding(20px 0 0 41px)
                 font-size: 24px
 
             .instructor-career
-                +padding(20px 0 0 40px)
+                +padding(20px 0 0 41px)
                 font-size: 15px
                 line-height: 1.53
 
@@ -58,6 +58,10 @@
 
         .instructor-description
             width: 395px
+
+    .instructor-content:last-child
+        .instructor-name
+            +padding(top 0)
 
     .instructor-content li::before
         +border-radius(50%)
