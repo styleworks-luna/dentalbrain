@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <section class="content">
+    <section id="content" class="content">
         <div class="container">
             <div class="row">
             <section class="lecture-information">
@@ -50,16 +50,44 @@
             <section class="lecture-detail">
                 <div class="lecture-detail-menu">
                     <ul>
-                        <li><a href="">상세정보</a></li>
-                        <li><a href="">댓글</a></li>
+                        <li><a href="#content" class="active">상세정보</a></li>
+                        <li><a href="#comment">댓글</a></li>
                     </ul>
                 </div>
                 <div class="lecture-detail-content">
                     <img src="{{ asset('/images/dummy/test.png') }}" alt="" class="lecture-detail-image">
                 </div>
             </section>
-            <section class="lecture-comment">
-
+            <section id="comment" class="lecture-comment">
+                <div class="comment-title">
+                    <h3>댓글</h3>
+                    <p class="comment-length">(250)</p>
+                </div>
+                <form action="" class="comment-input-form">
+                    <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
+                    <input type="submit" value="등록" class="comment-input-btn">
+                </form>
+                <ul class="comment-list">
+                    <li class="comment-total-area">
+                        <div class="comment-area">
+                            <div class="profile-img">
+                                <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                            </div>
+                            <div class="write-info">
+                                <span class="write-name">홍길동</span>
+                                <span class="date">2020-11-17 17:56:47</span>
+                                <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
+                                <a href="#" class="btn-comment-write active">댓글달기</a>
+                            </div>
+                            <div class="comment-btn-area">
+                                <form action="">
+                                    <button type="submit" class="btn-comment-modified">수정</button>
+                                    <button type="submit" class="btn-comment-delete">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </section>
             </div>
         </div>

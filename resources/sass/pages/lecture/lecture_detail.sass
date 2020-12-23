@@ -143,7 +143,7 @@
                     display: block
                     font-size: 16px
 
-                a:hover
+                a.active
                     +padding(13px 34px)
                     +border(2px solid $page-color)
                     +border-radius(23px)
@@ -156,3 +156,127 @@
         .lecture-detail-image
             width: 1140px
             height: 951px
+
+.lecture-comment
+    +padding(top 140px)
+
+    .comment-title
+        overflow: hidden
+
+        h3
+            float: left
+            font-size: 20px
+            font-weight: bold
+
+        .comment-length
+            +padding(left 10px)
+            float: left
+            font-size: 20px
+            color: $page-color
+
+    .comment-input-form
+        +padding(top 20px)
+        display: block
+        position: relative
+
+        .comment-input-text
+            +padding(18px 70px 18px 20px)
+            +border(1px solid #d8d8d8)
+            +border-radius(30px)
+            +background(null, null, null, #fafafa)
+            width: 1070px
+            height: 14px
+            font-size: 14px
+            line-height: 14px
+            resize: none
+
+        .comment-input-text:focus
+            outline: none
+
+        .comment-input-text::placeholder
+            color: $gray-900
+
+        .comment-input-btn
+            +border(1px solid #d8d8d8)
+            +border-radius(25px)
+            +background(null, null, null, $white)
+            position: absolute
+            top: 21px
+            right: -22px
+            width: 70px
+            height: 50px
+            font-size: 14px
+            font-weight: bold
+
+    .comment-list
+        +padding(top 10px)
+
+        .comment-total-area
+            +padding(30px 0)
+            +border(1px solid #e6e6e6,bottom)
+
+            .comment-area
+                overflow: hidden
+
+                .profile-img
+                    float: left
+
+                    img
+                        width: 44px
+                        height: 44px
+
+                .write-info
+                    +padding(5px 0 0 20px)
+                    float: left
+
+                    .write-name
+                        display: block
+                        font-size: 14px
+                        font-weight: bold
+
+                    .date
+                        +padding(top 8px)
+                        display: block
+                        font-size: 12px
+                        color: $gray-700
+
+                    .comment-text
+                        +padding(top 20px)
+                        display: block
+                        font-size: 14px
+
+                    .btn-comment-write
+                        +padding(top 21px)
+                        display: block
+                        position: relative
+                        font-size: 14px
+                        color: $gray-700
+
+                    .btn-comment-write::after
+                        +background('/images/global/icon_arrow_down.png',no-repeat, center center)
+                        display: block
+                        position: absolute
+                        bottom: 3px
+                        left: 60px
+                        content: ''
+                        width: 13px
+                        height: 7px
+
+                    .btn-comment-write:hover::after
+                        +background('/images/global/icon_arrow_down_ov.png',no-repeat, center center)
+
+                    .btn-comment-write.active::after
+                        +background('/images/global/icon_arrow_up.png',no-repeat, center center)
+
+                    .btn-comment-write.active:hover::after
+                        +background('/images/global/icon_arrow_up_ov.png',no-repeat, center center)
+
+                .comment-btn-area
+                    float: right
+
+                    .btn-comment-modified,
+                    .btn-comment-delete
+                        +border(none)
+                        +background(null,null,null,inherit)
+                        color: $gray-900
+                        cursor: pointer
