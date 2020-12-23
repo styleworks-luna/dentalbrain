@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    <div class="content">
+    <section class="content">
         <div class="instructor-title-wrap">
             <div class="container">
                 <h1>강사 소개</h1>
@@ -250,6 +250,6 @@
                 </ul>
             </div>
         </section>
-    </div>
+    </section>
 @endsection
 

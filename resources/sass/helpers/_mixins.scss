@@ -211,12 +211,21 @@
     box-shadow: $type;
 }
 
-@mixin ellipse($truncation-boundary: null) {
+@mixin ellipse($truncation-boundary: null, $line: null) {
     @if $truncation-boundary != null {
         max-width: $truncation-boundary;
     }
-
-    white-space: nowrap;
+    @if $line != null {
+        display: -webkit-box;
+        -webkit-line-clamp: $line;
+        -webkit-box-orient: vertical;
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+            display: block;
+        }
+    } @else {
+        display: block;
+        white-space: nowrap;
+    }
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -234,7 +243,8 @@
     @font-face {
         font-family: "#{$name}";
         font-weight: "#{$weight}";
-        src: url("/fonts/#{$file}.otf");
+        src: url("/fonts/#{$file}.eot");
+        src: url("/fonts/#{$file}.eot?#iefix") format("embedded-opentype"), url("/fonts/#{$file}.woff") format("woff"), url("/fonts/#{$file}.ttf") format("truetype"), url("/fonts/#{$file}.svg?#webfont") format("svg");
     }
 }
 

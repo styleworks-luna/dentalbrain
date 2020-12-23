@@ -24,3 +24,8 @@ Route::get('introduce',function () {
 Route::get('instructor',function () {
     return view('pages.introduce.instructor');
 });
+
+//강의 상세 (임시)
+Route::get('lecture',function () {
+    return view('pages.lecture.lecture_detail');
+});

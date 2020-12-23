@@ -17,3 +17,4 @@ mix.js('resources/js/app.js', 'public/js')
 mix.sass('resources/sass/pages/index.sass', 'public/css/pages');
 mix.sass('resources/sass/pages/introduce/about_us.sass', 'public/css/pages/introduce');
 mix.sass('resources/sass/pages/introduce/instructor.sass', 'public/css/pages/introduce');
+mix.sass('resources/sass/pages/lecture/lecture_detail.sass', 'public/css/pages/lecture');

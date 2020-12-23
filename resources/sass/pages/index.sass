@@ -58,10 +58,12 @@
 
         .swiper-button-prev
             +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,null)
+            background-size: 7px 10px
             transform: translateX(284px)
 
         .swiper-button-next
             +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,null)
+            background-size: 7px 10px
             transform: translateX(-4px)
 
 .lecture
@@ -88,6 +90,7 @@
                 +padding(24px 28px 24px 66px)
                 +border(2px solid $page-color)
                 +background('/images/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
+                font-weight: bold
                 color: $font-color-base
 
         li:nth-child(2)
@@ -101,6 +104,8 @@
         li:nth-child(4)
             a
                 +background('/images/lecture/lecture_menu_icon_4.png')
+            a:hover
+                +padding(24px 27px 24px 65px)
 
         li:nth-child(5)
             a
@@ -108,6 +113,7 @@
 
         li:nth-child(6)
             +margin(right 0)
+
             a
                 +background('/images/lecture/lecture_menu_icon_6.png')
 
@@ -149,7 +155,7 @@
                 width: 400px
 
                 .lecture-description-sub
-                    +margin(top 20px)
+                    +padding(top 20px)
                     overflow: hidden
                     color: $gray-700
 
@@ -162,9 +168,8 @@
                         font-size: 14px
 
                 .lecture-name
-                    +ellipse()
                     +margin(top 9px)
-                    display: block
+                    +ellipse(null, 2)
                     height: 60px
                     font-size: 20px
                     line-height: 1.5
