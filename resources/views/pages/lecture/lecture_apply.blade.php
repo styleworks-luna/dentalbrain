@@ -2,10 +2,13 @@
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/pages/lecture-apply.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.ui.min.js') }}"></script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-apply.css') }}">
+    <link rel="stylesheet" href="{{ ('css/jquery-ui.min.css') }}">
 @endsection
 
 @section('content')
@@ -26,7 +29,7 @@
                         <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
                         <table>
                             <tr>
-                                <th>강의일시</th>
+                                <th>강의시간</th>
                                 <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p></td>
                             </tr>
                             <tr>
@@ -41,22 +44,16 @@
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td>덴탈브레인</td>
+                            <td><em>덴탈브레인</em></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td>dentalbrain</td>
+                            <td><em>dentalbrain</em></td>
                         </tr>
                         <tr>
                             <th>이메일</th>
                             <td>
-                                <input type="text">
-                                @
-                                <select name="" id="">
-                                    <option value="">naver.com</option>
-                                    <option value="">google.com</option>
-                                    <option value="">daum.com</option>
-                                </select>
+                                <input type="email" name="email" class="email_box">
                             </td>
                         </tr>
                         <tr>
@@ -64,6 +61,9 @@
                             <td><input type="text"></td>
                         </tr>
                     </table>
+                </section>
+                <section class="additional-information">
+                    <h3>추가 정보 입력</h3>
                 </section>
             </div>
         </div>

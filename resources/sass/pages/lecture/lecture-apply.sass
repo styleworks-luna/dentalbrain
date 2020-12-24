@@ -96,3 +96,59 @@
                 td
                     +padding(left 20px)
                     font-size: 16px
+
+h3
+    font-size: 24px
+
+.applicant-information
+    +padding(top 60px)
+
+    table
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+        display: block
+
+        tr
+            +size(1140px, 72px)
+            +border(1px solid $border-color-base,bottom)
+
+            th
+                +padding(left 40px)
+                +size(142px)
+                +background(null, null, null, $background-color-menu)
+                font-size: 16px
+                text-align: left
+                vertical-align: middle
+
+            td
+                +padding(left 20px)
+                +size(958px)
+                font-size: 16px
+                vertical-align: middle
+
+                em
+                    font-weight: bold
+
+                input
+                    +margin(right 5px)
+                    +padding(left 20px)
+                    +border(1px solid $border-color-base)
+                    +border-radius(25px)
+                    +size(240px, 50px)
+                    +background(null, null, null, $white-light)
+                    box-sizing: border-box
+                    font-size: 14px
+
+                .email_box
+                    +padding(left 20px)
+                    +border(1px solid $border-color-base)
+                    +border-radius(25px)
+                    +size(240px, 50px)
+                    +background('/images/global/icon_arrow_down.png', no-repeat, 0 0, $white-light)
+                    font-size: 14px
+
+        tr:last-child
+            +border(2px solid $border-color-base,bottom)
+
+.additional-information
+    +margin(top 60px)
