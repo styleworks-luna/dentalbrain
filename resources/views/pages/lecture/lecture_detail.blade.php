@@ -86,6 +86,95 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="child-comment-area">
+                            <form action="" class="comment-input-form">
+                                <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
+                                <input type="submit" value="등록" class="comment-input-btn">
+                            </form>
+                            <ul class="child-comment-list">
+                                <li class="child-comment-item">
+                                    <div class="comment-area">
+                                        <div class="profile-img">
+                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                        </div>
+                                        <div class="write-info">
+                                            <span class="write-name">홍길동</span>
+                                            <span class="date">2020-11-17 17:56:47</span>
+                                            <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
+                                        </div>
+                                        <div class="comment-btn-area">
+                                            <form action="">
+                                                <button type="submit" class="btn-comment-modified">수정</button>
+                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="child-comment-item">
+                                    <div class="comment-area">
+                                        <div class="profile-img">
+                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                        </div>
+                                        <div class="write-info">
+                                            <span class="write-name">홍길동</span>
+                                            <span class="date">2020-11-17 17:56:47</span>
+                                            <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
+                                        </div>
+                                        <div class="comment-btn-area">
+                                            <form action="">
+                                                <button type="submit" class="btn-comment-modified">수정</button>
+                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="comment-total-area">
+                        <div class="comment-area">
+                            <div class="profile-img">
+                                <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                            </div>
+                            <div class="write-info">
+                                <span class="write-name">홍길동</span>
+                                <span class="date">2020-11-17 17:56:47</span>
+                                <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
+                                <a href="#" class="btn-comment-write active">댓글달기</a>
+                            </div>
+                            <div class="comment-btn-area">
+                                <form action="">
+                                    <button type="submit" class="btn-comment-modified">수정</button>
+                                    <button type="submit" class="btn-comment-delete">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="child-comment-area">
+                            <form action="" class="comment-input-form">
+                                <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
+                                <input type="submit" value="등록" class="comment-input-btn">
+                            </form>
+                            <ul class="child-comment-list">
+                                <li class="child-comment-item">
+                                    <div class="comment-area">
+                                        <div class="profile-img">
+                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                        </div>
+                                        <div class="write-info">
+                                            <span class="write-name">홍길동</span>
+                                            <span class="date">2020-11-17 17:56:47</span>
+                                            <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
+                                        </div>
+                                        <div class="comment-btn-area">
+                                            <form action="">
+                                                <button type="submit" class="btn-comment-modified">수정</button>
+                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </section>
