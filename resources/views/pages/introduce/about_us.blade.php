@@ -4,7 +4,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/introduce/about_us.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/pages/introduce/about-us.css') }}">
 @endsection
 
 @section('content')

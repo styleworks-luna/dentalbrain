@@ -16,15 +16,19 @@
                 <img src="{{ asset('/images/dummy/test.png') }}" alt="" class="lecture-image">
                 <div class="lecture-apply-form">
                     <div class="lecture-sort">
-                        <span class="onoffline">온라인</span>
+                        <span class="offline">오프라인</span>
                         <p class="lecture-subject">치과위생사 &middot; 위생</p>
                     </div>
-                    <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
+                    <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
                     <div class="lecture-information-text">
                         <table>
                             <tr>
-                                <th>강의시간</th>
-                                <td><p class="lecture-length">총 10강</p>・<p class="lecture-time">총 2시간 50분</p></td>
+                                <th>강의일시</th>
+                                <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p></td>
+                            </tr>
+                            <tr>
+                                <th>강의장소</th>
+                                <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층	</p></td>
                             </tr>
                             <tr>
                                 <th>옵션선택</th>
