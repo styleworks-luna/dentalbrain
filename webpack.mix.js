@@ -18,3 +18,4 @@ mix.sass('resources/sass/pages/index.sass', 'public/css/pages');
 mix.sass('resources/sass/pages/introduce/about-us.sass', 'public/css/pages/introduce');
 mix.sass('resources/sass/pages/introduce/instructor.sass', 'public/css/pages/introduce');
 mix.sass('resources/sass/pages/lecture/lecture-detail.sass', 'public/css/pages/lecture');
+mix.sass('resources/sass/pages/lecture/lecture-apply.sass', 'public/css/pages/lecture');

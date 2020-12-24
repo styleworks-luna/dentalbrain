@@ -1,0 +1,98 @@
+@import '../../helpers/_variables.sass'
+@import '../../helpers/_extends.sass'
+@import '../../helpers/_mixins.scss'
+
+.content
+    +background(null, null, null, #f5f4f5)
+    overflow: hidden
+    height: 1000px
+
+    .container
+        +margin(20px auto)
+        +border(1px solid $border-color-light)
+        +border-radius(10px)
+        +background(null, null, null, $white)
+        height: 900px
+
+        .row
+            +margin(50px auto 80px auto)
+
+
+.apply-title
+    +padding(bottom 20px)
+    +border(1px solid $border-color-base, bottom)
+    overflow: hidden
+
+    h1
+        float: left
+        font-size: 30px
+
+    p
+        float: right
+        font-size: 13px
+        color: $gray-700
+
+        em
+            font-weight: bold
+            color: $page-color
+
+        .for-padding
+            +padding(0 5px)
+
+.lecture-information-wrap
+    +padding(top 20px)
+    overflow: hidden
+
+    .lecture-image
+        +border(1px solid rgba(0, 0, 0, 0.1))
+        +border-radius(8px)
+        +size(298px, 223px)
+        float: left
+
+    .lecture-information
+        +padding(left 50px)
+        +size(790px)
+        float: left
+
+        .lecture-sort
+            overflow: hidden
+
+            .online,
+            .offline
+                +padding(6px 8px)
+                +background(null, null, null, $page-color)
+                float: left
+                font-size: 12px
+                color: $white
+
+            .offline
+                +background(null, null, null, $purply-pink)
+
+            .lecture-subject
+                +padding(6px 0 0 10px)
+                font-size: 14px
+                float: left
+                color: $gray-700
+
+        .lecture-title
+            +padding(top 16px)
+            +ellipse(null,2)
+            font-size: 24px
+            font-weight: bold
+            line-height: 1.21
+
+        table
+            +padding(top 20px)
+            display: block
+
+            tr
+                +padding(top 17px)
+                display: block
+
+                th
+                    font-size: 14px
+                    color: $gray-700
+
+                td
+                    +padding(left 20px)
+                    font-size: 16px

@@ -29,3 +29,8 @@ Route::get('instructor',function () {
 Route::get('lecture',function () {
     return view('pages.lecture.lecture_detail');
 });
+
+//강의 신청 (임시)
+Route::get('apply',function () {
+    return view('pages.lecture.lecture_apply');
+});
