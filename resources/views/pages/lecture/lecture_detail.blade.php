@@ -12,9 +12,9 @@
     <section id="content" class="content">
         <div class="container">
             <div class="row">
-            <section class="lecture-information">
+            <section class="lecture-information-wrap">
                 <img src="{{ asset('/images/dummy/test.png') }}" alt="" class="lecture-image">
-                <div class="lecture-apply-form">
+                <div class="lecture-information">
                     <div class="lecture-sort">
                         <span class="offline">오프라인</span>
                         <p class="lecture-subject">치과위생사 &middot; 위생</p>

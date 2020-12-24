@@ -3,14 +3,14 @@
 @import '../../helpers/_mixins.scss'
 
 .instructor-title-wrap
-    +background('/images/instructor/top-image.png',no-repeat,center center)
+    +background('/images/instructor/top-image.png', no-repeat, center center)
     height: 300px
     text-align: center
 
     h1
         +margin(0 auto)
         +padding(126px 0 0 20px)
-        width: 240px
+        +size(240px)
         font-size: 48px
         font-weight: bold
 
@@ -20,20 +20,18 @@
 
     .instructor-content
         +margin(top 30px)
+        +size(614px, 398px)
         overflow: hidden
         float: left
-        width: 614px
-        height: 398px
 
         .instructor-photo
             +border-radius(50%)
+            +size(200px, 200px)
             float: left
-            width: 200px
-            height: 200px
 
         .instructor-description
+            +size(414px)
             float: left
-            width: 414px
 
             .instructor-name
                 +padding(20px 0 0 41px)
@@ -53,11 +51,11 @@
         +margin(0)
 
     .instructor-content:nth-child(2n)
+        +size(601px)
         float: right
-        width: 601px
 
         .instructor-description
-            width: 395px
+            +size(395px)
 
     .instructor-content:last-child
         .instructor-name
@@ -65,10 +63,9 @@
 
     .instructor-content li::before
         +border-radius(50%)
-        +background(null,null,null, $font-color-base)
+        +background(null, null, null, $font-color-base)
+        +size(3px, 3px)
         position: absolute
         top: 10px
         left: 6px
         content: ''
-        width: 3px
-        height: 3px

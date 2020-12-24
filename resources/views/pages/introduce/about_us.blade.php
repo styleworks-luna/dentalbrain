@@ -14,8 +14,8 @@
                 <h1>회사소개</h1>
             </div>
         </div>
-        <div class="introduce-description">
-            <div class="container">
+        <div class="container">
+            <div class="introduce-description">
                 <em>덴탈브레인과 함께하세요!</em>
                 <h2>남들과 조금은 차별화된 인재로 거듭나기!</h2>
                 <strong>원장님, 실장, 스텝, 경영지원실등 치과스텝을 위한 다양한 세미나가 매달 업데이트 됩니다.</strong>

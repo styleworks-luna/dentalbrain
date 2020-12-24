@@ -14,21 +14,20 @@
 
         .row
             +margin(70px auto 80px auto)
-            width: 1140px
+            +size(1140px)
 
-.lecture-information
+.lecture-information-wrap
     overflow: hidden
 
     .lecture-image
         +border-radius(8px)
+        +size(540px, 405px)
         float: left
-        width: 540px
-        height: 405px
 
-    .lecture-apply-form
+    .lecture-information
         +padding(18px 0 0 50px)
+        +size(550px)
         float: left
-        width: 550px
 
         .lecture-sort
             overflow: hidden
@@ -83,8 +82,7 @@
                     .lecture-select-box
                         +padding(left 14px)
                         +border(1px solid $border-color-base)
-                        width: 418px
-                        height: 40px
+                        +size(418px, 40px)
                         font-size: 16px
                         appearance: none
 
@@ -105,10 +103,9 @@
             +margin(left 22px)
             +border-radius(27px)
             +background(null, null, null, $page-color)
+            +size(308px, 54px)
             display: block
             float: right
-            width: 308px
-            height: 54px
             font-size: 18px
             font-weight: bold
             color: $white
@@ -128,10 +125,9 @@
         .like::before
             +margin(9px auto 4px auto)
             +background('/images/lecture/lecture_icon_wish.png',no-repeat, center center)
+            +size(21px, 20px)
             content: ''
             display: block
-            width: 21px
-            height: 20px
 
 .lecture-detail
     +padding(top 80px)
@@ -139,7 +135,7 @@
     .lecture-detail-menu
         +border-radius(23px)
         +background(null, null, null, $background-color-menu)
-        width: 1140px
+        +size(1140px)
 
         ul
             overflow: hidden
@@ -164,8 +160,7 @@
         +padding(top 30px)
 
         .lecture-detail-image
-            width: 1140px
-            height: 951px
+            +size(1140px, 951px)
 
 .lecture-comment
     +padding(top 138px)
@@ -194,8 +189,7 @@
             +border(1px solid $border-color-base)
             +border-radius(30px)
             +background(null, null, null, $white-light)
-            width: 1049px
-            height: 14px
+            +size(1049px, 14px)
             font-size: 14px
             line-height: 14px
             resize: none
@@ -210,11 +204,10 @@
             +border(1px solid $border-color-base)
             +border-radius(25px)
             +background(null, null, null, $white)
+            +size(70px, 50px)
             position: absolute
             top: 21px
             right: 1px
-            width: 70px
-            height: 50px
             font-size: 14px
             font-weight: bold
 
@@ -235,8 +228,7 @@
                     float: left
 
                     img
-                        width: 44px
-                        height: 44px
+                        +size(44px, 44px)
 
                 .write-info
                     +padding(5px 0 0 20px)
@@ -267,13 +259,12 @@
 
                     .btn-comment-write::after
                         +background('/images/global/icon_arrow_down.png',no-repeat, center center)
+                        +size(13px, 7px)
                         display: block
                         position: absolute
                         bottom: 3px
                         left: 60px
                         content: ''
-                        width: 13px
-                        height: 7px
 
                     .btn-comment-write:hover::after
                         +background('/images/global/icon_arrow_down_ov.png',no-repeat, center center)
@@ -309,8 +300,9 @@
 
                 .comment-input-form
                     +padding(left 64px)
+
                     .comment-input-text
-                        width: 985px
+                        +size(985px)
 
                 .child-comment-list
                     +padding(left 64px)
