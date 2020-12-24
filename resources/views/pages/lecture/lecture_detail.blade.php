@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/pages/lecture-detail.js') }}"></script>
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture_detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-detail.css') }}">
 @endsection
 
 @section('content')
@@ -16,7 +17,7 @@
                 <div class="lecture-apply-form">
                     <div class="lecture-sort">
                         <span class="onoffline">온라인</span>
-                        <p class="lecture-subject">치과 위생사 &middot; 위생</p>
+                        <p class="lecture-subject">치과위생사 &middot; 위생</p>
                     </div>
                     <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
                     <div class="lecture-information-text">
@@ -50,8 +51,8 @@
             <section class="lecture-detail">
                 <div class="lecture-detail-menu">
                     <ul>
-                        <li><a href="#content" class="active">상세정보</a></li>
-                        <li><a href="#comment">댓글</a></li>
+                        <li><a href="#content" class="menu-tab-detail active">상세정보</a></li>
+                        <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                     </ul>
                 </div>
                 <div class="lecture-detail-content">
@@ -61,7 +62,7 @@
             <section id="comment" class="lecture-comment">
                 <div class="comment-title">
                     <h3>댓글</h3>
-                    <p class="comment-length">(250)</p>
+                    <p class="comment-length"></p>
                 </div>
                 <form action="" class="comment-input-form">
                     <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
@@ -77,7 +78,7 @@
                                 <span class="write-name">홍길동</span>
                                 <span class="date">2020-11-17 17:56:47</span>
                                 <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                <a href="#" class="btn-comment-write active">댓글달기</a>
+                                <a href="#" class="btn-comment-write">댓글달기</a>
                             </div>
                             <div class="comment-btn-area">
                                 <form action="">
@@ -87,7 +88,7 @@
                             </div>
                         </div>
                         <div class="child-comment-area">
-                            <form action="" class="comment-input-form">
+                            <form action="" class="comment-input-form hide">
                                 <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                                 <input type="submit" value="등록" class="comment-input-btn">
                             </form>
@@ -123,7 +124,7 @@
                                         <div class="comment-btn-area">
                                             <form action="">
                                                 <button type="submit" class="btn-comment-modified">수정</button>
-                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                                <button type="submit" class="btn-comment-delete" onclick="deleteComment(e)">삭제</button>
                                             </form>
                                         </div>
                                     </div>
@@ -140,7 +141,7 @@
                                 <span class="write-name">홍길동</span>
                                 <span class="date">2020-11-17 17:56:47</span>
                                 <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                <a href="#" class="btn-comment-write active">댓글달기</a>
+                                <a href="#" class="btn-comment-write">댓글달기</a>
                             </div>
                             <div class="comment-btn-area">
                                 <form action="">
@@ -150,7 +151,7 @@
                             </div>
                         </div>
                         <div class="child-comment-area">
-                            <form action="" class="comment-input-form">
+                            <form action="" class="comment-input-form hide">
                                 <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                                 <input type="submit" value="등록" class="comment-input-btn">
                             </form>
