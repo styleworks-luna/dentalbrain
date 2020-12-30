@@ -22,12 +22,17 @@
                 font-size: 12px
                 color: $gray-700
 
+                &:hover
+                    color: $font-color-base
+                    text-decoration: underline
+
             .user-name
                 padding-right: 17px
 
-                em
+                a
                     font-style: normal
                     font-weight: bold
+                    color: $gray-700
 
         .header-left
             position: absolute
@@ -41,6 +46,11 @@
                 a
                     font-size: 16px
                     color: $font-color-base
+
+                    &:hover
+                        font-weight: bold
+                        text-decoration: underline
+                        color: $page-color
 
             li:last-child
                 +padding(right 0)
@@ -56,11 +66,15 @@
                 +padding(right 34px)
                 display: inline-block
 
-                .header-mypage, .header-cs
+                .header-mypage,
+                .header-cs
                     display: block
                     position: relative
                     font-size: 12px
                     color: $font-color-base
+
+                    &:hover
+                        font-weight: bold
 
                 .header-mypage::before
                     +background('/images/global/icon-header-mypage.png')
