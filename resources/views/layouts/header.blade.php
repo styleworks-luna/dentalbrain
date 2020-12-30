@@ -6,7 +6,7 @@
                 </a>
             </div>
             <div class="login-menu">
-                <p class="user-name"><em>홍길동</em> 님</p>
+                <p class="user-name"><a href="">홍길동</a> 님</p>
                 <a href="" class="login-btn">로그아웃</a>
             </div>
             <div class="header-left">
