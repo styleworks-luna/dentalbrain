@@ -5,14 +5,12 @@
 .content
     +background(null, null, null, #f5f4f5)
     overflow: hidden
-    height: 1000px
 
     .container
         +margin(20px auto)
         +border(1px solid $border-color-light)
         +border-radius(10px)
         +background(null, null, null, $white)
-        height: 900px
 
         .row
             +margin(50px auto 80px auto)
@@ -152,3 +150,74 @@ h3
 
 .additional-information
     +margin(top 60px)
+
+    h3
+        +padding(bottom 18px)
+        +border(2px solid $gray-900, bottom)
+
+    h4
+        font-size: 16px
+        font-weight: bold
+
+
+    .multiple-single-choice
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+
+        em
+            font-size: 14px
+            font-weight: normal
+            color: $font-color-emphasis
+
+        ul
+            +margin(bottom 30px)
+
+            li
+                +padding(top 20px)
+                font-size: 16px
+
+    .multiple-choice
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+
+        ul
+            +margin(bottom 30px)
+
+            li
+                +padding(top 20px)
+                font-size: 16px
+
+    .short-answer
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+
+        .short-answer-response
+            +margin(top 20px bottom 20px)
+            +padding(left 20px)
+            +border(1px solid $border-color-base)
+            +border-radius(25px)
+            +size(1060px, 50px)
+            +background(null, null, null, $white-light)
+            box-sizing: border-box
+            font-size: 14px
+
+    .address-question
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+
+    .file-question
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+
+        .tips
+            +margin(top 10px bottom 30px)
+            +border(1px solid #ece6ec)
+            +background(null, null, null, #fdf8ff)
+            width: 1060px
+
+            p
+                +padding(16px 0 16px 20px)
+                display: block
+                font-size: 12px
+                color: $gray-700
+

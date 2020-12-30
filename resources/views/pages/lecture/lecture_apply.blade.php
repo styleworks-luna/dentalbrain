@@ -1,70 +1,133 @@
 @extends('layouts.app')
 
 @section('script')
-    <script type="text/javascript" src="{{ asset('js/pages/lecture-apply.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/lecture-apply.js') }}"></script>
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-apply.css') }}">
     <link rel="stylesheet" href="{{ ('css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-apply.css') }}">
 @endsection
 
 @section('content')
     <section class="content">
         <div class="container">
             <div class="row">
-                <section class="apply-title">
-                    <h1>신청하기</h1>
-                    <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
-                </section>
-                <section class="lecture-information-wrap">
-                    <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진" class="lecture-image">
-                    <div class="lecture-information">
-                        <div class="lecture-sort">
-                            <span class="offline">오프라인</span>
-                            <p class="lecture-subject">치과위생사 &middot; 위생</p>
+                <form action="">
+                    <section class="apply-title">
+                        <h1>신청하기</h1>
+                        <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
+                    </section>
+                    <section class="lecture-information-wrap">
+                        <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진" class="lecture-image">
+                        <div class="lecture-information">
+                            <div class="lecture-sort">
+                                <span class="offline">오프라인</span>
+                                <p class="lecture-subject">치과위생사 &middot; 위생</p>
+                            </div>
+                            <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
+                            <table>
+                                <tr>
+                                    <th>강의시간</th>
+                                    <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>강의장소</th>
+                                    <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
+                                </tr>
+                            </table>
                         </div>
-                        <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
+                    </section>
+                    <section class="applicant-information">
+                        <h3>신청자 정보 입력</h3>
                         <table>
                             <tr>
-                                <th>강의시간</th>
-                                <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p></td>
+                                <th>이름</th>
+                                <td><em>덴탈브레인</em></td>
                             </tr>
                             <tr>
-                                <th>강의장소</th>
-                                <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
+                                <th>아이디</th>
+                                <td><em>dentalbrain</em></td>
+                            </tr>
+                            <tr>
+                                <th>이메일</th>
+                                <td>
+                                    <input type="email"
+                                           name="email"
+                                           class="email_box"
+                                           data-parsley-required="true"
+                                           data-parsley-type="email"
+                                           data-parsley-class-handler=".ui-emailbox">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>휴대전화</th>
+                                <td><input type="text"></td>
                             </tr>
                         </table>
-                    </div>
-                </section>
-                <section class="applicant-information">
-                    <h3>신청자 정보 입력</h3>
-                    <table>
-                        <tr>
-                            <th>이름</th>
-                            <td><em>덴탈브레인</em></td>
-                        </tr>
-                        <tr>
-                            <th>아이디</th>
-                            <td><em>dentalbrain</em></td>
-                        </tr>
-                        <tr>
-                            <th>이메일</th>
-                            <td>
-                                <input type="email" name="email" class="email_box">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>휴대전화</th>
-                            <td><input type="text"></td>
-                        </tr>
-                    </table>
-                </section>
-                <section class="additional-information">
-                    <h3>추가 정보 입력</h3>
-                </section>
+                    </section>
+                    <section class="additional-information">
+                        <h3>추가 정보 입력</h3>
+                        <div class="multiple-single-choice">
+                            <h4>객관식 단일 선택 질문 객관식 단일 선택 질문 <em>(필수)</em></h4>
+                            <div class="choices">
+                                <ul>
+                                    <li>
+                                        <input type="radio" name="choice" id="choice-01">
+                                        <label for="choice-01">선택 1</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="choice" id="choice-02">
+                                        <label for="choice-02">선택 2</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="choice" id="choice-03">
+                                        <label for="choice-03">선택 3</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="multiple-choice">
+                            <h4>객관식 다중 선택 질문</h4>
+                            <div class="choices">
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" name="choice" id="multiple-choice-01">
+                                        <label for="multiple-choice-01">선택 1</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="choice" id="multiple-choice-02">
+                                        <label for="multiple-choice-02">선택 2</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" name="choice" id="multiple-choice-03">
+                                        <label for="multiple-choice-03">선택 3</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="short-answer">
+                            <h4>주관식 입력 질문 주관식 입력 질문</h4>
+                            <input type="text" placeholder="답변을 입력하세요." class="short-answer-response">
+                        </div>
+                        <div class="address-question">
+                            <h4>주소 질문</h4>
+                        </div>
+                        <div class="file-question">
+                            <h4>파일입력질문</h4>
+                            <div class="tips">
+                                <p>
+                                    ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
+                                    ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls, hwp  /  이미지파일 : JPG, JPEG, PNG, GIF  /  압축파일 : zip, alz, rar
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </form>
             </div>
         </div>
     </section>
