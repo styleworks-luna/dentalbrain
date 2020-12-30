@@ -1,7 +1,7 @@
 <footer class="footer">
     <div class="container">
             <div class="footer-logo-wrap">
-                <a href="" class="footer-logo">
+                <a href="{{ url('/') }}" class="footer-logo">
                     <img src="{{ asset('/images/global/footer-logo.png') }}" alt="덴탈브레인">
                 </a>
             </div>
