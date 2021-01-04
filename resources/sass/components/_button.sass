@@ -1,10 +1,10 @@
 // 버튼 default
 %btn-default
-    +box-sizing()
+    +box-sizing(border-box)
     display: block
     border: 0
     background: none
-    font-family: $font-family-source
+    font-family: $font-family-base
     text-align: center
     text-decoration: none
     outline: none
@@ -18,6 +18,8 @@
 
     @if $type == page-fill
         @extend %btn-page
+    @else
+        background-color: $type
 
     @if $border != null
         @include border($border)

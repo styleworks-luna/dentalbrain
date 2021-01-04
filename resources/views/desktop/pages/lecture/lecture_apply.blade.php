@@ -22,7 +22,9 @@
                         <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
                     </section>
                     <section class="lecture-information-wrap">
-                        <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진" class="lecture-image">
+                        <div class="lecture-image">
+                            <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진">
+                        </div>
                         <div class="lecture-information">
                             <div class="lecture-sort">
                                 <span class="offline">오프라인</span>
@@ -112,20 +114,89 @@
                         </div>
                         <div class="short-answer">
                             <h4>주관식 입력 질문 주관식 입력 질문</h4>
-                            <input type="text" placeholder="답변을 입력하세요." class="short-answer-response">
+                            <div class="answers">
+                                <input type="text" placeholder="답변을 입력하세요." class="short-answer-response">
+                            </div>
                         </div>
                         <div class="address-question">
                             <h4>주소 질문</h4>
+                            <div class="answers">
+                                <div class="address-form-wrap">
+                                    <input type="text" class="address">
+                                    <input type="text" placeholder="상세주소를 입력하세요." class="address-detail">
+                                </div>
+                            </div>
                         </div>
                         <div class="file-question">
                             <h4>파일입력질문</h4>
-                            <div class="tips">
-                                <p>
-                                    ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
-                                    ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls, hwp  /  이미지파일 : JPG, JPEG, PNG, GIF  /  압축파일 : zip, alz, rar
-                                </p>
+                            <div class="answers">
+                                <input type="file" id="file-upload" class="upload-hidden">
+                                <label for="file-upload" class="file-upload-btn">파일선택</label>
+                                <input class="file-name" value="파일을 업로드해주세요." disabled="disabled">
+                                <div class="tips">
+                                    <p>
+                                        ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
+                                        ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls, hwp /
+                                        이미지파일 :
+                                        JPG, JPEG, PNG, GIF / 압축파일 : zip, alz, rar
+                                    </p>
+                                </div>
                             </div>
                         </div>
+                    </section>
+                    <section class="payment-information">
+                        <h3>결제정보</h3>
+                        <table>
+                            <tr>
+                                <th>결제금액</th>
+                                <td><em>500,000원</em></td>
+                            </tr>
+                            <tr>
+                                <th>결제방식</th>
+                                <td>
+                                    <input type="radio" name="payment-method" id="credit" class="payment-method">
+                                    <label for="credit">신용카드</label>
+                                    <input type="radio" name="payment-method" id="bank-transform"
+                                           class="payment-method">
+                                    <label for="bank-transform">실시간 계좌이체</label>
+                                    <input type="radio" name="payment-method" id="deposit" class="payment-method">
+                                    <label for="deposit">무통장입금(가상계좌)</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                    <section class="agree">
+                        <h3>신청자 동의</h3>
+                        <div class="agreement-all-wrap">
+                            <input type="checkbox" name="agree-all" id="agree-all" class="agree-all">
+                            <label for="agree-all">전체동의</label>
+                        </div>
+                        <div class="agreement-wrap">
+                            <ul>
+                                <li>
+                                    <div class="input-box">
+                                        <input type="checkbox" name="offer-consent" id="offer-consent"
+                                               class="offer-consent">
+                                        <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
+                                    </div>
+                                    <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
+                                    <a href="">내용보기</a>
+                                </li>
+                                <li>
+                                    <div class="input-box">
+                                        <input type="checkbox" name="refund-consent" id="refund-consent"
+                                               class="refund-consent">
+                                        <label for="refund-consent">(필수) 취소/환불약관 동의</label>
+                                    </div>
+                                    <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
+                                    <a href="">내용보기</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                    <section class="btn-wrap">
+                        <button class="make-pay">결제하기</button>
+                        <button class="cancel">취소</button>
                     </section>
                 </form>
             </div>

@@ -1,6 +1,8 @@
-@import 'resources/sass/helpers/_variables.sass'
-@import 'resources/sass/helpers/_extends.sass'
-@import 'resources/sass/helpers/_mixins.scss'
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
 
 .content
     +background(null, null, null, #f5f4f5)
@@ -29,26 +31,30 @@
         float: right
         font-size: 13px
         color: $gray-700
+        transform: translateY(15px)
 
         em
             font-weight: bold
             color: $page-color
 
         .for-padding
-            +padding(0 5px)
+            +padding(0 6px)
 
 .lecture-information-wrap
     +padding(top 20px)
     overflow: hidden
 
     .lecture-image
-        +border(1px solid rgba(0, 0, 0, 0.1))
-        +border-radius(8px)
-        +size(298px, 223px)
         float: left
+        +size(298px, 223px)
+
+        img
+            +border(1px solid rgba(0, 0, 0, 0.1))
+            +border-radius(8px)
+            +size(298px, 223px)
 
     .lecture-information
-        +padding(left 50px)
+        +padding(top 20px left 52px)
         +size(790px)
         float: left
 
@@ -57,7 +63,7 @@
 
             .online,
             .offline
-                +padding(6px 8px)
+                +padding(4px 9px 8px 8px)
                 +background(null, null, null, $page-color)
                 float: left
                 font-size: 12px
@@ -67,24 +73,24 @@
                 +background(null, null, null, $purply-pink)
 
             .lecture-subject
-                +padding(6px 0 0 10px)
+                +padding(4px 0 0 10px)
                 font-size: 14px
                 float: left
                 color: $gray-700
 
         .lecture-title
-            +padding(top 16px)
+            +padding(top 13px)
             +ellipse(null,2)
             font-size: 24px
             font-weight: bold
             line-height: 1.21
 
         table
-            +padding(top 20px)
+            +padding(top 16px)
             display: block
 
             tr
-                +padding(top 17px)
+                +padding(top 18px)
                 display: block
 
                 th
@@ -99,15 +105,16 @@ h3
     font-size: 24px
 
 .applicant-information
-    +padding(top 60px)
+    +padding(top 62px)
 
     table
-        +margin(top 18px)
+        +margin(top 19px)
         +border(2px solid $gray-900, top)
         display: block
 
         tr
-            +size(1140px, 72px)
+            +box-sizing(border-box)
+            +size(1140px, 73px)
             +border(1px solid $border-color-base,bottom)
 
             th
@@ -119,50 +126,13 @@ h3
                 vertical-align: middle
 
             td
-                +padding(left 20px)
+                +padding(left 24px)
                 +size(958px)
                 font-size: 16px
                 vertical-align: middle
 
                 em
                     font-weight: bold
-
-                input
-                    +margin(right 5px)
-                    +padding(left 20px)
-                    +border(1px solid $border-color-base)
-                    +border-radius(25px)
-                    +size(240px, 50px)
-                    +background(null, null, null, $white-light)
-                    box-sizing: border-box
-                    font-size: 14px
-
-                .ui-emailbox
-                    position: relative
-
-                .email_box
-                    +padding(left 20px)
-                    +border(1px solid $border-color-base)
-                    +border-radius(25px)
-                    +size(240px, 50px)
-                    font-size: 14px
-
-                .ui-emailbox-account
-                    +margin(right 6px)
-
-                .ui-emailbox-domain
-                    +margin(left 6px)
-
-                .ui-button
-                    +border(none)
-                    +background('/images/desktop/global/icon_arrow_down.png', no-repeat, 0 0, $white-light)
-                    position: absolute
-                    right: 10px
-                    top: 5px
-                    cursor: default
-
-                    &:focus
-                        outline: none
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)
@@ -171,17 +141,24 @@ h3
     +margin(top 60px)
 
     h3
-        +padding(bottom 18px)
+        +padding(bottom 20px)
         +border(2px solid $gray-900, bottom)
 
     h4
+        +padding(left 40px)
         font-size: 16px
         font-weight: bold
 
+    .choices
+        +padding(left 60px)
+
+    .answers
+        +padding(left 40px)
 
     .multiple-single-choice
         +margin(top 30px)
         +border(1px solid $border-color-base, bottom)
+
 
         em
             font-size: 14px
@@ -211,7 +188,7 @@ h3
         +border(1px solid $border-color-base, bottom)
 
         .short-answer-response
-            +margin(top 20px bottom 20px)
+            +margin(top 20px bottom 30px)
             +padding(left 20px)
             +border(1px solid $border-color-base)
             +border-radius(25px)
@@ -224,9 +201,34 @@ h3
         +margin(top 30px)
         +border(1px solid $border-color-base, bottom)
 
+        .address-form-wrap
+            +margin(top 20px bottom 30px)
+
+            .address
+                +margin(right 7px)
+                +size(525px)
+
+            .address-detail
+                +size(525px)
+
     .file-question
         +margin(top 30px)
-        +border(1px solid $border-color-base, bottom)
+        +border(2px solid $border-color-base, bottom)
+        position: relative
+
+        .file-name
+            +margin(top 20px)
+            +border(1px solid $border-color-base)
+            +padding(0 0 0 106px)
+            +size(954px, 48px)
+            +border-radius(30px)
+            +background(null, null, null, $background-color-file)
+            font-size: 14px
+            color: $gray-900
+
+        .file-upload-btn
+            position: absolute
+            top: 16px
 
         .tips
             +margin(top 10px bottom 30px)
@@ -235,8 +237,123 @@ h3
             width: 1060px
 
             p
-                +padding(16px 0 16px 20px)
+                +padding(14px 0 14px 20px)
                 display: block
                 font-size: 12px
+                line-height: 1.5
+                letter-spacing: 0.1px
                 color: $gray-700
 
+
+.payment-information
+    +margin(top 63px)
+
+    table
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+        display: block
+
+        tr
+            +size(1140px, 72px)
+            +border(1px solid $border-color-base,bottom)
+
+            th
+                +padding(left 40px)
+                +size(142px)
+                +background(null, null, null, $background-color-menu)
+                font-size: 16px
+                text-align: left
+                vertical-align: middle
+
+            td
+                +padding(left 23px)
+                +size(958px)
+                font-size: 16px
+                vertical-align: middle
+
+                em
+                    font-weight: bold
+                    color: $page-color
+
+                label
+                    +padding(right 36px)
+
+        tr:last-child
+            +border(2px solid $border-color-base,bottom)
+
+            td
+                +padding(left 23px)
+
+.agree
+    +margin(top 60px)
+
+    h3
+        +padding(bottom 18px)
+        +border(2px solid $gray-900, bottom)
+
+    .agreement-all-wrap
+        +padding(29px 0 28px 40px)
+        +border(1px solid $border-color-base, bottom)
+
+        label
+            font-weight: bold
+            font-size: 16px
+
+    .agreement-wrap
+        +padding(26px 40px 26px 40px)
+        +border(2px solid $border-color-base, bottom)
+
+
+        li:last-child
+            +margin(top 40px)
+
+        li
+            overflow: hidden
+
+            .input-box
+                float: left
+
+                input
+                    display: inline-block
+
+                label
+                    +padding(left 5px)
+                    display: inline-block
+                    font-size: 16px
+
+                input[type='checkbox'],
+                input[type='checkbox']:checked
+                    +margin(0 1px 0 0 )
+
+            p
+                +padding(left 10px)
+                float: left
+                font-size: 12px
+                color: $gray-900
+                transform: translateY(3px)
+
+            a
+                float: right
+                font-size: 13px
+                color: $gray-700
+                text-decoration: underline
+                transform: translateY(3px)
+
+.btn-wrap
+    +margin(top 50px)
+    text-align: center
+
+    .make-pay
+        +btn(page-fill,null,25px)
+        +size(160px, 50px)
+        display: inline-block
+        color: $white
+        font-size: 16px
+
+    .cancel
+        +btn($gray-700,null,25px)
+        +size(160px, 50px)
+        +margin(left 8px)
+        display: inline-block
+        color: $white
+        font-size: 16px
