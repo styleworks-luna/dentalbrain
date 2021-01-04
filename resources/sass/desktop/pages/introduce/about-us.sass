@@ -3,40 +3,42 @@
 @import '@sass/helpers/_mixins.scss'
 
 .title-wrap
-    +background(null,null,null,#fdf8ff)
+    +background('/images/desktop/global/office-top-image.png', no-repeat, center center)
     height: 300px
-    text-align: center
 
-    h1
+    .title
         +margin(0 auto)
-        +padding(126px 0 0 20px)
-        width: 240px
-        font-size: 48px
-        font-weight: bold
+        +padding(top 101px)
+        width: 626px
+        em
+            font-size: 18px
+            font-weight: bold
+
+        h1
+            +padding(top 11px)
+            font-size: 37px
+            font-weight: bold
+            color: $page-color
+
+        strong
+            +padding(top 26px)
+            display: block
+            font-size: 15px
+            font-weight: normal
+            letter-spacing: 0.1px
 
 .introduce-description
-    +margin(80px auto 160px auto)
-    +size(680px)
-
-    em
-        font-size: 20px
-        font-weight: bold
+    +margin(80px auto 100px auto)
+    +size(626px)
 
     h2
-        +padding(top 19px)
-        font-size: 40px
+        +padding(bottom 10px)
+        +border(1px solid $border-color-super-light, bottom)
+        font-size: 24px
         font-weight: bold
-        color: $page-color
-
-    strong
-        +padding(top 23px)
-        display: block
-        font-size: 18px
-        font-weight: bold
-        letter-spacing: 0.1px
 
     p
-        +padding(top 80px)
+        +padding(top 20px)
         display: block
         font-size: 16px
         line-height: 1.5

@@ -10,15 +10,15 @@
 @section('content')
     <section class="content">
         <div class="title-wrap">
-            <div class="container">
-                <h1>회사소개</h1>
+            <div class="title">
+                <em>덴탈브레인과 함께하세요!</em>
+                <h1>남들과 조금은 차별화된 인재로 거듭나기!</h1>
+                <strong>원장님, 실장, 스텝, 경영지원실등 치과스텝을 위한 다양한 세미나가 매달 업데이트 됩니다.</strong>
             </div>
         </div>
         <div class="container">
             <div class="introduce-description">
-                <em>덴탈브레인과 함께하세요!</em>
-                <h2>남들과 조금은 차별화된 인재로 거듭나기!</h2>
-                <strong>원장님, 실장, 스텝, 경영지원실등 치과스텝을 위한 다양한 세미나가 매달 업데이트 됩니다.</strong>
+                <h2>회사소개</h2>
                 <p>세상의 변화에 빠르게 반응하지 않으면 도태되는 시대에 살고 있습니다.<br>
                     어떤상황에서도 지식과 정보를 얻기 위해 끊임없이<br>
                     학습을 통해 자신의 목표에 다가가고 있습니다.<br>
