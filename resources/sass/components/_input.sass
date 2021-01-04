@@ -93,3 +93,18 @@ input[type="file"] + label
 .ui-button:hover
     +border(none)
     +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center, $white-light)
+
+.ui-menu
+    max-width: 240px
+    max-height: 300px
+    overflow: hidden
+    overflow-y: scroll
+
+.ui-menu-item
+    +padding(20px 10px)
+    +border(1px solid $border-color-base, bottom)
+    +background(null, null, null, $white-light)
+
+.ui-widget-content .ui-state-active
+    +border(none)
+    +background(null, null, null, $page-color)

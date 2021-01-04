@@ -1,6 +1,7 @@
 $(function () {
     email_box('.email_box');
 
+    //파일 업로드 file name 업데이트
     var fileTarget = $('.upload-hidden');
 
     fileTarget.on('change', function(){
@@ -12,4 +13,6 @@ $(function () {
         }
         $(this).siblings('.file-name').val(filename);
     });
+
+
 });

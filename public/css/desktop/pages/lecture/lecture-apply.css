@@ -124,6 +124,24 @@ input[type=file] + label {
   background: #fafafa url("/images/desktop/global/icon_arrow_down.png") no-repeat center center;
 }
 
+.ui-menu {
+  max-width: 240px;
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.ui-menu-item {
+  padding: 20px 10px;
+  border-bottom: 1px solid #d8d8d8;
+  background-color: #fafafa;
+}
+
+.ui-widget-content .ui-state-active {
+  border: none;
+  background-color: #9b00d8;
+}
+
 .btn-wrap .cancel,
 .btn-wrap .make-pay {
   box-sizing: border-box;

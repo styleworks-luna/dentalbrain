@@ -130,7 +130,11 @@
                         <div class="file-question">
                             <h4>파일입력질문</h4>
                             <div class="answers">
-                                <input type="file" id="file-upload" class="upload-hidden">
+                                <input type="file"
+                                       id="file-upload"
+                                       class="upload-hidden"
+                                       accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
+                                               .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar">
                                 <label for="file-upload" class="file-upload-btn">파일선택</label>
                                 <input class="file-name" value="파일을 업로드해주세요." disabled="disabled">
                                 <div class="tips">
