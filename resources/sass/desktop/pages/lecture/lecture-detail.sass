@@ -1,6 +1,6 @@
-@import '../../helpers/_variables.sass'
-@import '../../helpers/_extends.sass'
-@import '../../helpers/_mixins.scss'
+@import 'resources/sass/helpers/_variables.sass'
+@import 'resources/sass/helpers/_extends.sass'
+@import 'resources/sass/helpers/_mixins.scss'
 
 .content
     +background(null, null, null, $border-color-light)
@@ -120,11 +120,11 @@
             font-size: 12px
 
         .like.active::before
-            +background('/images/lecture/lecture_icon_wish_on.png',no-repeat, center center)
+            +background('/images/desktop/lecture/lecture_icon_wish_on.png',no-repeat, center center)
 
         .like::before
             +margin(9px auto 4px auto)
-            +background('/images/lecture/lecture_icon_wish.png',no-repeat, center center)
+            +background('/images/desktop/lecture/lecture_icon_wish.png',no-repeat, center center)
             +size(21px, 20px)
             content: ''
             display: block
@@ -258,7 +258,7 @@
                         color: $gray-700
 
                     .btn-comment-write::after
-                        +background('/images/global/icon_arrow_down.png',no-repeat, center center)
+                        +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
                         +size(13px, 7px)
                         display: block
                         position: absolute
@@ -267,13 +267,13 @@
                         content: ''
 
                     .btn-comment-write:hover::after
-                        +background('/images/global/icon_arrow_down_ov.png',no-repeat, center center)
+                        +background('/images/desktop/global/icon_arrow_down_ov.png',no-repeat, center center)
 
                     .btn-comment-write.active::after
-                        +background('/images/global/icon_arrow_up.png',no-repeat, center center)
+                        +background('/images/desktop/global/icon_arrow_up.png',no-repeat, center center)
 
                     .btn-comment-write.active:hover::after
-                        +background('/images/global/icon_arrow_up_ov.png',no-repeat, center center)
+                        +background('/images/desktop/global/icon_arrow_up_ov.png',no-repeat, center center)
 
                 .comment-btn-area
                     +padding(top 2px)

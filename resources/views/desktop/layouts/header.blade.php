@@ -2,7 +2,7 @@
     <div class="container">
             <div class="header-logo-wrap">
                 <a href="{{ url('/') }}" class="ir_pm header-logo">
-                    <img src="{{ asset('/images/global/logo.png') }}" alt="덴탈브레인">
+                    <img src="{{ asset('/images/desktop/global/logo.png') }}" alt="덴탈브레인">
                 </a>
             </div>
             <div class="login-menu">

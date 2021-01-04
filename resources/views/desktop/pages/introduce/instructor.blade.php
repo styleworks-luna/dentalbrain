@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('desktop.layouts.app')
 
 @section('script')
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/introduce/instructor.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/introduce/instructor.css') }}">
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
             <div class="container">
                 <ul>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_1.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_1.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김민정 대표</h2>
                             <ul class="instructor-career">
@@ -39,7 +39,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_2.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_2.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김윤정</h2>
                             <ul class="instructor-career">
@@ -57,7 +57,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_3.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_3.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">노강규</h2>
                             <ul class="instructor-career">
@@ -71,7 +71,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_4.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_4.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">정미</h2>
                             <ul class="instructor-career">
@@ -90,7 +90,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_5.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_5.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">온은주</h2>
                             <ul class="instructor-career">
@@ -106,7 +106,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_6.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_6.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김보경</h2>
                             <ul class="instructor-career">
@@ -125,7 +125,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_7.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_7.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">박유진</h2>
                             <ul class="instructor-career">
@@ -141,7 +141,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_8.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_8.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">박진아</h2>
                             <ul class="instructor-career">
@@ -156,7 +156,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_9.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_9.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">최규영</h2>
                             <ul class="instructor-career">
@@ -170,7 +170,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_10.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_10.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김수지</h2>
                             <ul class="instructor-career">
@@ -182,7 +182,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_12.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_12.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김진</h2>
                             <ul class="instructor-career">
@@ -193,7 +193,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_12.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_12.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">연태림</h2>
                             <ul class="instructor-career">
@@ -205,7 +205,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_13.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_13.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">강혜민</h2>
                             <ul class="instructor-career">
@@ -218,7 +218,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_14.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_14.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">조한나</h2>
                             <ul class="instructor-career">
@@ -234,7 +234,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/instructor/instructor_15.png') }}" alt="" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_15.png') }}" alt="" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">변지은</h2>
                             <ul class="instructor-career">

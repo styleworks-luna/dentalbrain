@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('desktop.layouts.app')
 
 @section('script')
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/introduce/about-us.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/introduce/about-us.css') }}">
 @endsection
 
 @section('content')

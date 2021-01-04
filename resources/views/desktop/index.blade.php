@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('desktop.layouts.app')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>
@@ -7,7 +7,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ ('css/swiper-bundle.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/pages/index.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/index.css') }}">
 @endsection
 
 @section('content')

@@ -12,25 +12,25 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('desktop.index');
 });
 
 //회사 소개 (임시)
 Route::get('introduce',function () {
-    return view('pages.introduce.about_us');
+    return view('desktop.pages.introduce.about_us');
 });
 
 //강사 소개 (임시)
 Route::get('instructor',function () {
-    return view('pages.introduce.instructor');
+    return view('desktop.pages.introduce.instructor');
 });
 
 //강의 상세 (임시)
 Route::get('lecture',function () {
-    return view('pages.lecture.lecture_detail');
+    return view('desktop.pages.lecture.lecture_detail');
 });
 
 //강의 신청 (임시)
 Route::get('apply',function () {
-    return view('pages.lecture.lecture_apply');
+    return view('desktop.pages.lecture.lecture_apply');
 });

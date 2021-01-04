@@ -33,11 +33,11 @@
 </head>
 <body>
 <div id="app">
-    @include('layouts.header')
+    @include('desktop.layouts.header')
     <main class="main">
         @yield('content')
     </main>
-    @include('layouts.footer')
+    @include('desktop.layouts.footer')
 </div>
 </body>
 </html>

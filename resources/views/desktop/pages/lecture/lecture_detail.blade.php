@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('desktop.layouts.app')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/pages/lecture-detail.js') }}"></script>
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-detail.css') }}">
 @endsection
 
 @section('content')
@@ -100,7 +100,7 @@
                                 <li class="child-comment-item">
                                     <div class="comment-area">
                                         <div class="profile-img">
-                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                            <img src="{{ asset('/images/desktop/global/profile_default.png') }}" alt="profile image">
                                         </div>
                                         <div class="write-info">
                                             <span class="write-name">홍길동</span>
@@ -118,7 +118,7 @@
                                 <li class="child-comment-item">
                                     <div class="comment-area">
                                         <div class="profile-img">
-                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                            <img src="{{ asset('/images/desktop/global/profile_default.png') }}" alt="profile image">
                                         </div>
                                         <div class="write-info">
                                             <span class="write-name">홍길동</span>
@@ -139,7 +139,7 @@
                     <li class="comment-total-area">
                         <div class="comment-area">
                             <div class="profile-img">
-                                <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                <img src="{{ asset('/images/desktop/global/profile_default.png') }}" alt="profile image">
                             </div>
                             <div class="write-info">
                                 <span class="write-name">홍길동</span>
@@ -163,7 +163,7 @@
                                 <li class="child-comment-item">
                                     <div class="comment-area">
                                         <div class="profile-img">
-                                            <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                                            <img src="{{ asset('/images/desktop/global/profile_default.png') }}" alt="profile image">
                                         </div>
                                         <div class="write-info">
                                             <span class="write-name">홍길동</span>

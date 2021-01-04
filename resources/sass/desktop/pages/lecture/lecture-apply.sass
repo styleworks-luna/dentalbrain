@@ -1,6 +1,6 @@
-@import '../../helpers/_variables.sass'
-@import '../../helpers/_extends.sass'
-@import '../../helpers/_mixins.scss'
+@import 'resources/sass/helpers/_variables.sass'
+@import 'resources/sass/helpers/_extends.sass'
+@import 'resources/sass/helpers/_mixins.scss'
 
 .content
     +background(null, null, null, #f5f4f5)
@@ -137,13 +137,32 @@ h3
                     box-sizing: border-box
                     font-size: 14px
 
+                .ui-emailbox
+                    position: relative
+
                 .email_box
                     +padding(left 20px)
                     +border(1px solid $border-color-base)
                     +border-radius(25px)
                     +size(240px, 50px)
-                    +background('/images/global/icon_arrow_down.png', no-repeat, 0 0, $white-light)
                     font-size: 14px
+
+                .ui-emailbox-account
+                    +margin(right 6px)
+
+                .ui-emailbox-domain
+                    +margin(left 6px)
+
+                .ui-button
+                    +border(none)
+                    +background('/images/desktop/global/icon_arrow_down.png', no-repeat, 0 0, $white-light)
+                    position: absolute
+                    right: 10px
+                    top: 5px
+                    cursor: default
+
+                    &:focus
+                        outline: none
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)

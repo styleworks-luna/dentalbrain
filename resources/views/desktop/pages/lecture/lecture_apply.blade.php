@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('desktop.layouts.app')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
@@ -9,7 +9,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ ('css/jquery-ui.min.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/pages/lecture/lecture-apply.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-apply.css') }}">
 @endsection
 
 @section('content')

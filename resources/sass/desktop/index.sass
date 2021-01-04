@@ -1,6 +1,6 @@
-@import '../helpers/_variables.sass'
-@import '../helpers/_extends.sass'
-@import '../helpers/_mixins.scss'
+@import 'resources/sass/helpers/variables'
+@import 'resources/sass/helpers/extends'
+@import 'resources/sass/helpers/mixins'
 
 .swiper-button-prev:after,
 .swiper-button-next:after
@@ -63,20 +63,20 @@
             margin-top: -5px
 
         .swiper-button-prev
-            +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,null)
+            +background('/images/desktop/global/icon_left_arrow_white.png',no-repeat,center center,null)
             background-size: 7px 10px
             transform: translateX(295px)
 
             &:hover
-                +background('/images/global/icon_left_arrow_purple.png')
+                +background('/images/desktop/global/icon_left_arrow_purple.png')
 
         .swiper-button-next
-            +background('/images/global/icon_right_arrow_white.png',no-repeat,center center,null)
+            +background('/images/desktop/global/icon_right_arrow_white.png',no-repeat,center center,null)
             background-size: 7px 10px
             transform: translateX(-10px)
 
             &:hover
-                +background('/images/global/icon_right_arrow_purple.png')
+                +background('/images/desktop/global/icon_right_arrow_purple.png')
 
 .lecture
     +margin(top 78px)
@@ -93,7 +93,7 @@
                 +padding(25px 29px 25px 67px)
                 +border(1px solid #d8d8d8)
                 +border-radius(35px)
-                +background('/images/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
+                +background('/images/desktop/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
                 display: block
                 font-size: 20px
                 color: $gray-700
@@ -101,53 +101,53 @@
             a:hover
                 +padding(24px 28px 24px 66px)
                 +border(2px solid $page-color)
-                +background('/images/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
+                +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
                 font-weight: bold
                 color: $font-color-base
 
         li:nth-child(2)
             a
-                +background('/images/lecture/lecture_menu_icon_2.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_2.png')
 
         li:nth-child(3)
             a
-                +background('/images/lecture/lecture_menu_icon_3.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_3.png')
 
         li:nth-child(4)
             a
-                +background('/images/lecture/lecture_menu_icon_4.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_4.png')
             a:hover
                 +padding(24px 27px 24px 65px)
 
         li:nth-child(5)
             a
-                +background('/images/lecture/lecture_menu_icon_5.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_5.png')
 
         li:nth-child(6)
             +margin(right 0)
 
             a
-                +background('/images/lecture/lecture_menu_icon_6.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_6.png')
 
         li:nth-child(2):hover
             a
-                +background('/images/lecture/lecture_menu_icon_on_2.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_on_2.png')
 
         li:nth-child(3):hover
             a
-                +background('/images/lecture/lecture_menu_icon_on_3.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_on_3.png')
 
         li:nth-child(4):hover
             a
-                +background('/images/lecture/lecture_menu_icon_on_4.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_on_4.png')
 
         li:nth-child(5):hover
             a
-                +background('/images/lecture/lecture_menu_icon_on_5.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_on_5.png')
 
         li:nth-child(6):hover
             a
-                +background('/images/lecture/lecture_menu_icon_on_6.png')
+                +background('/images/desktop/lecture/lecture_menu_icon_on_6.png')
 
     .lecture-contents
         +margin(top 38px)
@@ -229,11 +229,11 @@
     outline: none
 
 .swiper-button-prev-common
-    +background('/images/global/icon_left_arrow_white.png',no-repeat,center center,rgba(0, 0, 0, 0.4))
+    +background('/images/desktop/global/icon_left_arrow_white.png',no-repeat,center center,rgba(0, 0, 0, 0.4))
     left: -20px
 
 .swiper-button-next-common
-    +background('/images/global/icon_right_arrow_white.png',no-repeat,13px center,rgba(0, 0, 0, 0.4))
+    +background('/images/desktop/global/icon_right_arrow_white.png',no-repeat,13px center,rgba(0, 0, 0, 0.4))
     right: -20px
 
 .middle-banner
@@ -328,7 +328,7 @@
                         text-decoration: underline
 
             .btn-more
-                +background('/images/global/icon_plus.png',no-repeat, 42px center)
+                +background('/images/desktop/global/icon_plus.png',no-repeat, 42px center)
                 display: block
                 position: absolute
                 top: 4px
@@ -338,7 +338,7 @@
                 color: $gray-700
 
             .btn-more:hover
-                +background('/images/global/icon_plus_on.png')
+                +background('/images/desktop/global/icon_plus_on.png')
 
         .notice
             +margin(right 80px)
@@ -370,24 +370,24 @@
 
             li:nth-child(1)
                 a::before
-                    +background('/images/global/icon_foot_mypage.png')
+                    +background('/images/desktop/global/icon_foot_mypage.png')
 
                 a:hover::before
-                    +background('/images/global/icon_foot_mypage_on.png')
+                    +background('/images/desktop/global/icon_foot_mypage_on.png')
 
             li:nth-child(2)
                 a::before
-                    +background('/images/global/icon_foot_cs.png')
+                    +background('/images/desktop/global/icon_foot_cs.png')
 
                 a:hover::before
-                    +background('/images/global/icon_foot_cs_on.png')
+                    +background('/images/desktop/global/icon_foot_cs_on.png')
 
             li:nth-child(3)
                 a::before
-                    +background('/images/global/icon_foot_lecture.png')
+                    +background('/images/desktop/global/icon_foot_lecture.png')
 
                 a:hover::before
-                    +background('/images/global/icon_foot_lecture_on.png')
+                    +background('/images/desktop/global/icon_foot_lecture_on.png')
 
             li:last-child
                 +margin(0)
