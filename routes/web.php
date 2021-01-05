@@ -34,3 +34,8 @@ Route::get('lecture',function () {
 Route::get('apply',function () {
     return view('desktop.pages.lecture.lecture_apply');
 });
+
+//강의 신청 (임시)
+Route::get('mypage',function () {
+    return view('desktop.pages.user.mypage_lecture');
+});
