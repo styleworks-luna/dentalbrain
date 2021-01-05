@@ -15,11 +15,17 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('login_id')->unique();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('email')->unique();
+            $table->string('name');
+            $table->string('mobile')->unique();
+
+            $table->unsignedTinyInteger('is_admin')->default('0')->comment('0 : 일반 유저 | 1 : 관리자');
+
+            $table->string('api_token')->nullable()->default(null)->unique()->comment('API TOKEN');
+
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
         });
     }
