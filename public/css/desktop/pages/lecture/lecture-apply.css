@@ -83,6 +83,16 @@ input[type=file] + label {
   cursor: pointer;
 }
 
+select {
+  margin-right: 5px;
+  padding-left: 20px;
+  border: 1px solid #d8d8d8;
+  border-radius: 25px;
+  width: 240px;
+  height: 50px;
+  background: #fafafa url("/images/desktop/global/icon_arrow_down.png") no-repeat 200px center;
+}
+
 .ui-emailbox {
   position: relative;
 }
@@ -143,7 +153,9 @@ input[type=file] + label {
 }
 
 .btn-wrap .cancel,
-.btn-wrap .make-pay {
+.btn-wrap .make-pay,
+.btn-purple,
+.btn-basic {
   box-sizing: border-box;
   display: block;
   border: 0;
@@ -155,8 +167,30 @@ input[type=file] + label {
   cursor: pointer;
 }
 
-.btn-wrap .make-pay {
+.btn-wrap .make-pay,
+.btn-purple {
   background: #9b00d8;
+}
+
+.btn-basic {
+  border: 1px solid #d8d8d8;
+  border-radius: 25px;
+  width: 140px;
+  height: 50px;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.btn-purple {
+  border: 0;
+  border-radius: 25px;
+  width: 160px;
+  height: 50px;
+  display: inline-block;
+  color: #ffffff;
+  font-size: 16px;
 }
 
 .content {

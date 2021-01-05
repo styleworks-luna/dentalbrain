@@ -35,7 +35,12 @@ Route::get('apply',function () {
     return view('desktop.pages.lecture.lecture_apply');
 });
 
-//강의 신청 (임시)
+//마이페이지 신청한 강의 (임시)
 Route::get('mypage',function () {
     return view('desktop.pages.user.mypage_lecture');
+});
+
+//회원가입 (임시)
+Route::get('register',function () {
+    return view('desktop.pages.user.register');
 });

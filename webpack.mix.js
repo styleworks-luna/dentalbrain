@@ -26,3 +26,4 @@ mix.sass('resources/sass/desktop/pages/introduce/instructor.sass', 'public/css/d
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture');
 mix.sass('resources/sass/desktop/pages/lecture/lecture-apply.sass', 'public/css/desktop/pages/lecture');
 mix.sass('resources/sass/desktop/pages/user/mypage-lecture.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/pages/user');
