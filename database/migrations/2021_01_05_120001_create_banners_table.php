@@ -22,6 +22,8 @@ class CreateBannersTable extends Migration
 
             $table->foreign('file_id')->references('id')->on('files');
 
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }
@@ -33,9 +35,9 @@ class CreateBannersTable extends Migration
      */
     public function down()
     {
-//        Schema::table('banners',function (Blueprint $table) {
-//           $table->dropForeign('file_id');
-//        });
+        Schema::table('banners',function (Blueprint $table) {
+           $table->dropForeign('banners_file_id_foreign');
+        });
 
         Schema::dropIfExists('banners');
     }

@@ -26,6 +26,9 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable()->default(null)->unique()->comment('API TOKEN');
 
             $table->timestamp('last_login_at')->nullable();
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

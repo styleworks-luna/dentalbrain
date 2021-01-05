@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('name')->comment('파일 이름');
             $table->unsignedBigInteger('size')->comment('byte');
             $table->unsignedBigInteger('download_times')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
