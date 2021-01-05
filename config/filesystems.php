@@ -65,6 +65,16 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'programs' => [
+            'driver' => 'local',
+            'root' => storage_path('app/programs'),
+        ],
+
+        'banners' => [
+            'driver' => 'local',
+            'root' => storage_path('app/banners'),
+        ],
+
     ],
 
 ];
