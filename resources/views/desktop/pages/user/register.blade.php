@@ -33,7 +33,7 @@
                                 <input type="text"
                                        id="uid"
                                        class="uid"
-                                       placeholder="아이디 입력 (최소 4자 이상)">
+                                       placeholder="아이디입력 (최소 4자 이상)">
                                 <button class="btn-basic check-overlap-id">중복확인</button>
                             </td>
                         </tr>
@@ -81,7 +81,7 @@
                                 <input type="text"
                                        id="phone"
                                        class="phone"
-                                       placeholder="'-'없이 입력해주세요.">
+                                       placeholder="'-' 없이 입력해주세요.">
                                 <button class="btn-basic btn-certification">인증번호발송</button>
 
                                 <input type="text"
@@ -95,7 +95,7 @@
                     </table>
                 </section>
                 <section class="agree">
-                    <h2>신청자 동의</h2>
+                    <h2>이용약관 / 개인정보 수집 및 이용 동의</h2>
                     <div class="agree-form">
                         <div class="agreement-all-wrap">
                             <input type="checkbox" name="agree-all" id="agree-all" class="agree-all">
@@ -132,7 +132,7 @@
                     </div>
                 </section>
                 <section class="btn-wrap">
-                    <button class="btn-purple">가입완료</button>
+                    <button class="btn-purple btn-register">가입완료</button>
                 </section>
             </form>
         </div>

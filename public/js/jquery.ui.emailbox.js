@@ -53,7 +53,7 @@
       if (typeof orig_input.get(0).form.elements['email']=='undefined') {
         orig_input.attr('name', 'email'); // name 속성이 없으면 검증 내부에서 오류 발생함
       }
-      
+
       // 계정 입력칸
       account_input = $('<input>')
         .attr({
@@ -178,7 +178,7 @@
                 my: o.positionOptions.my || 'left top'
                 ,at: o.positionOptions.at || 'left bottom'
                 ,of: domain_input
-                ,collision: 'none' // 화면이 작을 때 
+                ,collision: 'none' // 화면이 작을 때
               });
           }, 100);
         }
@@ -213,7 +213,7 @@
           required: true
           ,email: true
           ,messages: {
-            required: '이메일을 입력해 주세요.'
+            required: '이메일 주소 입력'
             ,email: '이메일 형식에 맞게 입력해 주세요.'
           }
         });

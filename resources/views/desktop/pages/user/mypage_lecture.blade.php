@@ -14,7 +14,7 @@
             <div class="mypage-menu">
                 <h1>마이페이지</h1>
                 <ul>
-                    <li><a href="">신청한 강의</a></li>
+                    <li class="active-menu"><a href="">신청한 강의</a></li>
                     <li><a href="">결제내역</a></li>
                     <li><a href="">질문내역</a></li>
                     <li><a href="">회원정보 수정</a></li>
@@ -75,25 +75,26 @@
                                         <span class="offline">오프라인</span>
                                         <p class="lecture-subject">치과위생사 &middot; 위생</p>
                                     </div>
-                                    <h3 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h3>
+                                    <h3 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정치과위생사를 위한 예방 및 유지관리 전문가과정</h3>
                                     <table>
                                         <tr>
                                             <th>강의일시</th>
-                                            <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p>
+                                            <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토)
+                                                    17:20</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>강의장소</th>
-                                            <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층	</p></td>
+                                            <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
-                            <div class="content-time">
+                            <div class="offline-lecture-pay">
                                 <p>결제금액</p>
                                 <div class="d-day"><em>250,000원</em></div>
                             </div>
-                            <div class="content-button">
+                            <div class="content-button-offline">
                                 <div class="btn-wrap">
                                     <a href="">수정하기</a>
                                     <a href="" class="cancel">취소하기</a>
@@ -148,17 +149,18 @@
                                     <table>
                                         <tr>
                                             <th>강의일시</th>
-                                            <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p>
+                                            <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토)
+                                                    17:20</p>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>강의장소</th>
-                                            <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층	</p></td>
+                                            <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
                                         </tr>
                                     </table>
                                 </div>
                             </div>
-                            <div class="content-time">
+                            <div class="offline-lecture-pay">
                                 <p>결제금액</p>
                                 <div class="d-day"><em>250,000원</em></div>
                             </div>
