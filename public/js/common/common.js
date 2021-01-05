@@ -9,7 +9,7 @@ function email_box(email){
 
         $('.ui-emailbox-account').attr({
             'type': 'text',
-            'placeholder': '이메일을 입력해주세요'
+            'placeholder': '이메일 주소 입력'
         });
         $('.ui-emailbox-domain').attr({
             'type': 'text',
