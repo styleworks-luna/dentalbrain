@@ -13,7 +13,7 @@ yarn-error.log
 .idea/
 
 package-lock.json
-/public/css/pages
+/public/css/desktop
 /public/css/app.css
 /public/js/app.js
 /public/mix-manifest.json
