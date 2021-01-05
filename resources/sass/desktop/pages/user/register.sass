@@ -1,0 +1,113 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+
+h2
+    font-size: 24px
+    font-weight: bold
+
+.register
+    +margin(top 80px)
+
+    table
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+        display: block
+
+        tr
+            +border(1px solid $border-color-base, bottom)
+            +size(null, 72px)
+
+            th
+                +size(182px)
+                +background(null, null, null, $background-color-menu)
+                text-align: left
+
+                label
+                    +padding(left 40px)
+                    font-size: 16px
+
+            td
+                +padding(left 20px top 11px bottom 11px)
+                overflow: hidden
+
+
+                .phone
+                    float: left
+
+                .uid
+                    float: left
+
+                .check-overlap-id
+                    +size(86px, 50px)
+                    float: left
+
+                .certification-number
+                    +margin(top 10px)
+                    float: left
+
+                .btn-certification
+                    +padding(0)
+                    +size(102px, 50px)
+                    float: left
+
+.agree
+    +margin(top 50px)
+
+    .agree-form
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+
+        .agreement-all-wrap
+            +padding(29px 0 28px 40px)
+            +border(1px solid $border-color-base, bottom)
+
+            label
+                font-weight: bold
+                font-size: 16px
+
+        .agreement-wrap
+            +padding(26px 40px 26px 40px)
+            +border(2px solid $border-color-base, bottom)
+
+            li
+                +margin(top 40px)
+                overflow: hidden
+
+                .input-box
+                    float: left
+
+                    input
+                        display: inline-block
+
+                    label
+                        +padding(left 5px)
+                        display: inline-block
+                        font-size: 16px
+
+                    input[type='checkbox'],
+                    input[type='checkbox']:checked
+                        +margin(0 1px 0 0 )
+
+                p
+                    +padding(left 10px)
+                    float: left
+                    font-size: 12px
+                    color: $gray-900
+                    transform: translateY(3px)
+
+                a
+                    float: right
+                    font-size: 13px
+                    color: $gray-700
+                    text-decoration: underline
+                    transform: translateY(3px)
+
+                &:first-child
+                    +margin(0)
+
+.btn-wrap
+    +margin(top 50px bottom 80px)
+    text-align: center

@@ -30,3 +30,19 @@
         @include border-radius($radius)
     @else
         @include border-radius(0)
+
+
+.btn-basic
+    +btn(null,1px solid $border-color-base, 25px)
+    +size(140px, 50px)
+    display: block
+    font-size: 14px
+    font-weight: bold
+    line-height: 1.2
+
+.btn-purple
+    +btn(page-fill,null,25px)
+    +size(160px, 50px)
+    display: inline-block
+    color: $white
+    font-size: 16px
