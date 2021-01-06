@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('desktop.index');
-});
+Route::get('/', 'Main\MainController@index');
 
 //회사 소개 (임시)
 Route::get('introduce',function () {
