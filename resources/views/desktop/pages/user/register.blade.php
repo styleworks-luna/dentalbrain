@@ -59,14 +59,14 @@
                             <th><label for="job">직업군</label></th>
                             <td>
                                 <select name="job" id="job">
-                                    <option value="0">치과의사</option>
-                                    <option value="1">치과위생사</option>
-                                    <option value="2">치과조무사</option>
-                                    <option value="3">코디네이터</option>
-                                    <option value="4">학생</option>
-                                    <option value="5">기타</option>
+                                    <option value="1">치과의사</option>
+                                    <option value="2">치과위생사</option>
+                                    <option value="3">치과조무사</option>
+                                    <option value="4">코디네이터</option>
+                                    <option value="5">학생</option>
+                                    <option value="6">기타</option>
                                 </select>
-                                <input type="text" placeholder="면허번호를 입력해주세요.">
+                                <input type="text" id='license_num' name ='license_num' placeholder="면허번호를 입력해주세요.">
                             </td>
                         </tr>
                         <tr>
