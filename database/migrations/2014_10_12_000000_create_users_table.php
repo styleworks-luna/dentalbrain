@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->string('name');
-            $table->string('mobile')->unique();
+            $table->string('phone')->unique();
 
             $table->unsignedTinyInteger('is_admin')->default('0')->comment('0 : 일반 유저 | 1 : 관리자');
 

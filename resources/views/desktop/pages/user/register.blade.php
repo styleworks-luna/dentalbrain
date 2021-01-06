@@ -13,9 +13,13 @@
 @endsection
 
 @section('content')
+    @foreach($errors as $error)
+        <p>{{ $error }}</p>
+    @endforeach
     <section id="content" class="content">
         <div class="small-container">
-            <form action="">
+            <form action="{{ route('user.create') }}" method="POST" id="register-form">
+                @csrf
                 <section class="register">
                     <h2>회원가입</h2>
                     <table>
@@ -24,6 +28,7 @@
                             <td>
                                 <input type="text"
                                        id="name"
+                                       name="name"
                                        placeholder="이름입력 (최소 2자 이상)">
                             </td>
                         </tr>
@@ -31,9 +36,10 @@
                             <th class="th-center"><label for="uid">아이디</label></th>
                             <td>
                                 <input type="text"
-                                       id="uid"
-                                       class="uid"
-                                       placeholder="아이디입력 (최소 4자 이상)">
+                                       id="login_id"
+                                       class="login_id"
+                                       name="login_id"
+                                       placeholder="아이디 입력 (최소 4자 이상)">
                                 <button class="btn-basic check-overlap-id">중복확인</button>
                             </td>
                         </tr>
@@ -53,12 +59,12 @@
                             <th><label for="job">직업군</label></th>
                             <td>
                                 <select name="job" id="job">
-                                    <option value="">치과의사</option>
-                                    <option value="">치과위생사</option>
-                                    <option value="">치과조무사</option>
-                                    <option value="">코디네이터</option>
-                                    <option value="">학생</option>
-                                    <option value="">기타</option>
+                                    <option value="0">치과의사</option>
+                                    <option value="1">치과위생사</option>
+                                    <option value="2">치과조무사</option>
+                                    <option value="3">코디네이터</option>
+                                    <option value="4">학생</option>
+                                    <option value="5">기타</option>
                                 </select>
                                 <input type="text" placeholder="면허번호를 입력해주세요.">
                             </td>
@@ -66,13 +72,14 @@
                         <tr>
                             <th><label for="upw">비밀번호</label></th>
                             <td>
-                                <input type="text" id="upw" placeholder="비밀번호 입력 (최소 6자 이상)">
+                                <input type="text" id="password" name="password" placeholder="비밀번호 입력 (최소 6자 이상)">
                             </td>
                         </tr>
                         <tr>
                             <th><label for="check-upw">비밀번호 확인</label></th>
                             <td>
-                                <input type="text" id="check-upw" placeholder="위의 비밀번호를 다시 입력하세요.">
+                                <input type="text" id="password_confirmation" name="password_confirmation"
+                                       placeholder="위의 비밀번호를 다시 입력하세요.">
                             </td>
                         </tr>
                         <tr>
@@ -80,15 +87,17 @@
                             <td>
                                 <input type="text"
                                        id="phone"
+                                       name="phone"
                                        class="phone"
-                                       placeholder="'-' 없이 입력해주세요.">
-                                <button class="btn-basic btn-certification">인증번호발송</button>
+                                       placeholder="'-'없이 입력해주세요.">
+                                <button class="btn-basic btn-verification">인증번호발송</button>
 
                                 <input type="text"
-                                       id="certification-number"
-                                       class="certification-number"
+                                       id="verification_number"
+                                       name="verification_number"
+                                       class="verification_number"
                                        placeholder="인증번호 6자리를 입력">
-                                <button class="btn-basic btn-certification mt-10">인증번호확인</button>
+                                <button class="btn-basic btn-verification mt-10">인증번호확인</button>
 
                             </td>
                         </tr>
@@ -132,7 +141,7 @@
                     </div>
                 </section>
                 <section class="btn-wrap">
-                    <button class="btn-purple btn-register">가입완료</button>
+                    <button class="btn-purple" type="submit" form="register-form">가입완료</button>
                 </section>
             </form>
         </div>
