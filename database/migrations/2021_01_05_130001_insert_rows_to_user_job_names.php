@@ -1,11 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
-class InsertRowsToUserJobs extends Migration
+class InsertRowsToUserJobNames extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +12,7 @@ class InsertRowsToUserJobs extends Migration
      */
     public function up()
     {
-        DB::table('user_jobs')->insert([
+        DB::table('user_job_names')->insert([
             ['name' => '치과의사'],
             ['name' => '치과위생사'],
             ['name' => '치과조무사'],
@@ -31,10 +29,7 @@ class InsertRowsToUserJobs extends Migration
      */
     public function down()
     {
-
-        Schema::table('user_jobs', function (Blueprint $table) {
-            $table->drop();
-        });
-        DB::raw("ALTER TABLE user_jobs AUTO_INCREMENT = 1");
+        DB::table('user_job_names')->truncate();
+        DB::raw("ALTER TABLE user_job_names AUTO_INCREMENT = 1");
     }
 }
