@@ -15,11 +15,9 @@ class CreateUserJobsTable extends Migration
     {
         Schema::create('user_jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('job_name_id');
             $table->string('license_num')->nullable();
 
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('job_name_id')->references('id')->on('user_job_names');
 
             $table->softDeletes();
@@ -36,7 +34,6 @@ class CreateUserJobsTable extends Migration
     public function down()
     {
         Schema::table('user_jobs',function (Blueprint $table) {
-            $table->dropForeign('user_jobs_user_id_foreign');
             $table->dropForeign('user_jobs_job_name_id_foreign');
         });
 
