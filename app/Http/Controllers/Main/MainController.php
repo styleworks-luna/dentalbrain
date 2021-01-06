@@ -10,6 +10,6 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        return view(session()->get('agent') . '.index');
+        return view(viewPrefix(). 'index');
     }
 }
