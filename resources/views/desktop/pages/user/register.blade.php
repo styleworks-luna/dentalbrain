@@ -30,7 +30,9 @@
                                 <input type="text"
                                        id="name"
                                        name="name"
-                                       placeholder="이름입력 (최소 2자 이상)">
+                                       placeholder="이름입력 (최소 2자 이상)"
+                                       data-parsley-required="true"
+                                       data-parsley-required-message="※ 이름을 입력해주세요.">
                             </td>
                         </tr>
                         <tr>
@@ -40,7 +42,9 @@
                                        id="login_id"
                                        class="login_id"
                                        name="login_id"
-                                       placeholder="아이디 입력 (최소 4자 이상)">
+                                       placeholder="아이디 입력 (최소 4자 이상)"
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 아이디를 입력해주세요.">
                                 <button class="btn-basic check-overlap-id">중복확인</button>
                             </td>
                         </tr>
@@ -53,7 +57,7 @@
                                        class="email_box"
                                        data-parsley-required="true"
                                        data-parsley-type="email"
-                                       data-parsley-class-handler=".ui-emailbox">
+                                       data-parsley-required-message= "※ 이메일 주소를 입력해주세요.">
                             </td>
                         </tr>
                         <tr>
@@ -68,20 +72,27 @@
                                     <option value="4">학생</option>
                                     <option value="5">기타</option>
                                 </select>
-                                <input type="text" placeholder="면허번호를 입력해주세요.">
+                                <input type="text" placeholder="면허번호를 입력해주세요."
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 면허번호를 입력해주세요.">
                             </td>
                         </tr>
                         <tr>
                             <th><label for="upw">비밀번호</label></th>
                             <td>
-                                <input type="text" id="password" name="password" placeholder="비밀번호 입력 (최소 6자 이상)">
+                                <input type="text" id="password" name="password"
+                                       placeholder="비밀번호 입력 (최소 6자 이상)"
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 비밀번호를 입력해주세요.">
                             </td>
                         </tr>
                         <tr>
                             <th><label for="check-upw">비밀번호 확인</label></th>
                             <td>
                                 <input type="text" id="password_confirmation" name="password_confirmation"
-                                       placeholder="위의 비밀번호를 다시 입력하세요.">
+                                       placeholder="위의 비밀번호를 다시 입력하세요."
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 비밀번호가 일치하지 않습니다.">
                             </td>
                         </tr>
                         <tr>
@@ -91,14 +102,18 @@
                                        id="phone"
                                        name="phone"
                                        class="phone"
-                                       placeholder="'-'없이 입력해주세요.">
+                                       placeholder="'-'없이 입력해주세요."
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 휴대전화 번호를 입력해주세요.">
                                 <button class="btn-basic btn-verification">인증번호발송</button>
 
                                 <input type="text"
                                        id="verification_number"
                                        name="verification_number"
                                        class="verification_number"
-                                       placeholder="인증번호 6자리를 입력">
+                                       placeholder="인증번호 6자리를 입력"
+                                       data-parsley-required="true"
+                                       data-parsley-required-message= "※ 일치하지 않습니다.">
                                 <button class="btn-basic btn-verification mt-10">인증번호확인</button>
 
                             </td>
@@ -116,23 +131,30 @@
                             <ul>
                                 <li>
                                     <div class="input-box">
-                                        <input type="checkbox" name="service-consent" id="service-consent"
-                                               class="service-consent">
+                                        <input type="checkbox" name="service-consent"
+                                               id="service-consent"
+                                               class="service-consent"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message= "※ 이용약관을 동의해 주세요.">
                                         <label for="service-consent">(필수) 이용약관 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
                                 </li>
                                 <li>
                                     <div class="input-box">
-                                        <input type="checkbox" name="privacy-consent" id="privacy-consent"
-                                               class="privacy-consent">
+                                        <input type="checkbox" name="privacy-consent"
+                                               id="privacy-consent"
+                                               class="privacy-consent"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message= "※ 개인정보 수집 및 이용 동의해 주세요.">
                                         <label for="privacy-consent">(필수) 개인정보 수집 및 이용 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
                                 </li>
                                 <li>
                                     <div class="input-box">
-                                        <input type="checkbox" name="reception-consent" id="reception-consent"
+                                        <input type="checkbox" name="reception-consent"
+                                               id="reception-consent"
                                                class="reception-consent">
                                         <label for="reception-consent"> (선택) 이메일 수신</label>
                                     </div>
