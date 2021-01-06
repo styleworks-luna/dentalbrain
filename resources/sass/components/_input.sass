@@ -99,7 +99,7 @@ select
     position: absolute
     right: 10px
     top: 5px
-    cursor: default
+    cursor: pointer
 
     &:focus
         outline: none
@@ -107,17 +107,12 @@ select
 .ui-button.ui-state-focus
     +background('/images/desktop/global/icon_arrow_up.png', no-repeat, center center, $white-light)
 
-.ui-button:hover
-    +border(none)
-    +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center, $white-light)
-
-
 .ui-state-focus
     border-bottom-left-radius: 0 !important
     border-bottom-right-radius: 0 !important
 
 .ui-menu
-    +size(238px 238px,200px  200px)
+    +size(238px 238px,200px 200px)
     +border-radius(25px)
     border-top-left-radius: 0 !important
     border-top-right-radius: 0 !important
@@ -131,11 +126,13 @@ select
 .ui-menu-item
     +box-sizing(border-box)
     +padding(20px 0)
-    +size(null,50px)
+    +size(238px,50px)
     +border(1px solid $border-color-base, bottom)
     +background(null, null, null, $white-light)
+    cursor: pointer
 
     .ui-menu-item-wrapper
+        +size(238px 238px,200px 200px)
         +box-sizing(border-box)
         +padding(20px 160px 15px 20px)
 
@@ -145,3 +142,4 @@ select
 .ui-widget-content .ui-state-active
     +border(none)
     +background(null, null, null, $page-color)
+    color: $white
