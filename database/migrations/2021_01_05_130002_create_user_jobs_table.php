@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserLicensesTable extends Migration
+class CreateUserJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateUserLicensesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_licenses', function (Blueprint $table) {
+        Schema::create('user_jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('job_name_id');
             $table->string('license_num')->nullable();
 
-            $table->unsignedBigInteger('job_id');
-
-            $table->foreign('job_id')->references('id')->on('user_jobs');
+            $table->foreign('job_name_id')->references('id')->on('user_job_names');
 
             $table->softDeletes();
 
@@ -34,10 +33,10 @@ class CreateUserLicensesTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_licenses',function (Blueprint $table) {
-            $table->dropForeign('user_licenses_job_id_foreign');
+        Schema::table('user_jobs',function (Blueprint $table) {
+            $table->dropForeign('user_jobs_job_name_id_foreign');
         });
 
-        Schema::dropIfExists('user_licenses');
+        Schema::dropIfExists('user_jobs');
     }
 }

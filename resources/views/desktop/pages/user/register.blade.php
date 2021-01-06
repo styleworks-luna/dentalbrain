@@ -9,7 +9,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ ('css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/register.css') }}">
 @endsection
 
@@ -63,16 +63,17 @@
                         <tr>
                             <th><label for="job">직업군</label></th>
                             <td>
-                                <select name="job" id="job"
-                                        class="select-menu">
-                                    <option value="0" selected>치과의사</option>
-                                    <option value="1">치과위생사</option>
-                                    <option value="2">치과조무사</option>
-                                    <option value="3">코디네이터</option>
-                                    <option value="4">학생</option>
-                                    <option value="5">기타</option>
+                                <select name="job" id="job">
+                                    <option value="1">치과의사</option>
+                                    <option value="2">치과위생사</option>
+                                    <option value="3">치과조무사</option>
+                                    <option value="4">코디네이터</option>
+                                    <option value="5">학생</option>
+                                    <option value="6">기타</option>
                                 </select>
                                 <input type="text" placeholder="면허번호를 입력해주세요."
+                                       id='license_num'
+                                       name ='license_num'
                                        data-parsley-required="true"
                                        data-parsley-required-message= "※ 면허번호를 입력해주세요.">
                             </td>
