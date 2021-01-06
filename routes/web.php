@@ -12,7 +12,10 @@
 */
 
 Route::get('/', 'Main\MainController@index');
-
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::get('logout', 'Auth\LoginController@logout');
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
@@ -41,9 +44,5 @@ Route::get('mypage', function () {
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
     //회원가입 (임시)
-    Route::get('register', function () {
-        return view('desktop.pages.user.register');
-    })->name('register');
-
     Route::post('create', 'Auth\RegisterController@register')->name('create');
 });
