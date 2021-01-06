@@ -9,7 +9,6 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/register.css') }}">
 @endsection
 
@@ -32,7 +31,9 @@
                                        name="name"
                                        placeholder="이름입력 (최소 2자 이상)"
                                        data-parsley-required="true"
-                                       data-parsley-required-message="※ 이름을 입력해주세요.">
+                                       data-parsley-required-message="※ 이름을 입력해주세요."
+                                       data-parsley-errors-container=".name-error-wrap">
+                                <div class="name-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
                         <tr>
@@ -40,12 +41,14 @@
                             <td>
                                 <input type="text"
                                        id="login_id"
-                                       class="login_id"
+                                       class="login-id"
                                        name="login_id"
                                        placeholder="아이디 입력 (최소 4자 이상)"
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 아이디를 입력해주세요.">
+                                       data-parsley-required-message= "※ 아이디를 입력해주세요."
+                                       data-parsley-errors-container=".id-error-wrap">
                                 <button class="btn-basic check-overlap-id">중복확인</button>
+                                <div class="id-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
                         <tr>
@@ -57,7 +60,10 @@
                                        class="email_box"
                                        data-parsley-required="true"
                                        data-parsley-type="email"
-                                       data-parsley-required-message= "※ 이메일 주소를 입력해주세요.">
+                                       data-parsley-required-message= "※ 이메일 주소를 입력해주세요."
+                                       data-parsley-class-handler=".ui-emailbox"
+                                       data-parsley-errors-container=".email-error-wrap">
+                                <div class="email-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
                         <tr>
@@ -75,7 +81,9 @@
                                        id='license_num'
                                        name ='license_num'
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 면허번호를 입력해주세요.">
+                                       data-parsley-required-message= "※ 면허번호를 입력해주세요."
+                                       data-parsley-errors-container=".license-error-wrap">
+                                <div class="license-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +92,11 @@
                                 <input type="text" id="password" name="password"
                                        placeholder="비밀번호 입력 (최소 6자 이상)"
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 비밀번호를 입력해주세요.">
+                                       data-parsley-required-message= "※ 비밀번호를 입력해주세요."
+                                       data-parsley-errors-container=".password-error-wrap">
+
+                                <div class="password-error-wrap error-wrap-common"></div>
+
                             </td>
                         </tr>
                         <tr>
@@ -93,7 +105,9 @@
                                 <input type="text" id="password_confirmation" name="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 비밀번호가 일치하지 않습니다.">
+                                       data-parsley-required-message= "※ 비밀번호가 일치하지 않습니다."
+                                       data-parsley-errors-container=".password-check-error-wrap">
+                                <div class="password-check-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
                         <tr>
@@ -105,17 +119,21 @@
                                        class="phone"
                                        placeholder="'-'없이 입력해주세요."
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 휴대전화 번호를 입력해주세요.">
+                                       data-parsley-required-message= "※ 휴대전화 번호를 입력해주세요."
+                                       data-parsley-errors-container=".phone-check-error-wrap">
                                 <button class="btn-basic btn-verification">인증번호발송</button>
+                                <div class="phone-check-error-wrap error-wrap-common"></div>
 
                                 <input type="text"
                                        id="verification_number"
                                        name="verification_number"
-                                       class="verification_number"
+                                       class="verification-number"
                                        placeholder="인증번호 6자리를 입력"
                                        data-parsley-required="true"
-                                       data-parsley-required-message= "※ 일치하지 않습니다.">
+                                       data-parsley-required-message= "※ 일치하지 않습니다."
+                                       data-parsley-errors-container=".verification-check-error-wrap">
                                 <button class="btn-basic btn-verification mt-10">인증번호확인</button>
+                                <div class="verification-check-error-wrap error-wrap-common"></div>
 
                             </td>
                         </tr>
@@ -136,22 +154,26 @@
                                                id="service-consent"
                                                class="service-consent"
                                                data-parsley-required="true"
-                                               data-parsley-required-message= "※ 이용약관을 동의해 주세요.">
+                                               data-parsley-required-message= "※ 이용약관을 동의해 주세요."
+                                               data-parsley-errors-container=".service-check-error-wrap">
                                         <label for="service-consent">(필수) 이용약관 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
                                 </li>
+                                <div class="service-check-error-wrap error-wrap-common"></div>
                                 <li>
                                     <div class="input-box">
                                         <input type="checkbox" name="privacy-consent"
                                                id="privacy-consent"
                                                class="privacy-consent"
                                                data-parsley-required="true"
-                                               data-parsley-required-message= "※ 개인정보 수집 및 이용 동의해 주세요.">
+                                               data-parsley-required-message= "※ 개인정보 수집 및 이용 동의해 주세요."
+                                               data-parsley-errors-container=".privacy-check-error-wrap">
                                         <label for="privacy-consent">(필수) 개인정보 수집 및 이용 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
                                 </li>
+                                <div class="privacy-check-error-wrap error-wrap-common"></div>
                                 <li>
                                     <div class="input-box">
                                         <input type="checkbox" name="email-consent"
