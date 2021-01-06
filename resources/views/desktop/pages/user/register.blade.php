@@ -63,7 +63,7 @@
                         <tr>
                             <th><label for="job">직업군</label></th>
                             <td>
-                                <select name="job" id="job">
+                                <select name="job" id="job" class="select-menu">
                                     <option value="1">치과의사</option>
                                     <option value="2">치과위생사</option>
                                     <option value="3">치과조무사</option>
@@ -154,10 +154,10 @@
                                 </li>
                                 <li>
                                     <div class="input-box">
-                                        <input type="checkbox" name="reception-consent"
-                                               id="reception-consent"
-                                               class="reception-consent">
-                                        <label for="reception-consent"> (선택) 이메일 수신</label>
+                                        <input type="checkbox" name="email-consent"
+                                               id="email-consent"
+                                               class="email-consent">
+                                        <label for="email-consent"> (선택) 이메일 수신</label>
                                     </div>
                                     <a href="">내용보기</a>
                                 </li>
