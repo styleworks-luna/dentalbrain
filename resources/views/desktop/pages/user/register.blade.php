@@ -3,6 +3,7 @@
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.tmpl.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/register.js') }}"></script>
 @endsection
@@ -58,8 +59,9 @@
                         <tr>
                             <th><label for="job">직업군</label></th>
                             <td>
-                                <select name="job" id="job">
-                                    <option value="0">치과의사</option>
+                                <select name="job" id="job"
+                                        class="select-menu">
+                                    <option value="0" selected>치과의사</option>
                                     <option value="1">치과위생사</option>
                                     <option value="2">치과조무사</option>
                                     <option value="3">코디네이터</option>

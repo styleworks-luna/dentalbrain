@@ -40,14 +40,7 @@ input[type="checkbox"]:checked
     +background('/images/desktop/input/check-on.png', no-repeat, center center)
 
 input[type="file"]
-    position: absolute
-    width: 1px
-    height: 1px
-    padding: 0
-    margin: -1px
-    overflow: hidden
-    clip: rect(0,0,0,0)
-    border: 0
+    display: none
 
 input[type="file"] + label
     +size(86px)
@@ -67,13 +60,59 @@ input::placeholder
 
 
 //select box
-select
+.ui-selectmenu-button
     +margin(right 5px)
-    +padding(left 20px)
+    +padding(top 18px left 20px)
     +border(1px solid $border-color-base)
     +border-radius(25px)
     +size(240px, 50px)
+    +box-sizing(border-box)
     +background('/images/desktop/global/icon_arrow_down.png', no-repeat, 206px center, $white-light)
+    display: block
+    float: left
+
+.ui-selectmenu-button:focus
+    outline: none
+
+.ui-selectmenu-button-open
+    border-bottom-left-radius: 0 !important
+    border-bottom-right-radius: 0 !important
+
+.ui-selectmenu-menu
+    +size(238px 238px,null 200px)
+    +border(1px solid $border-color-base)
+    +border-radius(25px)
+    display: none
+    border-top-left-radius: 0 !important
+    border-top-right-radius: 0 !important
+    overflow: hidden
+    overflow-y: scroll
+    -ms-overflow-style: none
+
+    .ui-menu-item
+        +box-sizing(border-box)
+        +size(238px,50px)
+        +border(1px solid $border-color-base, bottom)
+        +background(null, null, null, $white-light)
+        cursor: pointer
+
+        .ui-menu-item-wrapper
+            +padding(20px 0 15px 20px)
+
+.ui-selectmenu-open
+    display: block
+
+.ui-selectmenu-menu::-webkit-scrollbar
+    display: none
+
+.ui-selectmenu-menu:focus
+    outline: none
+
+.ui-state-active
+    +border(none)
+    +background(null, null, null, $page-color)
+    color: $white
+
 
 //emailbox
 .ui-emailbox
@@ -92,7 +131,7 @@ select
 .ui-emailbox-domain
     +margin(left 6px)
 
-.ui-button
+.ui-emailbox-button
     +border(none)
     +size(13px, 7px)
     +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center, $white-light)
@@ -104,15 +143,15 @@ select
     &:focus
         outline: none
 
-.ui-button.ui-state-focus
+.ui-emailbox-button.ui-state-focus
     +background('/images/desktop/global/icon_arrow_up.png', no-repeat, center center, $white-light)
 
 .ui-state-focus
     border-bottom-left-radius: 0 !important
     border-bottom-right-radius: 0 !important
 
-.ui-menu
-    +size(238px 238px,200px 200px)
+.ui-emailbox-menu
+    +size(238px 238px,null 200px)
     +border-radius(25px)
     border-top-left-radius: 0 !important
     border-top-right-radius: 0 !important
@@ -120,10 +159,10 @@ select
     overflow-y: scroll
     -ms-overflow-style: none
 
-.ui-menu::-webkit-scrollbar
+.ui-emailbox-menu::-webkit-scrollbar
     display: none
 
-.ui-menu-item
+.ui-emailbox-menu .ui-menu-item
     +box-sizing(border-box)
     +padding(20px 0)
     +size(238px,50px)
@@ -132,14 +171,13 @@ select
     cursor: pointer
 
     .ui-menu-item-wrapper
-        +size(238px 238px,200px 200px)
-        +box-sizing(border-box)
+        +size(238px 238px,null 200px)
         +padding(20px 160px 15px 20px)
 
-.ui-widget-content
+.ui-emailbox-menu.ui-widget-content
     +border(1px solid $border-color-base !important)
 
-.ui-widget-content .ui-state-active
+.ui-emailbox-menu.ui-widget-content .ui-state-active
     +border(none)
     +background(null, null, null, $page-color)
     color: $white
