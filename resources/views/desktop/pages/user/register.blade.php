@@ -8,7 +8,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ ('css/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/register.css') }}">
 @endsection
 
