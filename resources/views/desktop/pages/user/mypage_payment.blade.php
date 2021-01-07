@@ -57,7 +57,7 @@
                                     신용카드
                                     <a href="">취소 영수증</a>
                                 </td>
-                                <td class="date-wrap">
+                                <td>
                                     <p class="payment-date">2020.11.17/</p>
                                     2020.11.20
                                 </td>
