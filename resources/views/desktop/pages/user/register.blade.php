@@ -139,6 +139,7 @@
                         </tr>
                     </table>
                 </section>
+
                 <section class="agree">
                     <h2>이용약관 / 개인정보 수집 및 이용 동의</h2>
                     <div class="agree-form">
@@ -159,8 +160,8 @@
                                         <label for="service-consent">(필수) 이용약관 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
+                                    <div class="service-check-error-wrap error-wrap-common"></div>
                                 </li>
-                                <div class="service-check-error-wrap error-wrap-common"></div>
                                 <li>
                                     <div class="checkbox-wrap">
                                         <input type="checkbox" name="privacy-consent"
@@ -172,8 +173,8 @@
                                         <label for="privacy-consent">(필수) 개인정보 수집 및 이용 동의</label>
                                     </div>
                                     <a href="">내용보기</a>
+                                    <div class="privacy-check-error-wrap error-wrap-common"></div>
                                 </li>
-                                <div class="privacy-check-error-wrap error-wrap-common"></div>
                                 <li>
                                     <div class="checkbox-wrap">
                                         <input type="checkbox" name="email-consent"
@@ -187,6 +188,7 @@
                         </div>
                     </div>
                 </section>
+
                 <div class="btn-wrap">
                     <input type="submit" class="btn-register btn-purple" value="가입완료">
                 </div>
