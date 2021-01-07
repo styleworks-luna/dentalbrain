@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Manage;
 
+use App\Models\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static Builder public()
+ * @method static Builder public ()
  */
 class Banner extends Model
 {
