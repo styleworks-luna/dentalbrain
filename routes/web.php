@@ -42,6 +42,11 @@ Route::get('mypage', function () {
     return view('desktop.pages.user.mypage_lecture');
 });
 
+//마이페이지 신청한 강의 (임시)
+Route::get('mypage/payment', function () {
+    return view('desktop.pages.user.mypage_payment');
+});
+
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
     //회원가입 (임시)
     Route::post('create', 'Auth\RegisterController@register')->name('create');

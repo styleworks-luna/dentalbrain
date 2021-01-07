@@ -1,0 +1,91 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+
+.payment-history
+    +margin(top 60px)
+
+    h2
+        font-size: 24px
+
+    ul
+        +margin(top 21px)
+
+        li
+            +margin(bottom 50px)
+
+        .lecture-information
+            overflow: hidden
+
+            .online,
+            .offline
+                +padding(4px 9px 8px 8px)
+                +background(null, null, null, $page-color)
+                float: left
+                font-size: 12px
+                color: $white
+
+            .offline
+                +background(null, null, null, $purply-pink)
+
+            .lecture-name
+                +padding(top 3px left 10px)
+                float: left
+                font-weight: bold
+                font-size: 18px
+
+        .payment-information
+            +margin(top 12px)
+            +border(1px solid $border-color-base, top)
+            +size(1280px)
+
+            tr
+                +margin(0 auto)
+                +border(1px solid $border-color-base, bottom)
+                text-align: center
+
+                th
+                    +padding(14px 0)
+                    +size(320px)
+                    font-size: 14px
+                    line-height: 1.2
+                    color: $gray-700
+
+                td
+                    +padding(22px 0)
+                    font-size: 16px
+
+                    a
+                        +margin(left 8px)
+                        +padding(8px 12px)
+                        +border(1px solid $border-color-base)
+                        font-size: 12px
+                        color: $gray-700
+
+                        &:hover
+                            color: $page-color
+
+                &:first-child
+                    +background(null, null, null, $background-color-menu)
+
+                &:last-child
+                    +size(null, 62px)
+
+        .payment-cancel
+            tr td
+                +padding(10px 0)
+                transform: translateY(12px)
+
+            .date-wrap
+                +padding(top 11px bottom 11px)
+                transform: translateY(0)
+
+            .payment-date
+                +margin(bottom 7px)
+                color: $gray-700
+
+.cancel
+    color: $page-color
+
+

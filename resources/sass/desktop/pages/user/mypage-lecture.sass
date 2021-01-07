@@ -2,40 +2,7 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/_button.sass'
-
-.mypage-menu
-    +margin(top 105px)
-    +border(1px solid $border-color-base, bottom)
-    overflow: hidden
-
-    h1
-        float: left
-        font-size: 30px
-        font-weight: bold
-
-    ul
-        +padding(left 62px)
-        overflow: hidden
-        float: left
-
-        li
-            +margin(right 51px)
-            +padding(bottom 24px)
-            float: left
-
-            a
-                font-size: 16px
-                line-height: 1.9
-
-            &:last-child
-                +margin(0)
-
-        .active-menu
-            +padding(bottom 20px)
-            +border(4px solid $page-color, bottom)
-
-            a
-                color: $page-color
+@import '@sass/desktop/layouts/navigation/account.sass'
 
 .mypage-content-wrap
     +margin(top 60px)
