@@ -1,7 +1,12 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
+
 @import '@sass/components/_input.sass'
+@import '@sass/components/_checkbox.sass'
+@import '@sass/components/_radio.sass'
+@import '@sass/components/_file.sass'
+@import '@sass/components/_emailbox.sass'
 @import '@sass/components/_button.sass'
 
 .content
@@ -15,8 +20,24 @@
         +background(null, null, null, $white)
 
         .row
-            +margin(50px auto 80px auto)
+            +margin(50px auto 80px)
 
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-lignt-fill)
+        +size(240px, 50px)
+        +margin(right 5px)
+
+    .ui-emailbox
+        +emailbox()
+
+    .checkbox-wrap
+        +checkbox-wrap()
+
+    .radio-wrap
+        +radio-wrap()
 
 .apply-title
     +padding(bottom 20px)
@@ -216,19 +237,10 @@ h3
         +border(2px solid $border-color-base, bottom)
         position: relative
 
-        .file-name
+        .file-wrap
+            +file()
             +margin(top 20px)
-            +border(1px solid $border-color-base)
-            +padding(0 0 0 106px)
-            +size(954px, 48px)
-            +border-radius(30px)
-            +background(null, null, null, $background-color-file)
-            font-size: 14px
-            color: $gray-900
-
-        .file-upload-btn
-            position: absolute
-            top: 16px
+            +padding(right 40px)
 
         .tips
             +margin(top 10px bottom 30px)
@@ -275,8 +287,9 @@ h3
                     font-weight: bold
                     color: $page-color
 
-                label
-                    +padding(right 36px)
+                .radio-wrap
+                    +margin(right 40px)
+                    float: left
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)
@@ -309,35 +322,24 @@ h3
 
         li
             overflow: hidden
+            line-height: 14px
 
-            .input-box
-                float: left
+        .checkbox-wrap
+            float: left
 
-                input
-                    display: inline-block
+        p
+            +margin(top 3px)
+            +padding(left 10px)
+            float: left
+            font-size: 12px
+            line-height: 12px
+            color: $gray-900
 
-                label
-                    +padding(left 5px)
-                    display: inline-block
-                    font-size: 16px
-
-                input[type='checkbox'],
-                input[type='checkbox']:checked
-                    +margin(0 1px 0 0 )
-
-            p
-                +padding(left 10px)
-                float: left
-                font-size: 12px
-                color: $gray-900
-                transform: translateY(3px)
-
-            a
-                float: right
-                font-size: 13px
-                color: $gray-700
-                text-decoration: underline
-                transform: translateY(3px)
+        a
+            float: right
+            font-size: 13px
+            color: $gray-700
+            text-decoration: underline
 
 .btn-wrap
     +margin(top 50px)

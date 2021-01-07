@@ -8,7 +8,6 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ asset('css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-apply.css') }}">
 @endsection
 
@@ -78,15 +77,15 @@
                             <h4>객관식 단일 선택 질문 객관식 단일 선택 질문 <em>(필수)</em></h4>
                             <div class="choices">
                                 <ul>
-                                    <li>
+                                    <li class="radio-wrap">
                                         <input type="radio" name="choice" id="choice-01">
                                         <label for="choice-01">선택 1</label>
                                     </li>
-                                    <li>
+                                    <li class="radio-wrap">
                                         <input type="radio" name="choice" id="choice-02">
                                         <label for="choice-02">선택 2</label>
                                     </li>
-                                    <li>
+                                    <li class="radio-wrap">
                                         <input type="radio" name="choice" id="choice-03">
                                         <label for="choice-03">선택 3</label>
                                     </li>
@@ -97,15 +96,15 @@
                             <h4>객관식 다중 선택 질문</h4>
                             <div class="choices">
                                 <ul>
-                                    <li>
+                                    <li class="checkbox-wrap">
                                         <input type="checkbox" name="choice" id="multiple-choice-01">
                                         <label for="multiple-choice-01">선택 1</label>
                                     </li>
-                                    <li>
+                                    <li class="checkbox-wrap">
                                         <input type="checkbox" name="choice" id="multiple-choice-02">
                                         <label for="multiple-choice-02">선택 2</label>
                                     </li>
-                                    <li>
+                                    <li class="checkbox-wrap">
                                         <input type="checkbox" name="choice" id="multiple-choice-03">
                                         <label for="multiple-choice-03">선택 3</label>
                                     </li>
@@ -130,13 +129,15 @@
                         <div class="file-question">
                             <h4>파일입력질문</h4>
                             <div class="answers">
-                                <input type="file"
-                                       id="file-upload"
-                                       class="upload-hidden"
-                                       accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
+                                <div class="file-wrap">
+                                    <input type="file"
+                                           id="file-upload"
+                                           class="upload-hidden"
+                                           accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar">
-                                <label for="file-upload" class="file-upload-btn">파일선택</label>
-                                <input class="file-name" value="파일을 업로드해주세요." disabled="disabled">
+                                    <label for="file-upload" class="btn-file-upload">파일선택</label>
+                                    <input type="text" class="file-name" value="파일을 업로드해주세요." disabled="disabled">
+                                </div>
                                 <div class="tips">
                                     <p>
                                         ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
@@ -158,27 +159,33 @@
                             <tr>
                                 <th>결제방식</th>
                                 <td>
-                                    <input type="radio" name="payment-method" id="credit" class="payment-method">
-                                    <label for="credit">신용카드</label>
-                                    <input type="radio" name="payment-method" id="bank-transform"
-                                           class="payment-method">
-                                    <label for="bank-transform">실시간 계좌이체</label>
-                                    <input type="radio" name="payment-method" id="deposit" class="payment-method">
-                                    <label for="deposit">무통장입금(가상계좌)</label>
+                                    <div class="radio-wrap">
+                                        <input type="radio" name="payment-method" id="credit" class="payment-method">
+                                        <label for="credit">신용카드</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio" name="payment-method" id="bank-transform"
+                                               class="payment-method">
+                                        <label for="bank-transform">실시간 계좌이체</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio" name="payment-method" id="deposit" class="payment-method">
+                                        <label for="deposit">무통장입금(가상계좌)</label>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
                     </section>
                     <section class="agree">
                         <h3>신청자 동의</h3>
-                        <div class="agreement-all-wrap">
+                        <div class="agreement-all-wrap checkbox-wrap">
                             <input type="checkbox" name="agree-all" id="agree-all" class="agree-all">
                             <label for="agree-all">전체동의</label>
                         </div>
                         <div class="agreement-wrap">
                             <ul>
                                 <li>
-                                    <div class="input-box">
+                                    <div class="checkbox-wrap">
                                         <input type="checkbox" name="offer-consent" id="offer-consent"
                                                class="offer-consent">
                                         <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
@@ -187,7 +194,7 @@
                                     <a href="">내용보기</a>
                                 </li>
                                 <li>
-                                    <div class="input-box">
+                                    <div class="checkbox-wrap">
                                         <input type="checkbox" name="refund-consent" id="refund-consent"
                                                class="refund-consent">
                                         <label for="refund-consent">(필수) 취소/환불약관 동의</label>

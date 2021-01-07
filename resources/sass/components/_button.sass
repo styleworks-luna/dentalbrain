@@ -2,7 +2,6 @@
 %btn-default
     +box-sizing(border-box)
     display: block
-    border: 0
     background: none
     font-family: $font-family-base
     text-align: center
@@ -10,16 +9,17 @@
     outline: none
     cursor: pointer
 
-%btn-page
-    background: $page-color
+%btn-purple
+    background-color: $purple-800
+    color: $white
 
 @mixin btn($type: null, $border: null, $radius: null)
     @extend %btn-default
 
-    @if $type == page-fill
-        @extend %btn-page
+    @if $type == purple-fill
+        @extend %btn-purple
     @else
-        background-color: $type
+        background-color: transparent
 
     @if $border != null
         @include border($border)
@@ -29,20 +29,4 @@
     @if $radius != null
         @include border-radius($radius)
     @else
-        @include border-radius(0)
-
-
-.btn-basic
-    +btn(null,1px solid $border-color-base, 25px)
-    +size(140px, 50px)
-    display: block
-    font-size: 14px
-    font-weight: bold
-    line-height: 1.2
-
-.btn-purple
-    +btn($purple-800,null,25px)
-    +size(160px, 50px)
-    display: inline-block
-    color: $white
-    font-size: 16px
+        @include border-radius(25px)

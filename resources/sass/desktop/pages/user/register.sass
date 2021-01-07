@@ -1,14 +1,48 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
+
 @import '@sass/components/_input.sass'
 @import '@sass/components/_button.sass'
+@import '@sass/components/_checkbox.sass'
+@import '@sass/components/_selectbox.sass'
+@import '@sass/components/_emailbox.sass'
 
-h2
-    font-size: 24px
-    font-weight: bold
+.content
+    h2
+        font-size: 24px
+        font-weight: bold
 
-.register
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-lignt-fill)
+        +size(240px, 50px)
+        +margin(right 5px)
+
+    .ui-emailbox
+        +emailbox()
+
+    select
+        +selectbox(240px, 50px)
+
+        + .ui-selectmenu-button
+            +margin(right 10px)
+            float: left
+
+    .btn-basic
+        +btn(null, 1px solid $border-color-base)
+        +size(140px, 50px)
+        font-weight: bold
+        font-size: 14px
+        line-height: 1.2
+
+    .btn-purple
+        +btn(purple-fill)
+        font-size: 16px
+
+.content .register
     +margin(top 80px)
 
     table
@@ -55,15 +89,14 @@ h2
                     +padding(0)
                     +size(102px, 50px)
 
-                .ui-button
-                    right: 23px
-                    top: 3px
-
                 .ui-emailbox-domain
                     +margin(left 5px)
 
-.agree
+.content .agree
     +margin(top 52px)
+
+    .checkbox-wrap
+        +checkbox-wrap()
 
     .agree-form
         +margin(top 18px)
@@ -85,39 +118,28 @@ h2
                 +margin(top 40px)
                 overflow: hidden
 
-                .input-box
-                    float: left
-
-                    input
-                        display: inline-block
-
-                    label
-                        +padding(left 5px)
-                        display: inline-block
-                        font-size: 16px
-
-                    input[type='checkbox'],
-                    input[type='checkbox']:checked
-                        +margin(0 1px 0 0 )
-
-                a
-                    float: right
-                    font-size: 13px
-                    color: $gray-700
-                    text-decoration: underline
-                    transform: translateY(3px)
-
                 &:first-child
                     +margin(0)
 
-.btn-wrap
+            .checkbox-wrap
+                float: left
+
+            a
+                float: right
+                font-size: 13px
+                color: $gray-700
+                text-decoration: underline
+                transform: translateY(3px)
+
+.content .btn-wrap
     +margin(top 50px bottom 80px)
     text-align: center
 
     .btn-register
-        +size(200px)
+        +size(200px, 50px)
+        +margin(0 auto)
 
-
+// TODO: parsley error
 .error-wrap-common > ul
     +padding(top 10px left 20px)
     font-size: 12px
@@ -129,4 +151,3 @@ h2
 .privacy-check-error-wrap > ul,
 .service-check-error-wrap > ul
     +padding(left 22px)
-

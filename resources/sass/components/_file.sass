@@ -1,0 +1,45 @@
+%file-default
+    +size(100%)
+    +box-sizing(border-box)
+    overflow: hidden
+    position: relative
+
+    input[type="file"]
+        display: none
+
+    label
+        +size(null, 100%)
+        +border(1px solid $border-color-base)
+        +border-radius(25px)
+        +background(null, null, null, $white)
+        +box-sizing(border-box)
+        display: block
+        position: absolute
+        top: 0
+        left: 0
+        font-weight: bold
+        text-align: center
+        cursor: pointer
+
+    input[type="text"]
+        +size(100%, 100%)
+        +margin(0)
+        +padding(0 0 0 106px)
+        +border(1px solid $border-color-base)
+        +border-radius(30px)
+        +background(null, null, null, $background-color-file)
+        +box-sizing(border-box)
+        font-size: 14px
+        color: $gray-900
+
+
+@mixin file($labelWidth: 86px, $height: 50px)
+    @extend %file-default
+
+    @if $height != null
+        +size(null, $height)
+        line-height: $height - 2px
+
+    @if $labelWidth != null
+        label
+            +size($labelWidth)

@@ -1,0 +1,54 @@
+// common
+.ui-menu
+    .ui-menu-item
+        +border(1px solid $border-color-base, bottom)
+
+        &:last-child
+            +border(0, bottom)
+
+    .ui-menu-item-wrapper
+        +padding(18px 0 18px 19px)
+        +background(null, null, null, $white-light)
+        display: block
+        cursor: pointer
+
+    .ui-state-active
+        +border(none)
+        +background(null, null, null, $page-color)
+        color: $white
+
+// select menu
+.ui-selectmenu-menu
+    +size(240px, auto 200px)
+    +border(1px solid $border-color-base, right bottom left)
+    +border-radius(25px)
+    +box-sizing(border-box)
+    display: none
+    overflow: hidden
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    outline: none
+
+    &.ui-selectmenu-open
+        display: block
+
+    .ui-menu
+        +margin(0)
+        display: block
+        overflow-y: auto
+        max-height: 200px
+
+// email box menu
+.ui-emailbox-menu
+    +border(1px solid $border-color-base, right bottom left)
+    +border-radius(25px)
+    +box-sizing(border-box)
+    display: none
+    overflow-x: hidden
+    overflow-y: auto
+    width: 240px !important
+    max-height: 200px
+    background: $white
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    outline: none

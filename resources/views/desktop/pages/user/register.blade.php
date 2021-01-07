@@ -142,14 +142,14 @@
                 <section class="agree">
                     <h2>이용약관 / 개인정보 수집 및 이용 동의</h2>
                     <div class="agree-form">
-                        <div class="agreement-all-wrap">
+                        <div class="agreement-all-wrap checkbox-wrap">
                             <input type="checkbox" name="agree-all" id="agree-all" class="agree-all">
                             <label for="agree-all">전체동의</label>
                         </div>
                         <div class="agreement-wrap">
                             <ul>
                                 <li>
-                                    <div class="input-box">
+                                    <div class="checkbox-wrap">
                                         <input type="checkbox" name="service-consent"
                                                id="service-consent"
                                                class="service-consent"
@@ -162,7 +162,7 @@
                                 </li>
                                 <div class="service-check-error-wrap error-wrap-common"></div>
                                 <li>
-                                    <div class="input-box">
+                                    <div class="checkbox-wrap">
                                         <input type="checkbox" name="privacy-consent"
                                                id="privacy-consent"
                                                class="privacy-consent"
@@ -175,7 +175,7 @@
                                 </li>
                                 <div class="privacy-check-error-wrap error-wrap-common"></div>
                                 <li>
-                                    <div class="input-box">
+                                    <div class="checkbox-wrap">
                                         <input type="checkbox" name="email-consent"
                                                id="email-consent"
                                                class="email-consent">
@@ -187,9 +187,9 @@
                         </div>
                     </div>
                 </section>
-                <section class="btn-wrap">
-                    <button class="btn-purple" type="submit" form="register-form">가입완료</button>
-                </section>
+                <div class="btn-wrap">
+                    <input type="submit" class="btn-register btn-purple" value="가입완료">
+                </div>
             </form>
         </div>
     </section>

@@ -1,184 +1,27 @@
-input[type="text"]
-    +margin(right 5px)
-    +padding(left 20px)
-    +border(1px solid $border-color-base)
-    +border-radius(25px)
-    +size(240px, 50px)
-    +background(null, null, null, $white-light)
-    box-sizing: border-box
-    font-size: 14px
-
-input[type='radio'],
-input[type='radio']:checked
-    +margin(0 5px 0 0 )
-    appearance: none
-    width: 14px
-    height: 14px
-    border-radius: 100%
-
-input[type='radio']
-    +border(1px solid $border-color-base)
-
-input[type="radio"]:checked
-    +background('/images/desktop/input/radio-on.png', no-repeat, center center)
-
-input[type='checkbox'],
-input[type='checkbox']:checked
-    +margin(0 5px 0 0 )
-    appearance: none
-    display: inline-block
-    width: 14px
-    height: 14px
-
-input[type='checkbox']
-    +border(1px solid $border-color-base)
-
-input[type='checkbox'] + label
-    vertical-align: top
-
-input[type="checkbox"]:checked
-    +background('/images/desktop/input/check-on.png', no-repeat, center center)
-
-input[type="file"]
-    display: none
-
-input[type="file"] + label
-    +size(86px)
-    +margin(top 20px)
-    +padding(top 17px bottom 17px)
-    +border(1px solid $border-color-base)
-    +border-radius(25px)
-    +background(null, null, null, $white)
-    display: block
-    font-weight: bold
-    text-align: center
-    cursor: pointer
-
-input::placeholder
-    font-size: 14px
-    color: $gray-900
-
-
-//select box
-.ui-selectmenu-button
-    +margin(right 7px)
-    +padding(top 18px left 20px)
-    +border(1px solid $border-color-base)
-    +border-radius(25px)
-    +size(240px, 50px)
+%input-default
+    +padding(left 19px)
     +box-sizing(border-box)
-    +background('/images/desktop/global/icon_arrow_down.png', no-repeat, 206px center, $white-light)
-    display: block
-    float: left
 
-.ui-selectmenu-button:focus
-    outline: none
+    &::placeholder
+        color: $gray-900
 
-.ui-selectmenu-button-open
-    +background('/images/desktop/global/icon_arrow_up.png')
-    border-bottom-left-radius: 0 !important
-    border-bottom-right-radius: 0 !important
+    &.parsley-error
+        +border(1px solid $red)
 
-.ui-selectmenu-menu
-    +size(238px 238px,null 200px)
+%input-white-light
     +border(1px solid $border-color-base)
-    +border-radius(25px)
-    display: none
-    border-top-left-radius: 0 !important
-    border-top-right-radius: 0 !important
-    overflow: hidden
-    overflow-y: scroll
-    -ms-overflow-style: none
+    background-color: $white-light
 
-    .ui-menu-item
-        +box-sizing(border-box)
-        +size(238px,50px)
-        +border(1px solid $border-color-base, bottom)
-        +background(null, null, null, $white-light)
-        cursor: pointer
+@mixin input($type: null, $border: null, $radius: null)
+    @extend %input-default
 
-        .ui-menu-item-wrapper
-            +padding(20px 0 15px 20px)
+    @if $type == white-lignt-fill
+        @extend %input-white-light
 
-.ui-selectmenu-open
-    display: block
+    @if $border != null 
+        @include border($border)
 
-.ui-selectmenu-menu::-webkit-scrollbar
-    display: none
-
-.ui-selectmenu-menu:focus
-    outline: none
-
-.ui-state-active
-    +border(none)
-    +background(null, null, null, $page-color)
-    color: $white
-
-
-//emailbox
-.ui-emailbox
-    position: relative
-
-.email_box
-    +padding(left 20px)
-    +border(1px solid $border-color-base)
-    +border-radius(25px)
-    +size(240px, 50px)
-    font-size: 14px
-
-.ui-emailbox-account
-    +margin(right 6px)
-
-.ui-emailbox-domain
-    +margin(left 6px)
-
-.ui-emailbox-button
-    +border(none)
-    +size(13px, 7px)
-    +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center, $white-light)
-    position: absolute
-    right: 10px
-    top: 5px
-    cursor: pointer
-
-    &:focus
-        outline: none
-
-.ui-emailbox-button.ui-state-focus
-    +background('/images/desktop/global/icon_arrow_up.png')
-
-.ui-state-focus
-    border-bottom-left-radius: 0 !important
-    border-bottom-right-radius: 0 !important
-
-.ui-emailbox-menu
-    +size(238px 238px,null 200px)
-    +border-radius(25px)
-    border-top-left-radius: 0 !important
-    border-top-right-radius: 0 !important
-    overflow: hidden
-    overflow-y: scroll
-    -ms-overflow-style: none
-
-.ui-emailbox-menu::-webkit-scrollbar
-    display: none
-
-.ui-emailbox-menu .ui-menu-item
-    +box-sizing(border-box)
-    +padding(20px 0)
-    +size(238px,50px)
-    +border(1px solid $border-color-base, bottom)
-    +background(null, null, null, $white-light)
-    cursor: pointer
-
-    .ui-menu-item-wrapper
-        +size(238px 238px,null 200px)
-        +padding(20px 160px 15px 20px)
-
-.ui-emailbox-menu.ui-widget-content
-    +border(1px solid $border-color-base !important)
-
-.ui-emailbox-menu.ui-widget-content .ui-state-active
-    +border(none)
-    +background(null, null, null, $page-color)
-    color: $white
+    @if $radius != null
+        @include border-radius($radius)
+    @else
+        @include border-radius(25px)
