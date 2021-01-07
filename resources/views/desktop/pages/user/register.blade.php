@@ -117,7 +117,7 @@
                                        id="phone"
                                        name="phone"
                                        class="phone"
-                                       placeholder="'-'없이 입력해주세요."
+                                       placeholder="'-' 없이 입력해주세요."
                                        data-parsley-required="true"
                                        data-parsley-required-message= "※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap">
