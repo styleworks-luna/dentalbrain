@@ -29,3 +29,4 @@ mix.sass('resources/sass/desktop/pages/user/mypage-lecture.sass', 'public/css/de
 mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/mypage-payment.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/mypage-question.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/user/mypage-secession.sass', 'public/css/desktop/pages/user');

@@ -1,0 +1,101 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+@import '@sass/components/_radio.sass'
+
+.secession
+    +margin(top 60px)
+
+    input[type="text"],
+    input[type="password"]
+        +input(white-lignt-fill)
+        +size(240px, 50px)
+
+    input[type="radio"]
+        +radio()
+        +margin(right 8px)
+
+    input[type="radio"] + label
+        font-size: 16px
+
+    h2
+        font-size: 24px
+        line-height: 1.1
+
+    table
+        +size(1280px)
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+
+        tr
+            +size(null, 72px)
+            +border(1px solid $border-color-base, bottom)
+
+            th
+                +size(182px)
+                +padding(top 26px left 40px)
+                +background(null, null, null, $background-color-menu)
+                +box-sizing(border-box)
+                font-size: 16px
+                text-align: left
+
+            td
+                +padding(left 20px)
+                +box-sizing(border-box)
+                overflow: hidden
+                vertical-align: middle
+
+                .radio-wrap
+                    +margin(right 40px)
+                    float: left
+
+                    .secession-reason
+                        +size(800px)
+                        +margin(top 23px left 20px)
+
+                    &:nth-child(4),
+                    &:nth-child(5)
+                        +margin(top 40px)
+
+                .id
+                    font-weight: bold
+                    font-size: 16px
+
+                .password
+                    +size(300px)
+                    float: left
+
+                .tips
+                    +margin(top 10px left 20px)
+                    float: left
+
+                    p
+                        color: $page-color
+
+                        &:last-child
+                            +margin(top 5px)
+
+            &:first-child
+                +size(null, 184px)
+
+    .btn-wrap
+        +size(330px)
+        +margin(50px auto 80px auto)
+        overflow: hidden
+
+        .btn-common
+            +size(160px, 50px)
+            float: left
+            font-size: 16px
+
+        .btn-cancel
+            +btn(purple-fill)
+
+        .btn-secession
+            +btn()
+            +margin(left 10px)
+            +background(null, null, null, $gray-700)
+            color: $white

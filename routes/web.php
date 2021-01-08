@@ -52,6 +52,11 @@ Route::get('mypage/question', function () {
     return view('desktop.pages.user.mypage_question');
 });
 
+//마이페이지 질문내역 (임시)
+Route::get('mypage/secession', function () {
+    return view('desktop.pages.user.mypage_secession');
+});
+
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
     //회원가입 (임시)
     Route::post('create', 'Auth\RegisterController@register')->name('create');
