@@ -156,59 +156,63 @@
                 </div>
             </section>
             <section class="ad">
-                <a href="">
-                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                </a>
+                @if($middle)
+                    <a href="{{ $middle->link }}">
+                        <img src="{{ $middle->file->url }}" alt="">
+                    </a>
+                @endif
             </section>
             <section class="middle-banner">
                 <h2>추천강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test.png') }}" alt="">
-                            </a>
-                        </div>
+                        @foreach($bottomSlides as $bottom)
+                            <div class="swiper-slide">
+                                <a href="{{ $bottom->link }}">
+                                    <img src="{{ $bottom->file->url }}" alt="">
+                                </a>
+                            </div>
+                        @endforeach
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div class="swiper-slide">--}}
+                        {{--                            <a href="">--}}
+                        {{--                                <img src="{{ asset('images/dummy/test.png') }}" alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>

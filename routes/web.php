@@ -15,7 +15,7 @@ Route::get('/', 'Main\MainController@index');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');
-Route::get('logout', 'Auth\LoginController@logout');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
