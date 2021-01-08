@@ -1,0 +1,124 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+@import '@sass/components/_emailbox.sass'
+@import '@sass/components/_selectbox.sass'
+
+.edit
+    +margin(top 60px)
+
+    h2
+        font-size: 24px
+        line-height: 1.1
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-lignt-fill)
+        +size(240px, 50px)
+        +margin(right 5px)
+
+    .ui-emailbox
+        +emailbox()
+
+    select
+        +selectbox(240px, 50px)
+
+        + .ui-selectmenu-button
+            +margin(right 10px)
+            float: left
+
+    .btn-basic
+        +btn(null, 1px solid $border-color-base)
+        +size(140px, 50px)
+        font-weight: bold
+        font-size: 14px
+        line-height: 1.2
+
+    .btn-purple
+        +btn(purple-fill)
+        font-size: 16px
+
+    table
+        +size(1280px)
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+        display: block
+
+        tr
+            +size(null, 72px)
+            +border(1px solid $border-color-base, bottom)
+
+            th
+                +size(182px)
+                +padding(top 29px)
+                +background(null, null, null, $background-color-menu)
+                text-align: left
+                vertical-align: top
+
+                label,h3
+                    +padding(left 40px)
+                    font-size: 16px
+
+            td
+                +size(1078px)
+                +padding(left 20px top 11px bottom 11px)
+                overflow: hidden
+                vertical-align: middle
+
+                p
+                    font-weight: bold
+                    font-size: 16px
+
+                input[type="text"]
+                    +margin(right 11px)
+
+                .phone
+                    float: left
+
+                .login-id
+                    float: left
+
+                .email_box
+                    float: left
+
+                .btn-password-change,
+                .btn-email-change
+                    +size(70px, 50px)
+
+                .verification-number
+                    +margin(top 10px)
+                    float: left
+
+                .btn-verification
+                    +size(102px, 50px)
+                    +padding(0)
+
+                .ui-emailbox-domain
+                    +margin(left 5px)
+
+                .password_confirmation
+                    float: left
+
+    .btn-wrap
+        +size(330px)
+        +margin(50px auto 80px auto)
+        overflow: hidden
+
+        .btn-common
+            +size(160px, 50px)
+            float: left
+            font-size: 16px
+            color: $white
+
+        .btn-edit
+            +btn(purple-fill)
+
+        .btn-cancel
+            +btn()
+            +margin(left 10px)
+            +background(null, null, null, $gray-700)
