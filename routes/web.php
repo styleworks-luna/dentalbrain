@@ -42,9 +42,14 @@ Route::get('mypage', function () {
     return view('desktop.pages.user.mypage_lecture');
 });
 
-//마이페이지 신청한 강의 (임시)
+//마이페이지 결제내역 (임시)
 Route::get('mypage/payment', function () {
     return view('desktop.pages.user.mypage_payment');
+});
+
+//마이페이지 질문내역 (임시)
+Route::get('mypage/question', function () {
+    return view('desktop.pages.user.mypage_question');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
