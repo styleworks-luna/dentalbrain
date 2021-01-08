@@ -13,20 +13,20 @@
         overflow: hidden
 
         .row
-            +margin(70px auto 80px auto)
             +size(1140px)
+            +margin(70px auto 80px auto)
 
 .lecture-information-wrap
     overflow: hidden
 
     .lecture-image
-        +border-radius(8px)
         +size(540px, 405px)
+        +border-radius(8px)
         float: left
 
     .lecture-information
-        +padding(18px 0 0 50px)
         +size(550px)
+        +padding(18px 0 0 50px)
         float: left
 
         .lecture-sort
@@ -52,8 +52,8 @@
         .lecture-title
             +padding(top 16px)
             +ellipse(null,2)
-            font-size: 24px
             font-weight: bold
+            font-size: 24px
             line-height: 1.21
 
     .lecture-information-text
@@ -80,15 +80,15 @@
                         display: inline-block
 
                     .lecture-select-box
+                        +size(418px, 40px)
                         +padding(left 14px)
                         +border(1px solid $border-color-base)
-                        +size(418px, 40px)
                         font-size: 16px
                         appearance: none
 
                 .lecture-price
-                    font-size: 20px
                     font-weight: bold
+                    font-size: 20px
                     color: $page-color
 
             tr:last-child
@@ -100,14 +100,14 @@
         overflow: hidden
 
         .apply-btn
+            +size(308px, 54px)
             +margin(left 22px)
             +border-radius(27px)
             +background(null, null, null, $page-color)
-            +size(308px, 54px)
             display: block
             float: right
-            font-size: 18px
             font-weight: bold
+            font-size: 18px
             color: $white
             text-align: center
             line-height: 3
@@ -123,9 +123,9 @@
             +background('/images/desktop/lecture/lecture_icon_wish_on.png',no-repeat, center center)
 
         .like::before
+            +size(21px, 20px)
             +margin(9px auto 4px auto)
             +background('/images/desktop/lecture/lecture_icon_wish.png',no-repeat, center center)
-            +size(21px, 20px)
             content: ''
             display: block
 
@@ -133,9 +133,9 @@
     +padding(top 80px)
 
     .lecture-detail-menu
+        +size(1140px)
         +border-radius(23px)
         +background(null, null, null, $background-color-menu)
-        +size(1140px)
 
         ul
             overflow: hidden
@@ -170,8 +170,8 @@
 
         h3
             float: left
-            font-size: 20px
             font-weight: bold
+            font-size: 20px
 
         .comment-length
             +padding(left 10px)
@@ -185,11 +185,11 @@
         position: relative
 
         .comment-input-text
+            +size(1049px, 14px)
             +padding(18px 70px 18px 18px)
             +border(1px solid $border-color-base)
             +border-radius(30px)
             +background(null, null, null, $white-light)
-            +size(1049px, 14px)
             font-size: 14px
             line-height: 14px
             resize: none
@@ -201,15 +201,15 @@
             color: $gray-900
 
         .comment-input-btn
+            +size(70px, 50px)
             +border(1px solid $border-color-base)
             +border-radius(25px)
             +background(null, null, null, $white)
-            +size(70px, 50px)
             position: absolute
             top: 21px
             right: 1px
-            font-size: 14px
             font-weight: bold
+            font-size: 14px
 
         .comment-input-btn:hover
             color: $page-color
@@ -236,8 +236,8 @@
 
                     .write-name
                         display: block
-                        font-size: 14px
                         font-weight: bold
+                        font-size: 14px
 
                     .date
                         +padding(top 8px)
@@ -258,8 +258,8 @@
                         color: $gray-700
 
                     .btn-comment-write::after
-                        +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
                         +size(13px, 7px)
+                        +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
                         display: block
                         position: absolute
                         bottom: 3px
