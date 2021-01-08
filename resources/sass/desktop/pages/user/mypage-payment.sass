@@ -36,9 +36,9 @@
                 font-size: 18px
 
         .payment-information
+            +size(1280px)
             +margin(top 12px)
             +border(1px solid $border-color-base, top)
-            +size(1280px)
 
             tr
                 +margin(0 auto)
@@ -46,15 +46,15 @@
                 text-align: center
 
                 th
-                    +padding(14px 0)
                     +size(320px)
+                    +padding(14px 0)
                     font-size: 14px
                     line-height: 1.2
                     color: $gray-700
 
                 td
-                    +padding(22px 0)
                     font-size: 16px
+                    vertical-align: middle
 
                     a
                         +margin(left 8px)
@@ -73,14 +73,6 @@
                     +size(null, 62px)
 
         .payment-cancel
-            tr td
-                +padding(10px 0)
-                transform: translateY(12px)
-
-            .date-wrap
-                +padding(top 11px bottom 11px)
-                transform: translateY(0)
-
             .payment-date
                 +margin(bottom 7px)
                 color: $gray-700

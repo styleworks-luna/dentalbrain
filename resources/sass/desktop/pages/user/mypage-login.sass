@@ -1,0 +1,40 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+
+
+.identification
+    +margin(top 60px)
+
+    input[type="text"],
+    input[type="password"]
+        +input(white-lignt-fill)
+        +size(360px, 50px)
+
+    h2
+        font-size: 24px
+        line-height: 1.1
+
+    .identification-form
+        +size(360px)
+        +margin(150px auto 390px auto)
+        text-align: center
+
+        em
+            font-weight: bold
+            color: $page-color
+
+        .input-wrap
+            +margin(top 16px)
+
+        .btn-wrap
+            +margin(top 10px)
+
+            .btn-basic
+                +size(360px, 50px)
+                +btn(purple-fill)
+                font-size: 16px
+

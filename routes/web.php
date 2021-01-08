@@ -42,9 +42,29 @@ Route::get('mypage', function () {
     return view('desktop.pages.user.mypage_lecture');
 });
 
-//마이페이지 신청한 강의 (임시)
+//마이페이지 결제내역 (임시)
 Route::get('mypage/payment', function () {
     return view('desktop.pages.user.mypage_payment');
+});
+
+//마이페이지 질문내역 (임시)
+Route::get('mypage/question', function () {
+    return view('desktop.pages.user.mypage_question');
+});
+
+//마이페이지 회원탈퇴 (임시)
+Route::get('mypage/secession', function () {
+    return view('desktop.pages.user.mypage_secession');
+});
+
+//마이페이지 회원정보수정 진입 (임시)
+Route::get('mypage/login', function () {
+    return view('desktop.pages.user.mypage_login');
+});
+
+//마이페이지 회원정보수정 (임시)
+Route::get('mypage/edit', function () {
+    return view('desktop.pages.user.mypage_edit');
 });
 
 Route::group(['prefix' => 'user', 'as' => 'user.'], function () {

@@ -66,17 +66,17 @@
     overflow: hidden
 
     .lecture-image
-        float: left
         +size(298px, 223px)
+        float: left
 
         img
+            +size(298px, 223px)
             +border(1px solid rgba(0, 0, 0, 0.1))
             +border-radius(8px)
-            +size(298px, 223px)
 
     .lecture-information
-        +padding(top 20px left 52px)
         +size(790px)
+        +padding(top 20px left 52px)
         float: left
 
         .lecture-sort
@@ -102,8 +102,8 @@
         .lecture-title
             +padding(top 13px)
             +ellipse(null,2)
-            font-size: 24px
             font-weight: bold
+            font-size: 24px
             line-height: 1.21
 
         table
@@ -134,21 +134,21 @@ h3
         display: block
 
         tr
-            +box-sizing(border-box)
             +size(1140px, 73px)
             +border(1px solid $border-color-base,bottom)
+            +box-sizing(border-box)
 
             th
-                +padding(left 40px)
                 +size(142px)
+                +padding(left 40px)
                 +background(null, null, null, $background-color-menu)
                 font-size: 16px
                 text-align: left
                 vertical-align: middle
 
             td
-                +padding(left 24px)
                 +size(958px)
+                +padding(left 24px)
                 font-size: 16px
                 vertical-align: middle
 
@@ -167,8 +167,8 @@ h3
 
     h4
         +padding(left 40px)
-        font-size: 16px
         font-weight: bold
+        font-size: 16px
 
     .choices
         +padding(left 60px)
@@ -182,8 +182,8 @@ h3
 
 
         em
-            font-size: 14px
             font-weight: normal
+            font-size: 14px
             color: $font-color-emphasis
 
         ul
@@ -209,13 +209,13 @@ h3
         +border(1px solid $border-color-base, bottom)
 
         .short-answer-response
+            +size(1060px, 50px)
             +margin(top 20px bottom 30px)
             +padding(left 20px)
             +border(1px solid $border-color-base)
             +border-radius(25px)
-            +size(1060px, 50px)
             +background(null, null, null, $white-light)
-            box-sizing: border-box
+            +box-sizing(border-box)
             font-size: 14px
 
     .address-question
@@ -226,8 +226,8 @@ h3
             +margin(top 20px bottom 30px)
 
             .address
-                +margin(right 7px)
                 +size(525px)
+                +margin(right 7px)
 
             .address-detail
                 +size(525px)
@@ -243,10 +243,10 @@ h3
             +padding(right 40px)
 
         .tips
+            +size(1060px)
             +margin(top 10px bottom 30px)
             +border(1px solid #ece6ec)
             +background(null, null, null, #fdf8ff)
-            width: 1060px
 
             p
                 +padding(14px 0 14px 20px)
@@ -270,16 +270,16 @@ h3
             +border(1px solid $border-color-base,bottom)
 
             th
-                +padding(left 40px)
                 +size(142px)
+                +padding(left 40px)
                 +background(null, null, null, $background-color-menu)
                 font-size: 16px
                 text-align: left
                 vertical-align: middle
 
             td
-                +padding(left 23px)
                 +size(958px)
+                +padding(left 23px)
                 font-size: 16px
                 vertical-align: middle
 
@@ -346,16 +346,17 @@ h3
     text-align: center
 
     .make-pay
-        +btn(page-fill,null,25px)
+        +btn(purple-fill)
         +size(160px, 50px)
         display: inline-block
         color: $white
         font-size: 16px
 
     .cancel
-        +btn($gray-700,null,25px)
+        +btn()
         +size(160px, 50px)
         +margin(left 8px)
+        +background(null, null, null, $gray-700)
         display: inline-block
         color: $white
         font-size: 16px

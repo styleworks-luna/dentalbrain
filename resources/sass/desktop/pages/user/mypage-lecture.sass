@@ -30,12 +30,11 @@
                     +margin(0)
 
                 &::before
+                    +size(1px, 16px)
                     +background(null, null, null, $border-color-base)
-                    content: ''
-                    width: 1px
-                    height: 16px
                     position: absolute
                     right: -11px
+                    content: ''
 
             .active a
                 font-weight: bold
@@ -49,9 +48,9 @@
             overflow: hidden
 
             .content-information-wrap
+                +size(895px, 225px)
                 +padding(top 20px bottom 20px)
                 +border(1px solid $border-color-light, right)
-                +size(895px, 225px)
                 float: left
 
                 .content-image
@@ -60,13 +59,13 @@
                     float: left
 
                     img
+                        +size(298px, 223px)
                         +border(1px solid rgba(0, 0, 0, 0.1))
                         +border-radius(8px)
-                        +size(298px, 223px)
 
 .content-information
-    +margin(21px 38px 20px 40px)
     +size(500px)
+    +margin(21px 38px 20px 40px)
     float: left
 
     .lecture-sort
@@ -85,16 +84,16 @@
 
         .lecture-subject
             +padding(4px 0 0 10px)
-            font-size: 14px
             float: left
+            font-size: 14px
             color: $gray-700
 
     .lecture-title
-        +padding(top 13px)
         +size(500px, 53px)
+        +padding(top 13px)
         +ellipse(null,2)
-        font-size: 24px
         font-weight: bold
+        font-size: 24px
         line-height: 1.20
 
     table
@@ -122,9 +121,9 @@
 
 .content-time,
 .offline-lecture-pay
+    +size(190px, 225px)
     +padding(top 20px bottom 20px)
     +border(1px solid $border-color-light, right)
-    +size(190px, 225px)
     float: left
     text-align: center
 
@@ -133,8 +132,8 @@
 
     .d-day
         +padding(top 20px)
-        font-size: 20px
         font-weight: bold
+        font-size: 20px
 
         em
             color: $page-color
@@ -148,8 +147,8 @@
 
 .content-button,
 .content-button-offline
-    +padding(top 20px bottom 20px)
     +size(190px, 225px)
+    +padding(top 20px bottom 20px)
     float: left
     text-align: center
 
@@ -157,10 +156,10 @@
         +size(140px)
 
     a
+        +size(140px, 50px)
         +margin(top 88px left 28px)
         +padding(top 15px)
         +btn(null,1px solid $border-color-base, 25px)
-        +size(140px, 50px)
         display: block
         font-size: 16px
         font-weight: bold

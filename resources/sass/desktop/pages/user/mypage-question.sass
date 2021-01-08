@@ -1,0 +1,126 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+
+
+.question-history
+    +margin(top 60px)
+
+    h2
+        font-size: 24px
+
+    ul
+        +margin(top 18px bottom 51px)
+        +border(2px solid $gray-900, top)
+
+        li
+            overflow: hidden
+
+            .question-information
+                +border(1px solid $border-color-base, bottom)
+                overflow: hidden
+
+            span
+                display: block
+                float: left
+                font-size: 16px
+                text-align: center
+
+            .header-common
+                +padding(top 17px bottom 17px)
+
+            .content-common
+                +padding(top 26px bottom 26px)
+
+            .lecture-name
+                +size(160px)
+                +padding(left 20px right 20px)
+                +ellipse()
+
+            .question-content
+                +size(737px)
+                +padding(left 20px right 10px)
+                +ellipse()
+
+            .inquiry-date
+                +size(150px)
+                +padding(left 10px right 20px)
+
+            .response-status
+                +size(60px)
+                +padding(left 20px right 53px)
+
+            .question-detail
+                +padding(27px 40px)
+                +border(1px solid $border-color-base, bottom)
+                +background(null, null, null, $background-color-menu)
+                display: none
+
+                .question
+                    h3
+                        font-weight: bold
+                        color: $gray-700
+
+                    p
+                        +padding(top 20px)
+                        font-size: 16px
+                        line-height: 1.88
+
+                .question-hidden-wrap
+                    +padding(bottom 40px)
+                    +border(1px solid $border-color-base, bottom)
+
+            .answer
+                +margin(top 40px)
+
+                .answer-title
+                    overflow: hidden
+
+                    h3
+                        float: left
+                        font-weight: bold
+                        font-size: 16px
+                        color: $page-color
+
+                    span
+                        +padding(left 20px)
+                        font-size: 14px
+                        color: $gray-700
+                        line-height: 1.2
+
+                .answer-content
+                    +padding(top 20px)
+                    display: block
+                    font-size: 16px
+                    line-height: 1.88
+
+            .hide-show
+                display: block
+
+        .history-header
+            +background(null, null, null, $background-color-menu)
+
+        .history-content
+            .lecture-name,
+            .inquiry-date
+                color: $gray-700
+
+            .question-content
+                text-align: left
+
+            .response-status
+                +padding(right 20px)
+
+            .arrow-down
+                +size(13px, 7px)
+                +margin(top 31px)
+                +padding(0)
+                +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center)
+                cursor: pointer
+
+            .arrow-change
+                +background('/images/desktop/global/icon_arrow_up.png')
+
+            .response-status-complete
+                color: $page-color
