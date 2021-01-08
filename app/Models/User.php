@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','api_token','last_login_at'
+        'password', 'remember_token', 'api_token', 'last_login_at'
     ];
 
     /**
@@ -36,7 +36,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function job() {
-        return $this->belongsTo(UserJob::class,'job_id');
+    public function job()
+    {
+        return $this->belongsTo(UserJob::class, 'job_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->attributes['is_admin'] ? true : false;
     }
 }

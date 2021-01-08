@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
-use App\Models\Banner;
+use App\Models\Manage\Banner;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
