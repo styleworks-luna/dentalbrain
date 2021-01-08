@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserJobName;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,9 @@ class UserController extends Controller
 
     public function modify()
     {
-        return '준비중입니다.';
+        return view(viewPrefix() . 'pages.user.mypage_edit')->with([
+            'categories' => UserJobName::query()->select('id', 'name')->get(),
+        ]);
     }
 
     public function needConfirm(Request $request)
