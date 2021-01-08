@@ -10,7 +10,7 @@
                 @if(auth()->user()->isAdmin())
                     <p class="admin"><a href="">관리자</a></p>
                 @endif
-                <p class="user-name"><a href="">{{ auth()->user()->name }}</a> 님</p>
+                <p class="user-name"><a href="{{ route('account.index') }}">{{ auth()->user()->name }}</a> 님</p>
                 <a href="{{ route('logout') }}" class="login-btn">로그아웃</a>
             @else
                 <p class="user-name"><a href="{{ route('register') }}">회원가입</a></p>
@@ -28,7 +28,7 @@
         <div class="header-right">
             <ul>
                 <li>
-                    <a href="" class="header-mypage">마이페이지</a>
+                    <a href="{{ route('account.index') }}" class="header-mypage">마이페이지</a>
                 </li>
                 <li>
                     <a href="" class="header-cs">고객센터</a>
