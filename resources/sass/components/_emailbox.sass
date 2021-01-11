@@ -4,12 +4,9 @@
     position: relative
 
     &.parsley-error
+        .ui-emailbox-account,
         .ui-emailbox-domain
-            border-right: 0 !important
-
-        .ui-emailbox-button
-            +border(1px solid $red)
-            border-left: 0
+            border-color: $red
 
     input
         float: left
