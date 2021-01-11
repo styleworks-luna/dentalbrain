@@ -66,4 +66,3 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
 });
-

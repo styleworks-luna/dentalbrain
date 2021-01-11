@@ -32,3 +32,4 @@ mix.sass('resources/sass/desktop/pages/user/mypage-question.sass', 'public/css/d
 mix.sass('resources/sass/desktop/pages/user/mypage-secession.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/mypage-login.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/mypage-edit.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/user/login.sass', 'public/css/desktop/pages/user');

@@ -1,0 +1,48 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+
+.login
+    +margin(top 240px bottom 404px)
+
+    .container
+        +size(360px)
+
+    input[type="text"],
+    input[type="password"]
+        +input(white-lignt-fill)
+        +size(360px, 50px)
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder
+        letter-spacing: 0.7px
+
+
+    h1
+        font-weight: bold
+        font-size: 24px
+
+    .login-form
+        +margin(top 17px)
+        .password
+            +margin(top 10px)
+
+        .btn-login
+            +btn(purple-fill)
+            +size(360px, 50px)
+            +margin(top 10px)
+            font-size: 16px
+
+    .login-addition
+        +margin(top 21px)
+        text-align: right
+
+        .find-id
+            +margin(right 17px)
+            color: $gray-700
+
+        .go-register
+            color: $gray-700
+            font-weight: bold
