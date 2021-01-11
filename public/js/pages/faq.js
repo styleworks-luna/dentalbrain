@@ -4,5 +4,6 @@ $(function () {
 
     arrowDown.click(function () {
         $(this).toggleClass('arrow-change');
+        $(this).parent().parent().find('.answer').toggleClass('hide-show');
     })
 });

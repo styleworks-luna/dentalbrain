@@ -47,6 +47,11 @@ Route::get('notice', function () {
     return view('desktop.pages.service.notice');
 });
 
+//마이페이지 고객센터 공지사항 상세 (임시)
+Route::get('notice/detail', function () {
+    return view('desktop.pages.service.notice_detail');
+});
+
 //마이페이지 고객센터 faq (임시)
 Route::get('faq', function () {
     return view('desktop.pages.service.faq');

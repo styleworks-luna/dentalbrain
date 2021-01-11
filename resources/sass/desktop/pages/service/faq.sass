@@ -13,52 +13,78 @@
         +margin(top 20px)
         +border(2px solid $gray-900, top)
 
-        li
+    li
+        overflow: hidden
+        text-align: center
+
+        .sort
+            +size(120px)
+            +padding(left 20px right 20px)
+            float: left
+
+        .question
+            +size(1047px)
+            +padding(left 20px right 20px)
+            +ellipse
+            float: left
+
+        .arrow-down
+            +size(13px, 7px)
+            +background('/images/desktop/global/icon_arrow_down.png',no-repeat,center center)
+            float: left
+            cursor: pointer
+            transform: translateY(3px)
+
+        .arrow-change
+            +background('/images/desktop/global/icon_arrow_up.png')
+
+    .faq-header
+        +padding(top 17px bottom 17px)
+        +border(1px solid $border-color-base, bottom)
+        +background(null, null, null, $background-color-menu)
+
+        span
+            float: left
+
+    .faq-content
+        .question-information
+            +padding(top 26px bottom 26px)
             +border(1px solid $border-color-base, bottom)
             overflow: hidden
-            text-align: center
 
-            .sort
-                +size(120px)
-                +padding(left 20px right 20px)
+        .question
+            overflow: hidden
+            text-align: left
+
+            em
+                display: block
+                float: left
+                font-weight: bold
+                color: $page-color
+
+            .question-content
+                +margin(left 20px)
+                display: block
                 float: left
 
-            .question
-                +size(1047px)
-                +padding(left 20px right 20px)
-                +ellipse
+        .answer
+            +padding(left 180px top 27px bottom 27px)
+            +border(1px solid $border-color-base, bottom)
+            +background(null, null, null, $white-light)
+            display: none
+            overflow: hidden
+            text-align: left
+
+            em
                 float: left
+                font-weight: bold
+                color: $page-color
 
-            .arrow-down
-                +size(13px, 7px)
-                +background('/images/desktop/global/icon_arrow_down.png',no-repeat,center center)
+            p
+                +size(1030px)
+                +margin(left 20px)
                 float: left
-                cursor: pointer
-                transform: translateY(3px)
+                display: block
 
-            .arrow-change
-                +background('/images/desktop/global/icon_arrow_up.png')
-
-        .faq-header
-            +padding(top 17px bottom 17px)
-
-            span
-                float: left
-
-        .faq-content
-            +padding(top 26px bottom 26px)
-
-            .question
-                overflow: hidden
-                text-align: left
-
-                em
-                    display: block
-                    float: left
-                    font-weight: bold
-                    color: $page-color
-
-                .question-content
-                    +margin(left 20px)
-                    display: block
-                    float: left
+        .hide-show
+            display: block
