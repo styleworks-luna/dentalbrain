@@ -1,0 +1,64 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/service.sass'
+
+.faq-history
+    +margin(top 60px bottom 50px)
+
+    h2
+        font-size: 24px
+
+    ul
+        +margin(top 20px)
+        +border(2px solid $gray-900, top)
+
+        li
+            +border(1px solid $border-color-base, bottom)
+            overflow: hidden
+            text-align: center
+
+            .sort
+                +size(120px)
+                +padding(left 20px right 20px)
+                float: left
+
+            .question
+                +size(1047px)
+                +padding(left 20px right 20px)
+                +ellipse
+                float: left
+
+            .arrow-down
+                +size(13px, 7px)
+                +background('/images/desktop/global/icon_arrow_down.png',no-repeat,center center)
+                float: left
+                cursor: pointer
+                transform: translateY(3px)
+
+            .arrow-change
+                +background('/images/desktop/global/icon_arrow_up.png')
+
+        .faq-header
+            +padding(top 17px bottom 17px)
+
+            span
+                float: left
+
+        .faq-content
+            +padding(top 26px bottom 26px)
+
+            .question
+                overflow: hidden
+                text-align: left
+
+                em
+                    display: block
+                    float: left
+                    font-weight: bold
+                    color: $page-color
+
+                .question-content
+                    +margin(left 20px)
+                    display: block
+                    float: left

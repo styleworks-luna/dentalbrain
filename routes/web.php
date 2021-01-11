@@ -47,6 +47,11 @@ Route::get('notice', function () {
     return view('desktop.pages.service.notice');
 });
 
+//마이페이지 고객센터 faq (임시)
+Route::get('faq', function () {
+    return view('desktop.pages.service.faq');
+});
+
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
