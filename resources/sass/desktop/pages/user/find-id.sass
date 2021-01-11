@@ -1,0 +1,60 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_button.sass'
+
+.find
+    +margin(top 240px bottom 320px)
+
+    .container
+        +size(880px)
+        overflow: hidden
+
+    input[type="text"],
+    input[type="password"]
+        +input(white-lignt-fill)
+        +size(300px, 50px)
+        display: block
+
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder
+        letter-spacing: 0.5px
+
+    h2
+        font-weight: bold
+        font-size: 24px
+
+    .btn-confirm
+        +btn(purple-fill)
+        +size(300px, 50px)
+        +margin(top 10px)
+        font-size: 16px
+
+    .find-form-common
+        +size(400px, 300px)
+        +margin(top 10px)
+        +border(1px solid $page-color)
+        +box-sizing(border-box)
+
+    .find-id
+        +margin(right 80px)
+        float: left
+
+        .find-id-form
+            +padding(50px)
+
+            .name
+                +margin(top 16px)
+
+            .phone
+                +margin(top 10px)
+
+    .find-password
+        float: left
+
+        .find-password-form
+            +padding(80px 50px)
+
+            .email
+                +margin(top 16px)

@@ -33,3 +33,4 @@ mix.sass('resources/sass/desktop/pages/user/mypage-secession.sass', 'public/css/
 mix.sass('resources/sass/desktop/pages/user/mypage-login.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/mypage-edit.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/login.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/user/find-id.sass', 'public/css/desktop/pages/user');

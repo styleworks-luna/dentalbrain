@@ -37,6 +37,11 @@ Route::get('mypage/secession', function () {
     return view('desktop.pages.user.mypage_secession');
 });
 
+//마이페이지 회원탈퇴 (임시)
+Route::get('find', function () {
+    return view('desktop.pages.user.find_id');
+});
+
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
@@ -66,3 +71,4 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
 });
+
