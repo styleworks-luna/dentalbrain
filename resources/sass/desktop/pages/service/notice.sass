@@ -1,0 +1,61 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/service.sass'
+
+
+.notice-history
+    +margin(top 60px bottom 50px)
+
+    h2
+        font-size: 24px
+
+    ul
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+
+        li
+            +border(1px solid $border-color-base,bottom)
+            overflow: hidden
+            text-align: center
+
+            .list-common
+                +padding(left 20px right 20px)
+
+            .index
+                +size(40px)
+
+            .title
+                +size(796px)
+
+            .writer
+                +size(100px)
+
+            .date
+                +size(84px)
+
+            .views
+                +size(60px)
+
+        .notice-header
+            +padding(top 17px bottom 17px)
+            +background(null,null,null, $background-color-menu)
+
+            span
+                display: block
+                float: left
+
+        .notice-content
+            +padding(top 26px bottom 26px)
+
+            p
+                float: left
+
+            a
+                float: left
+
+            .title
+                text-align: left
+
+            .title:hover
+                text-decoration: underline

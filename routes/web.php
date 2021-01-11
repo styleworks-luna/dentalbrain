@@ -37,9 +37,14 @@ Route::get('mypage/secession', function () {
     return view('desktop.pages.user.mypage_secession');
 });
 
-//마이페이지 회원탈퇴 (임시)
+//마이페이지 아이디 비밀번호 찾기 (임시)
 Route::get('find', function () {
     return view('desktop.pages.user.find_id');
+});
+
+//마이페이지 고객센터 공지사항 (임시)
+Route::get('notice', function () {
+    return view('desktop.pages.service.notice');
 });
 
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
