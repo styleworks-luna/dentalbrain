@@ -57,6 +57,11 @@ Route::get('faq', function () {
     return view('desktop.pages.service.faq');
 });
 
+//마이페이지 고객센터 문의 (임시)
+Route::get('inquire', function () {
+    return view('desktop.pages.service.inquire');
+});
+
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
