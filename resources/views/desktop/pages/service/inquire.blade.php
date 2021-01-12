@@ -80,8 +80,7 @@
                                                   class="inquire-content"
                                                   placeholder="문의내용을 입력해주세요."
                                                   data-parsley-required="true"
-                                                  data-parsley-required-message="※ 문의내용을 입력해주세요.">
-                                        </textarea>
+                                                  data-parsley-required-message="※ 문의내용을 입력해주세요."></textarea>
                                     </td>
                                 </tr>
                             </table>
