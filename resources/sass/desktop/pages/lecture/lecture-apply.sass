@@ -224,9 +224,21 @@ h3
 
         .address-form-wrap
             +margin(top 20px bottom 30px)
+            position: relative
+
+            .btn-address
+                +btn()
+                +size(86px, 50px)
+                +background(null, null, null, $white)
+                +border(1px solid $border-color-base)
+                +border-radius(25px)
+                position: absolute
+                font-weight: bold
+                font-size: 14px
 
             .address
                 +size(525px)
+                +padding(left 106px)
                 +margin(right 7px)
 
             .address-detail
@@ -360,3 +372,6 @@ h3
         display: inline-block
         color: $white
         font-size: 16px
+
+.form_search
+    +background(null, null, null, $gray-700)
