@@ -15,7 +15,8 @@
     <section class="content">
         <div class="container">
             @include('desktop.layouts.navigation.account')
-            <form action="" id="edit-from">
+            <form action="{{ route('account.update') }}" id="edit-from" method="POST">
+                @csrf
                 <section class="edit">
                     <h2>회원정보 수정</h2>
                     <table>
@@ -53,7 +54,7 @@
                                 <select name="job" id="job" class="select-menu">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            @if ($category->id == auth()->user()->job_id)
+                                                @if ($category->id == auth()->user()->job_id)
                                                 selected
                                             @endif
                                         >{{ $category->name }}</option>
@@ -64,7 +65,8 @@
                                        name='license_num'
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
-                                       data-parsley-errors-container=".license-error-wrap">
+                                       data-parsley-errors-container=".license-error-wrap"
+                                       value="{{ old('license_num',auth()->user()->job->license_num) }}">
                                 <div class="license-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
@@ -78,7 +80,8 @@
                                        placeholder="'-' 없이 입력해주세요."
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
-                                       data-parsley-errors-container=".phone-check-error-wrap">
+                                       data-parsley-errors-container=".phone-check-error-wrap"
+                                       value="{{ old('phone',auth()->user()->phone) }}">
                                 <button class="btn-basic btn-verification">인증번호발송</button>
                                 <div class="phone-check-error-wrap error-wrap-common"></div>
 
@@ -123,7 +126,7 @@
                         </tr>
                     </table>
                     <div class="btn-wrap">
-                        <button class="btn-edit btn-common">수정완료</button>
+                        <input type="submit" class="btn-edit btn-common" value="수정완료">
                         <button class="btn-cancel btn-common">취소하기</button>
                     </div>
                 </section>

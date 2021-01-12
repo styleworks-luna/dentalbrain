@@ -62,6 +62,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::get('questions', 'Account\QuestionController@index')->name('questions');
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');
+    Route::post('update', 'Account\UserController@update')->name('update');
     // 회원정보 패스워드 확인
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
