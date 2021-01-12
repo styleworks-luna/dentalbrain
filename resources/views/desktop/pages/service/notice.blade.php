@@ -30,8 +30,8 @@
                             </li>
                         @endforeach
                     </ul>
+                    {{ $notice->links() }}
                 </section>
-
             </div>
         </div>
     </section>

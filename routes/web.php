@@ -53,6 +53,7 @@ Route::group(['prefix' => 'notice'],function(){
 
 
 Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'auth'],function() {
+    Route::get('notice','Admin\NoticeController@index')->name('noticeCreate');
     Route::post('notice','Admin\NoticeController@store')->name('noticeCreate');
     //공지사항 create
     Route::get('notice/{id}/edit','Admin\NoticeController@edit')->name('noticeUpdate');
