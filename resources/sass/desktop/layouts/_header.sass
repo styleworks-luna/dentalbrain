@@ -74,25 +74,21 @@
                         font-weight: bold
 
                 .header-mypage::before
+                    +size(28px, 28px)
                     +margin(left 13px bottom 8px)
                     +background('/images/desktop/global/icon-header-mypage.png')
-                    content: ''
                     display: block
-                    width: 28px
-                    height: 28px
-                    background-size: cover
+                    content: ''
 
                 .header-mypage:hover::before
                     +background('/images/desktop/global/icon-header-mypage-ov.png')
 
                 .header-cs::before
+                    +size(28px, 28px)
                     +margin(left 8px bottom 8px)
                     +background('/images/desktop/global/icon-header-cs.png')
-                    content: ''
                     display: block
-                    width: 28px
-                    height: 28px
-                    background-size: cover
+                    content: ''
 
                 .header-cs:hover::before
                     +background('/images/desktop/global/icon-header-cs-ov.png')
