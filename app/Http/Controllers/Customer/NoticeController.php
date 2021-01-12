@@ -20,7 +20,6 @@ class NoticeController extends Controller
     }
 
     public function show($number){
-        $notice = Notice::findOrFail($number);
-        return view(viewPrefix() . 'pages.service.notice_detail',['notice' => $notice]);
+        return view(viewPrefix() . 'pages.service.notice_detail',['notice' => Notice::findOrFail($number)]);
     }
 }
