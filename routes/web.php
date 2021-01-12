@@ -42,14 +42,23 @@ Route::get('find', function () {
     return view('desktop.pages.user.find_id');
 });
 
-//마이페이지 고객센터 공지사항 (임시)
-Route::get('notice', function () {
-    return view('desktop.pages.service.notice');
+
+Route::group(['prefix' => 'notice'],function(){
+    //마이페이지 고객센터 공지사항 (임시)
+    Route::get('/','Customer\NoticeController@index')->name('notice');
+
+    ////마이페이지 고객센터 공지사항 상세 (임시)
+    Route::get('detail/{id}','Customer\NoticeController@show')->name('notice_detail');
 });
 
-//마이페이지 고객센터 공지사항 상세 (임시)
-Route::get('notice/detail', function () {
-    return view('desktop.pages.service.notice_detail');
+
+Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'auth'],function() {
+    Route::post('notice','Admin\NoticeController@store')->name('noticeCreate');
+    //공지사항 create
+    Route::get('notice/{id}/edit','Admin\NoticeController@edit')->name('noticeUpdate');
+    //공지사항 edit 페이지
+    Route::delete('notice/{id}','Admin\NoticeController@destroy')->name('noticeDestroy');
+    //공지사항 삭제
 });
 
 //마이페이지 고객센터 faq (임시)
