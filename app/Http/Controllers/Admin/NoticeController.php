@@ -15,13 +15,14 @@ class NoticeController extends Controller
         return view(viewPrefix() . 'pages.test');
     }
 
-    public function store(){
-        $v = Validator::make(request()->all(),[
-                'title' => 'required',
-                'content' => 'required',
-                'display_name' => 'required',
-                'user_id' => 'required | numeric'
-            ]);
+    public function store()
+    {
+        $v = Validator::make(request()->all(), [
+            'title' => 'required',
+            'content' => 'required',
+            'display_name' => 'required',
+            'user_id' => 'required | numeric'
+        ]);
 
         Notice::create($v->validate());
 
@@ -31,23 +32,22 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function edit($number){
+    public function edit(Notice $notice)
+    {
         return response()->json([
-            'data' => Notice::findOrFail($number)->first()
+            'data' => $notice,
         ]);
     }
 
-    public function update(){
-        $v = Validator::make(request()->all().[
-            'title' => 'required',
-            'content' => 'required',
-            'display_name' => 'required',
-            'user_id' => 'required | numeric'
-        ]);
+    public function update(Notice $notice)
+    {
+        $v = Validator::make(request()->all() . [
+                'title' => 'required',
+                'content' => 'required',
+                'user_id' => 'required | numeric'
+            ]);
 
         $validatedData = $v->validate();
-
-        $notice = Notice::find(request('id'));
 
         $notice->update($validatedData);
 
@@ -57,8 +57,9 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function destroy(Notice $notice){
-        $notice::delete();
+    public function destroy(Notice $notice)
+    {
+        $notice->delete();
 
         return response()->json([
             'success' => true,

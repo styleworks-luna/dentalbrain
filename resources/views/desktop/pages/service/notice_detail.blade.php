@@ -16,7 +16,7 @@
                         <div class="notice-detail-title">
                             <h3>{{$notice -> title}}</h3>
                             <div class="notice-info">
-                                <span class="writer">{{$notice -> display_name}}</span>
+                                <span class="writer">{{$notice -> name}}</span>
                                 <span class="bar"></span>
                                 <span class="date">{{$notice ->created_at}}</span>
                             </div>

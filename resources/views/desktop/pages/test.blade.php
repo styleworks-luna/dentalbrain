@@ -17,7 +17,7 @@
             </form>
             <br>
             밑에는 faq 넣는 함수
-            <form method="POST" action="faqs">
+            <form method="POST" action="faq">
                 @csrf
                 <input type="text" name="question" placeholder="faq 질문" value="question">
                 <input type="text" name="answer" placeholder="faq정답" value="answer">

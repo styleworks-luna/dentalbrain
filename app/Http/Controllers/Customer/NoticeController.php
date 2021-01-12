@@ -24,13 +24,13 @@ class NoticeController extends Controller
         return view(viewPrefix() . 'pages.service.notice', ['notice' =>Notice::orderBy('created_at','desc')->simplePaginate(10)]);
     }
 
-    public function show($id){
-        $this->viewCountIncrement($id);
-        return view(viewPrefix() . 'pages.service.notice_detail',['notice' => Notice::findOrFail($id)]);
+    public function show(Notice $notice){
+        $this->viewCountIncrement($notice);
+        return view(viewPrefix() . 'pages.service.notice_detail',['notice' => $notice]);
     }
 
-    public function viewCountIncrement(int $id){
+    public function viewCountIncrement(Notice $notice){
         $viewCountIncrement = new ViewCountImpl();
-        $viewCountIncrement->viewCountAdd($this->dbName,$id);
+        $viewCountIncrement->viewCountAdd($notice);
     }
 }

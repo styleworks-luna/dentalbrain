@@ -11,13 +11,9 @@ use App\Interfaces\ViewCount\ViewCountMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class ViewCountImpl extends Model implements ViewCountMethod{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+class ViewCountImpl implements ViewCountMethod{
 
-    public function viewCountAdd(string $modelName , int $id){
-        DB::table($modelName)->where('id',$id)->increment('views');
+    public function viewCountAdd(Model $model){
+        $model->increment('views');
     }
 }

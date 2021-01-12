@@ -14,7 +14,7 @@
                 <li>{{$notice-> user_id}}</li>
             </ol>
 
-            <form method="POST" action="/admin/notice/{{$notice ->id}}">
+            <form method="POST" action="{{ route('admin.noticeUpdate',['notice' => $notice->id]) }}">
                 @method('DELETE')
                 @csrf
                 <button>Delete</button>
