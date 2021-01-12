@@ -7,9 +7,7 @@
  */
 namespace App\Interfaces\ViewCount;
 
-use App\Interfaces\ViewCount\ViewCountMethod;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class ViewCountImpl implements ViewCountMethod{
 

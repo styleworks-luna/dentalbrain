@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Manage\Notice;
-use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class NoticeController extends Controller
