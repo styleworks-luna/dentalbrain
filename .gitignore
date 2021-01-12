@@ -15,5 +15,6 @@ yarn-error.log
 package-lock.json
 /public/css/desktop
 /public/css/app.css
-/public/js/app.js
+/public/js/app/
+/public/fonts/vendor/
 /public/mix-manifest.json
