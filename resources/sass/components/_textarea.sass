@@ -1,0 +1,20 @@
+%textarea-default
+    +box-sizing(border-box)
+    +padding(left 20px top 18px)
+    +border(1px solid $border-color-base)
+    +border-radius(25px)
+    +background(null, null, null, $white-light)
+    display: block
+    font-size: 14px
+    color : $gray-900
+    resize: none
+    outline: none
+
+    &::placeholder
+        color: $gray-900
+
+    &.parsley-error
+        +border(1px solid $red)
+
+@mixin textarea()
+    @extend %textarea-default

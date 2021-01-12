@@ -3,12 +3,86 @@
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/desktop/layouts/navigation/service.sass'
 @import '@sass/components/_button.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_emailbox.sass'
+@import '@sass/components/_textarea.sass'
 
 
 .inquire
-    +margin(top 60px)
+    +margin(top 60px bottom 80px)
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-lignt-fill)
+        +size(240px, 50px)
+        +margin(right 5px)
+
+    textarea
+        +textarea()
+        +size(1058px, 150px)
+
+    .ui-emailbox
+        +emailbox()
+        float: left
 
     h2
         font-size: 24px
 
-    .inquire-form
+    .inquire-form-wrap
+        +margin(top 18px)
+
+        table
+            +size(1280px)
+            +border(2px solid $gray-900, top)
+
+        tr
+            +size(1280px, 72px)
+            +border(1px solid $border-color-base, bottom)
+
+            th
+                +size(182px)
+                +padding(left 40px top 26px)
+                +background(null, null, null, $background-color-menu)
+                +box-sizing(border-box)
+                font-size: 16px
+                text-align: left
+                vertical-align: top
+
+            td
+                +padding(left 20px top 11px bottom 11px)
+                +box-sizing(border-box)
+
+            .name-wrap
+                +size(458px)
+
+            .phone-wrap
+                +size(458px)
+
+            .email-wrap
+                +size(1096px)
+                overflow: hidden
+
+                p
+                    +padding(left 20px top 15px)
+                    float: left
+                    color: $gray-700
+
+            .title-wrap
+                +size(1096px)
+
+                input[name="title"]
+                    +size(1058px, 50px)
+
+            .inquire-content-wrap
+                +size(1096px)
+
+    .btn-wrap
+        +size(200px)
+        +margin(50px auto 0 auto)
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(200px, 50px)
+            font-size: 16px
