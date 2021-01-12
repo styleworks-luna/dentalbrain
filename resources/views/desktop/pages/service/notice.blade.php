@@ -23,7 +23,7 @@
                         @foreach($notice as $key => $value)
                             <li class="notice-content">
                                 <p class="index list-common">{{$value -> id }}</p>
-                                <a href="" class="title list-common">{{ $value -> title }}</a>
+                                <a href="/notice/detail/{{$value -> id}}" class="title list-common">{{ $value -> title }}</a>
                                 <p class="writer list-common">{{$value -> display_name }}</p>
                                 <p class="date list-common">{{$value -> created_at }}</p>
                                 <p class="views list-common">{{$value-> views }}</p>
