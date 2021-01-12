@@ -16,7 +16,14 @@ class CreateEnquiryAnswersTable extends Migration
         Schema::create('enquiry_answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('enquiry_id');
-            $table->
+            $table->string('display_name')->nullable()->default(null);
+            $table->string('title');
+            $table->text('content');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('enquiry_id')->references('id')->on('enquiries');
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }
@@ -28,6 +35,10 @@ class CreateEnquiryAnswersTable extends Migration
      */
     public function down()
     {
+        Schema::table('enquiry_answers', function (Blueprint $table) {
+            $table->dropForeign('enquiry_answers_user_id_foreign');
+            $table->dropForeign('enquiry_answers_enquiry_id_foreign');
+        });
         Schema::dropIfExists('enquiry_answers');
     }
 }

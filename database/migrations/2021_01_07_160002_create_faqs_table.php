@@ -36,7 +36,7 @@ class CreateFaqsTable extends Migration
     {
         Schema::table('faqs', function (Blueprint $table) {
             $table->dropForeign('faqs_category_id_foreign');
-            $table->dropForeign('faqs_users_id_foreign');
+            $table->dropForeign('faqs_user_id_foreign');
         });
 
         Schema::dropIfExists('faqs');
