@@ -25,11 +25,11 @@ class NoticeController extends Controller
     }
 
     public function show($id){
-        $this->viewCountAdd($id);
+        $this->viewCountIncrement($id);
         return view(viewPrefix() . 'pages.service.notice_detail',['notice' => Notice::findOrFail($id)]);
     }
 
-    public function viewCountAdd(int $id){
+    public function viewCountIncrement(int $id){
         $viewCountIncrement = new ViewCountImpl();
         $viewCountIncrement->viewCountAdd($this->dbName,$id);
     }

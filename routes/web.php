@@ -52,20 +52,29 @@ Route::group(['prefix' => 'notice'],function(){
 });
 
 
+Route::get('service/faq', 'Customer\FaqController@index')->name('faq');
+
+////마이페이지 고객센터 faq (임시)
+//Route::get('faq', function () {
+//    return view('desktop.pages.service.faq');
+//});
+
+
 Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'auth'],function() {
     Route::get('notice','Admin\NoticeController@index')->name('noticeCreate');
     Route::post('notice','Admin\NoticeController@store')->name('noticeCreate');
     //공지사항 create
-    Route::get('notice/{id}/edit','Admin\NoticeController@edit')->name('noticeUpdate');
+    Route::get('notice/{id}/edit','Admin\NoticeController@edit')->name('noticeEdit');
+    Route::put('notice/{id}','Admin\NoticeController@update')->name('noticeUpdate');
     //공지사항 edit 페이지
     Route::delete('notice/{id}','Admin\NoticeController@destroy')->name('noticeDestroy');
     //공지사항 삭제
+
+    Route::post('faq','Admin\FaqController@store')->name('faqCreate');
+    Route::get('faq','Admin\FaqController@edit')->name('faqUpdate');
+    Route::delete('faq','Admin\FaqController@destroy')->name('faqDestroy');
 });
 
-//마이페이지 고객센터 faq (임시)
-Route::get('faq', function () {
-    return view('desktop.pages.service.faq');
-});
 
 //마이페이지 고객센터 문의 (임시)
 Route::get('inquire', function () {
