@@ -83,67 +83,60 @@
         overflow: hidden
 
         li
+            +size(170px 170px, 70px 70px)
             +margin(right 40px)
+            +padding(left 67px top 25px)
+            +border(1px solid #d8d8d8)
+            +border-radius(35px)
+            +background('/images/desktop/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
+            +box-sizing(border-box)
+            display: block
             float: left
+            font-size: 20px
+            color: $gray-700
+            cursor: pointer
 
-            a
-                +padding(25px 29px 25px 67px)
-                +border(1px solid #d8d8d8)
-                +border-radius(35px)
-                +background('/images/desktop/lecture/lecture_menu_icon_1.png',no-repeat, 25px 19px, #fafafa)
-                display: block
-                font-size: 20px
-                color: $gray-700
-
-            a:hover
-                +padding(24px 28px 24px 66px)
+            &:hover
+                +padding(left 66px top 24px)
                 +border(2px solid $page-color)
                 +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
                 font-weight: bold
                 color: $font-color-base
 
         li:nth-child(2)
-            a
-                +background('/images/desktop/lecture/lecture_menu_icon_2.png')
+            +size(189px 189px, 70px 70px)
+            +background('/images/desktop/lecture/lecture_menu_icon_2.png')
 
-        li:nth-child(3)
-            a
-                +background('/images/desktop/lecture/lecture_menu_icon_3.png')
-
-        li:nth-child(4)
-            a
-                +background('/images/desktop/lecture/lecture_menu_icon_4.png')
-            a:hover
-                +padding(24px 27px 24px 65px)
-
-        li:nth-child(5)
-            a
-                +background('/images/desktop/lecture/lecture_menu_icon_5.png')
-
-        li:nth-child(6)
-            +margin(right 0)
-
-            a
-                +background('/images/desktop/lecture/lecture_menu_icon_6.png')
-
-        li:nth-child(2):hover
-            a
+            &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_2.png')
 
-        li:nth-child(3):hover
-            a
+        li:nth-child(3)
+            +size(189px 189px, 70px 70px)
+            +background('/images/desktop/lecture/lecture_menu_icon_3.png')
+
+            &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_3.png')
 
-        li:nth-child(4):hover
-            a
+        li:nth-child(4)
+            +size(239px 239px, 70px 70px)
+            +background('/images/desktop/lecture/lecture_menu_icon_4.png')
+
+            &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_4.png')
 
-        li:nth-child(5):hover
-            a
+        li:nth-child(5)
+            +size(152px 152px, 70px 70px)
+            +background('/images/desktop/lecture/lecture_menu_icon_5.png')
+
+            &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_5.png')
 
-        li:nth-child(6):hover
-            a
+        li:nth-child(6)
+            +size(133px 133px, 70px 70px)
+            +margin(right 0)
+            +background('/images/desktop/lecture/lecture_menu_icon_6.png')
+
+            &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_6.png')
 
     .lecture-contents
@@ -152,12 +145,14 @@
 
         .lecture-card
             +margin(80px 40px 0 0)
+            +box-sizing(border-box)
             float: left
 
             img
-                +size(398px, 300px)
+                +size(400px 400px, 300px)
                 +border(1px solid rgba(0, 0, 0, 0.1))
                 +border-radius(5px)
+                +box-sizing(border-box)
 
             .lecture-description
                 +size(400px)
