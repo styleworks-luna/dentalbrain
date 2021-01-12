@@ -62,6 +62,11 @@ Route::get('inquire', function () {
     return view('desktop.pages.service.inquire');
 });
 
+//마이페이지 고객센터 문의 (임시)
+Route::get('complete', function () {
+    return view('desktop.pages.lecture.lecture_complete');
+});
+
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
