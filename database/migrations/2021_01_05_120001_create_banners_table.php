@@ -26,8 +26,10 @@ class CreateBannersTable extends Migration
             $table->dateTime('ended_at')->comment('종료 시간');
 
             $table->unsignedBigInteger('file_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->softDeletes();
 
@@ -44,6 +46,7 @@ class CreateBannersTable extends Migration
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->dropForeign('banners_file_id_foreign');
+            $table->dropForeign('banners_user_id_foreign');
         });
 
         Schema::dropIfExists('banners');
