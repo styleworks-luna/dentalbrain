@@ -9,7 +9,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Manage\Notice;
 use App\Http\Controllers\Controller;
-use App\Interfaces\ViewCount\InterfaceViewCountImpl;
+use App\Interfaces\ViewCount\ViewCountImpl;
 
 /**
  * Class NoticeController
@@ -30,7 +30,7 @@ class NoticeController extends Controller
     }
 
     public function viewCountAdd(int $id){
-        $viewCountIncrement = new InterfaceViewCountImpl();
+        $viewCountIncrement = new ViewCountImpl();
         $viewCountIncrement->viewCountAdd($this->dbName,$id);
     }
 }

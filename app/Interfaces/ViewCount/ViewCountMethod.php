@@ -7,11 +7,11 @@
  */
 namespace App\Interfaces\ViewCount;
 
-use App\Interfaces\ViewCount\interfaceViewCountMethod;
+use App\Interfaces\ViewCount\ViewCountMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class InterfaceViewCountImpl extends Model implements interfaceViewCountMethod{
+class ViewCountImpl extends Model implements ViewCountMethod{
     public function __construct()
     {
         parent::__construct();
