@@ -17,6 +17,10 @@ mix.alias({
     '@sass': '/resources/sass'
 });
 
+mix.options({
+    processCssUrls: false
+});
+
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.sass', 'public/css');
 
@@ -34,3 +38,7 @@ mix.sass('resources/sass/desktop/pages/user/mypage-login.sass', 'public/css/desk
 mix.sass('resources/sass/desktop/pages/user/mypage-edit.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/login.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/find-id.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop/pages/service');
+mix.sass('resources/sass/desktop/pages/service/faq.sass', 'public/css/desktop/pages/service');
+mix.sass('resources/sass/desktop/pages/service/notice-detail.sass', 'public/css/desktop/pages/service');
+mix.sass('resources/sass/desktop/pages/service/inquire.sass', 'public/css/desktop/pages/service');

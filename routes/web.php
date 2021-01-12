@@ -37,9 +37,29 @@ Route::get('mypage/secession', function () {
     return view('desktop.pages.user.mypage_secession');
 });
 
-//마이페이지 회원탈퇴 (임시)
+//마이페이지 아이디 비밀번호 찾기 (임시)
 Route::get('find', function () {
     return view('desktop.pages.user.find_id');
+});
+
+//마이페이지 고객센터 공지사항 (임시)
+Route::get('notice', function () {
+    return view('desktop.pages.service.notice');
+});
+
+//마이페이지 고객센터 공지사항 상세 (임시)
+Route::get('notice/detail', function () {
+    return view('desktop.pages.service.notice_detail');
+});
+
+//마이페이지 고객센터 faq (임시)
+Route::get('faq', function () {
+    return view('desktop.pages.service.faq');
+});
+
+//마이페이지 고객센터 문의 (임시)
+Route::get('inquire', function () {
+    return view('desktop.pages.service.inquire');
 });
 
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
@@ -67,6 +87,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::get('questions', 'Account\QuestionController@index')->name('questions');
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');
+    Route::post('update', 'Account\UserController@update')->name('update');
     // 회원정보 패스워드 확인
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
