@@ -55,8 +55,6 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     });
 });
 
-
-
 Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
     Route::redirect('/', '/account/lectures')->name('index');
     // 신청한 강의
@@ -72,3 +70,5 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
 });
 
+// 관리자
+Route::view('admin', 'admin.index');

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const webpack = require('webpack');
 require('laravel-mix-alias');
 
 /*
@@ -17,13 +18,28 @@ mix.alias({
     '@sass': '/resources/sass'
 });
 
+mix.webpackConfig({
+    plugins: [
+        new webpack.DefinePlugin({
+            env: {
+                APP_URL: JSON.stringify(process.env.APP_URL)
+            }
+        })
+    ]
+});
+
 mix.options({
     processCssUrls: false
 });
 
-mix.js('resources/js/app.js', 'public/js')
+// global
+mix.js('resources/js/app/app.js', 'public/js/app')
     .sass('resources/sass/app.sass', 'public/css');
 
+// admin
+mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
+
+// pages TODO: 추후 수정
 mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
 mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/desktop/pages/introduce');
 mix.sass('resources/sass/desktop/pages/introduce/instructor.sass', 'public/css/desktop/pages/introduce');
@@ -38,3 +54,5 @@ mix.sass('resources/sass/desktop/pages/user/mypage-login.sass', 'public/css/desk
 mix.sass('resources/sass/desktop/pages/user/mypage-edit.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/login.sass', 'public/css/desktop/pages/user');
 mix.sass('resources/sass/desktop/pages/user/find-id.sass', 'public/css/desktop/pages/user');
+
+mix.version();
