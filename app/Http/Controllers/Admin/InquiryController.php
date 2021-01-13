@@ -7,7 +7,12 @@
  */
 
 namespace App\Http\Controllers\Admin;
+use App\Models\Manage\Inquiry;
 
 class InquiryController {
-
+    public function edit(Inquiry $inquiry){
+        return response()->json([
+           'inquiry' => $inquiry
+        ]);
+    }
 }

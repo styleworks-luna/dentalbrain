@@ -19,7 +19,7 @@
 
                 <section class="inquire">
                     <h2>문의하기</h2>
-                    <form method="POST" action="{{route('customer.inquire')}}" id="inquire-form" >
+                    <form method="POST" action="{{route('customer.inquiries.index')}}" id="inquire-form" >
                         @csrf
                         <div class="inquire-form-wrap">
                             <table>
