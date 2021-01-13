@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const webpack = require('webpack');
 require('laravel-mix-alias');
 
 /*
@@ -17,13 +18,28 @@ mix.alias({
     '@sass': '/resources/sass'
 });
 
+mix.webpackConfig({
+    plugins: [
+        new webpack.DefinePlugin({
+            env: {
+                APP_URL: JSON.stringify(process.env.APP_URL)
+            }
+        })
+    ]
+});
+
 mix.options({
     processCssUrls: false
 });
 
-mix.js('resources/js/app.js', 'public/js')
+// global
+mix.js('resources/js/app/app.js', 'public/js/app')
     .sass('resources/sass/app.sass', 'public/css');
 
+// admin
+mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
+
+// pages TODO: 추후 수정
 mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
 
 // 소개 페이지
@@ -53,3 +69,5 @@ mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop
     .sass('resources/sass/desktop/pages/service/faq.sass', 'public/css/desktop/pages/service')
     .sass('resources/sass/desktop/pages/service/notice-detail.sass', `public/css/desktop/pages/service`)
     .sass('resources/sass/desktop/pages/service/inquire.sass', 'public/css/desktop/pages/service');
+
+mix.version();
