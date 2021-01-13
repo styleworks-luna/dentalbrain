@@ -84,6 +84,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
             'job' => ['required', 'min:0', 'max:5'],
             'phone' => ['required'],
+            'email-consent' => ['nullable']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return $input->job <= 2;
@@ -113,6 +114,7 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'api_token' => Str::random(80),
             'job_id' => $userJob->id,
+            'allow_email' => isset($data['email-consent']),
         ]);
     }
 }
