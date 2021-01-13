@@ -14,15 +14,18 @@
 
             <section class="identification">
                 <h2>회원정보 수정</h2>
-                <div class="identification-form">
-                    <p>본인확인을 위해 <em>로그인 비밀번호</em>를 한번 더 입력해주세요.</p>
-                    <div class="input-wrap">
-                    <input type="password" id="password" class="password" placeholder="비밀번호를 입력하세요.">
+                <form action="{{ route('account.confirm') }}" method="POST">
+                    @csrf
+                    <div class="identification-form">
+                        <p>본인확인을 위해 <em>로그인 비밀번호</em>를 한번 더 입력해주세요.</p>
+                        <div class="input-wrap">
+                            <input type="password" id="password" name="password" class="password" placeholder="비밀번호를 입력하세요." />
+                        </div>
+                        <div class="btn-wrap">
+                            <input type="submit" class="btn-basic" value="확인" />
+                        </div>
                     </div>
-                    <div class="btn-wrap">
-                    <button class="btn-basic">확인</button>
-                    </div>
-                </div>
+                </form>
             </section>
         </div>
     </section>

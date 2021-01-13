@@ -1,0 +1,60 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/service.sass'
+@import '@sass/components/_button.sass'
+
+
+.notice-detail
+    +margin(top 60px bottom 80px)
+
+    h2
+        font-size: 24px
+
+    .notice-detail-text
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+
+        .notice-detail-title
+            +padding(top 26px bottom 26px)
+
+            h3
+                font-weight: bold
+                font-size: 20px
+
+            .notice-info
+                +padding(top 16px)
+                overflow: hidden
+                color: $gray-700
+
+                span
+                    display: block
+                    float: left
+
+                .writer
+                    +margin(right 10px)
+
+                .bar
+                    +size(1px,16px)
+                    +background(null, null, null, $border-color-base)
+
+                .date
+                    +margin(left 10px)
+
+        .notice-detail-content
+            +padding(top 40px bottom 40px)
+            +border(1px solid $border-color-base, top bottom)
+
+            p
+                +size(800px)
+                line-height: 1.88
+
+    .btn-wrap
+        +margin(50px auto 0 auto)
+        +size(200px)
+
+        .btn-prev
+            +btn(purple-fill)
+            +size(200px, 50px)
+            +padding(top 17px)
+            font-size: 16px
