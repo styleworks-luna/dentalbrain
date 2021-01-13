@@ -31,7 +31,7 @@
                     <a href="{{ route('account.index') }}" class="header-mypage">마이페이지</a>
                 </li>
                 <li>
-                    <a href="" class="header-cs">고객센터</a>
+                    <a href="{{ route('customer.index') }}" class="header-cs">고객센터</a>
                 </li>
             </ul>
         </div>
