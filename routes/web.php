@@ -48,12 +48,8 @@ Route::get('instructor', function () {
     return view('desktop.pages.introduce.instructor');
 });
 
-Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
-    //고객센터 faq (임시)
-    Route::get('faq', function () {
-        return view('desktop.pages.service.faq');
-    });
-
+Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
+    Route::redirect('/', '/customer/notices')->name('index');
 
     Route::group(['prefix' => 'notices', 'as' => 'notices.'], function () {
         // 고객센터 공지사항
@@ -62,11 +58,11 @@ Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
         Route::get('/notices/{notice}', 'Customer\NoticeController@show')->name('show');
     });
 
-    Route::group(['prefix' => 'inquiries', 'as' => 'inquiries'], function () {
+    Route::group(['prefix' => 'inquiries', 'as' => 'inquiries.'], function () {
         //고객센터 문의 (임시)
-        Route::get('enquiry', function () {
+        Route::get('/', function () {
             return view('desktop.pages.service.inquire');
-        });
+        })->name('edit');
 
     });
 
@@ -111,9 +107,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
 
     //마이페이지 회원탈퇴 (임시)
-    Route::get('secession', function () {
-        return view('desktop.pages.user.mypage_secession');
-    });
+    Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {

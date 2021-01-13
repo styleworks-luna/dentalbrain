@@ -20,7 +20,7 @@
                             <span class="date list-common">등록일</span>
                             <span class="views list-common">조회수</span>
                         </li>
-                        @foreach($notice as $key => $value)
+                        @foreach($notices as $key => $value)
                             <li class="notice-content">
                                 <p class="index list-common">{{$value -> id }}</p>
                                 <a href="{{ route('service.notice_detail',['notice' => $value->id])  }}" class="title list-common">{{ $value -> title }}</a>
@@ -30,7 +30,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    {{ $notice->links() }}
+                    {{ $notices->links() }}
                 </section>
             </div>
         </div>

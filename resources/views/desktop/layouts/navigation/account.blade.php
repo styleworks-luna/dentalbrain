@@ -5,6 +5,6 @@
         <li><a href="{{ route('account.payments') }}">결제내역</a></li>
         <li><a href="{{ route('account.questions') }}">질문내역</a></li>
         <li><a href="{{ route('account.modify') }}">회원정보 수정</a></li>
-        <li><a href="">회원탈퇴</a></li>
+        <li><a href="{{ route('account.secession') }}">회원탈퇴</a></li>
     </ul>
 </div>
