@@ -48,8 +48,13 @@ Route::get('instructor', function () {
     return view('desktop.pages.introduce.instructor');
 });
 
+//강사 소개 (임시)
+Route::get('watch', function () {
+    return view('desktop.pages.lecture.lecture_watch');
+});
 
-Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
+
+Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
 
     Route::group(['prefix' => 'notices', 'as' => 'notices.'], function () {

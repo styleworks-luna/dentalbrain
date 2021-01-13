@@ -3,3 +3,83 @@
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/_button.sass'
 @import '@sass/components/_input.sass'
+
+.lecture-wrapper
+    +padding(top 30px bottom 140px)
+    overflow: hidden
+
+.lecture-watch
+    +background(null, null, null, $black)
+    overflow: hidden
+
+    .lecture-watch-content
+        float: left
+
+    .lecture-title-wrap
+        overflow: hidden
+
+        .lecture-title
+            float: left
+
+            h1
+                font-size: 16px
+                color: $white
+
+            h2
+                +padding(top 12px)
+                font-weight: bold
+                font-size: 24px
+                color: $white
+
+    .lecture-file
+        float: right
+
+        .btn-download
+            +btn(purple-fill)
+            +size(200px, 50px)
+            +padding(top 17px)
+            font-size: 16px
+            color: $white
+
+    .video-wrap
+        +size(880px,495px)
+        +margin(top 20px)
+        background-color: $white
+
+    .lecture-question
+        +margin(top 40px)
+        position: relative
+
+        p
+            font-size: 20px
+            color: $white
+
+        input[type="text"]
+            +input()
+            +size(880px, 50px)
+            +margin(top 10px)
+            +border(0)
+            +background(null, null, null, $gray-200)
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(70px, 50px)
+            position: absolute
+            top: 30px
+            right: 0
+            font-size: 16px
+
+    .play-list
+        +padding(left 20px)
+        float: left
+
+        h3
+            font-weight: bold
+            font-size: 16px
+            color: $white
+
+        ul
+            +size(378px, 659px)
+            +margin(top 11px)
+            +border(1px solid $border-color-black)
+
