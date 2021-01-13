@@ -43,12 +43,12 @@
             <section class="lecture">
                 <div class="lecture-menu">
                     <ul>
-                        <li><a href="">치과의사</a></li>
-                        <li><a href="">치과위생사</a></li>
-                        <li><a href="">치과조무사</a></li>
-                        <li><a href="">학생(민간자격증)</a></li>
-                        <li><a href="">치바시</a></li>
-                        <li><a href="">기타</a></li>
+                        <li>치과의사</li>
+                        <li>치과위생사</li>
+                        <li>치과조무사</li>
+                        <li>학생(민간자격증)</li>
+                        <li>치바시</li>
+                        <li>기타</li>
                     </ul>
                 </div>
                 <div class="lecture-contents">
@@ -120,7 +120,7 @@
                             </div>
                         </li>
                         <li class="lecture-card">
-                            <a href=""><img src="{{ asset('images/dummy/test.png') }}" alt=""></a>
+                            <a href=""><figure><img src="{{ asset('images/dummy/test.png') }}" alt=""></figure></a>
                             <div class="lecture-description">
                                 <div class="lecture-description-sub">
                                     <p class="lecture-type">치과의사・임플란트</p>

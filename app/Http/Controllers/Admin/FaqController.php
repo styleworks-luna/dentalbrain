@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Manage\Faq;
 use App\Http\Controllers\Controller;
+use App\Models\Manage\Faq;
 use Illuminate\Support\Facades\Validator;
 
 
 class FaqController extends Controller
 {
-    //
-    private $dbName = 'faqs';
-
-    public function store(){
-        $v = Validator::make(request()->all(),[
+    public function store()
+    {
+        $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
             'category_id' => 'required | numeric'
@@ -29,7 +27,6 @@ class FaqController extends Controller
 
     public function edit(Faq $faq)
     {
-        //return  view(viewPrefix() . 'pages.testfaqUpdate',['faq' => $faq]);
         return response()->json([
             'data' => $faq,
         ]);
@@ -37,11 +34,11 @@ class FaqController extends Controller
 
     public function update(Faq $faq)
     {
-        $v = Validator::make(request()->all() , [
-                'question' => 'required',
-                'answer' => 'required',
-                'category_id' => 'required | numeric'
-            ]);
+        $v = Validator::make(request()->all(), [
+            'question' => 'required',
+            'answer' => 'required',
+            'category_id' => 'required | numeric'
+        ]);
 
         $validatedData = $v->validate();
 

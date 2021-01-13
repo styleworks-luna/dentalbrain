@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Notice;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class NoticeController extends Controller
@@ -37,13 +38,13 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function update(Notice $notice)
+    public function update(Request $request, Notice $notice)
     {
-        $v = Validator::make(request()->all() . [
-                'title' => 'required',
-                'content' => 'required',
-                'user_id' => 'required | numeric'
-            ]);
+        $v = Validator::make($request->all(), [
+            'title' => 'required',
+            'content' => 'required',
+            'user_id' => 'required | numeric'
+        ]);
 
         $validatedData = $v->validate();
 
