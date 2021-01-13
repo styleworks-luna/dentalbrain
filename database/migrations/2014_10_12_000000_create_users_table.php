@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->unsignedTinyInteger('is_admin')->default('0')->comment('0 : 일반 유저 | 1 : 관리자');
 
             $table->string('api_token',120)->nullable()->default(null)->unique()->comment('API TOKEN');
-
+            $table->unsignedBigInteger('file_id')->nullable();
             $table->timestamp('last_login_at')->nullable();
 
             $table->softDeletes();
