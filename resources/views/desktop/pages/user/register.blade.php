@@ -17,7 +17,7 @@
     @endforeach
     <section id="content" class="content">
         <div class="small-container">
-            <form action="{{ route('user.create') }}" method="POST" id="register-form">
+            <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
                 <section class="register">
                     <h2>회원가입</h2>
