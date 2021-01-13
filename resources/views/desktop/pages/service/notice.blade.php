@@ -20,51 +20,18 @@
                             <span class="date list-common">등록일</span>
                             <span class="views list-common">조회수</span>
                         </li>
-                        <li class="notice-content">
-                            <p class="index list-common">121</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
-                        <li class="notice-content">
-                            <p class="index list-common">120</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
-                        <li class="notice-content">
-                            <p class="index list-common">119</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
-                        <li class="notice-content">
-                            <p class="index list-common">118</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
-                        <li class="notice-content">
-                            <p class="index list-common">117</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
-                        <li class="notice-content">
-                            <p class="index list-common">116</p>
-                            <a href="" class="title list-common">코로나19로 인해 치과임상공부 집에서도 편하게하는 온라인라이브세미나를 시작했습니다. </a>
-                            <p class="writer list-common">uniquechoa</p>
-                            <p class="date list-common">2020.11.30</p>
-                            <p class="views list-common">521</p>
-                        </li>
+                        @foreach($notice as $key => $value)
+                            <li class="notice-content">
+                                <p class="index list-common">{{$value -> id }}</p>
+                                <a href="{{ route('service.notice_detail',['notice' => $value->id])  }}" class="title list-common">{{ $value -> title }}</a>
+                                <p class="writer list-common">{{$value -> name }}</p>
+                                <p class="date list-common">{{$value -> created_at }}</p>
+                                <p class="views list-common">{{$value-> views }}</p>
+                            </li>
+                        @endforeach
                     </ul>
+                    {{ $notice->links() }}
                 </section>
-
             </div>
         </div>
     </section>
