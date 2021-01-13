@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEnquiriesTable extends Migration
+class CreateInquiriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEnquiriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('enquiries', function (Blueprint $table) {
+        Schema::create('inquiries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('이름');
             $table->string('phone')->comment('전화번호');
@@ -32,6 +32,6 @@ class CreateEnquiriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enquiries');
+        Schema::dropIfExists('inquiries');
     }
 }

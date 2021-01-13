@@ -42,30 +42,12 @@ Route::get('find', function () {
     return view('desktop.pages.user.find_id');
 });
 
-//마이페이지 고객센터 공지사항 (임시)
-Route::get('notice', function () {
-    return view('desktop.pages.service.notice');
-});
 
-//마이페이지 고객센터 공지사항 상세 (임시)
-Route::get('notice/detail', function () {
-    return view('desktop.pages.service.notice_detail');
-});
 
-//마이페이지 고객센터 faq (임시)
-Route::get('faq', function () {
-    return view('desktop.pages.service.faq');
-});
 
-//마이페이지 고객센터 문의 (임시)
-Route::get('inquire', function () {
-    return view('desktop.pages.service.inquire');
-});
 
-//마이페이지 고객센터 문의 (임시)
-Route::get('complete', function () {
-    return view('desktop.pages.lecture.lecture_complete');
-});
+
+
 
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
@@ -80,6 +62,33 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     });
 });
 
+
+Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
+    //고객센터 문의 (임시)
+    Route::get('enquiry', function () {
+        return view('desktop.pages.service.inquire');
+    });
+
+    //고객센터 공지사항 (임시)
+    Route::get('notice', function () {
+        return view('desktop.pages.service.notice');
+    });
+
+    //고객센터 공지사항 상세 (임시)
+    Route::get('notice/detail', function () {
+        return view('desktop.pages.service.notice_detail');
+    });
+
+    //고객센터 faq (임시)
+    Route::get('faq', function () {
+        return view('desktop.pages.service.faq');
+    });
+
+    //고객센터 문의 (임시)
+    Route::get('complete', function () {
+        return view('desktop.pages.lecture.lecture_complete');
+    });
+});
 
 
 Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
