@@ -17,8 +17,8 @@ class Faq extends Model
         return $this->belongsTo(FaqCategory::class, 'category_id', 'id');
     }
 
-    public function getCategoryNameAttribute($value)
+    public function getCategoryNameAttribute()
     {
-        return FaqCategory::find($value)->name;
+        return FaqCategory::find($this->attributes['category_id'])->name;
     }
 }

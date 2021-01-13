@@ -15,9 +15,18 @@
             </ol>
 
             <form method="POST" action="{{ route('admin.noticeUpdate',['notice' => $notice->id]) }}">
-                @method('DELETE')
+                @method('PUT')
                 @csrf
-                <button>Delete</button>
+
+                <input type="text" name="id" value="{{$notice -> id}}">
+                <input type="text" name="title" value="{{$notice-> title}}">
+                <input type="text" name="content" value="{{$notice-> content}}">
+                <input type="text" name="user_id" value="{{$notice-> user_id}}">
+                <button type="submit">Update</button>
+            </form>
+
+            <form method="POST">
+
             </form>
         </section>
     </section>

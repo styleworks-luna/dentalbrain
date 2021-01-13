@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Manage\Faq;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class FaqController extends Controller
 {
@@ -22,6 +24,42 @@ class FaqController extends Controller
         return response()->json([
             'success' => true,
             'msg' => '추가되었습니다.',
+        ]);
+    }
+
+    public function edit(Faq $faq)
+    {
+        //return  view(viewPrefix() . 'pages.testfaqUpdate',['faq' => $faq]);
+        return response()->json([
+            'data' => $faq,
+        ]);
+    }
+
+    public function update(Faq $faq)
+    {
+        $v = Validator::make(request()->all() , [
+                'question' => 'required',
+                'answer' => 'required',
+                'category_id' => 'required | numeric'
+            ]);
+
+        $validatedData = $v->validate();
+
+        $faq->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'msg' => '변경이 완료되었습니다.',
+        ]);
+    }
+
+    public function destroy(Faq $faq)
+    {
+        $faq->delete();
+
+        return response()->json([
+            'success' => true,
+            'msg' => '삭제가 완료되었습니다.',
         ]);
     }
 }

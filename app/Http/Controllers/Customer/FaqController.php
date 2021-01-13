@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use App\Models\Manage\Faq;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class FaqController extends Controller
 {
-    //
-    private $dbName = 'faqs';
-
     public function index(){
         return view(viewPrefix() . 'pages.service.faq',['faq' => Faq::all()]);
     }

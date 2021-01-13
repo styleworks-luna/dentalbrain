@@ -43,22 +43,23 @@ Route::get('find', function () {
 });
 
 
-Route::group(['prefix' => 'notice'],function(){
+Route::group(['prefix' => 'service','as' => 'service.'],function(){
     //마이페이지 고객센터 공지사항 (임시)
-    Route::get('/','Customer\NoticeController@index')->name('notice');
+    Route::get('/notice','Customer\NoticeController@index')->name('notice');
 
     ////마이페이지 고객센터 공지사항 상세 (임시)
-    Route::get('detail/{notice}','Customer\NoticeController@show')->name('notice_detail');
+    Route::get('/notice/detail/{notice}','Customer\NoticeController@show')->name('notice_detail');
+    Route::get('faq', 'Customer\FaqController@index')->name('faq');
 });
-
-
-Route::get('service/faq', 'Customer\FaqController@index')->name('faq');
 
 ////마이페이지 고객센터 faq (임시)
 //Route::get('faq', function () {
 //    return view('desktop.pages.service.faq');
 //});
 
+Route::get('test/{id}', function(){
+   return view('desktop.pages.testUpdate');
+});
 
 Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'auth'],function() {
     Route::get('notice','Admin\NoticeController@index')->name('noticeCreate');
@@ -69,6 +70,15 @@ Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => 'auth'],func
     //공지사항 edit 페이지
     Route::delete('notice/{notice}','Admin\NoticeController@destroy')->name('noticeDestroy');
     //공지사항 삭제
+
+    Route::post('faq','Admin\FaqController@store')->name('faqCreate');
+    //FAQ create
+    Route::get('faq/{faq}/edit','Admin\FaqController@edit')->name('faqEdit');
+    //Faq 수정 페이지 데이터 불러오기
+    Route::put('faq/{faq}','Admin\FaqController@update')->name('faqUpdate');
+    //Faq 업데이트
+    Route::delete('faq/{faq}','Admin\FaqController@destroy')->name('faqDestroy');
+    //Faq 삭제
 });
 
 
