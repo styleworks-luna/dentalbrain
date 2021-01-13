@@ -18,3 +18,4 @@ package-lock.json
 /public/js/app/
 /public/fonts/vendor/
 /public/mix-manifest.json
+/public/js/app.js
