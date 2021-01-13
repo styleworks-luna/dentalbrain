@@ -50,15 +50,7 @@ Route::get('instructor', function () {
 
 
 Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
-    //고객센터 faq (임시)
-    Route::get('faq', function () {
-        return view('desktop.pages.service.faq');
-    });
-
-=======
-Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
->>>>>>> bd8c43c9a60fdce1c027a1e5483a453b2dc42bfa
 
     Route::group(['prefix' => 'notices', 'as' => 'notices.'], function () {
         // 고객센터 공지사항
