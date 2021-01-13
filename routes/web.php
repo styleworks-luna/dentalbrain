@@ -49,7 +49,7 @@ Route::get('instructor', function () {
 });
 
 
-Route::group(['prefix' => 'customer', 'as' => 'customer'], function () {
+Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
 
     Route::group(['prefix' => 'notices', 'as' => 'notices.'], function () {
