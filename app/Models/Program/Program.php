@@ -8,7 +8,7 @@ class Program extends Model
 {
     protected $table = 'programs';
 
-    protected $appends = ['major_category_name', 'minor_category_name'];
+    protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt'];
 
     public function majorCategory()
     {
@@ -28,5 +28,10 @@ class Program extends Model
     public function getMinorCategoryNameAttribute()
     {
         return ProgramMinorCategory::find($this->attributes['minor_category_id'])->name;
+    }
+
+    public function getUserLikeCntAttribute()
+    {
+        return UserLike::query()->where('program_id', '=', $this->attributes['id'])->count();
     }
 }

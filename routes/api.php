@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,6 +10,14 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
+    Route::group(['prefix' => '{program}'], function () {
+        Route::get('like', 'Lecture\DetailController@like')->name('like')->middleware('auth:api');
+        Route::post('unlike', 'Lecture\DetailController@like')->name('like')->middleware('auth:api');
+    });
+});
+
 
 // admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {

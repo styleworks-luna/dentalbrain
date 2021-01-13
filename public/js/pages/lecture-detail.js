@@ -13,7 +13,6 @@ $(function () {
         clickTabComment.addClass('active');
         clickTabDetail.removeClass('active');
     });
-
     //댓글 갯수 이벤트
     var length = $('.comment-list > li').length + $('.child-comment-item').length;
     console.log(length);
