@@ -79,7 +79,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     Route::get('/', function () {
         return '준비중.';
     });
-    Route::group(['prefix' => '{lecture}'], function () {
+    Route::group(['prefix' => '{program}'], function () {
         //강의 상세
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');
         // 강의 신청
