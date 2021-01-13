@@ -30,4 +30,26 @@ $(function() {
         }
     })
 
+    $('.trigger-service').on('click', function() {
+        $('.service-layer-wrapper').addClass('open blur');
+        return false;
+    });
+
+    $('.trigger-privacy').on('click', function() {
+        $('.privacy-layer-wrapper').addClass('open blur');
+        return false;
+    });
+
+    $('.trigger-email').on('click', function() {
+        $('.email-layer-wrapper').addClass('open blur');
+        return false;
+    });
+
+    $('.btn-close').on('click', function(e) {
+        e.preventDefault();
+        $('.service-layer-wrapper').removeClass('open blur');
+        $('.privacy-layer-wrapper').removeClass('open blur');
+        $('.email-layer-wrapper').removeClass('open blur');
+    });
+
 });
