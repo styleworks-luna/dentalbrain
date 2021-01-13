@@ -61,16 +61,14 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 
     Route::group(['prefix' => 'inquiries', 'as' => 'inquiries.'], function () {
         //고객센터 문의 (임시)
-        Route::get('/', function () {
-            return view('desktop.pages.service.inquire');
-        })->name('edit');
+        Route::get('/','Customer\InquiryController@index') -> name('index');
 
+        Route::post('/','Customer\InquiryController@store') -> name('store');
     });
 
     Route::group(['prefix' => 'faqs', 'as' => 'faqs.'], function () {
         Route::get('/', 'Customer\FaqController@index')->name('index');
     });
-
 });
 
 
