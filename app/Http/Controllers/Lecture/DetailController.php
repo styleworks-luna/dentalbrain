@@ -12,13 +12,14 @@ class DetailController extends Controller
 {
     public function detail(Program $program)
     {
-        return view(viewPrefix() . 'pages.lecture.lecture_detail', ['program' => $program]);
+        $heart = UserLike::query()->where('program_id', '=', $program->id)
+            ->where('user_id', '=', Auth::id())
+            ->exists();
+        return view(viewPrefix() . 'pages.lecture.lecture_detail', ['program' => $program, 'heart' => $heart]);
     }
 
     public function like(Request $request, Program $program)
     {
-        logger('awer');
-        logger($request->all());
         if ($request->get('like') === 'true') {
             // 찜
             UserLike::updateOrCreate([

@@ -33,7 +33,7 @@ $(function () {
     price.eq(0).removeClass('price-hidden');
 
     $('#ticket').change(function() {
-        var value = $(this).val();
+        var value = $(this).find('option:selected').data('price');
 
         price.eq(value-1).siblings().not('th').addClass('price-hidden');
         price.eq(value-1).removeClass('price-hidden');
@@ -45,8 +45,7 @@ $(function () {
 
     clickLike.click(function (e) {
         e.preventDefault();
-        clickLike.toggleClass('active');
-        if (clickLike.hasClass('active')) {
+        if (!clickLike.hasClass('active')) {
             $.ajax({
                 url: '/api/lectures/' + lectureIdx + '/like',
                 type: 'post',
@@ -56,6 +55,7 @@ $(function () {
                 success: function(res) {
                     var cnt = res.cnt;
 
+                    clickLike.toggleClass('active');
                     $('.like').text(cnt);
                 }
             });
@@ -69,6 +69,7 @@ $(function () {
                 success: function(res) {
                     var cnt = res.cnt;
 
+                    clickLike.toggleClass('active');
                     $('.like').text(cnt);
                 }
             });
