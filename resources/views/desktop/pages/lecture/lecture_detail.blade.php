@@ -48,22 +48,24 @@
                                 <tr>
                                     <th>옵션선택</th>
                                     <td>
-                                        <select name="" id="" class="lecture-select-box">
-                                            <option value="">3개월 수강권 (임시)</option>
-                                            <option value="">6개월 수강권 (임시)</option>
-                                            <option value="">9개월 수강권 (임시)</option>
+                                        <select name="ticket" id=ticket"" class="lecture-select-box">
+                                            @foreach($program->tickets as $ticket)
+                                                <option value="{{$ticket->id}}">{{ $ticket->name }}</option>
+                                            @endforeach
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>결제금액</th>
-                                    <td class="lecture-price">500,000원 (임시)</td>
+                                    @foreach($program->tickets as $ticket)
+                                        <td class="lecture-price">{{ $ticket->price }}원</td>
+                                    @endforeach
                                 </tr>
                             </table>
                         </div>
                         <div class="lecture-btn">
                             <a href="" class="apply-btn">신청하기</a>
-                            <a href="" class="like">2355</a>
+                            <a href="" class="like">{{ $program->user_like_cnt }}</a>
                         </div>
                     </div>
                 </section>

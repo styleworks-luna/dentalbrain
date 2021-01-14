@@ -71,9 +71,9 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 
     Route::group(['prefix' => 'inquiries', 'as' => 'inquiries.'], function () {
         //고객센터 문의 (임시)
-        Route::get('/','Customer\InquiryController@index') -> name('index');
+        Route::get('/', 'Customer\InquiryController@index')->name('index');
 
-        Route::post('/','Customer\InquiryController@store') -> name('store');
+        Route::post('/', 'Customer\InquiryController@store')->name('store');
     });
 
     Route::group(['prefix' => 'faqs', 'as' => 'faqs.'], function () {
@@ -123,7 +123,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('/', 'admin.index');
 });
 
-Route::group(['prefix'=>'api', 'as' => 'api.' , 'middleware' => 'auth'],function(){
+Route::group(['prefix' => 'api', 'as' => 'api.', 'middleware' => 'auth'], function () {
+
+    Route::group(['prefix' => 'lectures', 'as' => 'lectures'], function () {
+
+        Route::group(['prefix' => '{program}'], function () {
+           Route::get('like', 'Lecture\DetailController@like');
+        });
+    });
+
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
@@ -157,7 +165,7 @@ Route::group(['prefix'=>'api', 'as' => 'api.' , 'middleware' => 'auth'],function
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
                 //공지사항 index 페이지 데이터
-                Route::get('/','Admin\NoticeController@index')->name('index');
+                Route::get('/', 'Admin\NoticeController@index')->name('index');
                 // 공지사항 생성 함수
                 Route::post('/', 'Admin\NoticeController@store')->name('store');
                 //공지사항 수정 페이지 데이터
@@ -168,15 +176,15 @@ Route::group(['prefix'=>'api', 'as' => 'api.' , 'middleware' => 'auth'],function
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
             });
 
-            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'],function(){
+            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {
                 //문의하기 index 페이지 데이터
-                Route::get('/','Admin\InquiryController@index')->name('index');
+                Route::get('/', 'Admin\InquiryController@index')->name('index');
                 //문의하기 수정 페이지 데이터
-                Route::get('{Inquiry}/edit','Admin\InquiryController@edit')->name('edit');
+                Route::get('{Inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{Inquiry}','Admin\InquiryController@update')->name('update');
+                Route::put('{Inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
-                Route::delete('{Inquiry}','Admin\InquiryController@destroy')->name('destroy');
+                Route::delete('{Inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
             });
         });
     });

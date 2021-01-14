@@ -38,8 +38,9 @@ $(function () {
         clickLike.toggleClass('active');
         if (clickLike.hasClass('active')) {
             likeNum++;
+            '/api/lectures/5/like'
         } else {
-            likeNum--;
+            '/api/lectures/5/unlike'
         }
     });
 

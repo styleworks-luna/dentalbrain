@@ -23,18 +23,18 @@ class DetailController extends Controller
 
         return response()->json([
             'code' => 1,
-            'msg' => '찜',
+            'cnt' => $program->user_like_cnt,
         ]);
     }
 
     public function unlike(Program $program)
     {
-        UserLike::query()->where('program_id','=',$program->id)
-            ->where('user_id','=',Auth::id())->delete();
+        UserLike::query()->where('program_id', '=', $program->id)
+            ->where('user_id', '=', Auth::id())->delete();
 
         return response()->json([
             'code' => 1,
-            'msg' => '안찜',
+            'cnt' => $program->user_like_cnt,
         ]);
     }
 }

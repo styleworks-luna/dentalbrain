@@ -10,6 +10,10 @@ class Program extends Model
 
     protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt'];
 
+    /*
+     * ======= Define Relationships =========
+     */
+
     public function majorCategory()
     {
         return $this->belongsTo('program_major_categories', 'major_category_id');
@@ -19,6 +23,15 @@ class Program extends Model
     {
         return $this->belongsTo('program_minor_categories', 'minor_category_id');
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
+    }
+
+    /*
+     * ======= Define Appended Attributes =========
+     */
 
     public function getMajorCategoryNameAttribute()
     {
