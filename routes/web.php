@@ -128,7 +128,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.', 'middleware' => 'auth'], functi
     Route::group(['prefix' => 'lectures', 'as' => 'lectures'], function () {
 
         Route::group(['prefix' => '{program}'], function () {
-           Route::get('like', 'Lecture\DetailController@like');
+            Route::post('like', 'Lecture\DetailController@like')->middleware('auth');
+
         });
     });
 
