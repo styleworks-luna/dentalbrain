@@ -9,9 +9,13 @@ use Illuminate\Support\Facades\Validator;
 
 class NoticeController extends Controller
 {
-    public function index()
-    {
-        return view(viewPrefix() . 'pages.test');
+    public function index(){
+        $notice = Notice::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
+        return response()->json([
+            'notice' => $notice,
+        ]);
     }
 
     public function store()
@@ -38,16 +42,14 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function update(Request $request, Notice $notice)
+    public function update(Request $request)
     {
-        $v = Validator::make($request->all(), [
+        $validatedData = Validator::make($request->all(), [
             'title' => 'required',
             'content' => 'required',
             'user_id' => 'required | numeric'
         ]);
-
-        $validatedData = $v->validate();
-
+        $notice = Notice::find($request->id);
         $notice->update($validatedData);
 
         return response()->json([

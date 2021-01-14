@@ -9,12 +9,24 @@ use Illuminate\Support\Facades\Validator;
 
 class FaqController extends Controller
 {
+
+    public function index(){
+        $faq = Faq::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
+        return response()->json([
+            'faq' => $faq,
+        ]);
+    }
+
     public function store()
     {
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'category_id' => 'required | numeric'
+            'category_id' => 'required | numeric',
+            'is_open' => 'required',
+            'user_id'=>'required | numeric'
         ]);
 
         Faq::create($v->validate());
@@ -28,7 +40,7 @@ class FaqController extends Controller
     public function edit(Faq $faq)
     {
         return response()->json([
-            'data' => $faq,
+            'faq' => $faq,
         ]);
     }
 
@@ -37,7 +49,8 @@ class FaqController extends Controller
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'category_id' => 'required | numeric'
+            'category_id' => 'required | numeric',
+             'is_open' => 'required'
         ]);
 
         $validatedData = $v->validate();
