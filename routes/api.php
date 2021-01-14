@@ -47,7 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
         Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
             //공지사항 index 페이지 데이터
-            Route::get('/','Admin\NoticeController@index')->index('index');
+            Route::get('/','Admin\NoticeController@index')->name('index');
             // 공지사항 생성 함수
             Route::post('/', 'Admin\NoticeController@store')->name('store');
             //공지사항 수정 페이지 데이터
