@@ -15,7 +15,6 @@ $(function () {
     });
     //댓글 갯수 이벤트
     var length = $('.comment-list > li').length + $('.child-comment-item').length;
-    console.log(length);
     $('.comment-length').html('(' + length + ')');
 
     //댓글달기 클릭 이벤트
@@ -29,6 +28,17 @@ $(function () {
         targetForm.toggleClass('hide');
     });
 
+    //select 에 따른 가격 변동
+    var price = $('.lecture-price');
+    price.eq(0).removeClass('price-hidden');
+
+    $('#ticket').change(function() {
+        var value = $(this).val();
+
+        price.eq(value-1).siblings().not('th').addClass('price-hidden');
+        price.eq(value-1).removeClass('price-hidden');
+    });
+
     //하트 클릭 이벤트
     var clickLike = $('.like');
     var likeNum = 0
@@ -40,7 +50,7 @@ $(function () {
             likeNum++;
             '/api/lectures/5/like'
         } else {
-            '/api/lectures/5/unlike'
+            '/api/lectures/5/likefalse'
         }
     });
 
