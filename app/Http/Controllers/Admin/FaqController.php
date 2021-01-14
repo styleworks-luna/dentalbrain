@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Validator;
 
 class FaqController extends Controller
 {
+
+    public function show(){
+        $faq = Faq::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
+        return response()->json([
+            'faq' => $faq,
+        ]);
+    }
+
     public function store()
     {
         $v = Validator::make(request()->all(), [
