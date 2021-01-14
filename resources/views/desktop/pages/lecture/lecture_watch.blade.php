@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="video-wrap">
-                            <div class="player"></div>
+                            <div id="player"></div>
                         </div>
                         <div class="lecture-question">
                             <p>질문하기</p>
@@ -40,7 +40,54 @@
                     <div class="play-list">
                         <h3>플레이리스트</h3>
                         <ul>
-                            <li>hahas</li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li class="active">
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
+                            <li>
+                                <div class="thumbnail">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                </div>
+                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
+                            </li>
                         </ul>
                     </div>
                 </div>

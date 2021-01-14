@@ -14,7 +14,11 @@ function onYouTubeIframeAPIReady() {
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
-        }
+        },
+        playerVars: {
+            modestbranding: true,
+            autoplay: true
+        },
     });
 }
 function onPlayerReady(event) {

@@ -42,9 +42,7 @@
             color: $white
 
     .video-wrap
-        +size(880px,495px)
         +margin(top 20px)
-        background-color: $white
 
     .lecture-question
         +margin(top 40px)
@@ -82,4 +80,32 @@
             +size(378px, 659px)
             +margin(top 11px)
             +border(1px solid $border-color-black)
+            overflow: hidden
+            overflow-y: auto
+
+            &::-webkit-scrollbar
+                display: none
+
+        li
+            +margin(top 10px)
+            +padding(left 19px top 10px bottom 10px)
+            overflow: hidden
+            cursor: pointer
+
+            .thumbnail
+                +size(120px, 68px)
+                float: left
+
+                img
+                    +size(120px, 68px)
+
+            p
+                +size(180px)
+                +padding(15px 20px)
+                float: left
+                color: $white
+                line-height: 1.36
+
+        .active
+            +background(null, null, null, $background-color-playlist)
 
