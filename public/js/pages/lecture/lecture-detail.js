@@ -40,14 +40,15 @@ $(function () {
     });
 
     //하트 클릭 이벤트
-    var clickLike = $('.like');
+    var clickLike = $('.like')
+    var lectureIdx = $('.lecture-idx').val();
 
     clickLike.click(function (e) {
         e.preventDefault();
         clickLike.toggleClass('active');
         if (clickLike.hasClass('active')) {
             $.ajax({
-                url: '/api/lectures/1/like',
+                url: '/api/lectures/' + lectureIdx + '/like',
                 type: 'post',
                 data: {
                     'like' : 'true',
@@ -60,7 +61,7 @@ $(function () {
             });
         } else {
             $.ajax({
-                url: '/api/lectures/1/like',
+                url: '/api/lectures/' + lectureIdx + '/like',
                 type: 'post',
                 data: {
                     'like' : 'false',
