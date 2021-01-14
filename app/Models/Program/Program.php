@@ -16,17 +16,22 @@ class Program extends Model
 
     public function majorCategory()
     {
-        return $this->belongsTo('program_major_categories', 'major_category_id');
+        return $this->belongsTo(ProgramMajorCategory::class, 'major_category_id');
     }
 
     public function minorCategory()
     {
-        return $this->belongsTo('program_minor_categories', 'minor_category_id');
+        return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
     public function tickets()
     {
         return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'program_id', 'id');
     }
 
     /*
