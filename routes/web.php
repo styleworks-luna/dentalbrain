@@ -48,9 +48,14 @@ Route::get('instructor', function () {
     return view('desktop.pages.introduce.instructor');
 });
 
-//강사 소개 (임시)
+//강의 시청 (임시)
 Route::get('watch', function () {
     return view('desktop.pages.lecture.lecture_watch');
+});
+
+//전체 강의 (임시)
+Route::get('all', function () {
+    return view('desktop.pages.lecture.lecture_all');
 });
 
 
@@ -116,4 +121,63 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
+});
+
+Route::group(['prefix'=>'api', 'as' => 'api.' , 'middleware' => 'auth'],function(){
+    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+
+        });
+
+        Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
+
+        });
+
+        Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
+
+        });
+
+        Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {
+
+        });
+
+        Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
+            Route::group(['prefix' => 'faq', 'as' => 'faqs.'], function () {
+                //FAQ index 페이지 데이터
+                Route::get('/', 'Admin\FaqController@index')->name('index');
+                //FAQ 생성 함수
+                Route::post('/', 'Admin\FaqController@store')->name('store');
+                //Faq 수정 페이지 데이터
+                Route::get('{faq}/edit', 'Admin\FaqController@edit')->name('edit');
+                //Faq 업데이트 함수
+                Route::put('{faq}', 'Admin\FaqController@update')->name('update');
+                //Faq 삭제 함수
+                Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
+            });
+
+            Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
+                //공지사항 index 페이지 데이터
+                Route::get('/','Admin\NoticeController@index')->name('index');
+                // 공지사항 생성 함수
+                Route::post('/', 'Admin\NoticeController@store')->name('store');
+                //공지사항 수정 페이지 데이터
+                Route::get('{notice}/edit', 'Admin\NoticeController@edit')->name('edit');
+                //공지사항 업데이트 함수
+                Route::put('{notice}', 'Admin\NoticeController@update')->name('update');
+                //공지사항 삭제 함수
+                Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
+            });
+
+            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'],function(){
+                //문의하기 index 페이지 데이터
+                Route::get('/','Admin\InquiryController@index')->name('index');
+                //문의하기 수정 페이지 데이터
+                Route::get('{Inquiry}/edit','Admin\InquiryController@edit')->name('edit');
+                //문의하기 업데이트 함수
+                Route::put('{Inquiry}','Admin\InquiryController@update')->name('update');
+                //문의하기 삭제 함수
+                Route::delete('{Inquiry}','Admin\InquiryController@destroy')->name('destroy');
+            });
+        });
+    });
 });

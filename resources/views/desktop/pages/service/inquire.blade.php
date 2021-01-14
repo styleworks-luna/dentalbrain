@@ -4,7 +4,7 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/inquire.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/service/inquire.js') }}"></script>
 @endsection
 
 @section('style')
