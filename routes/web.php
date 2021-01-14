@@ -121,6 +121,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
+    Route::view('{any}', 'admin.index');
+    Route::view('customer/{any}', 'admin.index');
 });
 
 Route::group(['prefix'=>'api', 'as' => 'api.' , 'middleware' => 'auth'],function(){

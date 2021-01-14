@@ -9,7 +9,10 @@ import '@popperjs/core';
 import { Sidebar, Alert, Popover } from '@coreui/coreui';
 import { Helper } from '@/helper.js';
 
+import Layout from '@/components/admin/grid/Layout.vue';
+
 Vue.prototype.Helper = Helper;
+Vue.component('layout', Layout);
 
 const app = new Vue({
     el: '#app',
