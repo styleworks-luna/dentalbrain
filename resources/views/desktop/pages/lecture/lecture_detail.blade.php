@@ -48,7 +48,7 @@
                                 <tr>
                                     <th>옵션선택</th>
                                     <td>
-                                        <select name="ticket" id=ticket"" class="lecture-select-box">
+                                        <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
                                                 <option value="{{$ticket->id}}">{{ $ticket->name }}</option>
                                             @endforeach
@@ -58,7 +58,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        <td class="lecture-price">{{ $ticket->price }}원</td>
+                                        <td class="lecture-price price-hidden">{{ $ticket->price }}원</td>
                                     @endforeach
                                 </tr>
                             </table>
