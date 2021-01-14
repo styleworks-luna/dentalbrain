@@ -24,7 +24,9 @@ class FaqController extends Controller
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'category_id' => 'required | numeric'
+            'category_id' => 'required | numeric',
+            'is_open' => 'required',
+            'user_id'=>'required | numeric'
         ]);
 
         Faq::create($v->validate());
@@ -47,7 +49,8 @@ class FaqController extends Controller
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'category_id' => 'required | numeric'
+            'category_id' => 'required | numeric',
+             'is_open' => 'required'
         ]);
 
         $validatedData = $v->validate();
