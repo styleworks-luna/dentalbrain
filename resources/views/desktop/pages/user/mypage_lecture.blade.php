@@ -1,7 +1,7 @@
 @extends('desktop.layouts.app')
 
 @section('script')
-    <script type="text/javascript" src="{{ asset('js/pages/user/mypage-lecture.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/user/mypage-app.js') }}"></script>
 @endsection
 
 @section('style')
