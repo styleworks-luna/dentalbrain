@@ -14,6 +14,15 @@ class NoticeController extends Controller
         return view(viewPrefix() . 'pages.test');
     }
 
+    public function show(){
+        $notice = Notice::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
+        return response()->json([
+            'notice' => $notice,
+        ]);
+    }
+
     public function store()
     {
         $v = Validator::make(request()->all(), [

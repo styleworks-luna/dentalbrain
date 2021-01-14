@@ -66,16 +66,14 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 
     Route::group(['prefix' => 'inquiries', 'as' => 'inquiries.'], function () {
         //고객센터 문의 (임시)
-        Route::get('/', function () {
-            return view('desktop.pages.service.inquire');
-        })->name('edit');
+        Route::get('/','Customer\InquiryController@index') -> name('index');
 
+        Route::post('/','Customer\InquiryController@store') -> name('store');
     });
 
     Route::group(['prefix' => 'faqs', 'as' => 'faqs.'], function () {
         Route::get('/', 'Customer\FaqController@index')->name('index');
     });
-
 });
 
 
@@ -118,4 +116,25 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
+
+    Route::group(['prefix' => 'inquiry', 'as' => 'inquiry.'],function(){
+        Route::get('/','Admin\InquiryController@show')->name('show');
+        Route::get('{Inquiry}/edit','Admin\InquiryController@edit')->name('edit');
+        Route::put('{Inquiry}','Admin\InquiryController@update')->name('update');
+        Route::delete('{Inquiry}','Admin\InquiryController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix'=>'faqs', 'as' => 'faqs.' ],function(){
+        Route::get('/','Admin\FaqController@show')->name('show');
+        Route::get('{faq}/edit','Admin\FaqController@edit')->name('edit');
+        Route::put('{faq}','Admin\FaqController@update')->name('update');
+        Route::delete('{faq}','Admin\FaqController@destroy')->name('destroy');
+    });
+
+    Route::group(['prefix'=>'notices', 'as' => 'notices.'],function(){
+        Route::get('/','Admin\NoticeController@show')->name('show');
+        Route::get('{notice}/edit','Admin\NoticeController@edit')->name('edit');
+        Route::put('{notice}','Admin\NoticeController@update')->name('update');
+        Route::delete('{notice}','Admin\NoticeController@destroy')->name('destroy');
+    });
 });

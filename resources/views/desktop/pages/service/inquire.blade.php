@@ -19,7 +19,8 @@
 
                 <section class="inquire">
                     <h2>문의하기</h2>
-                    <form action="" id="inquire-form">
+                    <form method="POST" action="{{route('customer.inquiries.index')}}" id="inquire-form" >
+                        @csrf
                         <div class="inquire-form-wrap">
                             <table>
                                 <tr>
@@ -30,7 +31,8 @@
                                                name="name"
                                                placeholder="이름을 입력해주세요."
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 이름을 입력해주세요.">
+                                               data-parsley-required-message="※ 이름을 입력해주세요."
+                                                value="{{old('name')}}">
                                     </td>
 
                                     <th>연락처</th>
@@ -41,7 +43,8 @@
                                                class="phone"
                                                placeholder="연락처를 입력해주세요."
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 휴대전화 번호를 입력해주세요.">
+                                               data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
+                                               value="{{old('phone')}}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -55,7 +58,8 @@
                                                data-parsley-type="email"
                                                data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                                data-parsley-class-handler=".ui-emailbox"
-                                               data-parsley-errors-container=".email-error-wrap">
+                                               data-parsley-errors-container=".email-error-wrap"
+                                               value="{{old('email')}}">
                                         <p>※ 답변 받을 이메일 주소를 입력해주세요.</p>
                                         <div class="email-error-wrap parsley-error-wrap"></div>
                                     </td>
@@ -69,18 +73,21 @@
                                                class="title"
                                                placeholder="제목을 입력해주세요."
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 제목을 입력해주세요.">
+                                               data-parsley-required-message="※ 제목을 입력해주세요."
+                                               value="{{old('title')}}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>문의내용</th>
                                     <td class="inquire-content-wrap" colspan="3">
                                         <textarea id="inquire_content"
-                                                  name="inquire_content"
+                                                  name="content"
                                                   class="inquire-content"
                                                   placeholder="문의내용을 입력해주세요."
                                                   data-parsley-required="true"
-                                                  data-parsley-required-message="※ 문의내용을 입력해주세요."></textarea>
+                                                  data-parsley-required-message="※ 문의내용을 입력해주세요."
+                                                  value="{{old('content')}}">
+                                        </textarea>
                                     </td>
                                 </tr>
                             </table>
