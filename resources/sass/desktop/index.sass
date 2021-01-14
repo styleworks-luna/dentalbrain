@@ -96,12 +96,13 @@
             color: $gray-700
             cursor: pointer
 
-            &:hover
-                +padding(left 66px top 24px)
-                +border(2px solid $page-color)
-                +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
-                font-weight: bold
-                color: $font-color-base
+        li:hover,
+        .active-menu
+            +padding(left 66px top 24px)
+            +border(2px solid $page-color)
+            +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
+            font-weight: bold
+            color: $font-color-base
 
         li:nth-child(2)
             +size(189px 189px, 70px 70px)
@@ -110,12 +111,18 @@
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_2.png')
 
+        li:nth-child(2).active-menu
+            +background('/images/desktop/lecture/lecture_menu_icon_on_2.png')
+
         li:nth-child(3)
             +size(189px 189px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_3.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_3.png')
+
+        li:nth-child(3).active-menu
+            +background('/images/desktop/lecture/lecture_menu_icon_on_3.png')
 
         li:nth-child(4)
             +size(239px 239px, 70px 70px)
@@ -124,12 +131,18 @@
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_4.png')
 
+        li:nth-child(4).active-menu
+            +background('/images/desktop/lecture/lecture_menu_icon_on_4.png')
+
         li:nth-child(5)
             +size(152px 152px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_5.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_5.png')
+
+        li:nth-child(5).active-menu
+            +background('/images/desktop/lecture/lecture_menu_icon_on_5.png')
 
         li:nth-child(6)
             +size(133px 133px, 70px 70px)
@@ -138,6 +151,9 @@
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_6.png')
+
+        li:nth-child(6).active-menu
+            +background('/images/desktop/lecture/lecture_menu_icon_on_6.png')
 
     .lecture-contents
         +margin(top 38px)
@@ -197,6 +213,7 @@
         .lecture-card:nth-child(2),
         .lecture-card:nth-child(3)
             +margin(top 0)
+
 .ad
     +margin(top 104px)
 

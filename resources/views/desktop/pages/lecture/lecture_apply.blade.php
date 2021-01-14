@@ -5,7 +5,7 @@
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/lecture-apply.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-apply.js') }}"></script>
 @endsection
 
 @section('style')

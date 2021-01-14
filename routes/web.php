@@ -48,9 +48,14 @@ Route::get('instructor', function () {
     return view('desktop.pages.introduce.instructor');
 });
 
-//강사 소개 (임시)
+//강의 시청 (임시)
 Route::get('watch', function () {
     return view('desktop.pages.lecture.lecture_watch');
+});
+
+//전체 강의 (임시)
+Route::get('all', function () {
+    return view('desktop.pages.lecture.lecture_all');
 });
 
 

@@ -39,5 +39,7 @@
     </main>
     @include('desktop.layouts.footer')
 </div>
+
+@yield('vue', '')
 </body>
 </html>
