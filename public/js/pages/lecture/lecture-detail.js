@@ -41,16 +41,36 @@ $(function () {
 
     //하트 클릭 이벤트
     var clickLike = $('.like');
-    var likeNum = 0
 
     clickLike.click(function (e) {
         e.preventDefault();
         clickLike.toggleClass('active');
         if (clickLike.hasClass('active')) {
-            likeNum++;
-            '/api/lectures/5/like'
+            $.ajax({
+                url: '/api/lectures/1/like',
+                type: 'post',
+                data: {
+                    'like' : 'true',
+                },
+                success: function(res) {
+                    var cnt = res.cnt;
+
+                    $('.like').text(cnt);
+                }
+            });
         } else {
-            '/api/lectures/5/likefalse'
+            $.ajax({
+                url: '/api/lectures/1/like',
+                type: 'post',
+                data: {
+                    'like' : 'false',
+                },
+                success: function(res) {
+                    var cnt = res.cnt;
+
+                    $('.like').text(cnt);
+                }
+            });
         }
     });
 

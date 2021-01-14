@@ -123,12 +123,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('/', 'admin.index');
 });
 
-Route::group(['prefix' => 'api', 'as' => 'api.', 'middleware' => 'auth'], function () {
+// TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
+Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures'], function () {
 
         Route::group(['prefix' => '{program}'], function () {
-            Route::post('like', 'Lecture\DetailController@like')->middleware('auth');
+            Route::post('like', 'Lecture\DetailController@like');
 
         });
     });

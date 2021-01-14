@@ -17,13 +17,15 @@ class DetailController extends Controller
 
     public function like(Request $request, Program $program)
     {
-        if ($request->get('like') === true) {
+        logger('awer');
+        logger($request->all());
+        if ($request->get('like') === 'true') {
             // 찜
             UserLike::updateOrCreate([
                 'user_id' => Auth::id(),
                 'program_id' => $program->id,
             ]);
-        } elseif ($request->get('like') === false) {
+        } elseif ($request->get('like') === 'false') {
             // 찜 해제
             UserLike::query()->where('program_id', '=', $program->id)
                 ->where('user_id', '=', Auth::id())->delete();
@@ -34,7 +36,7 @@ class DetailController extends Controller
                 'cnt' => $program->user_like_cnt,
             ], 400);
         }
-
+        $program->refresh();
         // 정상 상황.
         return response()->json([
             'code' => 1,
