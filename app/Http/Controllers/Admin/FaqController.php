@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class FaqController extends Controller
 {
 
-    public function show(){
+    public function index(){
         $faq = Faq::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
@@ -40,7 +40,7 @@ class FaqController extends Controller
     public function edit(Faq $faq)
     {
         return response()->json([
-            'data' => $faq,
+            'faq' => $faq,
         ]);
     }
 

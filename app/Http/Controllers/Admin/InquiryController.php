@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Manage\Inquiry;
 
 class InquiryController {
-    public function show(){
+    public function index(){
         $inquiry = Inquiry::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(20);
