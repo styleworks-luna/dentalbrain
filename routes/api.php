@@ -32,9 +32,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     });
 
     Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
-        Route::group(['prefix' => 'notices', 'as' => 'notices.'], function () {
-            // 공지사항
-            Route::get('notice', 'Admin\NoticeController@index')->name('index');
+        Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
+            // 공지사항 목록 데이터
+            Route::get('/','Admin\NoticeController@show')->name('show');
             // 공지사항 저장
             Route::post('notice', 'Admin\NoticeController@store')->name('create');
             //공지사항 edit
@@ -55,6 +55,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
             //Faq 삭제
             Route::delete('faq/{faq}', 'Admin\FaqController@destroy')->name('destroy');
         });
-    });
 
+        Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'],function(){
+            //문의하기 목록
+            Route::get('/','Admin\InquiryController@show')->name('show');
+            //문의하기 edit
+            Route::get('{Inquiry}/edit','Admin\InquiryController@edit')->name('edit');
+            //문의하기 update
+            Route::put('{Inquiry}','Admin\InquiryController@update')->name('update');
+            //문의하기 delete
+            Route::delete('{Inquiry}','Admin\InquiryController@destroy')->name('destroy');
+        });
+    });
 });
