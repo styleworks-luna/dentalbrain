@@ -33,6 +33,7 @@ class InquiryController {
             'email' => 'required|email',
             'title' => 'required',
             'content' => 'required',
+            'category' => 'required|numeric'
         ]);
         $inquiry = Inquiry::find($request->id);
         $inquiry->update($validatedData);
