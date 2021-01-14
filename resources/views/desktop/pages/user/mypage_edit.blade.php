@@ -101,7 +101,7 @@
                         <tr>
                             <th><label for="upw">비밀번호 변경</label></th>
                             <td>
-                                <input type="text" id="password" name="password"
+                                <input type="password" id="password" name="password"
                                        placeholder="변경할 비밀번호를 입력해주세요."
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 비밀번호를 입력해주세요."
@@ -114,7 +114,7 @@
                         <tr>
                             <th><label for="check-upw">비밀번호 확인</label></th>
                             <td>
-                                <input type="text" id="password_confirmation" name="password_confirmation"
+                                <input type="password" id="password_confirmation" name="password_confirmation"
                                        class="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
                                        data-parsley-required="true"
