@@ -13,7 +13,7 @@
                     <h1>로그인</h1>
                     <div class="login-form">
                         <input type="text" id="login_id" name="login_id" class="login-id" placeholder="아이디를 입력하세요.">
-                        <input type="text" id="password" name="password" class="password" placeholder="비밀번호를 입력하세요">
+                        <input type="password" id="password" name="password" class="password" placeholder="비밀번호를 입력하세요">
                         <input type="submit" class="btn-login" value="로그인">
                     </div>
                     <div class="login-addition">
