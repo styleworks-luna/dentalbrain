@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/pages/user/mypage-question.js') }}"></script>

@@ -40,11 +40,7 @@
 </head>
 <body>
 <div id="app">
-    @include('desktop.layouts.header')
-    <main class="main">
-        @yield('content')
-    </main>
-    @include('desktop.layouts.footer')
+    @yield('frame')
 </div>
 
 @yield('vue', '')
