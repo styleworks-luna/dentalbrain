@@ -25,17 +25,16 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
+        logger($request);
         $validatedData = $request->validate([
             'question' => 'required',
             'answer' => 'required',
             'category_id' => 'required | numeric',
             'is_open' => 'required',
         ]);
-        $data = $v->validate();
+        $validatedData['user_id'] = Auth::id();
 
-        $data['user_id'] = Auth::id();
-
-        Faq::create($data);
+        Faq::create($validatedData);
 
         return response()->json([
             'success' => true,
