@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
+use App\Models\Program\Comment;
 use App\Models\Program\Program;
 use App\Models\Program\UserLike;
 use Illuminate\Http\Request;
@@ -15,7 +16,19 @@ class DetailController extends Controller
         $heart = UserLike::query()->where('program_id', '=', $program->id)
             ->where('user_id', '=', Auth::id())
             ->exists();
-        return view(viewPrefix() . 'pages.lecture.lecture_detail', ['program' => $program, 'heart' => $heart]);
+
+        $parents = Comment::ofProgram($program->id)
+            ->whereNull('parent_id')->with('children')->orderBy('id')->get();
+
+        $children = Comment::ofProgram($program->id)
+            ->whereNotNull('parent_id')->orderBy('id')->get();
+
+        return view(viewPrefix() . 'pages.lecture.lecture_detail', [
+            'program' => $program,
+            'heart' => $heart,
+            'comments' => $parents,
+            'children' => $children,
+        ]);
     }
 
     public function like(Request $request, Program $program)
