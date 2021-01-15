@@ -23,7 +23,7 @@
                         @foreach($notices as $key => $value)
                             <li class="notice-content">
                                 <p class="index list-common">{{$value -> id }}</p>
-                                <a href="{{ route('service.notice_detail',['notice' => $value->id])  }}" class="title list-common">{{ $value -> title }}</a>
+                                <a href="{{ route('customer.notices.show',['notice' => $value->id])  }}" class="title list-common">{{ $value -> title }}</a>
                                 <p class="writer list-common">{{$value -> name }}</p>
                                 <p class="date list-common">{{$value -> created_at }}</p>
                                 <p class="views list-common">{{$value-> views }}</p>

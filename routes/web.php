@@ -176,7 +176,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::post('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                Route::get('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {

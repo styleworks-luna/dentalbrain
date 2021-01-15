@@ -24,8 +24,16 @@ class StatusChangeImpl implements StatusChangeMethod{
                 $model->save();
             }
             DB::commit();
+            return response()->json([
+                'success' => true,
+                'msg' => '삭제가 완료되었습니다.',
+            ]);
         }catch(\Exception $ex){
             DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'msg' => '삭제가 취소되었습니다.',
+            ]);
         }
     }
 }
