@@ -11,7 +11,9 @@
 <script>
     export default {
         name: 'AdminButtonIcon',
-        props:['isOpen'],
+        props: {
+            'isOpen': [Number, Boolean]
+        },
         computed: {
             checkIsOpen() {
                 return {

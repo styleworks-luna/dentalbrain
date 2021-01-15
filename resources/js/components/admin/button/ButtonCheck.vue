@@ -10,10 +10,12 @@
 <script>
     export default {
         name: 'AdminButtonCheck',
-        props: ['propsCheck'],
+        props: {
+            'propsCheck': [Number, Boolean]
+        },
         data () {
             return {
-                check: ''
+                check: false
             }
         },
         mounted() {
