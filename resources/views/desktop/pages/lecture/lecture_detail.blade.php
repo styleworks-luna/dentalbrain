@@ -58,7 +58,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        <td class="lecture-price price-hidden">{{ $ticket->price }}원</td>
+                                        <td class="lecture-price price-hidden" data-price="{{ $ticket->price }}">{{ $ticket->price }}원</td>
                                     @endforeach
                                 </tr>
                             </table>

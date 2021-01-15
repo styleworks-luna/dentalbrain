@@ -28,15 +28,26 @@ $(function () {
         targetForm.toggleClass('hide');
     });
 
-    //select 에 따른 가격 변동
-    var price = $('.lecture-price');
-    price.eq(0).removeClass('price-hidden');
+    // select 에 따른 가격 변동
+    function findprice(value) {
+        var price = $('.lecture-price');
 
+        price.each(function () {
+            if($(this).data('price') == value) {
+                $(this).removeClass('price-hidden');
+                $(this).siblings('.lecture-price').addClass('price-hidden');
+            }
+        });
+    }
+
+    // 처음 randering시
+    var value = $('.lecture-select-box').find('option:selected').data('price');
+    findprice(value);
+
+    //옵션값에 변화를주었을때
     $('#ticket').change(function() {
-        var value = $(this).find('option:selected').data('price');
-
-        price.eq(value-1).siblings().not('th').addClass('price-hidden');
-        price.eq(value-1).removeClass('price-hidden');
+        var data = $(this).find('option:selected').data('price');
+        findprice(data);
     });
 
     //하트 클릭 이벤트
