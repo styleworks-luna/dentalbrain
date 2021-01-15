@@ -18,11 +18,12 @@ class StatusChangeImpl implements StatusChangeMethod{
         try{
             $this->statusChangeUpdate($model , $key);
             DB::commit();
-            return(response()->json([
+            return response()->json([
                 'success'=>true,
-                'msg' => '성공하였습니다.'
-            ]));
+                'msg' => '실패하였습니다.'
+            ]);
         }catch(\Exception $ex){
+            logger($ex);
             DB::rollBack();
             return response()->json([
                 'success'=>false,
