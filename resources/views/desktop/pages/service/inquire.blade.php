@@ -67,14 +67,20 @@
                                 <tr>
                                     <th>제목</th>
                                     <td class="title-wrap" colspan="3">
+                                        <select id="title-category" name="title-category" class="select-menu">
+                                            <option value="">haha</option>
+                                        </select>
+
                                         <input type="text"
                                                id="title"
                                                name="title"
                                                class="title"
                                                placeholder="제목을 입력해주세요."
+                                               value="{{old('title')}}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 제목을 입력해주세요."
-                                               value="{{old('title')}}">
+                                               data-parsley-errors-container=".title-error-wrap">
+                                        <div class="title-error-wrap parsley-error-wrap"></div>
                                     </td>
                                 </tr>
                                 <tr>

@@ -6,6 +6,7 @@
 @import '@sass/components/_input.sass'
 @import '@sass/components/_emailbox.sass'
 @import '@sass/components/_textarea.sass'
+@import '@sass/components/_selectbox.sass'
 
 
 .inquire
@@ -26,6 +27,13 @@
     .ui-emailbox
         +emailbox()
         float: left
+
+    select
+        +selectbox(240px, 50px)
+
+        + .ui-selectmenu-button
+            +margin(right 10px)
+            float: left
 
     h2
         font-size: 24px
@@ -73,7 +81,7 @@
                 +size(1096px)
 
                 input[name="title"]
-                    +size(1058px, 50px)
+                    +size(810px, 50px)
 
             .inquire-content-wrap
                 +size(1096px)
@@ -86,3 +94,6 @@
             +btn(purple-fill)
             +size(200px, 50px)
             font-size: 16px
+
+.title-error-wrap
+    +margin(left 250px)
