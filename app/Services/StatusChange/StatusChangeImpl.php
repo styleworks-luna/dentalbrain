@@ -20,7 +20,7 @@ class StatusChangeImpl implements StatusChangeMethod{
             DB::commit();
             return response()->json([
                 'success'=>true,
-                'msg' => '실패하였습니다.'
+                'msg' => '성공하였습니다.'
             ]);
         }catch(\Exception $ex){
             logger($ex);
