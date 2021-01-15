@@ -50,7 +50,8 @@
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
-                                                <option value="{{$ticket->id}}" data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
+                                                <option value="{{$ticket->id}}"
+                                                        data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -58,7 +59,9 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        <td class="lecture-price price-hidden" data-price="{{ $ticket->price }}">{{ $ticket->price }}원</td>
+                                        <td class="lecture-price price-hidden"
+                                            data-price="{{ $ticket->price }}">{{ $ticket->price }}원
+                                        </td>
                                     @endforeach
                                 </tr>
                             </table>
@@ -66,7 +69,8 @@
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
                             <a href="" class="apply-btn">신청하기</a>
-                            <a href="" class="like {{ $heart == true ? 'active' : '' }}">{{ $program->user_like_cnt }}</a>
+                            <a href=""
+                               class="like {{ $heart == true ? 'active' : '' }}">{{ $program->user_like_cnt }}</a>
                         </div>
                     </div>
                 </section>
@@ -79,7 +83,6 @@
                     </div>
                     <div class="lecture-detail-content">
                         {!! $program->description !!}
-                        {{--<img src="{{ asset('/images/dummy/test.png') }}" alt="" class="lecture-detail-image">--}}
                     </div>
                 </section>
                 <section id="comment" class="lecture-comment">
@@ -87,125 +90,71 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="" class="comment-input-form">
-                        <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
-                        <input type="submit" value="등록" class="comment-input-btn">
-                    </form>
+                        <form action="" class="comment-input-form">
+                            <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
+                            <input type="submit" value="등록" class="comment-input-btn">
+                        </form>
                     <ul class="comment-list">
-                        <li class="comment-total-area">
-                            <div class="comment-area">
-                                <div class="profile-img">
-                                    <img src="{{ asset('/images/global/profile_default.png') }}" alt="profile image">
+                        @forelse($comments as $comment)
+                            <li class="comment-total-area">
+                                <div class="comment-area">
+                                    <div class="profile-img">
+                                        <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
+                                             alt="profile image">
+                                    </div>
+                                    <div class="write-info">
+                                        <span class="write-name">{{ $comment->user->name }}</span>
+                                        <span class="date">{{ $comment->created_at }}</span>
+                                        <p class="comment-text">{{ $comment->content }}</p>
+                                        <a href="#" class="btn-comment-write">댓글달기</a>
+                                    </div>
+                                    <div class="comment-btn-area">
+                                        <form action="">
+                                            @can('update',$comment)
+                                                <button type="submit" class="btn-comment-modified">수정</button>
+                                            @endcan
+                                            @can('delete',$comment)
+                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                            @endcan
+                                        </form>
+                                    </div>
                                 </div>
-                                <div class="write-info">
-                                    <span class="write-name">홍길동</span>
-                                    <span class="date">2020-11-17 17:56:47</span>
-                                    <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                    <a href="#" class="btn-comment-write">댓글달기</a>
+                                <div class="child-comment-area">
+                                        <form action="" class="comment-input-form hide">
+                                            <textarea name="" placeholder="댓글을 입력하세요."
+                                                      class="comment-input-text"></textarea>
+                                            <input type="submit" value="등록" class="comment-input-btn">
+                                        </form>
+                                    <ul class="child-comment-list">
+                                        @foreach($comment->children as $child)
+                                            <li class="child-comment-item">
+                                                <div class="comment-area">
+                                                    <div class="profile-img">
+                                                        <img
+                                                            src="{{ asset('/images/desktop/global/profile_default.png') }}"
+                                                            alt="profile image">
+                                                    </div>
+                                                    <div class="write-info">
+                                                        <span class="write-name">{{ $child->user->name }}</span>
+                                                        <span class="date">{{ $child->created_at }}</span>
+                                                        <p class="comment-text">{{ $child->content }}</p>
+                                                    </div>
+                                                    <div class="comment-btn-area">
+                                                        <form action="">
+                                                            <button type="submit" class="btn-comment-modified">수정
+                                                            </button>
+                                                            <button type="submit" class="btn-comment-delete">삭제</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                <div class="comment-btn-area">
-                                    <form action="">
-                                        <button type="submit" class="btn-comment-modified">수정</button>
-                                        <button type="submit" class="btn-comment-delete">삭제</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="child-comment-area">
-                                <form action="" class="comment-input-form hide">
-                                    <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
-                                    <input type="submit" value="등록" class="comment-input-btn">
-                                </form>
-                                <ul class="child-comment-list">
-                                    <li class="child-comment-item">
-                                        <div class="comment-area">
-                                            <div class="profile-img">
-                                                <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
-                                                     alt="profile image">
-                                            </div>
-                                            <div class="write-info">
-                                                <span class="write-name">홍길동</span>
-                                                <span class="date">2020-11-17 17:56:47</span>
-                                                <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                            </div>
-                                            <div class="comment-btn-area">
-                                                <form action="">
-                                                    <button type="submit" class="btn-comment-modified">수정</button>
-                                                    <button type="submit" class="btn-comment-delete">삭제</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="child-comment-item">
-                                        <div class="comment-area">
-                                            <div class="profile-img">
-                                                <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
-                                                     alt="profile image">
-                                            </div>
-                                            <div class="write-info">
-                                                <span class="write-name">홍길동</span>
-                                                <span class="date">2020-11-17 17:56:47</span>
-                                                <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                            </div>
-                                            <div class="comment-btn-area">
-                                                <form action="">
-                                                    <button type="submit" class="btn-comment-modified">수정</button>
-                                                    <button type="submit" class="btn-comment-delete"
-                                                            onclick="deleteComment(e)">삭제
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="comment-total-area">
-                            <div class="comment-area">
-                                <div class="profile-img">
-                                    <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
-                                         alt="profile image">
-                                </div>
-                                <div class="write-info">
-                                    <span class="write-name">홍길동</span>
-                                    <span class="date">2020-11-17 17:56:47</span>
-                                    <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                    <a href="#" class="btn-comment-write">댓글달기</a>
-                                </div>
-                                <div class="comment-btn-area">
-                                    <form action="">
-                                        <button type="submit" class="btn-comment-modified">수정</button>
-                                        <button type="submit" class="btn-comment-delete">삭제</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="child-comment-area">
-                                <form action="" class="comment-input-form hide">
-                                    <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
-                                    <input type="submit" value="등록" class="comment-input-btn">
-                                </form>
-                                <ul class="child-comment-list">
-                                    <li class="child-comment-item">
-                                        <div class="comment-area">
-                                            <div class="profile-img">
-                                                <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
-                                                     alt="profile image">
-                                            </div>
-                                            <div class="write-info">
-                                                <span class="write-name">홍길동</span>
-                                                <span class="date">2020-11-17 17:56:47</span>
-                                                <p class="comment-text">모임에 필요한 자료는 어떻게 다운받을 수 있을까요?</p>
-                                            </div>
-                                            <div class="comment-btn-area">
-                                                <form action="">
-                                                    <button type="submit" class="btn-comment-modified">수정</button>
-                                                    <button type="submit" class="btn-comment-delete">삭제</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                            </li>
+                        @empty
+                            <li>댓글이 없습니다.</li>
+                        @endforelse
                     </ul>
                 </section>
             </div>
