@@ -1,10 +1,11 @@
 import Send from '@/utils/Send.js';
 
 export default {
-    getData() {
+    getData(params) {
         return Send({
             url: '/api/admin/customer/faq',
-            method: 'get'
+            method: 'get',
+            params: params
         });
     },
     getEditData(id) {

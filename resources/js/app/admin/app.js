@@ -10,9 +10,12 @@ import { Sidebar, Alert, Popover } from '@coreui/coreui';
 import { Helper } from '@/helper.js';
 
 import Layout from '@/components/admin/grid/Layout.vue';
+import Pagination from 'laravel-vue-pagination';
 
 Vue.prototype.Helper = Helper;
+
 Vue.component('layout', Layout);
+Vue.component('pagination', Pagination);
 
 const app = new Vue({
     el: '#app',

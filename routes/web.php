@@ -179,7 +179,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::put('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                Route::patch('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
                 //Faq 카테고리 가져오기
                 Route::get('faqCategory','Admin\FaqController@getFaqCategory')->name('getFaqCategory');
             });
