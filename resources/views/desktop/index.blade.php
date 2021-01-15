@@ -163,8 +163,8 @@
                     </div>
                     <div class="community-menu">
                         <ul>
-                            <li><a href="">마이페이지</a></li>
-                            <li><a href="">고객센터</a></li>
+                            <li><a href="{{ route('account.index') }}">마이페이지</a></li>
+                            <li><a href="{{ route('customer.index') }}">고객센터</a></li>
                             <li><a href="">전체강의</a></li>
                         </ul>
                     </div>
