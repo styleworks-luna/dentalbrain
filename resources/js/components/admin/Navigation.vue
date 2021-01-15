@@ -37,7 +37,7 @@
             <!-- 강의 관리 메뉴 -->
             <li class="c-sidebar-nav-dropdown"
                 :class="{ showClass: checkUrl('/admin/lecture') }">
-                <a href="#" class="c-sidebar-nav-dropdown-toggle">고객센터</a>
+                <a href="#" class="c-sidebar-nav-dropdown-toggle">강의관리</a>
 
                 <ul class="c-sidebar-nav-dropdown-items">
                     <router-link to="/admin/lecture/online" tag="li" class="c-sidebar-nav-item">

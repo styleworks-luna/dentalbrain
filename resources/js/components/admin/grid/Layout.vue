@@ -11,7 +11,11 @@
                 </div>
 
                 <div class="card-body">
-                    <slot name="page"></slot>
+                    <slot name="body"></slot>
+                </div>
+
+                <div class="card-footer">
+                    <slot name="footer"></slot>
                 </div>
             </div>
         </div>

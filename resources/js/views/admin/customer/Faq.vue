@@ -7,18 +7,24 @@
             </router-link>
         </template>
 
-        <template v-slot:page>
+        <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                   :data="data">
+                        :data="data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.question }}</td>
+                    <td>
+                        <router-link :to="`/admin/customer/faq/${slotProps.row.id}`">
+                            {{ slotProps.row.question }}
+                        </router-link>
+                    </td>
                     <td>{{ slotProps.row.created_at }}</td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_open"></button-open>
                     </td>
                 </template>
             </table-grid>
+
+            <router-view></router-view>
         </template>
     </layout>
 </template>
@@ -29,7 +35,7 @@
     import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
     // api
-    import Faq from '@/api/admin/customer/Faq.js'
+    import Faq from '@/api/admin/customer/Faq.js';
 
     export default {
         name: 'AdminFaq',
@@ -70,7 +76,7 @@
         },
         methods: {
             getData() {
-                Faq.getFaqData().then(res => {
+                Faq.getData().then(res => {
                     this.data = res.data.faq.data;
                 }).catch(err => {
                     this.data = [];
