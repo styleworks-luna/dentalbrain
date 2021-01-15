@@ -25,18 +25,18 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 /*============================ TESTING ============================*/
 
 
-Route::group(['prefix' => 'test','as'=>'test.'],function(){
+Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //FAQ, 공지사항, 문의하기 생성 페이지
-    Route::get('/','Test\TestController@index')->name('index');
+    Route::get('/', 'Test\TestController@index')->name('index');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('faq/{faq}','Test\TestController@FaqEdit')->name('FaqEdit');
+    Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('notice/{notice}','Test\TestController@NoticeEdit')->name('NoticeEdit');
+    Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
 
     //문의하기 업데이트 확인 페이지
-    Route::get('inquiry/{inquiry}','Test\TestController@InquiryEdit')->name('InquiryEdit');
+    Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
 });
 
@@ -108,6 +108,12 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('success', function () {
             return view('desktop.pages.lecture.lecture_success');
         });
+
+        Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+            Route::post('/', 'Lecture\CommentController@store')->name('store');
+            Route::put('{comment}', 'Lecture\CommentController@update')->name('update');
+            Route::delete('{comment}', 'Lecture\CommentController@delete')->name('delete');
+        });
     });
 });
 
@@ -141,7 +147,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
-    Route::group(['prefix' => 'lectures', 'as' => 'lectures'], function () {
+    Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
         Route::group(['prefix' => '{program}'], function () {
             Route::post('like', 'Lecture\DetailController@like');
@@ -179,7 +185,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::get('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                Route::get('statusChange/{faq}', 'Admin\FaqController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {

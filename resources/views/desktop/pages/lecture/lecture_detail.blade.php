@@ -90,10 +90,10 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                        <form action="" class="comment-input-form">
-                            <textarea name="" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
-                            <input type="submit" value="등록" class="comment-input-btn">
-                        </form>
+                    <form action="{{route('lectures.comments.store',$program->id)}}" class="comment-input-form">
+                        <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
+                        <input type="submit" value="등록" class="comment-input-btn">
+                    </form>
                     <ul class="comment-list">
                         @forelse($comments as $comment)
                             <li class="comment-total-area">
@@ -120,11 +120,13 @@
                                     </div>
                                 </div>
                                 <div class="child-comment-area">
-                                        <form action="" class="comment-input-form hide">
-                                            <textarea name="" placeholder="댓글을 입력하세요."
-                                                      class="comment-input-text"></textarea>
-                                            <input type="submit" value="등록" class="comment-input-btn">
-                                        </form>
+                                    <form action="{{ route('lectures.comments.store',$program->id) }}"
+                                          class="comment-input-form hide">
+                                        <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                        <textarea name="content" placeholder="댓글을 입력하세요."
+                                                  class="comment-input-text"></textarea>
+                                        <input type="submit" value="등록" class="comment-input-btn">
+                                    </form>
                                     <ul class="child-comment-list">
                                         @foreach($comment->children as $child)
                                             <li class="child-comment-item">
