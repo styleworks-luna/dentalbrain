@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
+use App\Services\StatusChange\StatusChangeImpl;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -19,17 +21,17 @@ class FaqController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $v = Validator::make(request()->all(), [
+        $validatedData = $request->validate([
             'question' => 'required',
             'answer' => 'required',
             'category_id' => 'required | numeric',
             'is_open' => 'required',
-            'user_id'=>'required | numeric'
         ]);
 
-        Faq::create($v->validate());
+        $validatedData['user_id'] = auth()->id();
+        Faq::create($validatedData);
 
         return response()->json([
             'success' => true,
@@ -49,8 +51,6 @@ class FaqController extends Controller
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
-            'category_id' => 'required | numeric',
-             'is_open' => 'required'
         ]);
 
         $validatedData = $v->validate();
@@ -71,5 +71,11 @@ class FaqController extends Controller
             'success' => true,
             'msg' => '삭제가 완료되었습니다.',
         ]);
+    }
+
+    public function statusChange(Faq $faq){
+        $statusChangeImpl = new StatusChangeImpl();
+        $statusChangeImpl->statusChange($faq,'is_open');
+        return redirect()->back()->with('alert','상태를 변경하였습니다.');
     }
 }
