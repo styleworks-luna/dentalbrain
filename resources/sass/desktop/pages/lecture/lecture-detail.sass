@@ -91,6 +91,9 @@
                     font-size: 20px
                     color: $page-color
 
+                .price-hidden
+                    display: none
+
             tr:last-child
                 +padding(0)
 
@@ -114,10 +117,12 @@
 
         .apply-btn:hover
             +background(null, null, null, $purple-400)
+
         .like
             display: block
             float: right
             font-size: 12px
+            text-align: center
 
         .like.active::before
             +background('/images/desktop/lecture/lecture_icon_wish_on.png',no-repeat, center center)

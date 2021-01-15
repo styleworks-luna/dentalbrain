@@ -8,6 +8,6 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        return view(viewPrefix() . 'pages.user.mypage_payment');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_payment');
     }
 }

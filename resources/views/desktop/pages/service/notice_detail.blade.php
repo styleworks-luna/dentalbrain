@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('desktop.layouts.frames.basic_frame')
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/service/notice-detail.css') }}">

@@ -1,10 +1,10 @@
-@extends('desktop.layouts.app')
+@extends('desktop.layouts.frames.simple_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/register.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/user/register.js') }}"></script>
 @endsection
 
 @section('style')
