@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/find-id.css') }}">
 @endsection
 
-@section('content')
+@section('frame')
     <section id="content">
         <section class="noitceEdit">
             <form method="POST" action="{{ route('api.admin.customer.notices.update',['notice' => $notice->id]) }}">
