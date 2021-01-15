@@ -21,6 +21,7 @@ class CreateNoticesTable extends Migration
             $table->unsignedBigInteger('views')->comment('조회수')->default('0');
             $table->unsignedBigInteger('user_id')->comment('작성자');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->tinyInteger('is_open')->default(1)->comment('공개 / 비공개');
 
             $table->timestamps();
         });
