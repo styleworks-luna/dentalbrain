@@ -1,5 +1,5 @@
 <?php
-namespace App\Interfaces\ViewCount;
+namespace App\Services\ViewCount;
 
 use Illuminate\Database\Eloquent\Model;
 interface ViewCountMethod {

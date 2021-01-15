@@ -24,8 +24,20 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 /*============================ TESTING ============================*/
 
-Route::get('test/{id}', function () {
-    return view('desktop.pages.testUpdate');
+
+Route::group(['prefix' => 'test','as'=>'test.'],function(){
+    //FAQ, 공지사항, 문의하기 생성 페이지
+    Route::get('/','Test\TestController@index')->name('index');
+
+    //공지사항 업데이트 확인 페이지
+    Route::get('faq/{faq}','Test\TestController@FaqEdit')->name('FaqEdit');
+
+    //공지사항 업데이트 확인 페이지
+    Route::get('notice/{notice}','Test\TestController@NoticeEdit')->name('NoticeEdit');
+
+    //문의하기 업데이트 확인 페이지
+    Route::get('inquiry/{inquiry}','Test\TestController@InquiryEdit')->name('InquiryEdit');
+
 });
 
 /*============================ PAGES ============================*/
@@ -66,7 +78,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
         // 고객센터 공지사항
         Route::get('/', 'Customer\NoticeController@index')->name('index');
         // 고객센터 공지사항 상세
-        Route::get('/notices/{notice}', 'Customer\NoticeController@show')->name('show');
+        Route::get('{notice}', 'Customer\NoticeController@show')->name('show');
     });
 
     Route::group(['prefix' => 'inquiries', 'as' => 'inquiries.'], function () {
@@ -165,6 +177,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::put('{faq}', 'Admin\FaqController@update')->name('update');
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
+                //상태 변경 함수
+                Route::get('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {

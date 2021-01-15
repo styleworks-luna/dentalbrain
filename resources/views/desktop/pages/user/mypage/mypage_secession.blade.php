@@ -18,7 +18,7 @@
                     <table>
                         <tr>
                             <th>탈퇴사유</th>
-                            <td>
+                            <td class="wrap">
                                 <div class="radio-wrap">
                                     <input type="radio"
                                            id="secession-radio-01"

@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function modify()
     {
-        return view(viewPrefix() . 'pages.user.mypage_edit')->with([
+        return view(viewPrefix() . 'pages.user.mypage.mypage_edit')->with([
             'categories' => UserJobName::query()->select('id', 'name')->get(),
         ]);
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
 
     public function needConfirm(Request $request)
     {
-        return view(viewPrefix() . 'pages.user.mypage_login');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_login');
     }
 
     public function confirm(Request $request)

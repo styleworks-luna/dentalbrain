@@ -8,7 +8,7 @@ class SecessionController extends Controller
 {
     public function secessionForm()
     {
-        return view(viewPrefix() . 'pages.user.mypage_secession');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_secession');
     }
 
     public function secession()

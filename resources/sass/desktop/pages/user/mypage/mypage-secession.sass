@@ -14,9 +14,13 @@
         +input(white-lignt-fill)
         +size(240px, 50px)
 
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder
+        font-size: 14px
+
     input[type="radio"]
         +radio()
-        +margin(right 8px)
+        +margin(right 5px)
 
     input[type="radio"] + label
         font-size: 16px
@@ -31,7 +35,7 @@
         +border(2px solid $gray-900, top)
 
         tr
-            +size(null, 72px)
+            +size(null, 73px)
             +border(1px solid $border-color-base, bottom)
 
             th
@@ -49,12 +53,18 @@
                 vertical-align: middle
 
                 .radio-wrap
-                    +margin(right 40px)
+                    +margin(right 50px)
                     float: left
 
                     .secession-reason
                         +size(800px)
                         +margin(top 23px left 20px)
+
+                    &:first-child
+                        +margin(right 83px)
+
+                    &:nth-child(2)
+                        +margin(right 41px)
 
                     &:nth-child(4),
                     &:nth-child(5)
@@ -71,6 +81,7 @@
                 .tips
                     +margin(top 10px left 20px)
                     float: left
+                    font-size: 12px
 
                     p
                         color: $page-color
@@ -78,8 +89,11 @@
                         &:last-child
                             +margin(top 5px)
 
+            .wrap
+                +padding(top 18px)
+
             &:first-child
-                +size(null, 184px)
+                +size(null, 185px)
 
     .btn-wrap
         +size(330px)

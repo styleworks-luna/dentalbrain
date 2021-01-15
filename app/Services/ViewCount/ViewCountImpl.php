@@ -5,7 +5,7 @@
  * Date: 2021-01-12
  * Time: 오후 3:19
  */
-namespace App\Interfaces\ViewCount;
+namespace App\Services\ViewCount;
 
 use Illuminate\Database\Eloquent\Model;
 

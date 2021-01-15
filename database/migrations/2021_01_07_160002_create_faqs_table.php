@@ -20,7 +20,6 @@ class CreateFaqsTable extends Migration
             $table->tinyInteger('is_open')->comment('공개 / 비공개');
             $table->unsignedBigInteger('category_id')->comment('카테고리 FK');
             $table->unsignedBigInteger('user_id')->comment('작성 유저');
-            $table->tinyInteger('is_active')->comment('공개상태');
 
             $table->foreign('category_id')->references('id')->on('faq_categories');
             $table->foreign('user_id')->references('id')->on('users');
