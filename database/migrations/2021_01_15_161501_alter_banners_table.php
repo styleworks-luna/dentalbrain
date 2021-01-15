@@ -20,6 +20,8 @@ class AlterBannersTable extends Migration
         Schema::table('banners', function (Blueprint $table) {
             $table->dropColumn('file_id');
             $table->dropColumn('clicks');
+            $table->dropColumn('is_active');
+            $table->tinyInteger('is_open')->default(1)->comment('0 : 비활성화 | 1 : 활성화')->after('id');
 
             $table->unsignedBigInteger('desktop_file_id')->after('ended_at');
             $table->unsignedBigInteger('mobile_file_id')->after('ended_at');
