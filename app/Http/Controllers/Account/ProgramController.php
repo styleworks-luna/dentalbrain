@@ -8,6 +8,6 @@ class ProgramController extends Controller
 {
     public function index()
     {
-        return view(viewPrefix() . 'pages.user.mypage_lecture');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 }

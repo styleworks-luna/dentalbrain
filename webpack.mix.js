@@ -59,12 +59,12 @@ mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/
     .sass('resources/sass/desktop/pages/user/find-id.sass', 'public/css/desktop/pages/user');
 
 // 마이페이지
-mix.sass('resources/sass/desktop/pages/user/mypage-login.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage-lecture.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage-payment.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage-question.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage-secession.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage-edit.sass', 'public/css/desktop/pages/user');
+mix.sass('resources/sass/desktop/pages/user/mypage/mypage-login.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-lecture.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-payment.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-question.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-secession.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user');
 
 // 고객센터
 mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop/pages/service')
