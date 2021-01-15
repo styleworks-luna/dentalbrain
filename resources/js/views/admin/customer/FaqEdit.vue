@@ -57,7 +57,7 @@
     import Faq from '@/api/admin/customer/Faq.js';
 
     // mixins
-    import { FaqMixin, FaqDestory } from '@/mixins/admin/customer/Faq.js';
+    import { FaqMixin, } from '@/mixins/admin/customer/Faq.js';
 
     export default {
         name: 'AdminFaqEdit',
