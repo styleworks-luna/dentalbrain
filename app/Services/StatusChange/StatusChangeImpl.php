@@ -16,24 +16,28 @@ class StatusChangeImpl implements StatusChangeMethod{
     public function statusChange(Model $model, string $key){
         DB::beginTransaction();
         try{
-            if($model->$key == '1'){
-                $model->$key = 0;
-                $model->save();
-            } else{
-                $model->$key = 1;
-                $model->save();
-            }
+            $this->statusChangeUpdate($model , $key);
             DB::commit();
             return response()->json([
-                'success' => true,
-                'msg' => '삭제가 완료되었습니다.',
+                'success'=>true,
+                'msg' => '성공하였습니다.'
             ]);
         }catch(\Exception $ex){
+            logger($ex);
             DB::rollBack();
             return response()->json([
-                'success' => false,
-                'msg' => '삭제가 취소되었습니다.',
+                'success'=>false,
+                'msg' => '실패하였습니다.'
             ]);
+        }
+    }
+    public function statusChangeUpdate(Model $model, string $key){
+        if($model->$key){
+            $model->$key = 0;
+            $model->save();
+        } else{
+            $model->$key = 1;
+            $model->save();
         }
     }
 }

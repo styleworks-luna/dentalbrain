@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
+use App\Models\Manage\FaqCategory;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,5 +82,9 @@ class FaqController extends Controller
     public function statusChange(Faq $faq){
         $statusChangeImpl = new StatusChangeImpl();
         return $statusChangeImpl->statusChange($faq,'is_open');
+    }
+
+    public function getFaqCategory(){
+        return response()->json(['faqCategory'=> FaqCategory::all()]);
     }
 }

@@ -179,7 +179,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::get('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                Route::put('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                //Faq 카테고리 가져오기
+                Route::get('faqCategory','Admin\FaqController@getFaqCategory')->name('getFaqCategory');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
@@ -193,6 +195,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::put('{notice}', 'Admin\NoticeController@update')->name('update');
                 //공지사항 삭제 함수
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
+                //상태 변경 함수
+                Route::put('statusChange/{notice}', 'Admin\NoticeController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {

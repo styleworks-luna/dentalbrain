@@ -19,6 +19,11 @@
                 @csrf
                 <button type="submit">Delete</button>
             </form>
+            <form method="POST" action="{{ route('api.admin.customer.notices.statusChange',['notice' => $notice->id]) }}">
+                @csrf
+                @method('PUT')
+                <button type="submit">상태 변경</button>
+            </form>
         </section>
     </section>
 @endsection
