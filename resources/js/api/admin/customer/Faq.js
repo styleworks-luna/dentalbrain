@@ -32,5 +32,11 @@ export default {
             url: `/api/admin/customer/faq/${id}`,
             method: 'delete'
         });
+    },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/customer/faq/statusChange/${id}`,
+            method: 'patch'
+        });
     }
 }

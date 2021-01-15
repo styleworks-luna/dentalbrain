@@ -1,7 +1,8 @@
 <template>
     <button type="button"
             class="btn btn-block btn-outline-dark"
-            :class="checkIsOpen">
+            :class="checkIsOpen"
+            @click="setStatus">
         <template v-if="isOpen">공개</template>
         <template v-else>비공개</template>
     </button>
@@ -17,6 +18,11 @@
                     'btn-outline-dark': this.isOpen,
                     'btn-outline-danger': !this.isOpen
                 }
+            }
+        },
+        methods: {
+            setStatus() {
+                this.$emit('setStatus');
             }
         }
     }
