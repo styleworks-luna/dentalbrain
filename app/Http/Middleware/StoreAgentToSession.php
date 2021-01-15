@@ -16,13 +16,14 @@ class StoreAgentToSession
      */
     public function handle($request, Closure $next)
     {
-//        $agent = new Agent();
-//        if ($agent->isMobile()) {
-//            $request->session()->put(['agent' => 'mobile']);
-//        } else {
-//            $request->session()->put(['agent' => 'desktop']);
-//        }
         $request->session()->put(['agent' => 'desktop']);
+
+        $agent = new Agent();
+        if ($agent->isMobile()) {
+            $request->session()->put(['agent' => 'mobile']);
+        } else {
+            $request->session()->put(['agent' => 'desktop']);
+        }
 
         return $next($request);
     }
