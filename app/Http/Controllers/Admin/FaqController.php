@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
 class FaqController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         $faq = Faq::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
@@ -23,14 +25,15 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
+        logger($request);
         $validatedData = $request->validate([
             'question' => 'required',
             'answer' => 'required',
             'category_id' => 'required | numeric',
             'is_open' => 'required',
         ]);
+        $validatedData['user_id'] = Auth::id();
 
-        $validatedData['user_id'] = auth()->id();
         Faq::create($validatedData);
 
         return response()->json([
@@ -51,6 +54,8 @@ class FaqController extends Controller
         $v = Validator::make(request()->all(), [
             'question' => 'required',
             'answer' => 'required',
+            'category_id' => 'required | numeric',
+            'is_open' => 'required'
         ]);
 
         $validatedData = $v->validate();

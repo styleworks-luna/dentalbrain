@@ -133,6 +133,9 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
+    Route::view('{any}', 'admin.index');
+    Route::view('customer/{any}', 'admin.index');
+    Route::view('customer/faq/{any}', 'admin.index');
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -170,7 +173,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //FAQ 생성 함수
                 Route::post('/', 'Admin\FaqController@store')->name('store');
                 //Faq 수정 페이지 데이터
-                Route::get('{faq}/edit', 'Admin\FaqController@edit')->name('edit');
+                Route::get('{faq}', 'Admin\FaqController@edit')->name('edit');
                 //Faq 업데이트 함수
                 Route::put('{faq}', 'Admin\FaqController@update')->name('update');
                 //Faq 삭제 함수
