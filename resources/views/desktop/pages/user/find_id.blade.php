@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('desktop.layouts.frames.simple_frame')
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/find-id.css') }}">

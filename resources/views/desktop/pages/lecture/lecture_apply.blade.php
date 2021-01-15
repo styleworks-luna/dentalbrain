@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('desktop.pages.lecture.resources.views.desktop.layouts.frames.basic_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>

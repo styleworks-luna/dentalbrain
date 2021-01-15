@@ -1,4 +1,4 @@
-@extends('desktop.layouts.app')
+@extends('desktop.layouts.frames.basic_frame')
 
 @section('vue')
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
