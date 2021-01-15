@@ -75,7 +75,6 @@ class FaqController extends Controller
 
     public function statusChange(Faq $faq){
         $statusChangeImpl = new StatusChangeImpl();
-        $result = $statusChangeImpl->statusChange($faq,'is_open');
-        return $result;
+        return $statusChangeImpl->statusChange($faq,'is_open');
     }
 }
