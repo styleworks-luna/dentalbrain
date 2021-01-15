@@ -20,13 +20,12 @@ class TestController extends Controller{
         return view(viewPrefix() . 'pages.test.create');
     }
 
+    public function FaqEdit(Faq $faq){
+        return view(viewPrefix().'pages.test.testFaqUpdate',['faq'=>$faq]);
+    }
 
     public function NoticeEdit(Notice $notice){
         return view(viewPrefix().'pages.test.testNoticeUpdate',['notice'=>$notice]);
-    }
-
-    public function FaqEdit(Faq $faq){
-        return view(viewPrefix().'pages.test.testFaqUpdate',['faq'=>$faq]);
     }
 
     public function InquiryEdit(Inquiry $inquiry){
