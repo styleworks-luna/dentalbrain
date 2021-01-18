@@ -21,6 +21,7 @@ class CreateProgramStudentsTable extends Migration
             $table->string('email')->comment('이메일 (NOT users.email)');
             $table->string('phone')->comment('전화번호 (NOT users.phone)');
             $table->tinyInteger('is_repeated')->default(0)->comment('재수강 여부');
+            $table->dateTime('applied_at')->comment('신청 시점');
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('ticket_id')->references('id')->on('program_tickets');

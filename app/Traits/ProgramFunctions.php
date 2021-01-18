@@ -8,6 +8,8 @@ use Illuminate\Http\JsonResponse;
 trait ProgramFunctions
 {
     /**
+     * 강의 목록
+     *
      * @param boolean|integer $is_online
      * @return JsonResponse
      */
@@ -17,6 +19,20 @@ trait ProgramFunctions
             ->withCount('students')->orderByDesc('id')->paginate('10');
         return response()->json([
             'programs' => $programs,
+        ]);
+    }
+
+    /**
+     * 강의 수강현황
+     *
+     * @param Program $program
+     * @return JsonResponse
+     */
+    function getStudentInfo(Program $program)
+    {
+        $students = $program->students()->orderByDesc('id')->with('ticket')->paginate(10);
+        return response()->json([
+            'students' => $students,
         ]);
     }
 }

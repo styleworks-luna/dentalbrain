@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Program\Program;
 use App\Traits\ProgramFunctions;
-use Illuminate\Http\Request;
 
 class OnlineProgramController extends Controller
 {
@@ -13,6 +13,11 @@ class OnlineProgramController extends Controller
     public function index()
     {
         return $this->programIndex(1);
+    }
+
+    public function students(Program $program)
+    {
+        return $this->getStudentInfo($program);
     }
 
 }
