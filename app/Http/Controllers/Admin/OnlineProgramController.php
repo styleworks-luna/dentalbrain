@@ -5,14 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Traits\ProgramFunctions;
+use Illuminate\Http\Request;
 
 class OnlineProgramController extends Controller
 {
     use ProgramFunctions;
 
+    public $is_online = true;
+
     public function index()
     {
-        return $this->programIndex(1);
+        return $this->programIndex();
     }
 
     public function students(Program $program)
@@ -20,4 +23,16 @@ class OnlineProgramController extends Controller
         return $this->getStudentInfo($program);
     }
 
+    public function store(Request $request)
+    {
+        $data = $this->validate($request);
+        $program = $this->programStore($data);
+
+    }
+
+    function additionalValidate(Request $request)
+    {
+        // 추가적으로 validation 필요한 것들.l
+        return [];
+    }
 }

@@ -3,9 +3,12 @@
 namespace App\Models\Program;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProgramTicket extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'program_tickets';
 
     public function program()

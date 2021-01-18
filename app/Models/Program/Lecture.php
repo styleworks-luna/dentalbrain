@@ -4,10 +4,12 @@ namespace App\Models\Program;
 
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lecture extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'lectures';
 
     protected $appends = ['thumbnail_url'];
