@@ -36,8 +36,14 @@ export default {
     },
     setStatus(id) {
         return Send({
-            url: `/api/admin/customer/faq/statusChange/${id}`,
+            url: `/api/admin/customer/faq/${id}/status`,
             method: 'patch'
+        });
+    },
+    getCategory() {
+        return Send({
+           url: '/api/admin/customer/faq/category',
+           method: 'get'
         });
     }
 }

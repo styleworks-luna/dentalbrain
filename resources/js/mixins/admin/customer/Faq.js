@@ -3,6 +3,9 @@ import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
+// api
+import Faq from '@/api/admin/customer/Faq.js';
+
 // faq 생성, 수정
 export const FaqMixin = {
     components: {
@@ -16,17 +19,11 @@ export const FaqMixin = {
             answer: '',
             category_id: 1,
             is_open: false,
-            categoryOptions: [
-                {
-                    id: 1,
-                    name: 'asd'
-                },
-                {
-                    id: 2,
-                    name: '123'
-                }
-            ]
+            categoryOptions: []
         }
+    },
+    mounted() {
+        this.getCategory();
     },
     methods: {
         handleSetCategoryId(value) {
@@ -34,6 +31,15 @@ export const FaqMixin = {
         },
         handleSetIsOpen(checked) {
             this.is_open = checked;
+        },
+        getCategory() {
+            Faq.getCategory().then(res => {
+                const result = res.data.faqCategory;
+
+                console.log(result)
+
+                this.categoryOptions = result;
+            });
         }
     }
 };
