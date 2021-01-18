@@ -25,7 +25,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'required',
-            // 'is_open' => 'required' TODO: 칼럼 추가
+            'is_open' => 'required'
         ]);
 
         $validatedData['user_id'] = Auth()->id();
@@ -50,7 +50,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'required',
-            // 'is_open' => 'required' TODO: 칼럼 추가
+            'is_open' => 'required'
         ]);
 
         $validatedData = $v->validate();

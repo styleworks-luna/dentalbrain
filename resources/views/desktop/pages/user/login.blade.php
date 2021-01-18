@@ -17,8 +17,8 @@
                         <input type="submit" class="btn-login" value="로그인">
                     </div>
                     <div class="login-addition">
-                        <a href="" class="find-id">아이디/비밀번호 찾기</a>
-                        <a href="" class="go-register">회원가입</a>
+                        <a href="{{ url('find') }}" class="find-id">아이디/비밀번호 찾기</a>
+                        <a href="{{ url('register') }}" class="go-register">회원가입</a>
                     </div>
                 </form>
             </div>
