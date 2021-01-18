@@ -18,6 +18,7 @@
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.created_at }}</td>
+                    <td>{{ slotProps.row.views }}</td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_open"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
@@ -76,6 +77,10 @@ export default {
                 {
                     name: 'created_at',
                     text: '작성일'
+                },
+                {
+                    name: 'views',
+                    text: '조회수'
                 },
                 {
                     name: 'is_open',
