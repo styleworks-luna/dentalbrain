@@ -91,8 +91,6 @@ export default {
             Notice.getEditData(this.id).then(res => {
                 const result = res.data.notice;
 
-                console.log(result);
-
                 this.title = result.title;
                 this.content = result.content;
                 this.is_open = result.is_open;
@@ -106,9 +104,6 @@ export default {
                 is_open: this.is_open,
                 display_name: this.display_name
             };
-
-            console.log(data);
-            // return false;
 
             Notice.update(this.id, data).then(res => {
                 alert(res.data.msg);

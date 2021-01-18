@@ -36,7 +36,7 @@ export default {
     },
     setStatus(id) {
         return Send({
-            url: `/api/admin/customer/notice/statusChange/${id}`,
+            url: `/api/admin/customer/notice/${id}/status`,
             method: 'patch'
         });
     }

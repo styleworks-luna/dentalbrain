@@ -25,18 +25,18 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 /*============================ TESTING ============================*/
 
 
-Route::group(['prefix' => 'test','as'=>'test.'],function(){
+Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //FAQ, 공지사항, 문의하기 생성 페이지
-    Route::get('/','Test\TestController@index')->name('index');
+    Route::get('/', 'Test\TestController@index')->name('index');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('faq/{faq}','Test\TestController@FaqEdit')->name('FaqEdit');
+    Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('notice/{notice}','Test\TestController@NoticeEdit')->name('NoticeEdit');
+    Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
 
     //문의하기 업데이트 확인 페이지
-    Route::get('inquiry/{inquiry}','Test\TestController@InquiryEdit')->name('InquiryEdit');
+    Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
 });
 
@@ -179,6 +179,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', 'Admin\FaqController@index')->name('index');
                 //FAQ 생성 함수
                 Route::post('/', 'Admin\FaqController@store')->name('store');
+                //Faq 카테고리 가져오기
+                Route::get('category', 'Admin\FaqController@getFaqCategory')->name('getFaqCategory');
                 //Faq 수정 페이지 데이터
                 Route::get('{faq}', 'Admin\FaqController@edit')->name('edit');
                 //Faq 업데이트 함수
@@ -186,9 +188,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::patch('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
-                //Faq 카테고리 가져오기
-                Route::get('faqCategory','Admin\FaqController@getFaqCategory')->name('getFaqCategory');
+                Route::patch('{faq}/status', 'Admin\FaqController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
@@ -203,7 +203,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //공지사항 삭제 함수
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::patch('statusChange/{notice}', 'Admin\NoticeController@statusChange')->name('statusChange');
+                Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {

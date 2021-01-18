@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class NoticeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $notice = Notice::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
@@ -73,8 +74,9 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function statusChange(Notice $notice){
+    public function statusChange(Notice $notice)
+    {
         $statusChangeImpl = new StatusChangeImpl();
-        return $statusChangeImpl->statusChange($notice,'is_open');
+        return $statusChangeImpl->statusChange($notice, 'is_open');
     }
 }
