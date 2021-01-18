@@ -26,7 +26,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'required',
-            'is_open' => 'required'
+            'is_open' => ['required','boolean']
         ]);
 
         $validatedData['user_id'] = Auth()->id();
@@ -51,7 +51,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'required',
-            'is_open' => 'required'
+            'is_open' => ['required','boolean']
         ]);
 
         $validatedData = $v->validate();

@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Notice extends Model
 {
     protected $appends = ['name'];
-    protected $fillable = ['title', 'content', 'display_name', 'user_id'];
     protected $guarded = [];
+    protected $casts = [
+        'is_open' => 'boolean'
+    ];
 
     public function getNameAttribute()
     {
