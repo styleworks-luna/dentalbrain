@@ -9,6 +9,14 @@
                 </template>
             </form-single-group>
 
+            <!-- 작성자 -->
+            <form-single-group name="작성자" :isRequired="true" :size="9">
+                <template v-slot:content>
+                    <input type="text" class="form-control" placeholder="작성자를 입력해 주세요."
+                           v-model="display_name">
+                </template>
+            </form-single-group>
+
             <!-- 세부내용 -->
             <form-single-group name="내용" :isRequired="true" :size="9">
                 <template v-slot:content>
@@ -53,7 +61,8 @@ export default {
             let data = {
                 title: this.title,
                 content: this.content,
-                is_open: this.is_open
+                is_open: this.is_open,
+                display_name: this.display_name
             };
 
             Notice.create(data).then(res => {

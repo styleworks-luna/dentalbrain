@@ -136,6 +136,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('{any}', 'admin.index');
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
+    Route::view('customer/notice/{any}', 'admin.index');
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -196,7 +197,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //공지사항 삭제 함수
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::put('statusChange/{notice}', 'Admin\NoticeController@statusChange')->name('statusChange');
+                Route::patch('statusChange/{notice}', 'Admin\NoticeController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {

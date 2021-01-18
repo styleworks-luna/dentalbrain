@@ -24,7 +24,8 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'display_name' => 'required'
+            'display_name' => 'required',
+            // 'is_open' => 'required' TODO: 칼럼 추가
         ]);
 
         $validatedData['user_id'] = Auth()->id();
@@ -48,6 +49,8 @@ class NoticeController extends Controller
         $v = Validator::make(request()->all(), [
             'title' => 'required',
             'content' => 'required',
+            'display_name' => 'required',
+            // 'is_open' => 'required' TODO: 칼럼 추가
         ]);
 
         $validatedData = $v->validate();

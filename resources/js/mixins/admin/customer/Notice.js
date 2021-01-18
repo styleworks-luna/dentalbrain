@@ -3,7 +3,7 @@ import FormSingleGroup from '@/components/admin/grid/FormSingleGroup.vue';
 import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
-// faq 생성, 수정
+// Notice 생성, 수정
 export const NoticeMixin = {
     components: {
         'form-single-group': FormSingleGroup,
@@ -14,6 +14,7 @@ export const NoticeMixin = {
         return {
             title: '',
             content: '',
+            display_name:'',
             is_open: false,
         }
     },

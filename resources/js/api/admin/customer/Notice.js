@@ -33,5 +33,11 @@ export default {
             url: `/api/admin/customer/notice/${id}`,
             method: 'delete'
         });
+    },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/customer/notice/statusChange/${id}`,
+            method: 'patch'
+        });
     }
 }
