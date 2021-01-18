@@ -157,7 +157,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
-
+                Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
+                Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
+//                Route::get('{program}', 'Admin\OnlineProgramController@index')->name('edit');
+//                Route::put('{program}', 'Admin\OnlineProgramController@index');
+//                Route::delete('{program}', 'Admin\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
 

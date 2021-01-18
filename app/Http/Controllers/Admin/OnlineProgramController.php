@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Program\Program;
+use App\Traits\ProgramFunctions;
+use Illuminate\Http\Request;
 
 class OnlineProgramController extends Controller
 {
+    use ProgramFunctions;
+
     public function index()
     {
-        $programs = Program::query()->where('is_online', '=', 1)
-            ->orderByDesc('id')->paginate('10');
-        return response()->json([
-            'programs' => $programs,
-        ]);
+        return $this->programIndex(1);
     }
+
 }
