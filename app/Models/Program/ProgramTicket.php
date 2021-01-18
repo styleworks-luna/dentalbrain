@@ -12,4 +12,9 @@ class ProgramTicket extends Model
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
+
+    public function students()
+    {
+        return $this->hasMany(ProgramStudent::class, 'ticket_id', 'id');
+    }
 }

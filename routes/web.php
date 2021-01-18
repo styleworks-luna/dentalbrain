@@ -25,18 +25,18 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 /*============================ TESTING ============================*/
 
 
-Route::group(['prefix' => 'test','as'=>'test.'],function(){
+Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //FAQ, 공지사항, 문의하기 생성 페이지
-    Route::get('/','Test\TestController@index')->name('index');
+    Route::get('/', 'Test\TestController@index')->name('index');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('faq/{faq}','Test\TestController@FaqEdit')->name('FaqEdit');
+    Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('notice/{notice}','Test\TestController@NoticeEdit')->name('NoticeEdit');
+    Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
 
     //문의하기 업데이트 확인 페이지
-    Route::get('inquiry/{inquiry}','Test\TestController@InquiryEdit')->name('InquiryEdit');
+    Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
 });
 
@@ -156,7 +156,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
+            Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
 
+            });
+            Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
+
+            });
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
@@ -180,9 +185,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::patch('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
+                Route::patch('statusChange/{faq}', 'Admin\FaqController@statusChange')->name('statusChange');
                 //Faq 카테고리 가져오기
-                Route::get('faqCategory','Admin\FaqController@getFaqCategory')->name('getFaqCategory');
+                Route::get('faqCategory', 'Admin\FaqController@getFaqCategory')->name('getFaqCategory');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
