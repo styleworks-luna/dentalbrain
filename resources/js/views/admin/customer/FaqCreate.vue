@@ -2,7 +2,10 @@
     <layout title="FAQ 생성">
         <template v-slot:body>
             <!-- 제목 -->
-            <form-single-group name="질문" :isRequired="true" :size="9">
+            <form-single-group name="질문"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="질문을 입력해 주세요."
                            v-model="question">
@@ -10,7 +13,10 @@
             </form-single-group>
 
             <!-- 세부내용 -->
-            <form-single-group name="답변" :isRequired="true" :size="9">
+            <form-single-group name="답변"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="답변을 입력해 주세요."
                               v-model="answer"></textarea>
@@ -18,7 +24,10 @@
             </form-single-group>
 
             <!-- 카테고리 타입 -->
-            <form-single-group name="카테고리 타입" :isRequired="true" :size="6">
+            <form-single-group name="카테고리 타입"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="6">
                 <template v-slot:content>
                     <select-box class="form-control"
                                 :value="category_id"
@@ -28,7 +37,10 @@
             </form-single-group>
 
             <!-- 공개 여부 -->
-            <form-single-group name="공개여부" :isRequired="true" :size="6">
+            <form-single-group name="공개여부"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="6">
                 <template v-slot:content>
                     <button-check :propsCheck="is_open"
                                   @isChecked="handleSetIsOpen"></button-check>
