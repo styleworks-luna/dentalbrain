@@ -1,12 +1,12 @@
 // component
-import FormSingleGroup from '@/components/admin/grid/FormSingleGroup.vue';
+import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
 // faq 생성, 수정
 export const FaqMixin = {
     components: {
-        'form-single-group': FormSingleGroup,
+        'single-group': SingleGroup,
         'button-check': ButtonCheck,
         'select-box': SelectBox
     },

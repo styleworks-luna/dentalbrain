@@ -2,7 +2,7 @@
     <layout title="공지사항 수정">
         <template v-slot:body>
             <!-- 제목 -->
-            <form-single-group name="제목"
+            <single-group name="제목"
                                :isRow="true"
                                :isRequired="true"
                                :size="9">
@@ -10,10 +10,10 @@
                     <input type="text" class="form-control" placeholder="제목을 입력해 주세요."
                            v-model="title">
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 작성자 -->
-            <form-single-group name="작성자"
+            <single-group name="작성자"
                                :isRow="true"
                                :isRequired="true"
                                :size="9">
@@ -21,10 +21,10 @@
                     <input type="text" class="form-control" placeholder="작성자를 입력해 주세요."
                            v-model="display_name">
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 세부내용 -->
-            <form-single-group name="내용"
+            <single-group name="내용"
                                :isRow="true"
                                :isRequired="true"
                                :size="9">
@@ -32,10 +32,10 @@
                     <textarea class="form-control" rows="9" placeholder="내용을 입력해 주세요."
                               v-model="content"></textarea>
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 공개 여부 -->
-            <form-single-group name="공개여부"
+            <single-group name="공개여부"
                                :isRow="true"
                                :isRequired="true"
                                :size="6">
@@ -43,7 +43,7 @@
                     <button-check :propsCheck="is_open"
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
-            </form-single-group>
+            </single-group>
         </template>
 
         <template v-slot:footer>
