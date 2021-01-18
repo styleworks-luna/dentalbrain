@@ -2,36 +2,48 @@
     <layout title="공지사항 생성">
         <template v-slot:body>
             <!-- 제목 -->
-            <form-single-group name="제목" :isRequired="true" :size="9">
+            <single-group name="제목"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="제목을 입력해 주세요."
                            v-model="title">
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 작성자 -->
-            <form-single-group name="작성자" :isRequired="true" :size="9">
+            <single-group name="작성자"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="작성자를 입력해 주세요."
                            v-model="display_name">
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 세부내용 -->
-            <form-single-group name="내용" :isRequired="true" :size="9">
+            <single-group name="내용"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="내용을 입력해 주세요."
                               v-model="content"></textarea>
                 </template>
-            </form-single-group>
+            </single-group>
 
             <!-- 공개 여부 -->
-            <form-single-group name="공개여부" :isRequired="true" :size="6">
+            <single-group name="공개여부"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="6">
                 <template v-slot:content>
                     <button-check :propsCheck="is_open"
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
-            </form-single-group>
+            </single-group>
         </template>
 
         <template v-slot:footer>

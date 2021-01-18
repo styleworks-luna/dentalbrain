@@ -25,18 +25,18 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 /*============================ TESTING ============================*/
 
 
-Route::group(['prefix' => 'test','as'=>'test.'],function(){
+Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //FAQ, 공지사항, 문의하기 생성 페이지
-    Route::get('/','Test\TestController@index')->name('index');
+    Route::get('/', 'Test\TestController@index')->name('index');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('faq/{faq}','Test\TestController@FaqEdit')->name('FaqEdit');
+    Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
 
     //공지사항 업데이트 확인 페이지
-    Route::get('notice/{notice}','Test\TestController@NoticeEdit')->name('NoticeEdit');
+    Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
 
     //문의하기 업데이트 확인 페이지
-    Route::get('inquiry/{inquiry}','Test\TestController@InquiryEdit')->name('InquiryEdit');
+    Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
 });
 
@@ -134,9 +134,16 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
     Route::view('{any}', 'admin.index');
+
+    // lecture
+    Route::view('lecture/{any}', 'admin.index');
+    Route::view('lecture/online/{any}', 'admin.index');
+
+    // customer
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
     Route::view('customer/notice/{any}', 'admin.index');
+    Route::view('customer/inquire/{any}', 'admin.index');
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -173,6 +180,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', 'Admin\FaqController@index')->name('index');
                 //FAQ 생성 함수
                 Route::post('/', 'Admin\FaqController@store')->name('store');
+                //Faq 카테고리 가져오기
+                Route::get('category', 'Admin\FaqController@getFaqCategory')->name('getFaqCategory');
                 //Faq 수정 페이지 데이터
                 Route::get('{faq}', 'Admin\FaqController@edit')->name('edit');
                 //Faq 업데이트 함수
@@ -180,9 +189,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::patch('statusChange/{faq}','Admin\FaqController@statusChange')->name('statusChange');
-                //Faq 카테고리 가져오기
-                Route::get('faqCategory','Admin\FaqController@getFaqCategory')->name('getFaqCategory');
+                Route::patch('{faq}/status', 'Admin\FaqController@statusChange')->name('statusChange');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
@@ -197,18 +204,18 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //공지사항 삭제 함수
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::patch('statusChange/{notice}', 'Admin\NoticeController@statusChange')->name('statusChange');
+                Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
             });
 
-            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {
+            Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {
                 //문의하기 index 페이지 데이터
                 Route::get('/', 'Admin\InquiryController@index')->name('index');
                 //문의하기 수정 페이지 데이터
-                Route::get('{Inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
+                Route::get('{Inquire}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{Inquiry}', 'Admin\InquiryController@update')->name('update');
+                Route::put('{Inquire}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
-                Route::delete('{Inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+                Route::delete('{Inquire}', 'Admin\InquiryController@destroy')->name('destroy');
             });
 
             Route::group(['prefix' => 'banner', 'as' =>'banners.'],function(){
