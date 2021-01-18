@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers\Controller;
+use App\Models\Manage\Banner;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
@@ -16,7 +17,7 @@ use App\Models\Manage\Notice;
 
 class TestController extends Controller{
     public function index(){
-        //FAQ, 공지사항, 문의하기 생성 페이지
+        //FAQ, 공지사항, 문의하기 생성, 배너 생성 페이지
         return view(viewPrefix() . 'pages.test.create');
     }
 
@@ -32,4 +33,7 @@ class TestController extends Controller{
         return view(viewPrefix().'pages.test.testInquiryUpdate',['inquiry'=>$inquiry]);
     }
 
+    public function BannerEdit(Banner $banner){
+        return view(viewPrefix().'pages.test.testBannerUpdate',['banner'=> $banner]);
+    }
 }
