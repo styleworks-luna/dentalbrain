@@ -23,6 +23,7 @@
                 <input type="text" name="title" placeholder="제목" value="title">
                 <input type="text" name="content" placeholder="내용" value="content">
                 <input type="text" name="display_name" placeholder="관리자 이름" value="관리자">
+                <input type="text" name="is_open" placeholder="상태" value="1">
                 <input type="submit">
             </form>
             <br>
