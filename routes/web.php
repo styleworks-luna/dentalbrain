@@ -211,11 +211,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //문의하기 index 페이지 데이터
                 Route::get('/', 'Admin\InquiryController@index')->name('index');
                 //문의하기 수정 페이지 데이터
-                Route::get('{Inquire}/edit', 'Admin\InquiryController@edit')->name('edit');
+                Route::get('{inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{Inquire}', 'Admin\InquiryController@update')->name('update');
+                Route::put('{inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
-                Route::delete('{Inquire}', 'Admin\InquiryController@destroy')->name('destroy');
+                Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
             });
         });
     });
