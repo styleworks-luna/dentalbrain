@@ -143,6 +143,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
     Route::view('customer/notice/{any}', 'admin.index');
+    Route::view('customer/inquire/{any}', 'admin.index');
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -206,15 +207,15 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
             });
 
-            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {
+            Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {
                 //문의하기 index 페이지 데이터
                 Route::get('/', 'Admin\InquiryController@index')->name('index');
                 //문의하기 수정 페이지 데이터
-                Route::get('{Inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
+                Route::get('{Inquire}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{Inquiry}', 'Admin\InquiryController@update')->name('update');
+                Route::put('{Inquire}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
-                Route::delete('{Inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+                Route::delete('{Inquire}', 'Admin\InquiryController@destroy')->name('destroy');
             });
         });
     });

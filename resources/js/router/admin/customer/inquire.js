@@ -1,16 +1,16 @@
-import Inquiry from '@/views/admin/customer/Inquiry.vue';
-import InquiryEdit from '@/views/admin/customer/InquiryEdit.vue';
+import Inquire from '@/views/admin/customer/Inquire.vue';
+import InquireEdit from '@/views/admin/customer/InquireEdit.vue';
 
 const routes = [
     {
-        path: '/admin/customer/inquiry',
+        path: '/admin/customer/inquire',
         name: 'AdminNotice',
-        component: Inquiry
+        component: Inquire
     },
     {
-        path: '/admin/customer/inquiry/:id',
+        path: '/admin/customer/inquire/:id',
         name: 'AdminNoticeEdit',
-        component: InquiryEdit
+        component: InquireEdit
     }
 ];
 

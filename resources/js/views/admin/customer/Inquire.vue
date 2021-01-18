@@ -1,13 +1,13 @@
 <template>
-    <layout title="문의하기">
+    <layout title="문의내역">
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="inquirys.data">
+                        :data="inquires.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{slotProps.row.category}}</td>
                     <td>
-                        <router-link :to="`/admin/customer/inquiry/${slotProps.row.id}`">
+                        <router-link :to="`/admin/customer/inquire/${slotProps.row.id}`">
                             {{ slotProps.row.title }}
                         </router-link>
                     </td>
@@ -18,7 +18,7 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="inquirys" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="inquires" @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
@@ -34,17 +34,17 @@ import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 // api
-import Inquiry from '@/api/admin/customer/Inquiry.js';
+import Inquire from '@/api/admin/customer/Inquire.js';
 
 export default {
-    name: 'AdminInquiry',
+    name: 'AdminInquire',
     components: {
         'table-grid': Table,
         'button-open': ButtonOpen
     },
     data() {
         return {
-            inquirys: {
+            inquires: {
                 data: []
             },
             page: 1
@@ -89,10 +89,11 @@ export default {
                 page: page
             };
 
-            Inquiry.getData(params).then(res => {
-                this.inquirys = res.data.inquiry;
+            Inquire.getData(params).then(res => {
+                console.log(res);
+                this.inquires = res.data.inquiry;
             }).catch(err => {
-                this.inquirys = [];
+                this.inquires = [];
             });
         },
     }
