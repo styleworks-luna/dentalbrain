@@ -90,7 +90,6 @@ export default {
             };
 
             Inquire.getData(params).then(res => {
-                console.log(res);
                 this.inquires = res.data.inquiry;
             }).catch(err => {
                 this.inquires = [];

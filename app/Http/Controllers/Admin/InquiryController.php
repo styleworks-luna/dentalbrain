@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Manage\Inquiry;
+use App\Models\Manage\InquiryCategory;
 
 class InquiryController {
     public function index(){
@@ -46,4 +47,11 @@ class InquiryController {
             'msg' => '삭제되었습니다.',
         ]);
     }
+
+    public function getInquiryCategory(){
+        return response()->json(
+            ['category' => InquiryCategory::all()]
+        );
+    }
 }
+
