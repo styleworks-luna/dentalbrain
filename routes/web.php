@@ -158,6 +158,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
+            Route::post('file','Admin\FileController@uploadFile')->name('file');
+            Route::post('image','Admin\FileController@uploadImage')->name('image');
+        });
+
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
         });
