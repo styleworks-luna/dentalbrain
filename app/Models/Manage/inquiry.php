@@ -9,8 +9,11 @@ class Inquiry extends Model
     //
     protected $table = 'inquiries';
     protected $fillable = ['name','phone','email','title','content'];
+    protected $casts =[
+        'is_answer' => 'boolean'
+    ];
 
     public function answers(){
-        return $this->hasOne(Inquiry_answers::class);
+        return $this->hasOne(InquiryAnswers::class);
     }
 }
