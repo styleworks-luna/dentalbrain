@@ -38,6 +38,8 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //문의하기 업데이트 확인 페이지
     Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
+    Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
+
 });
 
 /*============================ PAGES ============================*/
@@ -159,9 +161,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
-            Route::post('file','Admin\FileController@uploadFile')->name('file');
-            Route::post('image','Admin\FileController@uploadImage')->name('image');
+            Route::post('file', 'Admin\FileController@uploadFile')->name('file');
+            Route::post('image', 'Admin\FileController@uploadImage')->name('image');
         });
+        Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
