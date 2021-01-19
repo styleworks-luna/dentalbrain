@@ -56,7 +56,7 @@ class BannerController extends Controller{
 
     public function edit(Banner $banner){
         return response()->json([
-            'banner'=>$banner->load('file')
+            'banner'=>$banner
         ]);
     }
 
