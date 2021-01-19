@@ -17,7 +17,7 @@ export default {
     update(id, data) {
         return Send({
             url: `/api/admin/customer/inquire/${id}`,
-            method: 'put',
+            method: 'patch',
             data: data
         });
     },
@@ -25,6 +25,12 @@ export default {
         return Send({
             url: `/api/admin/customer/inquire/${id}`,
             method: 'delete'
+        });
+    },
+    getCategory() {
+        return Send({
+            url: '/api/admin/customer/inquire/category',
+            method: 'get'
         });
     },
 }

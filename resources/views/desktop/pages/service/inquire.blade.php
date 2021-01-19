@@ -19,7 +19,7 @@
 
                 <section class="inquire">
                     <h2>문의하기</h2>
-                    <form method="POST" action="{{route('customer.inquiries.index')}}" id="inquire-form" >
+                    <form method="POST" action="{{route('customer.inquiries.index')}}" id="inquire-form">
                         @csrf
                         <div class="inquire-form-wrap">
                             <table>
@@ -32,7 +32,7 @@
                                                placeholder="이름을 입력해주세요."
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 이름을 입력해주세요."
-                                                value="{{old('name')}}">
+                                               value="{{old('name')}}">
                                     </td>
 
                                     <th>연락처</th>
@@ -67,8 +67,10 @@
                                 <tr>
                                     <th>제목</th>
                                     <td class="title-wrap" colspan="3">
-                                        <select id="title-category" name="title-category" class="select-menu">
-                                            <option value="">haha</option>
+                                        <select id="title-category" name="category_id" class="select-menu">
+                                            @foreach($categories as $category)
+                                                <option value={{ $category->id }}>{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
 
                                         <input type="text"

@@ -43,16 +43,25 @@
                     </template>
                 </single-group>
 
-                <single-group name="구분" :size="1" :isRow="true">
+                <single-group name="구분" :size="1" :isRequired="true" :isRow="true">
                     <template v-slot:content>
                         <select-box class="form-control"
-                                    :value="data.category"></select-box>
+                                    :value="data.category_id"
+                                    :options="categoryOptions"
+                                    @setValue="handleSetCategoryId"></select-box>
                     </template>
                 </single-group>
-                <single-group name="답변상태" :size="1" :isRow="true">
+                <single-group name="답변상태" :isRequired="true" :size="6" :isRow="true">
                     <template v-slot:content>
-                        <select-box class="form-control"
-                                    :value="data.category"></select-box>
+                        <div class="float-left">
+                        <select-box class="form-control "
+                                    :value="data.is_answer"
+                                    :options="answerOption"
+                                    @setValue="handleSetAnswerId"></select-box>
+                        </div>
+                        <div class="float-left answer-time">
+                            <p v-if="data.answered_at !== null">답변 시간 : {{ data.answered_at }}</p>
+                        </div>
                     </template>
                 </single-group>
             </div>
@@ -95,32 +104,6 @@ export default {
             data: []
         }
     },
-    computed: {
-        tableCol() {
-            return [
-                {
-                    name: 'id',
-                    text: '번호'
-                },
-                {
-                    name: 'created_at',
-                    text: '작성일'
-                },
-                {
-                    name: 'email',
-                    text: '이메일'
-                },
-                {
-                    name: 'name',
-                    text: '이름'
-                },
-                {
-                    name: 'phone',
-                    text: '연락처'
-                },
-            ]
-        }
-    },
     created() {
         this.id = this.$route.params.id;
     },
@@ -134,11 +117,11 @@ export default {
 
                 this.data = result;
             });
-
         },
         update() {
             let data = {
-                category: this.category,
+                category_id: this.category_id,
+                is_answer: this.is_answer
             };
 
             Inquire.update(this.id, data).then(res => {

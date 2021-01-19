@@ -7,11 +7,15 @@
  */
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
+use Illuminate\Http\Request;
 
-class InquiryController {
-    public function index(){
+class InquiryController
+{
+    public function index()
+    {
         $inquiry = Inquiry::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(20);
@@ -20,18 +24,22 @@ class InquiryController {
         ]);
     }
 
-    public function edit(Inquiry $inquiry){
+    public function edit(Inquiry $inquiry)
+    {
         return response()->json([
-           'inquiry' => $inquiry
+            'inquiry' => $inquiry
         ]);
     }
 
     public function update(Request $request, Inquiry $inquiry)
     {
         $validatedData = $request->validate([
-            'category' => 'required|numeric',
-            'is_answer' => 'required'
+            'category_id' => 'required|numeric',
+            'is_answer' => 'required|boolean'
         ]);
+        if ($validatedData['is_answer'] == 1) {
+            $validatedData['answered_at'] = now();
+        }
         $inquiry->update($validatedData);
 
         return response()->json([
@@ -39,7 +47,9 @@ class InquiryController {
             'msg' => '수정되었습니다.',
         ]);
     }
-    public function destroy(Inquiry $inquiry){
+
+    public function destroy(Inquiry $inquiry)
+    {
         $inquiry->delete();
 
         return response()->json([
@@ -48,7 +58,8 @@ class InquiryController {
         ]);
     }
 
-    public function getInquiryCategory(){
+    public function getInquiryCategory()
+    {
         return response()->json(
             ['category' => InquiryCategory::all()]
         );

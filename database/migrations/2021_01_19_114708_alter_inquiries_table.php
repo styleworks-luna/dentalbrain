@@ -15,7 +15,9 @@ class AlterInquiriesTable extends Migration
     {
         Schema::table('inquiries', function (Blueprint $table) {
             $table->dropColumn('category');
-            $table->tinyInteger('category_id')->default(1)->comment('문의 내역 구분');
+            $table->datetime('answered_at')->nullable()->comment('답변 시간');
+            $table->unsignedBigInteger('category_id')->default(1)->comment('문의 내역 구분');
+            $table->foreign('category_id')->references('id')->on('inquiry_categories');
         });
     }
 
@@ -27,7 +29,11 @@ class AlterInquiriesTable extends Migration
     public function down()
     {
         Schema::table('inquiries', function (Blueprint $table) {
+            $table->dropForeign('inquiries_category_id_foreign');
+
             $table->tinyInteger('category');
+            $table->dropColumn('category_id');
+            $table->dropColumn('answered_at');
         });
     }
 }
