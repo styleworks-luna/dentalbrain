@@ -29,7 +29,7 @@
 
                     </div>
                     <div class="btn-wrap">
-                        <a href="/notice/" class="btn-prev">목록으로</a>
+                        <a href="{{ route('customer.notices.index') }}" class="btn-prev">목록으로</a>
                     </div>
                 </section>
 
