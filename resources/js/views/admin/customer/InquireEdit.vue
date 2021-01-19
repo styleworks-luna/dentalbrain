@@ -60,7 +60,7 @@
                                     @setValue="handleSetAnswerId"></select-box>
                         </div>
                         <div class="float-left answer-time">
-                            <p v-if="data.answered_at !== null">답변 시간 : {{ data.answered_at }}</p>
+                            <p v-if="data.is_answer == 1">답변 시간 : {{ data.answered_at }}</p>
                         </div>
                     </template>
                 </single-group>
