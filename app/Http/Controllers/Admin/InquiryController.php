@@ -38,7 +38,7 @@ class InquiryController {
             'msg' => '수정되었습니다.',
         ]);
     }
-    public function delete(Inquiry $inquiry){
+    public function destroy(Inquiry $inquiry){
         $inquiry->delete();
 
         return response()->json([

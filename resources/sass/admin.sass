@@ -2,50 +2,62 @@
 @import './helpers/extends.sass'
 @import './helpers/mixins.scss'
 
-.content .card-body
-    .form-group
-        margin-right: -15px
-        margin-left: -15px
-        clear: both
+.content
+    .card-body
+        .form-group
+            +size(1532px)
+            +border(1px solid $border-color-base ,bottom)
+            margin-right: -15px
+            margin-left: -15px
+            margin-bottom: 0
+            clear: both
 
-        &.float-left
-            clear: none
+            &.float-left
+                clear: none
 
-        .col-form-label
-            +background(null,null,nlll, $background-color-menu)
-            font-size: 16px
+            .col-form-label
+                +size(184px 184px !important)
+                +background(null,null,nlll, $background-color-menu)
+                +box-sizing(border-box)
+                font-size: 16px
 
-    .file-wrap
-        +size(100%, 180px)
-        +border(1px solid $border-color-base)
-        +box-sizing(border-box)
+            .col-md-2
+                flex: none
 
-        label
-            +size(60%)
-            +margin(120px auto 0)
+            .form-input
+                +padding(10px 10px)
 
-    .radio-wrap
-        +margin(right 30px)
-        +padding(0 calc(0.375rem + 1px))
-        float: left
-        line-height: 35px
-        vertical-align: middle
+        .file-wrap
+            +size(100%, 180px)
+            +border(1px solid $border-color-base)
+            +box-sizing(border-box)
 
-        &:last-child
-            +margin(right 0)
+            label
+                +size(60%)
+                +margin(120px auto 0)
 
-        input[type="radio"]
-            +margin(right 10px)
-            display: inline-block
+        .radio-wrap
+            +margin(right 30px)
+            +padding(0 calc(0.375rem + 1px))
+            float: left
+            line-height: 35px
+            vertical-align: middle
 
-        label
-            +margin(0)
-            display: inline-block
+            &:last-child
+                +margin(right 0)
 
-        label + .form-control
-            +size(150px)
-            +margin(left 20px)
-            display: inline-block
+            input[type="radio"]
+                +margin(right 10px)
+                display: inline-block
+
+            label
+                +margin(0)
+                display: inline-block
+
+            label + .form-control
+                +size(150px)
+                +margin(left 20px)
+                display: inline-block
 
 // 강의 관리
 .content #lecture
