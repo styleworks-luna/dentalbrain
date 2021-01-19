@@ -29,7 +29,7 @@ class Banner extends Model
      */
     public function scopePublic($query)
     {
-        return $query->where('is_active', '=', 1)
+        return $query->where('is_open', '=', 1)
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
             ->with('file');

@@ -39,6 +39,19 @@
                 <input type="text" name="category" placeholder="category" value="1">
                 <input type="submit">
             </form>
+
+            <form method="POST" action="{{route('api.admin.customer.banners.store')}}" enctype="multipart/form-data">
+                @csrf
+                <input type="text" name="position" placeholder="종류(위치)" value="{{\App\Models\Manage\Banner::$POSITION_BOTTOM}}">
+                <input type="text" name="order" placeholder="중요도" value="1">
+                <input type="text" name="title" placeholder="제목(title)" value="배너제목">
+                <input type="text" name="link" placeholder="연결 링크" value="https://google.com">
+                <input type="file" name="desktop_file_id" placeholder="데스크탑 파일 아이디">
+                <input type="file" name="mobile_file_id" placeholder="모바일 파일 아이디" >
+                <input type="date" name="started_at" placeholder="시작 시간" value="{{now()}}">
+                <input type="date" name="ended_at" placeholder="종료 시간" value="{{ now() }}">
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

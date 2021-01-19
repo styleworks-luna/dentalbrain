@@ -158,6 +158,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
+            Route::post('file','Admin\FileController@uploadFile')->name('file');
+            Route::post('image','Admin\FileController@uploadImage')->name('image');
+        });
+
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 
         });
@@ -216,6 +221,20 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::put('{inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
                 Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+            });
+
+            Route::group(['prefix' => 'banner', 'as' =>'banners.'],function(){
+                //배너 index 페이지 데이터
+                Route::get('/','Admin\Banner\BannerController@index')->name('index');
+
+                //배너 생성 함수
+                Route::post('/', 'Admin\Banner\BannerController@store')->name('store');
+                //배너 수정 페이지 데이터
+                Route::get('{banner}/edit','Admin\Banner\BannerController@edit')->name('edit');
+                //배너 업데이트 함수
+                Route::put('{banner}','Admin\Banner\BannerController@update')->name('update');
+                //배너 삭제 함수
+                Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
             });
         });
     });

@@ -12,6 +12,7 @@
                 @csrf
                 <input type="text" name="title" value="{{$notice-> title}}">
                 <input type="text" name="content" value="{{$notice-> content}}">
+                <input type="text" name="is_open" value="{{$notice->is_open}}">
                 <button type="submit">Update</button>
             </form>
             <form method="post" action="{{route('api.admin.customer.notices.destroy',['notice'=>$notice->id])}}">

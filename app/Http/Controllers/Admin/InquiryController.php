@@ -25,17 +25,12 @@ class InquiryController {
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Inquiry $inquiry)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'title' => 'required',
-            'content' => 'required',
-            'category' => 'required|numeric'
+            'category' => 'required|numeric',
+            'is_answer' => 'required'
         ]);
-        $inquiry = Inquiry::find($request->id);
         $inquiry->update($validatedData);
 
         return response()->json([
