@@ -2,44 +2,47 @@
     <layout title="FAQ 수정">
         <template v-slot:body>
 
+            <div class="overflow-hidden">
+                <single-group name="번호" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ id }}
+                    </template>
+                </single-group>
 
-            <single-group  name="번호" :size="9" :isRow="true">
-                <template v-slot:content>
-                    {{ id }}
-                </template>
-            </single-group>
+                <single-group name="작성일" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.created_at }}
+                    </template>
+                </single-group>
+            </div>
 
-            <single-group  name="작성일" :size="9" :isRow="true">
-                <template v-slot:content>
-                    {{ data.created_at }}
-                </template>
-            </single-group>
+            <div class="overflow-hidden">
+                <single-group name="이메일" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.email }}
+                    </template>
+                </single-group>
 
-            <single-group  name="이메일" :size="9" :isRow="true">
-                <template v-slot:content>
-                    {{ data.email }}
-                </template>
-            </single-group>
+                <single-group name="이름" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.name }}
+                    </template>
+                </single-group>
+            </div>
 
-            <single-group  name="이름" :size="9" :isRow="true">
-            <template v-slot:content>
-                    {{ data.name }}
-            </template>
-            </single-group>
-
-            <single-group  name="연락처" :size="9" :isRow="true">
+            <single-group name="연락처" :size="9" :isRow="true">
                 <template v-slot:content>
                     {{ data.phone }}
                 </template>
             </single-group>
 
-            <single-group  name="문의내용" :size="9" :isRow="true">
+            <single-group name="문의내용" :size="9" :isRow="true">
                 <template v-slot:content>
                     {{ data.content }}
                 </template>
             </single-group>
 
-            <single-group  name="구분" :size="9" :isRow="true">
+            <single-group name="구분" :size="9" :isRow="true">
                 <template v-slot:content>
                     <select-box class="form-control"
                                 :value="category"></select-box>
