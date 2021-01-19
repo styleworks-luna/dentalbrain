@@ -23,11 +23,11 @@ class Banner extends Model
     ];
 
     public function getPCImageNameAttribute(){
-        return $this->deskTopFile->name;
+        return File::find($this->desktop_file_id)->name;
     }
 
     public function getMobileImageNameAttribute(){
-        return $this->mobileFile->name;
+        return File::find($this->mobile_file_id)->name;
     }
 
     public function deskTopFile(){
