@@ -15,7 +15,7 @@ class AlterInquiriesTable extends Migration
     {
         Schema::table('inquiries', function (Blueprint $table) {
             $table->dropColumn('category');
-            $table->tinyInteger('category_id')->default(1)->after('')->comment('문의 내역 구분');
+            $table->tinyInteger('category_id')->default(1)->comment('문의 내역 구분');
         });
     }
 
