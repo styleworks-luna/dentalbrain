@@ -5,17 +5,23 @@
  * Date: 2021-01-13
  * Time: 오전 10:28
  */
+
 namespace App\Http\Controllers\Customer;
 
 use App\Models\Manage\inquiry;
+use App\Models\Manage\InquiryCategory;
 use Illuminate\Support\Facades\Validator;
 
-class InquiryController {
-    public function index(){
-        return view(viewPrefix() . 'pages.service.inquire');
+class InquiryController
+{
+    public function index()
+    {
+        $categories = InquiryCategory::all();
+        return view(viewPrefix() . 'pages.service.inquire', ['categories' => $categories]);
     }
 
-    public function store(){
+    public function store()
+    {
 //        $validateData = request()->validate([
 //            'name' => 'required',
 //            'email' => 'required|email',
@@ -29,7 +35,8 @@ class InquiryController {
             'email' => 'required',
             'phone' => 'required',
             'title' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'category_id' => 'required',
         ]);
 
         inquiry::create($validateData);

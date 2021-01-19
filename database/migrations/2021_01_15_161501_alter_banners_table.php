@@ -48,6 +48,9 @@ class AlterBannersTable extends Migration
             $table->dropForeign('banners_desktop_file_id_foreign');
             $table->dropForeign('banners_mobile_file_id_foreign');
 
+            $table->dropColumn('is_open');
+            $table->dropColumn('views');
+
             $table->unsignedBigInteger('file_id');
 
             $table->foreign('file_id')->references('id')->on('files');

@@ -36,8 +36,6 @@ export const FaqMixin = {
             Faq.getCategory().then(res => {
                 const result = res.data.faqCategory;
 
-                console.log(result)
-
                 this.categoryOptions = result;
             });
         }

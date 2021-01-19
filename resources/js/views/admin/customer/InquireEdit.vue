@@ -1,19 +1,72 @@
 <template>
-    <layout title="FAQ 수정">
+    <layout title="문의내역(상세)" class="test">
         <template v-slot:body>
-<!--            <single-group> {{ this.email }}</single-group>
-            <single-group> {{ this.name }}</single-group>
-            <single-group> {{ this.phone }}</single-group>-->
-            <single-group name="구분"
-                          :isRow="true"
-                          :isRequired="true"
-                          :size="6">
-                <template v-slot:content>
-                    <select-box class="form-control"
-                                :value="category"></select-box>
-                </template>
-            </single-group>
+
+            <div>
+                <single-group name="번호" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ id }}
+                    </template>
+                </single-group>
+
+                <single-group name="작성일" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.created_at }}
+                    </template>
+                </single-group>
+            </div>
+
+            <div>
+                <single-group name="이메일" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.email }}
+                    </template>
+                </single-group>
+
+                <single-group name="이름" class="float-left w-50" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.name }}
+                    </template>
+                </single-group>
+            </div>
+
+            <div>
+                <single-group name="연락처" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.phone }}
+                    </template>
+                </single-group>
+
+                <single-group name="문의내용" :size="9" :isRow="true">
+                    <template v-slot:content>
+                        {{ data.content }}
+                    </template>
+                </single-group>
+
+                <single-group name="구분" :size="1" :isRequired="true" :isRow="true">
+                    <template v-slot:content>
+                        <select-box class="form-control"
+                                    :value="data.category_id"
+                                    :options="categoryOptions"
+                                    @setValue="handleSetCategoryId"></select-box>
+                    </template>
+                </single-group>
+                <single-group name="답변상태" :isRequired="true" :size="6" :isRow="true">
+                    <template v-slot:content>
+                        <div class="float-left">
+                        <select-box class="form-control "
+                                    :value="data.is_answer"
+                                    :options="answerOption"
+                                    @setValue="handleSetAnswerId"></select-box>
+                        </div>
+                        <div class="float-left answer-time">
+                            <p v-if="data.is_answer == 1">답변 시간 : {{ data.answered_at }}</p>
+                        </div>
+                    </template>
+                </single-group>
+            </div>
         </template>
+
         <template v-slot:footer>
             <div class="float-left">
                 <button type="button" class="btn btn-danger"
@@ -48,7 +101,7 @@ export default {
     data() {
         return {
             id: '',
-            data: {}
+            data: []
         }
     },
     created() {
@@ -60,15 +113,15 @@ export default {
     methods: {
         getEditData() {
             Inquire.getEditData(this.id).then(res => {
-                console.log(res);
+                const result = res.data.inquiry;
+
+                this.data = result;
             });
         },
         update() {
             let data = {
-                question: this.question,
-                answer: this.answer,
                 category_id: this.category_id,
-                is_open: this.is_open
+                is_answer: this.is_answer
             };
 
             Inquire.update(this.id, data).then(res => {

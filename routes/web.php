@@ -232,14 +232,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {
                 //문의하기 index 페이지 데이터
                 Route::get('/', 'Admin\InquiryController@index')->name('index');
+                //문의하기 카테고리 가져오기
+                Route::get('category','Admin\InquiryController@getInquiryCategory')->name('getInquiryCategory');
                 //문의하기 수정 페이지 데이터
                 Route::get('{inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{inquiry}', 'Admin\InquiryController@update')->name('update');
+                Route::patch('{inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
                 Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
-                //문의하기 카테고리 가져오기
-                Route::get('category','Admin\InquiryController@getInquiryCategory')->name('getInquiryCategory');
             });
 
 

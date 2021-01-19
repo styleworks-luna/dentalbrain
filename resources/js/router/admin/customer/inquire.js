@@ -4,12 +4,12 @@ import InquireEdit from '@/views/admin/customer/InquireEdit.vue';
 const routes = [
     {
         path: '/admin/customer/inquire',
-        name: 'AdminNotice',
+        name: 'AdminInquire',
         component: Inquire
     },
     {
         path: '/admin/customer/inquire/:id',
-        name: 'AdminNoticeEdit',
+        name: 'AdminInuireEdit',
         component: InquireEdit
     }
 ];

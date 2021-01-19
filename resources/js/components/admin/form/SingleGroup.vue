@@ -5,7 +5,7 @@
                :class="labelSize">
             {{ name }} <span v-if="isRequired" class="text-danger">*</span>
         </label>
-        <div :class="contentSize">
+        <div :class="contentSize" class="form-input">
             <slot name="content"></slot>
         </div>
     </div>

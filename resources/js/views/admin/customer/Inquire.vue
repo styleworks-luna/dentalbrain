@@ -5,7 +5,13 @@
                         :data="inquires.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{slotProps.row.category}}</td>
+                    <td>
+                        {{ slotProps.row.category_name }}
+                    </td>
+<!--                    <td>
+                        <template v-if="slotProps.row.category_id == 1">일반</template>
+                        <template v-else-if="slotProps.row.category_id == 2">환불</template>
+                    </td>-->
                     <td>
                         <router-link :to="`/admin/customer/inquire/${slotProps.row.id}`">
                             {{ slotProps.row.title }}
@@ -13,6 +19,10 @@
                     </td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.created_at }}</td>
+                    <td>
+                        <template v-if="slotProps.row.is_answer == 1 ">완료</template>
+                        <template v-else>미완료</template>
+                    </td>
                 </template>
             </table-grid>
 
@@ -61,8 +71,8 @@ export default {
                     text: '번호'
                 },
                 {
-                  name: 'category',
-                  text: '구분'
+                    name: 'category',
+                    text: '구분'
                 },
                 {
                     name: 'title',
@@ -75,6 +85,10 @@ export default {
                 {
                     name: 'created_at',
                     text: '작성일'
+                },
+                {
+                    name: 'is_answer',
+                    text: '답변상태'
                 },
             ]
         }
@@ -90,12 +104,11 @@ export default {
             };
 
             Inquire.getData(params).then(res => {
-                console.log(res);
                 this.inquires = res.data.inquiry;
             }).catch(err => {
                 this.inquires = [];
             });
-        },
+        }
     }
 }
 </script>

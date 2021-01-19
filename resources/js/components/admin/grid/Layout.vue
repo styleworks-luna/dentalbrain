@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
+            <div class="card" :id="id">
                 <div class="card-header">
                     <h1 class="float-left mb-0 pt-2 pb-2 font-xl">{{ title }}</h1>
 
@@ -27,7 +27,8 @@
     export default {
         name: 'AdminLayout',
         props: {
-            title: String
+            title: String,
+            id: String
         }
     }
 </script>
