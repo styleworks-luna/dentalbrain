@@ -1,0 +1,77 @@
+@import './helpers/variables.sass'
+@import './helpers/extends.sass'
+@import './helpers/mixins.scss'
+
+.content .card-body
+    .form-group
+        margin-right: -15px
+        margin-left: -15px
+        clear: both
+
+        .col-form-label
+            font-size: 16px
+
+    .file-wrap
+        +size(100%, 180px)
+        +border(1px solid $border-color-base)
+        +box-sizing(border-box)
+
+        label
+            +size(60%)
+            +margin(120px auto 0)
+
+    .radio-wrap
+        +margin(right 30px)
+        +padding(0 calc(0.375rem + 1px))
+        float: left
+        line-height: 35px
+        vertical-align: middle
+
+        &:last-child
+            +margin(right 0)
+
+        input[type="radio"]
+            +margin(right 10px)
+            display: inline-block
+
+        label
+            +margin(0)
+            display: inline-block
+
+        label + .form-control
+            +size(150px)
+            +margin(left 20px)
+            display: inline-block
+
+// 강의 관리
+.content #lecture
+    .left-wrap,
+    .right-wrap
+        +margin(bottom 20px)
+
+
+    .left-wrap
+        +size(200px)
+        float: left
+
+    .right-wrap
+        +size(calc(100% - 200px))
+        +padding(0 10px)
+        float: right
+
+        .form-group
+            +margin(right 0 left 0)
+
+        .col-form-label + div
+            +padding(left 0)
+
+    select
+        +size(180px)
+        +margin(right 12px)
+        float: left
+
+    .lecture-setting
+        +margin(bottom 20px)
+
+        .form-group
+            +margin(right 0 left 0)

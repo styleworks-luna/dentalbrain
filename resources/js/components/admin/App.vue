@@ -32,5 +32,5 @@
 <style lang="scss">
     @import "~@coreui/coreui/scss/coreui";
     @import '~@coreui/icons/css/free.min.css';
-    /*@import "@sass/admin/admin.sass";*/
+    @import "@sass/admin.sass";
 </style>
