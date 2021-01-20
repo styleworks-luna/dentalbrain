@@ -30,4 +30,9 @@ class MobileFile extends FileTemplate
         $banner->mobileFile->delete();
         return $path;
     }
+
+    public function getPersistenceFilePath($parameter = [])
+    {
+        // TODO: Implement getPersistenceFilePath() method.
+    }
 }

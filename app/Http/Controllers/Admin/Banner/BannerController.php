@@ -89,6 +89,7 @@ class BannerController extends Controller
             $mobileFile->moveTempToPublic(File::find($validatedData['mobile_file_id']));
         }
 
+        $validatedData['user_id'] = auth()->id();
         $banner->update($validatedData);
 
         return response()->json([
@@ -99,10 +100,8 @@ class BannerController extends Controller
 
     public function destroy(Banner $banner)
     {
-        $banner->file; // eager loading
-
-        $pcFile = new DesktopFile($banner);
-        $pcFile->deletePublicFile();
+        $desktopFile = new DesktopFile();
+        $desktopFile->fileDelete($banner);
 
         $mobileFile = new MobileFile($banner);
         $mobileFile->deletePublicFile();

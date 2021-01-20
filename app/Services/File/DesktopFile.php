@@ -30,4 +30,9 @@ class DesktopFile extends FileTemplate
         $banner->desktopFile->delete();
         return $path;
     }
+
+    public function getPersistenceFilePath($parameter = [])
+    {
+        // TODO: Implement getPersistenceFilePath() method.
+    }
 }
