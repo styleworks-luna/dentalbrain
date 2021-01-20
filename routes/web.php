@@ -41,7 +41,8 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
     //배너 업데이트 확인 페이지
     Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
-
+    //유저 관리자 업로드 확인 페이지
+    Route::get('user/{userId}','Test\TestController@UserEdit')->name('userEdit');
 });
 
 /*============================ PAGES ============================*/
@@ -177,7 +178,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-
+            Route::get('/','Admin\User\UserController@index')->name('index');
+            Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
+            Route::put('user','Admin\User\UserController@update')->name('update');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {

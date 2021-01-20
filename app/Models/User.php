@@ -37,9 +37,30 @@ class User extends Authenticatable
         'allow_email' => 'boolean'
     ];
 
+    protected $appends = [
+        'need_license','job_name_id','job_name','license_num',
+    ];
+
+    public function getneedLicenseAttribute(){
+        return  UserJobName::find($this->getJobNameIdAttribute())->need_license;
+    }
+
+    public function getJobNameIdAttribute(){
+        return UserJob::find($this->attributes['job_id'])->job_name_id;
+    }
+
+    public function getJobNameAttribute(){
+        return UserJobName::find($this->getJobNameIdAttribute())->name;
+    }
+
+    public function getLicenseNumAttribute(){
+        return UserJob::find($this->attributes['job_id'])->license_num;
+    }
+
+
     public function job()
     {
-        return $this->belongsTo(UserJob::class, 'job_id');
+        return $this->belongsTo(UserJob::class, 'job_id','id');
     }
 
     public function isAdmin()
