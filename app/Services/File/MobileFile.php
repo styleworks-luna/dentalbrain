@@ -8,34 +8,26 @@
 
 namespace App\Services\File;
 
-use App\Models\File;
 use App\Models\Manage\Banner;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
-class MobileFile extends FileAbstractService
+class MobileFile extends FileTemplate
 {
-
-    public function __construct()
+    public function __construct(Banner $banner)
     {
-        parent::__construct('mobile');
+        parent::__construct($banner);
     }
 
-    public function fileDelete(Banner $banner)
+    function getPublicPath(string $fileName)
     {
-        $file = $banner->mobileFile();
+        $banner = $this->model;
+        return $path = 'public/banners/' . $banner->id . '/mobile/' . $fileName;
+    }
+
+    function deleteFileInDB()
+    {
+        $banner = $this->model;
         $path = $banner->mobileFile->path;
-        $file->delete();
-        return Storage::delete($path);
-    }
-
-    public function tempFileTransferToStorage(Banner $banner, File $file)
-    {
-        $path = 'public/banners/' . $banner->id . '/mobile/' . $file->name;
-        Storage::move($file->path, $path);
-        DB::transaction(function () use ($file, $path) {
-            $file->path = $path;
-            $file->save();
-        });
+        $banner->mobileFile->delete();
+        return $path;
     }
 }

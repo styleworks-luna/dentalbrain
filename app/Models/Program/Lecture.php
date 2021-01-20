@@ -4,7 +4,6 @@ namespace App\Models\Program;
 
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Lecture extends Model
 {
@@ -19,7 +18,7 @@ class Lecture extends Model
 
     public function thumbnail()
     {
-        return $this->belongsTo('files', 'thumbnail_id', 'id');
+        return $this->belongsTo(File::class, 'thumbnail_id', 'id');
     }
 
     public function getThumbnailUrlAttribute()

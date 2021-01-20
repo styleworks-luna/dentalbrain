@@ -2,6 +2,7 @@
 
 namespace App\Models\Program;
 
+use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
@@ -32,6 +33,16 @@ class Program extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'program_id', 'id');
+    }
+
+    public function thumbnail()
+    {
+        return $this->belongsTo(File::class, 'thumbnail_id', 'id');
+    }
+
+    public function material()
+    {
+        return $this->belongsTo(File::class, 'material_id', 'id');
     }
 
     /*
