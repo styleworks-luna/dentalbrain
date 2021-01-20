@@ -24,7 +24,7 @@
                                 :value="order"
                                 :options="orderOptions"
                                 @setValue="handleSetOrderCategoryId"></select-box>
-                    <p>중요도 값이 클수록 먼저 나오고, 같으면 동일한 중요도로 등록 된 배너가 랜덤 노출 됩니다.</p>
+                    <p class="d-block mt-2">중요도 값이 클수록 먼저 나오고, 같으면 동일한 중요도로 등록 된 배너가 랜덤 노출 됩니다.</p>
                 </template>
             </single-group>
 
@@ -46,7 +46,7 @@
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="URL을 입력해주세요."
                     v-model="link">
-                    <p>배너 클릭 시 연결 될 URL 주소를 입력해 주세요.</p>
+                    <p class="d-block mt-2">배너 클릭 시 연결 될 URL 주소를 입력해 주세요.</p>
                 </template>
             </single-group>
 
@@ -64,7 +64,7 @@
                     <image-upload :inputId="'mobile' + mobile_file.id"
                                   :initFile="mobile_file"
                                   @setImage="updateMobileFile"></image-upload>
-                    <p class="">Mobile 배너로 노출 될 이미지 업로드 (모바일 배너 등록 시 첨부)</p>
+                    <p>Mobile 배너로 노출 될 이미지 업로드 (모바일 배너 등록 시 첨부)</p>
                 </template>
             </single-group>
 
@@ -74,11 +74,19 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
-                    <input type="text" class="form-control w-25 float-left start-time" placeholder="시작기간을 입력해주세요"
-                            v-model="started_at">
+                    <datepicker class="date-picker start-time float-left" placeholder="시작 날짜"
+                                :format="'yyyy-MM-dd'"
+                                :language="ko"
+                                :required="true"
+                                input-class="datepicker form-control"
+                                v-model="started_at"></datepicker>
                     <span class="float-left">~</span>
-                    <input type="text" class="form-control w-25 float-left end-time" placeholder="종료기간을 입력해주세요.."
-                           v-model="ended_at">
+                    <datepicker class="date-picker end-time float-left" placeholder="종료 날짜"
+                                :format="'yyyy-MM-dd'"
+                                :language="ko"
+                                :required="true"
+                                input-class="datepicker form-control"
+                                v-model="ended_at"></datepicker>
                 </template>
             </single-group>
 
@@ -105,6 +113,10 @@
 </template>
 
 <script>
+// components
+import Datepicker from 'vuejs-datepicker';
+import { ko } from 'vuejs-datepicker/dist/locale';
+
 // api
 import Banner from '@/api/admin/banner/Banner.js';
 
@@ -116,8 +128,12 @@ export default {
     mixins: [
         BannerMixin
     ],
+    components: {
+      Datepicker,
+    },
     data() {
         return{
+            ko: ko,
         };
     },
     methods: {
