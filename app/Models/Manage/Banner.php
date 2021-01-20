@@ -54,7 +54,8 @@ class Banner extends Model
         return $query->where('is_open', '=', 1)
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
-            ->with('file');
+            ->orderByDesc('order')
+            ->with('desktopFile', 'mobileFile');
     }
 
     public function viewCountAdd(Banner $banner)

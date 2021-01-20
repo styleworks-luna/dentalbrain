@@ -41,7 +41,7 @@ class BannerController extends Controller
             'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
             'is_open' => ['required', 'boolean']
         ]);
-        logger($validatedData);
+
         $validatedData['user_id'] = auth()->id();
         $banner = Banner::create($validatedData);
 
@@ -49,7 +49,7 @@ class BannerController extends Controller
         $pcFile->moveTempToPublic(File::find($banner->desktop_file_id));
 
         $mobileFile = new MobileFile($banner);
-        $mobileFile->moveTempToPublic(File::find($banner->desktop_file_id));
+        $mobileFile->moveTempToPublic(File::find($banner->mobile_file_id));
 
         return response()->json([
             'success' => true,

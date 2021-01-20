@@ -36,6 +36,7 @@ abstract class FileTemplate
             }
 
             $file->path = $path;
+            $file->url = str_replace('public', '/storage', $path);
             $file->save();
             DB::commit();
 
