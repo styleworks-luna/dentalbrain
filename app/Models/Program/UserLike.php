@@ -2,6 +2,7 @@
 
 namespace App\Models\Program;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class UserLike extends Model
@@ -12,11 +13,11 @@ class UserLike extends Model
 
     public function program()
     {
-        return $this->belongsTo('programs', 'program_id', 'id');
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo('users', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
