@@ -17,14 +17,15 @@
                     <td>{{ slotProps.row.link }}</td>
                     <td>{{ slotProps.row.started_at }}{{ slotProps.row.ended_at }}</td>
                     <td>{{ slotProps.row.view }}</td>
-                    <td>
+                    <td class="overflow-hidden mr-auto ml-auto">
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"
-                                     class="btn btn-lg btn-info">
+                                     class="btn btn-info float-left mr-3">
                             수정
                         </router-link>
-                        <button-open :isOpen="slotProps.row.is_open"
+                        <button-open  class="btn btn-warning float-left w-25"
+                                        :isOpen="slotProps.row.is_open"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
-                        <button>삭제</button>
+                        <button class="btn btn-danger float-left ml-3">삭제</button>
                     </td>
                 </template>
             </table-grid>
