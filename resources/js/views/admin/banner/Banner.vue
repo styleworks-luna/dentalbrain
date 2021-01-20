@@ -1,12 +1,15 @@
 <template>
-    <layout title="회원정보 목록">
+    <layout title="배너관리">
         <template v-slot:button>
-
+            <router-link to="/admin/banner/create"
+                         class="btn btn-lg btn-info">
+                 새로 만들기
+            </router-link>
         </template>
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="users.data">
+                        :data="banners.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.position }}</td>
@@ -15,17 +18,20 @@
                     <td>{{ slotProps.row.started_at }}{{ slotProps.row.ended_at }}</td>
                     <td>{{ slotProps.row.view }}</td>
                     <td>
-                        <router-link :to="`/admin/banner/edit/${slotProps.row.id}`"
+                        <router-link :to="`/admin/banner/${slotProps.row.id}`"
                                      class="btn btn-lg btn-info">
                             수정
                         </router-link>
+                        <button-open :isOpen="slotProps.row.is_open"
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                        <button>삭제</button>
                     </td>
                 </template>
             </table-grid>
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="users" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="banners" @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
@@ -38,6 +44,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 // api
 import Banner from '@/api/admin/banner/Banner.js';
@@ -46,10 +53,11 @@ export default {
     name: 'AdminUser',
     components: {
         'table-grid': Table,
+        'button-open': ButtonOpen
     },
     data() {
         return {
-            users: {
+            banners: {
                 data: []
             },
             page: 1
@@ -104,11 +112,19 @@ export default {
 
             Banner.getData(params).then(res => {
                 console.log(res);
-                this.faqs = res.data.banner;
+                this.banners = res.data.banners;
             }).catch(err => {
-                this.faqs = [];
+                this.banners = [];
             });
         },
+        handleSetStatus(id) {
+            Banner.setStatus(id).then(res => {
+                this.getData();
+                alert(res.data.msg);
+            }).catch(err => {
+                alert('오류');
+            })
+        }
 
     }
 }

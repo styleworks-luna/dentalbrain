@@ -34,4 +34,10 @@ export default {
             method: 'delete'
         });
     },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/banner/${id}/status`,
+            method: 'patch'
+        });
+    },
 }
