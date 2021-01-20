@@ -3,6 +3,7 @@
 namespace App\Models\Manage;
 
 use App\Models\File;
+use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -48,5 +49,10 @@ class Banner extends Model
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
             ->with('file');
+    }
+
+    public function viewCountAdd(Banner $banner){
+        $viewCountAddImpl = new ViewCountImpl();
+        $viewCountAddImpl->viewCountAdd($banner);
     }
 }
