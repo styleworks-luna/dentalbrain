@@ -141,6 +141,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('lecture/{any}', 'admin.index');
     Route::view('lecture/online/{any}', 'admin.index');
 
+    // lecture
+    Route::view('user', 'admin.index');
+    Route::view('user/{any}', 'admin.index');
+
     // customer
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
