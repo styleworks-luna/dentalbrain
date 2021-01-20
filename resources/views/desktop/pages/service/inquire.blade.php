@@ -94,8 +94,7 @@
                                                   placeholder="문의내용을 입력해주세요."
                                                   data-parsley-required="true"
                                                   data-parsley-required-message="※ 문의내용을 입력해주세요."
-                                                  value="{{old('content')}}">
-                                        </textarea>
+                                                  value="{{old('content')}}"></textarea>
                                     </td>
                                 </tr>
                             </table>

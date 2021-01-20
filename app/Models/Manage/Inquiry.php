@@ -15,9 +15,9 @@ class Inquiry extends Model
         'is_answer' => 'boolean'
     ];
 
-    public function answers()
+    public function answer()
     {
-        return $this->hasOne(InquiryAnswers::class);
+        return $this->hasOne(InquiryAnswer::class);
     }
 
     public function category()

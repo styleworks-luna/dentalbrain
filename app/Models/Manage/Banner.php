@@ -3,6 +3,7 @@
 namespace App\Models\Manage;
 
 use App\Models\File;
+use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,9 +19,28 @@ class Banner extends Model
 
     protected $hidden = ['clicks', 'is_active', 'started_at', 'ended_at', 'position'];
 
-    public function file()
+    protected $appends = [
+        'desktop_image_name', 'mobile_image_name'
+    ];
+
+    public function getDesktopImageNameAttribute()
     {
-        return $this->belongsTo(File::class, 'file_id');
+        return File::find($this->desktop_file_id)->name;
+    }
+
+    public function getMobileImageNameAttribute()
+    {
+        return File::find($this->mobile_file_id)->name;
+    }
+
+    public function desktopFile()
+    {
+        return $this->belongsTo(File::class, 'desktop_file_id', 'id');
+    }
+
+    public function mobileFile()
+    {
+        return $this->belongsTo(File::class, 'mobile_file_id', 'id');
     }
 
     /**
@@ -33,5 +53,10 @@ class Banner extends Model
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
             ->with('file');
+    }
+
+    public function viewCountAdd(Banner $banner){
+        $viewCountAddImpl = new ViewCountImpl();
+        $viewCountAddImpl->viewCountAdd($banner);
     }
 }

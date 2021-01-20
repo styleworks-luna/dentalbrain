@@ -37,8 +37,10 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
 
     //문의하기 업데이트 확인 페이지
     Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
-
+    //업로드 파일 확인 페이지
     Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
+    //배너 업데이트 확인 페이지
+    Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
 
 });
 
@@ -182,8 +184,20 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         });
 
-        Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {
 
+        Route::group(['prefix' => 'banner', 'as' =>'banners.'],function(){
+            //배너 index 페이지 데이터
+            Route::get('/','Admin\Banner\BannerController@index')->name('index');
+            //배너 생성 함수
+            Route::post('/', 'Admin\Banner\BannerController@store')->name('store');
+            //배너 수정 페이지 데이터
+            Route::get('{banner}/edit','Admin\Banner\BannerController@edit')->name('edit');
+            //배너 업데이트 함수
+            Route::put('{banner}','Admin\Banner\BannerController@update')->name('update');
+            //배너 삭제 함수
+            Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
+            //배너 상태 변경 함수
+            Route::patch('{banner}','Admin\Banner\BannerController@statusChange')->name('statusChange');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
@@ -232,19 +246,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
             });
 
-            Route::group(['prefix' => 'banner', 'as' =>'banners.'],function(){
-                //배너 index 페이지 데이터
-                Route::get('/','Admin\Banner\BannerController@index')->name('index');
 
-                //배너 생성 함수
-                Route::post('/', 'Admin\Banner\BannerController@store')->name('store');
-                //배너 수정 페이지 데이터
-                Route::get('{banner}/edit','Admin\Banner\BannerController@edit')->name('edit');
-                //배너 업데이트 함수
-                Route::put('{banner}','Admin\Banner\BannerController@update')->name('update');
-                //배너 삭제 함수
-                Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
-            });
         });
     });
 });
