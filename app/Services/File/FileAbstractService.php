@@ -9,24 +9,25 @@
 namespace App\Services\File;
 
 use App\Models\File;
-use App\Models\Manage\Banner;
+use Illuminate\Database\Eloquent\Model;
 
-abstract class FileAbstractService{
-    private $category;
+abstract class FileAbstractService
+{
+    protected $model;
 
-    public function FileAbstractService($category)
+    public function __construct($model)
     {
-        $this->setCategory($category);
+        $this->model = $model;
     }
 
-    public function getCategory(){
-        return $this->category;
-    }
+    abstract function fileDelete(Model $model);
 
-    public function setCategory($category){
-        $this->category = $category;
-    }
+    abstract function tempFileTransferToStorage(Model $model, File $file);
 
-    abstract function fileDelete(Banner $banner);
-    abstract function tmpFileTransferToStorage(Banner $banner,File $file);
+    /**
+     * @param Model $model
+     * @param array $parameter
+     * @return string
+     */
+    abstract function getPersistenceFilePath($parameter = []);
 }

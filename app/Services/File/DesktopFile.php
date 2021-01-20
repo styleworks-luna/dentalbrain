@@ -13,25 +13,25 @@ use App\Models\Manage\Banner;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class MobileFile extends FileAbstractService
+class DesktopFile extends FileAbstractService
 {
 
     public function __construct()
     {
-        parent::__construct('mobile');
+        parent::__construct('desktop');
     }
 
     public function fileDelete(Banner $banner)
     {
-        $file = $banner->mobileFile();
-        $path = $banner->mobileFile->path;
+        $file = $banner->desktopFile();
+        $path = $banner->desktopFile->path;
         $file->delete();
         return Storage::delete($path);
     }
 
     public function tempFileTransferToStorage(Banner $banner, File $file)
     {
-        $path = 'public/banners/' . $banner->id . '/mobile/' . $file->name;
+        $path = 'public/banners/' . $banner->id . '/desktop/' . $file->name;
         Storage::move($file->path, $path);
         DB::transaction(function () use ($file, $path) {
             $file->path = $path;
