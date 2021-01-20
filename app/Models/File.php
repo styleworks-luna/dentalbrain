@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Manage\Banner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -9,12 +10,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class File extends Model
 {
     use softDeletes;
+
     protected $guarded = [];
 
     protected $hidden = ['download_times'];
 
-    public function banner()
+    public function desktopBanners()
     {
-        return $this->hasOne('banner', 'file_id', 'id');
+        return $this->hasMany(Banner::class, 'desktop_file_id', 'id');
+    }
+
+    public function mobileBanners()
+    {
+        return $this->hasMany(Banner::class, 'mobile_file_id', 'id');
     }
 }

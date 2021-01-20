@@ -30,18 +30,18 @@ class BannerController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
-            'position' => 'required | numeric',
-            'order' => 'required | numeric',
-            'title' => 'required',
-            'link' => 'required',
-            'mobile_file_id' => 'required | numeric',
-            'desktop_file_id' => 'required | numeric',
-            'started_at' => 'required|date_format:Y-m-d',
-            'ended_at' => 'required|date_format:Y-m-d|after:started_at',
+            'position' => ['required', 'numeric'],
+            'order' => ['required', 'numeric'],
+            'title' => ['string',],
+            'link' => ['required',],
+            'mobile_file_id' => ['required ', ' numeric',],
+            'desktop_file_id' => ['required', 'numeric'],
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'is_open' => ['required', 'boolean']
         ]);
-
+        logger($validatedData);
         $validatedData['user_id'] = auth()->id();
         $banner = Banner::create($validatedData);
 
@@ -66,16 +66,15 @@ class BannerController extends Controller
 
     public function update(Request $request, Banner $banner)
     {
-
         $validatedData = $request->validate([
-            'position' => 'required | numeric',
-            'order' => 'required | numeric',
-            'title' => 'required',
-            'link' => 'required',
-            'mobile_file_id' => 'required | numeric',
-            'desktop_file_id' => 'required | numeric',
-            'started_at' => 'required|date_format:Y-m-d',
-            'ended_at' => 'required|date_format:Y-m-d|after:started_at',
+            'position' => ['required', 'numeric'],
+            'order' => ['required', 'numeric'],
+            'title' => ['string',],
+            'link' => ['required',],
+            'mobile_file_id' => ['required', 'numeric',],
+            'desktop_file_id' => ['required', 'numeric'],
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
         ]);
 
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
