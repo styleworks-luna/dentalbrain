@@ -16,7 +16,7 @@
         name: 'SelectBox',
         props: {
             'text': String,
-            'value': [Number, String],
+            'value': [Number, String, Boolean],
             'options': Array
         },
         methods: {

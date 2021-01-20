@@ -11,6 +11,6 @@ class Inquiry extends Model
     protected $fillable = ['name','phone','email','title','content'];
 
     public function answers(){
-        return $this->hasOne(Inquiry_answers::class);
+        return $this->hasOne(InquiryAnswers::class);
     }
 }

@@ -18,9 +18,12 @@ class Banner extends Model
 
     protected $hidden = ['clicks', 'is_open', 'started_at', 'ended_at', 'position'];
 
-    public function file()
-    {
-        return $this->belongsTo(File::class, 'file_id');
+    public function deskTopFile(){
+        return $this->belongsTo(File::class, 'desktop_file_id','id');
+    }
+
+    public function mobileFile(){
+        return $this->belongsTo(File::class,'mobile_file_id','id');
     }
 
     /**

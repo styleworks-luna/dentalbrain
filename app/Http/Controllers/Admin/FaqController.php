@@ -26,7 +26,6 @@ class FaqController extends Controller
 
     public function store(Request $request)
     {
-        logger($request);
         $validatedData = $request->validate([
             'question' => 'required',
             'answer' => 'required',
@@ -79,12 +78,16 @@ class FaqController extends Controller
         ]);
     }
 
-    public function statusChange(Faq $faq){
+    public function statusChange(Faq $faq)
+    {
         $statusChangeImpl = new StatusChangeImpl();
         return $statusChangeImpl->statusChange($faq,'is_open');
     }
 
-    public function getFaqCategory(){
-        return response()->json(['faqCategory'=> FaqCategory::all()]);
+    public function getFaqCategory()
+    {
+        return response()->json([
+            'faqCategory' => FaqCategory::all()
+        ]);
     }
 }

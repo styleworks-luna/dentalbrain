@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Interfaces\ViewCount\ViewCountImpl;
+use App\Services\ViewCount\ViewCountImpl;
 use App\Models\Manage\Notice;
 
 /**
