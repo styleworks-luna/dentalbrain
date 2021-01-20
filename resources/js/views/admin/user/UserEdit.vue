@@ -1,7 +1,7 @@
 <template>
     <layout title="FAQ 수정">
         <template v-slot:body>
-            <!-- 제목 -->
+            <!-- 아이디 -->
             <single-group name="아이디"
                           :isRow="true"
                           :isRequired="true"
@@ -11,7 +11,7 @@
                 </template>
             </single-group>
 
-            <!-- 세부내용 -->
+            <!-- 이름 -->
             <single-group name="이름"
                           :isRow="true"
                           :isRequired="true" :size="2.5">
@@ -21,7 +21,7 @@
                 </template>
             </single-group>
 
-            <!-- 세부내용 -->
+            <!-- 이메일 -->
             <single-group name="이메일"
                           :isRow="true"
                           :isRequired="true" :size="2.5">
@@ -31,7 +31,7 @@
                 </template>
             </single-group>
 
-            <!-- 세부내용 -->
+            <!-- 전화번호 -->
             <single-group name="전화번호"
                           :isRow="true"
                           :isRequired="true" :size="2.5">
@@ -41,7 +41,7 @@
                 </template>
             </single-group>
 
-            <!-- 세부내용 -->
+            <!-- 비밀번호 -->
             <single-group name="비밀번호"
                           :isRow="true"
                           :isRequired="true" :size="2.5">
@@ -51,7 +51,7 @@
             </single-group>
 
 
-            <!-- 카테고리 타입 -->
+            <!-- 직업군 -->
             <single-group name="직업군"
                           :isRow="true"
                           :isRequired="true"
@@ -69,7 +69,7 @@
                 </template>
             </single-group>
 
-            <!-- 카테고리 타입 -->
+            <!-- 이메일 수신 -->
             <single-group name="이메일 수신"
                           :isRow="true"
                           :size="2.5">
