@@ -18,6 +18,18 @@ class Banner extends Model
 
     protected $hidden = ['clicks', 'is_active', 'started_at', 'ended_at', 'position'];
 
+    protected $appends =[
+        'PCImageName' ,'MobileImageName'
+    ];
+
+    public function getPCImageNameAttribute(){
+        return File::find($this->desktop_file_id)->name;
+    }
+
+    public function getMobileImageNameAttribute(){
+        return File::find($this->mobile_file_id)->name;
+    }
+
     public function deskTopFile(){
         return $this->belongsTo(File::class, 'desktop_file_id','id');
     }
