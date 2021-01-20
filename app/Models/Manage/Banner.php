@@ -18,24 +18,28 @@ class Banner extends Model
 
     protected $hidden = ['clicks', 'is_active', 'started_at', 'ended_at', 'position'];
 
-    protected $appends =[
-        'PCImageName' ,'MobileImageName'
+    protected $appends = [
+        'desktop_image_name', 'mobile_image_name'
     ];
 
-    public function getPCImageNameAttribute(){
+    public function getDesktopImageNameAttribute()
+    {
         return File::find($this->desktop_file_id)->name;
     }
 
-    public function getMobileImageNameAttribute(){
+    public function getMobileImageNameAttribute()
+    {
         return File::find($this->mobile_file_id)->name;
     }
 
-    public function deskTopFile(){
-        return $this->belongsTo(File::class, 'desktop_file_id','id');
+    public function desktopFile()
+    {
+        return $this->belongsTo(File::class, 'desktop_file_id', 'id');
     }
 
-    public function mobileFile(){
-        return $this->belongsTo(File::class,'mobile_file_id','id');
+    public function mobileFile()
+    {
+        return $this->belongsTo(File::class, 'mobile_file_id', 'id');
     }
 
     /**
