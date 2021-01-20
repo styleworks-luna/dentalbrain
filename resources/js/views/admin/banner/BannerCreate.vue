@@ -75,6 +75,7 @@
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
                     <datepicker class="date-picker start-time float-left" placeholder="시작 날짜"
+                                valueType="format"
                                 :format="'yyyy-MM-dd'"
                                 :language="ko"
                                 :required="true"
@@ -82,6 +83,7 @@
                                 v-model="started_at"></datepicker>
                     <span class="float-left">~</span>
                     <datepicker class="date-picker end-time float-left" placeholder="종료 날짜"
+                                valueType="format"
                                 :format="'yyyy-MM-dd'"
                                 :language="ko"
                                 :required="true"
@@ -137,6 +139,29 @@ export default {
         };
     },
     methods: {
+        nullCheck (value) {
+            return value == '' || value == null || value == undefined || value == 'undefined';
+        },
+        dateFormat (date) {
+            if (this.nullCheck(date)) {
+                return '';
+            }
+
+            date = new Date(date);
+            const year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+
+            if (month < 10){
+                month = `0${month}`;
+            }
+
+            if (day < 10) {
+                day = `0${day}`;
+            }
+
+            return `${year}-${month}-${day}`;
+        },
         create() {
             let data = {
                 title: this.title,
@@ -146,9 +171,10 @@ export default {
                 mobile_file_id: this.mobile_file.id,
                 order: this.order,
                 is_open: this.is_open,
-                started_at: this.started_at,
-                ended_at: this.ended_at
+                started_at: this.dateFormat(this.started_at),
+                ended_at: this.dateFormat(this.ended_at)
             };
+            console.log(data);
 
             Banner.create(data).then(res => {
                 alert(res.data.msg);

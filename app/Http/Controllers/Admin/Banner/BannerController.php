@@ -33,7 +33,7 @@ class BannerController extends Controller
         $validatedData = $request->validate([
             'position' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
-            'title' => ['string',],
+            'title' => ['string','nullable'],
             'link' => ['required',],
             'mobile_file_id' => ['required ', ' numeric',],
             'desktop_file_id' => ['required', 'numeric'],
@@ -69,7 +69,7 @@ class BannerController extends Controller
         $validatedData = $request->validate([
             'position' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
-            'title' => ['string',],
+            'title' => ['string','nullable'],
             'link' => ['required',],
             'mobile_file_id' => ['required', 'numeric',],
             'desktop_file_id' => ['required', 'numeric'],
