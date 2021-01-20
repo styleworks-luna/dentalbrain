@@ -2,6 +2,9 @@
 @import './helpers/extends.sass'
 @import './helpers/mixins.scss'
 
+.mt-10
+    +margin(top 10px)
+
 .content
     .card-body
         .form-group
@@ -30,8 +33,17 @@
                 .answer-time
                     +padding(left 20px top 5px)
 
-                    p
-                        +margin(0)
+                p
+                    +margin(0)
+
+                .tips
+                    +margin(bottom 10px)
+
+                .start-time
+                    +margin(right 10px)
+
+                .end-time
+                    +margin(left 10px)
 
         .file-wrap
             +size(100%, 180px)
@@ -64,6 +76,11 @@
                 +size(150px)
                 +margin(left 20px)
                 display: inline-block
+
+        .input-file-wrap
+            .input-file
+                +size(70%)
+                +margin(left 10px)
 
 // 강의 관리
 .content #lecture
