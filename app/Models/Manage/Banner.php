@@ -57,10 +57,5 @@ class Banner extends Model
             ->orderByDesc('order')
             ->with('desktopFile', 'mobileFile');
     }
-
-    public function viewCountAdd(Banner $banner)
-    {
-        $viewCountAddImpl = new ViewCountImpl();
-        $viewCountAddImpl->viewCountAdd($banner);
-    }
+    
 }
