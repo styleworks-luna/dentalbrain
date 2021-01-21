@@ -1,5 +1,5 @@
 <template>
-    <layout title="FAQ 수정">
+    <layout title="FAQ 수정" class="faq">
         <template v-slot:body>
             <!-- 제목 -->
             <single-group name="질문"

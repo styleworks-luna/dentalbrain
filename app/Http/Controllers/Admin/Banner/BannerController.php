@@ -61,6 +61,8 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
+        $banner->load('desktopFile','mobileFile');
+
         return response()->json([
             'banner' => $banner
         ]);
@@ -71,14 +73,16 @@ class BannerController extends Controller
         $validatedData = $request->validate([
             'position' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
-            'title' => ['string','nullable'],
+            'title' => ['string', 'nullable'],
             'link' => ['required',],
             'mobile_file_id' => ['required', 'numeric',],
             'desktop_file_id' => ['required', 'numeric'],
             'started_at' => ['required', 'date_format:Y-m-d'],
             'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'is_open' => ['required', 'boolean']
         ]);
 
+        logger($validatedData);
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
             $desktopFile = new DesktopFile($banner);
             $desktopFile->deletePublicFile();

@@ -23,7 +23,6 @@ export default {
         fileUpload(e) {
             let uploadForm = new FormData();
             uploadForm.append('image', e.target.files[0]);
-
             ImageUpload.fileUpload(uploadForm).then(res => {
                 this.$emit('setImage', res.data.file);
             }).catch(function (err) {

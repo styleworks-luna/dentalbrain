@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inquiry extends Model
 {
-    //
-
     protected $table = 'inquiries';
     protected $guarded = [];
     protected $appends = ['category_name'];
@@ -15,9 +13,9 @@ class Inquiry extends Model
         'is_answer' => 'boolean'
     ];
 
-    public function answer()
+    public function answers()
     {
-        return $this->hasOne(InquiryAnswer::class);
+        return $this->hasOne(InquiryAnswers::class);
     }
 
     public function category()
@@ -29,5 +27,4 @@ class Inquiry extends Model
     {
         return InquiryCategory::find($this->category_id)->name;
     }
-
 }
