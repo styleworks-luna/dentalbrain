@@ -60,10 +60,16 @@
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력" :isRequired="true" :size="9">
+            <single-group name="상세 정보 입력" :isRequired="true" :size="10">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="내용"
                               v-model="description"></textarea>
+                </template>
+            </single-group>
+
+            <single-group name="강의 장소" :size="9">
+                <template v-slot:content>
+                    <naver-map></naver-map>
                 </template>
             </single-group>
 
@@ -150,13 +156,15 @@
     import SingleGroup from '@/components/admin/form/SingleGroup.vue';
     import Thumbnail from '@/components/admin/form/Thumbnail.vue';
     import SelectBox from '@/components/common/SelectBox.vue';
+    import NaverMap from '@/components/common/NaverMap.vue';
 
     export default {
         name: 'AdminOnlineCreate',
         components: {
             'single-group': SingleGroup,
             'thumbnail': Thumbnail,
-            'select-box': SelectBox
+            'select-box': SelectBox,
+            'naver-map': NaverMap
         },
         data() {
             return {

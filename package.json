@@ -32,6 +32,7 @@
         "laravel-mix-alias": "^1.0.2",
         "laravel-vue-pagination": "^2.3.1",
         "perfect-scrollbar": "^1.5.0",
+        "vue-naver-maps": "^0.14.1",
         "vue-router": "^3.4.9",
         "vuejs-datepicker": "^1.6.2",
         "webpack": "^4.44.1"
