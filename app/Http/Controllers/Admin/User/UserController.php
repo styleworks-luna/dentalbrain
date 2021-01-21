@@ -64,7 +64,7 @@ class UserController {
         ]);
     }
 
-    public function getUserJobCategory(){
+    public function getUserJobNameCategory(){
         return response()->json(['userJob' => UserJobName::all()]);
     }
 }

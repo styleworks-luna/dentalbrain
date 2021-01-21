@@ -186,7 +186,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //user 업데이트 함수
             Route::put('{user}','Admin\User\UserController@update')->name('update');
             //user 직업 모두 가져오는 데이터
-            Route::get('category','Admin\User\UserController@getUserJobCategory')->name('getUserJobCategory');
+            Route::get('category','Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
