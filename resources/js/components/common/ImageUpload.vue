@@ -25,7 +25,6 @@ export default {
             uploadForm.append('image', e.target.files[0]);
 
             ImageUpload.fileUpload(uploadForm).then(res => {
-                console.log(res);
                 this.$emit('setImage', res.data.file);
             }).catch(function (err) {
                 alert('오류');

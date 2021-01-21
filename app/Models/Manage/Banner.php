@@ -12,8 +12,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Banner extends Model
 {
-    static $POSITION_MIDDLE = 0;
-    static $POSITION_BOTTOM = 1;
+    static $POSITION_TOP = 0;
+    static $POSITION_BAR = 1;
+    static $POSITION_RECOMMEND = 2;
+    static $POSITION_BOTTOM = 3;
 
     protected $guarded = [];
 
@@ -45,17 +47,19 @@ class Banner extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return zmixed
      */
     public function scopePublic($query)
     {
         return $query->where('is_open', '=', 1)
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
-            ->with('desktopFile','mobileFile');
+            ->orderByDesc('order')
+            ->with('desktopFile', 'mobileFile');
     }
 
-    public function viewCountAdd(Banner $banner){
+    public function viewCountAdd(Banner $banner)
+    {
         $viewCountAddImpl = new ViewCountImpl();
         $viewCountAddImpl->viewCountAdd($banner);
     }
