@@ -29,7 +29,7 @@ class UserController {
         return response()->json(['user' => $user]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',

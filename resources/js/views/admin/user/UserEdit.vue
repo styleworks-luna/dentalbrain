@@ -1,5 +1,5 @@
 <template>
-    <layout title="FAQ 수정">
+    <layout title="회원정보 상세" class="user">
         <template v-slot:body>
             <!-- 아이디 -->
             <single-group name="아이디"
@@ -27,7 +27,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="이메일을 입력해 주세요."
-                              v-model="email"/>
+                              v-model="email" />
                 </template>
             </single-group>
 
@@ -37,7 +37,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="전화번호를 입력해 주세요."
-                              v-model="phone"/>
+                              v-model="phone" />
                 </template>
             </single-group>
 
@@ -93,14 +93,14 @@
 </template>
 
 <script>
-// api
-// import User from '@/api/admin/user/user.js';
+//api
+import User from '@/api/admin/user/user.js';
 
 //Mixin
 import { UserMixin } from '@/mixins/admin/user/User.js'
 
 export default {
-    name: 'AdminuserEdit',
+    name: 'AdminUserEdit',
     mixins: [
         UserMixin,
     ],
@@ -111,13 +111,41 @@ export default {
         }
     },
     created() {
-
+        this.id = this.$route.params.id;
     },
     mounted() {
-
+        this.getEditData();
     },
     methods: {
+        getEditData() {
+            User.getEditData(this.id).then(res => {
+                const result = res.data.user;
+                console.log(res);
 
+                this.login_id = result.login_id;
+                this.name = result.name;
+                this.email = result.title;
+                this.phone = result.link;
+                this.job_id = result.is_open;
+
+            });
+        },
+        update() {
+            let data = {
+                login_id : this.login_id,
+                name : this.name,
+                email : this.email,
+                phone : this.phone,
+                job_id : this.job_id,
+            };
+
+            User.update(this.id, data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/user');
+            }).catch(err => {
+                alert('오류');
+            });
+        },
     }
 }
 </script>

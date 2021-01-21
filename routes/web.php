@@ -181,7 +181,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             Route::get('/','Admin\User\UserController@index')->name('index');
             Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
-            Route::put('user','Admin\User\UserController@update')->name('update');
+            Route::put('{user}','Admin\User\UserController@update')->name('update');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {

@@ -117,7 +117,6 @@ export default {
             };
 
             Banner.getData(params).then(res => {
-                console.log(res);
                 this.banners = res.data.banners;
             }).catch(err => {
                 this.banners = [];

@@ -8,7 +8,7 @@ const routes = [
         component: User
     },
     {
-        path: '/admin/user/edit',
+        path: '/admin/user/:id',
         name: 'AdminUserEdit',
         component: UserEdit
     },
