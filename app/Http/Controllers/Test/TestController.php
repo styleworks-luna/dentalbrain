@@ -13,6 +13,7 @@ use App\Models\Manage\Banner;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -46,6 +47,10 @@ class TestController extends Controller
     public function FileUpload(Request $request)
     {
         return view(viewPrefix() . 'pages.test.testFileUpload');
+    }
+
+    public function UserEdit($userId){
+        return view(viewPrefix(). 'pages.test.testUserUpdate',['user' => User::find($userId)]);
     }
 
 }

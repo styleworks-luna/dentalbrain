@@ -45,8 +45,8 @@ class BannerController extends Controller
         $validatedData['user_id'] = auth()->id();
         $banner = Banner::create($validatedData);
 
-        $pcFile = new DesktopFile($banner);
-        $pcFile->moveTempToPublic(File::find($banner->desktop_file_id));
+        $desktopFile = new DesktopFile($banner);
+        $desktopFile->moveTempToPublic(File::find($banner->desktop_file_id));
 
         $mobileFile = new MobileFile($banner);
         $mobileFile->moveTempToPublic(File::find($banner->mobile_file_id));
@@ -82,9 +82,9 @@ class BannerController extends Controller
 
         logger($validatedData);
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
-            $pcFile = new DesktopFile($banner);
-            $pcFile->deletePublicFile();
-            $pcFile->moveTempToPublic(File::find($validatedData['desktop_file_id']));
+            $desktopFile = new DesktopFile($banner);
+            $desktopFile->deletePublicFile();
+            $desktopFile->moveTempToPublic(File::find($validatedData['desktop_file_id']));
         }
         if ($validatedData['mobile_file_id'] != $banner->mobile_file_id) {
             $mobileFile = new MobileFile($banner);
@@ -92,6 +92,7 @@ class BannerController extends Controller
             $mobileFile->moveTempToPublic(File::find($validatedData['mobile_file_id']));
         }
 
+        $validatedData['user_id'] = auth()->id();
         $banner->update($validatedData);
 
         return response()->json([
@@ -102,10 +103,8 @@ class BannerController extends Controller
 
     public function destroy(Banner $banner)
     {
-        $banner->file; // eager loading
-
-        $pcFile = new DesktopFile($banner);
-        $pcFile->deletePublicFile();
+        $desktopFile = new DesktopFile($banner);
+        $desktopFile->deletePublicFile();
 
         $mobileFile = new MobileFile($banner);
         $mobileFile->deletePublicFile();

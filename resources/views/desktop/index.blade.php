@@ -59,6 +59,7 @@
                 <h2>추천강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
+
                         @foreach($bottomSlides as $bottom)
                             <div class="swiper-slide">
                                 <a href="{{ $bottom->link }}">

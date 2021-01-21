@@ -37,11 +37,13 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
 
     //문의하기 업데이트 확인 페이지
     Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
+
     //업로드 파일 확인 페이지
     Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
     //배너 업데이트 확인 페이지
     Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
-
+    //유저 관리자 업로드 확인 페이지
+    Route::get('user/{userId}','Test\TestController@UserEdit')->name('userEdit');
 });
 
 /*============================ PAGES ============================*/
@@ -177,11 +179,25 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-
+            Route::get('/','Admin\User\UserController@index')->name('index');
+            Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
+            Route::put('user','Admin\User\UserController@update')->name('update');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
+            Route::get('categories', 'Admin\OnlineProgramController@getCategories')->name('categories');
+            Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
+                Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
+                Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
+                Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
+//                Route::get('{program}', 'Admin\OnlineProgramController@index')->name('edit');
+//                Route::put('{program}', 'Admin\OnlineProgramController@index');
+//                Route::delete('{program}', 'Admin\OnlineProgramController@index');
+            });
+            Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
 
+
+            });
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {

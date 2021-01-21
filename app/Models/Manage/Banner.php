@@ -45,7 +45,7 @@ class Banner extends Model
 
     /**
      * @param Builder $query
-     * @return mixed
+     * @return zmixed
      */
     public function scopePublic($query)
     {
