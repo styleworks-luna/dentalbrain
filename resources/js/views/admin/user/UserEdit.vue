@@ -59,7 +59,7 @@
                 <template v-slot:content>
                     <div class="select-box-wrap float-left">
                         <select-box class="form-control"
-                                    :value="job_id"
+                                    :value="job_name_id"
                                     :options="jobOptions"
                                     @setValue="handleSetJobyId"
                                     ></select-box>
@@ -129,11 +129,10 @@ export default {
                 this.name = result.name;
                 this.email = result.email;
                 this.phone = result.phone;
-                this.job_id = result.job_id;
+                this.job_name_id = result.job_name_id;
                 this.license_num = result.license_num;
                 this.allow_email = result.allow_email;
             });
-            console.log(this.job_id);
         },
         update() {
             let data = {
@@ -141,11 +140,10 @@ export default {
                 name : this.name,
                 email : this.email,
                 phone : this.phone,
-                job_id : this.job_id,
+                job_name_id : this.job_name_id,
                 license_num : this.license_num,
                 allow_email : this.allow_email,
             };
-            console.log(data);
 
             User.update(this.id, data).then(res => {
                 alert(res.data.msg);

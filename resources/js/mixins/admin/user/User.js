@@ -19,7 +19,7 @@ export const UserMixin = {
             name: '',
             email: '',
             phone: '',
-            job_id: 1,
+            job_name_id: 1,
             license_num: '',
             allow_email: false,
             jobOptions: [],
@@ -37,8 +37,7 @@ export const UserMixin = {
             });
         },
         handleSetJobyId(value) {
-            this.job_id = value;
-            console.log(this.job_id);
+            this.job_name_id = value;
         },
     }
 };
