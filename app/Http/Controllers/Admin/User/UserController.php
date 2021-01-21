@@ -44,25 +44,19 @@ class UserController {
         $data = $v->validate();
         $user = User::find($request->id);
 
-        DB::beginTransaction();
-        try{
-            if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job_id']) {
-                $license_num = $data['license_num'] ?? null;
-                $userJob = UserJob::find($user->job_id);
-                $userJob->license_num = $license_num;
-                $userJob->job_name_id = $data['job_id'];
-                $userJob->save();
-            }
-
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-            $user->phone = $data['phone'];
-            $user->allow_email = $data['allow_email'];
-            $user->save();
-            DB::commit();
-        }catch(\Exception $ex){
-            DB::rollBack();
+        if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job_id']) {
+            $license_num = $data['license_num'] ?? null;
+            $userJob = UserJob::find($user->job_id);
+            $userJob->license_num = $license_num;
+            $userJob->job_name_id = $data['job_id'];
+            $userJob->save();
         }
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->phone = $data['phone'];
+        $user->allow_email = $data['allow_email'];
+        $user->save();
 
         return response()->json([
             'success'=> true,
