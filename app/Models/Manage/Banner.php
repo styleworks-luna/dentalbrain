@@ -19,8 +19,6 @@ class Banner extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['clicks', 'is_active', 'started_at', 'ended_at', 'position'];
-
     protected $appends = [
         'desktop_image_name', 'mobile_image_name'
     ];
