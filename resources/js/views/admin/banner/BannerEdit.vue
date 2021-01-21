@@ -203,7 +203,6 @@ export default {
                 mobile_file : this.mobile_file,
                 mobile_file_id : this.mobile_file.id
             };
-            console.log(data);
 
                 Banner.update(this.id, data).then(res => {
                 alert(res.data.msg);

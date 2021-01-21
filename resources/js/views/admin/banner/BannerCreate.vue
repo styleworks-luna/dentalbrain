@@ -174,7 +174,6 @@ export default {
                 started_at: this.dateFormat(this.started_at),
                 ended_at: this.dateFormat(this.ended_at)
             };
-            console.log(data);
 
             Banner.create(data).then(res => {
                 alert(res.data.msg);

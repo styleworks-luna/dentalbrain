@@ -12,7 +12,12 @@
                         :data="banners.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.position }}</td>
+                    <template>
+                        <td v-if=" slotProps.row.position == 0">상단배너</td>
+                        <td v-if=" slotProps.row.position == 1">바배너</td>
+                        <td v-if=" slotProps.row.position == 2">추천배너</td>
+                        <td v-if=" slotProps.row.position == 3">하단배너</td>
+                    </template>
                     <td>{{ slotProps.row.order }}</td>
                     <td>{{ slotProps.row.link }}</td>
                     <td>{{ slotProps.row.started_at }}{{ slotProps.row.ended_at }}</td>
