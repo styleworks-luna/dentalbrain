@@ -1,5 +1,5 @@
 <template>
-    <layout title="배너등록">
+    <layout title="배너등록" class="banner">
         <template v-slot:body>
             <!-- 종류 -->
             <single-group name="종류"

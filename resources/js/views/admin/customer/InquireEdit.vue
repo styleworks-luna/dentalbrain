@@ -1,5 +1,5 @@
 <template>
-    <layout title="문의내역(상세)" class="test">
+    <layout title="문의내역(상세)" class="inquire">
         <template v-slot:body>
 
             <div>

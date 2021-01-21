@@ -1,5 +1,5 @@
 <template>
-    <layout title="FAQ 생성">
+    <layout title="FAQ 생성" class="faq">
         <template v-slot:body>
             <!-- 제목 -->
             <single-group name="질문"
