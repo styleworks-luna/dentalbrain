@@ -6,12 +6,14 @@ use App\Models\File;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static Builder public ()
  */
 class Banner extends Model
 {
+    use SoftDeletes;
+
     static $POSITION_TOP = 0;
     static $POSITION_BAR = 1;
     static $POSITION_RECOMMEND = 2;
