@@ -10,6 +10,6 @@ class BannerCategory extends Model
     protected $table = 'banner_categories';
 
     public function banner(){
-        return $this->hasOne(Banner::class,'position','id');
+        return $this->hasMany(Banner::class,'position','id');
     }
 }
