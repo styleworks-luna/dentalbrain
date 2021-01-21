@@ -33,14 +33,13 @@ class UserController extends Controller
             'phone' => ['required'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
-            return UserJobName::find($input->job_name_id)->need_license == true;
+            return UserJobName::find($input->job)->need_license == true;
         });
         $data = $v->validate();
-
+        $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
 
-        if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job']) {
-            $license_num = $data['license_num'] ?? null;
+        if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
             $userJob = UserJob::find($user->job_id);
             $userJob->license_num = $license_num;
             $userJob->job_name_id = $data['job'];

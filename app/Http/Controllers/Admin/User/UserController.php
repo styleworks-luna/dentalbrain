@@ -46,9 +46,9 @@ class UserController
             return UserJobName::find($input->job_name_id)->need_license == true;
         });
         $data = $v->validate();
+        $license_num = $data['license_num'] ?? null;
 
-        if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job_name_id']) {
-            $license_num = $data['license_num'] ?? null;
+        if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job_name_id']) {
             $userJob = UserJob::find($user->job_id);
             $userJob->license_num = $license_num;
             $userJob->job_name_id = $data['job_name_id'];
