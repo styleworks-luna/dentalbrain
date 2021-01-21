@@ -14,12 +14,16 @@ export const Helper = {
     nullCheck(value) {
         return value == '' || value == null || value == undefined || value == 'undefined';
     },
-    thumbnail(path) {
-        if (path === null || path === '') {
+    thumbnail(file) {
+        let path;
+
+        if (Object.keys(file).length === 0) {
             path = this.urlFormat('/images/global/default_thumbnail.png');
         } else {
-            path = path.path;
+            path = file.url;
         }
+
+        console.log(path);
 
         return path;
     }
