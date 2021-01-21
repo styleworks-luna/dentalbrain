@@ -9,44 +9,47 @@
 namespace App\Http\Controllers\Admin\Banner;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Manage\Banner;
+use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
-use App\Services\File\PCFile;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
-use App\Models\File;
 
-class BannerController extends Controller{
+class BannerController extends Controller
+{
 
-    public function index(){
+    public function index()
+    {
         return response()->json([
-           'banners' => Banner::whereNotNull('id')
-               ->orderByDesc('id')
-               ->paginate(10)
+            'banners' => Banner::whereNotNull('id')
+                ->orderByDesc('id')
+                ->paginate(10)
         ]);
     }
 
-    public function store(Request $request){
-
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
-            'position'=>'required | numeric',
-            'order'=>'required | numeric',
-            'title' => 'required',
-            'link' => 'required',
-            'mobile_file_id' => 'required | numeric',
-            'desktop_file_id'=> 'required | numeric',
-            'started_at' => 'required|date_format:Y-m-d',
-            'ended_at'=> 'required|date_format:Y-m-d|after:started_at',
+            'position' => ['required', 'numeric'],
+            'order' => ['required', 'numeric'],
+            'title' => ['string','nullable'],
+            'link' => ['required',],
+            'mobile_file_id' => ['required ', ' numeric',],
+            'desktop_file_id' => ['required', 'numeric'],
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'is_open' => ['required', 'boolean']
         ]);
 
         $validatedData['user_id'] = auth()->id();
         $banner = Banner::create($validatedData);
 
-        $pcFile = new PCFile();
-        $pcFile->tmpFileTransferToStorage($banner,File::find($banner->desktop_file_id));
+        $desktopFile = new DesktopFile($banner);
+        $desktopFile->moveTempToPublic(File::find($banner->desktop_file_id));
 
-        $mobileFile = new MobileFile();
-        $mobileFile->tmpFileTransferToStorage($banner,File::find($banner->mobile_file_id));
+        $mobileFile = new MobileFile($banner);
+        $mobileFile->moveTempToPublic(File::find($banner->mobile_file_id));
 
         return response()->json([
             'success' => true,
@@ -54,36 +57,38 @@ class BannerController extends Controller{
         ]);
     }
 
-    public function edit(Banner $banner){
+    public function edit(Banner $banner)
+    {
         return response()->json([
-            'banner'=>$banner
+            'banner' => $banner
         ]);
     }
 
-    public function update(Request $request,Banner $banner){
-
+    public function update(Request $request, Banner $banner)
+    {
         $validatedData = $request->validate([
-            'position'=>'required | numeric',
-            'order'=>'required | numeric',
-            'title' => 'required',
-            'link' => 'required',
-            'mobile_file_id' => 'required | numeric',
-            'desktop_file_id'=> 'required | numeric',
-            'started_at' => 'required|date_format:Y-m-d',
-            'ended_at'=> 'required|date_format:Y-m-d|after:started_at',
+            'position' => ['required', 'numeric'],
+            'order' => ['required', 'numeric'],
+            'title' => ['string','nullable'],
+            'link' => ['required',],
+            'mobile_file_id' => ['required', 'numeric',],
+            'desktop_file_id' => ['required', 'numeric'],
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
         ]);
 
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
-            $pcFile = new PCFile();
-            $pcFile ->fileDelete($banner);
-            $pcFile->tmpFileTransferToStorage($banner,File::find($validatedData['desktop_file_id']));
+            $desktopFile = new DesktopFile($banner);
+            $desktopFile->deletePublicFile();
+            $desktopFile->moveTempToPublic(File::find($validatedData['desktop_file_id']));
         }
         if ($validatedData['mobile_file_id'] != $banner->mobile_file_id) {
-            $mobileFile = new MobileFile();
-            $mobileFile ->fileDelete($banner);
-            $mobileFile->tmpFileTransferToStorage($banner,File::find($validatedData['mobile_file_id']));
+            $mobileFile = new MobileFile($banner);
+            $mobileFile->deletePublicFile();
+            $mobileFile->moveTempToPublic(File::find($validatedData['mobile_file_id']));
         }
 
+        $validatedData['user_id'] = auth()->id();
         $banner->update($validatedData);
 
         return response()->json([
@@ -94,13 +99,11 @@ class BannerController extends Controller{
 
     public function destroy(Banner $banner)
     {
-        $banner->file; // eager loading
+        $desktopFile = new DesktopFile($banner);
+        $desktopFile->deletePublicFile();
 
-        $pcFile = new PCFile();
-        $pcFile->fileDelete($banner);
-
-        $mobileFile = new MobileFile();
-        $mobileFile->fileDelete($banner);
+        $mobileFile = new MobileFile($banner);
+        $mobileFile->deletePublicFile();
 
         $banner->delete();
 
@@ -110,8 +113,9 @@ class BannerController extends Controller{
         ]);
     }
 
-    public function statusChange(Banner $banner){
+    public function statusChange(Banner $banner)
+    {
         $statusChange = new StatusChangeImpl();
-        return $statusChange->statusChange($banner,'is_open');
+        return $statusChange->statusChange($banner, 'is_open');
     }
 }

@@ -42,6 +42,8 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
     //배너 업데이트 확인 페이지
     Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
+    //유저 관리자 업로드 확인 페이지
+    Route::get('user/{userId}','Test\TestController@UserEdit')->name('userEdit');
 });
 
 /*============================ PAGES ============================*/
@@ -143,6 +145,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
     Route::view('lecture/{any}', 'admin.index');
     Route::view('lecture/online/{any}', 'admin.index');
 
+    // user
+    Route::view('user', 'admin.index');
+    Route::view('user/{any}', 'admin.index');
+
+    // banner
+    Route::view('banner', 'admin.index');
+    Route::view('banner/{any}', 'admin.index');
+
     // customer
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
@@ -169,7 +179,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-
+            Route::get('/','Admin\User\UserController@index')->name('index');
+            Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
+            Route::put('user','Admin\User\UserController@update')->name('update');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
@@ -205,7 +217,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //배너 삭제 함수
             Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
             //배너 상태 변경 함수
-            Route::patch('{banner}','Admin\Banner\BannerController@statusChange')->name('statusChange');
+            Route::patch('{banner}/status','Admin\Banner\BannerController@statusChange')->name('statusChange');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {

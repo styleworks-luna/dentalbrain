@@ -9,8 +9,8 @@ class InquiryCategory extends Model
 {
     protected $table = 'inquiry_categories';
 
-    public function Inquiries()
+    public function inquiries()
     {
-        return $this->hasMany(Inquiry::class, 'category', 'id');
+        return $this->hasMany(Inquiry::class, 'category_id', 'id');
     }
 }

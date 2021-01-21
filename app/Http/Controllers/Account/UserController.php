@@ -39,14 +39,12 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        if ($user->job->license_num != $data['license_num'] || $user->job->job_id != $data['job']) {
+        if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job']) {
             $license_num = $data['license_num'] ?? null;
-            $newUserJob = UserJob::create([
-                'job_name_id' => $data['job'],
-                'license_num' => $license_num,
-            ]);
-            $user->job->delete();
-            $user->job_id = $newUserJob->id;
+            $userJob = UserJob::find($user->job_id);
+            $userJob->license_num = $license_num;
+            $userJob->job_name_id = $data['job'];
+            $userJob->save();
         }
 
         $user->email = $data['email'];

@@ -6,6 +6,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Lecture extends Model
 {
     use SoftDeletes;
@@ -21,7 +22,7 @@ class Lecture extends Model
 
     public function thumbnail()
     {
-        return $this->belongsTo('files', 'thumbnail_id', 'id');
+        return $this->belongsTo(File::class, 'thumbnail_id', 'id');
     }
 
     public function getThumbnailUrlAttribute()

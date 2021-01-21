@@ -10,7 +10,7 @@ namespace App\Services\File;
 
 use App\Models\Manage\Banner;
 
-class MobileFile extends FileTemplate
+class DesktopFile extends FileTemplate
 {
     public function __construct(Banner $banner)
     {
@@ -20,14 +20,14 @@ class MobileFile extends FileTemplate
     function getPublicPath(string $fileName)
     {
         $banner = $this->model;
-        return $path = 'public/banners/' . $banner->id . '/mobile/' . $fileName;
+        return $path = 'public/banners/' . $banner->id . '/desktop/' . $fileName;
     }
 
     function deleteFileInDB()
     {
         $banner = $this->model;
-        $path = $banner->mobileFile->path;
-        $banner->mobileFile->delete();
+        $path = $banner->desktopFile->path;
+        $banner->desktopFile->delete();
         return $path;
     }
 
