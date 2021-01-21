@@ -2,6 +2,7 @@
 
 namespace App\Models\Manage;
 
+use App\Models\Manage\BannerCategory;
 use App\Models\File;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,7 +23,7 @@ class Banner extends Model
     protected $guarded = [];
 
     protected $appends = [
-        'desktop_image_name', 'mobile_image_name'
+        'desktop_image_name', 'mobile_image_name', 'banner_category_name'
     ];
 
     public function getDesktopImageNameAttribute()
@@ -35,6 +36,10 @@ class Banner extends Model
         return File::find($this->mobile_file_id)->name;
     }
 
+    public function getBannerCategoryNameAttribute(){
+        return BannerCategory::find($this->position)->name;
+    }
+
     public function desktopFile()
     {
         return $this->belongsTo(File::class, 'desktop_file_id', 'id');
@@ -43,6 +48,10 @@ class Banner extends Model
     public function mobileFile()
     {
         return $this->belongsTo(File::class, 'mobile_file_id', 'id');
+    }
+
+    public function categories(){
+        return $this->belongsTo(BannerCategory::class,'position','id');
     }
 
     /**

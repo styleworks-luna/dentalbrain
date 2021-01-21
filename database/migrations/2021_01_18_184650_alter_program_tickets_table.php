@@ -25,6 +25,8 @@ class AlterProgramTicketsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('program_tickets', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

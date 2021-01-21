@@ -225,6 +225,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::patch('{banner}/status','Admin\Banner\BannerController@statusChange')->name('statusChange');
             //배너 클릭 횟수 올리고 링크로 이동
             Route::get('redirect/{banner}','Admin\Banner\BannerController@redirectToLink')->name('redirectToLink');
+            //배너 종류 데이터
+            Route::get('category','Admin\Banner\BannerController@getBannerCategory')->name('getBannerCategory');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {

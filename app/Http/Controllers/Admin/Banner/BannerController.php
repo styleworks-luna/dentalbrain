@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin\Banner;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Manage\Banner;
+use App\Models\Manage\BannerCategory;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
 use App\Services\StatusChange\StatusChangeImpl;
@@ -127,9 +128,17 @@ class BannerController extends Controller
         return $statusChange->statusChange($banner, 'is_open');
     }
 
-    public function redirectToLink(Banner $banner){
+
+    public function redirectToLink(Banner $banner)
+    {
         $viewCountIncrement = new ViewCountImpl();
         $viewCountIncrement->viewCountAdd($banner);
         return redirect($banner->link);
+    }
+
+    public function getBannerCategory(){
+        return response()->json([
+            'category' => BannerCategory::all()
+        ]);
     }
 }
