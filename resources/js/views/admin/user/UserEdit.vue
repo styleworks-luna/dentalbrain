@@ -1,5 +1,5 @@
 <template>
-    <layout title="FAQ 수정">
+    <layout title="회원정보 상세" class="user">
         <template v-slot:body>
             <!-- 아이디 -->
             <single-group name="아이디"
@@ -7,7 +7,7 @@
                           :isRequired="true"
                           :size="3">
                 <template v-slot:content>
-                    {{ data.login_id }}
+                    {{login_id}}
                 </template>
             </single-group>
 
@@ -27,7 +27,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="이메일을 입력해 주세요."
-                              v-model="email"/>
+                              v-model="email" />
                 </template>
             </single-group>
 
@@ -37,7 +37,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="전화번호를 입력해 주세요."
-                              v-model="phone"/>
+                              v-model="phone" />
                 </template>
             </single-group>
 
@@ -59,11 +59,15 @@
                 <template v-slot:content>
                     <div class="select-box-wrap float-left">
                         <select-box class="form-control"
+                                    :value="job_id"
+                                    :options="jobOptions"
+                                    @setValue="handleSetJobyId"
                                     ></select-box>
                     </div>
 
                     <div class="input-wrap float-left">
-                        <input type="text" class="form-control" placeholder="면허번호를 입력해 주세요.">
+                        <input type="text" class="form-control" placeholder="면허번호를 입력해 주세요."
+                                v-model="license_num">
                     </div>
 
                 </template>
@@ -74,7 +78,7 @@
                           :isRow="true"
                           :size="2.5">
                 <template v-slot:content>
-                    <input type="checkbox" name="email-check" id="email-check">
+                    <input type="checkbox" name="email-check" id="email-check" v-model="allow_email">
                     <label for="email-check">수신동의 선택</label>
                 </template>
             </single-group>
@@ -84,7 +88,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
-                        @click="">저장</button>
+                        @click="update">저장</button>
                 <router-link to="/admin/user"
                              class="btn btn-dark">취소</router-link>
             </div>
@@ -93,14 +97,14 @@
 </template>
 
 <script>
-// api
-// import User from '@/api/admin/user/user.js';
+//api
+import User from '@/api/admin/user/User.js';
 
 //Mixin
 import { UserMixin } from '@/mixins/admin/user/User.js'
 
 export default {
-    name: 'AdminuserEdit',
+    name: 'AdminUserEdit',
     mixins: [
         UserMixin,
     ],
@@ -111,13 +115,45 @@ export default {
         }
     },
     created() {
-
+        this.id = this.$route.params.id;
     },
     mounted() {
-
+        this.getEditData();
     },
     methods: {
+        getEditData() {
+            User.getEditData(this.id).then(res => {
+                const result = res.data.user;
 
+                this.login_id = result.login_id;
+                this.name = result.name;
+                this.email = result.email;
+                this.phone = result.phone;
+                this.job_id = result.job_id;
+                this.license_num = result.license_num;
+                this.allow_email = result.allow_email;
+            });
+            console.log(this.job_id);
+        },
+        update() {
+            let data = {
+                login_id : this.login_id,
+                name : this.name,
+                email : this.email,
+                phone : this.phone,
+                job_id : this.job_id,
+                license_num : this.license_num,
+                allow_email : this.allow_email,
+            };
+            console.log(data);
+
+            User.update(this.id, data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/user');
+            }).catch(err => {
+                alert('오류');
+            });
+        },
     }
 }
 </script>
