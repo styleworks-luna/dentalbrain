@@ -100,6 +100,7 @@
                 <input type="file" name="mobile_file" id="mobile_file" placeholder="모바일 파일">
                 <input type="date" name="started_at" placeholder="시작 시간" value="{{now()}}">
                 <input type="date" name="ended_at" placeholder="종료 시간" value="{{ now() }}">
+                <input type="text" name="is_open" placeholder="활성화 여부" value="1">
                 <input type="submit">
             </form>
         </section>
