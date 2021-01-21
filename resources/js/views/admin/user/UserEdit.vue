@@ -7,7 +7,7 @@
                           :isRequired="true"
                           :size="3">
                 <template v-slot:content>
-                    {{ data.login_id }}
+                    {{login_id}}
                 </template>
             </single-group>
 
@@ -59,11 +59,15 @@
                 <template v-slot:content>
                     <div class="select-box-wrap float-left">
                         <select-box class="form-control"
+                                    :value="job_id"
+                                    :options="jobOptions"
+                                    @setValue="handleSetJobyId"
                                     ></select-box>
                     </div>
 
                     <div class="input-wrap float-left">
-                        <input type="text" class="form-control" placeholder="면허번호를 입력해 주세요.">
+                        <input type="text" class="form-control" placeholder="면허번호를 입력해 주세요."
+                                v-model="license_num">
                     </div>
 
                 </template>
@@ -74,7 +78,7 @@
                           :isRow="true"
                           :size="2.5">
                 <template v-slot:content>
-                    <input type="checkbox" name="email-check" id="email-check">
+                    <input type="checkbox" name="email-check" id="email-check" v-model="allow_email">
                     <label for="email-check">수신동의 선택</label>
                 </template>
             </single-group>
@@ -84,7 +88,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
-                        @click="">저장</button>
+                        @click="update">저장</button>
                 <router-link to="/admin/user"
                              class="btn btn-dark">취소</router-link>
             </div>
@@ -94,7 +98,7 @@
 
 <script>
 //api
-import User from '@/api/admin/user/user.js';
+import User from '@/api/admin/user/User.js';
 
 //Mixin
 import { UserMixin } from '@/mixins/admin/user/User.js'
@@ -120,15 +124,16 @@ export default {
         getEditData() {
             User.getEditData(this.id).then(res => {
                 const result = res.data.user;
-                console.log(res);
 
                 this.login_id = result.login_id;
                 this.name = result.name;
-                this.email = result.title;
-                this.phone = result.link;
-                this.job_id = result.is_open;
-
+                this.email = result.email;
+                this.phone = result.phone;
+                this.job_id = result.job_id;
+                this.license_num = result.license_num;
+                this.allow_email = result.allow_email;
             });
+            console.log(this.job_id);
         },
         update() {
             let data = {
@@ -137,7 +142,10 @@ export default {
                 email : this.email,
                 phone : this.phone,
                 job_id : this.job_id,
+                license_num : this.license_num,
+                allow_email : this.allow_email,
             };
+            console.log(data);
 
             User.update(this.id, data).then(res => {
                 alert(res.data.msg);

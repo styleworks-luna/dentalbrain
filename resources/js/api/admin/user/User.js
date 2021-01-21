@@ -21,4 +21,10 @@ export default {
             data: data
         });
     },
+    getCategory() {
+        return Send({
+            url: '/api/admin/user/category',
+            method: 'get'
+        });
+    }
 }
