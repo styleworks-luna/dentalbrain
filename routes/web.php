@@ -223,6 +223,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
             //배너 상태 변경 함수
             Route::patch('{banner}/status','Admin\Banner\BannerController@statusChange')->name('statusChange');
+            //배너 클릭 횟수 올리고 링크로 이동
+            Route::get('redirect/{banner}','Admin\Banner\BannerController@redirectToLink')->name('redirectToLink');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {

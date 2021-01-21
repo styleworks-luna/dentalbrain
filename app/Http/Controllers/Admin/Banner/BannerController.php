@@ -14,6 +14,7 @@ use App\Models\Manage\Banner;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
 use App\Services\StatusChange\StatusChangeImpl;
+use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -124,5 +125,11 @@ class BannerController extends Controller
     {
         $statusChange = new StatusChangeImpl();
         return $statusChange->statusChange($banner, 'is_open');
+    }
+
+    public function redirectToLink(Banner $banner){
+        $viewCountIncrement = new ViewCountImpl();
+        $viewCountIncrement->viewCountAdd($banner);
+        return redirect($banner->link);
     }
 }

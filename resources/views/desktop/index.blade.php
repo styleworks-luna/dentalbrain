@@ -62,7 +62,7 @@
 
                         @foreach($bottomSlides as $bottom)
                             <div class="swiper-slide">
-                                <a href="{{ $bottom->link }}">
+                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
                                     <img src="{{ $bottom->desktopFile->url }}" alt="">
                                 </a>
                             </div>
