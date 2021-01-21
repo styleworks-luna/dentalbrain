@@ -29,7 +29,7 @@ class UserController {
         return response()->json(['user' => $user]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request,User $user)
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
@@ -42,7 +42,6 @@ class UserController {
             return $input->job <= 2;
         });
         $data = $v->validate();
-        $user = User::find($request->id);
 
         if ($user->job->license_num != $data['license_num'] || $user->job->job_name_id != $data['job_id']) {
             $license_num = $data['license_num'] ?? null;
