@@ -41,7 +41,7 @@ class User extends Authenticatable
         'need_license','job_name_id','job_name','license_num',
     ];
 
-    public function getneedLicenseAttribute(){
+    public function getNeedLicenseAttribute(){
         return  UserJobName::find($this->getJobNameIdAttribute())->need_license;
     }
 

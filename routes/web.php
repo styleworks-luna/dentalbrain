@@ -179,9 +179,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+            //user index 페이지 데이터
             Route::get('/','Admin\User\UserController@index')->name('index');
+            //user 수정 페이지 데이터
             Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
+            //user 업데이트 함수
             Route::put('{user}','Admin\User\UserController@update')->name('update');
+            //user 직업 모두 가져오는 데이터
+            Route::get('category','Admin\User\UserController@getUserJobCategory')->name('getUserJobCategory');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {

@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Models\User;
+use App\Models\UserJobName;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserJob;
 use Illuminate\Support\Facades\Validator;
@@ -61,5 +62,9 @@ class UserController {
             'success'=> true,
             'msg' => '성공하였습니다.'
         ]);
+    }
+
+    public function getUserJobCategory(){
+        return response()->json(['userJob' => UserJobName::all()]);
     }
 }
