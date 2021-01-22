@@ -28,6 +28,8 @@
         "@coreui/coreui": "^3.4.0",
         "@coreui/icons": "^2.0.0-rc.0",
         "@popperjs/core": "^2.6.0",
+        "element-tiptap": "^1.26.2",
+        "element-ui": "^2.15.0",
         "es6-promise": "^4.2.8",
         "laravel-mix-alias": "^1.0.2",
         "laravel-vue-pagination": "^2.3.1",

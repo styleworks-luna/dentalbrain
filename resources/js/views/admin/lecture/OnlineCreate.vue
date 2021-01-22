@@ -95,6 +95,12 @@
                 </template>
             </single-group>
 
+            <single-group>
+                <template v-slot:content>
+                    <editor></editor>
+                </template>
+            </single-group>
+
             <single-group name="추가 정보"
                           :size="9">
                 <template v-slot:content>
@@ -157,6 +163,7 @@
     import Thumbnail from '@/components/admin/form/Thumbnail.vue';
     import SelectBox from '@/components/common/SelectBox.vue';
     import NaverMap from '@/components/common/NaverMap.vue';
+    import Editor from '@/components/common/Editor.vue';
 
     export default {
         name: 'AdminOnlineCreate',
@@ -164,7 +171,8 @@
             'single-group': SingleGroup,
             'thumbnail': Thumbnail,
             'select-box': SelectBox,
-            'naver-map': NaverMap
+            'naver-map': NaverMap,
+            'editor': Editor
         },
         data() {
             return {
