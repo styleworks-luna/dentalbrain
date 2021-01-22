@@ -113,21 +113,21 @@
                 <template v-slot:content>
                     <div class="lecture-setting">
                         <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
+                            <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
+                            <label class="col-form-label" for="">유튜브 링크</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
+                            <label class="col-form-label" for="">썸네일 등록</label>
                             <div class="col-md-9">
                                 <input type="file" class="form-control">
                             </div>
