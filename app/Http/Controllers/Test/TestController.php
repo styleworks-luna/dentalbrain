@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Banner;
+use App\Models\Manage\BannerCategory;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
@@ -54,7 +55,7 @@ class TestController extends Controller
     }
 
     public function Search(){
-        return view(viewPrefix(). 'pages.test.search');
+        return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all()]);
     }
 
 }

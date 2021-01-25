@@ -40,7 +40,12 @@
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="">
                 <input type="date" id="date" name="date">
-                <input type="position" id="position" name="position" value="{{route()}}">
+                <select name="position">
+                    <option value="all">all</option>
+                    @foreach($bannerCategory as $key => $value)
+                        <option value="{{$value['id']}}">{{$value['name']}}</option>
+                    @endforeach
+                </select>
                 <input type="submit">
             </form>
         </section>

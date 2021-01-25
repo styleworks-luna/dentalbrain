@@ -9,6 +9,7 @@
 namespace App\Services\Search;
 
 use Illuminate\Database\Eloquent\Model;
+use DateTime;
 
 class BannerSearchImpl extends SearchService{
 
@@ -44,7 +45,7 @@ class BannerSearchImpl extends SearchService{
     }
 
     public function addWhereDate(){
-        if(isset($this->date)&& DateTime::createFromFormat('Y-m-d H:i:s', $this->date) !== FALSE ){
+        if(isset($this->date)&& DateTime::createFromFormat('Y-m-d', $this->date) !== FALSE ){
             $this->query->where('started_at', '<=', $this->date);
             $this->query->where('ended_at', '>=', $this->date);
         }
