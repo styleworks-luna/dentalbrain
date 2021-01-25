@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
 use App\Models\Manage\FaqCategory;
+use App\Services\Search\FaqSearchImpl;
 use App\Services\Search\SearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
@@ -96,6 +97,9 @@ class FaqController extends Controller
     }
 
     public function search(Request $request){
-        return response()->json(['search' =>  Faq::search($request->keyword)->get()]);
+        $faqSearchImpl = new FaqSearchImpl(new Faq());
+        $faqSearchImpl->setSearchKeyword($request->keyword);
+
+        return response()->json(['search' => $faqSearchImpl->search()]);
     }
 }

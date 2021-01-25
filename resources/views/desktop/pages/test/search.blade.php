@@ -13,6 +13,7 @@
                 <input type="text" id="keyword" name="keyword" value="t">
                 <input type="submit">
             </form>
+            <br>
             문의하기 검색
             <form method="POST" action="{{ route('api.admin.customer.inquiries.search') }}">
                 @csrf
@@ -24,6 +25,22 @@
                     <option value="normal">일반</option>
                     <option value="refund">환불</option>
                 </select>
+                <input type="submit">
+            </form>
+            <br>
+            공지사항 검색
+            <form method="POST" action="{{ route('api.admin.customer.notices.search') }}">
+                @csrf
+                <input type="text" id="keyword" name="keyword" value="">
+                <input type="submit">
+            </form>
+            <br>
+            배너 검색
+            <form method="POST" action="{{ route('api.admin.banners.search') }}">
+                @csrf
+                <input type="text" id="keyword" name="keyword" value="">
+                <input type="date" id="date" name="date">
+                <input type="position" id="position" name="position" value="{{route()}}">
                 <input type="submit">
             </form>
         </section>

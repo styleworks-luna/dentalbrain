@@ -2,6 +2,7 @@
 
 namespace App\Models\Manage;
 
+use App\BannerCategory;
 use App\Models\File;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,6 +46,10 @@ class Banner extends Model
         return $this->belongsTo(File::class, 'mobile_file_id', 'id');
     }
 
+    public function bannerCategories(){
+        $this->belongsTo(BannerCategory::class,'position','id');
+    }
+
     /**
      * @param Builder $query
      * @return zmixed
@@ -56,11 +61,5 @@ class Banner extends Model
             ->where('ended_at', '>=', now())
             ->orderByDesc('order')
             ->with('desktopFile', 'mobileFile');
-    }
-
-    public function viewCountAdd(Banner $banner)
-    {
-        $viewCountAddImpl = new ViewCountImpl();
-        $viewCountAddImpl->viewCountAdd($banner);
     }
 }

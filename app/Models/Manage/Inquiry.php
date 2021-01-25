@@ -7,7 +7,6 @@ use Laravel\Scout\Searchable;
 
 class Inquiry extends Model
 {
-    use Searchable;
     protected $table = 'inquiries';
     protected $guarded = [];
     protected $appends = ['category_name'];
@@ -30,11 +29,4 @@ class Inquiry extends Model
         return InquiryCategory::find($this->category_id)->name;
     }
 
-    public function toSearchableArray(){
-        $array['id']  = $this->id;
-        $array['title'] = $this->title;
-        $array['content'] = $this->content;
-        $array['category_id'] = $this->category_id;
-        return $array;
-    }
 }

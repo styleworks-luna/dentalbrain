@@ -225,6 +225,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
             //배너 상태 변경 함수
             Route::patch('{banner}/status','Admin\Banner\BannerController@statusChange')->name('statusChange');
+            //배너 검색
+            Route::post('search','Admin\Banner\BannerController@search')->name('search');
+
+            Route::get('category','Admin\Banner\BannerController@getBannerCategory')->name('category');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
@@ -260,6 +264,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
+
+                Route::post('search','Admin\NoticeController@search')->name('search');
             });
 
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {

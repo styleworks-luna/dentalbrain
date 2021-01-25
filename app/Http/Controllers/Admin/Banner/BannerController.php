@@ -8,11 +8,13 @@
 
 namespace App\Http\Controllers\Admin\Banner;
 
+use App\Models\Manage\BannerCategory;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
+use App\Services\Search\BannerSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -124,5 +126,16 @@ class BannerController extends Controller
     {
         $statusChange = new StatusChangeImpl();
         return $statusChange->statusChange($banner, 'is_open');
+    }
+
+    public function search(Request $request){
+        $search = new BannerSearchImpl(new Banner());
+        $search->setDate($request->date);
+        $search->setPosition($request->position);
+        return response()->json(['search' => $search->search()]);
+    }
+
+    public function getBannerCategory(){
+        return response()->json(['category' => BannerCategory::all()]);
     }
 }

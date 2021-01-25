@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Notice;
+use App\Services\Search\NoticeSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -77,5 +78,11 @@ class NoticeController extends Controller
     {
         $statusChangeImpl = new StatusChangeImpl();
         return $statusChangeImpl->statusChange($notice, 'is_open');
+    }
+
+    public function search(Request $request){
+        $search = new NoticeSearchImpl(new Notice());
+        $search->setSearchKeyword($request->keyword);
+        return response()->json(['search' =>$search->search()]);
     }
 }
