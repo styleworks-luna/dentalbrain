@@ -111,30 +111,27 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="lecture-setting">
+                    <div class="lecture-setting" v-for="lecture in lectures">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" v-model="lecture.title">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-form-label" for="">유튜브 링크</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-form-label" for="">썸네일 등록</label>
-                            <div class="col-md-9">
-                                <input type="file" class="form-control">
-                            </div>
+                        <div class="form-group">
+                            <image-upload></image-upload>
                         </div>
                     </div>
 
-                    <button>강의 추가</button>
+                    <button @click="addLecture">강의 추가</button>
                 </template>
             </single-group>
 
@@ -164,6 +161,7 @@
     import SelectBox from '@/components/common/SelectBox.vue';
     import NaverMap from '@/components/common/NaverMap.vue';
     import Editor from '@/components/common/Editor.vue';
+    import ImageUpload from '@/components/common/ImageUpload.vue';
 
     export default {
         name: 'AdminOnlineCreate',
@@ -172,7 +170,8 @@
             'thumbnail': Thumbnail,
             'select-box': SelectBox,
             'naver-map': NaverMap,
-            'editor': Editor
+            'editor': Editor,
+            'image-upload': ImageUpload,
         },
         data() {
             return {
@@ -186,6 +185,12 @@
                 is_free: true,
                 price: '',
                 file: {},
+                lectures: [
+                    {
+                        title: '',
+                        link: '',
+                    }
+                ]
             }
         },
         computed: {
@@ -212,6 +217,12 @@
             },
             handleSetMinorCategoryId(id) {
                 this.minor_category_id = id;
+            },
+            addLecture() {
+                this.lectures.push({
+                    title: '',
+                    link: ''
+                })
             }
         }
     }
