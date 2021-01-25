@@ -34,7 +34,7 @@ export default {
                 lng: 126.857758,
                 zoom: 17,
                 zoomControl: true,
-                zoomControlOptions: {position: 'TOP_RIGHT'},
+                zoomControlOptions: {position: 1},
                 mapTypeControl: true,
             },
             latLng: {
@@ -60,7 +60,6 @@ export default {
         }
     },
     mounted() {
-        setInterval(() => this.count++, 1000);
     }
 }
 </script>
