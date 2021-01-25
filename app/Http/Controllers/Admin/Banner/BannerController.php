@@ -12,10 +12,12 @@ use App\Models\Manage\BannerCategory;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Manage\Banner;
+use App\Models\Manage\BannerCategory;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
 use App\Services\Search\BannerSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
+use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -128,6 +130,7 @@ class BannerController extends Controller
         return $statusChange->statusChange($banner, 'is_open');
     }
 
+
     public function search(Request $request){
         $search = new BannerSearchImpl(new Banner());
         $search->setDate($request->date);
@@ -135,7 +138,16 @@ class BannerController extends Controller
         return response()->json(['search' => $search->search()]);
     }
 
+    public function redirectToLink(Banner $banner)
+    {
+        $viewCountIncrement = new ViewCountImpl();
+        $viewCountIncrement->viewCountAdd($banner);
+        return redirect($banner->link);
+    }
+
     public function getBannerCategory(){
-        return response()->json(['category' => BannerCategory::all()]);
+        return response()->json([
+            'category' => BannerCategory::all()
+        ]);
     }
 }

@@ -5,7 +5,7 @@
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
                            :file="thumbnail"
-                           @setFile="handleSetFile"></thumbnail>
+                           @setFile="handleSetThumbnail"></thumbnail>
             </div>
 
             <div class="right-wrap">
@@ -17,15 +17,15 @@
                     <template v-slot:content>
                         <select-box class="form-control"
                                     :text="'대분류'"
-                                    :value="category_id"
-                                    :options="categoryOptions"
-                                    @setValue="handleSetCategoryId"></select-box>
+                                    :value="major_category_id"
+                                    :options="majorCategoryOptions"
+                                    @setValue="handleSetMajorCategoryId"></select-box>
 
                         <select-box class="form-control"
                                     :text="'소분류'"
-                                    :value="category_id"
-                                    :options="categoryOptions"
-                                    @setValue="handleSetCategoryId"></select-box>
+                                    :value="minor_category_id"
+                                    :options="minorCategoryOptions"
+                                    @setValue="handleSetMinorCategoryId"></select-box>
                     </template>
                 </single-group>
 
@@ -45,7 +45,7 @@
                               :size="9">
                     <template v-slot:content>
                         <input type="text" class="form-control" placeholder="입력 예시) 총 10강. 총 2시간 30분"
-                               v-model="title">
+                               v-model="running_time">
                     </template>
                 </single-group>
 
@@ -55,14 +55,15 @@
                               :size="9">
                     <template v-slot:content>
                         <input type="text" class="form-control" placeholder="입력 예시) 유지관리 교육"
-                               v-model="title">
+                               v-model="lecture_info">
                     </template>
                 </single-group>
             </div>
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="9">
                 <template v-slot:content>
-                    <textarea></textarea>
+                    <textarea class="form-control" rows="9" placeholder="내용"
+                              v-model="description"></textarea>
                 </template>
             </single-group>
 
@@ -72,14 +73,18 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="radio-wrap">
-                        <input type="radio">
-                        <label for="">유료</label>
-                        <input type="text" class="form-control" placeholder="신청 금액 입력"
-                               v-model="title">
+                        <input type="radio" id="pay" value="false"
+                               v-model="is_free">
+                        <label for="pay">유료</label>
+                        <input type="number"
+                               class="form-control"
+                               placeholder="신청 금액 입력"
+                               v-model="price">
                     </div>
                     <div class="radio-wrap">
-                        <input type="radio">
-                        <label for="">무료</label>
+                        <input type="radio" id="free" value="true"
+                               v-model="is_free">
+                        <label for="free">무료</label>
                     </div>
                 </template>
             </single-group>
@@ -122,7 +127,7 @@
             </single-group>
 
             <single-group name="강의 자료"
-                          isRow="true"
+                          :isRow="true"
                           :size="9">
                 <template v-slot:content>
                     <input type="file">
@@ -155,21 +160,42 @@
         },
         data() {
             return {
-                data: {
-                    thumbnail: {},
-                    major_category_id: '',
-                    minor_category_id: '',
-                    title: '',
-                    file: {},
-                }
+                thumbnail: {},
+                major_category_id: '',
+                minor_category_id: '',
+                title: '',
+                running_time: '',
+                lecture_info: '',
+                description: '',
+                is_free: true,
+                price: '',
+                file: {},
             }
+        },
+        computed: {
+            majorCategoryOptions() {
+
+            },
+            minorCategoryOptions() {
+
+            },
+
         },
         methods: {
             create() {
                 console.log(this.$data);
             },
+            handleSetThumbnail(file) {
+                this.thumbnail = file;
+            },
             handleSetFile(file) {
-                this.file = file
+                this.file = file;
+            },
+            handleSetMajorCategoryId(id) {
+                this.major_category_id = id;
+            },
+            handleSetMinorCategoryId(id) {
+                this.minor_category_id = id;
             }
         }
     }

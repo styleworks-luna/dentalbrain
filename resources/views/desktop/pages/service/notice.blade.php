@@ -25,7 +25,7 @@
                                 <p class="index list-common">{{$value -> id }}</p>
                                 <a href="{{ route('customer.notices.show',['notice' => $value->id])  }}" class="title list-common">{{ $value -> title }}</a>
                                 <p class="writer list-common">{{$value -> name }}</p>
-                                <p class="date list-common">{{$value -> created_at }}</p>
+                                <p class="date list-common">{{ date('Y-m-d',strtotime($value->created_at)) }}</p>
                                 <p class="views list-common">{{$value-> views }}</p>
                             </li>
                         @endforeach

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterProgramTicketsTable extends Migration
+class CreateBannerCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AlterProgramTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::table('program_tickets', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::create('banner_categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->comment('배너 종류 이름');
         });
     }
 
@@ -25,8 +26,6 @@ class AlterProgramTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::table('program_tickets', function (Blueprint $table) {
-            $table->dropSoftDeletes();
-        });
+        Schema::dropIfExists('banner_categories');
     }
 }
