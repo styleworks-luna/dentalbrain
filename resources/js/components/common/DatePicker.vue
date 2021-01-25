@@ -1,5 +1,4 @@
 <template>
-    <div>
         <datepicker class="date-picker float-left"
                     valueType="format"
                     :format="'yyyy-MM-dd'"
@@ -8,7 +7,6 @@
                     input-class="datepicker form-control"
                     @input="handleSetDate"
                     v-model="date"></datepicker>
-    </div>
 </template>
 
 <script>

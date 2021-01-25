@@ -105,7 +105,26 @@
                 </template>
             </single-group>
 
-            <single-group>
+            <single-group name="신청일시" class="clearfix" :size="9">
+                <template v-slot:content>
+                    <div class="float-left">
+                        <label class="col-form-label d-block float-left" for="">모집정원</label>
+                        <div class="col-md-9 float-left">
+                        <input  type="number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="float-left">
+                        <label class="col-form-label d-block float-left" for="">신청기간</label>
+                        <date-picker></date-picker>
+                        <time-picker></time-picker>
+                        <p class="float-left">부터</p>
+                        <date-picker></date-picker>
+                        <time-picker></time-picker>
+                    </div>
+                </template>
+            </single-group>
+
+            <single-group name="상세정보입력">
                 <template v-slot:content>
                     <editor></editor>
                 </template>

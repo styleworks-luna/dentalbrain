@@ -1,5 +1,4 @@
 <template>
-    <div>
         <vue-timepicker class="timepicker float-left"
                     valueType="format"
                     :format="'A hh:mm'"
@@ -7,7 +6,6 @@
                     input-class="timepicker form-control"
                     @input="handleSetTime"
                     v-model="date"></vue-timepicker>
-    </div>
 </template>
 
 <script>
