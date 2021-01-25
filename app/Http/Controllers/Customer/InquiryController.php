@@ -22,17 +22,10 @@ class InquiryController
 
     public function store()
     {
-//        $validateData = request()->validate([
-//            'name' => 'required',
-//            'email' => 'required|email',
-//            'phone' => 'required|regex:/^\d{2,3}[-]?\d{3,4}[-]?\d{4}$/',
-//            'title' => 'required',
-//            'inquire_content' => 'required'
-//        ]);
-
+        //'phone' => 'required|regex:/^\d{2,3}[-]?\d{3,4}[-]?\d{4}$/',
         $validateData = request()->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             'phone' => 'required',
             'title' => 'required',
             'content' => 'required',

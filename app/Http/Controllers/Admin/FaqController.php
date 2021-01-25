@@ -5,17 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
 use App\Models\Manage\FaqCategory;
+use App\Services\Search\SearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use TeamTNT\TNTSearch\TNTSearch;
 
 
 class FaqController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
+        $faq = Faq::search($request->keyword)->orderBy('id','desc')->paginate(10);
+
         $faq = Faq::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
@@ -89,5 +93,9 @@ class FaqController extends Controller
         return response()->json([
             'faqCategory' => FaqCategory::all()
         ]);
+    }
+
+    public function search(Request $request){
+        return response()->json(['search' =>  Faq::search($request->keyword)->get()]);
     }
 }

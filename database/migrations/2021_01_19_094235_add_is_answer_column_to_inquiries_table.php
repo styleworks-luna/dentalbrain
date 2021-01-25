@@ -14,7 +14,7 @@ class AddIsAnswerColumnToInquiriesTable extends Migration
     public function up()
     {
         Schema::table('inquiries', function (Blueprint $table) {
-            $table->tinyInteger('is_answer')->default(0)->comment('답변 상태')->after('category');
+            $table->tinyInteger('is_answer')->default(0)->comment('답변 상태')->after('content');
         });
     }
 

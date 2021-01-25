@@ -82,7 +82,8 @@
                 <input type="text" name="email" placeholder="email" value="onoffmix@onoffmix.com">
                 <input type="text" name="title" placeholder="title" value="제목">
                 <input type="text" name="content" placeholder="content" value="내용">
-                <input type="text" name="category" placeholder="category" value="1">
+                <input type="text" name="category_id" placeholder="category_id" value="1">
+                <input type="text" name="is_answer" placeholder="답변 상태" value="0">
                 <input type="submit">
             </form>
             <br>

@@ -66,6 +66,7 @@
 
                 <input type="file" name="desktop_file" id="desktop_file" placeholder="데스크탑 파일 아이디">
                 <input type="file" name="mobile_file" id="mobile_file" placeholder="모바일 파일 아이디">
+                <input type="text" name="is_open" id="is_open" placeholder="활성화여부" value="{{ $banner -> is_open }}">
                 <button type="submit">Update</button>
             </form>
             <br/>

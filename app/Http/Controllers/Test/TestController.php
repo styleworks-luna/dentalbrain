@@ -53,4 +53,8 @@ class TestController extends Controller
         return view(viewPrefix(). 'pages.test.testUserUpdate',['user' => User::find($userId)]);
     }
 
+    public function Search(){
+        return view(viewPrefix(). 'pages.test.search');
+    }
+
 }

@@ -44,6 +44,8 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
     //유저 관리자 업로드 확인 페이지
     Route::get('user/{userId}','Test\TestController@UserEdit')->name('userEdit');
+
+    Route::get('search','Test\TestController@search')->name('search');
 });
 
 /*============================ PAGES ============================*/
@@ -241,6 +243,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{faq}/status', 'Admin\FaqController@statusChange')->name('statusChange');
+                //검색 함수
+                Route::post('search','Admin\FaqController@search')->name('search');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
@@ -269,9 +273,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::patch('{inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
                 Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+                //문의하기 검색 페이지
+                Route::post('search','Admin\InquiryController@search')->name('search');
             });
-
-
         });
     });
 });

@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
+use App\Services\Search\SearchImpl;
 use Illuminate\Http\Request;
 
 class InquiryController
@@ -62,6 +63,30 @@ class InquiryController
     {
         return response()->json(
             ['category' => InquiryCategory::all()]
+        );
+    }
+
+    public function search(Request $request){
+        $query = Inquiry::search($request->keyword);
+        switch($request->gubun){
+            case 'notCompleted':
+                $query->where('is_answer',0);
+                break;
+            case 'completed':
+                $query->where('is_answer',1);
+                break;
+            case 'normal':
+                $query->where('category_id',1);
+                break;
+            case 'default':
+                $query->where('category_id',2);
+                break;
+            case 'all':
+            default:
+                break;
+        }
+        return response()->json(
+            ['search' => $query->get()]
         );
     }
 }
