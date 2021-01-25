@@ -1,12 +1,12 @@
 <template>
     <div>
-        <datepicker class="date-picker start-time float-left"
+        <datepicker class="date-picker float-left"
                     valueType="format"
                     :format="'yyyy-MM-dd'"
                     :language="ko"
                     :required="true"
                     input-class="datepicker form-control"
-                    @input="handleSetTime"
+                    @input="handleSetDate"
                     v-model="date"></datepicker>
     </div>
 </template>
@@ -36,30 +36,7 @@ export default {
         }
     },
     methods: {
-        nullCheck(value) {
-            return value == '' || value == null || value == undefined || value == 'undefined';
-        },
-        dateFormat(date) {
-            if (this.nullCheck(date)) {
-                return '';
-            }
-
-            date = new Date(date);
-            const year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-
-            if (month < 10) {
-                month = `0${month}`;
-            }
-
-            if (day < 10) {
-                day = `0${day}`;
-            }
-
-            return `${year}-${month}-${day}`;
-        },
-        handleSetTime() {
+        handleSetDate() {
             this.$emit('setTime', this.date);
         }
     }

@@ -67,12 +67,6 @@
                 </template>
             </single-group>
 
-            <single-group name="강의 장소" :size="9">
-                <template v-slot:content>
-                    <naver-map></naver-map>
-                </template>
-            </single-group>
-
             <single-group name="결제 정보 입력"
                           :isRow="true"
                           :isRequired="true"
@@ -92,6 +86,22 @@
                                v-model="is_free">
                         <label for="free">무료</label>
                     </div>
+                </template>
+            </single-group>
+
+            <single-group name="강의 일시">
+                <template v-slot:content class="overflow-hidden">
+                    <date-picker></date-picker>
+                    <time-picker></time-picker>
+                    <p class="float-left">부터</p>
+                    <date-picker></date-picker>
+                    <time-picker></time-picker>
+                </template>
+            </single-group>
+
+            <single-group name="강의 장소" :size="9">
+                <template v-slot:content>
+                    <naver-map></naver-map>
                 </template>
             </single-group>
 
@@ -131,7 +141,7 @@
                         </div>
                     </div>
 
-                    <button @click="addLecture">강의 추가</button>
+                    <button class="btn btn-outline-dark w-100" @click="addLecture">강의 추가</button>
                 </template>
             </single-group>
 
@@ -162,6 +172,8 @@
     import NaverMap from '@/components/common/NaverMap.vue';
     import Editor from '@/components/common/Editor.vue';
     import ImageUpload from '@/components/common/ImageUpload.vue';
+    import DatePicker from '@/components/common/DatePicker.vue'
+    import TimePicker from '@/components/common/TimePicker.vue'
 
     export default {
         name: 'AdminOnlineCreate',
@@ -172,6 +184,8 @@
             'naver-map': NaverMap,
             'editor': Editor,
             'image-upload': ImageUpload,
+            'date-picker': DatePicker,
+            'time-picker': TimePicker,
         },
         data() {
             return {
