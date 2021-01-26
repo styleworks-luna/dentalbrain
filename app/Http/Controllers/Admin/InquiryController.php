@@ -10,12 +10,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
-use App\Services\Search\InquirySearchImpl;
 use App\Services\Search\SearchImpl;
+use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
+use App\Traits\SearchFunctions;
 
 class InquiryController
 {
+    use SearchFunctions;
     public function index()
     {
         $inquiry = Inquiry::whereNotNull('id')
@@ -68,15 +70,36 @@ class InquiryController
     }
 
     public function search(Request $request){
-        $inquiry = new Inquiry();
-        $inquirySearch = new InquirySearchImpl($inquiry);
-        $inquirySearch->setSearchKeyword($request->keyword);
-        $inquirySearch->setGubun($request->gubun);
+        $search = new SearchService(Inquiry::query());
+        $gubun = $this->returnArrayGubun($request->gubun);
 
+        $this->addKeywordToSearchService($search,['title','content'],$request->keyword);
+        $this->addCategoryToSearchService($search,$gubun);
+        $result = $search->search()->paginate('10');
 
         return response()->json(
-            ['search' => $inquirySearch->search()]
+            ['search' => $result]
         );
+    }
+
+    public function returnArrayGubun(string $gubun){
+        if(isset($gubun)){
+            switch($gubun){
+                case 'notCompleted':
+                    return ['is_answer','=',0];
+                case 'Completed':
+                    return ['is_answer','=',1];
+                case 'normal':
+                    return ['category_id','=',1];
+                case 'refund':
+                    return ['category_id','=',2];
+                default:
+                case 'all':
+                    return null;
+            }
+        }else{
+            return null;
+        }
     }
 }
 

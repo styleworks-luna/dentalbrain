@@ -5,18 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Faq;
 use App\Models\Manage\FaqCategory;
-use App\Services\Search\FaqSearchImpl;
-use App\Services\Search\SearchImpl;
+use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use TeamTNT\TNTSearch\TNTSearch;
-
+use App\Traits\SearchFunctions;
 
 class FaqController extends Controller
 {
-
+    use SearchFunctions;
     public function index(Request $request)
     {
         $faq = Faq::search($request->keyword)->orderBy('id','desc')->paginate(10);
@@ -97,9 +95,9 @@ class FaqController extends Controller
     }
 
     public function search(Request $request){
-        $faqSearchImpl = new FaqSearchImpl(new Faq());
-        $faqSearchImpl->setSearchKeyword($request->keyword);
-
-        return response()->json(['search' => $faqSearchImpl->search()]);
+        $search = new SearchService(Faq::query());
+        $this->addKeywordToSearchService($search,['question','answer'],$request->keyword);
+        $result = $search->search()->paginate('10');
+        return response()->json(['search' => $result]);
     }
 }

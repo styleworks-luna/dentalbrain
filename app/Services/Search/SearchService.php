@@ -10,33 +10,32 @@ namespace App\Services\Search;
 
 
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
-abstract class SearchService{
+ class SearchService{
+     private $query;
+     private $categories;
+     private $searchKeywords;
 
-    protected $model;
-    protected $keyword;
-    protected $keywordCategories;
-    protected $query;
+     public function __construct(Builder $query){
+        $this->categories = [];
+         $this->searchKeywords = [];
+         $this->query = $query;
+     }
 
-    public function __construct(Model $model)
-    {
-        $this->model = $model;
-        $this->query = $model::query();
-    }
+     public function addCategory(String $column, string $operator, $value){
+         $this->categories[] = [$column,$operator,$value];
+         return $this;
+     }
 
-    public function setSearchKeyword($keyword)
-    {
-        $this->keyword = $keyword;
-    }
+     public function addKeyword(string $column, $value){
+         $this->searchKeywords[] = [$column,'LIKE','%'.$value.'%','or'];
+         return $this;
+     }
 
-    public function addWhereKeyword(){
-        if(isset($this->keyword)){
-            foreach($this->keywordCategories as $key => $value){
-                $this->query->where($value,'like','%'.$this->keyword.'%','or');
-            }
-        }
-    }
-
-    abstract function search();
+     public function search(){
+         return $this->query->where(function (Builder $query){
+             $query->where($this->searchKeywords);
+         })->where($this->categories);
+     }
 }

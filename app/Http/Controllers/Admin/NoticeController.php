@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Notice;
 use App\Services\Search\NoticeSearchImpl;
+use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\SearchFunctions;
 
 class NoticeController extends Controller
 {
+    use SearchFunctions;
     public function index()
     {
         $notice = Notice::whereNotNull('id')
@@ -81,8 +84,10 @@ class NoticeController extends Controller
     }
 
     public function search(Request $request){
-        $search = new NoticeSearchImpl(new Notice());
-        $search->setSearchKeyword($request->keyword);
-        return response()->json(['search' =>$search->search()]);
+        $search = new SearchService(Notice::query());
+        $this->addKeywordToSearchService($search,['title','content'],$request->keyword);
+        $result = $search->search()->paginate('10');
+
+        return response()->json(['search' =>$result]);
     }
 }

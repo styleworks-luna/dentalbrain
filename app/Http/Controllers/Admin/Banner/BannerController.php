@@ -12,18 +12,22 @@ use App\Models\Manage\BannerCategory;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Manage\Banner;
-use App\Models\Manage\BannerCategory;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
 use App\Services\Search\BannerSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
+use App\Traits\SearchFunctions;
+use App\Services\Search\SearchService;
+use DateTime;
 
 class BannerController extends Controller
 {
-
+    use SearchFunctions;
+    private $search;
     public function index()
     {
         return response()->json([
@@ -132,10 +136,26 @@ class BannerController extends Controller
 
 
     public function search(Request $request){
-        $search = new BannerSearchImpl(new Banner());
-        $search->setDate($request->date);
-        $search->setPosition($request->position);
-        return response()->json(['search' => $search->search()]);
+        $this->search = new SearchService(Banner::query());
+        $this->addKeywordToSearchService($this->search,['link'],$request->keyword);
+        $this->addCategoryDate($request->date);
+        $this->addPosition($request->position);
+        $result = $this->search->search()->paginate('10');
+
+        return response()->json(['search' => $result]);
+    }
+
+    public function addCategoryDate(string $date = null){
+        if(isset($date) && DateTime::createFromFormat('Y-m-d', $date) !== false){
+            $this->search->addCategory('started_at','<=',$date);
+            $this->search->addCategory('ended_at','>=',$date);
+        }
+    }
+
+    public function addPosition(string $position = null){
+        if(isset($position) && is_numeric($position)){
+            $this->search->addCategory('position','=',$position);
+        }
     }
 
     public function redirectToLink(Banner $banner)
