@@ -18,16 +18,18 @@ use App\Services\Search\BannerSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
-use App\Traits\SearchFunctions;
 use App\Services\Search\SearchService;
 use DateTime;
 
 class BannerController extends Controller
 {
-    use SearchFunctions;
     private $search;
+    public function __construct()
+    {
+        $this->search = new SearchService(Banner::query());
+    }
+
     public function index()
     {
         return response()->json([
@@ -136,11 +138,10 @@ class BannerController extends Controller
 
 
     public function search(Request $request){
-        $this->search = new SearchService(Banner::query());
-        $this->addKeywordToSearchService($this->search,['link'],$request->keyword);
+        $this->search->addKeyword('link',$request->keyword);
         $this->addCategoryDate($request->date);
         $this->addPosition($request->position);
-        $result = $this->search->search()->paginate('10');
+        $result = $this->search->search()->paginate('20');
 
         return response()->json(['search' => $result]);
     }

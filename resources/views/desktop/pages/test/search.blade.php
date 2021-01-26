@@ -48,6 +48,20 @@
                 </select>
                 <input type="submit">
             </form>
+
+            <br>
+            유저 검색
+            <form method="POST" action="{{ route('api.admin.user.search') }}">
+                @csrf
+                <input type="text" id="keyword" name="keyword" value="">
+                <select name="job_name_id">
+                    <option value="all">all</option>
+                    @foreach($userCategory as $key => $value)
+                        <option value="{{$value['id']}}">{{$value['name']}}</option>
+                    @endforeach
+                </select>
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

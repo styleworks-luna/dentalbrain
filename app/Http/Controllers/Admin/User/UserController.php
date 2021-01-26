@@ -14,10 +14,20 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\UserJob;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Services\Search\SearchService;
+use App\Traits\SearchFunctions;
 
 class UserController
 {
+    use SearchFunctions;
+
+    private $search;
+
+    public function __construct()
+    {
+        $this->search = new SearchService(User::query());
+    }
+
     public function index()
     {
         return response()->json(
@@ -69,5 +79,32 @@ class UserController
 
     public function getUserJobNameCategory(){
         return response()->json(['userJob' => UserJobName::all()]);
+    }
+
+    public function search(Request $request){
+        $this->setJoinModel($request->input('job_name_id'));
+
+        $this->search
+            ->addKeyword('login_id',$request->keyword)
+            ->addKeyword('name',$request->keyword)
+            ->addKeyword('phone',$request->keywrod)
+            ->addKeyword('email',$request->keyword);
+
+        $result = $this->search->search()->get();
+
+        return response()->json([
+            'search' =>$result
+        ]);
+    }
+
+    public function setJoinModel($jobNameId){
+        if(isset($jobNameId) && is_numeric($jobNameId)){
+            $joinModelName = 'job';
+            $this->search->setJoinModel($joinModelName);
+            $this->search->addCategory('job_name_id','=',$jobNameId);
+        }else{
+            $joinModelName = null;
+        }
+        return $joinModelName;
     }
 }

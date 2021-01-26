@@ -36,7 +36,8 @@ abstract class FileTemplate
             }
 
             $file->path = $path;
-            $file->url = str_replace('public', '/storage', $path);
+            $file->url = route('api.admin.download', $file->id);
+            //$file->url = str_replace('public', '/storage', $path);
             $file->save();
             DB::commit();
 

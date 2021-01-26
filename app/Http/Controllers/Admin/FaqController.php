@@ -10,11 +10,16 @@ use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\SearchFunctions;
 
 class FaqController extends Controller
 {
-    use SearchFunctions;
+    private $search;
+    public function __construct()
+    {
+        $this->search = new SearchService(Faq::query());
+    }
+
+
     public function index(Request $request)
     {
         $faq = Faq::search($request->keyword)->orderBy('id','desc')->paginate(10);
@@ -95,9 +100,11 @@ class FaqController extends Controller
     }
 
     public function search(Request $request){
-        $search = new SearchService(Faq::query());
-        $this->addKeywordToSearchService($search,['question','answer'],$request->keyword);
-        $result = $search->search()->paginate('10');
+        $this->search
+            ->addKeyword('question',$request->keyword)
+            ->addKeyword('answer', $request->keyword);
+
+        $result = $this->search->search()->paginate('10');
         return response()->json(['search' => $result]);
     }
 }

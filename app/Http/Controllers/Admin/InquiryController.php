@@ -13,11 +13,16 @@ use App\Models\Manage\InquiryCategory;
 use App\Services\Search\SearchImpl;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
-use App\Traits\SearchFunctions;
 
 class InquiryController
 {
-    use SearchFunctions;
+    private $search;
+
+    public function __construct()
+    {
+        $this->search = new SearchService(Inquiry::query());
+    }
+
     public function index()
     {
         $inquiry = Inquiry::whereNotNull('id')
@@ -70,35 +75,38 @@ class InquiryController
     }
 
     public function search(Request $request){
-        $search = new SearchService(Inquiry::query());
-        $gubun = $this->returnArrayGubun($request->gubun);
+        $this->addGubunCategory($request->gubun);
 
-        $this->addKeywordToSearchService($search,['title','content'],$request->keyword);
-        $this->addCategoryToSearchService($search,$gubun);
-        $result = $search->search()->paginate('10');
+        $this->search
+            ->addKeyword('title',$request->keyword)
+            ->addKeyword('contet',$request->keyword);
+
+        $result = $this->search->search()->paginate('20');
 
         return response()->json(
             ['search' => $result]
         );
     }
 
-    public function returnArrayGubun(string $gubun){
+    public function addGubunCategory(string $gubun){
         if(isset($gubun)){
             switch($gubun){
                 case 'notCompleted':
-                    return ['is_answer','=',0];
+                    $this->search->addCategory('is_answer','=',0);
+                    break;
                 case 'Completed':
-                    return ['is_answer','=',1];
+                    $this->search->addCategory('is_answer','=',1);
+                    break;
                 case 'normal':
-                    return ['category_id','=',1];
+                    $this->search->addCategory('category_id','=',1);
+                    break;
                 case 'refund':
-                    return ['category_id','=',2];
+                    $this->search->addCategory('category_id','=',2);
+                    break;
                 default:
                 case 'all':
-                    return null;
+                    break;
             }
-        }else{
-            return null;
         }
     }
 }

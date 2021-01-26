@@ -9,11 +9,16 @@ use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\SearchFunctions;
 
 class NoticeController extends Controller
 {
-    use SearchFunctions;
+    private $search;
+
+    public function __construct()
+    {
+        $this->search = new SearchService(Notice::query());
+    }
+
     public function index()
     {
         $notice = Notice::whereNotNull('id')
@@ -84,10 +89,11 @@ class NoticeController extends Controller
     }
 
     public function search(Request $request){
-        $search = new SearchService(Notice::query());
-        $this->addKeywordToSearchService($search,['title','content'],$request->keyword);
-        $result = $search->search()->paginate('10');
+        $this->search
+            ->addKeyword('title',$request->keyword)
+            ->addKeyword('content',$request->keyword);
 
+        $result = $this->search->search()->paginate('10');
         return response()->json(['search' =>$result]);
     }
 }

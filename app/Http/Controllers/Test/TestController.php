@@ -15,6 +15,7 @@ use App\Models\Manage\Faq;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
 use App\Models\User;
+use App\Models\UserJobName;
 use Illuminate\Http\Request;
 
 
@@ -55,7 +56,7 @@ class TestController extends Controller
     }
 
     public function Search(){
-        return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all()]);
+        return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all(), 'userCategory' => UserJobName::all()]);
     }
 
 }

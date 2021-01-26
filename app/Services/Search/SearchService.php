@@ -16,11 +16,13 @@ use Illuminate\Database\Eloquent\Builder;
      private $query;
      private $categories;
      private $searchKeywords;
+     private $joinModel;
 
      public function __construct(Builder $query){
         $this->categories = [];
          $this->searchKeywords = [];
          $this->query = $query;
+         $this->joinModel = null;
      }
 
      public function addCategory(String $column, string $operator, $value){
@@ -33,9 +35,27 @@ use Illuminate\Database\Eloquent\Builder;
          return $this;
      }
 
+     public function setJoinModel($modelName){
+         $this->joinModel = $modelName;
+     }
+
      public function search(){
+        if(isset($this->joinModel)){
+            return $this->joinSearch();
+        }else{
+            return $this->onlyModelsearch();
+        }
+     }
+
+     public function onlyModelsearch(){
          return $this->query->where(function (Builder $query){
              $query->where($this->searchKeywords);
+         })->where($this->categories);
+     }
+
+     public function joinSearch(){
+         return $this->query->whereHas($this->joinModel,function(Builder $query){
+            $query->where($this->searchKeywords);
          })->where($this->categories);
      }
 }
