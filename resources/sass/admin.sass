@@ -2,9 +2,6 @@
 @import './helpers/extends.sass'
 @import './helpers/mixins.scss'
 
-.mt-10
-    +margin(top 10px)
-
 .content
     .card-body
         .form-group
@@ -125,3 +122,74 @@
 
         .form-group
             +margin(right 0 left 0)
+
+// 강의 추가 정보
+.additional-information
+    +border(1px solid $border-color-base)
+    overflow: hidden
+
+    .menu-wrap
+        +size(9%)
+        +padding(top 30px)
+        float: left
+
+        button
+            +margin(bottom 10px)
+
+    .survey-wrap
+        +size(86%)
+        +margin(left 3%)
+        +border(1px solid $border-color-base, left)
+        float: left
+
+        .form-wrap
+            +padding(left 2% top 30px bottom 30px)
+            +border(1px solid $border-color-base, bottom)
+            overflow: hidden
+
+            .input-wrap
+                +size(60%)
+                float: left
+
+            .item-wrap
+                +margin(top 10px)
+                overflow: hidden
+
+                .circle
+                    +size(23px, 23px)
+                    +margin(top 7px)
+                    +border(1px solid $border-color-base)
+                    +border-radius(50px)
+                    content: ''
+                    float: left
+
+                .square
+                    +size(23px, 23px)
+                    +margin(top 7px)
+                    +border(1px solid $border-color-base)
+                    content: ''
+                    float: left
+
+                .choices
+                    +margin(left 10px)
+                    float: left
+                    width: 80%
+
+                .btn-item-delete
+                    +margin(left 10px)
+
+            .checkbox-wrap
+                +padding(left 2%)
+                float: left
+
+                input[type=checkbox]
+                    +size(20px, 20px)
+                    transform: translateY(5px)
+
+                input[type=checkbox] + label
+                    +margin(left 5px)
+                    line-height: 1
+
+            .btn-wrap
+                +margin(left 20px)
+                float: left
