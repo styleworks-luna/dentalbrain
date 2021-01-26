@@ -87,9 +87,9 @@ class UserController
             ->addKeyword('phone',$request->keywrod)
             ->addKeyword('email',$request->keyword);
 
-        $result = $this->search->search();
+        $result = $this->search->search()->get();
         return response()->json([
-            'search' =>$result->get()
+            'search' =>$result
         ]);
     }
 
