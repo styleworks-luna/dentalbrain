@@ -79,7 +79,7 @@ class InquiryController
 
         $this->search
             ->addKeyword('title',$request->keyword)
-            ->addKeyword('contet',$request->keyword);
+            ->addKeyword('content',$request->keyword);
 
         $result = $this->search->search()->paginate('20');
 

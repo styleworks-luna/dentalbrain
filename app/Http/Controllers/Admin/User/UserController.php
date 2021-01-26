@@ -15,12 +15,9 @@ use App\Models\UserJob;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\Search\SearchService;
-use App\Traits\SearchFunctions;
 
 class UserController
 {
-    use SearchFunctions;
-
     private $search;
 
     public function __construct()
@@ -90,10 +87,9 @@ class UserController
             ->addKeyword('phone',$request->keywrod)
             ->addKeyword('email',$request->keyword);
 
-        $result = $this->search->search()->get();
-
+        $result = $this->search->search();
         return response()->json([
-            'search' =>$result
+            'search' =>$result->get()
         ]);
     }
 
@@ -101,10 +97,12 @@ class UserController
         if(isset($jobNameId) && is_numeric($jobNameId)){
             $joinModelName = 'job';
             $this->search->setJoinModel($joinModelName);
-            $this->search->addCategory('job_name_id','=',$jobNameId);
+            $this->search->addJoinOption('job_name_id','=',$jobNameId);
         }else{
             $joinModelName = null;
         }
         return $joinModelName;
     }
+
+
 }
