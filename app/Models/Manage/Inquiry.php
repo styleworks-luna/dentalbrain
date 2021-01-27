@@ -16,7 +16,7 @@ class Inquiry extends Model
 
     public function answers()
     {
-        return $this->hasOne(InquiryAnswers::class);
+        return $this->hasOne(InquiryAnswer::class);
     }
 
     public function category()
