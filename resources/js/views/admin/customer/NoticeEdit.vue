@@ -1,5 +1,5 @@
 <template>
-    <layout title="공지사항 수정">
+    <layout title="공지사항 수정" class="notice">
         <template v-slot:body>
             <!-- 제목 -->
             <single-group name="제목"

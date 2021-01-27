@@ -1,5 +1,5 @@
 <template>
-    <layout title="배너등록">
+    <layout title="배너등록" class="banner">
         <template v-slot:body>
             <!-- 종류 -->
             <single-group name="종류"
@@ -174,7 +174,6 @@ export default {
                 started_at: this.dateFormat(this.started_at),
                 ended_at: this.dateFormat(this.ended_at)
             };
-            console.log(data);
 
             Banner.create(data).then(res => {
                 alert(res.data.msg);

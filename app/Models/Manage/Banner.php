@@ -6,20 +6,20 @@ use App\Models\File;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static Builder public ()
  */
 class Banner extends Model
 {
+    use SoftDeletes;
+
     static $POSITION_TOP = 0;
     static $POSITION_BAR = 1;
     static $POSITION_RECOMMEND = 2;
     static $POSITION_BOTTOM = 3;
 
     protected $guarded = [];
-
-    protected $hidden = ['clicks', 'is_open', 'started_at', 'ended_at', 'position'];
 
     protected $appends = [
         'desktop_image_name', 'mobile_image_name'

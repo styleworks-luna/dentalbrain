@@ -13,9 +13,9 @@
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
-                    <td>{{ slotProps.row.job_id }}</td>
+                    <td>{{ slotProps.row.job_name }}</td>
                     <td>
-                        <router-link :to="`/admin/user/edit/${slotProps.row.id}`"
+                        <router-link :to="`/admin/user/${slotProps.row.id}`"
                                      class="btn btn-lg btn-info">
                             수정
                         </router-link>
@@ -40,7 +40,7 @@
 import Table from '@/components/admin/grid/Table.vue';
 
 // api
-/*import User from '@/api/admin/user/User.js';*/
+import User from '@/api/admin/user/User.js';
 
 export default {
     name: 'AdminUser',
@@ -56,6 +56,7 @@ export default {
         }
     },
     mounted() {
+        this.getData();
     },
     computed: {
         tableCol() {
@@ -92,7 +93,21 @@ export default {
         }
     },
     methods: {
+        getData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
 
+            let params = {
+                page: page
+            };
+
+            User.getData(params).then(res => {
+                this.users = res.data.user;
+            }).catch(err => {
+                this.users = [];
+            });
+        },
     }
 }
 </script>

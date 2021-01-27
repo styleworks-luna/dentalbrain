@@ -24,7 +24,7 @@ export default {
     update(id, data) {
         return Send({
             url: `/api/admin/banner/${id}`,
-            method: 'patch',
+            method: 'put',
             data: data
         });
     },

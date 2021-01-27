@@ -15,6 +15,7 @@ use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BannerController extends Controller
 {
@@ -34,8 +35,8 @@ class BannerController extends Controller
             'position' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
             'title' => ['string','nullable'],
-            'link' => ['required',],
-            'mobile_file_id' => ['required ', ' numeric',],
+            'link' => ['required'],
+            'mobile_file_id' => ['required ', ' numeric'],
             'desktop_file_id' => ['required', 'numeric'],
             'started_at' => ['required', 'date_format:Y-m-d'],
             'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
@@ -43,7 +44,8 @@ class BannerController extends Controller
         ]);
 
         $validatedData['user_id'] = auth()->id();
-        $banner = Banner::create($validatedData);
+        $banner = Banner::firstOrCreate($validatedData);
+        //여러번 누르면 여러개 만들어져서 firstOrCreate 사용
 
         $desktopFile = new DesktopFile($banner);
         $desktopFile->moveTempToPublic(File::find($banner->desktop_file_id));
@@ -59,6 +61,8 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
+        $banner->load('desktopFile','mobileFile');
+
         return response()->json([
             'banner' => $banner
         ]);
@@ -69,14 +73,16 @@ class BannerController extends Controller
         $validatedData = $request->validate([
             'position' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
-            'title' => ['string','nullable'],
+            'title' => ['string', 'nullable'],
             'link' => ['required',],
             'mobile_file_id' => ['required', 'numeric',],
             'desktop_file_id' => ['required', 'numeric'],
             'started_at' => ['required', 'date_format:Y-m-d'],
             'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'is_open' => ['required', 'boolean']
         ]);
 
+        logger($validatedData);
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
             $desktopFile = new DesktopFile($banner);
             $desktopFile->deletePublicFile();
@@ -105,6 +111,7 @@ class BannerController extends Controller
         $mobileFile = new MobileFile($banner);
         $mobileFile->deletePublicFile();
 
+        Storage::disk('banners')->deleteDirectory($banner->id); // 배너 자체가 사라지니까 폴더 자체를 없애버림.
         $banner->delete();
 
         return response()->json([

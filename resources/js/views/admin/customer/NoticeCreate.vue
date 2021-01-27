@@ -1,5 +1,5 @@
 <template>
-    <layout title="공지사항 생성">
+    <layout title="공지사항 생성" class="notice">
         <template v-slot:body>
             <!-- 제목 -->
             <single-group name="제목"

@@ -8,7 +8,6 @@
 .content
     .card-body
         .form-group
-            +size(1532px)
             +border(1px solid $border-color-base ,bottom)
             margin-right: -15px
             margin-left: -15px
@@ -19,37 +18,11 @@
                 clear: none
 
             .col-form-label
-                +size(184px 184px !important)
-                +background(null,null,nlll, $background-color-menu)
                 +box-sizing(border-box)
                 font-size: 16px
 
             .col-md-2
                 flex: none
-
-            .form-input
-                +padding(10px 10px)
-
-                .answer-time
-                    +padding(left 20px top 5px)
-
-                p
-                    +margin(0)
-
-                .tips
-                    +margin(bottom 10px)
-
-                .datepicker
-                    +background(null,null,null,$white)
-
-                .start-time
-                    +margin(right 10px)
-
-                .end-time
-                    +margin(left 10px)
-
-                .input-file
-                    +margin(left 10px)
 
         .file-wrap
             +size(100%, 180px)
@@ -86,6 +59,35 @@
         .input-file-wrap
             .input-file
                 +size(70%)
+                +margin(left 10px)
+
+.content
+    .banner, .faq, .notice, .inquire, .user
+        .col-form-label
+            +background(null,null,nlll, $background-color-menu)
+
+        .form-input
+            +padding(10px 10px)
+
+            .answer-time
+                +padding(left 20px top 5px)
+
+            p
+                +margin(0)
+
+            .tips
+                +margin(bottom 10px)
+
+            .datepicker
+                +background(null,null,null,$white)
+
+            .start-time
+                +margin(right 10px)
+
+            .end-time
+                +margin(left 10px)
+
+            .input-file
                 +margin(left 10px)
 
 // 강의 관리
