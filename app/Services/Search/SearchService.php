@@ -39,8 +39,18 @@ use Illuminate\Database\Eloquent\Builder;
          return $this;
      }
 
+     public function join() {
+         $this->query = $this->query->whereHas($this->joinModel,function(Builder $query){
+             $query->where($this->joinOptions);
+         });
+         $this->joinModel = null;
+         $this->joinOptions = [];
+         return $this;
+     }
+     
      public function setJoinModel($modelName){
          $this->joinModel = $modelName;
+         return $this;
      }
 
      public function addJoinOption(string $column, string $operator, $value){
@@ -49,22 +59,8 @@ use Illuminate\Database\Eloquent\Builder;
      }
 
      public function search(){
-        if(isset($this->joinModel)){
-            return $this->joinSearch();
-        }else{
-            return $this->onlyModelsearch();
-        }
-     }
-
-     public function onlyModelsearch(){
          return $this->query->where(function (Builder $query){
              $query->where($this->searchKeywords);
          })->where($this->categories);
-     }
-
-     public function joinSearch(){
-         return $this->query->whereHas($this->joinModel,function(Builder $query){
-             $query->where($this->joinOptions);
-         })->where($this->searchKeywords)->where($this->categories);
      }
 }

@@ -96,8 +96,7 @@ class UserController
     public function setJoinModel($jobNameId){
         if(isset($jobNameId) && is_numeric($jobNameId)){
             $joinModelName = 'job';
-            $this->search->setJoinModel($joinModelName);
-            $this->search->addJoinOption('job_name_id','=',$jobNameId);
+            $this->search->setJoinModel('job')->addJoinOption('job_name_id','=',$jobNameId)->join();
         }else{
             $joinModelName = null;
         }
