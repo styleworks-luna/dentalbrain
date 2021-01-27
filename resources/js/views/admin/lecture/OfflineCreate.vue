@@ -13,7 +13,7 @@
                               :isRow="true"
                               :size="9">
                     <template v-slot:content>
-                        <select-box class="form-control"
+                        <select-box class="form-control mr-3"
                                     :text="'대분류'"
                                     :value="major_category_id"
                                     :options="majorCategoryOptions"

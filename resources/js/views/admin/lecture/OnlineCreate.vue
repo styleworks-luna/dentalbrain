@@ -116,8 +116,8 @@
                         </div>
 
                         <div class="form-group">
-                            <file-upload :inputId="'lecture_file' + lecture.lecture_file.id"
-                                         :initFile="lecture.lecture_file"
+                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                                         :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
                         </div>
@@ -132,8 +132,8 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-file-wrap">
-                    <file-upload :inputId="'file' + file.id"
-                                 :initFile="file"
+                    <file-upload :inputId="'file' + material.id"
+                                 :initFile="material"
                                  @setFile="updateFile"></file-upload>
                     </div>
                 </template>
@@ -169,12 +169,13 @@
         ],
         data() {
             return {
-                file: '',
+                material: '',
                 lectures: [
                     {
                         title: '',
                         link: '',
-                        lecture_file: '',
+                        thumbnail_id : '',
+                        thumbnail: {}
                     },
                 ]
             }
@@ -184,18 +185,29 @@
         },
         methods: {
             create() {
+                var lectures = this.lectures;
+                lectures.forEach((lecture, index) => {
+                    delete lectures[index].thumbnail;
+                });
+
+                console.log(lectures);
+                console.log(this.lectures);
+
+                return false;
+
+
+
                 let data = {
-                    file: this.file,
-                    thumbnail: this.thumbnail,
+                    material_id: this.material.id,
+                    thumbnail_id: this.thumbnail.id,
                     title: this.title,
                     running_time: this.running_time,
                     lecture_info: this.lecture_info,
-                    description: this.description,
                     is_free: this.is_free,
                     price: this.price,
                     content: this.content,
                     surveys: this.surveys,
-                    lectureS: this.lecture,
+                    lectures: this.lectures,
                     major_category_id: this.major_category_id,
                     minor_category_id: this.minor_category_id,
                 };
@@ -211,14 +223,15 @@
                 this.lectures.push({
                     title: '',
                     link: '',
-                    lecture_file: '',
+                    thumbnail: '',
                 })
             },
             updateLectureFile (file, index) {
-                this.lectures[index].lecture_file = file;
+                this.lectures[index].thumbnail = file;
+                this.lectures[index].thumbnail_id = file.id;
             },
             updateFile (data) {
-                this.file = data;
+                this.material = data;
             },
         }
     }
