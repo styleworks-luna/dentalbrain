@@ -104,6 +104,15 @@
                 <input type="text" name="is_open" placeholder="활성화 여부" value="1">
                 <input type="submit">
             </form>
+
+            <br>
+            id 검색 함수
+            <form method="post" action="{{ route('account.findId') }}">
+                @csrf
+                <input type="text" name="name" id="name" placeholder="이름">
+                <input type="text" name="phone" id="phone" placeholder="휴대전화">
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

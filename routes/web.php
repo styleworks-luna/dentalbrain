@@ -133,6 +133,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 회원정보 패스워드 확인
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
+    Route::post('findId','Account\UserController@findId')->name('findId');
 
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');

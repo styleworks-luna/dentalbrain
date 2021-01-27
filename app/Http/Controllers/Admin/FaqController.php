@@ -20,10 +20,8 @@ class FaqController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function index()
     {
-        $faq = Faq::search($request->keyword)->orderBy('id','desc')->paginate(10);
-
         $faq = Faq::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
