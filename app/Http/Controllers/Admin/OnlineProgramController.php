@@ -41,4 +41,9 @@ class OnlineProgramController extends Controller
         // 추가적으로 validation 필요한 것들.
         return [];
     }
+
+    public function getCategories()
+    {
+        return $this->onlineConcrete->getCategories();
+    }
 }
