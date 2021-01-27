@@ -79,8 +79,6 @@ class MapController extends Controller
      */
     public function reverse_geocode(Request $request)
     {
-        $client_id = "ix821e2mie";
-        $client_secret = "vOBIVjZewMnrJMdchO4Oe6KzIRdJDWXoiWEUrgxc";
         $args = ['coords' => $request->latlng, 'output' => 'json', 'orders' => 'addr'];
         $url = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?" . http_build_query($args); // json
         $is_post = false;
@@ -88,8 +86,8 @@ class MapController extends Controller
         curl_setopt($ch, CURLOPT_POST, $is_post);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $headers = array();
-        $headers[] = "X-NCP-APIGW-API-KEY-ID: " . $client_id;
-        $headers[] = "X-NCP-APIGW-API-KEY: " . $client_secret;
+        $headers[] = "X-NCP-APIGW-API-KEY-ID: " . env('NAVER_CLOUD_ID');
+        $headers[] = "X-NCP-APIGW-API-KEY: " . env('NAVER_CLOUD_SECRET');
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $response = curl_exec($ch);
         $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
