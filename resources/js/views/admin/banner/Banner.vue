@@ -20,7 +20,7 @@
                     </template>
                     <td>{{ slotProps.row.order }}</td>
                     <td>{{ slotProps.row.link }}</td>
-                    <td>{{ slotProps.row.started_at }}{{ slotProps.row.ended_at }}</td>
+                    <td>노출 시작 : {{ slotProps.row.started_at }} ~  노출 종료 : {{ slotProps.row.ended_at }}</td>
                     <td>{{ slotProps.row.views }}</td>
                     <td class="overflow-hidden mr-auto ml-auto">
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"

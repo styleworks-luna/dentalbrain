@@ -34,7 +34,7 @@
                           :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="제목을 입력해주세요."
-                            v-model="title">
+                           v-model="title">
                 </template>
             </single-group>
 
@@ -45,7 +45,7 @@
                           :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="URL을 입력해주세요."
-                    v-model="link">
+                           v-model="link">
                     <p class="d-block mt-2">배너 클릭 시 연결 될 URL 주소를 입력해 주세요.</p>
                 </template>
             </single-group>
@@ -57,8 +57,8 @@
                           :size="9">
                 <template v-slot:content>
                     <image-upload :inputId="'desktop' + desktop_file.id"
-                                :initFile="desktop_file"
-                                @setImage="updateDesktopFile"></image-upload>
+                                  :initFile="desktop_file"
+                                  @setImage="updateDesktopFile"></image-upload>
                     <p class="tips">PC 배너로 노출 될 이미지 업로드 (PC 배너 등록 시 첨부)</p>
 
                     <image-upload :inputId="'mobile' + mobile_file.id"
@@ -74,21 +74,9 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
-                    <datepicker class="date-picker start-time float-left" placeholder="시작 날짜"
-                                valueType="format"
-                                :format="'yyyy-MM-dd'"
-                                :language="ko"
-                                :required="true"
-                                input-class="datepicker form-control"
-                                v-model="started_at"></datepicker>
+                    <date-picker @setTime="handleSetStartTime"></date-picker>
                     <span class="float-left">~</span>
-                    <datepicker class="date-picker end-time float-left" placeholder="종료 날짜"
-                                valueType="format"
-                                :format="'yyyy-MM-dd'"
-                                :language="ko"
-                                :required="true"
-                                input-class="datepicker form-control"
-                                v-model="ended_at"></datepicker>
+                    <date-picker @setTime="handleSetEndTime"></date-picker>
                 </template>
             </single-group>
 
@@ -108,60 +96,29 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
                 <router-link to="/admin/banner"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
 </template>
 
 <script>
-// components
-import Datepicker from 'vuejs-datepicker';
-import { ko } from 'vuejs-datepicker/dist/locale';
-
 // api
 import Banner from '@/api/admin/banner/Banner.js';
 
 // mixins
-import { BannerMixin } from '@/mixins/admin/banner/Banner.js';
+import {BannerMixin} from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminBannerCreate',
     mixins: [
         BannerMixin
     ],
-    components: {
-      Datepicker,
-    },
     data() {
-        return{
-            ko: ko,
-        };
+        return {}
     },
     methods: {
-        nullCheck (value) {
-            return value == '' || value == null || value == undefined || value == 'undefined';
-        },
-        dateFormat (date) {
-            if (this.nullCheck(date)) {
-                return '';
-            }
-
-            date = new Date(date);
-            const year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-
-            if (month < 10){
-                month = `0${month}`;
-            }
-
-            if (day < 10) {
-                day = `0${day}`;
-            }
-
-            return `${year}-${month}-${day}`;
-        },
         create() {
             let data = {
                 title: this.title,
@@ -171,8 +128,8 @@ export default {
                 mobile_file_id: this.mobile_file.id,
                 order: this.order,
                 is_open: this.is_open,
-                started_at: this.dateFormat(this.started_at),
-                ended_at: this.dateFormat(this.ended_at)
+                started_at: this.Helper.dateFormatYDM(this.started_at),
+                ended_at: this.Helper.dateFormatYDM(this.ended_at)
             };
 
             Banner.create(data).then(res => {
@@ -182,6 +139,12 @@ export default {
                 alert('오류');
             });
         },
+        handleSetStartTime(time) {
+            this.started_at = time;
+        },
+        handleSetEndTime(time) {
+            this.ended_at = time;
+        }
 
     }
 }

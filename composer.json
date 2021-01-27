@@ -16,8 +16,7 @@
         "laravel/scout": "^7.2.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
-        "teamtnt/laravel-scout-tntsearch-driver": "^11.1",
-        "yab/laravel-scout-mysql-driver": "v2.40"
+        "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -32,6 +31,7 @@
         "sort-packages": true
     },
     "extra": {
+
         "laravel": {
             "dont-discover": []
         }
