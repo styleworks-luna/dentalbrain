@@ -15,7 +15,7 @@
                               :isRow="true"
                               :size="9">
                     <template v-slot:content>
-                        <select-box class="form-control"
+                        <select-box class="form-control mr-3"
                                     :text="'대분류'"
                                     :value="major_category_id"
                                     :options="majorCategoryOptions"
@@ -60,7 +60,7 @@
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력" :isRequired="true" :size="10">
+            <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
                    <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
@@ -74,13 +74,13 @@
                     <div class="radio-wrap">
                         <input type="radio" id="pay" value="false"
                                v-model="is_free">
-                        <label for="pay">유료</label>
+                        <label for="pay" class="mr-3">유료</label>
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
                                v-model="price">
                     </div>
-                    <div class="radio-wrap">
+                    <div class="radio-wrap free">
                         <input type="radio" id="free" value="true"
                                v-model="is_free">
                         <label for="free">무료</label>
@@ -104,7 +104,7 @@
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="lecture.title">
+                                <input type="text" class="form-control lecture-title" v-model="lecture.title">
                             </div>
                         </div>
 
@@ -131,9 +131,11 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
+                    <div class="lecture-file-wrap">
                     <file-upload :inputId="'file' + file.id"
                                  :initFile="file"
                                  @setFile="updateFile"></file-upload>
+                    </div>
                 </template>
             </single-group>
         </template>
@@ -218,7 +220,6 @@
             updateFile (data) {
                 this.file = data;
             },
-
         }
     }
 </script>
