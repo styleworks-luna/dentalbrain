@@ -1,10 +1,11 @@
 import Send from '@/utils/Send.js';
 
 export default {
-    getData() {
+    getData(params) {
         return Send({
             url: '/api/admin/customer/faq',
-            method: 'get'
+            method: 'get',
+            params: params
         });
     },
     getEditData(id) {
@@ -31,6 +32,18 @@ export default {
         return Send({
             url: `/api/admin/customer/faq/${id}`,
             method: 'delete'
+        });
+    },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/customer/faq/${id}/status`,
+            method: 'patch'
+        });
+    },
+    getCategory() {
+        return Send({
+           url: '/api/admin/customer/faq/category',
+           method: 'get'
         });
     }
 }

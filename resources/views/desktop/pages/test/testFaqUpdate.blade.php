@@ -26,6 +26,7 @@
 
         <form method="POST" action="{{ route('api.admin.customer.faqs.statusChange',['faq' => $faq->id]) }}">
             @csrf
+            @method('PUT')
             <button type="submit">상태 변경</button>
         </form>
     </section>

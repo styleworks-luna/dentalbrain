@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    @foreach($errors as $error)
+    @foreach($errors->all() as $error)
         <p>{{ $error }}</p>
     @endforeach
     <section id="content" class="content">
@@ -31,7 +31,9 @@
                                        placeholder="이름입력 (최소 2자 이상)"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 이름을 입력해주세요."
-                                       data-parsley-errors-container=".name-error-wrap">
+                                       data-parsley-errors-container=".name-error-wrap"
+                                       value="{{ old('name') }}"
+                                >
 
                                 <div class="name-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -46,7 +48,9 @@
                                        placeholder="아이디 입력 (최소 4자 이상)"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 아이디를 입력해주세요."
-                                       data-parsley-errors-container=".id-error-wrap">
+                                       data-parsley-errors-container=".id-error-wrap"
+                                       value="{{ old('login_id') }}"
+                                >
                                 <button class="btn-basic check-overlap-id">중복확인</button>
 
                                 <div class="id-error-wrap parsley-error-wrap"></div>
@@ -63,7 +67,9 @@
                                        data-parsley-type="email"
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-class-handler=".ui-emailbox"
-                                       data-parsley-errors-container=".email-error-wrap">
+                                       data-parsley-errors-container=".email-error-wrap"
+                                       value="{{ old('email') }}"
+                                >
 
                                 <div class="email-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -72,19 +78,20 @@
                             <th><label for="job">직업군</label></th>
                             <td>
                                 <select name="job" id="job" class="select-menu">
-                                    <option value="1">치과의사</option>
-                                    <option value="2">치과위생사</option>
-                                    <option value="3">치과조무사</option>
-                                    <option value="4">코디네이터</option>
-                                    <option value="5">학생</option>
-                                    <option value="6">기타</option>
+                                    @foreach($jobs as $job)
+                                        <option value="{{ $job->id }}"
+                                                @if(old('job') == $job->id) selected @endif
+                                        >{{ $job->name }}</option>
+                                    @endforeach
                                 </select>
                                 <input type="text" placeholder="면허번호를 입력해주세요."
                                        id='license_num'
                                        name='license_num'
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
-                                       data-parsley-errors-container=".license-error-wrap">
+                                       data-parsley-errors-container=".license-error-wrap"
+                                       value="{{ old('license_num') }}"
+                                >
 
                                 <div class="license-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -123,7 +130,9 @@
                                        placeholder="'-' 없이 입력해주세요."
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
-                                       data-parsley-errors-container=".phone-check-error-wrap">
+                                       data-parsley-errors-container=".phone-check-error-wrap"
+                                       value="{{ old('phone') }}"
+                                >
                                 <button class="btn-basic btn-verification">인증번호발송</button>
 
                                 <div class="phone-check-error-wrap parsley-error-wrap"></div>
@@ -135,7 +144,9 @@
                                        placeholder="인증번호 6자리를 입력"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 일치하지 않습니다."
-                                       data-parsley-errors-container=".verification-check-error-wrap">
+                                       data-parsley-errors-container=".verification-check-error-wrap"
+                                       value="{{ old('verification_number') }}"
+                                >
                                 <button class="btn-basic btn-verification mt-10">인증번호확인</button>
 
                                 <div class="verification-check-error-wrap parsley-error-wrap"></div>
@@ -148,7 +159,8 @@
                     <h2>이용약관 / 개인정보 수집 및 이용 동의</h2>
                     <div class="agree-form">
                         <div class="agreement-all-wrap checkbox-wrap">
-                            <input type="checkbox" name="agree-all" id="agree-all" class="agree-all">
+                            <input type="checkbox" name="agree-all" id="agree-all" class="agree-all"
+                                   @if(old('agree-all')) checked @endif>
                             <label for="agree-all">전체동의</label>
                         </div>
                         <div class="agreement-wrap">
@@ -161,7 +173,9 @@
                                                    class="service-consent"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="※ 이용약관을 동의해 주세요."
-                                                   data-parsley-errors-container=".service-check-error-wrap">
+                                                   data-parsley-errors-container=".service-check-error-wrap"
+                                                   @if(old('service-consent')) checked @endif>
+
                                             <label for="service-consent">(필수) 이용약관 동의</label>
                                         </div>
                                         <a href="" class="trigger-service">내용보기</a>
@@ -177,7 +191,8 @@
                                                    class="privacy-consent"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="※ 개인정보 수집 및 이용 동의해 주세요."
-                                                   data-parsley-errors-container=".privacy-check-error-wrap">
+                                                   data-parsley-errors-container=".privacy-check-error-wrap"
+                                                   @if(old('privacy-consent')) checked @endif>
                                             <label for="privacy-consent">(필수) 개인정보 수집 및 이용 동의</label>
                                         </div>
                                         <a href="" class="trigger-privacy">내용보기</a>
@@ -190,7 +205,8 @@
                                         <div class="checkbox-wrap">
                                             <input type="checkbox" name="email-consent"
                                                    id="email-consent"
-                                                   class="email-consent">
+                                                   class="email-consent"
+                                                   @if(old('email-consent')) checked @endif>
                                             <label for="email-consent"> (선택) 이메일 수신</label>
                                         </div>
                                         <a href="" class="trigger-email">내용보기</a>

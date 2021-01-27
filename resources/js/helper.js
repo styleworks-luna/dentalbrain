@@ -14,13 +14,35 @@ export const Helper = {
     nullCheck(value) {
         return value == '' || value == null || value == undefined || value == 'undefined';
     },
-    thumbnail(path) {
-        if (path === null || path === '') {
+    thumbnail(file) {
+        let path;
+
+        if (Object.keys(file).length === 0) {
             path = this.urlFormat('/images/global/default_thumbnail.png');
         } else {
-            path = path.path;
+            path = file.url;
         }
 
         return path;
+    },
+    dateFormatYDM(date) {
+        if (this.nullCheck(date)) {
+            return '';
+        }
+
+        date = new Date(date);
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+
+        if (day < 10) {
+            day = `0${day}`;
+        }
+
+        return `${year}-${month}-${day}`;
     }
 };

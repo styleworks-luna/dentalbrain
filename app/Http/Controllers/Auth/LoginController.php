@@ -48,4 +48,10 @@ class LoginController extends Controller
     {
         return 'login_id';
     }
+
+    public function authenticated(Request $request, $user)
+    {
+        $user->last_login_at = now();
+        $user->save();
+    }
 }

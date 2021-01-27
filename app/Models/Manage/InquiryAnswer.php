@@ -2,11 +2,11 @@
 
 namespace App\Models\Manage;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class InquiryAnswers extends Model
+class InquiryAnswer extends Model
 {
-    //
     protected $table='inquiry_answers';
     protected $fillable = ['enquiry_id','display_name','title','content','user_id'];
 

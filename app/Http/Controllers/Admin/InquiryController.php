@@ -7,10 +7,24 @@
  */
 
 namespace App\Http\Controllers\Admin;
-use App\Models\Manage\Inquiry;
 
-class InquiryController {
-    public function index(){
+use App\Models\Manage\Inquiry;
+use App\Models\Manage\InquiryCategory;
+use App\Services\Search\SearchImpl;
+use App\Services\Search\SearchService;
+use Illuminate\Http\Request;
+
+class InquiryController
+{
+    private $search;
+
+    public function __construct()
+    {
+        $this->search = new SearchService(Inquiry::query());
+    }
+
+    public function index()
+    {
         $inquiry = Inquiry::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(20);
@@ -19,23 +33,22 @@ class InquiryController {
         ]);
     }
 
-    public function edit(Inquiry $inquiry){
+    public function edit(Inquiry $inquiry)
+    {
         return response()->json([
-           'inquiry' => $inquiry
+            'inquiry' => $inquiry
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Inquiry $inquiry)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|email',
-            'title' => 'required',
-            'content' => 'required',
-            'category' => 'required|numeric'
+            'category_id' => 'required|numeric',
+            'is_answer' => 'required|boolean'
         ]);
-        $inquiry = Inquiry::find($request->id);
+        if ($validatedData['is_answer'] == 1) {
+            $validatedData['answered_at'] = now();
+        }
         $inquiry->update($validatedData);
 
         return response()->json([
@@ -43,7 +56,9 @@ class InquiryController {
             'msg' => '수정되었습니다.',
         ]);
     }
-    public function delete(Inquiry $inquiry){
+
+    public function destroy(Inquiry $inquiry)
+    {
         $inquiry->delete();
 
         return response()->json([
@@ -51,4 +66,48 @@ class InquiryController {
             'msg' => '삭제되었습니다.',
         ]);
     }
+
+    public function getInquiryCategory()
+    {
+        return response()->json(
+            ['category' => InquiryCategory::all()]
+        );
+    }
+
+    public function search(Request $request){
+        $this->addGubunCategory($request->gubun);
+
+        $this->search
+            ->addKeyword('title',$request->keyword)
+            ->addKeyword('content',$request->keyword);
+
+        $result = $this->search->search()->paginate('20');
+
+        return response()->json(
+            ['search' => $result]
+        );
+    }
+
+    public function addGubunCategory(string $gubun){
+        if(isset($gubun)){
+            switch($gubun){
+                case 'notCompleted':
+                    $this->search->addCategory('is_answer','=',0);
+                    break;
+                case 'Completed':
+                    $this->search->addCategory('is_answer','=',1);
+                    break;
+                case 'normal':
+                    $this->search->addCategory('category_id','=',1);
+                    break;
+                case 'refund':
+                    $this->search->addCategory('category_id','=',2);
+                    break;
+                default:
+                case 'all':
+                    break;
+            }
+        }
+    }
 }
+

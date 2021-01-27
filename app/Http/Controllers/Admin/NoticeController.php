@@ -4,12 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Notice;
+use App\Services\Search\NoticeSearchImpl;
+use App\Services\Search\SearchService;
+use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class NoticeController extends Controller
 {
-    public function index(){
+    private $search;
+
+    public function __construct()
+    {
+        $this->search = new SearchService(Notice::query());
+    }
+
+    public function index()
+    {
         $notice = Notice::whereNotNull('id')
             ->orderByDesc('id')
             ->paginate(10);
@@ -18,16 +29,17 @@ class NoticeController extends Controller
         ]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        $v = Validator::make(request()->all(), [
+        $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'required',
-            'user_id' => 'required | numeric'
+            'is_open' => ['required','boolean']
         ]);
 
-        Notice::create($v->validate());
+        $validatedData['user_id'] = Auth()->id();
+        Notice::create($validatedData);
 
         return response()->json([
             'success' => true,
@@ -38,18 +50,20 @@ class NoticeController extends Controller
     public function edit(Notice $notice)
     {
         return response()->json([
-            'data' => $notice,
+            'notice' => $notice,
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Notice $notice)
     {
-        $validatedData = Validator::make($request->all(), [
+        $v = Validator::make(request()->all(), [
             'title' => 'required',
             'content' => 'required',
-            'user_id' => 'required | numeric'
+            'is_open' => ['required','boolean']
         ]);
-        $notice = Notice::find($request->id);
+
+        $validatedData = $v->validate();
+
         $notice->update($validatedData);
 
         return response()->json([
@@ -66,5 +80,20 @@ class NoticeController extends Controller
             'success' => true,
             'msg' => '삭제가 완료되었습니다.',
         ]);
+    }
+
+    public function statusChange(Notice $notice)
+    {
+        $statusChangeImpl = new StatusChangeImpl();
+        return $statusChangeImpl->statusChange($notice, 'is_open');
+    }
+
+    public function search(Request $request){
+        $this->search
+            ->addKeyword('title',$request->keyword)
+            ->addKeyword('content',$request->keyword);
+
+        $result = $this->search->search()->paginate('10');
+        return response()->json(['search' =>$result]);
     }
 }

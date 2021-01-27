@@ -9,7 +9,7 @@
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="data">
+                        :data="faqs.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
@@ -19,12 +19,20 @@
                     </td>
                     <td>{{ slotProps.row.created_at }}</td>
                     <td>
-                        <button-open :isOpen="slotProps.row.is_open"></button-open>
+                        <button-open :isOpen="slotProps.row.is_open"
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
             </table-grid>
 
-            <router-view></router-view>
+            <div class="paging-wrap text-center">
+                <nav class="d-inline-block">
+                    <pagination :data="faqs" @pagination-change-page="getData" class="mb-0">
+                        <span slot="prev-nav">‹</span>
+                        <span slot="next-nav">›</span>
+                    </pagination>
+                </nav>
+            </div>
         </template>
     </layout>
 </template>
@@ -45,7 +53,10 @@
         },
         data() {
             return {
-                data: []
+                faqs: {
+                    data: []
+                },
+                page: 1
             }
         },
         mounted() {
@@ -75,12 +86,28 @@
             }
         },
         methods: {
-            getData() {
-                Faq.getData().then(res => {
-                    this.data = res.data.faq.data;
+            getData(page = this.page) {
+                if (this.Helper.nullCheck(page)) {
+                    page = 1;
+                }
+
+                let params = {
+                    page: page
+                };
+
+                Faq.getData(params).then(res => {
+                    this.faqs = res.data.faq;
                 }).catch(err => {
-                    this.data = [];
+                    this.faqs = [];
                 });
+            },
+            handleSetStatus(id) {
+                Faq.setStatus(id).then(res => {
+                    this.getData();
+                    alert(res.data.msg);
+                }).catch(err => {
+                    alert('오류');
+                })
             }
         }
     }

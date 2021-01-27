@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('password.confirm:account.confirm')->except('confirm', 'needConfirm');
+        $this->middleware('password.confirm:account.confirm')->except('confirm', 'needConfirm','findId');
     }
 
     public function modify()
@@ -33,20 +34,17 @@ class UserController extends Controller
             'phone' => ['required'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
-            return $input->job <= 2;
+            return UserJobName::find($input->job)->need_license == true;
         });
         $data = $v->validate();
-
+        $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
 
-        if ($user->job->license_num != $data['license_num'] || $user->job->job_id != $data['job']) {
-            $license_num = $data['license_num'] ?? null;
-            $newUserJob = UserJob::create([
-                'job_name_id' => $data['job'],
-                'license_num' => $license_num,
-            ]);
-            $user->job->delete();
-            $user->job_id = $newUserJob->id;
+        if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
+            $userJob = UserJob::find($user->job_id);
+            $userJob->license_num = $license_num;
+            $userJob->job_name_id = $data['job'];
+            $userJob->save();
         }
 
         $user->email = $data['email'];
@@ -77,5 +75,14 @@ class UserController extends Controller
         }
 
         return response()->redirectToRoute('account.modify');
+    }
+
+    public function findId(Request $request){
+        $user = User::where('name',$request->name)->where('phone',$request->phone)->first();
+        if(isset($user)){
+            return response()->json(['message'=>'가입된 아이디는 "'.$user->login_id.'" 입니다.','success' => true]);
+        }else{
+            return response()->json(['message'=>'해당 정보와 일치하는 아이디가 없습니다.','success' => false]);
+        }
     }
 }

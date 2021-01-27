@@ -8,7 +8,7 @@
         <div class="login-menu">
             @auth()
                 @if(auth()->user()->isAdmin())
-                    <p class="admin"><a href="">관리자</a></p>
+                    <p class="admin"><a href="{{ url('admin') }}">관리자</a></p>
                 @endif
                 <p class="user-name"><a href="{{ route('account.index') }}">{{ auth()->user()->name }}</a> 님</p>
                 <a href="{{ route('logout') }}" class="login-btn">로그아웃</a>

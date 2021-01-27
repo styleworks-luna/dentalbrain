@@ -3,15 +3,16 @@
 namespace App\Models\Manage;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Scout\Searchable;
 
 class Faq extends Model
 {
     protected $table = 'faqs';
 
-    protected $guarded = [];
-
     protected $appends = ['category_name'];
 
+    protected $guarded = [];
     public function category()
     {
         return $this->belongsTo(FaqCategory::class, 'category_id', 'id');

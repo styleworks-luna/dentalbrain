@@ -38,6 +38,14 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     //문의하기 업데이트 확인 페이지
     Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
+    //업로드 파일 확인 페이지
+    Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
+    //배너 업데이트 확인 페이지
+    Route::get('banner/{banner}','Test\TestController@bannerEdit')->name('bannerEdit');
+    //유저 관리자 업로드 확인 페이지
+    Route::get('user/{userId}','Test\TestController@UserEdit')->name('userEdit');
+
+    Route::get('search','Test\TestController@search')->name('search');
 });
 
 /*============================ PAGES ============================*/
@@ -131,6 +139,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 회원정보 패스워드 확인
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
+    Route::post('findId','Account\UserController@findId')->name('findId');
 
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
@@ -140,8 +149,26 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::view('/', 'admin.index');
     Route::view('{any}', 'admin.index');
+
+    // lecture
+    Route::view('lecture/{any}', 'admin.index');
+    Route::view('lecture/online/{any}', 'admin.index');
+    Route::view('lecture/offline/{any}', 'admin.index');
+    Route::view('lecture/question/{any}', 'admin.index');
+
+    // user
+    Route::view('user', 'admin.index');
+    Route::view('user/{any}', 'admin.index');
+
+    // banner
+    Route::view('banner', 'admin.index');
+    Route::view('banner/{any}', 'admin.index');
+
+    // customer
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
+    Route::view('customer/notice/{any}', 'admin.index');
+    Route::view('customer/inquire/{any}', 'admin.index');
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -156,20 +183,65 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-        Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
+            Route::post('file', 'Admin\FileController@uploadFile')->name('file');
+            Route::post('image', 'Admin\FileController@uploadImage')->name('image');
+        });
+        Route::get('download/{file}', 'Admin\FileController@download')->name('download');
 
+        Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+            //user index 페이지 데이터
+            Route::get('/','Admin\User\UserController@index')->name('index');
+            //user 수정 페이지 데이터
+            Route::get('{user}/edit','Admin\User\UserController@edit')->name('edit');
+            //user 업데이트 함수
+            Route::put('{user}','Admin\User\UserController@update')->name('update');
+            //user 직업 모두 가져오는 데이터
+            Route::get('category','Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
+
+            Route::post('search','Admin\User\UserController@search')->name('search');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
+            Route::get('categories', 'Admin\OnlineProgramController@getCategories')->name('categories');
+            Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
+                Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
+                Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
+                Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
+//                Route::get('{program}', 'Admin\OnlineProgramController@index')->name('edit');
+//                Route::put('{program}', 'Admin\OnlineProgramController@index');
+//                Route::delete('{program}', 'Admin\OnlineProgramController@index');
+            });
+            Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
 
+
+            });
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
 
         });
 
-        Route::group(['prefix' => 'banner', 'as' => 'banner.'], function () {
 
+        Route::group(['prefix' => 'banner', 'as' =>'banners.'],function(){
+            //배너 index 페이지 데이터
+            Route::get('/','Admin\Banner\BannerController@index')->name('index');
+            //배너 생성 함수
+            Route::post('/', 'Admin\Banner\BannerController@store')->name('store');
+            //배너 수정 페이지 데이터
+            Route::get('{banner}/edit','Admin\Banner\BannerController@edit')->name('edit');
+            //배너 업데이트 함수
+            Route::put('{banner}','Admin\Banner\BannerController@update')->name('update');
+            //배너 삭제 함수
+            Route::delete('{banner}','Admin\Banner\BannerController@destroy')->name('destroy');
+            //배너 상태 변경 함수
+            Route::patch('{banner}/status','Admin\Banner\BannerController@statusChange')->name('statusChange');
+            //배너 검색
+            Route::post('search','Admin\Banner\BannerController@search')->name('search');
+            //배너 클릭 횟수 올리고 링크로 이동
+            Route::get('redirect/{banner}','Admin\Banner\BannerController@redirectToLink')->name('redirectToLink');
+            //배너 종류 데이터
+            Route::get('category','Admin\Banner\BannerController@getBannerCategory')->name('getBannerCategory');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
@@ -178,6 +250,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', 'Admin\FaqController@index')->name('index');
                 //FAQ 생성 함수
                 Route::post('/', 'Admin\FaqController@store')->name('store');
+                //Faq 카테고리 가져오기
+                Route::get('category', 'Admin\FaqController@getFaqCategory')->name('getFaqCategory');
                 //Faq 수정 페이지 데이터
                 Route::get('{faq}', 'Admin\FaqController@edit')->name('edit');
                 //Faq 업데이트 함수
@@ -185,7 +259,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //Faq 삭제 함수
                 Route::delete('{faq}', 'Admin\FaqController@destroy')->name('destroy');
                 //상태 변경 함수
-                Route::get('statusChange/{faq}', 'Admin\FaqController@statusChange')->name('statusChange');
+                Route::patch('{faq}/status', 'Admin\FaqController@statusChange')->name('statusChange');
+                //검색 함수
+                Route::post('search','Admin\FaqController@search')->name('search');
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
@@ -199,17 +275,25 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::put('{notice}', 'Admin\NoticeController@update')->name('update');
                 //공지사항 삭제 함수
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
+                //상태 변경 함수
+                Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
+
+                Route::post('search','Admin\NoticeController@search')->name('search');
             });
 
-            Route::group(['prefix' => 'inquiry', 'as' => 'inquiries.'], function () {
+            Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {
                 //문의하기 index 페이지 데이터
                 Route::get('/', 'Admin\InquiryController@index')->name('index');
+                //문의하기 카테고리 가져오기
+                Route::get('category','Admin\InquiryController@getInquiryCategory')->name('getInquiryCategory');
                 //문의하기 수정 페이지 데이터
-                Route::get('{Inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
+                Route::get('{inquiry}/edit', 'Admin\InquiryController@edit')->name('edit');
                 //문의하기 업데이트 함수
-                Route::put('{Inquiry}', 'Admin\InquiryController@update')->name('update');
+                Route::patch('{inquiry}', 'Admin\InquiryController@update')->name('update');
                 //문의하기 삭제 함수
-                Route::delete('{Inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+                Route::delete('{inquiry}', 'Admin\InquiryController@destroy')->name('destroy');
+                //문의하기 검색 페이지
+                Route::post('search','Admin\InquiryController@search')->name('search');
             });
         });
     });
