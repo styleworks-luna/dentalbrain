@@ -14,17 +14,17 @@
 
 <script>
 // api
-import ImageUpload from '@/api/admin/common/Upload.js';
+import FileUpload from '@/api/admin/common/Upload.js';
 
 export default {
-    name: 'ImageUpload',
-    props:['inputId', 'initFile'],
+    name: 'FileUpload',
+    props:['inputId', 'initFile', 'index'],
     methods: {
-        imageUpload(e) {
+        fileUpload(e) {
             let uploadForm = new FormData();
-            uploadForm.append('image', e.target.files[0]);
-            ImageUpload.imageUpload(uploadForm).then(res => {
-                this.$emit('setImage', res.data.file);
+            uploadForm.append('file', e.target.files[0]);
+            FileUpload.fileUpload(uploadForm).then(res => {
+                this.$emit('setFile', res.data.file, this.index);
             }).catch(function (err) {
                 alert('오류');
             });

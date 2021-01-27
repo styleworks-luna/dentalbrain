@@ -5,6 +5,7 @@ import Lecture from '@/router/admin/lecture/index.js';
 import Customer from '@/router/admin/customer/index.js';
 import User from '@/router/admin/user/index.js';
 import Banner from '@/router/admin/banner/index.js';
+import Payment from '@/router/admin/payment/index.js';
 
 Vue.use(Router);
 
@@ -12,7 +13,8 @@ const routes = [
     ...Lecture,
     ...Customer,
     ...User,
-    ...Banner
+    ...Banner,
+    ...Payment
 ];
 
 const router = new Router({

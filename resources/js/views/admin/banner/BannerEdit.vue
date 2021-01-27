@@ -74,21 +74,9 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
-                    <datepicker class="date-picker start-time float-left" placeholder="시작 날짜"
-                                valueType="format"
-                                :format="'yyyy-MM-dd'"
-                                :language="ko"
-                                :required="true"
-                                input-class="datepicker form-control"
-                                v-model="started_at"></datepicker>
+                    <date-picker :time="started_at" @setTime="handleSetStartTime"></date-picker>
                     <span class="float-left">~</span>
-                    <datepicker class="date-picker end-time float-left" placeholder="종료 날짜"
-                                valueType="format"
-                                :format="'yyyy-MM-dd'"
-                                :language="ko"
-                                :required="true"
-                                input-class="datepicker form-control"
-                                v-model="ended_at"></datepicker>
+                    <date-picker :time="ended_at" @setTime="handleSetEndTime"></date-picker>
                 </template>
             </single-group>
 
@@ -149,29 +137,6 @@ export default {
         this.getEditData();
     },
     methods: {
-        nullCheck (value) {
-            return value == '' || value == null || value == undefined || value == 'undefined';
-        },
-        dateFormat (date) {
-            if (this.nullCheck(date)) {
-                return '';
-            }
-
-            date = new Date(date);
-            const year = date.getFullYear();
-            let month = date.getMonth() + 1;
-            let day = date.getDate();
-
-            if (month < 10){
-                month = `0${month}`;
-            }
-
-            if (day < 10) {
-                day = `0${day}`;
-            }
-
-            return `${year}-${month}-${day}`;
-        },
         getEditData() {
             Banner.getEditData(this.id).then(res => {
                 const result = res.data.banner;
@@ -196,8 +161,8 @@ export default {
                 title : this.title,
                 link : this.link,
                 is_open : this.is_open,
-                started_at : this.dateFormat(this.started_at),
-                ended_at : this.dateFormat(this.ended_at),
+                started_at: this.Helper.dateFormatYDM(this.started_at),
+                ended_at: this.Helper.dateFormatYDM(this.ended_at),
                 desktop_file : this.desktop_file,
                 desktop_file_id : this.desktop_file.id,
                 mobile_file : this.mobile_file,
@@ -211,6 +176,12 @@ export default {
                 alert('오류');
             });
         },
+        handleSetStartTime(time) {
+            this.started_at = time;
+        },
+        handleSetEndTime(time) {
+            this.ended_at = time;
+        }
 
     }
 }

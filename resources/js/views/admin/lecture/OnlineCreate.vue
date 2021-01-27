@@ -5,7 +5,7 @@
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
                            :file="thumbnail"
-                           @setFile="handleSetFile"></thumbnail>
+                           @setFile="handleSetThumbnail"></thumbnail>
             </div>
 
             <div class="right-wrap">
@@ -17,15 +17,15 @@
                     <template v-slot:content>
                         <select-box class="form-control"
                                     :text="'대분류'"
-                                    :value="category_id"
-                                    :options="categoryOptions"
-                                    @setValue="handleSetCategoryId"></select-box>
+                                    :value="major_category_id"
+                                    :options="majorCategoryOptions"
+                                    @setValue="handleSetMajorCategoryId"></select-box>
 
                         <select-box class="form-control"
                                     :text="'소분류'"
-                                    :value="category_id"
-                                    :options="categoryOptions"
-                                    @setValue="handleSetCategoryId"></select-box>
+                                    :value="minor_category_id"
+                                    :options="minorCategoryOptions"
+                                    @setValue="handleSetMinorCategoryId"></select-box>
                     </template>
                 </single-group>
 
@@ -45,7 +45,7 @@
                               :size="9">
                     <template v-slot:content>
                         <input type="text" class="form-control" placeholder="입력 예시) 총 10강. 총 2시간 30분"
-                               v-model="title">
+                               v-model="running_time">
                     </template>
                 </single-group>
 
@@ -55,14 +55,14 @@
                               :size="9">
                     <template v-slot:content>
                         <input type="text" class="form-control" placeholder="입력 예시) 유지관리 교육"
-                               v-model="title">
+                               v-model="lecture_info">
                     </template>
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력" :isRequired="true" :size="9">
+            <single-group name="상세 정보 입력" :isRequired="true" :size="10">
                 <template v-slot:content>
-                    <textarea></textarea>
+                   <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -72,21 +72,27 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="radio-wrap">
-                        <input type="radio">
-                        <label for="">유료</label>
-                        <input type="text" class="form-control" placeholder="신청 금액 입력"
-                               v-model="title">
+                        <input type="radio" id="pay" value="false"
+                               v-model="is_free">
+                        <label for="pay">유료</label>
+                        <input type="number"
+                               class="form-control"
+                               placeholder="신청 금액 입력"
+                               v-model="price">
                     </div>
                     <div class="radio-wrap">
-                        <input type="radio">
-                        <label for="">무료</label>
+                        <input type="radio" id="free" value="true"
+                               v-model="is_free">
+                        <label for="free">무료</label>
                     </div>
                 </template>
             </single-group>
 
+
             <single-group name="추가 정보"
-                          :size="9">
+                          :size="12">
                 <template v-slot:content>
+                    <additional-information :data="surveys"></additional-information>
                 </template>
             </single-group>
 
@@ -94,38 +100,40 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="lecture-setting">
+                    <div class="lecture-setting" v-for="(lecture, index) in lectures">
                         <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
+                            <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" v-model="lecture.title">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
+                            <label class="col-form-label" for="">유튜브 링크</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label class="col-form-label" for="">asdasd</label>
-                            <div class="col-md-9">
-                                <input type="file" class="form-control">
-                            </div>
+                        <div class="form-group">
+                            <file-upload :inputId="'lecture_file' + lecture.lecture_file.id"
+                                         :initFile="lecture.lecture_file"
+                                         :index="index"
+                                         @setFile="updateLectureFile"></file-upload>
                         </div>
                     </div>
 
-                    <button>강의 추가</button>
+                    <button class="btn btn-outline-dark w-100" @click="addLecture">강의 추가</button>
                 </template>
             </single-group>
 
             <single-group name="강의 자료"
-                          isRow="true"
+                          :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <input type="file">
+                    <file-upload :inputId="'file' + file.id"
+                                 :initFile="file"
+                                 @setFile="updateFile"></file-upload>
                 </template>
             </single-group>
         </template>
@@ -142,35 +150,75 @@
 
 <script>
     // component
-    import SingleGroup from '@/components/admin/form/SingleGroup.vue';
-    import Thumbnail from '@/components/admin/form/Thumbnail.vue';
-    import SelectBox from '@/components/common/SelectBox.vue';
+    import FileUpload from '@/components/admin/form/FileUpload.vue';
+
+    import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+
+    //api
+    import Online from '@/api/admin/lecture/Online.js'
 
     export default {
         name: 'AdminOnlineCreate',
         components: {
-            'single-group': SingleGroup,
-            'thumbnail': Thumbnail,
-            'select-box': SelectBox
+            'file-upload': FileUpload,
         },
+        mixins: [
+            LectureFormMixin,
+        ],
         data() {
             return {
-                data: {
-                    thumbnail: {},
-                    major_category_id: '',
-                    minor_category_id: '',
-                    title: '',
-                    file: {},
-                }
+                file: '',
+                lectures: [
+                    {
+                        title: '',
+                        link: '',
+                        lecture_file: '',
+                    },
+                ]
             }
+        },
+        computed: {
+
         },
         methods: {
             create() {
-                console.log(this.$data);
+                let data = {
+                    file: this.file,
+                    thumbnail: this.thumbnail,
+                    title: this.title,
+                    running_time: this.running_time,
+                    lecture_info: this.lecture_info,
+                    description: this.description,
+                    is_free: this.is_free,
+                    price: this.price,
+                    content: this.content,
+                    surveys: this.surveys,
+                    lectureS: this.lecture,
+                    major_category_id: this.major_category_id,
+                    minor_category_id: this.minor_category_id,
+                };
+                console.log(data);
+                Online.create(data).then(res => {
+                    alert(res.data.msg);
+                    this.$router.push('/admin/lecture/online');
+                }).catch(err => {
+                    alert('오류');
+                });
             },
-            handleSetFile(file) {
-                this.file = file
-            }
+            addLecture() {
+                this.lectures.push({
+                    title: '',
+                    link: '',
+                    lecture_file: '',
+                })
+            },
+            updateLectureFile (file, index) {
+                this.lectures[index].lecture_file = file;
+            },
+            updateFile (data) {
+                this.file = data;
+            },
+
         }
     }
 </script>
