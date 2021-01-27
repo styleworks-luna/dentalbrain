@@ -62,8 +62,7 @@
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="10">
                 <template v-slot:content>
-                    <textarea class="form-control" rows="9" placeholder="내용"
-                              v-model="description"></textarea>
+                   <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -89,50 +88,11 @@
                 </template>
             </single-group>
 
-            <single-group name="강의 일시">
-                <template v-slot:content class="overflow-hidden">
-                    <date-picker></date-picker>
-                    <time-picker></time-picker>
-                    <p class="float-left">부터</p>
-                    <date-picker></date-picker>
-                    <time-picker></time-picker>
-                </template>
-            </single-group>
-
-            <single-group name="강의 장소" :size="9">
-                <template v-slot:content>
-                    <naver-map></naver-map>
-                </template>
-            </single-group>
-
-            <single-group name="신청일시" class="clearfix" :size="9">
-                <template v-slot:content>
-                    <div class="float-left">
-                        <label class="col-form-label d-block float-left" for="">모집정원</label>
-                        <div class="col-md-9 float-left">
-                        <input  type="number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="float-left">
-                        <label class="col-form-label d-block float-left" for="">신청기간</label>
-                        <date-picker></date-picker>
-                        <time-picker></time-picker>
-                        <p class="float-left">부터</p>
-                        <date-picker></date-picker>
-                        <time-picker></time-picker>
-                    </div>
-                </template>
-            </single-group>
-
-            <single-group name="상세정보입력">
-                <template v-slot:content>
-                    <editor></editor>
-                </template>
-            </single-group>
 
             <single-group name="추가 정보"
-                          :size="9">
+                          :size="12">
                 <template v-slot:content>
+                    <additional-information :data="surveys"></additional-information>
                 </template>
             </single-group>
 
@@ -188,11 +148,9 @@
     import SingleGroup from '@/components/admin/form/SingleGroup.vue';
     import Thumbnail from '@/components/admin/form/Thumbnail.vue';
     import SelectBox from '@/components/common/SelectBox.vue';
-    import NaverMap from '@/components/common/NaverMap.vue';
     import Editor from '@/components/common/Editor.vue';
     import ImageUpload from '@/components/common/ImageUpload.vue';
-    import DatePicker from '@/components/common/DatePicker.vue'
-    import TimePicker from '@/components/common/TimePicker.vue'
+    import AdditionalInformation from '@/components/common/AdditionalInformation.vue'
 
     export default {
         name: 'AdminOnlineCreate',
@@ -200,11 +158,9 @@
             'single-group': SingleGroup,
             'thumbnail': Thumbnail,
             'select-box': SelectBox,
-            'naver-map': NaverMap,
             'editor': Editor,
             'image-upload': ImageUpload,
-            'date-picker': DatePicker,
-            'time-picker': TimePicker,
+            'additional-information': AdditionalInformation,
         },
         data() {
             return {
@@ -217,13 +173,16 @@
                 description: '',
                 is_free: true,
                 price: '',
+                content: '',
                 file: {},
                 lectures: [
                     {
                         title: '',
                         link: '',
                     }
-                ]
+                ],
+                surveys: [],
+
             }
         },
         computed: {
@@ -256,7 +215,11 @@
                     title: '',
                     link: ''
                 })
-            }
+            },
+            handleSetEditor(data) {
+                console.log(data);
+                this.content = data;
+            },
         }
     }
 </script>

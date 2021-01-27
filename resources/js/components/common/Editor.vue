@@ -1,5 +1,5 @@
 <template>
-    <el-tiptap :extensions="extensions" :content="content" placeholder="Write something ..." />
+    <el-tiptap :extensions="extensions" placeholder="Write something ..." v-model="contents" @onUpdate="handleSetEditor"/>
 </template>
 
 <script>
@@ -44,7 +44,9 @@ import "codemirror/addon/edit/closetag.js"; // autoCloseTags
 
 export default {
     name: "Editor",
-
+    props: {
+      'content' : [String],
+    },
     data: () => ({
         extensions: [
             new Doc(),
@@ -143,7 +145,21 @@ export default {
             }),
             new History(),
         ],
-        content: '',
-    })
+        contents: '',
+    }),
+    mounted() {
+        this.contents = this.content;
+    },
+    watch: {
+        content() {
+            this.contents = this.content;
+        }
+    },
+    methods: {
+        handleSetEditor() {
+            console.log(this.contents);
+            this.$emit('setEditor', this.contents);
+        }
+    }
 };
 </script>

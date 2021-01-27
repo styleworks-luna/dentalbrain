@@ -82,7 +82,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
-                               placeholder="주관식 (단답형) 질문을 입력해주세요.">
+                               placeholder="주관식 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
                         <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
@@ -144,19 +144,10 @@ export default {
     props:{
         'data': [Array],
     },
-    watch: {
-        data() {
-            console.log(this.surveys);
-            this.surveys = this.data
-        }
-    },
     mounted() {
         this.surveys = this.data;
     },
     methods: {
-        create() {
-            console.log(this.$data);
-        },
         addChoice(type) {
             this.surveys.push(
                 {
