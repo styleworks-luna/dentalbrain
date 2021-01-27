@@ -174,7 +174,6 @@
                     {
                         title: '',
                         link: '',
-                        thumbnail_id : '',
                         thumbnail: {}
                     },
                 ]
@@ -185,17 +184,15 @@
         },
         methods: {
             create() {
-                var lectures = this.lectures;
-                lectures.forEach((lecture, index) => {
-                    delete lectures[index].thumbnail;
+                let lectures = [];
+
+                this.lectures.forEach(lecture => {
+                    lectures.push({
+                        title: lecture.title,
+                        link: lecture.link,
+                        thumbnail_id : lecture.thumbnail.id
+                    })
                 });
-
-                console.log(lectures);
-                console.log(this.lectures);
-
-                return false;
-
-
 
                 let data = {
                     material_id: this.material.id,
@@ -207,7 +204,7 @@
                     price: this.price,
                     content: this.content,
                     surveys: this.surveys,
-                    lectures: this.lectures,
+                    lectures: lectures,
                     major_category_id: this.major_category_id,
                     minor_category_id: this.minor_category_id,
                 };
@@ -228,7 +225,6 @@
             },
             updateLectureFile (file, index) {
                 this.lectures[index].thumbnail = file;
-                this.lectures[index].thumbnail_id = file.id;
             },
             updateFile (data) {
                 this.material = data;
