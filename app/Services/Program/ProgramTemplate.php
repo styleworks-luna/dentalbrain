@@ -57,8 +57,8 @@ abstract class ProgramTemplate
      */
     function getCategories()
     {
-        $major = ProgramMajorCategory::all();
-        $minor = ProgramMinorCategory::all();
+        $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
+        $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
         return response()->json([
             'major' => $major,
             'minor' => $minor,
