@@ -15,7 +15,7 @@
                               :isRow="true"
                               :size="9">
                     <template v-slot:content>
-                        <select-box class="form-control"
+                        <select-box class="form-control mr-3"
                                     :text="'대분류'"
                                     :value="major_category_id"
                                     :options="majorCategoryOptions"
@@ -60,7 +60,7 @@
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력" :isRequired="true" :size="10">
+            <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
                    <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
@@ -74,13 +74,13 @@
                     <div class="radio-wrap">
                         <input type="radio" id="pay" value="false"
                                v-model="is_free">
-                        <label for="pay">유료</label>
+                        <label for="pay" class="mr-3">유료</label>
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
                                v-model="price">
                     </div>
-                    <div class="radio-wrap">
+                    <div class="radio-wrap free">
                         <input type="radio" id="free" value="true"
                                v-model="is_free">
                         <label for="free">무료</label>
@@ -104,7 +104,7 @@
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="lecture.title">
+                                <input type="text" class="form-control lecture-title" v-model="lecture.title">
                             </div>
                         </div>
 
@@ -116,8 +116,8 @@
                         </div>
 
                         <div class="form-group">
-                            <file-upload :inputId="'lecture_file' + lecture.lecture_file.id"
-                                         :initFile="lecture.lecture_file"
+                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                                         :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
                         </div>
@@ -131,9 +131,11 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <file-upload :inputId="'file' + file.id"
-                                 :initFile="file"
+                    <div class="lecture-file-wrap">
+                    <file-upload :inputId="'file' + material.id"
+                                 :initFile="material"
                                  @setFile="updateFile"></file-upload>
+                    </div>
                 </template>
             </single-group>
         </template>
@@ -167,12 +169,12 @@
         ],
         data() {
             return {
-                file: '',
+                material: '',
                 lectures: [
                     {
                         title: '',
                         link: '',
-                        lecture_file: '',
+                        thumbnail: {}
                     },
                 ]
             }
@@ -182,18 +184,27 @@
         },
         methods: {
             create() {
+                let lectures = [];
+
+                this.lectures.forEach(lecture => {
+                    lectures.push({
+                        title: lecture.title,
+                        link: lecture.link,
+                        thumbnail_id : lecture.thumbnail.id
+                    })
+                });
+
                 let data = {
-                    file: this.file,
-                    thumbnail: this.thumbnail,
+                    material_id: this.material.id,
+                    thumbnail_id: this.thumbnail.id,
                     title: this.title,
                     running_time: this.running_time,
                     lecture_info: this.lecture_info,
-                    description: this.description,
                     is_free: this.is_free,
                     price: this.price,
                     content: this.content,
                     surveys: this.surveys,
-                    lectureS: this.lecture,
+                    lectures: lectures,
                     major_category_id: this.major_category_id,
                     minor_category_id: this.minor_category_id,
                 };
@@ -209,16 +220,15 @@
                 this.lectures.push({
                     title: '',
                     link: '',
-                    lecture_file: '',
+                    thumbnail: '',
                 })
             },
             updateLectureFile (file, index) {
-                this.lectures[index].lecture_file = file;
+                this.lectures[index].thumbnail = file;
             },
             updateFile (data) {
-                this.file = data;
+                this.material = data;
             },
-
         }
     }
 </script>

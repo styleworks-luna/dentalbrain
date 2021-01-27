@@ -1,5 +1,5 @@
 <template>
-    <el-tiptap :extensions="extensions" placeholder="Write something ..." v-model="contents" @onUpdate="handleSetEditor"/>
+    <el-tiptap  height="400" :extensions="extensions" placeholder="Write something ..." v-model="contents" @onUpdate="handleSetEditor"/>
 </template>
 
 <script>
