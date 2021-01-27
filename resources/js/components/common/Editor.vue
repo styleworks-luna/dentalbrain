@@ -42,10 +42,24 @@ import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js"; // autoCloseTags
 
+// api
+import ImageUpload from '@/api/admin/common/ImageUpload.js';
+
+// editor file upload
+async function uploadImage(image) {
+    let uploadForm = new FormData();
+    uploadForm.append('image', image);
+    const headers = {
+        'Content-type': 'multipart/form-data'
+    };
+    const response = await axios.post('/api/admin/upload/image', uploadForm, {headers: headers} );
+    return response.data.file.url
+}
+
 export default {
     name: "Editor",
     props: {
-      'content' : [String],
+      'content' : [String]
     },
     data: () => ({
         extensions: [
@@ -129,7 +143,9 @@ export default {
             }),
             new Blockquote(),
             new Link({ bubble: true }),
-            new Image(),
+            new Image({
+                uploadRequest: uploadImage
+            }),
             new Table({
                 resizable: true
             }),
@@ -157,9 +173,8 @@ export default {
     },
     methods: {
         handleSetEditor() {
-            console.log(this.contents);
             this.$emit('setEditor', this.contents);
-        }
+        },
     }
 };
 </script>
