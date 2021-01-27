@@ -49,10 +49,10 @@
             </div>
             <single-group name="강의 일시">
                 <template v-slot:content class="overflow-hidden">
-                    <date-picker></date-picker>
+                    <date-picker @setTime="handleSetStartTime"></date-picker>
                     <time-picker></time-picker>
                     <p class="float-left">부터</p>
-                    <date-picker></date-picker>
+                    <date-picker @setTime="handleSetEndTime"></date-picker>
                     <time-picker></time-picker>
                 </template>
             </single-group>
@@ -68,12 +68,12 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input  type="number" class="form-control">
+                            <input type="number" class="form-control">
                         </div>
                     </div>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">신청기간</label>
-                        <date-picker></date-picker>
+                        <date-picker @setTime=""></date-picker>
                         <time-picker></time-picker>
                         <p class="float-left">부터</p>
                         <date-picker></date-picker>
@@ -110,7 +110,7 @@
                 </template>
             </single-group>
 
-                <additional-information :data="surveys"></additional-information>
+            <additional-information :data="surveys"></additional-information>
         </template>
 
         <template v-slot:footer>
@@ -125,63 +125,45 @@
 </template>
 
 <script>
-import SingleGroup from '@/components/admin/form/SingleGroup.vue';
-import Thumbnail from '@/components/admin/form/Thumbnail.vue';
-import SelectBox from '@/components/common/SelectBox.vue';
-import AdditionalInformation from '@/components/common/AdditionalInformation.vue'
+// components
 import DatePicker from '@/components/common/DatePicker.vue'
 import TimePicker from '@/components/common/TimePicker.vue'
 import NaverMap from '@/components/common/NaverMap.vue';
-import Editor from '@/components/common/Editor.vue';
+
+
+import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
 
 
 export default {
     name: 'AdminOnlineCreate',
+    mixins: [
+        LectureFormMixin
+    ],
     components: {
-        'single-group': SingleGroup,
-        'thumbnail': Thumbnail,
-        'select-box': SelectBox,
-        'additional-information': AdditionalInformation,
         'date-picker': DatePicker,
         'time-picker': TimePicker,
         'naver-map': NaverMap,
-        'editor': Editor,
     },
     data() {
         return {
-            thumbnail: {},
-            major_category_id: '',
-            minor_category_id: '',
-            title: '',
-            running_time: '',
-            started_time: '',
-            lecture_info: '',
-            is_free: true,
-            price: '',
-            surveys: []
+            started_at: '',
+            ended_at: '',
+            receipt_started_at: '',
+            receipt_ended_at: '',
         }
     },
     computed: {
-        majorCategoryOptions() {
-
-        },
-        minorCategoryOptions() {
-
-        },
     },
     methods: {
         create() {
             console.log(this.$data);
         },
-        handleSetThumbnail(file) {
-            this.thumbnail = file;
+        handleSetStartTime(time) {
+            this.started_at = time;
         },
-        handleSetMajorCategoryId(id) {
-            this.major_category_id = id;
-        },
-        handleSetMinorCategoryId(id) {
-            this.minor_category_id = id;
-        },
+        handleSetEndTime(time) {
+            this.ended_at = time;
+        }
     }
 
 }
