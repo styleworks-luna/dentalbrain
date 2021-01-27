@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Traits;
+
+namespace App\Services\Program;
+
 
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
@@ -8,17 +10,26 @@ use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramTicket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-trait ProgramFunctions
+abstract class ProgramTemplate
 {
     public $is_online;
+    public $program = null;
 
     /**
-     * 강의 목록
-     *
+     * ProgramTemplate constructor.
+     * @param bool|int $is_online
+     */
+    public function __construct($is_online)
+    {
+        $this->is_online = $is_online;
+    }
+
+    /**
      * @return JsonResponse
      */
-    function programIndex()
+    function getPrograms()
     {
         $programs = Program::query()->where('is_online', '=', $this->is_online)
             ->withCount('students')->orderByDesc('id')->paginate('10');
@@ -33,7 +44,7 @@ trait ProgramFunctions
      * @param Program $program
      * @return JsonResponse
      */
-    function getStudentInfo(Program $program)
+    function getStudents(Program $program)
     {
         $students = $program->students()->orderByDesc('id')->with('ticket')->paginate(10);
         return response()->json([
@@ -60,17 +71,20 @@ trait ProgramFunctions
      */
     function validate(Request $request)
     {
-        $data = $request->validate([
+        $v = Validator::make($request->all(), [
                 'major_category' => ['required', 'numeric'],
                 'minor_category' => ['required', 'numeric'],
                 'title' => ['required', 'string', 'max:200'],
                 'description' => ['required',],
-                'running_time' => ['nullable', 'string'],
-                'thumbnail_id' => ['nullable', 'numeric'],
-            ] + $this->additionalRules()
-        );
+                'thumbnail_id' => ['required', 'numeric'],
+                'ticket_name' => ['required']
+            ] + $this->additionalRules())
+            ->sometimes('running_time', ['required', 'string'], function ($input) {
+                return $this->is_online == true;
+            });
+        $validatedData = $v->validate();
 
-        return $data;
+        return $validatedData;
     }
 
     /**
@@ -78,28 +92,36 @@ trait ProgramFunctions
      *
      * @return array
      */
-    function additionalRules()
-    {
-        // 추가적으로 validation 필요한 것들.
-        return [];
-    }
+    abstract function additionalRules();
 
-    function programStore(array $data)
+    /**
+     * 프로그램 생성.
+     *
+     * @param array $data
+     * @return Program
+     */
+    function storeProgram(array $data)
     {
-        return Program::create([
+        $this->program = Program::create([
             'title' => $data['title'],
             'description' => $data['description'],
             'is_online' => $this->is_online,
             'major_category_id' => $data['major_category'],
             'minor_category_id' => $data['minor_category'],
             'running_time' => $data['running_time'] ?? null,
-            'thumbnail_id' => $data['thumbnail_id'] ?? 1,
+            'thumbnail_id' => $data['thumbnail_id'],
         ]);
+
+        return $this->program;
     }
 
-    function createTickets(Program $program, $data)
+    function setProgram(Program $program)
+    {
+        $this->program = $program;
+    }
+
+    function createTickets($data)
     {
         ProgramTicket::create();
     }
-
 }
