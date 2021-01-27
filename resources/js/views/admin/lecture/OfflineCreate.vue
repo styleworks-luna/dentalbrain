@@ -110,7 +110,13 @@
                 </template>
             </single-group>
 
-            <additional-information :data="surveys"></additional-information>
+            <single-group name="추가정보">
+                <template v-slot:content>
+                    <additional-information :data="surveys"></additional-information>
+                </template>
+            </single-group>
+
+
         </template>
 
         <template v-slot:footer>
