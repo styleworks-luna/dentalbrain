@@ -79,7 +79,7 @@ class UserController
     }
 
     public function search(Request $request){
-        $this->setJoinModel($request->input('job_name_id'));
+        $this->setJoin($request->input('job_name_id'));
 
         $this->search
             ->addKeyword('login_id',$request->keyword)
@@ -93,15 +93,9 @@ class UserController
         ]);
     }
 
-    public function setJoinModel($jobNameId){
+    public function setJoin($jobNameId){
         if(isset($jobNameId) && is_numeric($jobNameId)){
-            $joinModelName = 'job';
             $this->search->setJoinModel('job')->addJoinOption('job_name_id','=',$jobNameId)->join();
-        }else{
-            $joinModelName = null;
         }
-        return $joinModelName;
     }
-
-
 }
