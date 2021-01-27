@@ -100,7 +100,7 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="lecture-setting" v-for="lecture in lectures">
+                    <div class="lecture-setting" v-for="(lecture, index) in lectures">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
@@ -116,7 +116,10 @@
                         </div>
 
                         <div class="form-group">
-                            <image-upload></image-upload>
+                            <file-upload :inputId="'lecture_file' + lecture.lecture_file.id"
+                                         :initFile="lecture.lecture_file"
+                                         :index="index"
+                                         @setFile="updateLectureFile"></file-upload>
                         </div>
                     </div>
 
@@ -128,7 +131,9 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <input type="file">
+                    <file-upload :inputId="'file' + file.id"
+                                 :initFile="file"
+                                 @setFile="updateFile"></file-upload>
                 </template>
             </single-group>
         </template>
@@ -145,81 +150,75 @@
 
 <script>
     // component
-    import SingleGroup from '@/components/admin/form/SingleGroup.vue';
-    import Thumbnail from '@/components/admin/form/Thumbnail.vue';
-    import SelectBox from '@/components/common/SelectBox.vue';
-    import Editor from '@/components/common/Editor.vue';
-    import ImageUpload from '@/components/common/ImageUpload.vue';
-    import AdditionalInformation from '@/components/common/AdditionalInformation.vue'
+    import FileUpload from '@/components/admin/form/FileUpload.vue';
+
+    import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+
+    //api
+    import Online from '@/api/admin/lecture/Online.js'
 
     export default {
         name: 'AdminOnlineCreate',
         components: {
-            'single-group': SingleGroup,
-            'thumbnail': Thumbnail,
-            'select-box': SelectBox,
-            'editor': Editor,
-            'image-upload': ImageUpload,
-            'additional-information': AdditionalInformation,
+            'file-upload': FileUpload,
         },
+        mixins: [
+            LectureFormMixin,
+        ],
         data() {
             return {
-                thumbnail: {},
-                major_category_id: '',
-                minor_category_id: '',
-                title: '',
-                running_time: '',
-                lecture_info: '',
-                description: '',
-                is_free: true,
-                price: '',
-                content: '',
-                file: {},
+                file: '',
                 lectures: [
                     {
                         title: '',
                         link: '',
-                    }
-                ],
-                surveys: [],
-
+                        lecture_file: '',
+                    },
+                ]
             }
         },
         computed: {
-            majorCategoryOptions() {
-
-            },
-            minorCategoryOptions() {
-
-            },
 
         },
         methods: {
             create() {
-                console.log(this.$data);
-            },
-            handleSetThumbnail(file) {
-                this.thumbnail = file;
-            },
-            handleSetFile(file) {
-                this.file = file;
-            },
-            handleSetMajorCategoryId(id) {
-                this.major_category_id = id;
-            },
-            handleSetMinorCategoryId(id) {
-                this.minor_category_id = id;
+                let data = {
+                    file: this.file,
+                    thumbnail: this.thumbnail,
+                    title: this.title,
+                    running_time: this.running_time,
+                    lecture_info: this.lecture_info,
+                    description: this.description,
+                    is_free: this.is_free,
+                    price: this.price,
+                    content: this.content,
+                    surveys: this.surveys,
+                    lectureS: this.lecture,
+                    major_category_id: this.major_category_id,
+                    minor_category_id: this.minor_category_id,
+                };
+                console.log(data);
+                Online.create(data).then(res => {
+                    alert(res.data.msg);
+                    this.$router.push('/admin/lecture/online');
+                }).catch(err => {
+                    alert('오류');
+                });
             },
             addLecture() {
                 this.lectures.push({
                     title: '',
-                    link: ''
+                    link: '',
+                    lecture_file: '',
                 })
             },
-            handleSetEditor(data) {
-                console.log(data);
-                this.content = data;
+            updateLectureFile (file, index) {
+                this.lectures[index].lecture_file = file;
             },
+            updateFile (data) {
+                this.file = data;
+            },
+
         }
     }
 </script>

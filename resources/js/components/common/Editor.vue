@@ -43,7 +43,7 @@ import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js"; // autoCloseTags
 
 // api
-import ImageUpload from '@/api/admin/common/ImageUpload.js';
+import ImageUpload from '@/api/admin/common/Upload.js';
 
 // editor file upload
 async function uploadImage(image) {
