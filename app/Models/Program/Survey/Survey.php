@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Survey extends Model
 {
     protected $table = 'surveys';
+    protected $guarded = [];
 
     public function category()
     {

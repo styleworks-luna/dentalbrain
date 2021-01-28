@@ -50,8 +50,9 @@ class OnlineProgramConcrete extends ProgramTemplate
             'lectures.*.link' => ['required', 'url'],
             'lectures.*.thumbnail_id' => ['sometimes', 'required', 'numeric'],
         ]);
+        $validatedData = $v->validate();
 
-        return $v->validate();
+        return $validatedData['lectures'];
     }
 
     /**

@@ -108,7 +108,7 @@ abstract class ProgramTemplate
         ]);
         $validatedData = $v->validate();
 
-        return $validatedData;
+        return $validatedData['surveys'];
     }
 
     function validateTickets(Request $request)
@@ -144,6 +144,11 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
+    /**
+     * @param Program $program
+     * @param $data
+     * @return mixed
+     */
     function storeTickets(Program $program, $data)
     {
         return ProgramTicket::create([
@@ -155,10 +160,17 @@ abstract class ProgramTemplate
         ]);
     }
 
+    /**
+     * @param Program $program
+     * @param $dataSet
+     * @return array
+     */
     function storeSurveys(Program $program, $dataSet)
     {
         $returnableDataSet = [];
+        logger($dataSet);
         foreach ($dataSet as $data) {
+            logger($data);
             $parent = Survey::create([
                 'category_id' => SurveyCategory::castStringTypeToId($data['type']),
                 'program_id' => $program->id,
@@ -166,15 +178,20 @@ abstract class ProgramTemplate
                 'is_required' => $data['is_required'],
             ]);
             $returnableDataSet[] = $parent;
-            foreach ($data['choices'] as $choice) {
-                $choice = Survey::create([
-                    'category_id' => SurveyCategory::castStringTypeToId($data['type']),
-                    'program_id' => $program->id,
-                    'question' => $choice,
-                    'is_required' => $data['is_required'],
-                    'parent_id' => $parent->id,
-                ]);
+            if (SurveyCategory::hasChoices($data['type'])) {
+                // 선택지가 있는 경우.
+                foreach ($data['choices'] as $choice) {
+                    $choice = Survey::create([
+                        'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                        'program_id' => $program->id,
+                        'question' => $choice,
+                        'is_required' => $data['is_required'],
+                        'parent_id' => $parent->id,
+                    ]);
+                    $returnableDataSet[] = $choice;
+                }
             }
         }
+        return $returnableDataSet;
     }
 }

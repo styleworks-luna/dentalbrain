@@ -14,6 +14,7 @@ class Lecture extends Model
     protected $table = 'lectures';
 
     protected $appends = ['thumbnail_url'];
+    protected $guarded = [];
 
     /**
      * Youtube URL 로 부터 Youtube ID 값 얻어냅니다.
