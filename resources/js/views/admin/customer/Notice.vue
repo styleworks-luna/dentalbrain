@@ -21,6 +21,7 @@
                     <td>{{ slotProps.row.views }}</td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_open"
+                                     class="btn-block"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>

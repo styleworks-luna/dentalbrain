@@ -22,15 +22,15 @@
                     <td>{{ slotProps.row.link }}</td>
                     <td>노출 시작 : {{ slotProps.row.started_at }} ~  노출 종료 : {{ slotProps.row.ended_at }}</td>
                     <td>{{ slotProps.row.views }}</td>
-                    <td class="overflow-hidden mr-auto ml-auto">
+                    <td>
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"
-                                     class="btn btn-info float-left mr-3">
+                                     class="btn btn-info">
                             수정
                         </router-link>
-                        <button-open  class="btn btn-warning float-left w-25"
+                        <button-open  class="btn btn-warning"
                                         :isOpen="slotProps.row.is_open"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
-                        <button class="btn btn-danger float-left ml-3" @click="destroy(slotProps.row.id)">삭제</button>
+                        <button class="btn btn-danger" @click="destroy(slotProps.row.id)">삭제</button>
                     </td>
                 </template>
             </table-grid>

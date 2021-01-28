@@ -138,6 +138,17 @@
                     </div>
                 </template>
             </single-group>
+
+            <!-- 공개 여부 -->
+            <single-group name="공개여부"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="6">
+                <template v-slot:content>
+                    <button-check :propsCheck="is_open"
+                                  @isChecked="handleSetIsOpen"></button-check>
+                </template>
+            </single-group>
         </template>
 
         <template v-slot:footer>
