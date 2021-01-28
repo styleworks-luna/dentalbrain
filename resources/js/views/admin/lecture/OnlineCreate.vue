@@ -225,11 +225,7 @@
                 Online.create(data).then(res => {
                     alert(res.data.msg);
                     this.$router.push('/admin/lecture/online');
-                }).catch(err => {
-                    if (err.response) {
-                        alert(JSON.stringify(err.response.data.errors));
-                    }
-                });
+                })
             },
             addLecture() {
                 this.lectures.push({

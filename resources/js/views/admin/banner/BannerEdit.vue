@@ -172,9 +172,7 @@ export default {
                 Banner.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/banner');
-            }).catch(err => {
-                alert('오류');
-            });
+            })
         },
         handleSetStartTime(time) {
             this.started_at = time;
