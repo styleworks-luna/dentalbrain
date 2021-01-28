@@ -75,7 +75,7 @@
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
                     <date-picker :time="started_at" @setTime="handleSetStartTime"></date-picker>
-                    <span class="float-left">~</span>
+                    <span class="float-left mr-2 ml-2 d-block">~</span>
                     <date-picker :time="ended_at" @setTime="handleSetEndTime"></date-picker>
                 </template>
             </single-group>
