@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="input-wrap float-left">
-                        <input type="text" class="form-control" placeholder="면허번호를 입력해 주세요."
+                        <input type="text" class="form-control ml-3" placeholder="면허번호를 입력해 주세요."
                                 v-model="license_num">
                     </div>
 

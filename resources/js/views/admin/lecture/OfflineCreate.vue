@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 등록" id="lecture">
+    <layout title="오프라인 강의 등록" id="offline">
         <template v-slot:body>
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
@@ -188,12 +188,12 @@ export default {
             };
             console.log(data);
             return false;
-            Online.create(data).then(res => {
-                alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
-            }).catch(err => {
-                alert('오류');
-            });
+            // Online.create(data).then(res => {
+            //     alert(res.data.msg);
+            //     this.$router.push('/admin/lecture/online');
+            // }).catch(err => {
+            //     alert('오류');
+            // });
         },
         handleSetStartDate(time) {
             this.started_at =  time;

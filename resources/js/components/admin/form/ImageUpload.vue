@@ -1,7 +1,7 @@
 <template>
     <div class="input-file-wrap overflow-hidden">
         <input type="file" class="d-none" :id="inputId"
-               @change="fileUpload">
+               @change="imageUpload">
         <label class="btn btn-info float-left w-30"
                :for="inputId">
             파일선택
