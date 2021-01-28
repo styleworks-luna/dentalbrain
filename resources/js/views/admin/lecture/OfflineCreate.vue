@@ -75,11 +75,11 @@
                     </div>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
-                        <date-picker class="mr-3" @setTime="handleSetReciptStartDate"></date-picker>
-                        <time-picker class="mr-3" @setTime="handleSetReciptStartTime"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReceiptStartDate"></date-picker>
+                        <time-picker class="mr-3" @setTime="handleSetReceiptStartTime"></time-picker>
                         <p class="float-left mr-3 mt-2">부터</p>
-                        <date-picker class="mr-3" @setTime="handleSetReciptEndDate"></date-picker>
-                        <time-picker @setTime="handleSetReciptEndTime"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReceiptEndDate"></date-picker>
+                        <time-picker @setTime="handleSetReceiptEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -90,7 +90,7 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="radio-wrap">
-                        <input type="radio" id="pay" value="false"
+                        <input type="radio" id="pay" value="0"
                                v-model="is_free">
                         <label for="pay">유료</label>
                         <input type="number"
@@ -99,7 +99,7 @@
                                v-model="price">
                     </div>
                     <div class="radio-wrap mt-1">
-                        <input type="radio" id="free" value="true"
+                        <input type="radio" id="free" value="1"
                                v-model="is_free">
                         <label for="free">무료</label>
                     </div>
@@ -207,16 +207,16 @@ export default {
         handleSetEndTime(time) {
             this.ended_time = time;
         },
-        handleSetReciptStartDate(time) {
+        handleSetReceiptStartDate(time) {
             this.receipt_started_date = time;
         },
-        handleSetReciptStartTime(time) {
+        handleSetReceiptStartTime(time) {
             this.receipt_started_time = time;
         },
-        handleSetReciptEndDate(time) {
+        handleSetReceiptEndDate(time) {
             this.receipt_ended_date = time;
         },
-        handleSetReciptEndTime(time) {
+        handleSetReceiptEndTime(time) {
             this.receipt_ended_time = time;
         },
     }

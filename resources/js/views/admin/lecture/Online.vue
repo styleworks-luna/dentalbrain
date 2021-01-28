@@ -31,6 +31,9 @@
     // component
     import Table from '@/components/admin/grid/Table.vue';
 
+    //api
+    import Online from '@/api/admin/lecture/Online.js'
+
     export default {
         name: 'AdminOnline',
         components: {
@@ -43,6 +46,9 @@
                 },
                 page: 1
             }
+        },
+        mounted() {
+            this.getData();
         },
         computed: {
             tableCol() {
@@ -92,8 +98,9 @@
                     page: page
                 };
 
-                Faq.getData(params).then(res => {
-                    this.lectures = res.data.lecture;
+                Online.getData(params).then(res => {
+                    console.log(res);
+                    this.lectures = res.data.programs;
                 }).catch(err => {
                     this.lectures = [];
                 });

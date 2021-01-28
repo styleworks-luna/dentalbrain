@@ -39,7 +39,7 @@ export default {
                 lat: null,
                 lng: null
             },
-            initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT', 'ENGLISH', 'CHINESE', 'JAPANESE']
+            initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT',]
         }
     },
     computed: {
