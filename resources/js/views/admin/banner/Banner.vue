@@ -24,10 +24,10 @@
                     <td>{{ slotProps.row.views }}</td>
                     <td>
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"
-                                     class="btn btn-info">
+                                     class="btn btn-info mr-3">
                             수정
                         </router-link>
-                        <button-open  class="btn btn-warning"
+                        <button-open  class="btn btn-warning text-white  border-warning mr-3"
                                         :isOpen="slotProps.row.is_open"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                         <button class="btn btn-danger" @click="destroy(slotProps.row.id)">삭제</button>

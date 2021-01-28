@@ -219,8 +219,9 @@
                     lectures: lectures,
                     major_category_id: this.major_category_id,
                     minor_category_id: this.minor_category_id,
+                    is_open: this.is_open,
                 };
-                console.log(data);
+
                 Online.create(data).then(res => {
                     alert(res.data.msg);
                     this.$router.push('/admin/lecture/online');

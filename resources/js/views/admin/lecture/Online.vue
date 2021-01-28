@@ -15,13 +15,19 @@
                     <td>{{ slotProps.row.major_category_name }}</td>
                     <td>{{ slotProps.row.minor_category_name }}</td>
                     <td>{{ slotProps.row.title }} </td>
-                    <td>{{ slotProps.row.students_count }}</td>
+                    <td>
+                        {{ slotProps.row.students_count }}명
+                        <router-link :to="``"
+                                    class="btn btn-info ml-4">
+                            보기
+                        </router-link>
+                    </td>
                     <td>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}`"
-                                     class="btn btn-warning mr-3">
+                                     class="btn btn-warning text-white mr-3">
                             수정</router-link>
                         <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger"
+                                     class="btn-danger text-white border-danger"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
@@ -105,7 +111,6 @@
                 };
 
                 Online.getData(params).then(res => {
-                    console.log(res);
                     this.lectures = res.data.programs;
                 }).catch(err => {
                     this.lectures = [];

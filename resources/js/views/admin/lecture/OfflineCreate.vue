@@ -118,6 +118,17 @@
                 </template>
             </single-group>
 
+            <!-- 공개 여부 -->
+            <single-group name="공개여부"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="6">
+                <template v-slot:content>
+                    <button-check :propsCheck="is_open"
+                                  @isChecked="handleSetIsOpen"></button-check>
+                </template>
+            </single-group>
+
 
         </template>
 
@@ -185,6 +196,7 @@ export default {
                 receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
+                is_open: this.is_open
             };
             console.log(data);
             return false;

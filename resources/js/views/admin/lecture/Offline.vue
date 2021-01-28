@@ -11,7 +11,27 @@
             <table-grid :tableCol="tableCol"
                         :data="lectures.data">
                 <template v-slot:list="slotProps">
-
+                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.major_category_name }}</td>
+                    <td>{{ slotProps.row.minor_category_name }}</td>
+                    <td>{{ slotProps.row.title }} </td>
+                    <td>{{ slotProps.row.started_at }}</td>
+                    <td>{{ slotProps.row.ended_at }}</td>
+                    <td>
+                        {{ slotProps.row.students_count }}명
+                        <router-link :to="``"
+                                     class="btn btn-info ml-4">
+                            보기
+                        </router-link>
+                    </td>
+                    <td>
+                        <router-link :to="`/admin/lecture/offline/${slotProps.row.id}`"
+                                     class="btn btn-warning text-white mr-3">
+                            수정</router-link>
+                        <button-open :isOpen="slotProps.row.is_open"
+                                     class="btn-danger text-white border-danger"
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                    </td>
                 </template>
             </table-grid>
 
@@ -98,6 +118,14 @@ export default {
                 this.lectures = [];
             });
         },
+        handleSetStatus(id) {
+            Online.setStatus(id).then(res => {
+                this.getData();
+                alert(res.data.msg);
+            }).catch(err => {
+                alert('오류');
+            })
+        }
     }
 }
 </script>
