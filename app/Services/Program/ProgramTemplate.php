@@ -152,7 +152,7 @@ abstract class ProgramTemplate
     function storeTickets(Program $program, $data)
     {
         return ProgramTicket::create([
-            'price' => $data['price'],
+            'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
             'name' => $data['lecture_info'],
             'program_id' => $program->id,
@@ -168,9 +168,7 @@ abstract class ProgramTemplate
     function storeSurveys(Program $program, $dataSet)
     {
         $returnableDataSet = [];
-        logger($dataSet);
         foreach ($dataSet as $data) {
-            logger($data);
             $parent = Survey::create([
                 'category_id' => SurveyCategory::castStringTypeToId($data['type']),
                 'program_id' => $program->id,
