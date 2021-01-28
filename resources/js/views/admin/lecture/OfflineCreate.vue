@@ -49,12 +49,12 @@
             </div>
             <single-group name="강의 일시" :isRow="true" :size="7">
                 <template v-slot:content>
-                    <div class="overflow-hidden">
-                        <date-picker class="mr-3" @setTime="handleSetStartTime"></date-picker>
-                        <time-picker class="mr-3"></time-picker>
+                    <div class="clearfix">
+                        <date-picker class="mr-3" @setTime="handleSetStartDate"></date-picker>
+                        <time-picker class="mr-3" @setTime="handleSetStartTime"></time-picker>
                         <p class="float-left mr-3 mt-2">부터</p>
-                        <date-picker class="mr-3" @setTime="handleSetEndTime"></date-picker>
-                        <time-picker></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetEndDate"></date-picker>
+                        <time-picker @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -70,16 +70,16 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control">
+                            <input type="number" class="form-control" v-model="capacity">
                         </div>
                     </div>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
-                        <date-picker class="mr-3" @setTime=""></date-picker>
-                        <time-picker class="mr-3"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReciptStartDate"></date-picker>
+                        <time-picker class="mr-3" @setTime="handleSetReciptStartTime"></time-picker>
                         <p class="float-left mr-3 mt-2">부터</p>
-                        <date-picker class="mr-3"></date-picker>
-                        <time-picker></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReciptEndDate"></date-picker>
+                        <time-picker @setTime="handleSetReciptEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -108,7 +108,7 @@
 
             <single-group name="상세정보입력" :size="12">
                 <template v-slot:content>
-                    <editor></editor>
+                    <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -141,7 +141,6 @@ import NaverMap from '@/components/common/NaverMap.vue';
 
 import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 
-
 export default {
     name: 'AdminOnlineCreate',
     mixins: [
@@ -154,23 +153,72 @@ export default {
     },
     data() {
         return {
-            started_at: '',
-            ended_at: '',
-            receipt_started_at: '',
-            receipt_ended_at: '',
+            started_date: '',
+            started_time: '',
+            ended_date: '',
+            ended_time: '',
+            capacity: '',
+            receipt_started_date: '',
+            receipt_started_time: '',
+            receipt_ended_date: '',
+            receipt_ended_time: '',
         }
     },
     computed: {},
     methods: {
         create() {
-            console.log(this.$data);
+            let data = {
+                thumbnail_id: this.thumbnail.id,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+                title: this.title,
+                lecture_info: this.lecture_info,
+                is_free: this.is_free,
+                price: this.price,
+                content: this.content,
+                surveys: this.surveys,
+                ended_date: this.Helper.dateFormatYDM(this.ended_at),
+                started_date: this.Helper.dateFormatYDM(this.started_at),
+                started_time: this.started_time,
+                ended_time: this.ended_time,
+                receipt_started_date: this.Helper.dateFormatYDM(this.receipt_started_date),
+                receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
+                receipt_started_time: this.receipt_started_time,
+                receipt_ended_time: this.receipt_ended_time,
+            };
+            console.log(data);
+            return false;
+            Online.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/online');
+            }).catch(err => {
+                alert('오류');
+            });
+        },
+        handleSetStartDate(time) {
+            this.started_at =  time;
         },
         handleSetStartTime(time) {
-            this.started_at = time;
+            this.started_time = time;
+        },
+        handleSetEndDate(time) {
+            this.ended_at = time;
         },
         handleSetEndTime(time) {
-            this.ended_at = time;
-        }
+            this.ended_time = time;
+        },
+        handleSetReciptStartDate(time) {
+            this.receipt_started_date = time;
+        },
+        handleSetReciptStartTime(time) {
+            this.receipt_started_time = time;
+        },
+        handleSetReciptEndDate(time) {
+            this.receipt_ended_date = time;
+        },
+        handleSetReciptEndTime(time) {
+            this.receipt_ended_time = time;
+        },
     }
 
 }
