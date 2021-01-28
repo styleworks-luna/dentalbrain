@@ -170,6 +170,7 @@
         data() {
             return {
                 material: '',
+                running_time: '',
                 lectures: [
                     {
                         title: '',

@@ -1,8 +1,8 @@
 // component
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+import ImageUpload from '@/components/admin/form/ImageUpload.vue';
 import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
-import ImageUpload from '@/components/common/ImageUpload.vue';
 import DatePicker from '@/components/common/DatePicker.vue';
 
 // 배너 수정,생성

@@ -7,7 +7,6 @@
         <div>
             <naver-maps
                 :height="height"
-                :width="width"
                 :mapOptions="mapOptions"
                 :initLayers="initLayers"
                 @load="onLoad">
@@ -25,7 +24,6 @@ export default {
     name: 'NaverMap',
     data() {
         return {
-            width: 1200,
             height: 500,
             marker: null,
             map: null,

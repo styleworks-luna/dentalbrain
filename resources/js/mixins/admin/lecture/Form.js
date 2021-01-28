@@ -1,8 +1,9 @@
+// components
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 import Thumbnail from '@/components/admin/form/Thumbnail.vue';
+import Editor from '@/components/admin/form/Editor.vue';
+import AdditionalInformation from '@/components/admin/form/AdditionalInformation.vue'
 import SelectBox from '@/components/common/SelectBox.vue';
-import Editor from '@/components/common/Editor.vue';
-import AdditionalInformation from '@/components/common/AdditionalInformation.vue'
 
 // api
 import Common from '@/api/admin/lecture/Common.js';
@@ -22,9 +23,7 @@ export const LectureFormMixin = {
             major_category_id: '',
             minor_category_id: '',
             title: '',
-            running_time: '',
             lecture_info: '',
-            description: '',
             is_free: true,
             price: '',
             content: '',
@@ -42,9 +41,7 @@ export const LectureFormMixin = {
         handleSetThumbnail(file) {
             this.thumbnail = file;
         },
-        handleSetFile(file) {
-            this.file = file;
-        },
+
         handleSetMajorCategoryId(id) {
             this.major_category_id = id;
         },

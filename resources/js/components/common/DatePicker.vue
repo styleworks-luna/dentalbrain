@@ -6,7 +6,8 @@
                     :required="true"
                     input-class="datepicker form-control"
                     @input="handleSetDate"
-                    v-model="date"></datepicker>
+                    v-model="date"
+                    placeholder="날짜를 입력해주세요."></datepicker>
 </template>
 
 <script>
