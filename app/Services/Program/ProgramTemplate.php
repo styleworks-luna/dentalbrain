@@ -11,6 +11,7 @@ use App\Models\Program\ProgramTicket;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 abstract class ProgramTemplate
 {
@@ -69,16 +70,15 @@ abstract class ProgramTemplate
      * @param Request $request
      * @return array
      */
-    function validate(Request $request)
+    function validateProgram(Request $request)
     {
-        $v = Validator::make($request->all(), [
-                'major_category' => ['required', 'numeric'],
-                'minor_category' => ['required', 'numeric'],
-                'title' => ['required', 'string', 'max:200'],
-                'description' => ['required',],
-                'thumbnail_id' => ['required', 'numeric'],
-                'ticket_name' => ['required']
-            ] + $this->additionalRules())
+        $v = Validator::make($request->all(), array_merge([
+            'major_category_id' => ['required', 'numeric'],
+            'minor_category_id' => ['required', 'numeric'],
+            'title' => ['required', 'string', 'max:200'],
+            'thumbnail_id' => ['required', 'numeric'],
+            'content' => ['required', 'string'],
+        ], $this->additionalRules()))
             ->sometimes('running_time', ['required', 'string'], function ($input) {
                 return $this->is_online == true;
             });
@@ -94,6 +94,34 @@ abstract class ProgramTemplate
      */
     abstract function additionalRules();
 
+    function validateSurveys(Request $request)
+    {
+        $surveyTypes = ['singleChoice', 'multipleChoice', 'shortAnswer', 'address', 'file'];
+        $hasChoices = ['singleChoice', 'multipleChoice'];
+
+        $v = Validator::make($request->all(), [
+            'surveys.*.type' => ['required', Rule::in($surveyTypes)],
+            'surveys.*.question' => ['required', 'string'],
+            'surveys.*.is_required' => ['required', 'boolean'],
+            'surveys.*.choices' => ['sometimes', 'required', 'array'],
+        ]);
+        $validatedData = $v->validate();
+
+        return $validatedData;
+    }
+
+    function validateTickets(Request $request)
+    {
+        $v = Validator::make($request->all(), [
+            'lecture_info' => ['required'],
+            'is_free' => ['required', 'boolean'],
+            'price' => ['nullable', 'numeric'],
+        ]);
+        $validatedData = $v->validate();
+
+        return $validatedData;
+    }
+
     /**
      * 프로그램 생성.
      *
@@ -104,10 +132,10 @@ abstract class ProgramTemplate
     {
         $this->program = Program::create([
             'title' => $data['title'],
-            'description' => $data['description'],
+            'content' => $data['content'],
             'is_online' => $this->is_online,
-            'major_category_id' => $data['major_category'],
-            'minor_category_id' => $data['minor_category'],
+            'major_category_id' => $data['major_category_id'],
+            'minor_category_id' => $data['minor_category_id'],
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
         ]);
@@ -115,13 +143,19 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
-    function setProgram(Program $program)
+    function storeTickets(Program $program, $data)
     {
-        $this->program = $program;
+        return ProgramTicket::create([
+            'price' => $data['price'],
+            'is_free' => $data['is_free'],
+            'name' => $data['lecture_info'],
+            'program_id' => $program->id,
+            //'term' => 100 days default.
+        ]);
     }
 
-    function createTickets($data)
+    function storeSurveys(Program $program, $data)
     {
-        ProgramTicket::create();
+        return [];
     }
 }

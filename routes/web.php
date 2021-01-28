@@ -116,6 +116,12 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('success', function () {
             return view('desktop.pages.lecture.lecture_success');
         });
+
+        Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+            Route::post('/', 'Lecture\CommentController@store')->name('store');
+            Route::put('{comment}', 'Lecture\CommentController@update')->name('update');
+            Route::delete('{comment}', 'Lecture\CommentController@delete')->name('delete');
+        });
     });
 });
 
@@ -168,7 +174,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
-    Route::group(['prefix' => 'lectures', 'as' => 'lectures'], function () {
+    Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
         Route::group(['prefix' => '{program}'], function () {
             Route::post('like', 'Lecture\DetailController@like');

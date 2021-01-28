@@ -28,11 +28,18 @@ class OnlineProgramController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->onlineConcrete->validate($request);
+        $programData = $this->onlineConcrete->validateProgram($request);
+        $ticketData = $this->onlineConcrete->validateTickets($request);
+        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
 
-        $program = $this->onlineConcrete->storeProgram($data);
-        $lectures = $this->onlineConcrete->storeLectures($lectureDataSet);
+        logger([$programData, $ticketData, $surveyDateSet, $lectureDataSet]);
+        ddd();
+
+        $program = $this->onlineConcrete->storeProgram($programData);
+        $ticket = $this->onlineConcrete->storeTickets($program, $ticketData);
+        $surveys = $this->onlineConcrete->storeSurveys($program, $surveyDateSet);
+        $lectures = $this->onlineConcrete->storeLectures($program, $lectureDataSet);
 
     }
 

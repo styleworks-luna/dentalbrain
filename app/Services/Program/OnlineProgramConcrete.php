@@ -5,6 +5,7 @@ namespace App\Services\Program;
 
 
 use App\Models\Program\Lecture;
+use App\Models\Program\Program;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,15 +18,21 @@ class OnlineProgramConcrete extends ProgramTemplate
     }
 
     /**
-     * @param array $validatedDataSet
+     * @param Program $program
+     * @param array $dataSet
      * @return array
      */
-    public function storeLectures($validatedDataSet)
+    public function storeLectures(Program $program, $dataSet)
     {
         $returnableDataSet = [];
-        foreach ($validatedDataSet as $lecture) {
-            $lecture['program_id'] = $this->program->id;
-            $returnableDataSet[] = Lecture::create($lecture);
+        foreach ($dataSet as $data) {
+            $returnableDataSet[] = Lecture::create([
+                'program_id' => $program->id,
+                'thumbnail_id' => $data['file_id'] ?? null,
+                'youtube_id' => Lecture::getYoutubeIdFromUrl($data['link']),
+                'url' => $data['link'],
+                'title' => $data['title'],
+            ]);
         }
         return $returnableDataSet;
     }
@@ -40,7 +47,7 @@ class OnlineProgramConcrete extends ProgramTemplate
     {
         $v = Validator::make($request->all(), [
             'title' => ['required', 'string'],
-            'url' => ['required', 'link'],
+            'link' => ['required', 'url'],
             'file_id' => ['required'],
         ]);
 
@@ -52,16 +59,6 @@ class OnlineProgramConcrete extends ProgramTemplate
      */
     function additionalRules()
     {
-        // TODO: Implement additionalRules() method.
-    }
-
-    /**
-     *
-     *
-     * @param Request $request
-     */
-    private function getLecturesFromRequest($request)
-    {
-
+        return ['running_time' => ['required', 'string']];
     }
 }
