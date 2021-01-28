@@ -16,6 +16,7 @@ class CreateSurveyCategoriesTable extends Migration
         Schema::create('survey_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('eng_name')->comment('영문명');
         });
     }
 
