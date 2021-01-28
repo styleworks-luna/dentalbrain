@@ -127,9 +127,7 @@ export default {
             Inquire.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/customer/inquire');
-            }).catch(err => {
-                alert('오류');
-            });
+            })
         },
         destroy() {
             Inquire.destroy(this.id).then(res => {

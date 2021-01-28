@@ -23,6 +23,11 @@ instance.interceptors.response.use(
     },
 
     (error) => {
+        if(error.response.status == 422){
+            alert(JSON.stringify(error.response.data.errors))
+        } else {
+            alert('오류');
+        }
         return Promise.reject(error);
     }
 );

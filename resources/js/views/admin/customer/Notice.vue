@@ -111,8 +111,6 @@ export default {
             Notice.setStatus(id).then(res => {
                 this.getData();
                 alert(res.data.msg);
-            }).catch(err => {
-                alert('오류');
             })
         }
     }

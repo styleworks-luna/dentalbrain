@@ -92,7 +92,7 @@ export default {
             Faq.getData(params).then(res => {
                 this.lectures = res.data.payment;
             }).catch(err => {
-                this.lectures = [];
+                this.payments = [];
             });
         },
     }

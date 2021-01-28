@@ -226,7 +226,9 @@
                     alert(res.data.msg);
                     this.$router.push('/admin/lecture/online');
                 }).catch(err => {
-                    alert('오류');
+                    if (err.response) {
+                        alert(JSON.stringify(err.response.data.errors));
+                    }
                 });
             },
             addLecture() {

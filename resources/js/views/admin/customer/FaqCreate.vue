@@ -82,9 +82,7 @@
                 Faq.create(data).then(res => {
                     alert(res.data.msg);
                     this.$router.push('/admin/customer/faq');
-                }).catch(err => {
-                    alert('오류');
-                });
+                })
             }
         }
     }

@@ -148,9 +148,7 @@ export default {
             User.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/user');
-            }).catch(err => {
-                alert('오류');
-            });
+            })
         },
     }
 }
