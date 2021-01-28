@@ -20,7 +20,7 @@ class NoticeController extends Controller
 {
     public function index()
     {
-        $notices = Notice::orderBy('created_at', 'desc')->simplePaginate(10);
+        $notices = Notice::where('is_open',1)->orderBy('created_at', 'desc')->paginate(10);
         return view(viewPrefix() . 'pages.service.notice', ['notices' => $notices]);
     }
 

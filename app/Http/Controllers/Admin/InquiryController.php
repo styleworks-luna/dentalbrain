@@ -98,8 +98,8 @@ class InquiryController
                 case 'refund':
                     $this->search->addCategory('category_id','=',2);
                     break;
-                default:
                 case 'all':
+                default:
                     break;
             }
         }

@@ -62,6 +62,7 @@
                 is_open<input type="text" name="is_open" placeholder="상태" value="1">
                 <input type="submit">
             </form>
+            <br>
 
             notice 넣는 함수
             <form method="POST" action="{{route('api.admin.customer.notices.store')}}">
