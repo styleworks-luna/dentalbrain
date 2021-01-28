@@ -33,7 +33,7 @@ class OnlineProgramController extends Controller
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
 
-        logger([$programData, $ticketData, $surveyDateSet, $lectureDataSet]);
+        return response()->json([$programData, $ticketData, $surveyDateSet, $lectureDataSet]);
         ddd();
 
         $program = $this->onlineConcrete->storeProgram($programData);

@@ -46,9 +46,9 @@ class OnlineProgramConcrete extends ProgramTemplate
     public function validateLectures($request)
     {
         $v = Validator::make($request->all(), [
-            'title' => ['required', 'string'],
-            'link' => ['required', 'url'],
-            'file_id' => ['required'],
+            'lectures.*.title' => ['required', 'string'],
+            'lectures.*.link' => ['required', 'url'],
+            'lectures.*.thumbnail_id' => ['sometimes', 'required', 'numeric'],
         ]);
 
         return $v->validate();
