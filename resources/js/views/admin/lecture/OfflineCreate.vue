@@ -47,23 +47,25 @@
                     </template>
                 </single-group>
             </div>
-            <single-group name="강의 일시">
-                <template v-slot:content class="overflow-hidden">
-                    <date-picker @setTime="handleSetStartTime"></date-picker>
-                    <time-picker></time-picker>
-                    <p class="float-left">부터</p>
-                    <date-picker @setTime="handleSetEndTime"></date-picker>
-                    <time-picker></time-picker>
+            <single-group name="강의 일시" :isRow="true" :size="7">
+                <template v-slot:content>
+                    <div class="overflow-hidden">
+                        <date-picker class="mr-3" @setTime="handleSetStartTime"></date-picker>
+                        <time-picker class="mr-3"></time-picker>
+                        <p class="float-left mr-3 mt-2">부터</p>
+                        <date-picker class="mr-3" @setTime="handleSetEndTime"></date-picker>
+                        <time-picker></time-picker>
+                    </div>
                 </template>
             </single-group>
 
-            <single-group name="강의 장소" :size="9">
+            <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
                     <naver-map></naver-map>
                 </template>
             </single-group>
 
-            <single-group name="신청일시" class="clearfix" :size="9">
+            <single-group name="신청일시" class="clearfix" :isRow="true" :size="9">
                 <template v-slot:content>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
@@ -72,11 +74,11 @@
                         </div>
                     </div>
                     <div class="float-left">
-                        <label class="col-form-label d-block float-left" for="">신청기간</label>
-                        <date-picker @setTime=""></date-picker>
-                        <time-picker></time-picker>
-                        <p class="float-left">부터</p>
-                        <date-picker></date-picker>
+                        <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
+                        <date-picker class="mr-3" @setTime=""></date-picker>
+                        <time-picker class="mr-3"></time-picker>
+                        <p class="float-left mr-3 mt-2">부터</p>
+                        <date-picker class="mr-3"></date-picker>
                         <time-picker></time-picker>
                     </div>
                 </template>
@@ -92,11 +94,11 @@
                                v-model="is_free">
                         <label for="pay">유료</label>
                         <input type="number"
-                               class="form-control"
+                               class="form-control ml-3"
                                placeholder="신청 금액 입력"
                                v-model="price">
                     </div>
-                    <div class="radio-wrap">
+                    <div class="radio-wrap mt-1">
                         <input type="radio" id="free" value="true"
                                v-model="is_free">
                         <label for="free">무료</label>
@@ -104,13 +106,13 @@
                 </template>
             </single-group>
 
-            <single-group name="상세정보입력">
+            <single-group name="상세정보입력" :size="12">
                 <template v-slot:content>
                     <editor></editor>
                 </template>
             </single-group>
 
-            <single-group name="추가정보">
+            <single-group name="추가정보" :size="12">
                 <template v-slot:content>
                     <additional-information :data="surveys"></additional-information>
                 </template>
@@ -137,7 +139,7 @@ import TimePicker from '@/components/common/TimePicker.vue'
 import NaverMap from '@/components/common/NaverMap.vue';
 
 
-import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 
 
 export default {
@@ -158,8 +160,7 @@ export default {
             receipt_ended_at: '',
         }
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         create() {
             console.log(this.$data);

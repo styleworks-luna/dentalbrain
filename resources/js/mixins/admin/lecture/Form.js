@@ -24,7 +24,6 @@ export const LectureFormMixin = {
             minor_category_id: '',
             title: '',
             lecture_info: '',
-            description: '',
             is_free: true,
             price: '',
             content: '',
