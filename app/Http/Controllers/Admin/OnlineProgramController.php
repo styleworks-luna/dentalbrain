@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OnlineProgramController extends Controller
 {
@@ -33,14 +35,25 @@ class OnlineProgramController extends Controller
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
 
-        logger([$programData, $ticketData, $surveyDateSet, $lectureDataSet]);
-        ddd();
+        try {
+            DB::beginTransaction();
+            $program = $this->onlineConcrete->storeProgram($programData);
+            $ticket = $this->onlineConcrete->storeTickets($program, $ticketData);
+            $surveys = $this->onlineConcrete->storeSurveys($program, $surveyDateSet);
+            $lectures = $this->onlineConcrete->storeLectures($program, $lectureDataSet);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('ONLINE PROGRAM STORE ERROR',
+                [$exception, $programData, $ticketData, $surveyDateSet, $lectureDataSet]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.',
+            ], 500);
+        }
+        DB::commit();
 
-        $program = $this->onlineConcrete->storeProgram($programData);
-        $ticket = $this->onlineConcrete->storeTickets($program, $ticketData);
-        $surveys = $this->onlineConcrete->storeSurveys($program, $surveyDateSet);
-        $lectures = $this->onlineConcrete->storeLectures($program, $lectureDataSet);
-
+        return response()->json([
+            'msg' => '온라인 강의가 생성되었습니다.',
+        ]);
     }
 
     function additionalValidate(Request $request)

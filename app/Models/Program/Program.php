@@ -14,6 +14,8 @@ class Program extends Model
 
     protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt'];
 
+    protected $guarded = [];
+
     /*
      * ======= Define Relationships =========
      */

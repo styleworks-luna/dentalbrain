@@ -2,7 +2,7 @@
     <div>
         <div class="overflow-hidden">
             <input type="text" class="form-control float-left w-75 mb-3" placeholder="장소명,주소를 입력해주세요.">
-            <button class="btn btn-info float-right" @click="handleSearch">검색</button>
+            <button class="btn btn-info float-left mt-1 ml-3" @click="handleSearch">검색</button>
         </div>
         <div>
             <naver-maps
@@ -39,7 +39,7 @@ export default {
                 lat: null,
                 lng: null
             },
-            initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT', 'ENGLISH', 'CHINESE', 'JAPANESE']
+            initLayers: ['BACKGROUND', 'BACKGROUND_DETAIL', 'POI_KOREAN', 'TRANSIT',]
         }
     },
     computed: {

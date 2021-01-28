@@ -8,6 +8,8 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramTicket;
+use App\Models\Program\Survey\Survey;
+use App\Models\Program\Survey\SurveyCategory;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -96,24 +98,23 @@ abstract class ProgramTemplate
 
     function validateSurveys(Request $request)
     {
-        $surveyTypes = ['singleChoice', 'multipleChoice', 'shortAnswer', 'address', 'file'];
         $hasChoices = ['singleChoice', 'multipleChoice'];
 
         $v = Validator::make($request->all(), [
-            'surveys.*.type' => ['required', Rule::in($surveyTypes)],
+            'surveys.*.type' => ['required', Rule::exists('survey_categories', 'eng_name')],
             'surveys.*.question' => ['required', 'string'],
             'surveys.*.is_required' => ['required', 'boolean'],
             'surveys.*.choices' => ['sometimes', 'required', 'array'],
         ]);
         $validatedData = $v->validate();
 
-        return $validatedData;
+        return $validatedData['surveys'];
     }
 
     function validateTickets(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'lecture_info' => ['required'],
+            'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
             'price' => ['nullable', 'numeric'],
         ]);
@@ -143,6 +144,11 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
+    /**
+     * @param Program $program
+     * @param $data
+     * @return mixed
+     */
     function storeTickets(Program $program, $data)
     {
         return ProgramTicket::create([
@@ -154,8 +160,38 @@ abstract class ProgramTemplate
         ]);
     }
 
-    function storeSurveys(Program $program, $data)
+    /**
+     * @param Program $program
+     * @param $dataSet
+     * @return array
+     */
+    function storeSurveys(Program $program, $dataSet)
     {
-        return [];
+        $returnableDataSet = [];
+        logger($dataSet);
+        foreach ($dataSet as $data) {
+            logger($data);
+            $parent = Survey::create([
+                'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                'program_id' => $program->id,
+                'question' => $data['question'],
+                'is_required' => $data['is_required'],
+            ]);
+            $returnableDataSet[] = $parent;
+            if (SurveyCategory::hasChoices($data['type'])) {
+                // 선택지가 있는 경우.
+                foreach ($data['choices'] as $choice) {
+                    $choice = Survey::create([
+                        'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                        'program_id' => $program->id,
+                        'question' => $choice,
+                        'is_required' => $data['is_required'],
+                        'parent_id' => $parent->id,
+                    ]);
+                    $returnableDataSet[] = $choice;
+                }
+            }
+        }
+        return $returnableDataSet;
     }
 }

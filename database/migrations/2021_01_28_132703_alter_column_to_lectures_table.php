@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSurveyCategoriesTable extends Migration
+class AlterColumnToLecturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateSurveyCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_categories', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('eng_name')->comment('영문명');
+        Schema::table('lectures', function (Blueprint $table) {
+            $table->unsignedBigInteger('thumbnail_id')->nullable()->change();
         });
     }
 
@@ -27,6 +25,5 @@ class CreateSurveyCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_categories');
     }
 }

@@ -11,6 +11,8 @@ class ProgramTicket extends Model
 
     protected $table = 'program_tickets';
 
+    protected $guarded = [];
+
     public function program()
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
