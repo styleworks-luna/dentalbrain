@@ -168,9 +168,7 @@ abstract class ProgramTemplate
     function storeSurveys(Program $program, $dataSet)
     {
         $returnableDataSet = [];
-        logger($dataSet);
         foreach ($dataSet as $data) {
-            logger($data);
             $parent = Survey::create([
                 'category_id' => SurveyCategory::castStringTypeToId($data['type']),
                 'program_id' => $program->id,
