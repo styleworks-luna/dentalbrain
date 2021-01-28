@@ -8,10 +8,6 @@
                     <td>
                         {{ slotProps.row.category_name }}
                     </td>
-<!--                    <td>
-                        <template v-if="slotProps.row.category_id == 1">일반</template>
-                        <template v-else-if="slotProps.row.category_id == 2">환불</template>
-                    </td>-->
                     <td>
                         <router-link :to="`/admin/customer/inquire/${slotProps.row.id}`">
                             {{ slotProps.row.title }}

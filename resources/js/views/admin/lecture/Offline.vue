@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의">
+    <layout title="오프라인 강의">
         <template v-slot:button>
             <router-link to="/admin/lecture/offline/create"
                          class="btn btn-lg btn-info">
