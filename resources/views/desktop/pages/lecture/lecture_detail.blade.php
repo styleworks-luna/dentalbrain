@@ -82,7 +82,7 @@
                         </ul>
                     </div>
                     <div class="lecture-detail-content">
-                        {!! $program->description !!}
+                        {!! $program->content !!}
                     </div>
                 </section>
                 <section id="comment" class="lecture-comment">

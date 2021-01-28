@@ -69,6 +69,7 @@ instance.interceptors.response.use(
             if (errors.ended_at) {
                 errors.ended_at[0] = '노출기간 종료 날짜를 시작 날짜 전으로 선택해주세요.'
             }
+
             alert(JSON.stringify(errors, null, 2))
         } else {
             alert('오류');
