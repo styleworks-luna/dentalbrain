@@ -176,6 +176,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
     });
 
+    Route::get('map/geocode','MapController@naver_map');
+    Route::get('map/reverse-geocode','MapController@reverse_geocode');
+
     Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
             Route::post('file', 'Admin\FileController@uploadFile')->name('file');
