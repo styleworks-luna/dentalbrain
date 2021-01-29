@@ -143,30 +143,38 @@ export default {
 
                 this.position = result.position;
                 this.order = result.order;
+
                 this.title = result.title;
                 this.link = result.link;
-                this.is_open = result.is_open;
-                this.started_at = result.started_at;
-                this.ended_at = result.ended_at;
+
                 this.desktop_file = result.desktop_file;
                 this.desktop_file_id = result.desktop_file_id;
                 this.mobile_file = result.mobile_file;
                 this.mobile_file_id = result.mobile_file_id;
+
+                this.started_at = result.started_at;
+                this.ended_at = result.ended_at;
+
+                this.is_open = result.is_open;
             });
         },
         update() {
             let data = {
                 position : this.position,
                 order : this.order,
+
                 title : this.title,
                 link : this.link,
-                is_open : this.is_open,
-                started_at: this.Helper.dateFormatYDM(this.started_at),
-                ended_at: this.Helper.dateFormatYDM(this.ended_at),
+
                 desktop_file : this.desktop_file,
                 desktop_file_id : this.desktop_file.id,
                 mobile_file : this.mobile_file,
-                mobile_file_id : this.mobile_file.id
+                mobile_file_id : this.mobile_file.id,
+
+                started_at: this.Helper.dateFormatYDM(this.started_at),
+                ended_at: this.Helper.dateFormatYDM(this.ended_at),
+
+                is_open : this.is_open,
             };
 
                 Banner.update(this.id, data).then(res => {

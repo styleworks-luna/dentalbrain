@@ -121,15 +121,19 @@ export default {
     methods: {
         create() {
             let data = {
+                position: this.position,
+                order: this.order,
+
                 title: this.title,
                 link: this.link,
-                position: this.position,
+
                 desktop_file_id: this.desktop_file.id,
                 mobile_file_id: this.mobile_file.id,
-                order: this.order,
-                is_open: this.is_open,
+
                 started_at: this.Helper.dateFormatYDM(this.started_at),
-                ended_at: this.Helper.dateFormatYDM(this.ended_at)
+                ended_at: this.Helper.dateFormatYDM(this.ended_at),
+                
+                is_open: this.is_open,
             };
 
             Banner.create(data).then(res => {
