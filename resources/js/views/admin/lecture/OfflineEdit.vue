@@ -61,7 +61,10 @@
 
             <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
-                    <naver-map></naver-map>
+                    <naver-map :data="offline_programs"
+                               @setAddress="handleSetAddress"
+                               @setAddressDetail="handleSetAddressDetail"
+                               @setProgram="handleSetProgram"></naver-map>
                 </template>
             </single-group>
 
@@ -145,23 +148,20 @@
 </template>
 
 <script>
-// components
-import DatePicker from '@/components/common/DatePicker.vue'
-import TimePicker from '@/components/common/TimePicker.vue'
-import NaverMap from '@/components/common/NaverMap.vue';
-
+//api
+import Offline from '@/api/admin/lecture/Offline.js'
 
 import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
     name: 'AdminOfflineEdit',
     mixins: [
-        LectureFormMixin
+        LectureFormMixin,
+        OfflineMixin
     ],
     components: {
-        'date-picker': DatePicker,
-        'time-picker': TimePicker,
-        'naver-map': NaverMap,
+
     },
     created() {
         this.id = this.$route.params.id;
@@ -170,17 +170,7 @@ export default {
         this.getEditData();
     },
     data() {
-        return {
-            started_date: '',
-            started_time: '',
-            ended_date: '',
-            ended_time: '',
-            capacity: '',
-            receipt_started_date: '',
-            receipt_started_time: '',
-            receipt_ended_date: '',
-            receipt_ended_time: '',
-        }
+
     },
     computed: {},
     methods: {
@@ -207,6 +197,7 @@ export default {
                 this.content = result.content;
                 this.surveys = result.surveys;
                 this.is_open = result.is_open;
+                this.offline_programs = result.offline_programs;
             });
         },
         update() {
@@ -228,7 +219,8 @@ export default {
                 receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
-                is_open: this.is_open
+                is_open: this.is_open,
+                offline_programs: this.offline_programs,
             };
             Offline.create(data).then(res => {
                 alert(res.data.msg);
@@ -240,30 +232,6 @@ export default {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/offline');
             })
-        },
-        handleSetStartDate(time) {
-            this.started_at =  time;
-        },
-        handleSetStartTime(time) {
-            this.started_time = time;
-        },
-        handleSetEndDate(time) {
-            this.ended_at = time;
-        },
-        handleSetEndTime(time) {
-            this.ended_time = time;
-        },
-        handleSetReceiptStartDate(time) {
-            this.receipt_started_date = time;
-        },
-        handleSetReceiptStartTime(time) {
-            this.receipt_started_time = time;
-        },
-        handleSetReceiptEndDate(time) {
-            this.receipt_ended_date = time;
-        },
-        handleSetReceiptEndTime(time) {
-            this.receipt_ended_time = time;
         },
     }
 }

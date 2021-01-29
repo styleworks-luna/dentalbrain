@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import {
     Doc,
     Text,
@@ -41,6 +42,16 @@ import "codemirror/lib/codemirror.css"; // import base style
 import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js"; // autoCloseTags
+import ElementUI from 'element-ui';
+import { ElementTiptapPlugin } from 'element-tiptap';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'element-tiptap/lib/index.css';
+
+Vue.use(ElementUI);
+Vue.use(ElementTiptapPlugin, {
+    lang: "ko",
+    // spellcheck: false,
+});
 
 // api
 import ImageUpload from '@/api/admin/common/Upload.js';
