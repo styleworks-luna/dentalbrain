@@ -44,7 +44,6 @@ export const LectureFormMixin = {
         handleSetThumbnail(file) {
             this.thumbnail = file;
         },
-
         handleSetMajorCategoryId(id) {
             this.major_category_id = id;
         },

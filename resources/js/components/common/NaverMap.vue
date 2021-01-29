@@ -48,7 +48,15 @@
     export default {
         name: 'NaverMap',
         props: {
-            data: Object
+            data: {
+                address: String,
+                address_detail: String,
+                latitude: Number,
+                longitude: Number,
+                sido: String,
+                gugun: String,
+                dong: String
+            }
         },
         data() {
             return {
@@ -151,13 +159,14 @@
                     const position = window.naver.maps.TransCoord.fromTM128ToLatLng(window.naver.maps.Point(data.latlng.lat, data.latlng.lng));
 
                     latlng = {
-                        lat: position.y,
-                        lng: position.x
+                        lat: Number(position.y),
+                        lng: Number(position.x)
                     };
+
                 } else {
                     latlng = {
-                        lat: data.latlng.lat,
-                        lng: data.latlng.lng
+                        lat: Number(data.latlng.lat),
+                        lng: Number(data.latlng.lng)
                     };
                 }
 

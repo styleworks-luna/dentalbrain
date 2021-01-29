@@ -164,34 +164,24 @@
 </template>
 
 <script>
-// component
-import FileUpload from '@/components/admin/form/FileUpload.vue';
-
 import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
 
 //api
 import Online from '@/api/admin/lecture/Online.js'
+import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
 
 export default {
     name: 'AdminOnlineEdit',
-    components: {
-        'file-upload': FileUpload,
-    },
     mixins: [
         LectureFormMixin,
+        OnlineMixin
     ],
     data() {
         return {
             id:'',
-            material: '',
-            running_time: '',
-            lectures: [
-                {
-                    title: '',
-                    link: '',
-                    thumbnail: {}
-                },
-            ]
+            data: {
+
+            }
         }
     },
     created() {
@@ -262,19 +252,6 @@ export default {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             })
-        },
-        addLecture() {
-            this.lectures.push({
-                title: '',
-                link: '',
-                thumbnail: '',
-            })
-        },
-        updateLectureFile (file, index) {
-            this.lectures[index].thumbnail = file;
-        },
-        updateFile (data) {
-            this.material = data;
         },
     }
 }

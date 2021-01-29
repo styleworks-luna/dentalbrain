@@ -8,10 +8,6 @@ import '@/bootstrap';
 import '@popperjs/core';
 import { Sidebar, Alert, Popover } from '@coreui/coreui';
 import { Helper } from '@/helper.js';
-import ElementUI from 'element-ui';
-import { ElementTiptapPlugin } from 'element-tiptap';
-import 'element-ui/lib/theme-chalk/index.css';
-import 'element-tiptap/lib/index.css';
 
 import Layout from '@/components/admin/grid/Layout.vue';
 import Pagination from 'laravel-vue-pagination';
@@ -20,12 +16,6 @@ Vue.prototype.Helper = Helper;
 
 Vue.component('layout', Layout);
 Vue.component('pagination', Pagination);
-
-Vue.use(ElementUI);
-Vue.use(ElementTiptapPlugin, {
-     lang: "ko",
-    // spellcheck: false,
-});
 
 const app = new Vue({
     el: '#app',

@@ -73,14 +73,16 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control" v-model="capacity">
+                            <input type="number" class="form-control" v-model="offline_programs.capacity">
                         </div>
                     </div>
                     <div class="float-left">
-                        <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
+                        <label class="col-form-label d-block float-left mr-3">신청기간</label>
                         <date-picker class="mr-3" @setTime="handleSetReceiptStartDate"></date-picker>
                         <time-picker class="mr-3" @setTime="handleSetReceiptStartTime"></time-picker>
-                        <p class="float-left mr-3 mt-2">부터</p>
+
+                        <span class="float-left mr-3 mt-2">부터</span>
+
                         <date-picker class="mr-3" @setTime="handleSetReceiptEndDate"></date-picker>
                         <time-picker @setTime="handleSetReceiptEndTime"></time-picker>
                     </div>
@@ -146,118 +148,56 @@
 </template>
 
 <script>
-// components
-import DatePicker from '@/components/common/DatePicker.vue'
-import TimePicker from '@/components/common/TimePicker.vue'
-import NaverMap from '@/components/common/NaverMap.vue';
+
 
 //api
 import Offline from '@/api/admin/lecture/Offline.js'
 
 import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
     name: 'AdminOfflineCreate',
     mixins: [
-        LectureFormMixin
+        LectureFormMixin,
+        OfflineMixin
     ],
-    components: {
-        'date-picker': DatePicker,
-        'time-picker': TimePicker,
-        'naver-map': NaverMap,
-    },
-    data() {
-        return {
-            started_date: '',
-            started_time: '',
-            ended_date: '',
-            ended_time: '',
-            capacity: '',
-            receipt_started_date: '',
-            receipt_started_time: '',
-            receipt_ended_date: '',
-            receipt_ended_time: '',
-            offline_programs: {
-                address: '',
-                address_detail: '',
-                latitude: 37.487935,
-                longitude: 126.857758,
-                sido: '',
-                gugun: '',
-                dong: ''
-            }
-        }
-    },
     methods: {
         create() {
+            const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
+            const ended_at = `${this.Helper.dateFormatYDM(this.ended_date)} ${this.ended_time}`;
+            const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
+            const receipt_ended_at = `${this.Helper.dateFormatYDM(this.receipt_ended_date)} ${this.receipt_ended_time}`;
+
+            this.offline_programs.started_at = started_at;
+            this.offline_programs.ended_at = ended_at;
+            this.offline_programs.receipt_started_at = receipt_started_at;
+            this.offline_programs.receipt_ended_at = receipt_ended_at;
+
             let data = {
                 thumbnail_id: this.thumbnail.id,
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
                 title: this.title,
                 lecture_info: this.lecture_info,
+
                 is_free: this.is_free,
                 price: this.price,
+
                 content: this.content,
                 surveys: this.surveys,
-                ended_date: this.Helper.dateFormatYDM(this.ended_at),
-                started_date: this.Helper.dateFormatYDM(this.started_at),
-                started_time: this.started_time,
-                ended_time: this.ended_time,
-                receipt_started_date: this.Helper.dateFormatYDM(this.receipt_started_date),
-                receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
-                receipt_started_time: this.receipt_started_time,
-                receipt_ended_time: this.receipt_ended_time,
                 is_open: this.is_open,
+
                 offline_programs: this.offline_programs
             };
 
             return false; // TODO : 작업시 제거
 
-             Online.create(data).then(res => {
+             Offline.create(data).then(res => {
                  alert(res.data.msg);
-                 this.$router.push('/admin/lecture/online');
-             }).catch(err => {
-                 alert('오류');
-             });
+                 this.$router.push('/admin/lecture/offline');
+             })
         },
-        handleSetStartDate(time) {
-            this.started_at =  time;
-        },
-        handleSetStartTime(time) {
-            this.started_time = time;
-        },
-        handleSetEndDate(time) {
-            this.ended_at = time;
-        },
-        handleSetEndTime(time) {
-            this.ended_time = time;
-        },
-        handleSetReceiptStartDate(time) {
-            this.receipt_started_date = time;
-        },
-        handleSetReceiptStartTime(time) {
-            this.receipt_started_time = time;
-        },
-        handleSetReceiptEndDate(time) {
-            this.receipt_ended_date = time;
-        },
-        handleSetReceiptEndTime(time) {
-            this.receipt_ended_time = time;
-        },
-        handleSetAddress(address) {
-            this.offline_programs.address = address;
-        },
-        handleSetAddressDetail(addressDetail) {
-            this.offline_programs.address_detail = addressDetail;
-        },
-        handleSetProgram(data) {
-            this.offline_programs.latitude = data.latitude;
-            this.offline_programs.longitude = data.longitude;
-            this.offline_programs.sido = data.sido;
-            this.offline_programs.gugun = data.gugun;
-            this.offline_programs.dong = data.dong;
-        }
     }
 }
 
