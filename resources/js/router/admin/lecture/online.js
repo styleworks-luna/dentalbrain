@@ -15,7 +15,7 @@ const routes = [
         component: OnlineCreate
     },
     {
-        path: '/admin/lecture/online/status/',
+        path: '/admin/lecture/online/status',
         name: 'AdminOnlineStatus',
         component: OnlineStatus
     },

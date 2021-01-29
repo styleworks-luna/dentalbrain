@@ -1,7 +1,7 @@
 // component
 import FileUpload from '@/components/admin/form/FileUpload.vue';
 
-// 오프라인 강의 생성,수정
+// 온라인 강의 생성,수정
 export const OnlineMixin = {
     components: {
         'file-upload': FileUpload,

@@ -182,11 +182,9 @@
         ],
         data() {
             return {
-
             }
         },
         computed: {
-
         },
         methods: {
             create() {

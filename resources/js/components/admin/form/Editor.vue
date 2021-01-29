@@ -53,8 +53,6 @@ Vue.use(ElementTiptapPlugin, {
     // spellcheck: false,
 });
 
-// api
-import ImageUpload from '@/api/admin/common/Upload.js';
 
 // editor file upload
 async function uploadImage(image) {
