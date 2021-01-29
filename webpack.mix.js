@@ -22,7 +22,8 @@ mix.webpackConfig({
     plugins: [
         new webpack.DefinePlugin({
             env: {
-                APP_URL: JSON.stringify(process.env.APP_URL)
+                APP_URL: JSON.stringify(process.env.APP_URL),
+                NAVER_CLOUD_ID: JSON.stringify(process.env.NAVER_CLOUD_ID)
             }
         })
     ]

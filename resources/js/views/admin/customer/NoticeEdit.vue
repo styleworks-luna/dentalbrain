@@ -108,9 +108,7 @@ export default {
             Notice.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/customer/notice');
-            }).catch(err => {
-                alert('오류');
-            });
+            })
         },
         destroy() {
             Notice.destroy(this.id).then(res => {

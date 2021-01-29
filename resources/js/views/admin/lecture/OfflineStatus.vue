@@ -1,35 +1,37 @@
 <template>
-    <layout title="공지사항">
+    <layout title="오프라인 강의 현황">
         <template v-slot:button>
-            <router-link to="/admin/customer/notice/create"
-                         class="btn btn-lg btn-info">
-                공지사항 추가
-            </router-link>
+
         </template>
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="notices.data">
+                        :data="lectures.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.user_id }}</td>
+                    <td>{{ slotProps.row.email }}</td>
+                    <td>{{ slotProps.row.phone }} </td>
+                    <td>{{ slotProps.row.payment }} </td>
+                    <td>{{ slotProps.row.watch }} </td>
                     <td>
-                        <router-link :to="`/admin/customer/notice/${slotProps.row.id}`">
-                            {{ slotProps.row.title }}
+                        <router-link :to="``"
+                                     class="btn btn-info">
+                            보기
                         </router-link>
                     </td>
-                    <td>{{ slotProps.row.created_at }}</td>
-                    <td>{{ slotProps.row.views }}</td>
                     <td>
-                        <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-block"
-                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                        <router-link :to="``"
+                                     class="btn btn-danger text-white">
+                            결제취소</router-link>
                     </td>
+                    <td>{{ slotProps.row.started_at }} </td>
                 </template>
             </table-grid>
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="notices" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="lectures" @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
@@ -44,18 +46,18 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
-// api
-import Notice from '@/api/admin/customer/Notice.js';
+//api
+import Offline from '@/api/admin/lecture/Offline.js'
 
 export default {
-    name: 'AdminNotice',
+    name: 'AdminOfflineStatus',
     components: {
         'table-grid': Table,
         'button-open': ButtonOpen
     },
     data() {
         return {
-            notices: {
+            lectures: {
                 data: []
             },
             page: 1
@@ -72,22 +74,33 @@ export default {
                     text: '번호'
                 },
                 {
-                    name: 'title2',
-                    text: '제목'
+                    name: 'user_id',
+                    text: '아이디'
                 },
                 {
-                    name: 'created_at',
-                    text: '작성일'
+                    name: 'email',
+                    text: '이메일'
                 },
                 {
-                    name: 'views',
-                    text: '조회수'
+                    name: 'phone',
+                    text: '연락처'
                 },
                 {
-                    name: 'is_open',
-                    text: '상태',
-                    isSort: true
-                }
+                    name: 'payment',
+                    text: '결제금액'
+                },
+                {
+                    name: 'additional',
+                    text: '추가정보'
+                },
+                {
+                    name: 'cancel',
+                    text: '취소'
+                },
+                {
+                    name: 'started_at',
+                    text: '신청일시'
+                },
             ]
         }
     },
@@ -101,14 +114,14 @@ export default {
                 page: page
             };
 
-            Notice.getData(params).then(res => {
-                this.notices = res.data.notice;
+            Offline.getData(params).then(res => {
+                this.lectures = res.data.programs;
             }).catch(err => {
-                this.notices = [];
+                this.lectures = [];
             });
         },
         handleSetStatus(id) {
-            Notice.setStatus(id).then(res => {
+            Offline.setStatus(id).then(res => {
                 this.getData();
                 alert(res.data.msg);
             })

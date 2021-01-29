@@ -80,9 +80,7 @@ export default {
             Notice.create(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/customer/notice');
-            }).catch(err => {
-                alert('오류');
-            });
+            })
         }
     }
 }

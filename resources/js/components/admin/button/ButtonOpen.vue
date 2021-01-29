@@ -1,6 +1,6 @@
 <template>
     <button type="button"
-            class="btn btn-block btn-outline-dark"
+            class="btn btn-outline-dark"
             :class="checkIsOpen"
             @click="setStatus">
         <template v-if="isOpen">공개</template>

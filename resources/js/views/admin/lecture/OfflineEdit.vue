@@ -61,10 +61,7 @@
 
             <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
-                    <naver-map :data="offline_programs"
-                               @setAddress="handleSetAddress"
-                               @setAddressDetail="handleSetAddressDetail"
-                               @setProgram="handleSetProgram"></naver-map>
+                    <naver-map></naver-map>
                 </template>
             </single-group>
 
@@ -132,6 +129,8 @@
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
+
+
         </template>
 
         <template v-slot:footer>
@@ -151,13 +150,11 @@ import DatePicker from '@/components/common/DatePicker.vue'
 import TimePicker from '@/components/common/TimePicker.vue'
 import NaverMap from '@/components/common/NaverMap.vue';
 
-//api
-import Offline from '@/api/admin/lecture/Offline.js'
 
 import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 
 export default {
-    name: 'AdminOfflineCreate',
+    name: 'AdminOfflineEdit',
     mixins: [
         LectureFormMixin
     ],
@@ -165,6 +162,12 @@ export default {
         'date-picker': DatePicker,
         'time-picker': TimePicker,
         'naver-map': NaverMap,
+    },
+    created() {
+        this.id = this.$route.params.id;
+    },
+    mounted() {
+        this.getEditData();
     },
     data() {
         return {
@@ -177,19 +180,36 @@ export default {
             receipt_started_time: '',
             receipt_ended_date: '',
             receipt_ended_time: '',
-            offline_programs: {
-                address: '',
-                address_detail: '',
-                latitude: 37.487935,
-                longitude: 126.857758,
-                sido: '',
-                gugun: '',
-                dong: ''
-            }
         }
     },
+    computed: {},
     methods: {
-        create() {
+        getEditData() {
+            Offline.getEditData(this.id).then(res => {
+                const result = res.data.programs;
+
+                this.thumbnail_id = result.thumbnail_id;
+                this.major_category_id = result.major_category_id;
+                this.minor_category_id = result.minor_category_id;
+                this.title = result.title;
+                this.lecture_info = result.lecture_info;
+                this.started_date = result.started_date;
+                this.started_time = result.started_time;
+                this.ended_date = result.ended_date;
+                this.ended_time = result.ended_time;
+                this.capacity = result.capacity;
+                this.receipt_started_date = result.receipt_started_date;
+                this.receipt_started_time = result.receipt_started_time;
+                this.receipt_ended_date = result.receipt_ended_date;
+                this.receipt_ended_time = result.receipt_ended_time;
+                this.is_free = result.is_free;
+                this.price = result.price;
+                this.content = result.content;
+                this.surveys = result.surveys;
+                this.is_open = result.is_open;
+            });
+        },
+        update() {
             let data = {
                 thumbnail_id: this.thumbnail.id,
                 major_category_id: this.major_category_id,
@@ -208,18 +228,18 @@ export default {
                 receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
-                is_open: this.is_open,
-                offline_programs: this.offline_programs
+                is_open: this.is_open
             };
-
-            return false; // TODO : 작업시 제거
-
-             Online.create(data).then(res => {
-                 alert(res.data.msg);
-                 this.$router.push('/admin/lecture/online');
-             }).catch(err => {
-                 alert('오류');
-             });
+            Offline.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
+        },
+        destroy() {
+            Offline.destroy(this.id).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
         },
         handleSetStartDate(time) {
             this.started_at =  time;
@@ -245,19 +265,6 @@ export default {
         handleSetReceiptEndTime(time) {
             this.receipt_ended_time = time;
         },
-        handleSetAddress(address) {
-            this.offline_programs.address = address;
-        },
-        handleSetAddressDetail(addressDetail) {
-            this.offline_programs.address_detail = addressDetail;
-        },
-        handleSetProgram(data) {
-            this.offline_programs.latitude = data.latitude;
-            this.offline_programs.longitude = data.longitude;
-            this.offline_programs.sido = data.sido;
-            this.offline_programs.gugun = data.gugun;
-            this.offline_programs.dong = data.dong;
-        }
     }
 }
 

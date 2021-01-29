@@ -91,8 +91,8 @@
                 +margin(left 10px)
 
 // 강의 관리
-.content #lecture,
-.content #offline
+.content .online,
+.content .offline
     .form-group
         +margin(bottom 50px)
         +border(0)
@@ -136,7 +136,7 @@
             +margin(left 20px)
 
         .input-file
-            +size(72.4%)
+            +size(71%)
 
         .btn-info
             +margin(top 5px right 18px)
@@ -225,3 +225,33 @@
             .btn-wrap
                 +margin(left 20px)
                 float: left
+
+// 지도
+.content .map-container .map-search-bar
+    @extend %reset-box-height
+    position: relative
+
+    .search-list
+        +size(75%)
+        +padding(0)
+        +border(1px solid $border-color-base)
+        +box-sizing(border-box)
+        overflow-y: scroll
+        position: absolute
+        top: 40px
+        left: 0
+        z-index: 1000
+        max-height: 270px
+        background: $white
+
+        li
+            +padding(6px 0 6px 10px)
+            +border(1px solid $border-color-base, top)
+            overflow: hidden
+            white-space: nowrap
+            cursor: pointer
+
+            &:first-child
+                +border(0, top)
+
+

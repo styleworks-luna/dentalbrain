@@ -11,7 +11,25 @@
             <table-grid :tableCol="tableCol"
                         :data="lectures.data">
                 <template v-slot:list="slotProps">
-
+                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.major_category_name }}</td>
+                    <td>{{ slotProps.row.minor_category_name }}</td>
+                    <td>{{ slotProps.row.title }} </td>
+                    <td>
+                        {{ slotProps.row.students_count }}명
+                        <router-link :to="`/admin/lecture/online/status`"
+                                    class="btn btn-info ml-4">
+                            보기
+                        </router-link>
+                    </td>
+                    <td>
+                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}`"
+                                     class="btn btn-warning text-white mr-3">
+                            수정</router-link>
+                        <button-open :isOpen="slotProps.row.is_open"
+                                     class="btn-danger text-white border-danger"
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                    </td>
                 </template>
             </table-grid>
 
@@ -30,6 +48,7 @@
 <script>
     // component
     import Table from '@/components/admin/grid/Table.vue';
+    import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
     //api
     import Online from '@/api/admin/lecture/Online.js'
@@ -37,7 +56,8 @@
     export default {
         name: 'AdminOnline',
         components: {
-            'table-grid': Table
+            'table-grid': Table,
+            'button-open': ButtonOpen
         },
         data() {
             return {
@@ -70,21 +90,13 @@
                         text: '강의 제목'
                     },
                     {
-                        name: 'started_at',
-                        text: '시작일시'
-                    },
-                    {
-                        name: 'ended_at',
-                        text: '종료일시'
-                    },
-                    {
                         name: 'count',
                         text: '수강현황'
                     },
                     {
                         name: 'control',
                         text: '수정'
-                    }
+                    },
                 ]
             }
         },
@@ -99,12 +111,17 @@
                 };
 
                 Online.getData(params).then(res => {
-                    console.log(res);
                     this.lectures = res.data.programs;
                 }).catch(err => {
                     this.lectures = [];
                 });
             },
+            handleSetStatus(id) {
+                Online.setStatus(id).then(res => {
+                    this.getData();
+                    alert(res.data.msg);
+                })
+            }
         }
     }
 </script>

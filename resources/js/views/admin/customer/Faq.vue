@@ -20,6 +20,7 @@
                     <td>{{ slotProps.row.created_at }}</td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_open"
+                                     class="btn-block"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
@@ -105,8 +106,6 @@
                 Faq.setStatus(id).then(res => {
                     this.getData();
                     alert(res.data.msg);
-                }).catch(err => {
-                    alert('오류');
                 })
             }
         }

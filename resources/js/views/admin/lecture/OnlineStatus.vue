@@ -1,10 +1,7 @@
 <template>
-    <layout title="오프라인 강의">
+    <layout title="온라인 강의 현황">
         <template v-slot:button>
-            <router-link to="/admin/lecture/offline/create"
-                         class="btn btn-lg btn-info">
-                오프라인 강의 관리
-            </router-link>
+
         </template>
 
         <template v-slot:body>
@@ -12,26 +9,23 @@
                         :data="lectures.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.major_category_name }}</td>
-                    <td>{{ slotProps.row.minor_category_name }}</td>
-                    <td>{{ slotProps.row.title }} </td>
-                    <td>{{ slotProps.row.started_at }}</td>
-                    <td>{{ slotProps.row.ended_at }}</td>
+                    <td>{{ slotProps.row.user_id }}</td>
+                    <td>{{ slotProps.row.email }}</td>
+                    <td>{{ slotProps.row.phone }} </td>
+                    <td>{{ slotProps.row.payment }} </td>
+                    <td>{{ slotProps.row.watch }} </td>
                     <td>
-                        {{ slotProps.row.students_count }}명
                         <router-link :to="``"
-                                     class="btn btn-info ml-4">
+                                     class="btn btn-info">
                             보기
                         </router-link>
                     </td>
                     <td>
-                        <router-link :to="`/admin/lecture/offline/${slotProps.row.id}`"
-                                     class="btn btn-warning text-white mr-3">
-                            수정</router-link>
-                        <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger text-white border-danger"
-                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                        <router-link :to="``"
+                                     class="btn btn-danger text-white">
+                            결제취소</router-link>
                     </td>
+                    <td>{{ slotProps.row.started_at }} </td>
                 </template>
             </table-grid>
 
@@ -50,11 +44,16 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+
+//api
+import Online from '@/api/admin/lecture/Online.js'
 
 export default {
-    name: 'AdminOffline',
+    name: 'AdminOnlineStatus',
     components: {
-        'table-grid': Table
+        'table-grid': Table,
+        'button-open': ButtonOpen
     },
     data() {
         return {
@@ -64,6 +63,9 @@ export default {
             page: 1
         }
     },
+    mounted() {
+        this.getData();
+    },
     computed: {
         tableCol() {
             return [
@@ -72,33 +74,37 @@ export default {
                     text: '번호'
                 },
                 {
-                    name: 'category',
-                    text: '대분류'
+                    name: 'user_id',
+                    text: '아이디'
                 },
                 {
-                    name: 'subclass',
-                    text: '소분류'
+                    name: 'email',
+                    text: '이메일'
                 },
                 {
-                    name: 'title',
-                    text: '강의 제목'
+                    name: 'phone',
+                    text: '연락처'
+                },
+                {
+                    name: 'payment',
+                    text: '결제금액'
+                },
+                {
+                    name: 'watch',
+                    text: '시청기간'
+                },
+                {
+                    name: 'additional',
+                    text: '추가정보'
+                },
+                {
+                    name: 'cancel',
+                    text: '취소'
                 },
                 {
                     name: 'started_at',
-                    text: '시작일시'
+                    text: '신청일시'
                 },
-                {
-                    name: 'ended_at',
-                    text: '종료일시'
-                },
-                {
-                    name: 'count',
-                    text: '수강현황'
-                },
-                {
-                    name: 'control',
-                    text: '수정'
-                }
             ]
         }
     },
@@ -112,8 +118,8 @@ export default {
                 page: page
             };
 
-            Faq.getData(params).then(res => {
-                this.lectures = res.data.lecture;
+            Online.getData(params).then(res => {
+                this.lectures = res.data.programs;
             }).catch(err => {
                 this.lectures = [];
             });
