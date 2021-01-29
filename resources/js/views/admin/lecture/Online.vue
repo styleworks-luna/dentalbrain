@@ -17,7 +17,7 @@
                     <td>{{ slotProps.row.title }} </td>
                     <td>
                         {{ slotProps.row.students_count }}명
-                        <router-link :to="``"
+                        <router-link :to="`/admin/lecture/online/status`"
                                     class="btn btn-info ml-4">
                             보기
                         </router-link>

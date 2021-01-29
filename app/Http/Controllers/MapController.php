@@ -28,7 +28,7 @@ class MapController extends Controller
                 }
                 $url = 'https://' . $url . '.' . $VARS['output'];
                 $query['query'] = isset($VARS['query']) && !empty($VARS['query']) ? $VARS['query'] : '';
-                $query['display'] = 5;
+                $query['display'] = isset($VARS['display']) && !empty($VARS['display']) ? $VARS['display'] : 5;
 
                 $headerArray[] = 'X-Naver-Client-Id: ' . env('NAVER_DEV_ID');
                 $headerArray[] = 'X-Naver-Client-Secret: ' . env('NAVER_DEV_SECRET');

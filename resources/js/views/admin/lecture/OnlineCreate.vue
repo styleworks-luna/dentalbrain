@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 등록" id="lecture">
+    <layout title="온라인 강의 등록" class="online">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -78,6 +78,7 @@
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">
@@ -98,11 +99,13 @@
 
             <single-group name="강의 설정"
                           :isRow="true"
+                          :isRequired="true"
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-setting" v-for="(lecture, index) in lectures">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control lecture-title" v-model="lecture.title">
                             </div>
@@ -110,12 +113,14 @@
 
                         <div class="form-group row">
                             <label class="col-form-label" for="">유튜브 링크</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
                             <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
@@ -162,33 +167,22 @@
 </template>
 
 <script>
-    // component
-    import FileUpload from '@/components/admin/form/FileUpload.vue';
-
+    // mixin
     import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+    import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
 
     //api
     import Online from '@/api/admin/lecture/Online.js'
 
     export default {
         name: 'AdminOnlineCreate',
-        components: {
-            'file-upload': FileUpload,
-        },
         mixins: [
             LectureFormMixin,
+            OnlineMixin
         ],
         data() {
             return {
-                material: '',
-                running_time: '',
-                lectures: [
-                    {
-                        title: '',
-                        link: '',
-                        thumbnail: {}
-                    },
-                ]
+
             }
         },
         computed: {
@@ -227,19 +221,7 @@
                     this.$router.push('/admin/lecture/online');
                 })
             },
-            addLecture() {
-                this.lectures.push({
-                    title: '',
-                    link: '',
-                    thumbnail: '',
-                })
-            },
-            updateLectureFile (file, index) {
-                this.lectures[index].thumbnail = file;
-            },
-            updateFile (data) {
-                this.material = data;
-            },
+
         }
     }
 </script>

@@ -132,6 +132,8 @@
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
+
+
         </template>
 
         <template v-slot:footer>
@@ -146,8 +148,6 @@
 </template>
 
 <script>
-
-
 //api
 import Offline from '@/api/admin/lecture/Offline.js'
 
@@ -155,7 +155,7 @@ import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
-    name: 'AdminOfflineCreate',
+    name: 'AdminOfflineEdit',
     mixins: [
         LectureFormMixin,
         OfflineMixin
@@ -163,13 +163,44 @@ export default {
     components: {
 
     },
-    data() {
-        return {
-
-        }
+    created() {
+        this.id = this.$route.params.id;
     },
+    mounted() {
+        this.getEditData();
+    },
+    data() {
+
+    },
+    computed: {},
     methods: {
-        create() {
+        getEditData() {
+            Offline.getEditData(this.id).then(res => {
+                const result = res.data.programs;
+
+                this.thumbnail_id = result.thumbnail_id;
+                this.major_category_id = result.major_category_id;
+                this.minor_category_id = result.minor_category_id;
+                this.title = result.title;
+                this.lecture_info = result.lecture_info;
+                this.started_date = result.started_date;
+                this.started_time = result.started_time;
+                this.ended_date = result.ended_date;
+                this.ended_time = result.ended_time;
+                this.capacity = result.capacity;
+                this.receipt_started_date = result.receipt_started_date;
+                this.receipt_started_time = result.receipt_started_time;
+                this.receipt_ended_date = result.receipt_ended_date;
+                this.receipt_ended_time = result.receipt_ended_time;
+                this.is_free = result.is_free;
+                this.price = result.price;
+                this.content = result.content;
+                this.surveys = result.surveys;
+                this.is_open = result.is_open;
+                this.offline_programs = result.offline_programs;
+            });
+        },
+        update() {
             let data = {
                 thumbnail_id: this.thumbnail.id,
                 major_category_id: this.major_category_id,
@@ -189,15 +220,18 @@ export default {
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
                 is_open: this.is_open,
-                offline_programs: this.offline_programs
+                offline_programs: this.offline_programs,
             };
-
-            return false; // TODO : 작업시 제거
-
-             Offline.create(data).then(res => {
-                 alert(res.data.msg);
-                 this.$router.push('/admin/lecture/offline');
-             })
+            Offline.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
+        },
+        destroy() {
+            Offline.destroy(this.id).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
         },
     }
 }

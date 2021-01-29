@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 등록" id="lecture">
+    <layout title="온라인 강의 수정" class="online">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -78,6 +78,7 @@
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">
@@ -116,6 +117,7 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
                             <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
@@ -153,7 +155,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="submit" class="btn btn-info" @click="create">등록</button>
+                <button type="submit" class="btn btn-info" @click="update">등록</button>
                 <router-link to="/admin/lecture/online"
                              class="btn btn-dark">취소</router-link>
             </div>
@@ -162,34 +164,24 @@
 </template>
 
 <script>
-// component
-import FileUpload from '@/components/admin/form/FileUpload.vue';
-
 import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
 
 //api
 import Online from '@/api/admin/lecture/Online.js'
+import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
 
 export default {
-    name: 'AdminOnlineCreate',
-    components: {
-        'file-upload': FileUpload,
-    },
+    name: 'AdminOnlineEdit',
     mixins: [
         LectureFormMixin,
+        OnlineMixin
     ],
     data() {
         return {
             id:'',
-            material: '',
-            running_time: '',
-            lectures: [
-                {
-                    title: '',
-                    link: '',
-                    thumbnail: {}
-                },
-            ]
+            data: {
+
+            }
         }
     },
     created() {
@@ -245,7 +237,7 @@ export default {
                 is_open: this.is_open,
             };
 
-            Online.create(data).then(res => {
+            Online.update(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             })
@@ -253,21 +245,8 @@ export default {
         destroy() {
             Online.destroy(this.id).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/faq');
+                this.$router.push('/admin/lecture/online');
             })
-        },
-        addLecture() {
-            this.lectures.push({
-                title: '',
-                link: '',
-                thumbnail: '',
-            })
-        },
-        updateLectureFile (file, index) {
-            this.lectures[index].thumbnail = file;
-        },
-        updateFile (data) {
-            this.material = data;
         },
     }
 }
