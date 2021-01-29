@@ -61,7 +61,10 @@
 
             <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
-                    <naver-map></naver-map>
+                    <naver-map :data="offline_programs"
+                               @setAddress="handleSetAddress"
+                               @setAddressDetail="handleSetAddressDetail"
+                               @setProgram="handleSetProgram"></naver-map>
                 </template>
             </single-group>
 
@@ -129,8 +132,6 @@
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
-
-
         </template>
 
         <template v-slot:footer>
@@ -176,9 +177,17 @@ export default {
             receipt_started_time: '',
             receipt_ended_date: '',
             receipt_ended_time: '',
+            offline_programs: {
+                address: '',
+                address_detail: '',
+                latitude: 37.487935,
+                longitude: 126.857758,
+                sido: '',
+                gugun: '',
+                dong: ''
+            }
         }
     },
-    computed: {},
     methods: {
         create() {
             let data = {
@@ -199,15 +208,18 @@ export default {
                 receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
-                is_open: this.is_open
+                is_open: this.is_open,
+                offline_programs: this.offline_programs
             };
 
-            Offline.create(data).then(res => {
-                alert(res.data.msg);
-                this.$router.push('/admin/lecture/offline');
-            }).catch(err => {
-                alert('오류');
-            });
+            return false; // TODO : 작업시 제거
+
+             Online.create(data).then(res => {
+                 alert(res.data.msg);
+                 this.$router.push('/admin/lecture/online');
+             }).catch(err => {
+                 alert('오류');
+             });
         },
         handleSetStartDate(time) {
             this.started_at =  time;
@@ -233,6 +245,19 @@ export default {
         handleSetReceiptEndTime(time) {
             this.receipt_ended_time = time;
         },
+        handleSetAddress(address) {
+            this.offline_programs.address = address;
+        },
+        handleSetAddressDetail(addressDetail) {
+            this.offline_programs.address_detail = addressDetail;
+        },
+        handleSetProgram(data) {
+            this.offline_programs.latitude = data.latitude;
+            this.offline_programs.longitude = data.longitude;
+            this.offline_programs.sido = data.sido;
+            this.offline_programs.gugun = data.gugun;
+            this.offline_programs.dong = data.dong;
+        }
     }
 }
 
