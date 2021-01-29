@@ -1,6 +1,6 @@
 <template>
     <button type="button"
-            class="btn btn-outline-dark"
+            class="btn"
             :class="checkIsOpen"
             @click="setStatus">
         <template v-if="isOpen">공개</template>
@@ -17,8 +17,8 @@
         computed: {
             checkIsOpen() {
                 return {
-                    'btn-outline-dark': this.isOpen,
-                    'btn-outline-danger': !this.isOpen
+                    // 'btn-outline-dark': this.isOpen,
+                    // 'btn-outline-danger': !this.isOpen
                 }
             }
         },

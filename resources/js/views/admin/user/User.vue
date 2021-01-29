@@ -16,7 +16,7 @@
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.id}`"
-                                     class="btn btn-lg btn-info">
+                                     class="btn btn-info">
                             수정
                         </router-link>
                     </td>
