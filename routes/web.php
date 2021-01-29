@@ -211,7 +211,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
                 Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
                 Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
-//                Route::get('{program}', 'Admin\OnlineProgramController@index')->name('edit');
+                Route::get('{program}', 'Admin\OnlineProgramController@edit')->name('edit');
 //                Route::put('{program}', 'Admin\OnlineProgramController@index');
 //                Route::delete('{program}', 'Admin\OnlineProgramController@index');
             });

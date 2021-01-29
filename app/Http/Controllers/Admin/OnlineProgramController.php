@@ -28,6 +28,14 @@ class OnlineProgramController extends Controller
         return $this->onlineConcrete->getStudents($program);
     }
 
+    public function edit(Program $program)
+    {
+        return response()->json(
+            array_merge($this->onlineConcrete->getProgramDetail($program),
+                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+        );
+    }
+
     public function store(Request $request)
     {
         $programData = $this->onlineConcrete->validateProgram($request,

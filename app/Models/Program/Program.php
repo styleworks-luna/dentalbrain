@@ -3,6 +3,7 @@
 namespace App\Models\Program;
 
 use App\Models\File;
+use App\Models\Program\Survey\Survey;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -60,6 +61,16 @@ class Program extends Model
     public function material()
     {
         return $this->belongsTo(File::class, 'material_id', 'id');
+    }
+
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class, 'program_id', 'id');
+    }
+
+    public function lectures()
+    {
+        return $this->hasMany(Lecture::class, 'program_id', 'id');
     }
 
     /*
