@@ -25,7 +25,7 @@ abstract class FileTemplate
      */
     public function moveTempToPublic(File $file)
     {
-        $path = $this->getPublicPath($file->name);
+        $path = $this->getSavePath($file->name);
         try {
             DB::beginTransaction();
 
@@ -36,8 +36,10 @@ abstract class FileTemplate
             }
 
             $file->path = $path;
-            $file->url = route('api.admin.download', $file->id);
-            //$file->url = str_replace('public', '/storage', $path);
+            $file->save();
+
+            $file->url = $this->getDownloadUrl($path);
+
             $file->save();
             DB::commit();
 
@@ -52,11 +54,22 @@ abstract class FileTemplate
 
     /**
      * 저장할 곳 지정.
-     *
+     * ex) 'public/banners/' . $banner->id . '/desktop/' . $fileName;
      * @param string $fileName
      * @return string
      */
-    abstract function getPublicPath(string $fileName);
+    abstract protected function getSavePath(string $fileName);
+
+    /**
+     * 다운로드 할 수 있는 링크 지정.
+     * ex) /storage/program/1/tnumbnail/hello.jpg , http:://dbv2020.onoffmix.test/api/admin/download/13
+     * @param $path
+     * @return string|string[]
+     */
+    protected function getDownloadUrl($path)
+    {
+        return str_replace('public', '/storage', $path);
+    }
 
     /**
      * 이미 생성된 모델의 파일 삭제 진행.
@@ -77,5 +90,5 @@ abstract class FileTemplate
      *
      * @return false|string 실패시 false 반환, 성공시 file 의 path 반환
      */
-    abstract function deleteFileInDB();
+    protected abstract function deleteFileInDB();
 }

@@ -30,7 +30,11 @@ class OnlineProgramController extends Controller
 
     public function store(Request $request)
     {
-        $programData = $this->onlineConcrete->validateProgram($request);
+        $programData = $this->onlineConcrete->validateProgram($request,
+            [
+                'material_id' => ['sometimes', 'required', 'numeric'],
+                'running_time' => ['required', 'string']
+            ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
@@ -54,12 +58,6 @@ class OnlineProgramController extends Controller
         return response()->json([
             'msg' => '온라인 강의가 생성되었습니다.',
         ]);
-    }
-
-    function additionalValidate(Request $request)
-    {
-        // 추가적으로 validation 필요한 것들.
-        return [];
     }
 
     public function getCategories()

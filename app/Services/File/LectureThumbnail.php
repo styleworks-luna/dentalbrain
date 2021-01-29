@@ -12,13 +12,13 @@ class LectureThumbnail extends FileTemplate
         parent::__construct($lecture);
     }
 
-    function getPublicPath(string $fileName)
+    protected function getSavePath(string $fileName)
     {
         $lecture = $this->model;
         return $path = 'public/program/' . $lecture->program->id . '/lecture/' . $lecture->id . '/' . $fileName;
     }
 
-    function deleteFileInDB()
+    protected function deleteFileInDB()
     {
         $lecture = $this->model;
         $path = $lecture->thumbnail->path;
