@@ -12,7 +12,7 @@ class ProgramMaterial extends FileTemplate
         parent::__construct($program);
     }
 
-    function getDownloadUrl($path)
+    function getDownloadUrl($file ,$path)
     {
         return route('api.lectures.download', [$file->id]);
     }

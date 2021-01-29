@@ -31,7 +31,7 @@
                             <span class="circle"></span>
                             <input type="text"
                                    class="form-control choices"
-                                   v-model="surveys[index].choices[idx]"
+                                   v-model="surveys[index].choices[idx].question"
                                    placeholder="항목을 입력해주세요.">
                             <button class="btn btn-outline-dark btn-item-delete"
                                     @click="popItem(survey.choices,idx)">항목삭제
@@ -59,7 +59,7 @@
                             <span class="square"></span>
                             <input type="text"
                                    class="form-control choices"
-                                   v-model="surveys[index].choices[idx]"
+                                   v-model="surveys[index].choices[idx].question"
                                    placeholder="항목을 입력해주세요.">
                             <button class="btn btn-outline-dark btn-item-delete"
                                     @click="popItem(survey.choices,idx)">항목삭제
@@ -144,6 +144,11 @@ export default {
     props:{
         'data': [Array],
     },
+    watch: {
+        data() {
+            this.surveys = this.data;
+        }
+    },
     mounted() {
         this.surveys = this.data;
     },
@@ -154,7 +159,9 @@ export default {
                     type: type,
                     question: '',
                     is_required: 0,
-                    choices: [],
+                    choices: [{
+                        question:''
+                    }],
                 }
             )
         },
@@ -168,7 +175,9 @@ export default {
             )
         },
         addItem(index) {
-            this.surveys[index].choices.push('');
+            this.surveys[index].choices.push({
+                question:'',
+            });
         },
         pop(data, index) {
             data.splice(index, 1)

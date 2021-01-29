@@ -62,7 +62,7 @@
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
-                   <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -121,7 +121,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
-                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                            <file-upload :inputId="'lecture_file' + index"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
@@ -137,9 +137,9 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-file-wrap">
-                    <file-upload :inputId="'file' + material.id"
-                                 :initFile="material"
-                                 @setFile="updateFile"></file-upload>
+                        <file-upload :inputId="'file'"
+                                     :initFile="material"
+                                     @setFile="updateFile"></file-upload>
                     </div>
                 </template>
             </single-group>
@@ -160,66 +160,68 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">등록</button>
                 <router-link to="/admin/lecture/online"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
 </template>
 
 <script>
-    // mixin
-    import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
-    import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
+// mixin
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
-    //api
-    import Online from '@/api/admin/lecture/Online.js'
+//api
+import Online from '@/api/admin/lecture/Online.js'
 
-    export default {
-        name: 'AdminOnlineCreate',
-        mixins: [
-            LectureFormMixin,
-            OnlineMixin
-        ],
-        data() {
-            return {
-            }
-        },
-        computed: {
-        },
-        methods: {
-            create() {
-                let lectures = [];
+export default {
+    name: 'AdminOnlineCreate',
+    mixins: [
+        LectureFormMixin,
+        OnlineMixin
+    ],
+    data() {
+        return {}
+    },
+    computed: {},
+    methods: {
+        create() {
+            let lectures = [];
 
-                this.lectures.forEach(lecture => {
-                    lectures.push({
-                        title: lecture.title,
-                        link: lecture.link,
-                        thumbnail_id : lecture.thumbnail.id
-                    })
-                });
 
-                let data = {
-                    material_id: this.material.id,
-                    thumbnail_id: this.thumbnail.id,
-                    title: this.title,
-                    running_time: this.running_time,
-                    lecture_info: this.lecture_info,
-                    is_free: this.is_free,
-                    price: this.price,
-                    content: this.content,
-                    surveys: this.surveys,
-                    lectures: lectures,
-                    major_category_id: this.major_category_id,
-                    minor_category_id: this.minor_category_id,
-                    is_open: this.is_open,
-                };
-
-                Online.create(data).then(res => {
-                    alert(res.data.msg);
-                    this.$router.push('/admin/lecture/online');
+            this.lectures.forEach(lecture => {
+                lectures.push({
+                    title: lecture.title,
+                    link: lecture.link,
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
                 })
-            },
+            });
 
-        }
+            let data = {
+                material_id: this.material.id,
+                thumbnail_id: this.thumbnail.id,
+                title: this.title,
+                running_time: this.running_time,
+                lecture_info: this.lecture_info,
+                is_free: this.is_free,
+                price: this.price,
+                content: this.content,
+                surveys: this.surveys,
+                lectures: lectures,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+                is_open: this.is_open,
+            };
+
+            console.log(data);
+
+            Online.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/online');
+            })
+        },
+
     }
+}
 </script>

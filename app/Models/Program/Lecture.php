@@ -33,7 +33,7 @@ class Lecture extends Model
 
     public function program()
     {
-        return $this->belongsTo('programs', 'program_id', 'id');
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     public function thumbnail()

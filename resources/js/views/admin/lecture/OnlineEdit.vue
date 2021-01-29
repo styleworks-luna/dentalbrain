@@ -101,7 +101,8 @@
                           :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="lecture-setting" v-for="(lecture, index) in lectures">
+
+                    <div class="lecture-setting" v-for="(lecture, index) in lectures" :key="lecture.id">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
                             <div class="col-md-9">
@@ -112,13 +113,13 @@
                         <div class="form-group row">
                             <label class="col-form-label" for="">유튜브 링크</label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="lecture.link">
+                                <input type="text" class="form-control" v-model="lecture.url">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
-                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                            <file-upload :inputId="'lecture_file' + index"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
@@ -134,7 +135,7 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-file-wrap">
-                        <file-upload :inputId="'file' + material.id"
+                        <file-upload :inputId="'file'"
                                      :initFile="material"
                                      @setFile="updateFile"></file-upload>
                     </div>
@@ -157,18 +158,20 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">등록</button>
                 <router-link to="/admin/lecture/online"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
 </template>
 
 <script>
-import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+// mixins
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
-//api
+// api
 import Online from '@/api/admin/lecture/Online.js'
-import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
 
 export default {
     name: 'AdminOnlineEdit',
@@ -178,41 +181,37 @@ export default {
     ],
     data() {
         return {
-            id:'',
-            data: {
-
-            }
+            id: '',
+            data: {}
         }
     },
     created() {
         this.id = this.$route.params.id;
     },
     mounted() {
-      this.getEditData();
+        this.getEditData();
     },
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
                 const ticket = res.data.ticket;
                 const program = res.data.program;
-                const surveys = res.data.surveys;
-                const lectures = res.data.lectures;
 
                 this.material_id = program.material_id;
+                this.material = program.material;
                 this.thumbnail_id = program.thumbnail_id;
+                this.thumbnail = program.thumbnail;
                 this.title = program.title;
                 this.running_time = program.running_time;
                 this.lecture_info = ticket.name;
                 this.is_free = ticket.is_free;
                 this.price = ticket.price;
                 this.content = program.content;
-                this.surveys = surveys;
-                this.lectures = lectures;
+                this.surveys = res.data.surveys;
+                this.lectures = res.data.lectures;
                 this.major_category_id = program.major_category_id;
                 this.minor_category_id = program.minor_category_id;
                 this.is_open = program.is_open;
-                console.log(this.lectures)
-                console.log(this.surveys);
             });
         },
         update() {
@@ -220,9 +219,10 @@ export default {
 
             this.lectures.forEach(lecture => {
                 lectures.push({
+                    id: lecture.id,
                     title: lecture.title,
                     link: lecture.url,
-                    thumbnail_id : lecture.thumbnail.id
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
                 })
             });
 
@@ -241,6 +241,8 @@ export default {
                 minor_category_id: this.minor_category_id,
                 is_open: this.is_open,
             };
+
+            console.log(data);
 
             Online.update(data).then(res => {
                 alert(res.data.msg);

@@ -200,7 +200,7 @@ abstract class ProgramTemplate
                     $choice = Survey::create([
                         'category_id' => SurveyCategory::castStringTypeToId($data['type']),
                         'program_id' => $program->id,
-                        'question' => $choice,
+                        'question' => $choice['question'],
                         'is_required' => $data['is_required'],
                         'parent_id' => $parent->id,
                     ]);
