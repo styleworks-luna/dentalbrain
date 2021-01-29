@@ -159,7 +159,9 @@ export default {
                     type: type,
                     question: '',
                     is_required: 0,
-                    choices: [],
+                    choices: [{
+                        question:''
+                    }],
                 }
             )
         },
@@ -173,7 +175,9 @@ export default {
             )
         },
         addItem(index) {
-            this.surveys[index].choices.push('');
+            this.surveys[index].choices.push({
+                question:'',
+            });
         },
         pop(data, index) {
             data.splice(index, 1)

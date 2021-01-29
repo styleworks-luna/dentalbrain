@@ -158,7 +158,8 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">등록</button>
                 <router-link to="/admin/lecture/online"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
@@ -166,8 +167,8 @@
 
 <script>
 // mixins
-import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
-import { OnlineMixin } from '@/mixins/admin/lecture/Online.js';
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 // api
 import Online from '@/api/admin/lecture/Online.js'
@@ -180,17 +181,15 @@ export default {
     ],
     data() {
         return {
-            id:'',
-            data: {
-
-            }
+            id: '',
+            data: {}
         }
     },
     created() {
         this.id = this.$route.params.id;
     },
     mounted() {
-      this.getEditData();
+        this.getEditData();
     },
     methods: {
         getEditData() {
@@ -199,7 +198,7 @@ export default {
                 const program = res.data.program;
 
                 this.material_id = program.material_id;
-                this.marterial = program.material;
+                this.material = program.material;
                 this.thumbnail_id = program.thumbnail_id;
                 this.thumbnail = program.thumbnail;
                 this.title = program.title;
@@ -219,18 +218,12 @@ export default {
             let lectures = [];
 
             this.lectures.forEach(lecture => {
-                if(lecture.thumbnail) {
-                    lectures.push({
-                        title: lecture.title,
-                        link: lecture.link,
-                        thumbnail_id: lecture.thumbnail.id
-                    })
-                } else {
-                    lectures.push({
-                        title: lecture.title,
-                        link: lecture.link,
-                    })
-                }
+                lectures.push({
+                    id: lecture.id,
+                    title: lecture.title,
+                    link: lecture.url,
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
+                })
             });
 
             let data = {
@@ -248,6 +241,8 @@ export default {
                 minor_category_id: this.minor_category_id,
                 is_open: this.is_open,
             };
+
+            console.log(data);
 
             Online.update(data).then(res => {
                 alert(res.data.msg);
