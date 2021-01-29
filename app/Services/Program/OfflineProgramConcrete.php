@@ -12,12 +12,4 @@ class OfflineProgramConcrete extends ProgramTemplate
         $is_online = false;
         parent::__construct($is_online);
     }
-
-    /**
-     * @inheritDoc
-     */
-    function additionalRules()
-    {
-
-    }
 }
