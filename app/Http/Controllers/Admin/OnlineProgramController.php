@@ -18,6 +18,11 @@ class OnlineProgramController extends Controller
         $this->onlineConcrete = new OnlineProgramConcrete();
     }
 
+    public function getCategories()
+    {
+        return $this->onlineConcrete->getCategories();
+    }
+
     public function index()
     {
         return $this->onlineConcrete->getPrograms();
@@ -26,14 +31,6 @@ class OnlineProgramController extends Controller
     public function students(Program $program)
     {
         return $this->onlineConcrete->getStudents($program);
-    }
-
-    public function edit(Program $program)
-    {
-        return response()->json(
-            array_merge($this->onlineConcrete->getProgramDetail($program),
-                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
-        );
     }
 
     public function store(Request $request)
@@ -68,8 +65,22 @@ class OnlineProgramController extends Controller
         ]);
     }
 
-    public function getCategories()
+    public function edit(Program $program)
     {
-        return $this->onlineConcrete->getCategories();
+        return response()->json(
+            array_merge($this->onlineConcrete->getProgramDetail($program),
+                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+        );
+    }
+
+    public function update(Request $request, Program $program)
+    {
+        $programData = $this->onlineConcrete->validateProgram($request, [
+            'material_id' => ['sometimes', 'required', 'numeric'],
+            'running_time' => ['required', 'string']
+        ]);
+        $ticketData = $this->onlineConcrete->validateTickets($request);
+        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
     }
 }

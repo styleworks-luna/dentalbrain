@@ -48,9 +48,9 @@ abstract class ProgramTemplate
     function getProgramDetail(Program $program)
     {
         return [
-            'program' => $program->load('material:id,url,name','thumbnail:id,url,name'),
-            'ticket' => $program->tickets()->select(['id','name','price','is_free'])->get()->first(),
-            'surveys' => $program->surveys()->select(['id','question','parent_id','category_id'])->with('choices:id,question,parent_id')->get()->whereNull('parent_id')->values(),
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
+            'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
+            'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])->with('choices:id,question,parent_id')->get()->whereNull('parent_id')->values(),
         ];
     }
 
@@ -94,6 +94,7 @@ abstract class ProgramTemplate
             'title' => ['required', 'string', 'max:200'],
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
+            'is_open' => ['required', 'boolean'],
         ], $additionalRules));
 
         return $v->validate();
@@ -145,6 +146,7 @@ abstract class ProgramTemplate
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'] ?? null,
+            'is_open' => $data['is_open']
         ]);
 
         $fileService = new ProgramThumbnail($this->program);

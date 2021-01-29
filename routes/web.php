@@ -212,7 +212,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
                 Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
                 Route::get('{program}', 'Admin\OnlineProgramController@edit')->name('edit');
-//                Route::put('{program}', 'Admin\OnlineProgramController@index');
+                Route::put('{program}', 'Admin\OnlineProgramController@update');
 //                Route::delete('{program}', 'Admin\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
