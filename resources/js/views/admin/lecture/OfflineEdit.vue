@@ -239,7 +239,7 @@ export default {
 
                 offline_programs: this.offline_programs,
             };
-            Offline.create(data).then(res => {
+            Offline.create(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/offline');
             })
