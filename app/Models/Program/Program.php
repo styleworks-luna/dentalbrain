@@ -16,6 +16,11 @@ class Program extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_online' => 'boolean',
+        'is_open' => 'boolean',
+    ];
+
     /*
      * ======= Define Relationships =========
      */
