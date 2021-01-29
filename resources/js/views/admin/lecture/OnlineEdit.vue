@@ -193,21 +193,26 @@ export default {
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
-                const result = res.data.programs;
+                const ticket = res.data.ticket;
+                const program = res.data.program;
+                const surveys = res.data.surveys;
+                const lectures = res.data.lectures;
 
-                this.material_id = result.material_id;
-                this.thumbnail_id = result.thumbnail_id;
-                this.title = result.title;
-                this.running_time = result.running_time;
-                this.lecture_info = result.lecture_info;
-                this.is_free = result.is_free;
-                this.price = result.price;
-                this.content = result.content;
-                this.surveys = result.surveys;
-                this.lectures = result.lectures;
-                this.major_category_id = result.major_category_id;
-                this.minor_category_id = result.minor_category_id;
-                this.is_open = result.is_open;
+                this.material_id = program.material_id;
+                this.thumbnail_id = program.thumbnail_id;
+                this.title = program.title;
+                this.running_time = program.running_time;
+                this.lecture_info = ticket.name;
+                this.is_free = ticket.is_free;
+                this.price = ticket.price;
+                this.content = program.content;
+                this.surveys = surveys;
+                this.lectures = lectures;
+                this.major_category_id = program.major_category_id;
+                this.minor_category_id = program.minor_category_id;
+                this.is_open = program.is_open;
+                console.log(this.lectures)
+                console.log(this.surveys);
             });
         },
         update() {
@@ -216,7 +221,7 @@ export default {
             this.lectures.forEach(lecture => {
                 lectures.push({
                     title: lecture.title,
-                    link: lecture.link,
+                    link: lecture.url,
                     thumbnail_id : lecture.thumbnail.id
                 })
             });

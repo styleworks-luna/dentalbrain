@@ -45,6 +45,15 @@ abstract class ProgramTemplate
         ]);
     }
 
+    function getProgramDetail(Program $program)
+    {
+        return [
+            'program' => $program->load('material:id,url,name','thumbnail:id,url,name'),
+            'ticket' => $program->tickets()->select(['id','name','price','is_free'])->get()->first(),
+            'surveys' => $program->surveys()->select(['id','question','parent_id','category_id'])->with('choices:id,question,parent_id')->get()->whereNull('parent_id')->values(),
+        ];
+    }
+
     /**
      * 강의 수강현황
      *

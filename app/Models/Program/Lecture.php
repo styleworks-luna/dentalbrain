@@ -13,7 +13,6 @@ class Lecture extends Model
 
     protected $table = 'lectures';
 
-    protected $appends = ['thumbnail_url'];
     protected $guarded = [];
 
     /**
@@ -40,10 +39,5 @@ class Lecture extends Model
     public function thumbnail()
     {
         return $this->belongsTo(File::class, 'thumbnail_id', 'id');
-    }
-
-    public function getThumbnailUrlAttribute()
-    {
-        return File::find($this->attributes['thumbnail_id'])->url;
     }
 }
