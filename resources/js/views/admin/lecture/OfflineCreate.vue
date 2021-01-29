@@ -150,11 +150,13 @@ import DatePicker from '@/components/common/DatePicker.vue'
 import TimePicker from '@/components/common/TimePicker.vue'
 import NaverMap from '@/components/common/NaverMap.vue';
 
+//api
+import Offline from '@/api/admin/lecture/Offline.js'
 
 import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 
 export default {
-    name: 'AdminOnlineCreate',
+    name: 'AdminOfflineCreate',
     mixins: [
         LectureFormMixin
     ],
@@ -199,14 +201,13 @@ export default {
                 receipt_ended_time: this.receipt_ended_time,
                 is_open: this.is_open
             };
-            console.log(data);
-            return false;
-            // Online.create(data).then(res => {
-            //     alert(res.data.msg);
-            //     this.$router.push('/admin/lecture/online');
-            // }).catch(err => {
-            //     alert('오류');
-            // });
+
+            Offline.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            }).catch(err => {
+                alert('오류');
+            });
         },
         handleSetStartDate(time) {
             this.started_at =  time;

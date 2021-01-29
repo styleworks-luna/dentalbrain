@@ -8,11 +8,36 @@ export default {
             params: params
         });
     },
+    getEditData(id) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}`,
+            method: 'get'
+        })
+    },
     create(data) {
         return Send({
             url: '/api/admin/lecture/online',
             method: 'post',
             data: data
+        });
+    },
+    update(id, data) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}`,
+            method: 'put',
+            data: data
+        });
+    },
+    destroy(id) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}`,
+            method: 'delete'
+        });
+    },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}/status`,
+            method: 'patch'
         });
     },
 }

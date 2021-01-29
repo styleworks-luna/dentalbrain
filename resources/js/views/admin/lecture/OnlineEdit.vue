@@ -247,7 +247,7 @@ export default {
                 is_open: this.is_open,
             };
 
-            Online.create(data).then(res => {
+            Online.update(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             })
@@ -255,7 +255,7 @@ export default {
         destroy() {
             Online.destroy(this.id).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/faq');
+                this.$router.push('/admin/lecture/online');
             })
         },
         addLecture() {

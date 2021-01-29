@@ -1,10 +1,7 @@
 <template>
     <layout title="온라인 강의 현황">
         <template v-slot:button>
-            <router-link to="/admin/lecture/online/create"
-                         class="btn btn-lg btn-info">
-                온라인 강의 관리
-            </router-link>
+
         </template>
 
         <template v-slot:body>
@@ -82,15 +79,15 @@ export default {
                 },
                 {
                     name: 'email',
-                    text: '소분류'
+                    text: '이메일'
                 },
                 {
                     name: 'phone',
-                    text: '강의 제목'
+                    text: '연락처'
                 },
                 {
                     name: 'payment',
-                    text: '수강현황'
+                    text: '결제금액'
                 },
                 {
                     name: 'watch',
