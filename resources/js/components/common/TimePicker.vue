@@ -1,11 +1,11 @@
 <template>
-        <vue-timepicker class="timepicker float-left"
-                    valueType="format"
-                    :format="'A hh:mm'"
-                    :required="true"
-                    input-class="timepicker form-control"
-                    @input="handleSetTime"
-                    v-model="date"></vue-timepicker>
+    <vue-timepicker class="timepicker float-left"
+                valueType="format"
+                format="HH:mm"
+                :required="true"
+                input-class="timepicker form-control"
+                @input="handleSetTime"
+                v-model="date"></vue-timepicker>
 </template>
 
 <script>
