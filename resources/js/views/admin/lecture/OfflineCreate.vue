@@ -96,6 +96,7 @@
                         <input type="number"
                                class="form-control ml-3"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap mt-1">
@@ -232,7 +233,6 @@ export default {
             this.receipt_ended_time = time;
         },
     }
-
 }
 
 </script>

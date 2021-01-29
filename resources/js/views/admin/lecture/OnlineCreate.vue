@@ -78,6 +78,7 @@
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">

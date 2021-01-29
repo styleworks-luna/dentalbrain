@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 등록" id="lecture">
+    <layout title="온라인 강의 수정" id="lecture">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -78,6 +78,7 @@
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">
@@ -171,7 +172,7 @@ import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
 import Online from '@/api/admin/lecture/Online.js'
 
 export default {
-    name: 'AdminOnlineCreate',
+    name: 'AdminOnlineEdit',
     components: {
         'file-upload': FileUpload,
     },
