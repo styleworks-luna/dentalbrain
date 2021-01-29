@@ -61,7 +61,7 @@
 
             <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
-                    <naver-map :data="offline_programs"
+                    <naver-map :data="program_place"
                                @setAddress="handleSetAddress"
                                @setAddressDetail="handleSetAddressDetail"
                                @setProgram="handleSetProgram"></naver-map>
@@ -197,7 +197,7 @@ export default {
                 this.content = result.content;
                 this.surveys = result.surveys;
                 this.is_open = result.is_open;
-                this.offline_programs = result.offline_programs;
+                this.program_place = result.program_place;
             });
         },
         update() {
@@ -220,7 +220,7 @@ export default {
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
                 is_open: this.is_open,
-                offline_programs: this.offline_programs,
+                program_place: this.program_place,
             };
             Offline.create(data).then(res => {
                 alert(res.data.msg);

@@ -20,7 +20,7 @@ class OfflineProgramConcrete extends ProgramTemplate
 
     public function validatePlace(Request $request)
     {
-        $v = Validator::make($request->all(), [
+        $v = Validator::make($request->all()['program_place'], [
             'address' => ['required', 'string',],
             'address_detail' => ['required', 'nullable', 'string',],
 
@@ -34,10 +34,10 @@ class OfflineProgramConcrete extends ProgramTemplate
             'capacity' => ['required', 'numeric'],
 
             'started_at' => ['required', 'date', 'before:ended_at'],
-            'ended_at' => ['required', 'date', 'after:started_at', 'before_or_equal:receipt_ended_at'],
+            'ended_at' => ['required', 'date', 'after:started_at'],
 
             'receipt_started_at' => ['required', 'date', 'before:receipt_ended_at'],
-            'receipt_ended_at' => ['required', 'date', 'after:receipt_started_at'],
+            'receipt_ended_at' => ['required', 'date', 'after:receipt_started_at', 'before_or_equal:ended_at'],
         ]);
 
         return $v->validate();
@@ -45,7 +45,10 @@ class OfflineProgramConcrete extends ProgramTemplate
 
     public function storePlace(Program $program, array $data)
     {
+        logger($data);
         return ProgramPlace::create([
+            'program_id' => $program->id,
+
             'address' => $data['address'],
             'address_detail' => $data['address_detail'],
 
