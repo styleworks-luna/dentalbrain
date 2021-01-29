@@ -179,47 +179,64 @@ export default {
                 const result = res.data.programs;
 
                 this.thumbnail_id = result.thumbnail_id;
+
                 this.major_category_id = result.major_category_id;
                 this.minor_category_id = result.minor_category_id;
                 this.title = result.title;
                 this.lecture_info = result.lecture_info;
+
                 this.started_date = result.started_date;
                 this.started_time = result.started_time;
                 this.ended_date = result.ended_date;
                 this.ended_time = result.ended_time;
+
                 this.capacity = result.capacity;
                 this.receipt_started_date = result.receipt_started_date;
                 this.receipt_started_time = result.receipt_started_time;
                 this.receipt_ended_date = result.receipt_ended_date;
                 this.receipt_ended_time = result.receipt_ended_time;
+
                 this.is_free = result.is_free;
                 this.price = result.price;
+
                 this.content = result.content;
+
                 this.surveys = result.surveys;
+
                 this.is_open = result.is_open;
+
                 this.offline_programs = result.offline_programs;
             });
         },
         update() {
             let data = {
                 thumbnail_id: this.thumbnail.id,
+
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
                 title: this.title,
                 lecture_info: this.lecture_info,
-                is_free: this.is_free,
-                price: this.price,
-                content: this.content,
-                surveys: this.surveys,
+
                 ended_date: this.Helper.dateFormatYDM(this.ended_at),
                 started_date: this.Helper.dateFormatYDM(this.started_at),
                 started_time: this.started_time,
                 ended_time: this.ended_time,
+
+                capacity: this.capacity,
                 receipt_started_date: this.Helper.dateFormatYDM(this.receipt_started_date),
                 receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
                 receipt_started_time: this.receipt_started_time,
                 receipt_ended_time: this.receipt_ended_time,
+
+                is_free: this.is_free,
+                price: this.price,
+
+                content: this.content,
+
+                surveys: this.surveys,
+
                 is_open: this.is_open,
+
                 offline_programs: this.offline_programs,
             };
             Offline.create(data).then(res => {

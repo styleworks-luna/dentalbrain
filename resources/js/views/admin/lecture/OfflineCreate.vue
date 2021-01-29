@@ -185,7 +185,9 @@ export default {
                 price: this.price,
 
                 content: this.content,
+
                 surveys: this.surveys,
+
                 is_open: this.is_open,
 
                 offline_programs: this.offline_programs
