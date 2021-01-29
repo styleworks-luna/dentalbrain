@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 등록" id="offline">
+    <layout title="오프라인 강의 등록" class="offline">
         <template v-slot:body>
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"

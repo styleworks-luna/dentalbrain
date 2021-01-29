@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 등록" id="lecture">
+    <layout title="온라인 강의 등록" class="online">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -99,11 +99,13 @@
 
             <single-group name="강의 설정"
                           :isRow="true"
+                          :isRequired="true"
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-setting" v-for="(lecture, index) in lectures">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control lecture-title" v-model="lecture.title">
                             </div>
@@ -111,12 +113,14 @@
 
                         <div class="form-group row">
                             <label class="col-form-label" for="">유튜브 링크</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
                             <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
                                          :initFile="lecture.thumbnail"
                                          :index="index"

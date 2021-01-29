@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 수정" id="lecture">
+    <layout title="온라인 강의 수정" class="online">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -117,6 +117,7 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
                             <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
@@ -154,7 +155,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="submit" class="btn btn-info" @click="create">등록</button>
+                <button type="submit" class="btn btn-info" @click="update">등록</button>
                 <router-link to="/admin/lecture/online"
                              class="btn btn-dark">취소</router-link>
             </div>
