@@ -32,7 +32,7 @@ class OfflineProgramController extends Controller
     {
         return response()->json(
             array_merge($this->offlineConcrete->getProgramDetail($program),
-                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+                ['place' => $program->place()])
         );
     }
 
@@ -40,18 +40,19 @@ class OfflineProgramController extends Controller
     {
         $programData = $this->offlineConcrete->validateProgram($request);
         $ticketData = $this->offlineConcrete->validateTickets($request);
-        $surveyDateSet = $this->offlineConcrete->validateSurveys($request);
-
+        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
+        $placeData = $this->offlineConcrete->validatePlace($request);
 
         try {
             DB::beginTransaction();
             $program = $this->offlineConcrete->storeProgram($programData);
             $ticket = $this->offlineConcrete->storeTickets($program, $ticketData);
-            $surveys = $this->offlineConcrete->storeSurveys($program, $surveyDateSet);
+            $surveys = $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
+            $places = $this->offlineConcrete->storePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDateSet]);
+                [$exception, $programData, $ticketData, $surveyDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);

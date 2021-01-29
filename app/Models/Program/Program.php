@@ -73,6 +73,11 @@ class Program extends Model
         return $this->hasMany(Lecture::class, 'program_id', 'id');
     }
 
+    public function place()
+    {
+        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
+    }
+
     /*
      * ======= Define Appended Attributes =========
      */
