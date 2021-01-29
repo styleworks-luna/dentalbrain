@@ -16,12 +16,20 @@ export const OfflineMixin = {
             started_time: '',
             ended_date: '',
             ended_time: '',
-            capacity: '',
+
             receipt_started_date: '',
             receipt_started_time: '',
             receipt_ended_date: '',
             receipt_ended_time: '',
+
             offline_programs: {
+                started_at: '',
+                ended_at: '',
+
+                capacity: '',
+                receipt_started_at: '',
+                receipt_ended_at: '',
+
                 address: '',
                 address_detail: '',
                 latitude: 37.487935,
@@ -32,20 +40,15 @@ export const OfflineMixin = {
             }
         }
     },
-    mounted() {
-
-    },
-    computed: {
-    },
     methods: {
         handleSetStartDate(time) {
-            this.started_at =  time;
+            this.started_date =  time;
         },
         handleSetStartTime(time) {
             this.started_time = time;
         },
         handleSetEndDate(time) {
-            this.ended_at = time;
+            this.ended_date = time;
         },
         handleSetEndTime(time) {
             this.ended_time = time;
