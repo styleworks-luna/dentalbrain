@@ -219,8 +219,6 @@ export default {
                 lectures: lectures,
             };
 
-            console.log(data);
-
             Online.create(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');

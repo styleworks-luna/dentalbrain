@@ -132,7 +132,7 @@ export default {
 
                 started_at: this.Helper.dateFormatYDM(this.started_at),
                 ended_at: this.Helper.dateFormatYDM(this.ended_at),
-                
+
                 is_open: this.is_open,
             };
 
