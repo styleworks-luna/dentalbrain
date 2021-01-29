@@ -121,7 +121,7 @@
 
                         <div class="form-group">
                             <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
-                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                            <file-upload :inputId="'lecture_file' + index"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
@@ -137,7 +137,7 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-file-wrap">
-                    <file-upload :inputId="'file' + material.id"
+                    <file-upload :inputId="'file'"
                                  :initFile="material"
                                  @setFile="updateFile"></file-upload>
                     </div>
@@ -190,12 +190,20 @@
             create() {
                 let lectures = [];
 
+
                 this.lectures.forEach(lecture => {
-                    lectures.push({
-                        title: lecture.title,
-                        link: lecture.link,
-                        thumbnail_id : lecture.thumbnail.id
-                    })
+                    if(lecture.thumbnail) {
+                        lectures.push({
+                            title: lecture.title,
+                            link: lecture.link,
+                            thumbnail_id: lecture.thumbnail.id
+                        })
+                    } else {
+                        lectures.push({
+                            title: lecture.title,
+                            link: lecture.link,
+                        })
+                    }
                 });
 
                 let data = {

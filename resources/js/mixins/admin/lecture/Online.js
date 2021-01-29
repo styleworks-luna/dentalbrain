@@ -14,7 +14,9 @@ export const OnlineMixin = {
                 {
                     title: '',
                     link: '',
-                    thumbnail: {}
+                    thumbnail: {
+
+                    }
                 },
             ]
         }

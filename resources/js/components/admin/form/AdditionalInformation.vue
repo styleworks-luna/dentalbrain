@@ -31,7 +31,7 @@
                             <span class="circle"></span>
                             <input type="text"
                                    class="form-control choices"
-                                   v-model="surveys[index].choices[idx]"
+                                   v-model="surveys[index].choices[idx].question"
                                    placeholder="항목을 입력해주세요.">
                             <button class="btn btn-outline-dark btn-item-delete"
                                     @click="popItem(survey.choices,idx)">항목삭제
@@ -143,6 +143,11 @@ export default {
     },
     props:{
         'data': [Array],
+    },
+    watch: {
+        data() {
+            this.surveys = this.data;
+        }
     },
     mounted() {
         this.surveys = this.data;
