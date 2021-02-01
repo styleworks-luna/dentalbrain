@@ -10,9 +10,11 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        $data['bar'] = Banner::public()->where('position', '=', Banner::$POSITION_BAR)->first();
-        $data['bottomSlides'] = Banner::public()->where('position', '=', Banner::$POSITION_BOTTOM)->get();
 
+        $data['topSlides'] = Banner::public()->where('position','=',Banner::$POSITION_TOP)->get();
+        $data['bar'] = Banner::public()->where('position', '=', Banner::$POSITION_BAR)->first();
+        $data['recommendSlides'] = Banner::public()->where('position','=',Banner::$POSITION_RECOMMEND)->get();
+        $data['bottomSlides'] = Banner::public()->where('position', '=', Banner::$POSITION_BOTTOM)->get();
         return view(viewPrefix() . 'index', $data);
     }
 }

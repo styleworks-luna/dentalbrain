@@ -8,14 +8,14 @@
     <section id="content">
         <section class="search">
             faq 검색
-            <form method="POST" action="{{ route('api.admin.customer.faqs.search') }}">
+            <form method="GET" action="{{ route('api.admin.customer.faqs.index') }}">
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="t">
                 <input type="submit">
             </form>
             <br>
             문의하기 검색
-            <form method="POST" action="{{ route('api.admin.customer.inquiries.search') }}">
+            <form method="GET" action="{{ route('api.admin.customer.inquiries.index') }}">
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="">
                 <select name="gubun">
@@ -29,14 +29,14 @@
             </form>
             <br>
             공지사항 검색
-            <form method="POST" action="{{ route('api.admin.customer.notices.search') }}">
+            <form method="GET" action="{{ route('api.admin.customer.notices.index') }}">
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="">
                 <input type="submit">
             </form>
             <br>
             배너 검색
-            <form method="POST" action="{{ route('api.admin.banners.search') }}">
+            <form method="GET" action="{{ route('api.admin.banners.index') }}">
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="">
                 <input type="date" id="date" name="date">
@@ -51,7 +51,7 @@
 
             <br>
             유저 검색
-            <form method="POST" action="{{ route('api.admin.user.search') }}">
+            <form method="GET" action="{{ route('api.admin.user.index') }}">
                 @csrf
                 <input type="text" id="keyword" name="keyword" value="">
                 <select name="job_name_id">
