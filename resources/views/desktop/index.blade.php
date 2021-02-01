@@ -20,6 +20,12 @@
             <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
+                        @foreach($topSlides as $key => $topSlideValues)
+                            <div class="swiper-slide">
+                                <img src="{{ asset($topSlideValues->desktopFile->url ) }}" alt="">
+                            </div>
+                        @endforeach
+
                         <div class="swiper-slide">
                             <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
                         </div>
@@ -49,7 +55,7 @@
 
             <section class="ad">
                 @if($bar)
-                    <a href="{{ $bar->link }}">
+                    <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bar->id]) }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="">
                     </a>
                 @endif
@@ -60,10 +66,10 @@
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
 
-                        @foreach($bottomSlides as $bottom)
+                        @foreach($recommendSlides as $recommendBanner)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
-                                    <img src="{{ $bottom->desktopFile->url }}" alt="">
+                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$recommendBanner->id])}}">
+                                    <img src="{{ $recommendBanner->desktopFile->url }}" alt="">
                                 </a>
                             </div>
                         @endforeach
