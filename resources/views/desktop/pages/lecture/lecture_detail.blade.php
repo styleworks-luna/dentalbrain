@@ -13,7 +13,7 @@
         <div class="container">
             <div class="row">
                 <section class="lecture-information-wrap">
-                    <img src="{{ asset('/images/dummy/test.png') }}" alt="" class="lecture-image">
+                    <img src="{{ $program->thumbnail->url }}" alt="" class="lecture-image">
                     <div class="lecture-information">
                         <div class="lecture-sort">
                             @if($program->is_online == true)
@@ -36,13 +36,16 @@
                                 @else
                                     <tr>
                                         <th>강의일시</th>
-                                        <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토)
-                                                17:20</p>
+                                        <td>
+                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>강의장소</th>
-                                        <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
+                                        <td>
+                                            <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                        </td>
                                     </tr>
                                 @endif
                                 <tr>
@@ -60,7 +63,7 @@
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
                                         <td class="lecture-price price-hidden"
-                                            data-price="{{ $ticket->price }}">{{ $ticket->price }}원
+                                            data-price="{{ $ticket->price }}">{{ $ticket->price == 0 ? '무료' : $ticket->price.'원'}}
                                         </td>
                                     @endforeach
                                 </tr>
@@ -70,7 +73,7 @@
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
                             <a href="" class="apply-btn">신청하기</a>
                             <a href=""
-                               class="like {{ $heart == true ? 'active' : '' }}">{{ $program->user_like_cnt }}</a>
+                               class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}</a>
                         </div>
                     </div>
                 </section>
@@ -90,7 +93,7 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="{{route('lectures.comments.store',$program->id)}}" class="comment-input-form">
+                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form">
                         <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                         <input type="submit" value="등록" class="comment-input-btn">
                     </form>
@@ -155,7 +158,7 @@
                                 </div>
                             </li>
                         @empty
-                            <li>댓글이 없습니다.</li>
+                            <p>댓글이 없습니다.</p>
                         @endforelse
                     </ul>
                 </section>

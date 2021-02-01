@@ -20,21 +20,13 @@
             <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
+                        @foreach($slides as $slide)
+                            <div class="swiper-slide">
+                                <a href="{{ route('lectures.detail',$slide->id) }}">
+                                    <img src="{{ $slide->thumbnail->url }}" alt="">
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="swiper-controller-wrap">
                         <div class="swiper-pagination"></div>
