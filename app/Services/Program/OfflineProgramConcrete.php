@@ -4,6 +4,11 @@
 namespace App\Services\Program;
 
 
+use App\Models\Program\Program;
+use App\Models\Program\ProgramPlace;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 class OfflineProgramConcrete extends ProgramTemplate
 {
 
@@ -13,11 +18,55 @@ class OfflineProgramConcrete extends ProgramTemplate
         parent::__construct($is_online);
     }
 
-    /**
-     * @inheritDoc
-     */
-    function additionalRules()
+    public function validatePlace(Request $request)
     {
+        $v = Validator::make($request->all()['program_place'], [
+            'address' => ['required', 'string',],
+            'address_detail' => ['required', 'nullable', 'string',],
 
+            'sido' => ['required', 'string',],
+            'gugun' => ['required', 'string',],
+            'dong' => ['required', 'string', 'nullable'],
+
+            'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
+            'longitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
+
+            'capacity' => ['required', 'numeric'],
+
+            'started_at' => ['required', 'date', 'before:ended_at'],
+            'ended_at' => ['required', 'date', 'after:started_at'],
+
+            'receipt_started_at' => ['required', 'date', 'before:receipt_ended_at'],
+            'receipt_ended_at' => ['required', 'date', 'after:receipt_started_at', 'before_or_equal:ended_at'],
+        ]);
+
+        return $v->validate();
     }
+
+    public function storePlace(Program $program, array $data)
+    {
+        logger($data);
+        return ProgramPlace::create([
+            'program_id' => $program->id,
+
+            'address' => $data['address'],
+            'address_detail' => $data['address_detail'],
+
+            'sido' => $data['sido'],
+            'gugun' => $data['gugun'],
+            'dong' => $data['dong'],
+
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+
+            'capacity' => $data['capacity'],
+
+            'started_at' => $data['started_at'],
+            'ended_at' => $data['ended_at'],
+
+            'receipt_started_at' => $data['receipt_started_at'],
+            'receipt_ended_at' => $data['receipt_ended_at'],
+        ]);
+    }
+
 }

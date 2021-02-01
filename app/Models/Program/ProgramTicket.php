@@ -13,6 +13,10 @@ class ProgramTicket extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'is_required' => 'boolean',
+    ];
+
     public function program()
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');

@@ -48,9 +48,11 @@ abstract class ProgramTemplate
     function getProgramDetail(Program $program)
     {
         return [
-            'program' => $program->load('material:id,url,name','thumbnail:id,url,name'),
-            'ticket' => $program->tickets()->select(['id','name','price','is_free'])->get()->first(),
-            'surveys' => $program->surveys()->select(['id','question','parent_id','category_id'])->with('choices:id,question,parent_id')->get()->whereNull('parent_id')->values(),
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
+            'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
+            'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
+                ->with('choices:id,question,parent_id')->get()
+                ->whereNull('parent_id')->values(),
         ];
     }
 
@@ -94,6 +96,7 @@ abstract class ProgramTemplate
             'title' => ['required', 'string', 'max:200'],
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
+            'is_open' => ['required', 'boolean'],
         ], $additionalRules));
 
         return $v->validate();
@@ -103,16 +106,21 @@ abstract class ProgramTemplate
     {
         $hasChoices = ['singleChoice', 'multipleChoice'];
 
-        $v = Validator::make($request->all(), array_merge([
-            'surveys.*.type' => ['required', Rule::exists('survey_categories', 'eng_name')],
-            'surveys.*.question' => ['required', 'string'],
-            'surveys.*.is_required' => ['required', 'boolean'],
-            'surveys.*.choices' => ['sometimes', 'required', 'array'],
-        ], $additionalRules));
+        $validatedData = [];
 
-        $validatedData = $v->validate();
+        if ($request->get('surveys', false)) {
+            $v = Validator::make($request->get('surveys', []), array_merge([
+                '*.type' => ['required', Rule::exists('survey_categories', 'eng_name')],
+                '*.question' => ['required', 'string'],
+                '*.is_required' => ['required', 'boolean'],
+                '*.choices' => ['sometimes', 'required', 'array', 'nullable',],
+                '*.choices.*.question' => ['sometimes', 'required', 'string'],
+            ], $additionalRules));
 
-        return $validatedData['surveys'];
+            $validatedData = $v->validate();
+        }
+
+        return $validatedData;
     }
 
     function validateTickets(Request $request, array $additionalRules = [])
@@ -145,6 +153,7 @@ abstract class ProgramTemplate
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'] ?? null,
+            'is_open' => $data['is_open']
         ]);
 
         $fileService = new ProgramThumbnail($this->program);

@@ -61,7 +61,7 @@
 
             <single-group name="강의 장소" :size="12">
                 <template v-slot:content>
-                    <naver-map :data="offline_programs"
+                    <naver-map :data="program_place"
                                @setAddress="handleSetAddress"
                                @setAddressDetail="handleSetAddressDetail"
                                @setProgram="handleSetProgram"></naver-map>
@@ -73,7 +73,7 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control" v-model="offline_programs.capacity">
+                            <input type="number" class="form-control" v-model="program_place.capacity">
                         </div>
                     </div>
                     <div class="float-left">
@@ -169,10 +169,10 @@ export default {
             const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
             const receipt_ended_at = `${this.Helper.dateFormatYDM(this.receipt_ended_date)} ${this.receipt_ended_time}`;
 
-            this.offline_programs.started_at = started_at;
-            this.offline_programs.ended_at = ended_at;
-            this.offline_programs.receipt_started_at = receipt_started_at;
-            this.offline_programs.receipt_ended_at = receipt_ended_at;
+            this.program_place.started_at = started_at;
+            this.program_place.ended_at = ended_at;
+            this.program_place.receipt_started_at = receipt_started_at;
+            this.program_place.receipt_ended_at = receipt_ended_at;
 
             let data = {
                 thumbnail_id: this.thumbnail.id,
@@ -190,10 +190,8 @@ export default {
 
                 is_open: this.is_open,
 
-                offline_programs: this.offline_programs
+                program_place: this.program_place
             };
-
-            return false; // TODO : 작업시 제거
 
              Offline.create(data).then(res => {
                  alert(res.data.msg);

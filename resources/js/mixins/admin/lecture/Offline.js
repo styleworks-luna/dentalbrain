@@ -22,7 +22,7 @@ export const OfflineMixin = {
             receipt_ended_date: '',
             receipt_ended_time: '',
 
-            offline_programs: {
+            program_place: {
                 started_at: '',
                 ended_at: '',
 
@@ -66,17 +66,17 @@ export const OfflineMixin = {
             this.receipt_ended_time = time;
         },
         handleSetAddress(address) {
-            this.offline_programs.address = address;
+            this.program_place.address = address;
         },
         handleSetAddressDetail(addressDetail) {
-            this.offline_programs.address_detail = addressDetail;
+            this.program_place.address_detail = addressDetail;
         },
         handleSetProgram(data) {
-            this.offline_programs.latitude = data.latitude;
-            this.offline_programs.longitude = data.longitude;
-            this.offline_programs.sido = data.sido;
-            this.offline_programs.gugun = data.gugun;
-            this.offline_programs.dong = data.dong;
+            this.program_place.latitude = data.latitude;
+            this.program_place.longitude = data.longitude;
+            this.program_place.sido = data.sido;
+            this.program_place.gugun = data.gugun;
+            this.program_place.dong = data.dong;
         }
     }
 };
