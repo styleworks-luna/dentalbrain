@@ -113,20 +113,20 @@
                     <div class="notice community-common">
                         <h2>공지사항</h2>
                         <ul>
-                            <li><a href="">브레인스펙 치과보험청구전문강사 모집 </a></li>
-                            <li><a href="">김민정 대표와 함께하는 우리치과 예방진료 중간중간중간 김민정 대표와 함께하는 우리치과 예방진료 중간중간중간</a></li>
-                            <li><a href="">신종코로나바이너스로 의료기관 및 국민 여러분께 신종코로나바이너스로 의료기관 및 국민 여러분께</a></li>
+                            @foreach($notices as $key => $value)
+                                <li><a href="{{ route('customer.notices.show',['notice'=> $value['id']]) }}">{{$value['title']}}</a></li>
+                            @endforeach
                         </ul>
-                        <a href="" class="btn-more">더보기</a>
+                        <a href="{{route('customer.notices.index')}}" class="btn-more">더보기</a>
                     </div>
                     <div class="faq community-common">
                         <h2>FAQ</h2>
                         <ul>
-                            <li><a href="">브레인스펙 치과보험청구전문강사 모집 </a></li>
-                            <li><a href="">김민정 대표와 함께하는 우리치과 예방진료 중간중간중간 김민정 대표와 함께하는 우리치과 예방진료 중간중간중간</a></li>
-                            <li><a href="">신종코로나바이너스로 의료기관 및 국민 여러분께 신종코로나바이너스로 의료기관 및 국민 여러분께</a></li>
+                            @foreach($faqs as $key => $value)
+                                <li><a href="{{ route('customer.faqs.index') }}"> {{$value['question']}} </a></li>
+                            @endforeach
                         </ul>
-                        <a href="" class="btn-more">더보기</a>
+                        <a href="{{route('customer.faqs.index')}}" class="btn-more">더보기</a>
                     </div>
                     <div class="community-menu">
                         <ul>

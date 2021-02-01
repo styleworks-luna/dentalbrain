@@ -64,6 +64,7 @@
 
                                     <input type="text"
                                            id="secession-reason"
+                                           name="secession-reason"
                                            class="secession-reason"
                                            placeholder="사유를 입력해주세요">
                                 </div>
