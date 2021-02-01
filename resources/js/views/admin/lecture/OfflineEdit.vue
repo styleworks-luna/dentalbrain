@@ -50,11 +50,20 @@
             <single-group name="강의 일시" :isRow="true" :size="7">
                 <template v-slot:content>
                     <div class="clearfix">
-                        <date-picker class="mr-3" @setTime="handleSetStartDate"></date-picker>
-                        <time-picker class="mr-3" @setTime="handleSetStartTime"></time-picker>
+                        <date-picker class="mr-3"
+                                     :time="started_date"
+                                     @setTime="handleSetStartDate"></date-picker>
+                        <time-picker class="mr-3"
+                                     :time="started_time"
+                                     @setTime="handleSetStartTime"></time-picker>
+
                         <p class="float-left mr-3 mt-2">부터</p>
-                        <date-picker class="mr-3" @setTime="handleSetEndDate"></date-picker>
-                        <time-picker @setTime="handleSetEndTime"></time-picker>
+
+                        <date-picker class="mr-3"
+                                     :time="ended_date"
+                                     @setTime="handleSetEndDate"></date-picker>
+                        <time-picker :time="ended_time"
+                                     @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -73,16 +82,25 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control" v-model="capacity">
+                            <input type="number" class="form-control" v-model="program_place.capacity">
                         </div>
                     </div>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
-                        <date-picker class="mr-3" @setTime="handleSetReceiptStartDate"></date-picker>
-                        <time-picker class="mr-3" @setTime="handleSetReceiptStartTime"></time-picker>
+                        <date-picker class="mr-3"
+                                     :time="receipt_started_date"
+                                     @setTime="handleSetReceiptStartDate"></date-picker>
+                        <time-picker class="mr-3"
+                                     :time="receipt_started_time"
+                                     @setTime="handleSetReceiptStartTime"></time-picker>
+
                         <p class="float-left mr-3 mt-2">부터</p>
-                        <date-picker class="mr-3" @setTime="handleSetReceiptEndDate"></date-picker>
-                        <time-picker @setTime="handleSetReceiptEndTime"></time-picker>
+
+                        <date-picker class="mr-3"
+                                     :time="receipt_ended_date"
+                                     @setTime="handleSetReceiptEndDate"></date-picker>
+                        <time-picker :time="receipt_ended_time"
+                                     @setTime="handleSetReceiptEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -160,41 +178,23 @@ export default {
         LectureFormMixin,
         OfflineMixin
     ],
-    components: {
-
-    },
     created() {
         this.id = this.$route.params.id;
     },
     mounted() {
         this.getEditData();
     },
-    data() {
-
-    },
-    computed: {},
     methods: {
         getEditData() {
             Offline.getEditData(this.id).then(res => {
                 const result = res.data.programs;
 
-                this.thumbnail_id = result.thumbnail_id;
+                this.thumbnail = result.thumbnail;
 
                 this.major_category_id = result.major_category_id;
                 this.minor_category_id = result.minor_category_id;
                 this.title = result.title;
                 this.lecture_info = result.lecture_info;
-
-                this.started_date = result.started_date;
-                this.started_time = result.started_time;
-                this.ended_date = result.ended_date;
-                this.ended_time = result.ended_time;
-
-                this.capacity = result.capacity;
-                this.receipt_started_date = result.receipt_started_date;
-                this.receipt_started_time = result.receipt_started_time;
-                this.receipt_ended_date = result.receipt_ended_date;
-                this.receipt_ended_time = result.receipt_ended_time;
 
                 this.is_free = result.is_free;
                 this.price = result.price;
@@ -205,9 +205,28 @@ export default {
 
                 this.is_open = result.is_open;
                 this.program_place = result.program_place;
+
+                this.started_date = this.Helper.dateFullFormat(this.program_place.started_at);
+                this.started_time = this.Helper.timeFormat(this.started_date);
+                this.ended_date = this.Helper.dateFullFormat(this.program_place.ended_at);
+                this.ended_time = this.Helper.timeFormat(this.ended_date);
+                this.receipt_started_date = this.Helper.dateFullFormat(this.program_place.receipt_started_at);
+                this.receipt_started_time = this.Helper.timeFormat(this.receipt_started_date);
+                this.receipt_ended_date = this.Helper.dateFullFormat(this.program_place.receipt_ended_at);
+                this.receipt_ended_time = this.Helper.timeFormat(this.receipt_ended_date);
             });
         },
         update() {
+            const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
+            const ended_at = `${this.Helper.dateFormatYDM(this.ended_date)} ${this.ended_time}`;
+            const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
+            const receipt_ended_at = `${this.Helper.dateFormatYDM(this.receipt_ended_date)} ${this.receipt_ended_time}`;
+
+            this.program_place.started_at = started_at;
+            this.program_place.ended_at = ended_at;
+            this.program_place.receipt_started_at = receipt_started_at;
+            this.program_place.receipt_ended_at = receipt_ended_at;
+
             let data = {
                 thumbnail_id: this.thumbnail.id,
 
@@ -215,17 +234,6 @@ export default {
                 minor_category_id: this.minor_category_id,
                 title: this.title,
                 lecture_info: this.lecture_info,
-
-                ended_date: this.Helper.dateFormatYDM(this.ended_at),
-                started_date: this.Helper.dateFormatYDM(this.started_at),
-                started_time: this.started_time,
-                ended_time: this.ended_time,
-
-                capacity: this.capacity,
-                receipt_started_date: this.Helper.dateFormatYDM(this.receipt_started_date),
-                receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
-                receipt_started_time: this.receipt_started_time,
-                receipt_ended_time: this.receipt_ended_time,
 
                 is_free: this.is_free,
                 price: this.price,
@@ -235,19 +243,14 @@ export default {
                 surveys: this.surveys,
 
                 is_open: this.is_open,
-                program_place: this.program_place,
+                program_place: this.program_place
             };
+
             Offline.create(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/offline');
             })
-        },
-        destroy() {
-            Offline.destroy(this.id).then(res => {
-                alert(res.data.msg);
-                this.$router.push('/admin/lecture/offline');
-            })
-        },
+        }
     }
 }
 

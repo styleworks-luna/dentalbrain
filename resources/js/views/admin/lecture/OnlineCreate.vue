@@ -189,7 +189,6 @@ export default {
         create() {
             let lectures = [];
 
-
             this.lectures.forEach(lecture => {
                 lectures.push({
                     title: lecture.title,
