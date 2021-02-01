@@ -19,7 +19,6 @@
         },
         computed: {
             thumbnailPreview() {
-                console.log('asd');
                 return {
                     backgroundImage: `url(${this.Helper.thumbnail(this.file)})`
                 };
@@ -31,7 +30,6 @@
                 uploadForm.append('image', e.target.files[0]);
 
                 axios.post(`/api/admin/upload/image`, uploadForm).then(res => {
-                    console.log(res);
                     this.$emit('setFile', res.data.file);
                     uploadForm = null;
                 }).catch(err => {

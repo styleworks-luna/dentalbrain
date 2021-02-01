@@ -12,13 +12,19 @@ class ProgramMaterial extends FileTemplate
         parent::__construct($program);
     }
 
-    function getPublicPath(string $fileName)
+    function getDownloadUrl($file ,$path)
     {
-        $program = $this->model;
-        return $path = 'public/program/' . $program->id . '/material/' . $fileName;
+        return route('api.lectures.download', [$file->id]);
     }
 
-    function deleteFileInDB()
+    protected function getSavePath(string $fileName)
+    {
+        $program = $this->model;
+        // NOT PUBLIC
+        return $path = '/program/' . $program->id . '/material/' . $fileName;
+    }
+
+    protected function deleteFileInDB()
     {
         $program = $this->model;
         $path = $program->material->path;

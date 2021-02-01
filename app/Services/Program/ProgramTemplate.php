@@ -4,12 +4,16 @@
 namespace App\Services\Program;
 
 
+use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
+use App\Services\File\ProgramMaterial;
+use App\Services\File\ProgramThumbnail;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -41,6 +45,15 @@ abstract class ProgramTemplate
         ]);
     }
 
+    function getProgramDetail(Program $program)
+    {
+        return [
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
+            'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
+            'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])->with('choices:id,question,parent_id')->get()->whereNull('parent_id')->values(),
+        ];
+    }
+
     /**
      * 강의 수강현황
      *
@@ -70,9 +83,10 @@ abstract class ProgramTemplate
 
     /**
      * @param Request $request
+     * @param array|null $additionalRules
      * @return array
      */
-    function validateProgram(Request $request)
+    function validateProgram(Request $request, array $additionalRules = [])
     {
         $v = Validator::make($request->all(), array_merge([
             'major_category_id' => ['required', 'numeric'],
@@ -80,44 +94,35 @@ abstract class ProgramTemplate
             'title' => ['required', 'string', 'max:200'],
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
-        ], $this->additionalRules()))
-            ->sometimes('running_time', ['required', 'string'], function ($input) {
-                return $this->is_online == true;
-            });
-        $validatedData = $v->validate();
+            'is_open' => ['required', 'boolean'],
+        ], $additionalRules));
 
-        return $validatedData;
+        return $v->validate();
     }
 
-    /**
-     * 추가적으로 validation 해야하는 것들.
-     *
-     * @return array
-     */
-    abstract function additionalRules();
-
-    function validateSurveys(Request $request)
+    function validateSurveys(Request $request, array $additionalRules = [])
     {
         $hasChoices = ['singleChoice', 'multipleChoice'];
 
-        $v = Validator::make($request->all(), [
+        $v = Validator::make($request->all(), array_merge([
             'surveys.*.type' => ['required', Rule::exists('survey_categories', 'eng_name')],
             'surveys.*.question' => ['required', 'string'],
             'surveys.*.is_required' => ['required', 'boolean'],
             'surveys.*.choices' => ['sometimes', 'required', 'array'],
-        ]);
+        ], $additionalRules));
+
         $validatedData = $v->validate();
 
         return $validatedData['surveys'];
     }
 
-    function validateTickets(Request $request)
+    function validateTickets(Request $request, array $additionalRules = [])
     {
-        $v = Validator::make($request->all(), [
+        $v = Validator::make($request->all(), array_merge([
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
             'price' => ['nullable', 'numeric'],
-        ]);
+        ], $additionalRules));
         $validatedData = $v->validate();
 
         return $validatedData;
@@ -128,6 +133,7 @@ abstract class ProgramTemplate
      *
      * @param array $data
      * @return Program
+     * @throws Exception 썸네일 저장 혹은 자료 저장 에러
      */
     function storeProgram(array $data)
     {
@@ -139,7 +145,21 @@ abstract class ProgramTemplate
             'minor_category_id' => $data['minor_category_id'],
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
+            'material_id' => $data['material_id'] ?? null,
+            'is_open' => $data['is_open']
         ]);
+
+        $fileService = new ProgramThumbnail($this->program);
+        if ($fileService->moveTempToPublic(File::find($data['thumbnail_id'])) === false) {
+            throw new Exception('PROGRAM THUMBNAIL STORE ERROR');
+        }
+
+        if (isset($data['material_id'])) {
+            $fileService = new ProgramMaterial($this->program);
+            if ($fileService->moveTempToPublic(File::find($data['material_id'])) === false) {
+                throw new Exception('PROGRAM MATERIAL STORE ERROR');
+            }
+        }
 
         return $this->program;
     }
@@ -182,7 +202,7 @@ abstract class ProgramTemplate
                     $choice = Survey::create([
                         'category_id' => SurveyCategory::castStringTypeToId($data['type']),
                         'program_id' => $program->id,
-                        'question' => $choice,
+                        'question' => $choice['question'],
                         'is_required' => $data['is_required'],
                         'parent_id' => $parent->id,
                     ]);

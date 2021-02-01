@@ -109,9 +109,7 @@
                 Faq.update(this.id, data).then(res => {
                     alert(res.data.msg);
                     this.$router.push('/admin/customer/faq');
-                }).catch(err => {
-                    alert('오류');
-                });
+                })
             },
             destroy() {
                 Faq.destroy(this.id).then(res => {

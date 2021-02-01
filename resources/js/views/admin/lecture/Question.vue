@@ -84,7 +84,7 @@
                 Faq.getData(params).then(res => {
                     this.lectures = res.data.question;
                 }).catch(err => {
-                    this.lectures = [];
+                    this.questions = [];
                 });
             },
         }

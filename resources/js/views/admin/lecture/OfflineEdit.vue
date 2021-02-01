@@ -73,16 +73,14 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control" v-model="program_place.capacity">
+                            <input type="number" class="form-control" v-model="capacity">
                         </div>
                     </div>
                     <div class="float-left">
-                        <label class="col-form-label d-block float-left mr-3">신청기간</label>
+                        <label class="col-form-label d-block float-left mr-3" for="">신청기간</label>
                         <date-picker class="mr-3" @setTime="handleSetReceiptStartDate"></date-picker>
                         <time-picker class="mr-3" @setTime="handleSetReceiptStartTime"></time-picker>
-
-                        <span class="float-left mr-3 mt-2">부터</span>
-
+                        <p class="float-left mr-3 mt-2">부터</p>
                         <date-picker class="mr-3" @setTime="handleSetReceiptEndDate"></date-picker>
                         <time-picker @setTime="handleSetReceiptEndTime"></time-picker>
                     </div>
@@ -134,6 +132,8 @@
                                   @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
+
+
         </template>
 
         <template v-slot:footer>
@@ -148,8 +148,6 @@
 </template>
 
 <script>
-
-
 //api
 import Offline from '@/api/admin/lecture/Offline.js'
 
@@ -157,44 +155,83 @@ import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
-    name: 'AdminOfflineCreate',
+    name: 'AdminOfflineEdit',
     mixins: [
         LectureFormMixin,
         OfflineMixin
     ],
+    components: {
+
+    },
+    created() {
+        this.id = this.$route.params.id;
+    },
+    mounted() {
+        this.getEditData();
+    },
+    data() {
+
+    },
+    computed: {},
     methods: {
-        create() {
-            const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
-            const ended_at = `${this.Helper.dateFormatYDM(this.ended_date)} ${this.ended_time}`;
-            const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
-            const receipt_ended_at = `${this.Helper.dateFormatYDM(this.receipt_ended_date)} ${this.receipt_ended_time}`;
+        getEditData() {
+            Offline.getEditData(this.id).then(res => {
+                const result = res.data.programs;
 
-            this.program_place.started_at = started_at;
-            this.program_place.ended_at = ended_at;
-            this.program_place.receipt_started_at = receipt_started_at;
-            this.program_place.receipt_ended_at = receipt_ended_at;
-
+                this.thumbnail_id = result.thumbnail_id;
+                this.major_category_id = result.major_category_id;
+                this.minor_category_id = result.minor_category_id;
+                this.title = result.title;
+                this.lecture_info = result.lecture_info;
+                this.started_date = result.started_date;
+                this.started_time = result.started_time;
+                this.ended_date = result.ended_date;
+                this.ended_time = result.ended_time;
+                this.capacity = result.capacity;
+                this.receipt_started_date = result.receipt_started_date;
+                this.receipt_started_time = result.receipt_started_time;
+                this.receipt_ended_date = result.receipt_ended_date;
+                this.receipt_ended_time = result.receipt_ended_time;
+                this.is_free = result.is_free;
+                this.price = result.price;
+                this.content = result.content;
+                this.surveys = result.surveys;
+                this.is_open = result.is_open;
+                this.program_place = result.program_place;
+            });
+        },
+        update() {
             let data = {
                 thumbnail_id: this.thumbnail.id,
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
                 title: this.title,
                 lecture_info: this.lecture_info,
-
                 is_free: this.is_free,
                 price: this.price,
-
                 content: this.content,
                 surveys: this.surveys,
+                ended_date: this.Helper.dateFormatYDM(this.ended_at),
+                started_date: this.Helper.dateFormatYDM(this.started_at),
+                started_time: this.started_time,
+                ended_time: this.ended_time,
+                receipt_started_date: this.Helper.dateFormatYDM(this.receipt_started_date),
+                receipt_ended_date: this.Helper.dateFormatYDM(this.receipt_ended_date),
+                receipt_started_time: this.receipt_started_time,
+                receipt_ended_time: this.receipt_ended_time,
                 is_open: this.is_open,
-
-                program_place: this.program_place
+                program_place: this.program_place,
             };
-
-             Offline.create(data).then(res => {
-                 alert(res.data.msg);
-                 this.$router.push('/admin/lecture/offline');
-             })
+            Offline.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
+        },
+        destroy() {
+            Offline.destroy(this.id).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
         },
     }
 }

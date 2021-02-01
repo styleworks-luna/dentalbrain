@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 등록" id="lecture">
+    <layout title="온라인 강의 등록" class="online">
         <template v-slot:body>
             <!-- 제목 -->
             <div class="left-wrap">
@@ -62,7 +62,7 @@
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
-                   <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -78,6 +78,7 @@
                         <input type="number"
                                class="form-control"
                                placeholder="신청 금액 입력"
+                               :disabled="is_free == 1"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">
@@ -98,11 +99,13 @@
 
             <single-group name="강의 설정"
                           :isRow="true"
+                          :isRequired="true"
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-setting" v-for="(lecture, index) in lectures">
                         <div class="form-group row">
                             <label class="col-form-label" for="">강의제목</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control lecture-title" v-model="lecture.title">
                             </div>
@@ -110,13 +113,15 @@
 
                         <div class="form-group row">
                             <label class="col-form-label" for="">유튜브 링크</label>
+                            <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <file-upload :inputId="'lecture_file' + lecture.thumbnail.id"
+                            <label class="col-form-label float-left mr-4" for="">썸네일 등록</label>
+                            <file-upload :inputId="'lecture_file' + index"
                                          :initFile="lecture.thumbnail"
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
@@ -132,10 +137,21 @@
                           :size="9">
                 <template v-slot:content>
                     <div class="lecture-file-wrap">
-                    <file-upload :inputId="'file' + material.id"
-                                 :initFile="material"
-                                 @setFile="updateFile"></file-upload>
+                        <file-upload :inputId="'file'"
+                                     :initFile="material"
+                                     @setFile="updateFile"></file-upload>
                     </div>
+                </template>
+            </single-group>
+
+            <!-- 공개 여부 -->
+            <single-group name="공개여부"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="6">
+                <template v-slot:content>
+                    <button-check :propsCheck="is_open"
+                                  @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
         </template>
@@ -144,92 +160,68 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">등록</button>
                 <router-link to="/admin/lecture/online"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
 </template>
 
 <script>
-    // component
-    import FileUpload from '@/components/admin/form/FileUpload.vue';
+// mixin
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
-    import { LectureFormMixin } from '@/mixins/admin/lecture/Form.js';
+//api
+import Online from '@/api/admin/lecture/Online.js'
 
-    //api
-    import Online from '@/api/admin/lecture/Online.js'
+export default {
+    name: 'AdminOnlineCreate',
+    mixins: [
+        LectureFormMixin,
+        OnlineMixin
+    ],
+    data() {
+        return {}
+    },
+    computed: {},
+    methods: {
+        create() {
+            let lectures = [];
 
-    export default {
-        name: 'AdminOnlineCreate',
-        components: {
-            'file-upload': FileUpload,
-        },
-        mixins: [
-            LectureFormMixin,
-        ],
-        data() {
-            return {
-                material: '',
-                running_time: '',
-                lectures: [
-                    {
-                        title: '',
-                        link: '',
-                        thumbnail: {}
-                    },
-                ]
-            }
-        },
-        computed: {
 
-        },
-        methods: {
-            create() {
-                let lectures = [];
-
-                this.lectures.forEach(lecture => {
-                    lectures.push({
-                        title: lecture.title,
-                        link: lecture.link,
-                        thumbnail_id : lecture.thumbnail.id
-                    })
-                });
-
-                let data = {
-                    material_id: this.material.id,
-                    thumbnail_id: this.thumbnail.id,
-                    title: this.title,
-                    running_time: this.running_time,
-                    lecture_info: this.lecture_info,
-                    is_free: this.is_free,
-                    price: this.price,
-                    content: this.content,
-                    surveys: this.surveys,
-                    lectures: lectures,
-                    major_category_id: this.major_category_id,
-                    minor_category_id: this.minor_category_id,
-                };
-                console.log(data);
-                Online.create(data).then(res => {
-                    alert(res.data.msg);
-                    this.$router.push('/admin/lecture/online');
-                }).catch(err => {
-                    alert('오류');
-                });
-            },
-            addLecture() {
-                this.lectures.push({
-                    title: '',
-                    link: '',
-                    thumbnail: '',
+            this.lectures.forEach(lecture => {
+                lectures.push({
+                    title: lecture.title,
+                    link: lecture.link,
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
                 })
-            },
-            updateLectureFile (file, index) {
-                this.lectures[index].thumbnail = file;
-            },
-            updateFile (data) {
-                this.material = data;
-            },
-        }
+            });
+
+            let data = {
+                material_id: this.material.id,
+                thumbnail_id: this.thumbnail.id,
+                title: this.title,
+                running_time: this.running_time,
+                lecture_info: this.lecture_info,
+                is_free: this.is_free,
+                price: this.price,
+                content: this.content,
+                surveys: this.surveys,
+                lectures: lectures,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+                is_open: this.is_open,
+            };
+
+            console.log(data);
+
+            Online.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/online');
+            })
+        },
+
     }
+}
 </script>

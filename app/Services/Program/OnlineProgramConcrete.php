@@ -4,8 +4,10 @@
 namespace App\Services\Program;
 
 
+use App\Models\File;
 use App\Models\Program\Lecture;
 use App\Models\Program\Program;
+use App\Services\File\LectureThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,13 +28,16 @@ class OnlineProgramConcrete extends ProgramTemplate
     {
         $returnableDataSet = [];
         foreach ($dataSet as $data) {
-            $returnableDataSet[] = Lecture::create([
+            $lecture = Lecture::create([
                 'program_id' => $program->id,
-                'thumbnail_id' => $data['file_id'] ?? null,
+                'thumbnail_id' => $data['thumbnail_id'] ?? null,
                 'youtube_id' => Lecture::getYoutubeIdFromUrl($data['link']),
                 'url' => $data['link'],
                 'title' => $data['title'],
             ]);
+            $fileService = new LectureThumbnail($lecture);
+            $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
+            $returnableDataSet[] = $lecture;
         }
         return $returnableDataSet;
     }
@@ -53,13 +58,5 @@ class OnlineProgramConcrete extends ProgramTemplate
         $validatedData = $v->validate();
 
         return $validatedData['lectures'];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    function additionalRules()
-    {
-        return ['running_time' => ['required', 'string']];
     }
 }

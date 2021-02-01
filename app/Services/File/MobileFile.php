@@ -17,22 +17,17 @@ class MobileFile extends FileTemplate
         parent::__construct($banner);
     }
 
-    function getPublicPath(string $fileName)
+    protected function getSavePath(string $fileName)
     {
         $banner = $this->model;
         return $path = 'public/banners/' . $banner->id . '/mobile/' . $fileName;
     }
 
-    function deleteFileInDB()
+    protected function deleteFileInDB()
     {
         $banner = $this->model;
         $path = $banner->mobileFile->path;
         $banner->mobileFile->delete();
         return $path;
-    }
-
-    public function getPersistenceFilePath($parameter = [])
-    {
-        // TODO: Implement getPersistenceFilePath() method.
     }
 }

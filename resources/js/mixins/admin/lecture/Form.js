@@ -4,6 +4,7 @@ import Thumbnail from '@/components/admin/form/Thumbnail.vue';
 import Editor from '@/components/admin/form/Editor.vue';
 import AdditionalInformation from '@/components/admin/form/AdditionalInformation.vue'
 import SelectBox from '@/components/common/SelectBox.vue';
+import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 
 // api
 import Common from '@/api/admin/lecture/Common.js';
@@ -16,6 +17,7 @@ export const LectureFormMixin = {
         'thumbnail': Thumbnail,
         'editor': Editor,
         'additional-information': AdditionalInformation,
+        'button-check': ButtonCheck,
     },
     data() {
         return {
@@ -29,7 +31,8 @@ export const LectureFormMixin = {
             content: '',
             surveys: [],
             majorCategoryOptions: [],
-            minorCategoryOptions: []
+            minorCategoryOptions: [],
+            is_open: false,
         }
     },
     mounted() {
@@ -41,7 +44,6 @@ export const LectureFormMixin = {
         handleSetThumbnail(file) {
             this.thumbnail = file;
         },
-
         handleSetMajorCategoryId(id) {
             this.major_category_id = id;
         },
@@ -59,6 +61,9 @@ export const LectureFormMixin = {
                 this.majorCategoryOptions = major;
                 this.minorCategoryOptions = minor;
             });
-        }
+        },
+        handleSetIsOpen(checked) {
+            this.is_open = checked;
+        },
     }
 };

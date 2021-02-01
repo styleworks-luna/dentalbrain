@@ -12,13 +12,13 @@ class ProgramThumbnail extends FileTemplate
         parent::__construct($program);
     }
 
-    function getPublicPath(string $fileName)
+    protected function getSavePath(string $fileName)
     {
         $program = $this->model;
         return $path = 'public/program/' . $program->id . '/thumbnail/' . $fileName;
     }
 
-    function deleteFileInDB()
+    protected function deleteFileInDB()
     {
         $program = $this->model;
         $path = $program->thumbnail->path;

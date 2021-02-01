@@ -8,6 +8,7 @@
 
 namespace App\Services\File;
 
+use App\Models\File;
 use App\Models\Manage\Banner;
 
 class DesktopFile extends FileTemplate
@@ -17,22 +18,17 @@ class DesktopFile extends FileTemplate
         parent::__construct($banner);
     }
 
-    function getPublicPath(string $fileName)
+    protected function getSavePath(string $fileName)
     {
         $banner = $this->model;
         return $path = 'public/banners/' . $banner->id . '/desktop/' . $fileName;
     }
 
-    function deleteFileInDB()
+    protected function deleteFileInDB()
     {
         $banner = $this->model;
         $path = $banner->desktopFile->path;
         $banner->desktopFile->delete();
         return $path;
-    }
-
-    public function getPersistenceFilePath($parameter = [])
-    {
-        // TODO: Implement getPersistenceFilePath() method.
     }
 }

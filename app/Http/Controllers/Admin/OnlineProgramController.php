@@ -18,6 +18,11 @@ class OnlineProgramController extends Controller
         $this->onlineConcrete = new OnlineProgramConcrete();
     }
 
+    public function getCategories()
+    {
+        return $this->onlineConcrete->getCategories();
+    }
+
     public function index()
     {
         return $this->onlineConcrete->getPrograms();
@@ -30,7 +35,11 @@ class OnlineProgramController extends Controller
 
     public function store(Request $request)
     {
-        $programData = $this->onlineConcrete->validateProgram($request);
+        $programData = $this->onlineConcrete->validateProgram($request,
+            [
+                'material_id' => ['sometimes', 'required', 'numeric'],
+                'running_time' => ['required', 'string']
+            ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
@@ -56,14 +65,22 @@ class OnlineProgramController extends Controller
         ]);
     }
 
-    function additionalValidate(Request $request)
+    public function edit(Program $program)
     {
-        // 추가적으로 validation 필요한 것들.
-        return [];
+        return response()->json(
+            array_merge($this->onlineConcrete->getProgramDetail($program),
+                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+        );
     }
 
-    public function getCategories()
+    public function update(Request $request, Program $program)
     {
-        return $this->onlineConcrete->getCategories();
+        $programData = $this->onlineConcrete->validateProgram($request, [
+            'material_id' => ['sometimes', 'required', 'numeric'],
+            'running_time' => ['required', 'string']
+        ]);
+        $ticketData = $this->onlineConcrete->validateTickets($request);
+        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
     }
 }
