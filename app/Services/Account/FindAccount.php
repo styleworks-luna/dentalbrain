@@ -15,6 +15,15 @@ use Illuminate\Support\Facades\Hash;
 class FindAccount{
     public function findId(Request $request){
         $validatedData = $request->validate([
+            'login_id' => 'required'
+        ]);
+
+        $user = User::where('login_id',$validatedData['login_id'])->first();
+        return isset($user) && !empty($user);
+    }
+
+    public function findIdWithNameAndPhone(Request $request){
+        $validatedData = $request->validate([
             'name' => 'required',
             'phone' => 'required | numeric'
         ]);
@@ -27,7 +36,7 @@ class FindAccount{
         }
     }
 
-    public function findPassword(Request $request){
+    public function checkPasswordOfCurrentUser(Request $request){
         $validatedData = $request->validate([
             'password' => 'required| min:6'
         ]);

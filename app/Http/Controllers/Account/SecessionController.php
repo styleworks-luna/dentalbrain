@@ -19,7 +19,7 @@ class SecessionController extends Controller
     public function userSecession(Request $request)
     {
         $findPassword = new FindAccount();
-        if($findPassword->findPassword($request)){
+        if($findPassword->checkPasswordOfCurrentUser($request)){
             Auth::user()->delete();
             return redirect('/')->with('alert','회원 탈퇴 되었습니다.');
         }else{

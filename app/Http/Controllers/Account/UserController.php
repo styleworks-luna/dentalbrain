@@ -80,6 +80,6 @@ class UserController extends Controller
 
     public function findId(Request $request){
         $findAccount = new FindAccount();
-        return $findAccount->findId($request);
+        return $findAccount->findIdWithNameAndPhone($request);
     }
 }
