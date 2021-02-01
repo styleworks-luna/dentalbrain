@@ -244,7 +244,7 @@ export default {
 
             console.log(data);
 
-            Online.update(data).then(res => {
+            Online.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             })

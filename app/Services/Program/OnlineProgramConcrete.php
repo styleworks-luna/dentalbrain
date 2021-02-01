@@ -35,9 +35,12 @@ class OnlineProgramConcrete extends ProgramTemplate
                 'url' => $data['link'],
                 'title' => $data['title'],
             ]);
-            $fileService = new LectureThumbnail($lecture);
-            $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
+            if (isset($data['thumbnail_id'])) {
+                $fileService = new LectureThumbnail($lecture);
+                $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
+            }
             $returnableDataSet[] = $lecture;
+
         }
         return $returnableDataSet;
     }
