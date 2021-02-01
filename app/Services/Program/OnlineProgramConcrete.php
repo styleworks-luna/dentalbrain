@@ -31,8 +31,8 @@ class OnlineProgramConcrete extends ProgramTemplate
             $lecture = Lecture::create([
                 'program_id' => $program->id,
                 'thumbnail_id' => $data['thumbnail_id'] ?? null,
-                'youtube_id' => Lecture::getYoutubeIdFromUrl($data['link']),
-                'url' => $data['link'],
+                'youtube_id' => Lecture::getYoutubeIdFromUrl($data['url']),
+                'url' => $data['url'],
                 'title' => $data['title'],
             ]);
             if (isset($data['thumbnail_id'])) {
@@ -55,8 +55,8 @@ class OnlineProgramConcrete extends ProgramTemplate
     {
         $v = Validator::make($request->all(), [
             'lectures.*.title' => ['required', 'string'],
-            'lectures.*.link' => ['required', 'url'],
-            'lectures.*.thumbnail_id' => ['sometimes', 'required', 'numeric'],
+            'lectures.*.url' => ['required', 'url'],
+            'lectures.*.thumbnail_id' => ['nullable', 'numeric'],
         ]);
         $validatedData = $v->validate();
 
