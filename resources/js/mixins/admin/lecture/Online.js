@@ -13,18 +13,13 @@ export const OnlineMixin = {
             lectures: [
                 {
                     title: '',
-                    link: '',
+                    url: '',
                     thumbnail: {
 
                     }
                 },
             ]
         }
-    },
-    mounted() {
-
-    },
-    computed: {
     },
     methods: {
         addLecture() {
