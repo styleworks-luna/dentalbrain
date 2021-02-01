@@ -44,5 +44,16 @@ export const Helper = {
         }
 
         return `${year}-${month}-${day}`;
-    }
+    },
+    dateFullFormat(date) {
+        date = date.split(' ');
+        let dateArr = date[0].split('-');
+        let timeArr = date[1].split(':');
+        const format = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], timeArr[0], timeArr[1], 0);
+
+        return format;
+    },
+    timeFormat(date) {
+        return `${date.getHours()} ${date.getMinutes()}`;
+    },
 };
