@@ -1,5 +1,5 @@
 <template>
-    <layout title="온라인 강의 현황">
+    <layout title="오프라인 강의 수강 신청 현황">
         <template v-slot:button>
 
         </template>
@@ -47,10 +47,10 @@ import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 //api
-import Online from '@/api/admin/lecture/Online.js'
+import Offline from '@/api/admin/lecture/Offline.js'
 
 export default {
-    name: 'AdminOnlineStatus',
+    name: 'AdminOfflineStatus',
     components: {
         'table-grid': Table,
         'button-open': ButtonOpen
@@ -90,10 +90,6 @@ export default {
                     text: '결제금액'
                 },
                 {
-                    name: 'watch',
-                    text: '시청기간'
-                },
-                {
                     name: 'additional',
                     text: '추가정보'
                 },
@@ -118,14 +114,14 @@ export default {
                 page: page
             };
 
-            Online.getData(params).then(res => {
+            Offline.getData(params).then(res => {
                 this.lectures = res.data.programs;
             }).catch(err => {
                 this.lectures = [];
             });
         },
         handleSetStatus(id) {
-            Online.setStatus(id).then(res => {
+            Offline.setStatus(id).then(res => {
                 this.getData();
                 alert(res.data.msg);
             })

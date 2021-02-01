@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -53,5 +54,12 @@ class LoginController extends Controller
     {
         $user->last_login_at = now();
         $user->save();
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => ['※ 입력하신 아이디 또는 비밀번호가 일치하지 않습니다. 다시 한번 확인하신 후 로그인해주세요.'],
+        ]);
     }
 }

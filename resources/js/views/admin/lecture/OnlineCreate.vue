@@ -199,22 +199,25 @@ export default {
             });
 
             let data = {
-                material_id: this.material.id,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+
                 thumbnail_id: this.thumbnail.id,
                 title: this.title,
                 running_time: this.running_time,
+
                 lecture_info: this.lecture_info,
-                is_free: this.is_free,
                 price: this.price,
+                is_free: this.is_free,
+                is_open: this.is_open,
+
                 content: this.content,
+
+                material_id: this.material.id,
+
                 surveys: this.surveys,
                 lectures: lectures,
-                major_category_id: this.major_category_id,
-                minor_category_id: this.minor_category_id,
-                is_open: this.is_open,
             };
-
-            console.log(data);
 
             Online.create(data).then(res => {
                 alert(res.data.msg);

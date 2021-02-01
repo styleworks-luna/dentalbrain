@@ -197,21 +197,29 @@ export default {
                 const ticket = res.data.ticket;
                 const program = res.data.program;
 
-                this.material_id = program.material_id;
-                this.material = program.material;
+                this.major_category_id = program.major_category_id;
+                this.minor_category_id = program.minor_category_id;
+
                 this.thumbnail_id = program.thumbnail_id;
                 this.thumbnail = program.thumbnail;
+
                 this.title = program.title;
                 this.running_time = program.running_time;
+
+                this.content = program.content;
+
+                this.material_id = program.material_id;
+                this.material = program.material;
+
+                this.is_open = program.is_open;
+
                 this.lecture_info = ticket.name;
                 this.is_free = ticket.is_free;
                 this.price = ticket.price;
-                this.content = program.content;
+
                 this.surveys = res.data.surveys;
+
                 this.lectures = res.data.lectures;
-                this.major_category_id = program.major_category_id;
-                this.minor_category_id = program.minor_category_id;
-                this.is_open = program.is_open;
             });
         },
         update() {
@@ -227,24 +235,27 @@ export default {
             });
 
             let data = {
-                material_id: this.material.id,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+
                 thumbnail_id: this.thumbnail.id,
                 title: this.title,
                 running_time: this.running_time,
+
                 lecture_info: this.lecture_info,
-                is_free: this.is_free,
                 price: this.price,
+                is_free: this.is_free,
+                is_open: this.is_open,
+
                 content: this.content,
+
+                material_id: this.material.id,
+
                 surveys: this.surveys,
                 lectures: lectures,
-                major_category_id: this.major_category_id,
-                minor_category_id: this.minor_category_id,
-                is_open: this.is_open,
             };
 
-            console.log(data);
-
-            Online.update(data).then(res => {
+            Online.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             })

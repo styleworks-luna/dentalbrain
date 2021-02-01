@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 현황">
+    <layout :title="`수강 신청 신청 현황`">
         <template v-slot:button>
 
         </template>
@@ -47,10 +47,10 @@ import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 //api
-import Offline from '@/api/admin/lecture/Offline.js'
+import Online from '@/api/admin/lecture/Online.js'
 
 export default {
-    name: 'AdminOfflineStatus',
+    name: 'AdminOnlineStudent',
     components: {
         'table-grid': Table,
         'button-open': ButtonOpen
@@ -59,12 +59,8 @@ export default {
         return {
             lectures: {
                 data: []
-            },
-            page: 1
+            }
         }
-    },
-    mounted() {
-        this.getData();
     },
     computed: {
         tableCol() {
@@ -90,6 +86,10 @@ export default {
                     text: '결제금액'
                 },
                 {
+                    name: 'watch',
+                    text: '시청기간'
+                },
+                {
                     name: 'additional',
                     text: '추가정보'
                 },
@@ -105,26 +105,12 @@ export default {
         }
     },
     methods: {
-        getData(page = this.page) {
-            if (this.Helper.nullCheck(page)) {
-                page = 1;
-            }
-
-            let params = {
-                page: page
-            };
-
-            Offline.getData(params).then(res => {
-                this.lectures = res.data.programs;
+        getData() {
+            Online.getStudentsData().then(res => {
+                console.log(res);
             }).catch(err => {
                 this.lectures = [];
             });
-        },
-        handleSetStatus(id) {
-            Offline.setStatus(id).then(res => {
-                this.getData();
-                alert(res.data.msg);
-            })
         }
     }
 }

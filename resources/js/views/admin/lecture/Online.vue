@@ -17,8 +17,8 @@
                     <td>{{ slotProps.row.title }} </td>
                     <td>
                         {{ slotProps.row.students_count }}명
-                        <router-link :to="`/admin/lecture/online/status`"
-                                    class="btn btn-info ml-4">
+                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
+                                     class="btn btn-info ml-4">
                             보기
                         </router-link>
                     </td>
@@ -28,7 +28,7 @@
                             수정</router-link>
                         <button-open :isOpen="slotProps.row.is_open"
                                      class="btn-danger text-white border-danger"
-                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                                     @setStatus="handleSetStudent(slotProps.row.id)"></button-open>
                     </td>
                 </template>
             </table-grid>
@@ -116,8 +116,8 @@
                     this.lectures = [];
                 });
             },
-            handleSetStatus(id) {
-                Online.setStatus(id).then(res => {
+            handleSetStudent(id) {
+                Online.setStudent(id).then(res => {
                     this.getData();
                     alert(res.data.msg);
                 })
