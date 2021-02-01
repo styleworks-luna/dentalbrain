@@ -194,7 +194,7 @@ export default {
                 lectures.push({
                     title: lecture.title,
                     link: lecture.link,
-                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
+                    thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null
                 })
             });
 
@@ -216,7 +216,7 @@ export default {
                 material_id: this.material.id,
 
                 surveys: this.surveys,
-                lectures: lectures,
+                lectures: lectures
             };
 
             Online.create(data).then(res => {
@@ -224,7 +224,6 @@ export default {
                 this.$router.push('/admin/lecture/online');
             })
         },
-
     }
 }
 </script>

@@ -230,7 +230,7 @@ export default {
                     id: lecture.id,
                     title: lecture.title,
                     link: lecture.url,
-                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null,
+                    thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null,
                 })
             });
 
