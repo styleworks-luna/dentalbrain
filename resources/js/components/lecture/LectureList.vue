@@ -1,7 +1,7 @@
 <template>
     <div class="lecture-contents">
         <ul>
-            <li class="lecture-card" v-for="lecture in lectures">
+            <li class="lecture-card" v-for="lecture in lectures" :key="lecture.id">
                 <a href="">
                     <img :src="lecture.thumbnail.url" alt="">
                     <div class="lecture-description">
@@ -20,31 +20,20 @@
 </template>
 
 <script>
-import Lecture from '@/api/lecture/Lecture.js'
-
 export default {
     name: 'LectureList',
+    props: {
+        'list' : Array
+    },
     data() {
         return {
-            category_id: 1,
             lectures: [],
         }
     },
-    created() {
-
-    },
-    mounted() {
-        this.getData();
-    },
-    methods: {
-        getData() {
-            Lecture.getData(this.category_id).then(res => {
-                console.log(res);
-                this.lectures = res.data;
-            }).catch(err => {
-                this.lectures = [];
-            });
-        },
+    watch: {
+        lecture() {
+            this.lectures = this.list;
+        }
     }
 }
 
