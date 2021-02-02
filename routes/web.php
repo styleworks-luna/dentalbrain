@@ -178,7 +178,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
-
+        Route::get('/', 'Main\MainController@lectures');
         Route::group(['prefix' => '{program}'], function () {
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');
