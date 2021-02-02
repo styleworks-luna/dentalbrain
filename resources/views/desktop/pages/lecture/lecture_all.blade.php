@@ -17,7 +17,7 @@
 
         <section class="lecture-wrap">
             <div class="container">
-            <lecture-all></lecture-all>
+            <lecture-all :is_pagination="true" :per_page="12"></lecture-all>
             </div>
         </section>
 

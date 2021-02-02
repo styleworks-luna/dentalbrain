@@ -1,19 +1,17 @@
 <template>
     <section class="lecture">
         <lecture-navigation @setMenu="handleSetMenu"></lecture-navigation>
-        <lecture-order></lecture-order>
+        <lecture-order v-if="is_pagination"></lecture-order>
         <lecture-list :list="list"></lecture-list>
 
-
-        <div class="paging-wrap text-center" v-if="this.page>=2">
-        <nav class="d-inline-block">
-            <pagination :data="list" @pagination-change-page="getData" class="mb-0">
-                <span slot="prev-nav">‹</span>
-                <span slot="next-nav">›</span>
-            </pagination>
-        </nav>
+        <div class="paging-wrap text-center" v-if="is_pagination">
+            <nav class="d-inline-block">
+                <pagination :data="list" @pagination-change-page="getData" class="mb-0">
+                    <span slot="prev-nav">‹</span>
+                    <span slot="next-nav">›</span>
+                </pagination>
+            </nav>
         </div>
-
     </section>
 </template>
 
@@ -32,11 +30,14 @@ export default {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
     },
+    props: {
+        'is_pagination': Boolean,
+        'per_page': Number,
+    },
     data() {
         return {
             category_id: 1,
             list: [],
-            per_page: 12,
             page: 1
         }
     },
@@ -48,13 +49,13 @@ export default {
             this.category_id = category_id;
             this.getData()
         },
-        getData(page=this.page) {
+        getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
 
             let params = {
-                category_id : this.category_id,
+                category_id: this.category_id,
                 per_page: this.per_page,
                 page: page
             };

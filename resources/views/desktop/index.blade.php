@@ -43,7 +43,7 @@
                 </div>
             </section>
 
-            <lecture></lecture>
+            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
 
             <section class="ad">
                 @if($bar)
