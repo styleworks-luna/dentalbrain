@@ -32,7 +32,7 @@ class OfflineProgramController extends Controller
     {
         return response()->json(
             array_merge($this->offlineConcrete->getProgramDetail($program),
-                ['place' => $program->place()])
+                ['place' => $program->place ])
         );
     }
 
