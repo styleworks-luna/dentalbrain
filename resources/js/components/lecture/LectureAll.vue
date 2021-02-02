@@ -4,14 +4,14 @@
         <lecture-order></lecture-order>
         <lecture-list :list="list"></lecture-list>
 
-        <div class="paging-wrap text-center">
-        <nav class="d-inline-block">
-            <pagination :data="list" @pagination-change-page="getData" class="mb-0">
-                <span slot="prev-nav">‹</span>
-                <span slot="next-nav">›</span>
-            </pagination>
-        </nav>
-        </div>
+<!--        <div class="paging-wrap text-center">-->
+<!--        <nav class="d-inline-block">-->
+<!--            <pagination :data="list" @pagination-change-page="getData" class="mb-0">-->
+<!--                <span slot="prev-nav">‹</span>-->
+<!--                <span slot="next-nav">›</span>-->
+<!--            </pagination>-->
+<!--        </nav>-->
+<!--        </div>-->
 
     </section>
 </template>
@@ -44,18 +44,13 @@ export default {
     methods: {
         handleSetMenu(category_id) {
             this.category_id = category_id;
-            console.log(this.category_id);
             this.getData()
         },
-        getData(page = this.page) {
-            if (this.Helper.nullCheck(page)) {
-                page = 1;
-            }
-            let params = {
-                page: page
-            };
-            Lecture.getData(params,this.category_id).then(res => {
-                console.log(res);
+        getData() {
+            Lecture.getData({
+                category_id : this.category_id,
+                page: this.page
+            }).then(res => {
                 this.list = res.data;
             }).catch(err => {
                 this.list = [];
