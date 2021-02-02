@@ -8,7 +8,6 @@ use App\Models\Manage\Faq;
 use App\Models\Manage\Notice;
 use App\Models\Program\Program;
 use Illuminate\Http\Request;
-use App\Models\Manage\Faq;
 
 class MainController extends Controller
 {
