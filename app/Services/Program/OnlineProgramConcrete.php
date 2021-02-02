@@ -55,7 +55,6 @@ class OnlineProgramConcrete extends ProgramTemplate
      */
     public function validateLectures($request, array $additionalRules = [])
     {
-        logger($request->all());
         $v = Validator::make($request->all(), array_merge([
             'lectures.*.title' => ['required', 'string'],
             'lectures.*.url' => ['required', 'url'],
@@ -68,8 +67,6 @@ class OnlineProgramConcrete extends ProgramTemplate
 
     public function updateLectures(Program $program, array $dataSet)
     {
-        logger($dataSet);
-
         $returnableDataSet = [];
         $originalLectureIds = $program->lectures()->pluck('id');
 

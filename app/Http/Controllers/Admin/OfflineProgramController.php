@@ -72,7 +72,6 @@ class OfflineProgramController extends Controller
 
     public function update(Request $request, Program $program)
     {
-        logger($request->all());
         $programData = $this->offlineConcrete->validateProgram($request);
         $ticketData = $this->offlineConcrete->validateTickets($request);
         $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [

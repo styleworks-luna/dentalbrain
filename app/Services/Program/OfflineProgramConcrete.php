@@ -45,7 +45,6 @@ class OfflineProgramConcrete extends ProgramTemplate
 
     public function storePlace(Program $program, array $data)
     {
-        logger($data);
         return ProgramPlace::create([
             'program_id' => $program->id,
 
