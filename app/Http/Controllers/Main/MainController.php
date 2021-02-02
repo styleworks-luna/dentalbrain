@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Banner;
 
+use App\Models\Manage\Notice;
 use App\Models\Program\Program;
 use Illuminate\Http\Request;
 use App\Models\Manage\Faq;
