@@ -224,13 +224,12 @@ export default {
             let lectures = [];
 
             this.lectures.forEach(lecture => {
-
                 lectures.push({
                     id: lecture.id,
                     title: lecture.title,
                     url: lecture.url,
-                    thumbnail_id: lecture.thumbnail_id || null
-                })
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null
+                });
             });
 
             let data = {
