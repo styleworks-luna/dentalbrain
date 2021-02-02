@@ -54,6 +54,17 @@ export const Helper = {
         return format;
     },
     timeFormat(date) {
-        return `${date.getHours()} ${date.getMinutes()}`;
+        let hour = String(date.getHours());
+        let minute = String(date.getMinutes());
+
+        if (hour.length === 1) {
+            hour = `0${hour}`;
+        }
+
+        if (minute.length === 1) {
+            minute = `0${minute}`;
+        }
+
+        return `${hour}:${minute}`;
     },
 };

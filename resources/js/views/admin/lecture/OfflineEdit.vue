@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 등록" class="offline">
+    <layout title="오프라인 강의 수정" class="offline">
         <template v-slot:body>
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
@@ -190,15 +190,13 @@ export default {
                 const program = res.data.program;
                 const ticket = res.data.ticket;
 
-                console.log(res);
-
                 this.thumbnail = program.thumbnail;
 
                 this.major_category_id = program.major_category_id;
                 this.minor_category_id = program.minor_category_id;
                 this.title = program.title;
-                this.lecture_info = program.lecture_info;
 
+                this.lecture_info = ticket.name;
                 this.is_free = ticket.is_free;
                 this.price = ticket.price;
 
