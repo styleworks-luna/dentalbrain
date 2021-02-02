@@ -19,7 +19,7 @@ class OnlineProgramConcrete extends ProgramTemplate
         $is_online = true;
         parent::__construct($is_online);
     }
-    
+
     /**
      * @param Program $program
      * @param array $dataSet
