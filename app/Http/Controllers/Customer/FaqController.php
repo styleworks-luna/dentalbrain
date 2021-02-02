@@ -9,7 +9,7 @@ class FaqController extends Controller
 {
     public function index()
     {
-        $faqs = Faq::all();
+        $faqs = Faq::public()->paginate(10);
         return view(viewPrefix() . 'pages.service.faq', ['faqs' => $faqs]);
     }
 }

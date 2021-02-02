@@ -9,8 +9,8 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Services\ViewCount\ViewCountImpl;
 use App\Models\Manage\Notice;
+use App\Services\ViewCount\ViewCountImpl;
 
 /**
  * Class NoticeController
@@ -20,7 +20,7 @@ class NoticeController extends Controller
 {
     public function index()
     {
-        $notices = Notice::orderBy('created_at', 'desc')->simplePaginate(10);
+        $notices = Notice::public()->paginate(10);
         return view(viewPrefix() . 'pages.service.notice', ['notices' => $notices]);
     }
 
