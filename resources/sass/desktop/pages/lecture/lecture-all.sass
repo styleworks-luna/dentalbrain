@@ -143,7 +143,7 @@
                     color: $page-color
                     letter-spacing: 0.8px
 
-        .lecture-card:hover
+        .lecture-card a:hover
             img
                 +border(1px solid $page-color)
 
@@ -157,3 +157,21 @@
         .lecture-card:nth-child(2),
         .lecture-card:nth-child(3)
             +margin(top 0)
+
+    .paging-wrap
+        +margin(top 80px)
+
+        .prev-nav,
+        .next-nav
+            +size(30px, 30px)
+            +border(1px solid $border-color-light)
+            +border-radius(50%)
+            content: ''
+
+        .prev-nav
+            +padding(7px 13px 7px 15px)
+            +background('/images/desktop/global/icon_left_arrow_purple.png',no-repeat, 10px center)
+
+        .next-nav
+            +padding(7px 13px 7px 15px)
+            +background('/images/desktop/global/icon_right_arrow_purple.png',no-repeat, 12px center)

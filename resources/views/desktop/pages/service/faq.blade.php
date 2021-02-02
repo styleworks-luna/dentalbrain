@@ -24,7 +24,7 @@
                         @forelse($faqs as $key => $value)
                             <li class="faq-content">
                                 <div class="question-information">
-                                    <p class="sort">{{$value->category_name}}</p>
+                                    <p class="sort">강의신청</p>
                                     <div class="question">
                                         <em>Q</em>
                                         <a href="" class="question-content">{{ $value->question }}</a>

@@ -15,8 +15,8 @@
                     <td>{{ slotProps.row.major_category_name }}</td>
                     <td>{{ slotProps.row.minor_category_name }}</td>
                     <td>{{ slotProps.row.title }} </td>
-                    <td>{{ slotProps.row.place.started_at }}</td>
-                    <td>{{ slotProps.row.place.ended_at }}</td>
+                    <td>{{ slotProps.row.started_at }}</td>
+                    <td>{{ slotProps.row.ended_at }}</td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/offline/${slotProps.row.id}/student`"
@@ -50,16 +50,11 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
-import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
-
-//api
-import Offline from '@/api/admin/lecture/Offline.js'
 
 export default {
     name: 'AdminOffline',
     components: {
-        'table-grid': Table,
-        'button-open': ButtonOpen
+        'table-grid': Table
     },
     data() {
         return {
@@ -68,9 +63,6 @@ export default {
             },
             page: 1
         }
-    },
-    mounted() {
-        this.getData();
     },
     computed: {
         tableCol() {
@@ -120,14 +112,14 @@ export default {
                 page: page
             };
 
-            Offline.getData(params).then(res => {
-                this.lectures = res.data.programs;
+            Faq.getData(params).then(res => {
+                this.lectures = res.data.lecture;
             }).catch(err => {
                 this.lectures = [];
             });
         },
         handleSetStudent(id) {
-            Offline.setStudent(id).then(res => {
+            Online.setStudent(id).then(res => {
                 this.getData();
                 alert(res.data.msg);
             })

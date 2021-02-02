@@ -1,0 +1,4 @@
+GET http://dbv2020.onoffmix.test/api/lectures?category_id=9
+Accept: application/json
+
+###

@@ -25,11 +25,14 @@ class UserController
         $this->search = new SearchService(User::query());
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        return response()->json([
-            'user' => $this->search($request)
-        ]);
+        return response()->json(
+            ['user' => User::whereNotNull('id')
+                ->orderByDesc('id')
+                ->paginate(10)
+            ]
+        );
     }
 
     public function edit(User $user)
@@ -75,7 +78,7 @@ class UserController
         return response()->json(['userJob' => UserJobName::all()]);
     }
 
-    private function search(Request $request){
+    public function search(Request $request){
         $this->setJoin($request->input('job_name_id'));
 
         $this->search
@@ -84,11 +87,13 @@ class UserController
             ->addKeyword('phone',$request->keywrod)
             ->addKeyword('email',$request->keyword);
 
-        $result = $this->search->search()->orderBy('id','desc')->paginate('20');
-        return $result;
+        $result = $this->search->search()->get();
+        return response()->json([
+            'search' =>$result
+        ]);
     }
 
-    private function setJoin($jobNameId){
+    public function setJoin($jobNameId){
         if(isset($jobNameId) && is_numeric($jobNameId)){
             $this->search->setJoinModel('job')->addJoinOption('job_name_id','=',$jobNameId)->join();
         }

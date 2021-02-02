@@ -30,10 +30,12 @@ class BannerController extends Controller
         $this->search = new SearchService(Banner::query());
     }
 
-    public function index(Request $request)
+    public function index()
     {
         return response()->json([
-            'banners' => $this->search($request)
+            'banners' => Banner::whereNotNull('id')
+                ->orderByDesc('id')
+                ->paginate(10)
         ]);
     }
 
@@ -134,23 +136,23 @@ class BannerController extends Controller
     }
 
 
-    private function search(Request $request){
+    public function search(Request $request){
         $this->search->addKeyword('link',$request->keyword);
         $this->addCategoryDate($request->date);
         $this->addPosition($request->position);
-        $result = $this->search->search()->orderBy('id','desc')->paginate('20');
+        $result = $this->search->search()->paginate('20');
 
-        return $result;
+        return response()->json(['search' => $result]);
     }
 
-    private function addCategoryDate(string $date = null){
+    public function addCategoryDate(string $date = null){
         if(isset($date) && DateTime::createFromFormat('Y-m-d', $date) !== false){
             $this->search->addCategory('started_at','<=',$date);
             $this->search->addCategory('ended_at','>=',$date);
         }
     }
 
-    private function addPosition(string $position = null){
+    public function addPosition(string $position = null){
         if(isset($position) && is_numeric($position)){
             $this->search->addCategory('position','=',$position);
         }

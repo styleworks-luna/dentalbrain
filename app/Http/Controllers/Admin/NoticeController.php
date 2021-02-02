@@ -19,9 +19,11 @@ class NoticeController extends Controller
         $this->search = new SearchService(Notice::query());
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $notice = $this->search($request);
+        $notice = Notice::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
         return response()->json([
             'notice' => $notice,
         ]);
@@ -86,12 +88,12 @@ class NoticeController extends Controller
         return $statusChangeImpl->statusChange($notice, 'is_open');
     }
 
-    private function search(Request $request){
+    public function search(Request $request){
         $this->search
             ->addKeyword('title',$request->keyword)
             ->addKeyword('content',$request->keyword);
 
-        $result = $this->search->search()->orderBy('id','desc')->paginate('10');
-        return $result;
+        $result = $this->search->search()->paginate('10');
+        return response()->json(['search' =>$result]);
     }
 }

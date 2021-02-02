@@ -1,110 +1,41 @@
 <template>
     <div class="lecture-contents">
         <ul>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
+            <li class="lecture-card" v-for="lecture in lectures" :key="lecture.id">
+                <a href="">
+                    <img :src="lecture.thumbnail.url" alt="">
+                    <div class="lecture-description">
+                        <div class="lecture-description-sub">
+                            <p class="lecture-type">{{ lecture.major_category_name }}・{{ lecture.minor_category_name }}</p>
+                            <p class="lecture-time">{{ lecture.running_time }}</p>
+                        </div>
+                        <a href="" class="lecture-name">{{ lecture.title }}</a>
+                        <p class="lecture-price" v-if="lecture.ticket.is_free == 0">{{ lecture.ticket.price }}</p>
+                        <p class="lecture-price" v-else>무료</p>
                     </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><figure><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></figure></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
-            </li>
-            <li class="lecture-card">
-                <a href=""><img src="Helper.urlFormat('/images/dummy/test.png')" alt=""></a>
-                <div class="lecture-description">
-                    <div class="lecture-description-sub">
-                        <p class="lecture-type">치과의사・임플란트</p>
-                        <p class="lecture-time">총 4강 / 200분</p>
-                    </div>
-                    <a href="" class="lecture-name">임플란트 상담으로 치과수익을 올려보세요. 임플란트 상담으로 치과수익을 올려보세요.</a>
-                    <p class="lecture-price">300,000원</p>
-                </div>
+                </a>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
+export default {
+    name: 'LectureList',
+    props: {
+        'list' : Array
+    },
+    data() {
+        return {
+            lectures: [],
+        }
+    },
+    watch: {
+        list() {
+            this.lectures = this.list;
+        }
+    }
+}
 
 </script>
 

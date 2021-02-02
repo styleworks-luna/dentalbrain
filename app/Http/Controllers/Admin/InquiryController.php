@@ -23,10 +23,13 @@ class InquiryController
         $this->search = new SearchService(Inquiry::query());
     }
 
-    public function index(Request $request)
+    public function index()
     {
+        $inquiry = Inquiry::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(20);
         return response()->json([
-            'inquiry' => $this->search($request),
+            'inquiry' => $inquiry,
         ]);
     }
 
@@ -71,19 +74,21 @@ class InquiryController
         );
     }
 
-    private function search(Request $request){
+    public function search(Request $request){
         $this->addGubunCategory($request->gubun);
 
         $this->search
             ->addKeyword('title',$request->keyword)
             ->addKeyword('content',$request->keyword);
 
-        $result = $this->search->search()->orderBy('id','desc')->paginate('20');
+        $result = $this->search->search()->paginate('20');
 
-        return $result;
+        return response()->json(
+            ['search' => $result]
+        );
     }
 
-    private function addGubunCategory(string $gubun){
+    public function addGubunCategory(string $gubun){
         if(isset($gubun)){
             switch($gubun){
                 case 'notCompleted':
@@ -98,8 +103,8 @@ class InquiryController
                 case 'refund':
                     $this->search->addCategory('category_id','=',2);
                     break;
-                case 'all':
                 default:
+                case 'all':
                     break;
             }
         }

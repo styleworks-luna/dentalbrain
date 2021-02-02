@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static Builder main ()
+ * @method static Builder public ()
  */
 class Program extends Model
 {
@@ -41,9 +42,18 @@ class Program extends Model
         return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
+    /*
+     * 사용 예정
     public function tickets()
     {
         return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
+    }
+    */
+
+
+    public function ticket()
+    {
+        return $this->hasOne(ProgramTicket::class, 'program_id', 'id');
     }
 
     public function comments()
@@ -96,12 +106,18 @@ class Program extends Model
 
     public function getMajorCategoryNameAttribute()
     {
-        return ProgramMajorCategory::find($this->attributes['major_category_id'])->name;
+        if (isset($this->attributes['major_category_id']))
+            return ProgramMajorCategory::find($this->attributes['major_category_id'])->name;
+        else
+            return null;
     }
 
     public function getMinorCategoryNameAttribute()
     {
-        return ProgramMinorCategory::find($this->attributes['minor_category_id'])->name;
+        if (isset($this->attributes['minor_category_id']))
+            return ProgramMinorCategory::find($this->attributes['minor_category_id'])->name;
+        else
+            return null;
     }
 
     public function getUserLikeCntAttribute()
@@ -130,5 +146,13 @@ class Program extends Model
             ->where('is_open', '=', 1)
             ->with('thumbnail:id,url')->orderByDesc('created_at');
     }
+
+    public function scopePublic(Builder $query)
+    {
+        return $query->select(['id', 'thumbnail_id', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
+            ->where('is_open', '=', 1)
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free'])->orderByDesc('created_at');
+    }
+
 
 }

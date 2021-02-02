@@ -50,20 +50,11 @@
             <single-group name="강의 일시" :isRow="true" :size="7">
                 <template v-slot:content>
                     <div class="clearfix">
-                        <date-picker class="mr-3"
-                                     :time="started_date"
-                                     @setTime="handleSetStartDate"></date-picker>
-                        <time-picker class="mr-3"
-                                     :time="started_time"
-                                     @setTime="handleSetStartTime"></time-picker>
-
+                        <date-picker class="mr-3" @setTime="handleSetStartDate"></date-picker>
+                        <time-picker class="mr-3" @setTime="handleSetStartTime"></time-picker>
                         <p class="float-left mr-3 mt-2">부터</p>
-
-                        <date-picker class="mr-3"
-                                     :time="ended_date"
-                                     @setTime="handleSetEndDate"></date-picker>
-                        <time-picker :time="ended_time"
-                                     @setTime="handleSetEndTime"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetEndDate"></date-picker>
+                        <time-picker @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -87,20 +78,13 @@
                     </div>
                     <div class="float-left">
                         <label class="col-form-label d-block float-left mr-3">신청기간</label>
-                        <date-picker class="mr-3"
-                                     :time="receipt_started_date"
-                                     @setTime="handleSetReceiptStartDate"></date-picker>
-                        <time-picker class="mr-3"
-                                     :time="receipt_started_time"
-                                     @setTime="handleSetReceiptStartTime"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReceiptStartDate"></date-picker>
+                        <time-picker class="mr-3" @setTime="handleSetReceiptStartTime"></time-picker>
 
                         <span class="float-left mr-3 mt-2">부터</span>
 
-                        <date-picker class="mr-3"
-                                     :time="receipt_ended_date"
-                                     @setTime="handleSetReceiptEndDate"></date-picker>
-                        <time-picker :time="receipt_ended_time"
-                                     @setTime="handleSetReceiptEndTime"></time-picker>
+                        <date-picker class="mr-3" @setTime="handleSetReceiptEndDate"></date-picker>
+                        <time-picker @setTime="handleSetReceiptEndTime"></time-picker>
                     </div>
                 </template>
             </single-group>
@@ -164,12 +148,13 @@
 </template>
 
 <script>
-// mixin
-import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
-import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
+
 
 //api
-import Offline from '@/api/admin/lecture/Offline.js';
+import Offline from '@/api/admin/lecture/Offline.js'
+
+import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
     name: 'AdminOfflineCreate',
@@ -204,6 +189,7 @@ export default {
                 surveys: this.surveys,
 
                 is_open: this.is_open,
+
                 program_place: this.program_place
             };
 

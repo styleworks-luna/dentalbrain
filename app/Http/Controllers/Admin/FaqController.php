@@ -20,10 +20,13 @@ class FaqController extends Controller
     }
 
 
-    public function index(Request $request)
+    public function index()
     {
+        $faq = Faq::whereNotNull('id')
+            ->orderByDesc('id')
+            ->paginate(10);
         return response()->json([
-            'faq' => $this->search($request),
+            'faq' => $faq,
         ]);
     }
 
@@ -94,12 +97,12 @@ class FaqController extends Controller
         ]);
     }
 
-    private function search(Request $request){
+    public function search(Request $request){
         $this->search
             ->addKeyword('question',$request->keyword)
             ->addKeyword('answer', $request->keyword);
 
-        $result = $this->search->search()->orderBy('id','desc')->paginate('10');
-        return $result;
+        $result = $this->search->search()->paginate('10');
+        return response()->json(['search' => $result]);
     }
 }
