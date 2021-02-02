@@ -4,11 +4,11 @@
         <lecture-order v-if="is_pagination"></lecture-order>
         <lecture-list :list="list"></lecture-list>
 
-        <div class="paging-wrap text-center" v-if="is_pagination">
-            <nav class="d-inline-block">
+        <div class="paging-wrap" v-if="is_pagination">
+            <nav class="d-block">
                 <pagination :data="list" @pagination-change-page="getData" class="mb-0">
-                    <span slot="prev-nav">‹</span>
-                    <span slot="next-nav">›</span>
+                    <span slot="prev-nav" class="prev-nav"></span>
+                    <span slot="next-nav" class="next-nav"></span>
                 </pagination>
             </nav>
         </div>
