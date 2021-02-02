@@ -39,6 +39,7 @@ abstract class ProgramTemplate
     function getPrograms()
     {
         $programs = Program::query()->where('is_online', '=', $this->is_online)
+            ->with('place:program_id,started_at,ended_at')
             ->withCount('students')->orderByDesc('id')->paginate('10');
         return response()->json([
             'programs' => $programs,
