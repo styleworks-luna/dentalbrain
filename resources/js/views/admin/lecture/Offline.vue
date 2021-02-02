@@ -50,11 +50,16 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+
+//api
+import Offline from '@/api/admin/lecture/Offline.js'
 
 export default {
     name: 'AdminOffline',
     components: {
-        'table-grid': Table
+        'table-grid': Table,
+        'button-open': ButtonOpen
     },
     data() {
         return {
@@ -63,6 +68,9 @@ export default {
             },
             page: 1
         }
+    },
+    mounted() {
+        this.getData();
     },
     computed: {
         tableCol() {
@@ -112,14 +120,15 @@ export default {
                 page: page
             };
 
-            Faq.getData(params).then(res => {
-                this.lectures = res.data.lecture;
+            Offline.getData(params).then(res => {
+                this.lectures = res.data.programs;
+                console.log(res);
             }).catch(err => {
                 this.lectures = [];
             });
         },
         handleSetStudent(id) {
-            Online.setStudent(id).then(res => {
+            Offline.setStudent(id).then(res => {
                 this.getData();
                 alert(res.data.msg);
             })
