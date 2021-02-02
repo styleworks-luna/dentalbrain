@@ -38,7 +38,6 @@ class OnlineProgramController extends Controller
     {
         $programData = $this->onlineConcrete->validateProgram($request,
             [
-                'material_id' => ['nullable', 'numeric'],
                 'running_time' => ['required', 'string']
             ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);
@@ -77,7 +76,6 @@ class OnlineProgramController extends Controller
     public function update(Request $request, Program $program)
     {
         $programData = $this->onlineConcrete->validateProgram($request, [
-            'material_id' => ['nullable', 'numeric'],
             'running_time' => ['required', 'string']
         ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);

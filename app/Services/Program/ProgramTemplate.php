@@ -101,6 +101,7 @@ abstract class ProgramTemplate
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
             'is_open' => ['required', 'boolean'],
+            'material_id' => ['sometimes','nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -247,6 +248,9 @@ abstract class ProgramTemplate
                 throw new Exception('PROGRAM THUMBNAIL STORE ERROR');
             }
         }
+
+        // material_id => sometimes 이기 때문.
+        $data['material_id'] = isset($data['material_id']) ?: null;
 
         if ($program->material_id != $data['material_id']) {
             // 변경 있음.
