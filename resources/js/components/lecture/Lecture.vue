@@ -10,7 +10,7 @@ import LectureNavigation from '@/components/lecture/LectureNavigation.vue';
 import LectureList from '@/components/lecture/LectureList.vue';
 
 export default {
-    name: 'lecture',
+    name: 'Lecture',
     components: {
         'lecture-navigation': LectureNavigation,
         'lecture-list': LectureList,

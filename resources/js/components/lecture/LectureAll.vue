@@ -12,7 +12,7 @@ import LectureList from '@/components/lecture/LectureList.vue';
 import LectureOrder from '@/components/lecture/LectureOrder.vue';
 
 export default {
-    name: 'lecture',
+    name: 'Lecture',
     components: {
         'lecture-navigation': LectureNavigation,
         'lecture-list': LectureList,
