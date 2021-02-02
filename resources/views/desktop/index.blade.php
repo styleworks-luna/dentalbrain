@@ -20,13 +20,19 @@
             <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        @foreach($slides as $slide)
+                        @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('lectures.detail',$slide->id) }}">
                                     <img src="{{ $slide->thumbnail->url }}" alt="">
                                 </a>
                             </div>
-                        @endforeach
+                        @empty
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                </a>
+                            </div>
+                        @endforelse
                     </div>
                     <div class="swiper-controller-wrap">
                         <div class="swiper-pagination"></div>
@@ -44,6 +50,10 @@
                     <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bar->id]) }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="">
                     </a>
+                @else
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                    </a>
                 @endif
             </section>
 
@@ -51,14 +61,21 @@
                 <h2>추천강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
-
-                        @foreach($recommendSlides as $recommendBanner)
+                        @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
                                 <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$recommendBanner->id])}}">
                                     <img src="{{ $recommendBanner->desktopFile->url }}" alt="">
                                 </a>
                             </div>
-                        @endforeach
+                        @empty
+                            @for($i = 0; $i < 7; $i++)
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            @endfor
+                        @endforelse
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
@@ -99,20 +116,25 @@
                     <div class="notice community-common">
                         <h2>공지사항</h2>
                         <ul>
-                            @foreach($notices as $key => $value)
-                                <li><a href="{{ route('customer.notices.show',['notice'=> $value['id']]) }}">{{$value['title']}}</a></li>
-                            @endforeach
+                            @forelse($notices as $notice)
+                                <li><a href="{{ route('customer.notices.show',$notice->id) }}">{{ $notice->title }}</a>
+                                </li>
+                            @empty
+                                <li>공지사항이 없습니다.</li>
+                            @endforelse
                         </ul>
-                        <a href="{{route('customer.notices.index')}}" class="btn-more">더보기</a>
+                        <a href="{{ route('customer.notices.index') }}" class="btn-more">더보기</a>
                     </div>
                     <div class="faq community-common">
                         <h2>FAQ</h2>
                         <ul>
-                            @foreach($faqs as $key => $value)
-                                <li><a href="{{ route('customer.faqs.index') }}"> {{$value['question']}} </a></li>
-                            @endforeach
+                            @forelse($faqs as $faq)
+                                <li><a href="{{ route('customer.faqs.index') }}">{{ $faq->question }}</a></li>
+                            @empty
+                                <li>FAQ가 없습니다.</li>
+                            @endforelse
                         </ul>
-                        <a href="{{route('customer.faqs.index')}}" class="btn-more">더보기</a>
+                        <a href="{{ route('customer.faqs.index') }}" class="btn-more">더보기</a>
                     </div>
                     <div class="community-menu">
                         <ul>

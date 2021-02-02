@@ -3,8 +3,9 @@
 namespace App\Models\Manage;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * @method static Builder public ()
  */
@@ -26,11 +27,8 @@ class Notice extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    /**
-     * @param Builder $query
-     * @return mixed
-     */
-    public function scopePublic($query){
-        return $query->where('is_open','1')->orderBy('id','desc');
+    public function scopePublic(Builder $query)
+    {
+        return $query->where('is_open', '=', 1)->orderByDesc('created_at');
     }
 }

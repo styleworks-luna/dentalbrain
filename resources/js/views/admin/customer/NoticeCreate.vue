@@ -15,7 +15,6 @@
             <!-- 작성자 -->
             <single-group name="작성자"
                                :isRow="true"
-                               :isRequired="true"
                                :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="작성자를 입력해 주세요."

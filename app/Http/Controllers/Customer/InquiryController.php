@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\Manage\inquiry;
 use App\Models\Manage\InquiryCategory;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class InquiryController
 {
@@ -27,13 +27,13 @@ class InquiryController
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'title' => 'required',
-            'content' => 'required',
-            'category_id' => 'required',
+            'title' => ['required','string'],
+            'content' => ['required','string'],
+            'category_id' => ['required', Rule::exists('inquiry_categories', 'id')],
         ]);
 
         inquiry::create($validateData);
 
-        return redirect(request()->url());
+        return redirect(request()->url())->with('alert','문의가 접수되었습니다.');
     }
 }

@@ -14,11 +14,11 @@
                     <h2>공지사항</h2>
                     <div class="notice-detail-text">
                         <div class="notice-detail-title">
-                            <h3>{{$notice -> title}}</h3>
+                            <h3>{{ $notice -> title }}</h3>
                             <div class="notice-info">
-                                <span class="writer">{{$notice -> name}}</span>
+                                <span class="writer">{{ $notice -> name }}</span>
                                 <span class="bar"></span>
-                                <span class="date">{{$notice ->created_at}}</span>
+                                <span class="date">{{ $notice ->created_at }}</span>
                             </div>
                         </div>
                         <div class="notice-detail-content">

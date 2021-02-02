@@ -21,7 +21,7 @@
                             <span class="sort">분류</span>
                             <span class="question">질문</span>
                         </li>
-                        @foreach($faqs as $key => $value)
+                        @forelse($faqs as $key => $value)
                             <li class="faq-content">
                                 <div class="question-information">
                                     <p class="sort">{{$value->category_name}}</p>
@@ -38,7 +38,9 @@
                                     </p>
                                 </div>
                             </li>
-                        @endforeach
+                        @empty
+                            <li>FAQ 가 없습니다.</li>
+                        @endforelse
                     </ul>
                 </section>
 
