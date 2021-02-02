@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 등록" class="offline">
+    <layout title="오프라인 강의 수정" class="offline">
         <template v-slot:body>
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
@@ -156,7 +156,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="submit" class="btn btn-info" @click="create">등록</button>
+                <button type="button" class="btn btn-info" @click="update">수정</button>
                 <router-link to="/admin/lecture/offline"
                              class="btn btn-dark">취소
                 </router-link>
@@ -187,24 +187,25 @@ export default {
     methods: {
         getEditData() {
             Offline.getEditData(this.id).then(res => {
-                const result = res.data.programs;
+                const program = res.data.program;
+                const ticket = res.data.ticket;
 
-                this.thumbnail = result.thumbnail;
+                this.thumbnail = program.thumbnail;
 
-                this.major_category_id = result.major_category_id;
-                this.minor_category_id = result.minor_category_id;
-                this.title = result.title;
-                this.lecture_info = result.lecture_info;
+                this.major_category_id = program.major_category_id;
+                this.minor_category_id = program.minor_category_id;
+                this.title = program.title;
 
-                this.is_free = result.is_free;
-                this.price = result.price;
+                this.lecture_info = ticket.name;
+                this.is_free = ticket.is_free;
+                this.price = ticket.price;
 
-                this.content = result.content;
+                this.content = program.content;
 
-                this.surveys = result.surveys;
+                this.surveys = res.data.surveys;
 
-                this.is_open = result.is_open;
-                this.program_place = result.program_place;
+                this.is_open = program.is_open;
+                this.program_place = res.data.place;
 
                 this.started_date = this.Helper.dateFullFormat(this.program_place.started_at);
                 this.started_time = this.Helper.timeFormat(this.started_date);
@@ -246,7 +247,7 @@ export default {
                 program_place: this.program_place
             };
 
-            Offline.create(this.id, data).then(res => {
+            Offline.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/offline');
             })

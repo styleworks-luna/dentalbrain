@@ -8,6 +8,7 @@ use App\Services\Program\OfflineProgramConcrete;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class OfflineProgramController extends Controller
 {
@@ -32,7 +33,7 @@ class OfflineProgramController extends Controller
     {
         return response()->json(
             array_merge($this->offlineConcrete->getProgramDetail($program),
-                ['place' => $program->place()])
+                ['place' => $program->place])
         );
     }
 
@@ -46,9 +47,9 @@ class OfflineProgramController extends Controller
         try {
             DB::beginTransaction();
             $program = $this->offlineConcrete->storeProgram($programData);
-            $ticket = $this->offlineConcrete->storeTickets($program, $ticketData);
-            $surveys = $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
-            $places = $this->offlineConcrete->storePlace($program, $placeData);
+            $this->offlineConcrete->storeTickets($program, $ticketData);
+            $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
+            $this->offlineConcrete->storePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
@@ -68,4 +69,39 @@ class OfflineProgramController extends Controller
     {
         return $this->offlineConcrete->getCategories();
     }
+
+    public function update(Request $request, Program $program)
+    {
+        $programData = $this->offlineConcrete->validateProgram($request);
+        $ticketData = $this->offlineConcrete->validateTickets($request);
+        $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [
+            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
+            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
+            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
+        ]);
+        $placeData = $this->offlineConcrete->validatePlace($request, [
+            'id' => ['required', Rule::exists('program_places', 'id')],
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $program = $this->offlineConcrete->updateProgram($program, $programData);
+            $this->offlineConcrete->updateTickets($program, $ticketData);
+            $this->offlineConcrete->updateSurveys($program, $surveyDataSet);
+            $this->offlineConcrete->updatePlace($program, $placeData);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('ONLINE PROGRAM STORE ERROR',
+                [$exception, $programData, $ticketData, $surveyDataSet]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.',
+            ], 500);
+        }
+        DB::commit();
+
+        return response()->json([
+            'msg' => '오프라인 강의가 수정되었습니다.',
+        ]);
+    }
+
 }

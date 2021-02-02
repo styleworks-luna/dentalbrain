@@ -90,7 +90,6 @@ class BannerController extends Controller
             'is_open' => ['required', 'boolean']
         ]);
 
-        logger($validatedData);
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
             $desktopFile = new DesktopFile($banner);
             $desktopFile->deletePublicFile();

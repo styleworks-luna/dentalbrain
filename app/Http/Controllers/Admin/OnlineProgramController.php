@@ -8,6 +8,7 @@ use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class OnlineProgramController extends Controller
 {
@@ -37,7 +38,6 @@ class OnlineProgramController extends Controller
     {
         $programData = $this->onlineConcrete->validateProgram($request,
             [
-                'material_id' => ['nullable', 'numeric'],
                 'running_time' => ['required', 'string']
             ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);
@@ -76,11 +76,36 @@ class OnlineProgramController extends Controller
     public function update(Request $request, Program $program)
     {
         $programData = $this->onlineConcrete->validateProgram($request, [
-            'material_id' => ['nullable', 'numeric'],
             'running_time' => ['required', 'string']
         ]);
         $ticketData = $this->onlineConcrete->validateTickets($request);
-        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
+        $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
+            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
+            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
+            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
+        ]);
+        $lectureDataSet = $this->onlineConcrete->validateLectures($request, [
+            'lectures.*.id' => ['sometimes', 'required', Rule::exists('lectures', 'id')]
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $this->onlineConcrete->updateProgram($program, $programData);
+            $this->onlineConcrete->updateTickets($program, $ticketData);
+            $this->onlineConcrete->updateSurveys($program, $surveyDataSet);
+            $this->onlineConcrete->updateLectures($program, $lectureDataSet);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('ONLINE PROGRAM STORE ERROR',
+                [$exception]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.',
+            ], 500);
+        }
+        DB::commit();
+
+        return response()->json([
+            'msg' => '온라인 강의가 수정되었습니다.',
+        ]);
     }
 }

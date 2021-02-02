@@ -15,8 +15,8 @@
                     <td>{{ slotProps.row.major_category_name }}</td>
                     <td>{{ slotProps.row.minor_category_name }}</td>
                     <td>{{ slotProps.row.title }} </td>
-                    <td>{{ slotProps.row.started_at }}</td>
-                    <td>{{ slotProps.row.ended_at }}</td>
+                    <td>{{ slotProps.row.place.started_at }}</td>
+                    <td>{{ slotProps.row.place.ended_at }}</td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/offline/${slotProps.row.id}/student`"
@@ -122,7 +122,6 @@ export default {
 
             Offline.getData(params).then(res => {
                 this.lectures = res.data.programs;
-                console.log(res);
             }).catch(err => {
                 this.lectures = [];
             });
