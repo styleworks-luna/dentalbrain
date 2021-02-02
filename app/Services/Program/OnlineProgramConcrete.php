@@ -19,6 +19,26 @@ class OnlineProgramConcrete extends ProgramTemplate
         parent::__construct($is_online);
     }
 
+
+    /**
+     * Lecture validate
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function validateLectures($request)
+    {
+        logger($request);
+        $v = Validator::make($request->all(), [
+            'lectures.*.title' => ['required', 'string'],
+            'lectures.*.link' => ['required', 'url'],
+            'lectures.*.thumbnail_id' => ['numeric', 'nullable'],
+        ]);
+        $validatedData = $v->validate();
+
+        return $validatedData['lectures'];
+    }
+
     /**
      * @param Program $program
      * @param array $dataSet
@@ -43,23 +63,5 @@ class OnlineProgramConcrete extends ProgramTemplate
 
         }
         return $returnableDataSet;
-    }
-
-    /**
-     * Lecture validate
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function validateLectures($request)
-    {
-        $v = Validator::make($request->all(), [
-            'lectures.*.title' => ['required', 'string'],
-            'lectures.*.url' => ['required', 'url'],
-            'lectures.*.thumbnail_id' => ['nullable', 'numeric'],
-        ]);
-        $validatedData = $v->validate();
-
-        return $validatedData['lectures'];
     }
 }
