@@ -20,21 +20,19 @@
             <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
-                        </div>
+                        @forelse($slides as $slide)
+                            <div class="swiper-slide">
+                                <a href="{{ route('lectures.detail',$slide->id) }}">
+                                    <img src="{{ $slide->thumbnail->url }}" alt="">
+                                </a>
+                            </div>
+                        @empty
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                </a>
+                            </div>
+                        @endforelse
                     </div>
                     <div class="swiper-controller-wrap">
                         <div class="swiper-pagination"></div>
@@ -52,6 +50,10 @@
                     <a href="{{ $bar->link }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="">
                     </a>
+                @else
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                    </a>
                 @endif
             </section>
 
@@ -59,14 +61,21 @@
                 <h2>추천강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
-
-                        @foreach($bottomSlides as $bottom)
+                        @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
                                 <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
                                     <img src="{{ $bottom->desktopFile->url }}" alt="">
                                 </a>
                             </div>
-                        @endforeach
+                        @empty
+                            @for($i = 0; $i < 7; $i++)
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                    </a>
+                                </div>
+                            @endfor
+                        @endforelse
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
@@ -107,20 +116,25 @@
                     <div class="notice community-common">
                         <h2>공지사항</h2>
                         <ul>
-                            <li><a href="">브레인스펙 치과보험청구전문강사 모집 </a></li>
-                            <li><a href="">김민정 대표와 함께하는 우리치과 예방진료 중간중간중간 김민정 대표와 함께하는 우리치과 예방진료 중간중간중간</a></li>
-                            <li><a href="">신종코로나바이너스로 의료기관 및 국민 여러분께 신종코로나바이너스로 의료기관 및 국민 여러분께</a></li>
+                            @forelse($notices as $notice)
+                                <li><a href="{{ route('customer.notices.show',$notice->id) }}">{{ $notice->title }}</a>
+                                </li>
+                            @empty
+                                <li>공지사항이 없습니다.</li>
+                            @endforelse
                         </ul>
-                        <a href="" class="btn-more">더보기</a>
+                        <a href="{{ route('customer.notices.index') }}" class="btn-more">더보기</a>
                     </div>
                     <div class="faq community-common">
                         <h2>FAQ</h2>
                         <ul>
-                            <li><a href="">브레인스펙 치과보험청구전문강사 모집 </a></li>
-                            <li><a href="">김민정 대표와 함께하는 우리치과 예방진료 중간중간중간 김민정 대표와 함께하는 우리치과 예방진료 중간중간중간</a></li>
-                            <li><a href="">신종코로나바이너스로 의료기관 및 국민 여러분께 신종코로나바이너스로 의료기관 및 국민 여러분께</a></li>
+                            @forelse($faqs as $faq)
+                                <li><a href="{{ route('customer.faqs.index') }}">{{ $faq->question }}</a></li>
+                            @empty
+                                <li>FAQ가 없습니다.</li>
+                            @endforelse
                         </ul>
-                        <a href="" class="btn-more">더보기</a>
+                        <a href="{{ route('customer.faqs.index') }}" class="btn-more">더보기</a>
                     </div>
                     <div class="community-menu">
                         <ul>

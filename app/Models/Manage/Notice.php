@@ -3,8 +3,12 @@
 namespace App\Models\Manage;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static Builder public ()
+ */
 class Notice extends Model
 {
     protected $appends = ['name'];
@@ -21,5 +25,10 @@ class Notice extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function scopePublic(Builder $query)
+    {
+        return $query->where('is_open', '=', 1)->orderByDesc('created_at');
     }
 }

@@ -4,16 +4,21 @@ namespace App\Models\Program;
 
 use App\Models\File;
 use App\Models\Program\Survey\Survey;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * @method static Builder main ()
+ */
 class Program extends Model
 {
     use SoftDeletes;
 
     protected $table = 'programs';
 
-    protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt'];
+    protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt', 'auth_like'];
 
     protected $guarded = [];
 
@@ -78,6 +83,13 @@ class Program extends Model
         return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
     }
 
+    public function like()
+    {
+        return $this->hasMany(UserLike::class, 'program_id', 'id')
+            ->where('user_id', '=', Auth::id());
+    }
+
+
     /*
      * ======= Define Appended Attributes =========
      */
@@ -96,4 +108,27 @@ class Program extends Model
     {
         return UserLike::query()->where('program_id', '=', $this->attributes['id'])->count();
     }
+
+    public function getAuthLikeAttribute()
+    {
+        if (Auth::guest()) {
+            return false;
+        } else {
+            return UserLike::query()
+                ->where('program_id', '=', $this->attributes['id'])
+                ->where('user_id', '=', Auth::id())->exists();
+        }
+
+    }
+
+    /*
+     * ============== Scope ==============
+     */
+    public function scopeMain(Builder $query)
+    {
+        return $query->select(['id', 'thumbnail_id'])
+            ->where('is_open', '=', 1)
+            ->with('thumbnail:id,url')->orderByDesc('created_at');
+    }
+
 }

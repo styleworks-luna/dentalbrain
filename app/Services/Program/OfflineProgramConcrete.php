@@ -20,7 +20,8 @@ class OfflineProgramConcrete extends ProgramTemplate
 
     public function validatePlace(Request $request)
     {
-        $v = Validator::make($request->all()['program_place'], [
+        $data = $request->get('program_place');
+        $v = Validator::make($data, [
             'address' => ['required', 'string',],
             'address_detail' => ['required', 'nullable', 'string',],
 
