@@ -28,7 +28,6 @@ export default {
         getCategory() {
             Lecture.getCategory().then(res => {
                 this.menus = res.data;
-                console.log(this.menus);
             })
         }
     }
