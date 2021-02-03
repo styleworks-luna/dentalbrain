@@ -3,6 +3,22 @@
 @import './helpers/mixins.scss'
 
 .content
+    .card-search
+        +padding(1rem 1rem 0)
+        overflow: hidden
+
+        .form-group,
+        .input-group
+            +margin(left 10px)
+
+        select
+            +size(135px)
+            float: left
+
+        .input-group
+            +size(300px)
+            float: left
+
     .card-body
         .form-group
             +border(1px solid $border-color-base ,bottom)

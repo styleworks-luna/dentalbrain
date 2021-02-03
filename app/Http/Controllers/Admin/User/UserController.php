@@ -80,7 +80,7 @@ class UserController
         $this->search
             ->addKeyword('login_id',$request->keyword)
             ->addKeyword('name',$request->keyword)
-            ->addKeyword('phone',$request->keywrod)
+            ->addKeyword('phone',$request->keyword)
             ->addKeyword('email',$request->keyword);
 
         $result = $this->search->search()->orderBy('id','desc')->paginate('20');
