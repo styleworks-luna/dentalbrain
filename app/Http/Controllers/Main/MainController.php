@@ -17,7 +17,6 @@ class MainController extends Controller
     {
         $data['slides'] = Program::main()->take(4)->get();
         $data['bar'] = Banner::public()->where('position', '=', Banner::$POSITION_BAR)->first();
-        $data['recommendSlides'] = Banner::public()->where('position','=',Banner::$POSITION_RECOMMEND)->get();
         $data['bottomSlides'] = Banner::public()->where('position', '=', Banner::$POSITION_BOTTOM)->get();
 
         $data['notices'] = Notice::public()->take(3)->get();

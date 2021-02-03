@@ -10,7 +10,6 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Models\User;
 use App\Models\UserJobName;
-use Illuminate\Support\Facades\Hash;
 use App\Models\UserJob;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;

@@ -14,7 +14,6 @@ use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
-use App\Services\Search\BannerSearchImpl;
 use App\Services\StatusChange\StatusChangeImpl;
 use App\Services\ViewCount\ViewCountImpl;
 use Illuminate\Http\Request;
