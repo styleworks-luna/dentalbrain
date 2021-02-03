@@ -8,4 +8,10 @@ export default {
             params: value
         });
     },
+    getCategory() {
+        return Send({
+            url: '/api/lectures/categories',
+            method: 'get',
+        });
+    },
 }
