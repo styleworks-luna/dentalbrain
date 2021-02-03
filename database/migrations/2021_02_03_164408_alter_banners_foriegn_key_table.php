@@ -15,8 +15,16 @@ class AlterBannersForiegnKeyTable extends Migration
     {
         Schema::table('banners', function (Blueprint $table) {
             $table->unsignedBigInteger('position')->change();
-            $table->foreign('position')->references('id')->on('banner_categories');
         });
+
+        Schema::table('banners', function (Blueprint $table) {
+            $table->renameColumn('position','category_id');
+        });
+
+        Schema::table('banners', function (Blueprint $table) {
+            $table->foreign('category_id')->references('id')->on('banner_categories');
+        });
+
     }
 
     /**
@@ -27,7 +35,12 @@ class AlterBannersForiegnKeyTable extends Migration
     public function down()
     {
         Schema::table('banners', function (Blueprint $table) {
-            $table->dropForeign('banners_position_foreign');
+            $table->dropForeign('banners_category_id_foreign');
         });
+
+        Schema::table('banners', function (Blueprint $table) {
+            $table->renameColumn('category_id','position');
+        });
+
     }
 }
