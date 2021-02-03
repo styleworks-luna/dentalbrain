@@ -1,4 +1,12 @@
-GET http://dbv2020.onoffmix.test/api/lectures?category_id=9
+GET http://dbv2020.onoffmix.test/api/lectures?category_id=1&per_page=3
+Accept: application/json
+
+###
+GET http://dbv2020.onoffmix.test/api/lectures?category_id=1&per_page=1&order_by=newest
+Accept: application/json
+
+###
+GET http://dbv2020.onoffmix.test/api/lectures?category_id=1&per_page=1&order_by=popular
 Accept: application/json
 
 ###

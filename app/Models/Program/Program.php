@@ -148,7 +148,7 @@ class Program extends Model
     {
         return $query->select(['id', 'thumbnail_id', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free'])->orderByDesc('created_at');
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free']);
     }
 
 
