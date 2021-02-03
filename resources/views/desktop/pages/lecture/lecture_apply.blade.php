@@ -15,15 +15,16 @@
 @section('content')
     <section class="content">
         <div class="container">
-            <div class="row">
-                <form action="">
+            <form action="{{ route('lectures.apply',$program->id) }} " method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    @csrf
                     <section class="apply-title">
                         <h1>신청하기</h1>
                         <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
                     </section>
                     <section class="lecture-information-wrap">
                         <div class="lecture-image">
-                            <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진">
+                            <img src="{{ $program->thumbnail->url }}" alt="강의 사진">
                         </div>
                         <div class="lecture-information">
                             <div class="lecture-sort">
@@ -66,11 +67,11 @@
                         <table>
                             <tr>
                                 <th>이름</th>
-                                <td><em>덴탈브레인</em></td>
+                                <td><em>{{ auth()->user()->name }}</em></td>
                             </tr>
                             <tr>
                                 <th>아이디</th>
-                                <td><em>dentalbrain</em></td>
+                                <td><em>{{ auth()->user()->login_id }}</em></td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
@@ -81,7 +82,8 @@
                                            class="email_box"
                                            data-parsley-required="true"
                                            data-parsley-type="email"
-                                           data-parsley-class-handler=".ui-emailbox">
+                                           data-parsley-class-handler=".ui-emailbox"
+                                           value="{{old('email') ?? auth()->user()->email}}">
                                 </td>
                             </tr>
                             <tr>
@@ -90,114 +92,149 @@
                                     <input type="text"
                                            id="phone"
                                            name="phone"
-                                           class="phone">
+                                           class="phone"
+                                           value="{{old('phone') ?? auth()->user()->phone}}">
                                 </td>
                             </tr>
                         </table>
                     </section>
                     <section class="additional-information">
                         <h3>추가 정보 입력</h3>
-                        <div class="multiple-single-choice">
-                            <h4>객관식 단일 선택 질문 객관식 단일 선택 질문 <em>(필수)</em></h4>
-                            <div class="choices">
-                                <ul>
-                                    <li class="radio-wrap">
-                                        <input type="radio" id="choice-01" name="single-choice">
-                                        <label for="choice-01">선택 1</label>
-                                    </li>
-                                    <li class="radio-wrap">
-                                        <input type="radio" id="choice-02" name="single-choice">
-                                        <label for="choice-02">선택 2</label>
-                                    </li>
-                                    <li class="radio-wrap">
-                                        <input type="radio" id="choice-03" name="single-choice">
-                                        <label for="choice-03">선택 3</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="multiple-choice">
-                            <h4>객관식 다중 선택 질문</h4>
-                            <div class="choices">
-                                <ul>
-                                    <li class="checkbox-wrap">
-                                        <input type="checkbox" id="multiple-choice-01" name="multiple-choice">
-                                        <label for="multiple-choice-01">선택 1</label>
-                                    </li>
-                                    <li class="checkbox-wrap">
-                                        <input type="checkbox" id="multiple-choice-02" name="multiple-choice">
-                                        <label for="multiple-choice-02">선택 2</label>
-                                    </li>
-                                    <li class="checkbox-wrap">
-                                        <input type="checkbox" id="multiple-choice-03" name="multiple-choice">
-                                        <label for="multiple-choice-03">선택 3</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="short-answer">
-                            <h4>주관식 입력 질문 주관식 입력 질문</h4>
-                            <div class="answers">
-                                <input type="text" id="short-answer-response" name="short-answer-response"
-                                       class="short-answer-response" placeholder="답변을 입력하세요.">
-                            </div>
-                        </div>
-                        <div class="address-question">
-                            <h4>주소 질문</h4>
-                            <div class="answers">
-                                <div class="address-form-wrap">
-                                    <input type="button" class="btn-address" value="주소검색">
-                                    <input type="text" id="address" name="address" class="address" disabled="disabled">
-                                    <input type="text" id="address-detail" name="address-detail" class="address-detail"
-                                           placeholder="상세주소를 입력하세요.">
+                        @forelse($surveys as $idx => $survey)
+                            @switch($survey->type)
+                                @case('singleChoice')
+                                <div class="multiple-single-choice">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <div class="choices">
+                                        <ul>
+                                            @forelse($survey->choices as $choice)
+                                                <li class="radio-wrap">
+
+                                                    <input type="radio" id="choice-{{$choice->id}}"
+                                                           name="surveys[{{ $idx }}][answer]"
+                                                           value="{{ $choice->id }}">
+                                                    <label for="choice-{{$choice->id}}">{{ $choice->question }}</label>
+                                                </li>
+                                            @empty
+                                                질문이 없습니다.
+                                            @endforelse
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="file-question">
-                            <h4>파일입력질문</h4>
-                            <div class="answers">
-                                <div class="file-wrap">
-                                    <input type="file"
-                                           id="file-upload"
-                                           class="upload-hidden"
-                                           accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
+                                @break
+                                @case('multipleChoice')
+                                <div class="multiple-choice">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <div class="choices">
+                                        <ul>
+                                            @forelse($survey->choices as $choice)
+                                                <li class="checkbox-wrap">
+                                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                                           value="{{ $survey->id }}">
+                                                    <input type="checkbox" id="multiple-choice-{{ $choice->id }}"
+                                                           name="surveys[{{ $idx }}][answers][]"
+                                                           value="{{ $choice->id }}">
+                                                    <label
+                                                        for="multiple-choice-{{ $choice->id }}">{{ $choice->question }}</label>
+                                                </li>
+                                            @empty
+                                                질문이 없습니다.
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </div>
+                                @break
+                                @case('shortAnswer')
+                                <div class="short-answer">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <div class="answers">
+                                        <input type="text" id="short-answer-response" name="surveys[{{ $idx }}][answer]"
+                                               class="short-answer-response" placeholder="답변을 입력하세요.">
+                                    </div>
+                                </div>
+                                @break
+                                @case('address')
+                                <div class="address-question">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <div class="answers">
+                                        <div class="address-form-wrap">
+                                            <input type="button" class="btn-address" value="주소검색"
+                                                   data-index="{{ $idx }}">
+                                            <input type="text" id="address" name="surveys[{{ $idx }}][address]"
+                                                   class="address"
+                                                   data-index="{{ $idx }}"
+                                                   readonly="readonly">
+                                            <input type="text" id="address-detail"
+                                                   name="surveys[{{ $idx }}][address-detail]"
+                                                   class="address-detail"
+                                                   placeholder="상세주소를 입력하세요.">
+                                        </div>
+                                    </div>
+                                </div>
+                                @break
+                                @case('file')
+                                <div class="file-question">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <div class="answers">
+                                        <div class="file-wrap">
+                                            <input type="file"
+                                                   id="file-upload"
+                                                   class="upload-hidden"
+                                                   name="surveys[{{ $idx }}][file]"
+                                                   accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar">
-                                    <label for="file-upload" class="btn-file-upload">파일선택</label>
-                                    <input type="text" id="file-name" name="file-name" class="file-name"
-                                           value="파일을 업로드해주세요." disabled="disabled">
+                                            <label for="file-upload" class="btn-file-upload">파일선택</label>
+                                            <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
+                                                   class="file-name"
+                                                   value="파일을 업로드해주세요." disabled="disabled">
+                                        </div>
+                                        <div class="tips">
+                                            <p>
+                                                ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
+                                                ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls,
+                                                hwp /
+                                                이미지파일 :
+                                                JPG, JPEG, PNG, GIF / 압축파일 : zip, alz, rar
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tips">
-                                    <p>
-                                        ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
-                                        ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls, hwp /
-                                        이미지파일 :
-                                        JPG, JPEG, PNG, GIF / 압축파일 : zip, alz, rar
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                                @break
+                                @default
+                                <p>default</p>
+                            @endswitch
+                        @empty
+                            추가 정보 입력이 필요하지 않은 강의입니다.
+                        @endforelse
                     </section>
                     <section class="payment-information">
                         <h3>결제정보</h3>
                         <table>
                             <tr>
                                 <th>결제금액</th>
-                                <td><em>500,000원</em></td>
+                                <td><em>{{ $program->ticket->is_free ? '무료' : $program->ticket->price.'원' }}</em></td>
                             </tr>
                             <tr>
                                 <th>결제방식</th>
                                 <td>
                                     <div class="radio-wrap">
-                                        <input type="radio" id="credit" name="payment-method" class="payment-method">
+                                        <input type="radio" id="credit" name="payment-method"
+                                               class="payment-method" value="신용카드">
                                         <label for="credit">신용카드</label>
                                     </div>
                                     <div class="radio-wrap">
                                         <input type="radio" id="bank-transform" name="payment-method"
-                                               class="payment-method">
+                                               class="payment-method" value="계좌이체">
                                         <label for="bank-transform">실시간 계좌이체</label>
                                     </div>
                                     <div class="radio-wrap">
-                                        <input type="radio" id="deposit" name="payment-method" class="payment-method">
+                                        <input type="radio" id="deposit" name="payment-method"
+                                               class="payment-method" value="무통장입금">
                                         <label for="deposit">무통장입금(가상계좌)</label>
                                     </div>
                                 </td>
@@ -237,8 +274,8 @@
                         <button class="make-pay">결제하기</button>
                         <button class="cancel">취소</button>
                     </section>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </section>
 @endsection

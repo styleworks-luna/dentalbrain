@@ -4,7 +4,7 @@ $(function () {
     //파일 업로드 file name 업데이트
     var fileTarget = $('.upload-hidden');
 
-    fileTarget.on('change', function(){
+    fileTarget.on('change', function () {
         if (window.FileReader) {
             var filename = $(this)[0].files[0].name;
         } else {
@@ -19,12 +19,12 @@ $(function () {
     var agreeOffer = $("input:checkbox[name=offer-consent]");
     var agreeRefund = $("input:checkbox[name=refund-consent]");
 
-    $('.agreement-all-wrap input[type="checkbox"]').change(function(){
+    $('.agreement-all-wrap input[type="checkbox"]').change(function () {
         var check = $(this).is(':checked');
         $('.agreement-wrap input[type="checkbox"]').prop('checked', check);
     });
 
-    $('.agreement-wrap > ul > li').change(function() {
+    $('.agreement-wrap > ul > li').change(function () {
         if (agreeOffer.is(':checked') == true && agreeRefund.is(':checked') == true) {
             agreeAll.prop('checked', true);
         } else {
@@ -32,14 +32,17 @@ $(function () {
         }
     });
 
-    $('.btn-address').click(function(){
-        DaumPostcode();
+    $('.btn-address').click(function () {
+        console.log($(this).data('index'));
+        var index = $(this).data('index');
+        DaumPostcode(index);
     });
 
 });
-function DaumPostcode() {
+
+function DaumPostcode(index) {
     new daum.Postcode({
-        oncomplete: function(data) {
+        oncomplete: function (data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
             // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
@@ -47,7 +50,14 @@ function DaumPostcode() {
             var roadAddr = data.roadAddress; // 도로명 주소 변수
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById("address").value = roadAddr;
+            var addresses = $('.address');
+
+            addresses.each(function (i, item) {
+                if ($(this).data('index') == index) {
+                    $(this).val(roadAddr);
+                }
+            });
+
         },
     }).open({
         autoClose: true

@@ -35,6 +35,7 @@ class LectureController extends Controller
         }
 
         $programs = $programs->paginate($data['per_page']);
+
         return response()->json(
             $programs
         );

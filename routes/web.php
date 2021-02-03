@@ -106,7 +106,10 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         //강의 상세
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');
         // 강의 신청
-        Route::get('apply', 'Lecture\ApplyController@apply')->name('apply');
+        Route::group(['middleware' => 'auth'], function () {
+            Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
+            Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+        });
         // 강의 신청 성공
         Route::get('success', function () {
             return view('desktop.pages.lecture.lecture_success');

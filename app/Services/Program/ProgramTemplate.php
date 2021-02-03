@@ -100,7 +100,7 @@ abstract class ProgramTemplate
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
             'is_open' => ['required', 'boolean'],
-            'material_id' => ['sometimes','nullable', 'numeric'],
+            'material_id' => ['sometimes', 'nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -284,6 +284,10 @@ abstract class ProgramTemplate
 
     public function updateTickets(Program $program, array $data)
     {
+        if ($data['is_free'] == true) {
+            $data['price'] = 0;
+        }
+
         $program->tickets()->first()->update([
             'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
