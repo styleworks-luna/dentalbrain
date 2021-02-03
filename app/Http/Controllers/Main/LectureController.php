@@ -16,12 +16,27 @@ class LectureController extends Controller
         $v = Validator::make($request->all(), [
             'category_id' => ['required', Rule::exists('program_major_categories', 'id')],
             'per_page' => ['required', 'numeric'],
+            'orderBy' => ['sometimes', 'required', Rule::in(['popular', 'newest'])]
         ]);
 
         $data = $v->validate();
 
-        $programs = Program::public()->where('major_category_id', '=', $data['category_id'])
-            ->paginate($data['per_page']);
+
+        $programs = Program::public()
+            ->where('major_category_id', '=', $data['category_id']);
+
+        if ($data['orderBy'] == 'popular') {
+            $programs = $programs
+                ->where('major_category_id', '=', $data['category_id'])
+                // TODO: 인기순 정렬 만들기.
+                ->inRandomOrder();
+        } else if ($data['orderBy'] == 'newest') {
+            $programs = Program::public()
+                ->where('major_category_id', '=', $data['category_id'])
+                ->orderByDesc('created_at');
+        }
+
+        $programs = $programs->paginate($data['per_page']);
 
         return response()->json(
             $programs
