@@ -13,10 +13,10 @@ class Banner extends Model
 {
     use SoftDeletes;
 
-    static $POSITION_TOP = 0;
-    static $POSITION_BAR = 1;
-    static $POSITION_RECOMMEND = 2;
-    static $POSITION_BOTTOM = 3;
+    static $POSITION_TOP = 1;
+    static $POSITION_BAR = 2;
+    static $POSITION_RECOMMEND = 3;
+    static $POSITION_BOTTOM = 4;
 
     protected $guarded = [];
 
