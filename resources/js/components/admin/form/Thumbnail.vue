@@ -2,7 +2,8 @@
     <div class="thumbnail-wrap"
          :style="thumbnailPreview">
         <input type="file" class="d-none" :id="id"
-               @change="fileUpload">
+               @change="fileUpload"
+               accept=".JPG, .JPEG, .PNG, .GIF">
         <label class="btn btn-block btn-info"
                :for="id">
             썸네일 변경

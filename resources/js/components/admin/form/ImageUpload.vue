@@ -1,7 +1,8 @@
 <template>
     <div class="input-file-wrap overflow-hidden">
         <input type="file" class="d-none" :id="inputId"
-               @change="imageUpload">
+               @change="imageUpload"
+               accept=".JPG, .JPEG, .PNG, .GIF">
         <label class="btn btn-info float-left w-30"
                :for="inputId">
             파일선택
@@ -18,13 +19,13 @@ import ImageUpload from '@/api/admin/common/Upload.js';
 
 export default {
     name: 'ImageUpload',
-    props:['inputId', 'initFile'],
+    props:['inputId', 'initFile','index'],
     methods: {
         imageUpload(e) {
             let uploadForm = new FormData();
             uploadForm.append('image', e.target.files[0]);
             ImageUpload.imageUpload(uploadForm).then(res => {
-                this.$emit('setImage', res.data.file);
+                this.$emit('setImage', res.data.file, this.index);
             }).catch(function (err) {
                 alert('오류');
             });
