@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Services\Program\OnlineProgramConcrete;
+use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -13,10 +14,12 @@ use Illuminate\Validation\Rule;
 class OnlineProgramController extends Controller
 {
     protected $onlineConcrete;
+    private $search;
 
     public function __construct()
     {
         $this->onlineConcrete = new OnlineProgramConcrete();
+        $this->search = new SearchService(new Program());
     }
 
     public function getCategories()
@@ -24,9 +27,11 @@ class OnlineProgramController extends Controller
         return $this->onlineConcrete->getCategories();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->onlineConcrete->getPrograms();
+        return response()->json([
+            'search' => $this->search($request),
+        ]);
     }
 
     public function students(Program $program)
@@ -107,5 +112,28 @@ class OnlineProgramController extends Controller
         return response()->json([
             'msg' => '온라인 강의가 수정되었습니다.',
         ]);
+    }
+
+    private function search(Request $request){
+        $this->search->addKeyword('title',$request->keyword);
+        $this->addMajorCategoryId($request);
+        $this->addMinorCategoryId($request);
+
+        $search = $this->search->search()->where('is_online', '=', $this->onlineConcrete->is_online)
+            ->withCount('students')->orderByDesc('id')->paginate('10');
+
+        return $search;
+    }
+
+    private function addMajorCategoryId(Request $request){
+        if(isset($request->major_category_id) && is_numeric($request->major_category_id)){
+            $this->search->addCategory('major_category_id','=',$request->major_category_id);
+        }
+    }
+
+    private function addMinorCategoryId(Request $request){
+        if(isset($request->minor_category_id) && is_numeric($request->minor_category_id)){
+            $this->search->addCategory('minor_category_id','=',$request->minor_category_id);
+        }
     }
 }
