@@ -115,7 +115,7 @@
                             <label class="col-form-label" for="">유튜브 링크</label>
                             <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="lecture.link">
+                                <input type="text" class="form-control" v-model="lecture.url">
                             </div>
                         </div>
 
@@ -193,7 +193,7 @@ export default {
             this.lectures.forEach(lecture => {
                 lectures.push({
                     title: lecture.title,
-                    link: lecture.link,
+                    url: lecture.url,
                     thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null
                 })
             });
