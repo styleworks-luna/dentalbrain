@@ -139,6 +139,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
+    //마이페이지 회원탈퇴 함수
+    Route::post('userSecession','Account\SecessionController@userSecession')->name('userSecession');
 });
 
 // 관리자

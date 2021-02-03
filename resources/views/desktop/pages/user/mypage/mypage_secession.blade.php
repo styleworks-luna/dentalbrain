@@ -12,7 +12,8 @@
     <section class="content">
         <div class="container">
             @include('desktop.layouts.navigation.account')
-            <form action="" id="form-secession">
+            <form action={{ route('account.userSecession')}} id="form-secession" method="POST">
+                @csrf
                 <section class="secession">
                     <h2>회원탈퇴</h2>
                     <table>
@@ -72,7 +73,7 @@
                         <tr>
                             <th>탈퇴 아이디</th>
                             <td>
-                                <span class="id">dentalbrain</span>
+                                <span class="id">{{ $user->login_id }}</span>
                             </td>
                         </tr>
                         <tr>
@@ -80,6 +81,7 @@
                             <td>
                                 <div class="input-wrap">
                                     <input type="password"
+                                           name="password"
                                            id="password"
                                            class="password"
                                            placeholder="본인인증을 위해 비밀번호를 입력해주세요.">
