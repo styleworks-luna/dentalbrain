@@ -35,7 +35,7 @@ class Banner extends Model
     }
 
     public function getBannerCategoryNameAttribute(){
-        return BannerCategory::find($this->position)->name;
+        return BannerCategory::find($this->category_id)->name;
     }
 
     public function desktopFile()

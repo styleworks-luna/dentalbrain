@@ -3,7 +3,7 @@
                 valueType="format"
                 :format="'yyyy-MM-dd'"
                 :language="ko"
-                :required="true"
+                :typeable="true"
                 input-class="datepicker form-control"
                 @input="handleSetDate"
                 v-model="date"

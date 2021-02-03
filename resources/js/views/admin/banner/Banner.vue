@@ -7,20 +7,42 @@
             </router-link>
         </template>
 
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                text="종류 선택"
+                                :value="category_id"
+                                :options="bannerOptions"
+                                @setValue="handleSetPosition"></select-box>
+
+                    <date-picker class="mr-3" @setTime="handleSetDate"></date-picker>
+
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="연결링크 검색"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </template>
+
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="banners.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <template>
-                        <td v-if=" slotProps.row.position == 0">상단배너</td>
-                        <td v-if=" slotProps.row.position == 1">바배너</td>
-                        <td v-if=" slotProps.row.position == 2">추천배너</td>
-                        <td v-if=" slotProps.row.position == 3">하단배너</td>
-                    </template>
+                    <td>{{ slotProps.row.categories.name }}</td>
                     <td>{{ slotProps.row.order }}</td>
                     <td>{{ slotProps.row.link }}</td>
-                    <td>노출 시작 : {{ slotProps.row.started_at }} ~  노출 종료 : {{ slotProps.row.ended_at }}</td>
+                    <td>
+                        노출 시작 : {{ slotProps.row.started_at }} ~<br>
+                        노출 종료 : {{ slotProps.row.ended_at }}
+                    </td>
                     <td>{{ slotProps.row.views }}</td>
                     <td>
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"
@@ -51,23 +73,38 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
+import DatePicker from '@/components/common/DatePicker.vue'
 
 // api
 import Banner from '@/api/admin/banner/Banner.js';
 
+// mixins
+import { BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
+
 export default {
     name: 'AdminUser',
+    mixins: [
+        BannerCategoryMixin
+    ],
     components: {
         'table-grid': Table,
-        'button-open': ButtonOpen
+        'button-open': ButtonOpen,
+        'select-box': SelectBox,
+        'date-picker': DatePicker
     },
     data() {
         return {
             banners: {
                 data: []
             },
-            page: 1
+            keyword: '',
+            date: '',
+            page: 1,
         }
+    },
+    created() {
+        this.category_id = '';
     },
     mounted() {
         this.getData();
@@ -80,7 +117,7 @@ export default {
                     text: '번호'
                 },
                 {
-                    name: 'position',
+                    name: 'category_id',
                     text: '종류'
                 },
                 {
@@ -104,7 +141,7 @@ export default {
                     text: '명령'
                 }
             ]
-        }
+        },
     },
     methods: {
         getData(page = this.page) {
@@ -113,6 +150,9 @@ export default {
             }
 
             let params = {
+                keyword: this.keyword,
+                category_id: this.category_id,
+                date: this.Helper.dateFormatYDM(this.date),
                 page: page
             };
 
@@ -128,12 +168,17 @@ export default {
                 alert(res.data.msg);
             })
         },
+        handleSetPosition(value) {
+            this.category_id = value;
+        },
+        handleSetDate(date) {
+            this.date = date;
+        },
         destroy(id) {
             Banner.destroy(id).then(res => {
                 alert(res.data.msg);
             })
-        },
-
+        }
     }
 }
 </script>

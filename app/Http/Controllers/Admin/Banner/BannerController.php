@@ -138,7 +138,7 @@ class BannerController extends Controller
         $this->search->addKeyword('link',$request->keyword);
         $this->addCategoryDate($request->date);
         $this->addPositionCategoryId($request->category_id);
-        $result = $this->search->search()->orderBy('id','desc')->paginate('20');
+        $result = $this->search->search()->with('categories')->orderBy('id','desc')->paginate('20');
 
         return $result;
     }

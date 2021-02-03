@@ -14,6 +14,12 @@ export default {
             method: 'get'
         })
     },
+    getCategoryData() {
+        return Send({
+            url: '/api/admin/banner/category',
+            method: 'get'
+        })
+    },
     create(data) {
         return Send({
             url: '/api/admin/banner',

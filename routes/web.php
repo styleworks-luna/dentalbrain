@@ -228,7 +228,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         });
 
-
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
             //배너 index 페이지 데이터
             Route::get('/', 'Admin\Banner\BannerController@index')->name('index');
