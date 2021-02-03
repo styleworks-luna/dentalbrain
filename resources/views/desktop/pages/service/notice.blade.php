@@ -29,7 +29,7 @@
                                 <p class="views list-common">{{ $notice->views }}</p>
                             </li>
                         @empty
-                            <li>공지사항이 없습니다.</li>
+                            <li class="list-none">공지사항이 없습니다.</li>
                         @endforelse
                     </ul>
                     {{ $notices->links() }}
