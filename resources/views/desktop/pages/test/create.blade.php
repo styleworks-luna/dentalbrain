@@ -93,7 +93,7 @@
                 @csrf
                 <input type="hidden" name="desktop_file_id" id="desktop_file_id" placeholder="데스크탑 파일 아이디" value="">
                 <input type="hidden" name="mobile_file_id" id='mobile_file_id' placeholder="모바일 파일 아이디" value="">
-                position<input type="text" name="position" placeholder="종류(위치)" value="{{\App\Models\Manage\Banner::$POSITION_BOTTOM}}">
+                category_id<input type="text" name="category_id" placeholder="종류(위치)" value="{{\App\Models\Manage\Banner::$POSITION_BOTTOM}}">
                 order<input type="text" name="order" placeholder="중요도" value="1">
                 title<input type="text" name="title" placeholder="제목(title)" value="배너제목">
                 link<input type="text" name="link" placeholder="연결 링크" value="https://google.com">

@@ -49,7 +49,7 @@ class Banner extends Model
     }
 
     public function categories(){
-        return $this->belongsTo(BannerCategory::class,'position','id');
+        return $this->belongsTo(BannerCategory::class,'category_id','id');
 
     }
 

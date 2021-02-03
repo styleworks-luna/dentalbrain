@@ -39,7 +39,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'position' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
             'title' => ['string','nullable'],
             'link' => ['required'],
@@ -78,7 +78,7 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $validatedData = $request->validate([
-            'position' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
             'link' => ['required',],
@@ -137,7 +137,7 @@ class BannerController extends Controller
     private function search(Request $request){
         $this->search->addKeyword('link',$request->keyword);
         $this->addCategoryDate($request->date);
-        $this->addPosition($request->position);
+        $this->addPositionCategoryId($request->category_id);
         $result = $this->search->search()->orderBy('id','desc')->paginate('20');
 
         return $result;
@@ -150,9 +150,9 @@ class BannerController extends Controller
         }
     }
 
-    private function addPosition(string $position = null){
-        if(isset($position) && is_numeric($position)){
-            $this->search->addCategory('position','=',$position);
+    private function addPositionCategoryId(string $category_id = null){
+        if(isset($category_id) && is_numeric($category_id)){
+            $this->search->addCategory('category_id','=',$category_id);
         }
     }
 
