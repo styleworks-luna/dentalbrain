@@ -1,6 +1,9 @@
 $(function () {
     email_box('.email_box');
 
+    // 파슬리
+    $('#lecture-apply-form').parsley();
+
     //파일 업로드 file name 업데이트
     var fileTarget = $('.upload-hidden');
 

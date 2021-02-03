@@ -15,7 +15,7 @@
 @section('content')
     <section class="content">
         <div class="container">
-            <form action="{{ route('lectures.apply',$program->id) }} " method="POST" enctype="multipart/form-data">
+            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     @csrf
                     <section class="apply-title">
@@ -113,7 +113,10 @@
 
                                                     <input type="radio" id="choice-{{$choice->id}}"
                                                            name="surveys[{{ $idx }}][answer]"
-                                                           value="{{ $choice->id }}">
+                                                           value="{{ $choice->id }}"
+                                                           data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                           data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
+                                                           data-parsley-multiple="radio{{ $survey->id }}">
                                                     <label for="choice-{{$choice->id}}">{{ $choice->question }}</label>
                                                 </li>
                                             @empty
@@ -121,6 +124,7 @@
                                             @endforelse
                                         </ul>
                                     </div>
+                                    <div class="radio_error_wrap{{ $survey->id }}"></div>
                                 </div>
                                 @break
                                 @case('multipleChoice')
@@ -135,7 +139,10 @@
                                                            value="{{ $survey->id }}">
                                                     <input type="checkbox" id="multiple-choice-{{ $choice->id }}"
                                                            name="surveys[{{ $idx }}][answers][]"
-                                                           value="{{ $choice->id }}">
+                                                           value="{{ $choice->id }}"
+                                                           data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                           data-parsley-errors-container=".checkbox_error_wrap{{ $survey->id }}"
+                                                           data-parsley-multiple="checkbox{{ $survey->id }}">
                                                     <label
                                                         for="multiple-choice-{{ $choice->id }}">{{ $choice->question }}</label>
                                                 </li>
@@ -144,6 +151,7 @@
                                             @endforelse
                                         </ul>
                                     </div>
+                                    <div class="checkbox_error_wrap{{ $survey->id }}"></div>
                                 </div>
                                 @break
                                 @case('shortAnswer')
@@ -152,8 +160,11 @@
                                     <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
                                     <div class="answers">
                                         <input type="text" id="short-answer-response" name="surveys[{{ $idx }}][answer]"
-                                               class="short-answer-response" placeholder="답변을 입력하세요.">
+                                               class="short-answer-response" placeholder="답변을 입력하세요."
+                                               data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                               data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}">
                                     </div>
+                                    <div class="short_answer_error_wrap{{ $survey->id }}"></div>
                                 </div>
                                 @break
                                 @case('address')
@@ -167,11 +178,13 @@
                                             <input type="text" id="address" name="surveys[{{ $idx }}][address]"
                                                    class="address"
                                                    data-index="{{ $idx }}"
-                                                   readonly="readonly">
+                                                   readonly="readonly"
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}">
                                             <input type="text" id="address-detail"
                                                    name="surveys[{{ $idx }}][address-detail]"
                                                    class="address-detail"
-                                                   placeholder="상세주소를 입력하세요.">
+                                                   placeholder="상세주소를 입력하세요."
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}">
                                         </div>
                                     </div>
                                 </div>
@@ -187,12 +200,15 @@
                                                    class="upload-hidden"
                                                    name="surveys[{{ $idx }}][file]"
                                                    accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
-                                               .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar">
+                                               .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                   data-parsley-errors-container=".file_error_wrap{{ $survey->id }}">
                                             <label for="file-upload" class="btn-file-upload">파일선택</label>
                                             <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
                                                    class="file-name"
                                                    value="파일을 업로드해주세요." disabled="disabled">
                                         </div>
+                                        <div class="file_error_wrap{{ $survey->id }}"></div>
                                         <div class="tips">
                                             <p>
                                                 ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
@@ -252,20 +268,26 @@
                                 <li>
                                     <div class="checkbox-wrap">
                                         <input type="checkbox" id="offer-consent" name="offer-consent"
-                                               class="offer-consent">
+                                               class="offer-consent"
+                                               data-parsley-required="true"
+                                               data-parsley-errors-container=".offer_error_wrap">
                                         <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                     </div>
                                     <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
                                     <a href="">내용보기</a>
+                                    <div class="offer_error_wrap"></div>
                                 </li>
                                 <li>
                                     <div class="checkbox-wrap">
                                         <input type="checkbox" id="refund-consent" name="refund-consent"
-                                               class="refund-consent">
+                                               class="refund-consent"
+                                               data-parsley-required="true"
+                                               data-parsley-errors-container=".refund_error_wrap">
                                         <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                     </div>
                                     <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
                                     <a href="">내용보기</a>
+                                    <div class="refund_error_wrap"></div>
                                 </li>
                             </ul>
                         </div>
