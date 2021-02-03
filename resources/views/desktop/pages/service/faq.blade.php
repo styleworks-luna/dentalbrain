@@ -39,7 +39,7 @@
                                 </div>
                             </li>
                         @empty
-                            <li>FAQ 가 없습니다.</li>
+                            <li class="list-none">FAQ 가 없습니다.</li>
                         @endforelse
                     </ul>
                 </section>
