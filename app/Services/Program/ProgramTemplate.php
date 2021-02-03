@@ -82,6 +82,9 @@ abstract class ProgramTemplate
             'minor' => $minor,
         ]);
     }
+    /*
+     * ========================= Validation =========================
+     */
 
     /**
      * @param Request $request
@@ -97,6 +100,7 @@ abstract class ProgramTemplate
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
             'is_open' => ['required', 'boolean'],
+            'material_id' => ['sometimes','nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -113,7 +117,7 @@ abstract class ProgramTemplate
                 '*.type' => ['required', Rule::exists('survey_categories', 'eng_name')],
                 '*.question' => ['required', 'string'],
                 '*.is_required' => ['required', 'boolean'],
-                '*.choices' => ['sometimes', 'required', 'array', 'nullable',],
+                '*.choices' => ['sometimes', 'array', 'nullable',],
                 '*.choices.*.question' => ['sometimes', 'required', 'string'],
             ], $additionalRules));
 
@@ -134,6 +138,9 @@ abstract class ProgramTemplate
 
         return $validatedData;
     }
+    /*
+     * ========================= STORE =========================
+     */
 
     /**
      * 프로그램 생성.
@@ -217,6 +224,132 @@ abstract class ProgramTemplate
                 }
             }
         }
+        return $returnableDataSet;
+    }
+
+    /*
+     *  ========================= UPDATE =========================
+     */
+
+    function updateProgram(Program $program, array $data)
+    {
+        $this->program = $program;
+        if ($data['thumbnail_id'] != $program->thumbnail->id) {
+            // 썸네일이 변경된 경우.
+            $fileService = new ProgramThumbnail($this->program);
+
+            // 기존 파일 삭제
+            $fileService->deletePublicFile();
+
+            // 새로운 파일 등록
+            $file = $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
+            if ($file === false) {
+                throw new Exception('PROGRAM THUMBNAIL STORE ERROR');
+            }
+        }
+
+        // material_id => sometimes 이기 때문.
+        $data['material_id'] = isset($data['material_id']) ?: null;
+
+        if ($program->material_id != $data['material_id']) {
+            // 변경 있음.
+            $fileService = new ProgramMaterial($program);
+
+            //기존 파일 삭제
+            $fileService->deletePublicFile();
+
+            if ($data['material_id'] !== null) {
+                // 새 파일 생성
+                $file = $fileService->moveTempToPublic(File::find($data['material_id']));
+                if ($file === false) {
+                    throw new Exception('PROGRAM MATERIAL UPDATE ERROR');
+                }
+            }
+        }
+
+        $program->update([
+            'title' => $data['title'],
+            'content' => $data['content'],
+            'is_online' => $this->is_online,
+            'major_category_id' => $data['major_category_id'],
+            'minor_category_id' => $data['minor_category_id'],
+            'running_time' => $data['running_time'] ?? null,
+            'thumbnail_id' => $data['thumbnail_id'],
+            'material_id' => $data['material_id'],
+            'is_open' => $data['is_open'],
+        ]);
+
+        return $this->program;
+    }
+
+    public function updateTickets(Program $program, array $data)
+    {
+        $program->tickets()->first()->update([
+            'price' => $data['price'] ?? 0,
+            'is_free' => $data['is_free'],
+            'name' => $data['lecture_info'],
+            //'term' => 100 days default.
+        ]);
+    }
+
+    public function updateSurveys(Program $program, array $dataSet)
+    {
+        $returnableDataSet = [];
+        $originalSurveyIds = $program->surveys()->pluck('id');
+
+        foreach ($dataSet as $data) {
+            if (isset($data['id'])) {
+                // 기존에 존재하는 경우.
+                $parent = Survey::find($data['id']);
+                $parent->update([
+                    'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                    'program_id' => $program->id,
+                    'question' => $data['question'],
+                    'is_required' => $data['is_required'],
+                ]);
+            } else {
+                //새로 생성.
+                $parent = Survey::create([
+                    'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                    'program_id' => $program->id,
+                    'question' => $data['question'],
+                    'is_required' => $data['is_required'],
+                ]);
+            }
+            $returnableDataSet[] = $parent;
+            if (SurveyCategory::hasChoices($data['type'])) {
+                // 선택지가 있는 경우.
+                foreach ($data['choices'] as $choice) {
+                    if (isset($choice['id'])) {
+                        // 기존에 존재하는 경우.
+                        $choice = Survey::find($choice['id']);
+                        $choice->update([
+                            'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                            'program_id' => $program->id,
+                            'question' => $choice['question'],
+                            'is_required' => $data['is_required'],
+                            'parent_id' => $parent->id,
+                        ]);
+                    } else {
+                        // 새로 생성한 항목인 경우.
+                        $choice = Survey::create([
+                            'category_id' => SurveyCategory::castStringTypeToId($data['type']),
+                            'program_id' => $program->id,
+                            'question' => $choice['question'],
+                            'is_required' => $data['is_required'],
+                            'parent_id' => $parent->id,
+                        ]);
+                    }
+
+                    $returnableDataSet[] = $choice;
+                }
+            }
+        }
+        // 삭제 된 설문조사들 삭제.
+        $newSurveyIds = collect($returnableDataSet)->pluck('id');
+        $deletable = $originalSurveyIds->diff($newSurveyIds);
+        Survey::query()->whereIn('id', $deletable)->delete();
+
         return $returnableDataSet;
     }
 }

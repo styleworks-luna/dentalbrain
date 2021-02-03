@@ -8,12 +8,7 @@ class ProgramPlace extends Model
 {
     protected $table = 'program_places';
     protected $guarded = [];
-    protected $casts = [
-        'started_at' => 'datetime',
-        'ended_at' => 'datetime',
-        'receipt_started_at' => 'datetime',
-        'receipt_ended_at' => 'datetime',
-    ];
+    protected $casts = [];
 
     public function program()
     {

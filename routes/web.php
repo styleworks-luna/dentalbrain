@@ -61,22 +61,17 @@ Route::get('find', function () {
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
-    return view('desktop.pages.introduce.about_us');
+    return view(viewPrefix() . 'pages.introduce.about_us');
 });
 
-//강사 소개 (임시)
+//강사 소개
 Route::get('instructor', function () {
-    return view('desktop.pages.introduce.instructor');
+    return view(viewPrefix() . 'pages.introduce.instructor');
 });
 
 //강의 시청 (임시)
 Route::get('watch', function () {
     return view('desktop.pages.lecture.lecture_watch');
-});
-
-//전체 강의 (임시)
-Route::get('all', function () {
-    return view('desktop.pages.lecture.lecture_all');
 });
 
 
@@ -106,7 +101,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
-        return '준비중.';
+        return view(viewPrefix() . 'pages.lecture.lecture_all');
     });
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
@@ -215,7 +210,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
                 Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
                 Route::get('{program}', 'Admin\OnlineProgramController@edit')->name('edit');
-                Route::put('{program}', 'Admin\OnlineProgramController@update');
+                Route::put('{program}', 'Admin\OnlineProgramController@update')->name('update');
 //                Route::delete('{program}', 'Admin\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
@@ -223,7 +218,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('/', 'Admin\OfflineProgramController@store')->name('store');
                 Route::get('{program}/students', 'Admin\OfflineProgramController@getStudentInfo')->name('students');
                 Route::get('{program}', 'Admin\OfflineProgramController@edit')->name('edit');
-//                Route::put('{program}', 'Admin\OfflineProgramController@index');
+                Route::put('{program}', 'Admin\OfflineProgramController@update')->name('update');
 //                Route::delete('{program}', 'Admin\OfflineProgramController@index');
 
             });

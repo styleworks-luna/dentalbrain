@@ -156,7 +156,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="button" class="btn btn-info" @click="update">수정</button>
+                <button type="submit" class="btn btn-info" @click="update">등록</button>
                 <router-link to="/admin/lecture/online"
                              class="btn btn-dark">취소
                 </router-link>
@@ -200,6 +200,7 @@ export default {
                 this.major_category_id = program.major_category_id;
                 this.minor_category_id = program.minor_category_id;
 
+                this.thumbnail_id = program.thumbnail_id;
                 this.thumbnail = program.thumbnail;
 
                 this.title = program.title;
@@ -207,6 +208,7 @@ export default {
 
                 this.content = program.content;
 
+                this.material_id = program.material_id;
                 this.material = program.material;
 
                 this.is_open = program.is_open;
@@ -224,20 +226,20 @@ export default {
             let lectures = [];
 
             this.lectures.forEach(lecture => {
-
                 lectures.push({
                     id: lecture.id,
                     title: lecture.title,
+
                     url: lecture.url,
-                    thumbnail_id: lecture.thumbnail_id || null
-                })
+                    thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null
+                });
             });
 
             let data = {
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
 
-                thumbnail_id: this.thumbnail ? this.thumbnail.id : null,
+                thumbnail_id: this.thumbnail.id,
                 title: this.title,
                 running_time: this.running_time,
 
@@ -248,7 +250,7 @@ export default {
 
                 content: this.content,
 
-                material_id: this.material ? this.material.id : null,
+                material_id: this.material.id,
 
                 surveys: this.surveys,
                 lectures: lectures,
@@ -257,8 +259,14 @@ export default {
             Online.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
-            });
-        }
+            })
+        },
+        destroy() {
+            Online.destroy(this.id).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/online');
+            })
+        },
     }
 }
 </script>

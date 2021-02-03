@@ -115,7 +115,7 @@
                             <label class="col-form-label" for="">유튜브 링크</label>
                             <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="lecture.url">
+                                <input type="text" class="form-control" v-model="lecture.link">
                             </div>
                         </div>
 
@@ -189,11 +189,12 @@ export default {
         create() {
             let lectures = [];
 
+
             this.lectures.forEach(lecture => {
                 lectures.push({
                     title: lecture.title,
-                    url: lecture.url,
-                    thumbnail_id: lecture.thumbnail_id || null
+                    link: lecture.link,
+                    thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null
                 })
             });
 
@@ -201,7 +202,7 @@ export default {
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
 
-                thumbnail_id: this.thumbnail ? this.thumbnail.id : null,
+                thumbnail_id: this.thumbnail.id,
                 title: this.title,
                 running_time: this.running_time,
 
@@ -212,7 +213,7 @@ export default {
 
                 content: this.content,
 
-                material_id: this.material ? this.material.id : null,
+                material_id: this.material.id,
 
                 surveys: this.surveys,
                 lectures: lectures

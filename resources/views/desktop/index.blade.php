@@ -43,11 +43,11 @@
                 </div>
             </section>
 
-            <lecture></lecture>
+            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
 
             <section class="ad">
                 @if($bar)
-                    <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bar->id]) }}">
+                    <a href="{{ $bar->link }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="">
                     </a>
                 @else
@@ -63,8 +63,8 @@
                     <div class="swiper-wrapper">
                         @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$recommendBanner->id])}}">
-                                    <img src="{{ $recommendBanner->desktopFile->url }}" alt="">
+                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
+                                    <img src="{{ $bottom->desktopFile->url }}" alt="">
                                 </a>
                             </div>
                         @empty

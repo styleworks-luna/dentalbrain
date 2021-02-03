@@ -10,7 +10,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
-use App\Services\Search\SearchImpl;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
 

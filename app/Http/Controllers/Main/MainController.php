@@ -18,7 +18,6 @@ class MainController extends Controller
         $data['slides'] = Program::main()->take(4)->get();
         $data['bar'] = Banner::public()->where('position', '=', Banner::$POSITION_BAR)->first();
         $data['bottomSlides'] = Banner::public()->where('position', '=', Banner::$POSITION_BOTTOM)->get();
-
         $data['notices'] = Notice::public()->take(3)->get();
         $data['faqs'] = Faq::public()->take(3)->get();
         return view(viewPrefix() . 'index', $data);
@@ -27,13 +26,15 @@ class MainController extends Controller
     public function lectures(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'category_id' => ['required', Rule::exists('program_major_categories', 'id')]
+            'category_id' => ['required', Rule::exists('program_major_categories', 'id')],
+            'per_page' => ['required', 'numeric'],
         ]);
 
-        $v->validate();
+        $data = $v->validate();
 
-        $programs = Program::public()->where('major_category_id', '=', $request->get('category_id', 1))
-            ->take(9)->get();
+        $programs = Program::public()->where('major_category_id', '=', $data['category_id'])
+            ->paginate($data['per_page']);
+
         return response()->json(
             $programs
         );

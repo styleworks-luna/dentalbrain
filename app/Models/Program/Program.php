@@ -42,13 +42,10 @@ class Program extends Model
         return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
-    /*
-     * 사용 예정
     public function tickets()
     {
         return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
     }
-    */
 
 
     public function ticket()

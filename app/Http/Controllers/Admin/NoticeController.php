@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Notice;
-use App\Services\Search\NoticeSearchImpl;
 use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;

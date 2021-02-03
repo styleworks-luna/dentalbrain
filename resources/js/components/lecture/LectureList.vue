@@ -31,7 +31,7 @@ export default {
         }
     },
     watch: {
-        lecture() {
+        list() {
             this.lectures = this.list;
         }
     }

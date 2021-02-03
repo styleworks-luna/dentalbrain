@@ -95,6 +95,7 @@ class UserController extends Controller
         ]);
 
         $user = User::where('name',$validatedData['name'])->where('phone',$validatedData['phone'])->first();
+
         if(isset($user)){
             return response()->json(['message'=>'가입된 아이디는 "'.$user->login_id.'" 입니다.','success' => true]);
         }else{

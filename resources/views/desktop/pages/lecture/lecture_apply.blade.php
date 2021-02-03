@@ -1,4 +1,4 @@
-@extends('desktop.pages.lecture.resources.views.desktop.layouts.frames.basic_frame')
+@extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
@@ -27,20 +27,37 @@
                         </div>
                         <div class="lecture-information">
                             <div class="lecture-sort">
-                                <span class="offline">오프라인</span>
-                                <p class="lecture-subject">치과위생사 &middot; 위생</p>
+                                @if($program->is_online == true)
+                                    <span class="online">온라인</span>
+                                @else
+                                    <span class="offline">오프라인</span>
+                                @endif
+
+                                <p class="lecture-subject">
+                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
                             </div>
-                            <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
+                            <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
-                                <tr>
-                                    <th>강의시간</th>
-                                    <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>강의장소</th>
-                                    <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
-                                </tr>
+                                @if($program->is_online == true)
+                                    <tr>
+                                        <th>강의시간</th>
+                                        <td><p class="lecture-length">{{ $program->running_time }}</p></td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <th>강의일시</th>
+                                        <td>
+                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>강의장소</th>
+                                        <td>
+                                            <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                        </td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                     </section>
