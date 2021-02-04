@@ -13,10 +13,10 @@ class Banner extends Model
 {
     use SoftDeletes;
 
-    static $POSITION_TOP = 0;
-    static $POSITION_BAR = 1;
-    static $POSITION_RECOMMEND = 2;
-    static $POSITION_BOTTOM = 3;
+    static $POSITION_TOP = 1;
+    static $POSITION_BAR = 2;
+    static $POSITION_RECOMMEND = 3;
+    static $POSITION_BOTTOM = 4;
 
     protected $guarded = [];
 
@@ -35,7 +35,7 @@ class Banner extends Model
     }
 
     public function getBannerCategoryNameAttribute(){
-        return BannerCategory::find($this->position)->name;
+        return BannerCategory::find($this->category_id)->name;
     }
 
     public function desktopFile()
@@ -49,7 +49,7 @@ class Banner extends Model
     }
 
     public function categories(){
-        return $this->belongsTo(BannerCategory::class,'position','id');
+        return $this->belongsTo(BannerCategory::class,'category_id','id');
 
     }
 

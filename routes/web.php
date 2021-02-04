@@ -46,6 +46,7 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
+    Route::get('sms','Test\TestController@getToken')->name('getToken');
 });
 
 /*============================ PAGES ============================*/
@@ -141,6 +142,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
+    //마이페이지 회원탈퇴 함수
+    Route::post('userSecession','Account\SecessionController@userSecession')->name('userSecession');
 });
 
 // 관리자
@@ -228,7 +231,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
 
         });
-
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
             //배너 index 페이지 데이터

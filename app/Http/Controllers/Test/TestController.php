@@ -16,6 +16,7 @@ use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
 use App\Models\User;
 use App\Models\UserJobName;
+use App\Services\Notification\Sms\Ppurio;
 use Illuminate\Http\Request;
 
 
@@ -59,4 +60,8 @@ class TestController extends Controller
         return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all(), 'userCategory' => UserJobName::all()]);
     }
 
+    public function getToken(){
+        $sms = new Ppurio();
+        $sms->getToken();
+    }
 }

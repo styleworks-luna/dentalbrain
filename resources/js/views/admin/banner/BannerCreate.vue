@@ -8,9 +8,9 @@
                           :size="6">
                 <template v-slot:content>
                     <select-box class="form-control"
-                                :value="position"
+                                :value="category_id"
                                 :options="bannerOptions"
-                                @setValue="handleSetBannerCategoryId"></select-box>
+                                @setValue="handleSetCategoryId"></select-box>
                 </template>
             </single-group>
 
@@ -108,20 +108,18 @@
 import Banner from '@/api/admin/banner/Banner.js';
 
 // mixins
-import {BannerMixin} from '@/mixins/admin/banner/Banner.js';
+import { BannerMixin, BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminBannerCreate',
     mixins: [
-        BannerMixin
+        BannerMixin,
+        BannerCategoryMixin
     ],
-    data() {
-        return {}
-    },
     methods: {
         create() {
             let data = {
-                position: this.position,
+                category_id: this.category_id,
                 order: this.order,
 
                 title: this.title,

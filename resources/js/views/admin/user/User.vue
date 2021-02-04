@@ -1,8 +1,27 @@
 <template>
     <layout title="회원정보 목록">
-        <template v-slot:button>
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                text="분류"
+                                :value="job_name_id"
+                                :options="jobOptions"
+                                @setValue="handleSetJobyId"></select-box>
 
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="ID, 이름, 전화번호, 이메일"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
         </template>
+
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
@@ -38,6 +57,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 // api
 import User from '@/api/admin/user/User.js';
@@ -46,17 +66,22 @@ export default {
     name: 'AdminUser',
     components: {
         'table-grid': Table,
+        'select-box': SelectBox
     },
     data() {
         return {
             users: {
                 data: []
             },
+            jobOptions: [],
+            job_name_id: '',
+            keyword: '',
             page: 1
         }
     },
     mounted() {
         this.getData();
+        this.getCategory();
     },
     computed: {
         tableCol() {
@@ -99,6 +124,8 @@ export default {
             }
 
             let params = {
+                job_name_id: this.job_name_id,
+                keyword: this.keyword,
                 page: page
             };
 
@@ -107,6 +134,14 @@ export default {
             }).catch(err => {
                 this.users = [];
             });
+        },
+        getCategory() {
+            User.getCategory().then(res => {
+                this.jobOptions = res.data.userJob;
+            });
+        },
+        handleSetJobyId(value) {
+            this.job_name_id = value;
         },
     }
 }

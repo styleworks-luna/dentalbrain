@@ -8,9 +8,9 @@
                           :size="6">
                 <template v-slot:content>
                     <select-box class="form-control"
-                                :value="position"
+                                :value="category_id"
                                 :options="bannerOptions"
-                                @setValue="handleSetBannerCategoryId"></select-box>
+                                @setValue="handleSetCategoryId"></select-box>
                 </template>
             </single-group>
 
@@ -111,12 +111,13 @@ import { ko } from 'vuejs-datepicker/dist/locale';
 import Banner from '@/api/admin/banner/Banner.js';
 
 // mixins
-import { BannerMixin } from '@/mixins/admin/banner/Banner.js';
+import { BannerMixin, BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminBannerCreate',
     mixins: [
-        BannerMixin
+        BannerMixin,
+        BannerCategoryMixin
     ],
     components: {
         Datepicker,
@@ -124,10 +125,8 @@ export default {
     data() {
         return{
             id: '',
-            data: {
-
-            },
-            ko: ko,
+            data: {},
+            ko: ko
         };
     },
     created() {
@@ -141,7 +140,7 @@ export default {
             Banner.getEditData(this.id).then(res => {
                 const result = res.data.banner;
 
-                this.position = result.position;
+                this.category_id = result.category_id;
                 this.order = result.order;
 
                 this.title = result.title;
@@ -160,7 +159,7 @@ export default {
         },
         update() {
             let data = {
-                position : this.position,
+                category_id : this.category_id,
                 order : this.order,
 
                 title : this.title,

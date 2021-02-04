@@ -56,20 +56,21 @@
             faq 넣는 함수
             <form method="POST" action="{{route('api.admin.customer.faqs.store')}}">
                 @csrf
-                <input type="text" name="question" placeholder="faq 질문" value="question">
-                <input type="text" name="answer" placeholder="faq정답" value="answer">
-                <input type="text" name="category_id" placeholder="카테고리 id" value="1">
-                <input type="text" name="is_open" placeholder="상태" value="1">
+                question<input type="text" name="question" placeholder="faq 질문" value="question">
+                answer<input type="text" name="answer" placeholder="faq정답" value="answer">
+                category_id<input type="text" name="category_id" placeholder="카테고리 id" value="1">
+                is_open<input type="text" name="is_open" placeholder="상태" value="1">
                 <input type="submit">
             </form>
+            <br>
 
             notice 넣는 함수
             <form method="POST" action="{{route('api.admin.customer.notices.store')}}">
                 @csrf
-                <input type="text" name="title" placeholder="제목" value="title">
-                <input type="text" name="content" placeholder="내용" value="content">
-                <input type="text" name="display_name" placeholder="관리자 이름" value="관리자">
-                <input type="text" name="is_open" placeholder="상태" value="1">
+                title<input type="text" name="title" placeholder="제목" value="title">
+                content<input type="text" name="content" placeholder="내용" value="content">
+                display_name<input type="text" name="display_name" placeholder="관리자 이름" value="관리자">
+                is_open<input type="text" name="is_open" placeholder="상태" value="1">
                 <input type="submit">
             </form>
             <br>
@@ -77,13 +78,12 @@
             inquiry 넣는 함수
             <form method="POST" action="{{route('customer.inquiries.store')}}">
                 @csrf
-                <input type="text" name="name" placeholder="name" value="이름">
-                <input type="text" name="phone" placeholder="phone" value="01012345678">
-                <input type="text" name="email" placeholder="email" value="onoffmix@onoffmix.com">
-                <input type="text" name="title" placeholder="title" value="제목">
-                <input type="text" name="content" placeholder="content" value="내용">
-                <input type="text" name="category_id" placeholder="category_id" value="1">
-                <input type="text" name="is_answer" placeholder="답변 상태" value="0">
+                name<input type="text" name="name" placeholder="name" value="이름">
+                phone<input type="text" name="phone" placeholder="phone" value="01012345678">
+                email<input type="text" name="email" placeholder="email" value="onoffmix@onoffmix.com">
+                title<input type="text" name="title" placeholder="title" value="제목">
+                content<input type="text" name="content" placeholder="content" value="내용">
+                cateogry<input type="text" name="category" placeholder="category" value="1">
                 <input type="submit">
             </form>
             <br>
@@ -93,15 +93,15 @@
                 @csrf
                 <input type="hidden" name="desktop_file_id" id="desktop_file_id" placeholder="데스크탑 파일 아이디" value="">
                 <input type="hidden" name="mobile_file_id" id='mobile_file_id' placeholder="모바일 파일 아이디" value="">
-                <input type="text" name="position" placeholder="종류(위치)" value="{{\App\Models\Manage\Banner::$POSITION_BOTTOM}}">
-                <input type="text" name="order" placeholder="중요도" value="1">
-                <input type="text" name="title" placeholder="제목(title)" value="배너제목">
-                <input type="text" name="link" placeholder="연결 링크" value="https://google.com">
-                <input type="file" name="desktop_file" id="desktop_file" placeholder="데스크탑 파일">
-                <input type="file" name="mobile_file" id="mobile_file" placeholder="모바일 파일">
-                <input type="date" name="started_at" placeholder="시작 시간" value="{{now()}}">
-                <input type="date" name="ended_at" placeholder="종료 시간" value="{{ now() }}">
-                <input type="text" name="is_open" placeholder="활성화 여부" value="1">
+                category_id<input type="text" name="category_id" placeholder="종류(위치)" value="{{\App\Models\Manage\Banner::$POSITION_BOTTOM}}">
+                order<input type="text" name="order" placeholder="중요도" value="1">
+                title<input type="text" name="title" placeholder="제목(title)" value="배너제목">
+                link<input type="text" name="link" placeholder="연결 링크" value="https://google.com">
+                desktop_file<input type="file" name="desktop_file" id="desktop_file" placeholder="데스크탑 파일">
+                mobile_file<input type="file" name="mobile_file" id="mobile_file" placeholder="모바일 파일">
+                started_at<input type="date" name="started_at" placeholder="시작 시간" value="{{now()}}">
+                ended_at<input type="date" name="ended_at" placeholder="종료 시간" value="{{ now() }}">
+                is_open<input type="text" name="is_open" placeholder="활성화 여부" value="1">
                 <input type="submit">
             </form>
 
