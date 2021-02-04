@@ -2,7 +2,7 @@
     <div class="lecture-contents">
         <ul>
             <li class="lecture-card" v-for="lecture in lectures" :key="lecture.id">
-                <a href="">
+                <a :href="'/lectures/' + lecture.id">
                     <img :src="lecture.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
