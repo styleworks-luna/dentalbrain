@@ -116,6 +116,7 @@ class OfflineProgramController extends Controller
         $this->addMinorCategoryId($request);
 
         $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+            ->with('place:id,program_id,started_at,ended_at')
             ->withCount('students')->orderByDesc('id')->paginate('10');
 
         return $search;

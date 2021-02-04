@@ -181,14 +181,9 @@ export default {
         LectureFormMixin,
         OnlineMixin
     ],
-    data() {
-        return {}
-    },
-    computed: {},
     methods: {
         create() {
             let lectures = [];
-
 
             this.lectures.forEach(lecture => {
                 lectures.push({
@@ -202,7 +197,7 @@ export default {
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
 
-                thumbnail_id: this.thumbnail.id,
+                thumbnail_id: this.thumbnail ? this.thumbnail.id : null,
                 title: this.title,
                 running_time: this.running_time,
 
@@ -213,7 +208,7 @@ export default {
 
                 content: this.content,
 
-                material_id: this.material.id,
+                material_id: this.material ? this.material.id : null,
 
                 surveys: this.surveys,
                 lectures: lectures
