@@ -67,7 +67,6 @@ export default {
             };
 
             Lecture.getData(params).then(res => {
-                console.log(res);
                 this.list = res.data;
             }).catch(err => {
                 this.list = [];
