@@ -64,6 +64,11 @@ Route::get('introduce', function () {
     return view(viewPrefix() . 'pages.introduce.about_us');
 });
 
+//강의 안내
+Route::get('information', function () {
+    return view(viewPrefix() . 'pages.introduce.lecture_information');
+});
+
 //강사 소개
 Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
