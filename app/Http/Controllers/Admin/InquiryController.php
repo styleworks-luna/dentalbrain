@@ -17,11 +17,6 @@ class InquiryController
 {
     private $search;
 
-    public function __construct()
-    {
-        $this->search = new SearchService(Inquiry::query());
-    }
-
     public function index(Request $request)
     {
         return response()->json([
@@ -71,6 +66,8 @@ class InquiryController
     }
 
     private function search(Request $request){
+        $this->search = new SearchService(Inquiry::query());
+
         $this->addGubunCategory($request->gubun);
 
         $this->search
@@ -82,7 +79,11 @@ class InquiryController
         return $result;
     }
 
-    private function addGubunCategory(string $gubun){
+    /**
+     *
+     * @param null|string $gubun
+     */
+    private function addGubunCategory($gubun){
         if(isset($gubun)){
             switch($gubun){
                 case 'notCompleted':

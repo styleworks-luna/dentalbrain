@@ -24,10 +24,6 @@ use DateTime;
 class BannerController extends Controller
 {
     private $search;
-    public function __construct()
-    {
-        $this->search = new SearchService(Banner::query());
-    }
 
     public function index(Request $request)
     {
@@ -89,7 +85,6 @@ class BannerController extends Controller
             'is_open' => ['required', 'boolean']
         ]);
 
-        logger($validatedData);
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
             $desktopFile = new DesktopFile($banner);
             $desktopFile->deletePublicFile();
@@ -135,6 +130,8 @@ class BannerController extends Controller
 
 
     private function search(Request $request){
+        $this->search = new SearchService(Banner::query());
+
         $this->search->addKeyword('link',$request->keyword);
         $this->addCategoryDate($request->date);
         $this->addPositionCategoryId($request->category_id);

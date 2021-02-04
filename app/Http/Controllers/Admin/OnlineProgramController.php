@@ -19,7 +19,6 @@ class OnlineProgramController extends Controller
     public function __construct()
     {
         $this->onlineConcrete = new OnlineProgramConcrete();
-        $this->search = new SearchService(Program::query());
     }
 
     public function getCategories()
@@ -115,11 +114,13 @@ class OnlineProgramController extends Controller
     }
 
     private function search(Request $request){
+        $this->search = new SearchService(Program::query());
+
         $this->search->addKeyword('title',$request->keyword);
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', $this->onlineConcrete->is_online)
+        $search = $this->search->search()->where('is_online', '=', 1)
             ->withCount('students')->orderByDesc('id')->paginate('10');
 
         return $search;

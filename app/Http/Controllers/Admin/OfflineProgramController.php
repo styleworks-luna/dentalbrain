@@ -19,13 +19,12 @@ class OfflineProgramController extends Controller
     public function __construct()
     {
         $this->offlineConcrete = new OfflineProgramConcrete();
-        $this->search = new SearchService(new Program());
     }
 
     public function index(Request $request)
     {
         return response()->json([
-            'search' => $this->search($request),
+            'programs' => $this->search($request),
         ]);
     }
 
@@ -110,6 +109,8 @@ class OfflineProgramController extends Controller
     }
 
     private function search(Request $request){
+        $this->search = new SearchService(Program::query());
+
         $this->search->addKeyword('title',$request->keyword);
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
