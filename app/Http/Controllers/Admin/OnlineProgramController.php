@@ -19,7 +19,7 @@ class OnlineProgramController extends Controller
     public function __construct()
     {
         $this->onlineConcrete = new OnlineProgramConcrete();
-        $this->search = new SearchService(new Program());
+        $this->search = new SearchService(Program::query());
     }
 
     public function getCategories()
@@ -30,7 +30,7 @@ class OnlineProgramController extends Controller
     public function index(Request $request)
     {
         return response()->json([
-            'search' => $this->search($request),
+            'programs' => $this->search($request),
         ]);
     }
 
