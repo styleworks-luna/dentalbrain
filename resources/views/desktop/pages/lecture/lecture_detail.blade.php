@@ -71,7 +71,7 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-                            <a href="" class="apply-btn">신청하기</a>
+                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">신청하기</a>
                             <a href=""
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}</a>
                         </div>
