@@ -80,10 +80,11 @@
                                            id="email"
                                            name="email"
                                            class="email_box"
+                                           value="{{old('email') ?? auth()->user()->email}}"
                                            data-parsley-required="true"
                                            data-parsley-type="email"
                                            data-parsley-class-handler=".ui-emailbox"
-                                           value="{{old('email') ?? auth()->user()->email}}">
+                                           data-parsley-required-message="이메일을 입력해주세요.">
                                 </td>
                             </tr>
                             <tr>
@@ -93,7 +94,9 @@
                                            id="phone"
                                            name="phone"
                                            class="phone"
-                                           value="{{old('phone') ?? auth()->user()->phone}}">
+                                           value="{{old('phone') ?? auth()->user()->phone}}"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="전화번호를 입력해주세요.">
                                 </td>
                             </tr>
                         </table>
@@ -116,7 +119,8 @@
                                                            value="{{ $choice->id }}"
                                                            data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                            data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
-                                                           data-parsley-multiple="radio{{ $survey->id }}">
+                                                           data-parsley-multiple="radio{{ $survey->id }}"
+                                                           data-parsley-required-message="항목을 선택해주세요.">
                                                     <label for="choice-{{$choice->id}}">{{ $choice->question }}</label>
                                                 </li>
                                             @empty
@@ -142,7 +146,8 @@
                                                            value="{{ $choice->id }}"
                                                            data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                            data-parsley-errors-container=".checkbox_error_wrap{{ $survey->id }}"
-                                                           data-parsley-multiple="checkbox{{ $survey->id }}">
+                                                           data-parsley-multiple="checkbox{{ $survey->id }}"
+                                                           data-parsley-required-message="항목을 선택해주세요.">
                                                     <label
                                                         for="multiple-choice-{{ $choice->id }}">{{ $choice->question }}</label>
                                                 </li>
@@ -162,7 +167,8 @@
                                         <input type="text" id="short-answer-response" name="surveys[{{ $idx }}][answer]"
                                                class="short-answer-response" placeholder="답변을 입력하세요."
                                                data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                               data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}">
+                                               data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}"
+                                               data-parsley-required-message="답변을 입력하세요.">
                                     </div>
                                     <div class="short_answer_error_wrap{{ $survey->id }}"></div>
                                 </div>
@@ -179,13 +185,18 @@
                                                    class="address"
                                                    data-index="{{ $idx }}"
                                                    readonly="readonly"
-                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}">
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                   data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
+                                                   data-parsley-required-message="주소를 검색해주세요.">
                                             <input type="text" id="address-detail"
                                                    name="surveys[{{ $idx }}][address-detail]"
                                                    class="address-detail"
                                                    placeholder="상세주소를 입력하세요."
-                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}">
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                    data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
+                                                   data-parsley-required-message="상세주소를 입력하세요">
                                         </div>
+                                        <div class="address_answer_error_wrap{{ $survey->id }} address-error"></div>
                                     </div>
                                 </div>
                                 @break
@@ -202,7 +213,8 @@
                                                    accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
                                                    data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                   data-parsley-errors-container=".file_error_wrap{{ $survey->id }}">
+                                                   data-parsley-errors-container=".file_error_wrap{{ $survey->id }}"
+                                                   data-parsley-required-message="파일을 업로드해주세요.">
                                             <label for="file-upload" class="btn-file-upload">파일선택</label>
                                             <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
                                                    class="file-name"
@@ -270,7 +282,8 @@
                                         <input type="checkbox" id="offer-consent" name="offer-consent"
                                                class="offer-consent"
                                                data-parsley-required="true"
-                                               data-parsley-errors-container=".offer_error_wrap">
+                                               data-parsley-errors-container=".offer_error_wrap"
+                                               data-parsley-required-message="동의를 선택해주세요.">
                                         <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                     </div>
                                     <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
@@ -282,7 +295,8 @@
                                         <input type="checkbox" id="refund-consent" name="refund-consent"
                                                class="refund-consent"
                                                data-parsley-required="true"
-                                               data-parsley-errors-container=".refund_error_wrap">
+                                               data-parsley-errors-container=".refund_error_wrap"
+                                               data-parsley-required-message="동의를 선택해주세요.">
                                         <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                     </div>
                                     <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
