@@ -14,8 +14,8 @@ class MainController extends Controller
     public function index(Request $request)
     {
         $data['slides'] = Program::main()->take(4)->get();
-        $data['bar'] = Banner::public()->where('position', '=', Banner::$POSITION_BAR)->first();
-        $data['bottomSlides'] = Banner::public()->where('position', '=', Banner::$POSITION_BOTTOM)->get();
+        $data['bar'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BAR)->first();
+        $data['bottomSlides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BOTTOM)->get();
         $data['notices'] = Notice::public()->take(3)->get();
         $data['faqs'] = Faq::public()->take(3)->get();
         return view(viewPrefix() . 'index', $data);
