@@ -26,7 +26,19 @@ export const InquireMixin = {
                     id: 1,
                     name: '완료'
                 }
-            ],
+            ]
+        }
+    },
+    methods: {
+        handleSetAnswerId(value) {
+            this.is_answer = value;
+        }
+    }
+};
+
+export const InquireCategoryMixin = {
+    data() {
+        return {
             categoryOptions: []
         }
     },
@@ -37,15 +49,10 @@ export const InquireMixin = {
         handleSetCategoryId(value) {
             this.category_id = value;
         },
-        handleSetAnswerId(value) {
-            this.is_answer = value;
-        },
         getCategory() {
             Inquire.getCategory().then(res => {
-                const result = res.data.category;
-
-                this.categoryOptions = result;
+                this.categoryOptions = res.data.category;
             });
-        },
+        }
     }
 };

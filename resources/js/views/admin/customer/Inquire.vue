@@ -1,5 +1,26 @@
 <template>
     <layout title="문의내역">
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                :value="gubun"
+                                :options="gubunOptions"
+                                @setValue="handleSetGubun"></select-box>
+
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="내용, 이름"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </template>
+
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="inquires.data">
@@ -38,6 +59,7 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 // api
 import Inquire from '@/api/admin/customer/Inquire.js';
@@ -46,13 +68,16 @@ export default {
     name: 'AdminInquire',
     components: {
         'table-grid': Table,
-        'button-open': ButtonOpen
+        'button-open': ButtonOpen,
+        'select-box': SelectBox
     },
     data() {
         return {
             inquires: {
                 data: []
             },
+            keyword: '',
+            gubun: 'all',
             page: 1
         }
     },
@@ -87,6 +112,30 @@ export default {
                     text: '답변상태'
                 },
             ]
+        },
+        gubunOptions() {
+            return [
+                {
+                    id: 'all',
+                    name: '구분'
+                },
+                {
+                    id: 'notCompleted',
+                    name: '미완료'
+                },
+                {
+                    id: 'Completed',
+                    name: '완료'
+                },
+                {
+                    id: 'normal',
+                    name: '일반'
+                },
+                {
+                    id: 'refund',
+                    name: '환불'
+                }
+            ]
         }
     },
     methods: {
@@ -96,6 +145,8 @@ export default {
             }
 
             let params = {
+                keyword: this.keyword,
+                gubun: this.gubun,
                 page: page
             };
 
@@ -104,6 +155,9 @@ export default {
             }).catch(err => {
                 this.inquires = [];
             });
+        },
+        handleSetGubun(gubun) {
+            this.gubun = gubun;
         }
     }
 }

@@ -43,7 +43,7 @@
                     </template>
                 </single-group>
 
-                <single-group name="구분" :size="1" :isRequired="true" :isRow="true">
+                <single-group name="구분" :size="2" :isRequired="true" :isRow="true">
                     <template v-slot:content>
                         <select-box class="form-control"
                                     :value="data.category_id"
@@ -54,10 +54,10 @@
                 <single-group name="답변상태" :isRequired="true" :size="6" :isRow="true">
                     <template v-slot:content>
                         <div class="float-left">
-                        <select-box class="form-control "
-                                    :value="data.is_answer"
-                                    :options="answerOption"
-                                    @setValue="handleSetAnswerId"></select-box>
+                            <select-box class="form-control "
+                                        :value="data.is_answer"
+                                        :options="answerOption"
+                                        @setValue="handleSetAnswerId"></select-box>
                         </div>
                         <div class="float-left answer-time">
                             <p v-if="data.is_answer == 1">답변 시간 : {{ data.answered_at }}</p>
@@ -91,12 +91,13 @@
 import Inquire from '@/api/admin/customer/Inquire.js';
 
 // mixins
-import {InquireMixin} from '@/mixins/admin/customer/Inquire.js';
+import { InquireMixin, InquireCategoryMixin } from '@/mixins/admin/customer/Inquire.js';
 
 export default {
     name: 'AdminInquireEdit',
     mixins: [
-        InquireMixin
+        InquireMixin,
+        InquireCategoryMixin
     ],
     data() {
         return {
