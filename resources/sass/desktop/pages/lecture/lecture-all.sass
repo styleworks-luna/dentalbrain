@@ -14,18 +14,20 @@
 
 .lecture-order
     +margin(top 50px)
+    overflow: hidden
 
     ul
+        float: right
         overflow: hidden
 
         li
-            float: right
+            float: left
 
             .active
                 font-weight: bold
                 color: $page-color
 
-            &:first-child::before
+            &:last-child::before
                 +size(1px, 16px)
                 +margin(0 10px)
                 +background(null, null, null, $border-color-base)
