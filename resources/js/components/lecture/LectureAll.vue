@@ -1,14 +1,14 @@
 <template>
     <section class="lecture">
         <lecture-navigation @setMenu="handleSetMenu"></lecture-navigation>
-        <lecture-order v-if="is_pagination"></lecture-order>
-        <lecture-list :list="list"></lecture-list>
+        <lecture-order v-if="is_pagination" @setOrder="handleSetOrder"></lecture-order>
+        <lecture-list :list="list.data"></lecture-list>
 
         <div class="paging-wrap" v-if="is_pagination">
-            <nav class="d-block">
-                <pagination :data="list" @pagination-change-page="getData" class="mb-0">
-                    <span slot="prev-nav" class="prev-nav"></span>
-                    <span slot="next-nav" class="next-nav"></span>
+            <nav>
+                <pagination :data="list" :limit=3 @pagination-change-page="getData">
+                    <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                    <span slot="next-nav" class="next-nav ir_pm">next</span>
                 </pagination>
             </nav>
         </div>
@@ -37,7 +37,8 @@ export default {
     data() {
         return {
             category_id: 1,
-            list: [],
+            list: {},
+            order_by: 'newest',
             page: 1
         }
     },
@@ -49,6 +50,11 @@ export default {
             this.category_id = category_id;
             this.getData()
         },
+        handleSetOrder(order_by) {
+            this.order_by = order_by;
+            console.log(this.order_by);
+            this.getData()
+        },
         getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
@@ -56,12 +62,14 @@ export default {
 
             let params = {
                 category_id: this.category_id,
-                per_page: this.per_page,
+                per_page: 1,
+                order_by: this.order_by,
                 page: page
             };
 
             Lecture.getData(params).then(res => {
-                this.list = res.data.data;
+                console.log(res);
+                this.list = res.data;
             }).catch(err => {
                 this.list = [];
             });

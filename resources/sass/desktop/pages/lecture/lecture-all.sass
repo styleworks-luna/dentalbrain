@@ -159,18 +159,49 @@
 
     .paging-wrap
         +margin(top 80px)
+        text-align: center
 
-        .prev-nav,
-        .next-nav
-            +size(30px, 30px)
-            +border(1px solid $border-color-light)
-            +border-radius(50%)
-            content: ''
+        nav
+            display: inline-block
 
-        .prev-nav
-            +padding(7px 13px 7px 15px)
-            +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, 10px center)
+            ul
+                clear: both
 
-        .next-nav
-            +padding(7px 13px 7px 15px)
-            +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, 12px center)
+                li
+                    +margin(right 16px)
+                    +border-radius(50%)
+                    float: left
+
+                .pagination-page-nav
+                    +padding(8px 7px)
+
+                    .page-link
+                        +size(16px, 14px)
+                        display: block
+
+
+                .pagination-prev-nav
+                    +padding(top 9px right 11px bottom 9px left 10px)
+                    +border(1px solid $gray-900)
+                    +border-radius(50%)
+                    +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, center center)
+
+                .pagination-next-nav
+                    +margin(right 0)
+                    +padding(top 9px right 10px bottom 9px left 11px)
+                    +border(1px solid $gray-900)
+                    +border-radius(50%)
+                    +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, center center)
+
+                .next-nav,
+                .prev-nav
+                    +size(7px,10px)
+
+                .sr-only
+                    display: none
+
+                li.active
+                    +background(null, null, null, $page-color)
+
+                    a
+                        color: $white
