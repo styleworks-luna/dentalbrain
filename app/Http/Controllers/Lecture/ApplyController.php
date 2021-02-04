@@ -7,12 +7,15 @@ use App\Models\Program\Program;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
+        if (env('APP_ENV') == 'production') {
+            return back()->with(['alert' => '준비중입니다.']);
+        }
+
         if ($program->is_online == 1) {
             $programService = new OnlineProgramConcrete();
         } else {
@@ -29,6 +32,6 @@ class ApplyController extends Controller
 
     public function apply(Request $request, Program $program)
     {
-        ddd($request->all());
+
     }
 }
