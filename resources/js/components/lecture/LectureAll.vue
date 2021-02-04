@@ -52,7 +52,6 @@ export default {
         },
         handleSetOrder(order_by) {
             this.order_by = order_by;
-            console.log(this.order_by);
             this.getData()
         },
         getData(page = this.page) {
@@ -62,7 +61,7 @@ export default {
 
             let params = {
                 category_id: this.category_id,
-                per_page: 1,
+                per_page: this.per_page,
                 order_by: this.order_by,
                 page: page
             };
