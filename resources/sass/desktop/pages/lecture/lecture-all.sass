@@ -37,15 +37,15 @@
     +margin(top 80px bottom 80px)
 
     .lecture-menu
-        +margin(0 auto)
-
         ul
+            +margin(0 auto)
+            display: flex
             overflow: hidden
+            justify-content: center
 
         li
-            +size(170px 170px, 70px 70px)
             +margin(right 40px)
-            +padding(left 67px top 25px)
+            +padding(top 25px right 29px bottom 25px left 67px)
             +border(1px solid #d8d8d8)
             +border-radius(35px)
             +background('/images/desktop/lecture/lecture_menu_icon_1.png', no-repeat, 25px 19px, #fafafa)
@@ -58,42 +58,37 @@
 
         li:hover,
         .active-menu
-            +padding(left 66px top 24px)
+            +padding(top 24px right 28px bottom 24px left 66px)
             +border(2px solid $page-color)
             +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
             font-weight: bold
             color: $font-color-base
 
         li:nth-child(2)
-            +size(189px 189px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_2.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_2.png')
 
         li:nth-child(3)
-            +size(189px 189px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_3.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_3.png')
 
         li:nth-child(4)
-            +size(239px 239px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_4.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_4.png')
 
         li:nth-child(5)
-            +size(152px 152px, 70px 70px)
             +background('/images/desktop/lecture/lecture_menu_icon_5.png')
 
             &:hover
                 +background('/images/desktop/lecture/lecture_menu_icon_on_5.png')
 
-        li:nth-child(6)
-            +size(133px 133px, 70px 70px)
+        li:last-child
             +margin(right 0)
             +background('/images/desktop/lecture/lecture_menu_icon_6.png')
 
