@@ -237,7 +237,7 @@
                                 <p>default</p>
                             @endswitch
                         @empty
-                            추가 정보 입력이 필요하지 않은 강의입니다.
+                            <p class="additional-none">추가 정보 입력이 필요하지 않은 강의입니다.</p>
                         @endforelse
                     </section>
                     <section class="payment-information">
