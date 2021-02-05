@@ -2,6 +2,6 @@
     @csrf
     <input type="hidden" name="token" id="token" value="{{$token}}">
     <input type="password" id="password" name="password">
-    <input type="password_confirm" id="password_confirm" name="password_confirm">
+    <input type="password" id="password_confirm" name="password_confirm">
     <input type="submit">
 </form>

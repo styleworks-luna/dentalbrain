@@ -85,8 +85,6 @@ class FindPasswordController extends Controller{
         $user->password = Hash::make($validatedData['password']);
         $user->update();
 
-        Auth::login($user);
-
         PasswordReset::where('email',$user->email)->delete();
 
         return redirect()->to('/')->with('alert','비밀번호를 변경하였습니다.');
