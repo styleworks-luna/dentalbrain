@@ -50,7 +50,7 @@ class FindPasswordController extends Controller{
 
         try{
             Mail::to($passwordReset->email)
-                ->send(new Reset($user));
+                ->send(new Reset($user,$newPassword));
             return redirect()->back()->with('alert', "패스워드 재설정 메일이 전송되었습니다");
         }catch(\Exception $e){
             return redirect()->back()->with('alert', "메일 전송 오류");

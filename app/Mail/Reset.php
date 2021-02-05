@@ -13,14 +13,16 @@ class Reset extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $newPassword;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $newPassword)
     {
         $this->user = $user;
+        $this->newPassword = $newPassword;
     }
 
     /**
@@ -34,6 +36,7 @@ class Reset extends Mailable
             ->view('emails.user.password_find')
             ->with([
                 'user' => $this->user,
+                'newPassword'=> $this->newPassword
             ]);
     }
 }
