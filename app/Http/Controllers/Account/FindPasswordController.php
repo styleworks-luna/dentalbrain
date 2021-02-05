@@ -59,13 +59,30 @@ class FindPasswordController extends Controller{
     }
 
     public function resetPassword(Request $request, $token){
-        $password = $request->password;
-        $tokenData = PasswordReset::where('remember_token',$token)->first();
 
-        $user = User::where('email',$tokenData->email)->first();
-        if( !$user) return redirect()->to('/');
+        $validatedData = $request->validate([
+            'password' => 'required| min:6',
+            'password_confirm' => 'required | min:6',
+            'token' => 'required'
+        ]);
 
-        $user->password = Hash::make($password);
+        if($validatedData['password'] != $validatedData['password_confirm']){
+            return redirect()->back()->with('alert', '비밀번호가 서로 다릅니다');
+        }
+
+        $token = PasswordReset::whereNull('deleted_at')
+            ->where([
+                'remember_token' => $token
+            ])->first();
+
+        if (!$token) {
+            return redirect()->back()->with("alert", "확인할 수 없는 요청입니다");
+        }
+
+        $user = User::where('email',$token->email)->first();
+        if(!$user) return redirect()->to('/');
+
+        $user->password = Hash::make($validatedData['password']);
         $user->update();
 
         Auth::login($user);
