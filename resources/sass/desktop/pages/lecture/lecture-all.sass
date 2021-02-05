@@ -174,10 +174,9 @@
                     float: left
 
                 .pagination-page-nav
-                    +padding(8px 7px)
-
                     .page-link
                         +size(16px, 14px)
+                        +padding(8px 7px)
                         display: block
 
                     &:hover .page-link
@@ -185,7 +184,6 @@
                         text-decoration: underline
 
                 .pagination-prev-nav
-                    +padding(top 9px right 11px bottom 9px left 10px)
                     +border(1px solid $border-color-light)
                     +border-radius(50%)
                     +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, center center)
@@ -195,7 +193,6 @@
 
                 .pagination-next-nav
                     +margin(right 0)
-                    +padding(top 9px right 10px bottom 9px left 11px)
                     +border(1px solid $border-color-light)
                     +border-radius(50%)
                     +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, center center)
@@ -206,6 +203,12 @@
                 .next-nav,
                 .prev-nav
                     +size(7px,10px)
+
+                .next-nav
+                    +padding(top 9px right 11px bottom 9px left 10px)
+
+                .prev-nav
+                    +padding(top 9px right 10px bottom 9px left 11px)
 
                 .sr-only
                     display: none
