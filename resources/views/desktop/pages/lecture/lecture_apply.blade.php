@@ -258,26 +258,26 @@
                                 <th>결제금액</th>
                                 <td><em>{{ $program->ticket->is_free ? '무료' : $program->ticket->price.'원' }}</em></td>
                             </tr>
-                            <tr>
-                                <th>결제방식</th>
-                                <td>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="credit" name="payment-method"
-                                               class="payment-method" value="신용카드">
-                                        <label for="credit">신용카드</label>
-                                    </div>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="bank-transform" name="payment-method"
-                                               class="payment-method" value="계좌이체">
-                                        <label for="bank-transform">실시간 계좌이체</label>
-                                    </div>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="deposit" name="payment-method"
-                                               class="payment-method" value="무통장입금">
-                                        <label for="deposit">무통장입금(가상계좌)</label>
-                                    </div>
-                                </td>
-                            </tr>
+{{--                            <tr>--}}
+{{--                                <th>결제방식</th>--}}
+{{--                                <td>--}}
+{{--                                    <div class="radio-wrap">--}}
+{{--                                        <input type="radio" id="credit" name="payment-method"--}}
+{{--                                               class="payment-method" value="신용카드">--}}
+{{--                                        <label for="credit">신용카드</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="radio-wrap">--}}
+{{--                                        <input type="radio" id="bank-transform" name="payment-method"--}}
+{{--                                               class="payment-method" value="계좌이체">--}}
+{{--                                        <label for="bank-transform">실시간 계좌이체</label>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="radio-wrap">--}}
+{{--                                        <input type="radio" id="deposit" name="payment-method"--}}
+{{--                                               class="payment-method" value="무통장입금">--}}
+{{--                                        <label for="deposit">무통장입금(가상계좌)</label>--}}
+{{--                                    </div>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
                         </table>
                     </section>
                     <section class="agree">

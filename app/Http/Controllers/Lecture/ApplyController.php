@@ -37,6 +37,6 @@ class ApplyController extends Controller
         foreach ($surveys as $idx => $survey) {
             logger($survey);
         }
-        ddd($request->all('surveys'));
+        return redirect()->route('lectures.payment.form',$program);
     }
 }

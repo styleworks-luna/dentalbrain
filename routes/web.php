@@ -113,11 +113,16 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
+            // 강의 신청 폼
             Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
+            // 강의 신청
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+            // 강의 결제 폼
+            Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
+            // 강의 신청 성공
+            Route::get('result', 'Lecture\PaymentsController@success');
         });
-        // 강의 신청 성공
-        Route::get('success', 'Lecture\PaymentsController@success');
+
 
         Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
             Route::post('/', 'Lecture\CommentController@store')->name('store');
