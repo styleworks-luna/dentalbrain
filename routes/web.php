@@ -46,7 +46,7 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
-    Route::get('sms','Test\TestController@getToken')->name('getToken');
+    Route::get('sms', 'Test\TestController@getToken')->name('getToken');
 });
 
 /*============================ PAGES ============================*/
@@ -117,9 +117,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
         });
         // 강의 신청 성공
-        Route::get('success', function () {
-            return view('desktop.pages.lecture.lecture_success');
-        });
+        Route::get('success', 'Lecture\PaymentsController@success');
 
         Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
             Route::post('/', 'Lecture\CommentController@store')->name('store');
@@ -148,7 +146,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
     //마이페이지 회원탈퇴 함수
-    Route::post('userSecession','Account\SecessionController@userSecession')->name('userSecession');
+    Route::post('userSecession', 'Account\SecessionController@userSecession')->name('userSecession');
 });
 
 // 관리자

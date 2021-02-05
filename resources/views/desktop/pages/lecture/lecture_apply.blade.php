@@ -15,7 +15,8 @@
 @section('content')
     <section class="content">
         <div class="container">
-            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
+                  enctype="multipart/form-data">
                 <div class="row">
                     @csrf
                     <section class="apply-title">
@@ -108,7 +109,10 @@
                                 @case('singleChoice')
                                 <div class="multiple-single-choice">
                                     <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                           value="{{ $survey->id }}">
+                                    {{-- 값 초기화 --}}
+                                    <input type="hidden" name="surveys[{{ $idx }}][answer]" value="">
                                     <div class="choices">
                                         <ul>
                                             @forelse($survey->choices as $choice)
@@ -134,7 +138,11 @@
                                 @case('multipleChoice')
                                 <div class="multiple-choice">
                                     <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                           value="{{ $survey->id }}">
+                                    {{-- 값 초기화 --}}
+                                    <input type="hidden" id="multiple-choice-{{ $choice->id }}"
+                                           name="surveys[{{ $idx }}][answers]" value="">
                                     <div class="choices">
                                         <ul>
                                             @forelse($survey->choices as $choice)
@@ -162,7 +170,8 @@
                                 @case('shortAnswer')
                                 <div class="short-answer">
                                     <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                           value="{{ $survey->id }}">
                                     <div class="answers">
                                         <input type="text" id="short-answer-response" name="surveys[{{ $idx }}][answer]"
                                                class="short-answer-response" placeholder="답변을 입력하세요."
@@ -176,7 +185,8 @@
                                 @case('address')
                                 <div class="address-question">
                                     <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                           value="{{ $survey->id }}">
                                     <div class="answers">
                                         <div class="address-form-wrap">
                                             <input type="button" class="btn-address" value="주소검색"
@@ -193,7 +203,7 @@
                                                    class="address-detail"
                                                    placeholder="상세주소를 입력하세요."
                                                    data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                    data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
+                                                   data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
                                                    data-parsley-required-message="상세주소를 입력하세요">
                                         </div>
                                         <div class="address_answer_error_wrap{{ $survey->id }} address-error"></div>
@@ -203,7 +213,8 @@
                                 @case('file')
                                 <div class="file-question">
                                     <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
+                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                           value="{{ $survey->id }}">
                                     <div class="answers">
                                         <div class="file-wrap">
                                             <input type="file"

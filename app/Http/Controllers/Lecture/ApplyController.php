@@ -32,6 +32,11 @@ class ApplyController extends Controller
 
     public function apply(Request $request, Program $program)
     {
-
+        // 파일을 함께 조회하기 위해 all 사용.
+        $surveys = $request->all('surveys')['surveys'];
+        foreach ($surveys as $idx => $survey) {
+            logger($survey);
+        }
+        ddd($request->all('surveys'));
     }
 }
