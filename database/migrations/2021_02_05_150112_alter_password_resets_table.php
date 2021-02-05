@@ -25,6 +25,8 @@ class AlterPasswordResetsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('password_resets', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }
