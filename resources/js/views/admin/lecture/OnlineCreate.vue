@@ -169,7 +169,7 @@
 
 <script>
 // mixin
-import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 //api
@@ -179,6 +179,7 @@ export default {
     name: 'AdminOnlineCreate',
     mixins: [
         LectureFormMixin,
+        ProgramCategoryMixin,
         OnlineMixin
     ],
     methods: {

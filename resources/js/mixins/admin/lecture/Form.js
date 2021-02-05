@@ -22,21 +22,14 @@ export const LectureFormMixin = {
     data() {
         return {
             thumbnail: {},
-            major_category_id: '',
-            minor_category_id: '',
             title: '',
             lecture_info: '',
             is_free: true,
             price: '',
             content: '',
             surveys: [],
-            majorCategoryOptions: [],
-            minorCategoryOptions: [],
             is_open: false,
         }
-    },
-    mounted() {
-            this.getCategory();
     },
     computed: {
     },
@@ -44,15 +37,28 @@ export const LectureFormMixin = {
         handleSetThumbnail(file) {
             this.thumbnail = file;
         },
-        handleSetMajorCategoryId(id) {
-            this.major_category_id = id;
-        },
-        handleSetMinorCategoryId(id) {
-            this.minor_category_id = id;
-        },
         handleSetEditor(data) {
             this.content = data;
         },
+        handleSetIsOpen(checked) {
+            this.is_open = checked;
+        },
+    }
+};
+
+export const ProgramCategoryMixin = {
+    data() {
+        return {
+            major_category_id: '',
+            minor_category_id: '',
+            majorCategoryOptions: [],
+            minorCategoryOptions: [],
+        }
+    },
+    mounted() {
+        this.getCategory();
+    },
+    methods: {
         getCategory() {
             Common.getCategory().then(res => {
                 const major = res.data.major;
@@ -62,8 +68,11 @@ export const LectureFormMixin = {
                 this.minorCategoryOptions = minor;
             });
         },
-        handleSetIsOpen(checked) {
-            this.is_open = checked;
+        handleSetMajorCategoryId(id) {
+            this.major_category_id = id;
         },
-    }
+        handleSetMinorCategoryId(id) {
+            this.minor_category_id = id;
+        },
+    },
 };
