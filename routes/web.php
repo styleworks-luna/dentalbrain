@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +57,11 @@ Route::get('/', 'Main\MainController@index');
 Route::get('find', function () {
     return view('desktop.pages.user.find_id');
 });
+
+Route::post('findIdWithNameAndPhone', 'Account\FindIdController@findIdWithNameAndPhone')->name('findIdWithNameAndPhone');
+Route::post('sendPasswordMail','Account\FindPasswordController@sendPasswordMail')->name('sendPasswordMail');
+Route::get('password/reset/{token}','Account\FindPasswordController@showPasswordResetForm');
+Route::post('password/reset/{token}','Account\FindPasswordController@resetPassword')->name('resetPassword');
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
@@ -143,7 +147,6 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 회원정보 패스워드 확인
     Route::get('confirm', 'Account\UserController@needConfirm')->name('confirm');
     Route::post('confirm', 'Account\UserController@confirm')->name('confirm');
-    Route::post('findId', 'Account\UserController@findId')->name('findId');
 
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
