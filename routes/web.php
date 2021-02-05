@@ -45,7 +45,7 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
-    Route::get('sms','Test\sendMail@getToken')->name('getToken');
+    Route::get('sms','Test\TestController@getToken')->name('getToken');
 });
 
 /*============================ PAGES ============================*/
