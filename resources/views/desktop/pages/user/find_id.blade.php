@@ -9,6 +9,7 @@
         <section class="find">
             <div class="container">
                 <div class="find-id">
+                    {{-- TODO : findIDWithNameAndPhone을 form으로 하지말고 ajax로 해야 함--}}
                     <form action="{{ route('findIdWithNameAndPhone') }}" method="post">
                         @csrf
                         <h2>아이디 찾기</h2>
