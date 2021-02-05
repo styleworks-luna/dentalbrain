@@ -1,6 +1,8 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-detail.js') }}"></script>
 @endsection
 
@@ -9,6 +11,7 @@
 @endsection
 
 @section('content')
+
     <section id="content" class="content">
         <div class="container">
             <div class="row">
@@ -45,6 +48,7 @@
                                         <th>강의장소</th>
                                         <td>
                                             <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                            <a href="" class="btn-map">지도보기</a>
                                         </td>
                                     </tr>
                                 @endif
@@ -77,6 +81,7 @@
                         </div>
                     </div>
                 </section>
+
                 <section class="lecture-detail">
                     <div class="lecture-detail-menu">
                         <ul>
@@ -88,6 +93,7 @@
                         {!! $program->content !!}
                     </div>
                 </section>
+
                 <section id="comment" class="lecture-comment">
                     <div class="comment-title">
                         <h3>댓글</h3>
@@ -148,7 +154,8 @@
                                                         <form action="">
                                                             <button type="submit" class="btn-comment-modified">수정
                                                             </button>
-                                                            <button type="submit" class="btn-comment-delete">삭제</button>
+                                                            <button type="submit" class="btn-comment-delete">삭제
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -163,6 +170,25 @@
                     </ul>
                 </section>
             </div>
+
+            @if($program->is_online == false)
+                <section class="popup-area">
+                    <div class="dim"></div>
+                    <div class="popup-wrap">
+                        <div class="popup-header">
+                            <h3>강의 장소</h3>
+                            <a href="#" class="btn-popup-close"></a>
+                        </div>
+
+                        <input type="hidden" class="map_x" value="{{ $program->place->longitude }}">
+                        <input type="hidden" class="map_y" value="{{ $program->place->latitude }}">
+                        <div id="mapzone" class="map"></div>
+
+                        <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                    </div>
+                </section>
+            @endif
+
         </div>
     </section>
 @endsection

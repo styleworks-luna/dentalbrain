@@ -1,0 +1,66 @@
+<table align="center" width="720" border="0" cellpadding="0" cellspacing="0"
+       style="font-family: 'Malgun Gothic', Dotum, '돋움', sans, sans-serif; border-collapse: collapse">
+    <thead>
+    <tr>
+        <td width="720" height="60">
+            <img src="{{ asset('images/desktop/global/logo.png') }}" style="border: 0;" width="146" height="29">
+        </td>
+    </tr>
+    <tr>
+        <td width="720" height="100" bgcolor="#9b00d8">
+            <h4 style="line-height: 100px; margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">문의 접수 안내</h4>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
+            <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
+                <b>{{ $user->name }}</b>님이 문의 하신 내용의 답변이 완료 되었습니다.<br/>
+                관리자 페이지 - 문의사항 관리에서 확인 가능합니다.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table align="center" width="720" border="0" cellpadding="0" cellspacing="0"
+                   style="border-collapse: collapse">
+                <tbody>
+                <tr>
+                    <th align="left" colspan="1" rowspan="1" valign="top" width="140" bgcolor="#f8f8f8"
+                        style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8;font-size: 12px; font-weight: bold; color: #333333; letter-spacing: -1px;">
+                        접수일시
+                    </th>
+                    <td width="570"
+                        style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
+                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ now() }}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="left" colspan="1" rowspan="1" valign="top" width="140" bgcolor="#f8f8f8"
+                        style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8;font-size: 12px; font-weight: bold; color: #333333; letter-spacing: -1px;">
+                        접수내용
+                    </th>
+                    <td width="570"
+                        style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
+                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $inquiry->content }}</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="70"></td>
+    </tr>
+    <tr>
+        <td style="line-height: 15px; padding: 23px 0 29px 30px; font-size: 12px; color: #666; background-color: #efefef">
+            <h4 style="float: left; margin: 6px 22px 0 0"><img src="{{ asset('images/desktop/global/logo.png') }}" alt="덴탈브레인" width="80" height="34"></h4>
+            <p style="float: left; margin: 0; padding: 0; line-height: 24px">
+                서울특별시 서초구 효령로 140 (방배동,3층) / 070-8222-3179<br>
+                copyright © BRAINSPEC. ALL RIGHTS RESERVED
+            </p>
+        </td>
+    </tr>
+    </tbody>
+</table>
