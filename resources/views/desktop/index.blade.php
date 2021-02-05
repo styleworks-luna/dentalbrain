@@ -141,7 +141,7 @@
                         <ul>
                             <li><a href="{{ route('account.index') }}">마이페이지</a></li>
                             <li><a href="{{ route('customer.index') }}">고객센터</a></li>
-                            <li><a href="">전체강의</a></li>
+                            <li><a href="{{ url('lectures') }}">전체강의</a></li>
                         </ul>
                     </div>
                 </div>
