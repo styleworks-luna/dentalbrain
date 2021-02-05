@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Mail\Reset;
-use App\Models\Password\PasswordReset;
 
 
 class FindPasswordController extends Controller{
@@ -26,18 +25,12 @@ class FindPasswordController extends Controller{
             'email' => 'required|email'
         ]);
 
-        $passwordReset = new PasswordReset();
-        $passwordReset->email = $validatedData['email'];
-        $passwordReset->remember_token = Str::random(60);
-        $passwordReset->created_at = now();
-        $passwordReset->save();
-
-        return $this->sendResetEmail($passwordReset);
+        return $this->sendResetEmail($validatedData['email']);
     }
 
-    private function sendResetEmail($passwordReset){
+    private function sendResetEmail($email){
         try{
-            $user = User::where('email', $passwordReset->email)->firstOrFail();
+            $user = User::where('email', $email)->firstOrFail();
             $newPassword = Str::random(6);
             DB::beginTransaction();
             $user->password = Hash::make($newPassword);
@@ -49,7 +42,7 @@ class FindPasswordController extends Controller{
         }
 
         try{
-            Mail::to($passwordReset->email)
+            Mail::to($email)
                 ->send(new Reset($user,$newPassword));
             return redirect()->back()->with('alert', "패스워드 재설정 메일이 전송되었습니다");
         }catch(\Exception $e){
