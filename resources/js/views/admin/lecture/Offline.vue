@@ -7,6 +7,22 @@
             </router-link>
         </template>
 
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="제목"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </template>
+
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="lectures.data">
@@ -66,7 +82,8 @@ export default {
             lectures: {
                 data: []
             },
-            page: 1
+            page: 1,
+            keyword: ''
         }
     },
     mounted() {
@@ -117,7 +134,8 @@ export default {
             }
 
             let params = {
-                page: page
+                page: page,
+                keyword: this.keyword
             };
 
             Offline.getData(params).then(res => {
