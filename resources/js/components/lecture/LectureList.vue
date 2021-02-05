@@ -9,7 +9,7 @@
                             <p class="lecture-type">{{ lecture.major_category_name }}・{{ lecture.minor_category_name }}</p>
                             <p class="lecture-time">{{ lecture.running_time }}</p>
                         </div>
-                        <a href="" class="lecture-name">{{ lecture.title }}</a>
+                        <p class="lecture-name">{{ lecture.title }}</p>
                         <p class="lecture-price" v-if="lecture.ticket.is_free == 0">{{ lecture.ticket.price }}</p>
                         <p class="lecture-price" v-else>무료</p>
                     </div>
