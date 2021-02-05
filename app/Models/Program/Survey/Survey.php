@@ -13,6 +13,9 @@ class Survey extends Model
     protected $table = 'surveys';
     protected $guarded = [];
     protected $appends = ['type'];
+    protected $casts = [
+        'is_required' => 'boolean',
+    ];
 
     public function parent()
     {
@@ -45,6 +48,11 @@ class Survey extends Model
     public function category()
     {
         return $this->belongsTo(SurveyCategory::class, 'category_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(SurveyAnswer::class, 'survey_id', 'id');
     }
 
 }

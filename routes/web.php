@@ -192,6 +192,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
     });
 
+    Route::group(['prefix' => 'surveys', 'as' => 'surveys.'], function () {
+        Route::group(['prefix' => '{survey}'], function () {
+            Route::group(['prefix' => 'answers', 'as' => 'answers.'], function () {
+                Route::get('{answer}/download', 'Survey\FileController@download')->name('download');
+            });
+        });
+    });
+
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
 

@@ -20,7 +20,6 @@ class PaymentsController extends Controller
 
     public function showPaymentForm(Request $request, Program $program)
     {
-
         if ($program->is_online == 1) {
             $programService = new OnlineProgramConcrete();
         } else {

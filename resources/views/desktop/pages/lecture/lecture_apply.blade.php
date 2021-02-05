@@ -199,7 +199,7 @@
                                                    data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
                                                    data-parsley-required-message="주소를 검색해주세요.">
                                             <input type="text" id="address-detail"
-                                                   name="surveys[{{ $idx }}][address-detail]"
+                                                   name="surveys[{{ $idx }}][address_detail]"
                                                    class="address-detail"
                                                    placeholder="상세주소를 입력하세요."
                                                    data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
