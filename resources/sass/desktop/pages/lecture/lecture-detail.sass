@@ -56,83 +56,89 @@
             font-size: 24px
             line-height: 1.21
 
-    .lecture-information-text
-        +margin(top 50px)
-        +background(null, null, null, $white-light)
+.lecture-information-text
+    +margin(top 50px)
+    +background(null, null, null, $white-light)
 
-        table
-            +padding(30px 0 30px 30px)
+    table
+        +padding(30px 0 30px 30px)
+        display: block
+
+        tr
+            +padding(bottom 23px)
             display: block
 
-            tr
-                +padding(bottom 23px)
-                display: block
+            th
+                font-size: 14px
+                color: $gray-700
 
-                th
+            td
+                +padding(left 20px)
+                font-size: 16px
+
+                p
+                    display: inline-block
+
+                .btn-map
+                    +margin(left 10px)
+                    +padding(5px 10px)
+                    +border(1px solid $gray-900)
                     font-size: 14px
-                    color: $gray-700
 
-                td
-                    +padding(left 20px)
+                .lecture-select-box
+                    +size(418px, 40px)
+                    +padding(left 14px)
+                    +border(1px solid $border-color-base)
                     font-size: 16px
+                    appearance: none
 
-                    p
-                        display: inline-block
+            .lecture-price
+                font-weight: bold
+                font-size: 20px
+                color: $page-color
 
-                    .lecture-select-box
-                        +size(418px, 40px)
-                        +padding(left 14px)
-                        +border(1px solid $border-color-base)
-                        font-size: 16px
-                        appearance: none
+            .price-hidden
+                display: none
 
-                .lecture-price
-                    font-weight: bold
-                    font-size: 20px
-                    color: $page-color
-
-                .price-hidden
-                    display: none
-
-            tr:last-child
-                +padding(0)
+        tr:last-child
+            +padding(0)
 
 
-    .lecture-btn
-        +margin(top 22px)
-        overflow: hidden
+.lecture-btn
+    +margin(top 22px)
+    overflow: hidden
 
-        .apply-btn
-            +size(308px, 54px)
-            +margin(left 22px)
-            +border-radius(27px)
-            +background(null, null, null, $page-color)
-            display: block
-            float: right
-            font-weight: bold
-            font-size: 18px
-            color: $white
-            text-align: center
-            line-height: 3
+    .apply-btn
+        +size(308px, 54px)
+        +margin(left 22px)
+        +border-radius(27px)
+        +background(null, null, null, $page-color)
+        display: block
+        float: right
+        font-weight: bold
+        font-size: 18px
+        color: $white
+        text-align: center
+        line-height: 3
 
-        .apply-btn:hover
-            +background(null, null, null, $purple-400)
+    .apply-btn:hover
+        +background(null, null, null, $purple-400)
 
-        .like
-            display: block
-            float: right
-            font-size: 12px
-            text-align: center
+    .like
+        display: block
+        float: right
+        font-size: 12px
+        text-align: center
 
-        .like.active::before
-            +background('/images/desktop/lecture/lecture_icon_wish_on.png',no-repeat, center center)
+    .like.active::before
+        +background('/images/desktop/lecture/lecture_icon_wish_on.png',no-repeat, center center)
 
-        .like::before
-            +size(21px, 20px)
-            +margin(9px auto 4px auto)
-            +background('/images/desktop/lecture/lecture_icon_wish.png',no-repeat, center center)
-            content: ''
-            display: block
+    .like::before
+        +size(21px, 20px)
+        +margin(9px auto 4px auto)
+        +background('/images/desktop/lecture/lecture_icon_wish.png',no-repeat, center center)
+        content: ''
+        display: block
 
 .lecture-detail
     +padding(top 80px)
@@ -317,3 +323,51 @@
 
             .comment-input-form.hide
                 display: none
+
+.popup-area
+    .dim
+        +background(null,null,null,$white)
+        display: none
+        width: 100%
+        height: 100%
+        position: fixed
+        top: 0
+        left: 0
+        background-color: rgba(0, 0, 0, 0.5)
+        cursor: pointer
+        z-index: 210
+
+    .popup-wrap
+        +size(700px)
+        +padding(20px)
+        +border(3px solid $page-color)
+        +background(null,null,null, $white)
+        display: none
+        position: fixed
+        left: 50%
+        top: 50%
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.4)
+        transform: translate(-50%, -50%)
+        z-index: 220
+
+        .popup-header
+            overflow: hidden
+
+            h3
+                float: left
+                font-weight: bold
+                font-size: 20px
+
+            .btn-popup-close
+                +size(18px, 18px)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                display: block
+                float: right
+
+        .map
+            +size(700px, 500px)
+            +margin(top 20px)
+
+        p
+            +margin(top 20px)
+            font-size: 16px

@@ -222,6 +222,7 @@
                     <input type="submit" class="btn-register btn-purple" value="가입완료">
                 </div>
 
+                <div class="dim"></div>
                 <div class="service-layer-wrapper">
                     <div class="layer">
                         <div class="layer-header">

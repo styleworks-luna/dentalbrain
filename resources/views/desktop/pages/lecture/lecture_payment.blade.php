@@ -1,6 +1,51 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script>
+        $(function() {
+            var clientKey = '{{ env('TOSS_PAYMENT_CLIENT_KEY')  }}';
+            var tossPayments = TossPayments(clientKey);
+            var message = getParameter('message');
+
+            paymentMessage(message);
+
+            $('.btn-submit').click(function(e) {
+                e.preventDefault();
+                var paymentType = $('.payment-method:checked').val();
+
+                if (!paymentType) {
+                    alert('결제 방식을 선택해 주세요.');
+                    return false;
+                }
+
+                tossPayments.requestPayment(paymentType, {
+                    amount: 15000,
+                    orderId: 's5z0qom-xwpOlFSiP1yS_',
+                    orderName: '토스 티셔츠 외 2건',
+                    customerName: '박토스',
+                    successUrl: window.location.origin + '/success',
+                    failUrl: window.location.href,
+                }).catch(function(err) {
+                    alert('취소');
+                });
+            });
+        });
+
+        function getParameter(param) {
+            var paramData = window.location.search.substr(1).split('&').filter(function(i) {
+                return i.split('=')[0] == param;
+            });
+
+            return paramData.length === 0 ? null : paramData[0].split('=')[1];
+        }
+
+        function paymentMessage(message) {
+            if (message) {
+                alert(message);
+            }
+        }
+    </script>
 @endsection
 
 @section('style')
@@ -125,14 +170,23 @@
                         <tr>
                             <th>결제방식</th>
                             <td>
-                                <p>신용카드</p>
+                                <div class="radio-wrap">
+                                    <input type="radio" id="credit" name="payment-method"
+                                           class="payment-method" value="카드">
+                                    <label for="credit">신용카드</label>
+                                </div>
+                                <div class="radio-wrap">
+                                    <input type="radio" id="deposit" name="payment-method"
+                                           class="payment-method" value="가상계좌">
+                                    <label for="deposit">무통장입금(가상계좌)</label>
+                                </div>
                             </td>
                         </tr>
                     </table>
                 </section>
 
                 <section class="btn-wrap">
-                    <button class="btn-confirm">확인</button>
+                    <button type="button" class="btn-confirm btn-submit">확인</button>
                 </section>
             </div>
         </div>
