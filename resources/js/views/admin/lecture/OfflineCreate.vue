@@ -165,7 +165,7 @@
 
 <script>
 // mixin
-import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 //api
@@ -175,6 +175,7 @@ export default {
     name: 'AdminOfflineCreate',
     mixins: [
         LectureFormMixin,
+        ProgramCategoryMixin,
         OfflineMixin
     ],
     methods: {

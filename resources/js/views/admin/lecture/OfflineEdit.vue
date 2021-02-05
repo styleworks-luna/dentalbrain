@@ -169,13 +169,15 @@
 //api
 import Offline from '@/api/admin/lecture/Offline.js'
 
-import {LectureFormMixin} from '@/mixins/admin/lecture/Form.js';
+//mixins
+import {LectureFormMixin,ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
     name: 'AdminOfflineEdit',
     mixins: [
         LectureFormMixin,
+        ProgramCategoryMixin,
         OfflineMixin
     ],
     created() {

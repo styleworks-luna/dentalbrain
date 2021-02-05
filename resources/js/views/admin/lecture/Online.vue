@@ -10,6 +10,18 @@
         <template v-slot:search>
             <div class="float-right">
                 <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                text="종류 선택"
+                                :value="major_category_id"
+                                :options="majorCategoryOptions"
+                                @setValue="handleSetMajorCategoryId"></select-box>
+
+                    <select-box class="form-control"
+                                text="종류 선택"
+                                :value="minor_category_id"
+                                :options="minorCategoryOptions"
+                                @setValue="handleSetMinorCategoryId"></select-box>
+
                     <div class="input-group">
                         <input class="form-control"
                                type="text"
@@ -65,15 +77,23 @@
     // component
     import Table from '@/components/admin/grid/Table.vue';
     import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+    import SelectBox from '@/components/common/SelectBox.vue';
 
     //api
     import Online from '@/api/admin/lecture/Online.js'
 
+    // mixins
+    import { ProgramCategoryMixin } from '@/mixins/admin/lecture/Form.js';
+
     export default {
         name: 'AdminOnline',
+        mixins: [
+            ProgramCategoryMixin
+        ],
         components: {
             'table-grid': Table,
-            'button-open': ButtonOpen
+            'button-open': ButtonOpen,
+            'select-box':SelectBox,
         },
         data() {
             return {
@@ -126,8 +146,9 @@
                 let params = {
                     page: page,
                     keyword: this.keyword,
+                    major_category_id: this.major_category_id,
+                    minor_category_id: this.minor_category_id,
                 };
-
                 Online.getData(params).then(res => {
                     this.lectures = res.data.programs;
                 }).catch(err => {
@@ -139,7 +160,7 @@
                     this.getData();
                     alert(res.data.msg);
                 })
-            }
+            },
         }
     }
 </script>
