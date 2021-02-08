@@ -11,7 +11,7 @@ namespace App\Services\Notification\Sms;
 class Ppurio{
     const PpurioID  = 'brainspec';
     const password = 'well5511$$';
-    const url = 'https://api.bizppurio.com';
+    const url = 'dev-api.bizppurio.com';
 
     public function getToken(){
         //curl -u brainspec:well5511$$ -i -H 'Accept:application/json' -X POST https://api.bizppurio.com/v1/token
