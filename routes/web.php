@@ -120,7 +120,9 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             // 강의 결제 폼
             Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
             // 강의 신청 성공
-            Route::get('result', 'Lecture\PaymentsController@success');
+            Route::get('success', 'Lecture\PaymentsController@success')->name('payment.success');
+            // 강의 신청 성공
+            Route::get('result', 'Lecture\PaymentsController@result')->name('result');
         });
 
 
