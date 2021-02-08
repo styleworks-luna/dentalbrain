@@ -15,6 +15,8 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Register;
 
 class RegisterController extends Controller
 {
@@ -67,6 +69,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+        Mail::to($user->email)->send(new Register($user));
 
         return $this->registered($request, $user)
             ?: redirect($this->redirectPath());
@@ -109,7 +112,6 @@ class RegisterController extends Controller
             'job_name_id' => $data['job'],
             'license_num' => $license_num,
         ]);
-
         return User::create([
             'login_id' => $data['login_id'],
             'name' => $data['name'],

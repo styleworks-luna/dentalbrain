@@ -6,23 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
+use App\Models\Manage\Inquiry;
 
-class Reset extends Mailable
+class InquiryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $newPassword;
+    private $inquiry;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $newPassword)
+    public function __construct(Inquiry $inquiry)
     {
-        $this->user = $user;
-        $this->newPassword = $newPassword;
+        $this->inquiry = $inquiry;
     }
 
     /**
@@ -32,11 +31,11 @@ class Reset extends Mailable
      */
     public function build()
     {
-        return $this->subject('[DBV2020] 비밀번호 재설정')
-            ->view('emails.user.password_find')
+        return $this
+            ->subject('[DBV2020] 문의 답변 완료')
+            ->view('emails.service.inquire_answer')
             ->with([
-                'user' => $this->user,
-                'newPassword'=> $this->newPassword
+                'inquiry' => $this->inquiry
             ]);
     }
 }

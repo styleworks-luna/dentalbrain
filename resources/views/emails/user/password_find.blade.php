@@ -19,7 +19,7 @@
         <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
                 <b>{{ $user->name }}</b>님의 비밀번호 요청입니다.<br>
-                <b>{{ $user->name }}</b>님의 비밀번호는 <b style="font-size: 14px;">{{ $user->password }}</b>입니다.<br>
+                <b>{{ $user->name }}</b>님의 비밀번호는 <b style="font-size: 14px;">{{ $newPassword }}</b>입니다.<br>
                 임시비밀 번호이므로 마이페이지 회원정보 변경에서 비밀번호를 변경해 주시기 바랍니다.
             </p>
         </td>

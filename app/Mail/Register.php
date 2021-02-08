@@ -2,27 +2,25 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
-class Reset extends Mailable
+class Register extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $newPassword;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $newPassword)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->newPassword = $newPassword;
     }
 
     /**
@@ -32,11 +30,11 @@ class Reset extends Mailable
      */
     public function build()
     {
-        return $this->subject('[DBV2020] 비밀번호 재설정')
-            ->view('emails.user.password_find')
+        return $this
+            ->subject('[DBV2020] 회원가입 완료')
+            ->view('emails.user.register_complete')
             ->with([
-                'user' => $this->user,
-                'newPassword'=> $this->newPassword
+                'user' => $this->user
             ]);
     }
 }
