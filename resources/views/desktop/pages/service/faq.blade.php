@@ -43,7 +43,9 @@
                         @endforelse
                     </ul>
                 </section>
-
+                <div class="paging-wrap">
+                    {{ $faqs->links() }}
+                </div>
             </div>
         </section>
     </section>

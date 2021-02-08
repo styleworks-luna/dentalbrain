@@ -23,7 +23,8 @@
                         @forelse($notices as $notice)
                             <li class="notice-content">
                                 <p class="index list-common">{{ $notice->id }}</p>
-                                <a href="{{ route('customer.notices.show',$notice->id) }}" class="title list-common">{{ $notice->title }}</a>
+                                <a href="{{ route('customer.notices.show',$notice->id) }}"
+                                   class="title list-common">{{ $notice->title }}</a>
                                 <p class="writer list-common">{{ $notice->name }}</p>
                                 <p class="date list-common">{{ date_format($notice->created_at,'Y-m-d') }}</p>
                                 <p class="views list-common">{{ $notice->views }}</p>
@@ -32,8 +33,10 @@
                             <li class="list-none">공지사항이 없습니다.</li>
                         @endforelse
                     </ul>
-                    {{ $notices->links() }}
                 </section>
+                <div class="paging-wrap">
+                    {{ $notices->links() }}
+                </div>
             </div>
         </div>
     </section>
