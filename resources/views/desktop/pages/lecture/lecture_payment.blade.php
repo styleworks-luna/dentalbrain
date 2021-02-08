@@ -24,7 +24,7 @@
                     orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
                     orderName: '{{$program->title . ', ' . $program->ticket->name}}',
                     customerName: '{{ auth()->user()->name }}',
-                    successUrl: window.location.origin + '/success',
+                    successUrl: '{{ route('lectures.payment.success',$program->id) }}',
                     failUrl: window.location.href,
                     customerEmail: '{{ auth()->user()->email }}',
                     customerMobilePhone: '{{ auth()->user()->phone }}',
