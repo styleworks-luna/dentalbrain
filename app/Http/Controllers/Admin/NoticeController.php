@@ -31,7 +31,6 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'display_name' => 'required',
             'is_open' => ['required','boolean']
         ]);
 
