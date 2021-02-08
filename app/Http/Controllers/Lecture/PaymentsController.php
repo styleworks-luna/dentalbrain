@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
+use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\Survey\Survey;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -48,6 +50,25 @@ class PaymentsController extends Controller
                 'request' => $request->all()]);
             return redirect()->back()->with(['alert' => '오류가 발생했습니다. 다시 시도해주세요.']);
         }
+
+        $fullContent = $response->getBody()->getContents();
+        $responseBody = json_decode($fullContent, true);
+
+        Payment::query()->create([
+            'paymentKey' => $responseBody['paymentKey'],
+            'orderId' => $responseBody['orderId'],
+            'totalAmount' => $responseBody['totalAmount'],
+            'receiptUrl' => $responseBody['card'] ? $responseBody['card']['receiptUrl'] : null,
+            'method' => $responseBody['method'],
+            'status' => $responseBody['status'],
+            'refundStatus' => $responseBody['virtualAccount'] ? $responseBody['card']['receiptUrl'] : null,
+            'useDiscount' => $responseBody['useDiscount'],
+            'discountAmount' => $responseBody['discountAmount'],
+            'secret' => $responseBody['secret'],
+            'full_response' => $fullContent,
+            'requestedAt' => Carbon::parse($responseBody['requestedAt'])->toDateTime(),
+            'approvedAt' => Carbon::parse($responseBody['approvedAt'])->toDateTime(),
+        ]);
 
         logger($response->getBody());
 
