@@ -19,7 +19,7 @@ class Ppurio{
         //curl -u brainspec:well5511$$ -i -H 'Accept:application/json' -H "Content-Type : application/json" -X POST https://dev-api.bizppurio.com:10443/
         //curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
-        $url = 'https://dev-api.bizppurio.com:443/v1/token';
+        $url = 'https://dev-api.bizppurio.com:10443/v1/token';
         $credentials = base64_encode(self::PpurioID.":".self::password);
         $oCurl = curl_init();
         curl_setopt($oCurl,CURLOPT_URL,$url);
