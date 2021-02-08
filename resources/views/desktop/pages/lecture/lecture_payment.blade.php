@@ -18,10 +18,10 @@
                     alert('결제 방식을 선택해 주세요.');
                     return false;
                 }
-                console.log({{time()}});
+
                 tossPayments.requestPayment(paymentType, {
                     amount: {{ $program->ticket->price }},
-                    orderId: '{{ time() }}',
+                    orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
                     orderName: '{{$program->title . ', ' . $program->ticket->name}}',
                     customerName: '{{ auth()->user()->name }}',
                     successUrl: window.location.origin + '/success',
