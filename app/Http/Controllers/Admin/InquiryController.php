@@ -8,10 +8,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\InquiryMail;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InquiryController
 {
@@ -39,6 +41,7 @@ class InquiryController
         ]);
         if ($validatedData['is_answer'] == 1) {
             $validatedData['answered_at'] = now();
+            Mail::to($inquiry->email)->send(new InquiryMail($inquiry));
         }
         $inquiry->update($validatedData);
 

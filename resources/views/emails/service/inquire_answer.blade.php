@@ -16,7 +16,7 @@
     <tr>
         <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
-                <b>{{ $user->name }}</b>님이 문의 하신 내용의 답변이 완료 되었습니다.
+                <b>{{ $inquiry->name }}</b>님이 문의 하신 내용의 답변이 완료 되었습니다.
             </p>
         </td>
     </tr>
