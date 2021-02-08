@@ -43,6 +43,10 @@ class ApplyController extends Controller
         // 파일을 함께 조회하기 위해 all 사용.
         $surveyDataSet = $request->all('surveys')['surveys'];
 
+        if (!$program->surveys()->exists()) {
+            return redirect()->route('lectures.payment.form', $program);
+        }
+
         if ($this->validateSurveyAnswers($surveyDataSet) == false) {
             return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
         }
