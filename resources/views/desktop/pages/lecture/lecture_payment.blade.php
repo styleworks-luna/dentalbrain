@@ -4,7 +4,7 @@
     <script src="https://js.tosspayments.com/v1"></script>
     <script>
         $(function() {
-            var clientKey = '{{ env('TOSS_PAYMENT_CLIENT_KEY')  }}';
+            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY')  }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
 
