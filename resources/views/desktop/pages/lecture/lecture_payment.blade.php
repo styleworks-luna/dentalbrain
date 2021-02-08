@@ -132,75 +132,83 @@
                     </table>
                 </section>
 
-                <section class="additional-information-list">
-                    <h3>추가 정보</h3>
-                    <ul class="information-answers-list">
-                        @forelse($surveys as $survey)
-                            @switch($survey->type)
-                                @case('singleChoice')
-                                <li class="information-answers">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <div class="answer">
-                                        <ul>
-                                            <li>{{ $survey->answer->content }}</li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                @break
-                                @case('multipleChoice')
-                                <li class="information-answers">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <div class="answer">
-                                        <ul>
-                                            @forelse($survey->answers as $answer)
-                                                <li>{{ $answer->content }}</li>
-                                            @empty
-                                                선택 없음.
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                </li>
-                                @break
-                                @case('shortAnswer')
-                                <li class="information-answers">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <div class="answer">
-                                        <ul>
-                                            <li class="short-answer">
-                                                {{ $survey->answer->content }}
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                @break
-                                @case('address')
-                                <li class="information-answers">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <div class="answer">
-                                        <p>{{ $survey->answer->address }}{{ ', ' . $survey->answer->address_detail }}</p>
-                                    </div>
-                                </li>
-                                @break
-                                @case('file')
-                                <li class="information-answers">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <div class="answer">
-                                        <ul>
-                                            <li>
-                                                <a href="{{$survey->answer->file->url}}"><em>{{ $survey->answer->file->name }}</em></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                @break
-                                @default
-                                <p>오류가 발생했습니다.</p>
-                            @endswitch
-                        @empty
-                            추가 정보 없음.
-                        @endforelse
-                    </ul>
-                </section>
+                @if($surveys->isNotEmpty())
+                    <section class="additional-information-list">
+                        <h3>추가 정보</h3>
+                        <ul class="information-answers-list">
+                            @forelse($surveys as $survey)
+                                @switch($survey->type)
+                                    @case('singleChoice')
+                                    <li class="information-answers">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <div class="answer">
+                                            <ul>
+                                                <li>{{ $survey->answer->content }}</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @break
+                                    @case('multipleChoice')
+                                    <li class="information-answers">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <div class="answer">
+                                            <ul>
+                                                @forelse($survey->answers as $answer)
+                                                    <li>{{ $answer->content }}</li>
+                                                @empty
+                                                    선택 없음.
+                                                @endforelse
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @break
+                                    @case('shortAnswer')
+                                    <li class="information-answers">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <div class="answer">
+                                            <ul>
+                                                <li class="short-answer">
+                                                    {{ $survey->answer->content }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @break
+                                    @case('address')
+                                    <li class="information-answers">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <div class="answer">
+                                            <p>{{ $survey->answer->address }}{{ ', ' . $survey->answer->address_detail }}</p>
+                                        </div>
+                                    </li>
+                                    @break
+                                    @case('file')
+                                    <li class="information-answers">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <div class="answer">
+                                            <ul>
+                                                <li>
+                                                    <a href="{{$survey->answer->file->url}}"><em>{{ $survey->answer->file->name }}</em></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    @break
+                                    @default
+                                    <p>오류가 발생했습니다.</p>
+                                @endswitch
+                            @empty
+                                추가 정보 없음.
+                            @endforelse
+                        </ul>
+                    </section>
+                @endif
+
                 <section class="payment-information">
                     <h3>결제정보</h3>
                     <table>
