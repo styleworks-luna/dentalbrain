@@ -16,7 +16,7 @@ class Ppurio{
 
     public function getToken(){
         //curl -u brainspec:well5511$$ -i -H 'Accept:application/json' -X POST https://api.bizppurio.com/v1/token
-        print_r($_SERVER['SERVER_ADDR']);
+        print_r('server:'.$_SERVER['SERVER_ADDR']);
         $credentials = base64_encode(self::PpurioID.":".self::password);
         $oCurl = curl_init();
         curl_setopt($oCurl,CURLOPT_URL,self::url.'/v1/token');
@@ -39,6 +39,6 @@ class Ppurio{
         print_r(curl_errno($oCurl));
         print_r(curl_error($oCurl));
         curl_close($oCurl);
-        print_r(json_decode($response));
+        print_r('response:'.json_decode($response));
     }
 }
