@@ -55,6 +55,7 @@ class NoticeController extends Controller
         $v = Validator::make(request()->all(), [
             'title' => 'required',
             'content' => 'required',
+            'display_name' => 'nullable',
             'is_open' => ['required','boolean']
         ]);
 
