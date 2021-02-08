@@ -4,6 +4,7 @@ namespace App\Models\Program;
 
 use App\Models\File;
 use App\Models\Program\Survey\Survey;
+use App\Models\Program\Survey\SurveyAnswer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -94,6 +95,13 @@ class Program extends Model
     {
         return $this->hasMany(UserLike::class, 'program_id', 'id')
             ->where('user_id', '=', Auth::id());
+    }
+
+    public function answers()
+    {
+        return $this->hasManyThrough(SurveyAnswer::class, Survey::class,
+            'program_id', 'survey_id',
+            'id', 'id');
     }
 
 

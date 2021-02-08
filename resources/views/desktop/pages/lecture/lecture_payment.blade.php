@@ -3,14 +3,14 @@
 @section('script')
     <script src="https://js.tosspayments.com/v1"></script>
     <script>
-        $(function() {
-            var clientKey = '{{ env('TOSS_PAYMENT_CLIENT_KEY')  }}';
+        $(function () {
+            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
 
             paymentMessage(message);
 
-            $('.btn-submit').click(function(e) {
+            $('.btn-submit').click(function (e) {
                 e.preventDefault();
                 var paymentType = $('.payment-method:checked').val();
 
@@ -18,22 +18,24 @@
                     alert('결제 방식을 선택해 주세요.');
                     return false;
                 }
-
+                console.log({{time()}});
                 tossPayments.requestPayment(paymentType, {
-                    amount: 15000,
-                    orderId: 's5z0qom-xwpOlFSiP1yS_',
-                    orderName: '토스 티셔츠 외 2건',
-                    customerName: '박토스',
+                    amount: {{ $program->ticket->price }},
+                    orderId: '{{ time() }}',
+                    orderName: '{{$program->title . ', ' . $program->ticket->name}}',
+                    customerName: '{{ auth()->user()->name }}',
                     successUrl: window.location.origin + '/success',
                     failUrl: window.location.href,
-                }).catch(function(err) {
+                    customerEmail: '{{ auth()->user()->email }}',
+                    customerMobilePhone: '{{ auth()->user()->phone }}',
+                }).catch(function (err) {
                     alert('취소');
                 });
             });
         });
 
         function getParameter(param) {
-            var paramData = window.location.search.substr(1).split('&').filter(function(i) {
+            var paramData = window.location.search.substr(1).split('&').filter(function (i) {
                 return i.split('=')[0] == param;
             });
 
@@ -63,24 +65,41 @@
 
                 <section class="lecture-information-wrap">
                     <div class="lecture-image">
-                        <img src="{{ asset('/images/dummy/test.png') }}" alt="강의 사진">
+                        <img src="{{ $program->thumbnail->url }}" alt="강의 사진">
                     </div>
                     <div class="lecture-information">
                         <div class="lecture-sort">
-                            <span class="offline">오프라인</span>
-                            <p class="lecture-subject">치과위생사 &middot; 위생</p>
+                            @if($program->is_online == true)
+                                <span class="online">온라인</span>
+                            @else
+                                <span class="offline">오프라인</span>
+                            @endif
+
+                            <p class="lecture-subject">
+                                {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
                         </div>
-                        <h2 class="lecture-title">치과위생사를 위한 예방 및 유지관리 전문가과정 치과위생사를 위한 예방 및 유지관리 전문가과정</h2>
+                        <h2 class="lecture-title">{{ $program->title }}</h2>
                         <table>
-                            <tr>
-                                <th>강의시간</th>
-                                <td><p class="lecture-length">2019년 10월 15일 (월) 15:00 ~ 2019년 10월 20일 (토) 17:20</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>강의장소</th>
-                                <td><p class="lecture-length">서울시 서초구 강남대로 79길 59 새로나빌딩 3층 </p></td>
-                            </tr>
+                            @if($program->is_online == true)
+                                <tr>
+                                    <th>강의시간</th>
+                                    <td><p class="lecture-length">{{ $program->running_time }}</p></td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <th>강의일시</th>
+                                    <td>
+                                        <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>강의장소</th>
+                                    <td>
+                                        <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                    </td>
+                                </tr>
+                            @endif
                         </table>
                     </div>
                 </section>
@@ -90,22 +109,24 @@
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td><em>덴탈브레인</em></td>
+                            <td><em>{{ auth()->user()->name }}</em></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td><em>dentalbrain</em></td>
+                            <td><em>{{ auth()->user()->login_id }}</em></td>
                         </tr>
                         <tr>
                             <th>이메일</th>
                             <td>
-                                <em>dentalbrain@naver.com</em>
+                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
+                                <em>{{ auth()->user()->email }}</em>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <em>010-1234-5678</em>
+                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
+                                <em>{{ auth()->user()->phone }}</em>
                             </td>
                         </tr>
                     </table>
@@ -114,58 +135,84 @@
                 <section class="additional-information">
                     <h3>추가 정보</h3>
                     <ul class="information-answers-list">
-                        <li class="information-answers">
-                            <h4>객관식 단일 선택 질문 객관식 단일 선택 질문 <em>(필수)</em></h4>
-                            <div class="answer">
-                                <ul>
-                                    <li>선택1 선택1 선택1 선택1 선택1 선택1 선택1 선택1 선택1</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="information-answers">
-                            <h4>객관식 다중 선택 질문</h4>
-                            <div class="answer">
-                                <ul>
-                                    <li>선택1 선택1 선택1 선택1 선택1 선택1 선택1 선택1 선택1</li>
-                                    <li>선택2</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="information-answers for-padding">
-                            <h4>주관식 입력 질문 주관식 입력 질문</h4>
-                            <div class="answer">
-                                <ul>
-                                    <li class="short-answer">
-                                        주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변
-                                        답변주관식답변 답변주관식답변 답변주관식답변
-                                        답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변주관식답변 답변
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="information-answers">
-                            <h4>주소 질문</h4>
-                            <div class="answer">
-                                <p>서울시 서초구 강남대로 79길 59 새로나빌딩 3층 온오프믹스</p>
-                            </div>
-                        </li>
-                        <li class="information-answers">
-                            <h4>파일입력질문</h4>
-                            <div class="answer">
-                                <ul>
-                                    <li><em>설문조사.doc</em></li>
-                                </ul>
-                            </div>
-                        </li>
+                        @forelse($surveys as $survey)
+                            @switch($survey->type)
+                                @case('singleChoice')
+                                <li class="information-answers">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <div class="answer">
+                                        <ul>
+                                            <li>{{ $survey->answer->content }}</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                @break
+                                @case('multipleChoice')
+                                <li class="information-answers">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <div class="answer">
+                                        <ul>
+                                            @forelse($survey->answers as $answer)
+                                                <li>{{ $answer->content }}</li>
+                                            @empty
+                                                선택 없음.
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </li>
+                                @break
+                                @case('shortAnswer')
+                                <li class="information-answers for-padding">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <div class="answer">
+                                        <ul>
+                                            <li class="short-answer">
+                                                {{ $survey->answer->content }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                @break
+                                @case('address')
+                                <li class="information-answers">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <div class="answer">
+                                        <p>{{ $survey->answer->address }}{{ ', ' . $survey->answer->address_detail }}</p>
+                                    </div>
+                                </li>
+                                @break
+                                @case('file')
+                                <li class="information-answers">
+                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
+                                    <div class="answer">
+                                        <ul>
+                                            <li>
+                                                <a href="{{$survey->answer->file->url}}"><em>{{ $survey->answer->file->name }}</em></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                @break
+                                @default
+                                <p>오류가 발생했습니다.</p>
+                            @endswitch
+                        @empty
+                            추가 정보 없음.
+                        @endforelse
                     </ul>
                 </section>
-
                 <section class="payment-information">
                     <h3>결제정보</h3>
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            <td><em>500,000원</em></td>
+                            @if($program->ticket->is_free)
+                                {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
+                                <td><em>무료</em></td>
+                            @else
+                                <td><em>{{ $program->ticket->price }}원</em></td>
+                            @endif
+
                         </tr>
                         <tr>
                             <th>결제방식</th>

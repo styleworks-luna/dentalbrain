@@ -19,8 +19,9 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if (env('APP_ENV') == 'production') {
-            return back()->with(['alert' => '준비중입니다.']);
+
+        if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
+            return redirect()->route('lectures.payment.form', $program->id);
         }
 
         if ($program->is_online == 1) {
@@ -59,7 +60,6 @@ class ApplyController extends Controller
             DB::rollback();
             return redirect()->back(302)->with(['alert' => '오류']);
         }
-
         return redirect()->route('lectures.payment.form', $program);
     }
 
@@ -70,8 +70,7 @@ class ApplyController extends Controller
      * @param array $data
      * @return bool
      */
-    private
-    function validateSurveyAnswers($surveyDataSet)
+    private function validateSurveyAnswers($surveyDataSet)
     {
         foreach ($surveyDataSet as $idx => $data) {
             $survey = Survey::find($data['survey_id']);
@@ -108,8 +107,7 @@ class ApplyController extends Controller
      * @param $data
      * @return array|bool|SurveyAnswer false 면 오류. 배열이면 다중선택 질문. 보통 SurveyAnswer 모델 반환.
      */
-    private
-    function storeSurveyAnswer(Survey $survey, $data)
+    private function storeSurveyAnswer(Survey $survey, $data)
     {
         $createData = [
             'survey_id' => $survey->id,
@@ -123,7 +121,7 @@ class ApplyController extends Controller
                 return true;
             }
             $createData['choice_id'] = $data['answer'];
-
+            $createData['content'] = Survey::find($data['answer'])->question;
             $returnable = SurveyAnswer::create($createData);
 
         } elseif ($survey->category_id == SurveyCategory::$MULTIPLE_CHOICE) {
@@ -133,6 +131,7 @@ class ApplyController extends Controller
             $returnableDataSet = [];
             foreach ($data['answers'] as $answer) {
                 $createData['choice_id'] = $answer;
+                $createData['content'] = Survey::find($answer)->question;
                 $returnableDataSet[] = SurveyAnswer::create($createData);
             }
 
