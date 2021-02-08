@@ -44,7 +44,7 @@
 
         function paymentMessage(message) {
             if (message) {
-                alert(message);
+                alert(decodeURI(message));
             }
         }
     </script>
