@@ -298,7 +298,7 @@
                         </div>
                     </section>
                     <section class="btn-wrap">
-                        <button class="make-pay">결제하기</button>
+                        <button class="btn-confirm">결제하기</button>
                         <button class="cancel">취소</button>
                     </section>
                 </div>

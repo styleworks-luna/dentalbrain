@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row">
                 <section class="lecture-information-wrap">
-                    <img src="{{ $program->thumbnail->url }}" alt="" class="lecture-image">
+                    <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
                     <div class="lecture-information">
                         <div class="lecture-sort">
                             @if($program->is_online == true)

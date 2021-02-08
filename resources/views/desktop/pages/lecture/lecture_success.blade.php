@@ -4,7 +4,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-success.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-apply.css') }}">
 @endsection
 
 @section('content')
@@ -66,7 +66,7 @@
                     </table>
                 </section>
 
-                <section class="additional-information">
+                <section class="additional-information-list">
                     <h3>추가 정보</h3>
                     <ul class="information-answers-list">
                         <li class="information-answers">
