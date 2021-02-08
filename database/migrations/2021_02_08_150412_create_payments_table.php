@@ -24,7 +24,7 @@ class CreatePaymentsTable extends Migration
 
             $table->string('method')->comment('결제 수단');
             $table->string('status')
-                ->comment('결제 처리 상태입니다. [ READY - 준비됨 | IN_PROGRESS - 진행중 | WAITING_FOR_DEPOSIT - 입금 대기 중 | DONE - 완료됨 | CANCELED - 취소됨 | ABORTED - 중단됨 | PARTIAL_CANCELED - 부분 취소됨 ]');
+                ->comment('결제 처리 상태입니다.  READY - 준비됨 | IN_PROGRESS - 진행중 | WAITING_FOR_DEPOSIT - 입금 대기 중 | DONE - 완료됨 | CANCELED - 취소됨 | ABORTED - 중단됨 | PARTIAL_CANCELED - 부분 취소됨 ');
             $table->string('refundStatus')->nullable()
                 ->comment('환불 처리 상태입니다.');
 
@@ -34,7 +34,7 @@ class CreatePaymentsTable extends Migration
             $table->string('secret')->nullable()
                 ->comment('가상계좌 결제 시 전달되는 입금 콜백을 검증하기 위한 값');
 
-            $table->json('full_response')->comment('조회 결과 전문.');
+            $table->text('full_response')->comment('조회 결과 전문.');
 
             $table->dateTime('requestedAt')->comment('결제 요청 일시입니다');
             $table->dateTime('approvedAt')->comment('결제 승인 일시입니다.');
