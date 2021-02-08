@@ -24,13 +24,13 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('lectures.detail',$slide->id) }}">
-                                    <img src="{{ $slide->thumbnail->url }}" alt="">
+                                    <img src="{{ $slide->thumbnail->url }}" alt="광고">
                                 </a>
                             </div>
                         @empty
                             <div class="swiper-slide">
                                 <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                                 </a>
                             </div>
                         @endforelse
@@ -49,11 +49,11 @@
             <section class="ad">
                 @if($bar)
                     <a href="{{ $bar->link }}">
-                        <img src="{{ $bar->desktopFile->url }}" alt="">
+                        <img src="{{ $bar->desktopFile->url }}" alt="광고">
                     </a>
                 @else
                     <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                     </a>
                 @endif
             </section>
@@ -65,14 +65,14 @@
                         @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
                                 <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
-                                    <img src="{{ $bottom->desktopFile->url }}" alt="">
+                                    <img src="{{ $bottom->desktopFile->url }}" alt="광고">
                                 </a>
                             </div>
                         @empty
                             @for($i = 0; $i < 7; $i++)
                                 <div class="swiper-slide">
                                     <a href="">
-                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                                     </a>
                                 </div>
                             @endfor
@@ -87,22 +87,22 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                             </a>
                         </div>
                         <div class="swiper-slide">
                             <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                             </a>
                         </div>
                         <div class="swiper-slide">
                             <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                             </a>
                         </div>
                         <div class="swiper-slide">
                             <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
                             </a>
                         </div>
                     </div>
