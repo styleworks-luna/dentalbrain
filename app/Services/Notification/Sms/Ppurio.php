@@ -39,6 +39,7 @@ class Ppurio{
         print_r(curl_errno($oCurl));
         print_r(curl_error($oCurl));
         curl_close($oCurl);
-        print_r('response:'.json_decode($response));
+        print_r('response:');
+        print_r(json_decode($response));
     }
 }
