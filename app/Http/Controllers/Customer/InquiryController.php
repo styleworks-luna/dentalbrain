@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Models\Manage\inquiry;
+use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
 use Illuminate\Validation\Rule;
 
@@ -32,7 +32,7 @@ class InquiryController
             'category_id' => ['required', Rule::exists('inquiry_categories', 'id')],
         ]);
 
-        inquiry::create($validateData);
+        Inquiry::create($validateData);
 
         return redirect(request()->url())->with('alert','문의가 접수되었습니다.');
     }
