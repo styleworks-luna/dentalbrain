@@ -7,35 +7,39 @@
  */
 
 namespace App\Services\Notification\Sms;
+use Illuminate\Support\Facades\Cookie;
 
 class Ppurio{
-    const PpurioID  = 'brainspec';
-    const password = 'well5511$$';
-    const url = 'https://api.bizppurio.com';
-
     public function getToken(){
-        //curl -u brainspec:well5511$$ -i -H 'Accept:application/json' -X POST https://api.bizppurio.com/v1/token
+        $host = 'https://api.bizppurio.com/v1/token';
 
-        $credentials = base64_encode(self::PpurioID.":".self::password);
-        $oCurl = curl_init();
-        curl_setopt($oCurl,CURLOPT_URL,self::url.'/v1/token');
-        curl_setopt($oCurl,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, FALSE); //true로 설정시 일부 https 사이트는 안 열림
-        curl_setopt($oCurl, CURLOPT_POST, 1);
-        curl_setopt($oCurl, CURLOPT_HTTPHEADER,
-            array(
-                'Content-Type:  application/json; charset=utf-8',
-                'Authorization:Basic '.$credentials
-            )
+        $headers = array(
+        'Accept: application/json',
+        'Content-Type:application/json',
+        'Authorization: Basic '. base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'))
         );
-        //curl_setopt($oCurl,CURLOPT_USERPWD,$credentials); 이것을 사용하려면 Authorization:Basic을 주석하고 대신 사용
-        curl_setopt($oCurl, CURLOPT_VERBOSE, true);
-        curl_setopt($oCurl,CURLOPT_NOSIGNAL, 1);
+
+        $oCurl = curl_init();
+        curl_setopt($oCurl, CURLOPT_URL, $host);
+        curl_setopt($oCurl, CURLOPT_POST, true);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($oCurl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($oCurl, CURLOPT_VERBOSE, true);
 
         $response = curl_exec($oCurl);
+        $curl_errno = curl_errno($oCurl);
+        $curl_error = curl_error($oCurl);
+
         curl_close($oCurl);
+
+        echo 'Response :';
+        echo '<pre>';
         print_r(json_decode($response));
+        print_r($curl_error);
+        echo '</pre>';
     }
 }

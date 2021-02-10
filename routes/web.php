@@ -45,7 +45,6 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
-    Route::get('sms','Test\TestController@getToken')->name('getToken');
 });
 
 /*============================ PAGES ============================*/
@@ -184,6 +183,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+    Route::get('bizppurio','Test\TestController@getToken')->name('getToken');
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');

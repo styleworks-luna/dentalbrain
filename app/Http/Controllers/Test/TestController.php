@@ -63,5 +63,6 @@ class TestController extends Controller
     public function getToken(){
         $sms = new Ppurio();
         $sms->getToken();
+        return true;
     }
 }

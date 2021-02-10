@@ -2,7 +2,7 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/desktop/layouts/navigation/service.sass'
-
+@import '@sass/components/_pagination.sass'
 
 .notice-history
     +margin(top 60px bottom 50px)
@@ -63,58 +63,3 @@
 
         .list-none
             +padding(top 26px bottom 26px)
-
-
-.paging-wrap
-    +margin(top 80px bottom 60px)
-    text-align: center
-
-    nav
-        display: inline-block
-
-        ul
-            clear: both
-
-            li
-                +margin(right 16px)
-                +border-radius(50%)
-                float: left
-
-                .page-link
-                    +size(16px, 14px)
-                    +padding(8px 7px)
-                    display: block
-
-                &:hover .page-link
-                    color: $page-color
-                    text-decoration: underline
-
-                &:first-child
-                    +border(1px solid $border-color-light)
-                    +border-radius(50%)
-                    +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, center center)
-
-                    &:hover
-                        border-color: $gray-900
-
-                        a, span
-                            text-decoration: none
-
-                &:last-child
-                    +margin(right 0)
-                    +border(1px solid $border-color-light)
-                    +border-radius(50%)
-                    +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, center center)
-
-                    &:hover
-                        border-color: $gray-900
-
-                        a, span
-                            text-decoration: none
-
-            li.active
-                +background(null, null, null, $page-color)
-
-                .page-link
-                    color: $white
-                    text-decoration: none
