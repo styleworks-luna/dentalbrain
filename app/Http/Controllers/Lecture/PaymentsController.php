@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -54,7 +55,7 @@ class PaymentsController extends Controller
         $fullContent = $response->getBody()->getContents();
         $responseBody = json_decode($fullContent, true);
 
-        Payment::query()->create([
+        $payment = Payment::query()->create([
             'paymentKey' => $responseBody['paymentKey'],
             'orderId' => $responseBody['orderId'],
             'totalAmount' => $responseBody['totalAmount'],
@@ -70,42 +71,18 @@ class PaymentsController extends Controller
             'approvedAt' => Carbon::parse($responseBody['approvedAt'])->toDateTime(),
         ]);
 
+        ProgramStudent::query()->where('user_id', '=', Auth::id())
+            ->where('ticket_id', '=', $program->ticket->id)
+            ->first()->update(['payment_id' => $payment->id]);
+
         logger($response->getBody());
 
         return redirect()->route('lectures.result', $program->id);
     }
 
-    public function result(Program $program)
-    {
-        $surveys = Survey::query()
-            ->with(['choices',
-                'answers' => function ($query) {
-                    $query->where('user_id', '=', Auth::id());
-                }, 'answer' => function ($query) {
-                    $query->where('user_id', '=', Auth::id());
-                }])
-            ->where('program_id', '=', $program->id)
-            ->whereNull('parent_id')
-            ->get();
-
-        return view(viewPrefix() . 'pages.lecture.lecture_result', [
-            'program' => $program,
-            'surveys' => $surveys,
-        ]);
-    }
-
     public function showPaymentForm(Request $request, Program $program)
     {
-        $surveys = Survey::query()
-            ->with(['choices',
-                'answers' => function ($query) {
-                    $query->where('user_id', '=', Auth::id());
-                }, 'answer' => function ($query) {
-                    $query->where('user_id', '=', Auth::id());
-                }])
-            ->where('program_id', '=', $program->id)
-            ->whereNull('parent_id')
-            ->get();
+        $surveys = Survey::result($program->id)->get();
 
         return view(viewPrefix() . 'pages.lecture.lecture_payment', [
             'program' => $program,

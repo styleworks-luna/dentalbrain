@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\Survey\SurveyCategory;
@@ -43,19 +44,39 @@ class ApplyController extends Controller
         // 파일을 함께 조회하기 위해 all 사용.
         $surveyDataSet = $request->all('surveys')['surveys'];
 
-        if (!$program->surveys()->exists()) {
-            return redirect()->route('lectures.payment.form', $program);
-        }
-
-        if ($this->validateSurveyAnswers($surveyDataSet) == false) {
-            return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
-        }
         try {
             DB::beginTransaction();
+
+            $programStudent = ProgramStudent::updateOrCreate([
+                'ticket_id' => $program->ticket->id,
+                'user_id' => Auth::id(),
+            ], [
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
+                'applied_at' => now(),
+            ]);
+
+            if ($program->surveys()->doesntExist()) {
+                return redirect()->route('lectures.payment.form', $program);
+            }
+
+            if ($this->validateSurveyAnswers($surveyDataSet) == false) {
+                // Validation Failed.
+                return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
+            }
+
 
             foreach ($surveyDataSet as $idx => $data) {
                 $survey = Survey::find($data['survey_id']);
                 $this->storeSurveyAnswer($survey, $data);
+            }
+
+            if ($program->is_free) {
+                // 무료 행사인 경우.
+                $programStudent->expired_at = now()->addDays($program->ticket->term);
+                $programStudent->save();
+
+                return redirect()->route('lectures.result');
             }
 
             DB::commit();
@@ -70,8 +91,7 @@ class ApplyController extends Controller
     /**
      * 추가 질문사항 검증.
      *
-     * @param Request $survey
-     * @param array $data
+     * @param $surveyDataSet
      * @return bool
      */
     private function validateSurveyAnswers($surveyDataSet)
@@ -174,5 +194,16 @@ class ApplyController extends Controller
 
 
         return $returnable;
+    }
+
+    public function result(Program $program)
+    {
+        $surveys = Survey::result($program->id)
+            ->get();
+
+        return view(viewPrefix() . 'pages.lecture.lecture_result', [
+            'program' => $program,
+            'surveys' => $surveys,
+        ]);
     }
 }
