@@ -7,7 +7,6 @@
  */
 
 namespace App\Services\Notification\Sms;
-use Illuminate\Support\Facades\Cookie;
 
 class Ppurio{
     public function getToken(){
@@ -16,7 +15,7 @@ class Ppurio{
         $headers = array(
         'Accept: application/json',
         'Content-Type:application/json',
-        'Authorization: Basic '. base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'))
+        'Authorization: Basic '. base64_encode("brainspec:well5511$$")
         );
 
         $oCurl = curl_init();
