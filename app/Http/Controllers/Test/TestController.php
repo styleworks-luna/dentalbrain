@@ -70,7 +70,7 @@ class TestController extends Controller
         $client = new Client();
         $res = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
             'headers' => [
-                'Authorization' => 'YnJhaW5zcGVjOndlbGw1NTExJCQ=',
+                'Authorization' => 'Basic YnJhaW5zcGVjOndlbGw1NTExJCQ=',
                 'Content-Type' => 'application/json',
             ]
         ]);
