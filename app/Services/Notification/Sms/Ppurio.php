@@ -19,39 +19,32 @@ class Ppurio{
     //curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
     public function getToken(){
-        $url = ' https://dev-api.bizppurio.com:443/v1/token';
-        $credentials = base64_encode(self::ppurioID.":".self::password);
-        $oCurl = curl_init();
-        curl_setopt($oCurl,CURLOPT_URL,$url);
-        curl_setopt($oCurl,CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($oCurl,CURLOPT_NOSIGNAL, 1);
-        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false); //true로 설정시 일부 https 사이트는 안 열림
-        curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($oCurl,CURLOPT_HEADER,1);
-        curl_setopt($oCurl, CURLOPT_HTTPHEADER,
-            array(
-                'Accept : application/json',
-                'Content-Type: application/json; charset=UTF=8',
-                'Authorization:Basic'.$credentials
-            )
-        );
-        curl_setopt($oCurl, CURLOPT_VERBOSE, true);
-        curl_setopt($oCurl, CURLOPT_POST, true);
+        $host = 'https://api.bizppurio.com/v1/token';
 
-        $header_size = curl_getinfo($oCurl, CURLINFO_HEADER_SIZE);
+        $headers = array(
+        'Accept: application/json',
+        'Content-Type:application/json',
+        'Authorization: Basic '. base64_encode(self::ppurioID.":".self::password)
+        );
+
+        $oCurl = curl_init();
+        curl_setopt($oCurl, CURLOPT_URL, $host);
+        curl_setopt($oCurl, CURLOPT_POST, true);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($oCurl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($oCurl, CURLOPT_VERBOSE, true);
 
         $response = curl_exec($oCurl);
         $curl_errno = curl_errno($oCurl);
         $curl_error = curl_error($oCurl);
 
-        $header = substr($response, 0, $header_size);
-        $body = substr($response, $header_size);
-        print_r('<br/>header:'.$header);
-        print_r('<br/>body:'.$body);
         curl_close($oCurl);
-        print_r('<br/>result:'.$response);
 
+        echo 'Response :';
         echo '<pre>';
         print_r(json_decode($response));
         print_r($curl_error);
