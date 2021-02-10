@@ -82,7 +82,7 @@
                     <div class="float-left">
                         <label class="col-form-label d-block float-left" for="">모집정원</label>
                         <div class="col-md-9 float-left">
-                            <input type="number" class="form-control" v-model="program_place.capacity">
+                            <input type="text" class="form-control" v-model="program_place.capacity">
                         </div>
                     </div>
                     <div class="float-left">
@@ -114,7 +114,7 @@
                         <input type="radio" id="pay" value="0"
                                v-model="is_free">
                         <label for="pay">유료</label>
-                        <input type="number"
+                        <input type="text"
                                class="form-control ml-3"
                                placeholder="신청 금액 입력"
                                :disabled="is_free == 1"

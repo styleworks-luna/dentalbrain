@@ -49,4 +49,8 @@ class FindPasswordController extends Controller{
             return redirect()->back()->with('alert', "메일 전송 오류");
         }
     }
+
+    public function sendPasswordMailWithUser(User $user){
+        return $this->sendResetEmail($user->email);
+    }
 }

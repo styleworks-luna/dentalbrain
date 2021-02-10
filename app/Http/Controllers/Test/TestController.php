@@ -17,6 +17,7 @@ use App\Models\Manage\Notice;
 use App\Models\User;
 use App\Models\UserJobName;
 use App\Services\Notification\Sms\Ppurio;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 
@@ -62,6 +63,18 @@ class TestController extends Controller
 
     public function getToken(){
         $sms = new Ppurio();
-        $sms->getToken();
+        return $sms->getToken();
+    }
+
+    public function purio() {
+        $client = new Client();
+        $res = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
+            'headers' => [
+                'Authorization' => 'Basic YnJhaW5zcGVjOndlbGw1NTExJCQ=',
+                'Content-Type' => 'application/json',
+            ]
+        ]);
+
+        return $res;
     }
 }

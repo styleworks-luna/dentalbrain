@@ -8,10 +8,10 @@ $(function () {
 
 
     var mySwiper = new Swiper('.swiper-container', {
-       /* autoplay: {
+        autoplay: {
             delay: 5000,
             disableOnInteraction: false,
-        },*/
+        },
         pagination: {
             el: '.swiper-pagination',
             type: 'fraction',

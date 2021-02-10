@@ -46,6 +46,7 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
 
     Route::get('search', 'Test\TestController@search')->name('search');
     Route::get('sms', 'Test\TestController@getToken')->name('getToken');
+    Route::get('purio', 'Test\TestController@purio');
 });
 
 /*============================ PAGES ============================*/
@@ -58,10 +59,12 @@ Route::get('find', function () {
     return view('desktop.pages.user.find_id');
 });
 
+//이름과 전화번호로 아이디 찾기
 Route::post('findIdWithNameAndPhone', 'Account\FindIdController@findIdWithNameAndPhone')->name('findIdWithNameAndPhone');
+// 패스워드 변경 이메일 보내기
 Route::post('sendPasswordMail','Account\FindPasswordController@sendPasswordMail')->name('sendPasswordMail');
-Route::get('password/reset/{token}','Account\FindPasswordController@showPasswordResetForm');
-Route::post('password/reset/{token}','Account\FindPasswordController@resetPassword')->name('resetPassword');
+//관리자 회원정보 상세 패스워드 변경 이메일 보내기
+Route::post('sendPasswordMailWithUser/{user}','Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
