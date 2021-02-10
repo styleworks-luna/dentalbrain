@@ -51,17 +51,23 @@ class ApplyController extends Controller
                 'ticket_id' => $program->ticket->id,
                 'user_id' => Auth::id(),
             ], [
+                'ticket_id' => $program->ticket->id,
+                'user_id' => Auth::id(),
                 'email' => $request->get('email'),
                 'phone' => $request->get('phone'),
                 'applied_at' => now(),
             ]);
 
             if ($program->surveys()->doesntExist()) {
+
+                DB::commit();
                 return redirect()->route('lectures.payment.form', $program);
             }
 
             if ($this->validateSurveyAnswers($surveyDataSet) == false) {
                 // Validation Failed.
+
+                DB::rollback();
                 return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
             }
 
@@ -76,6 +82,7 @@ class ApplyController extends Controller
                 $programStudent->expired_at = now()->addDays($program->ticket->term);
                 $programStudent->save();
 
+                DB::commit();
                 return redirect()->route('lectures.result');
             }
 
