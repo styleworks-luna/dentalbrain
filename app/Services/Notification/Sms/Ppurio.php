@@ -7,7 +7,6 @@
  */
 
 namespace App\Services\Notification\Sms;
-use Illuminate\Support\Facades\Cookie;
 
 class Ppurio{
     public function getToken(){
