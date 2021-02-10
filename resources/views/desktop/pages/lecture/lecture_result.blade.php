@@ -163,21 +163,22 @@
                 <section class="payment-information">
                     <h3>결제정보</h3>
                     <table>
-                        <tr>
-                            <th>결제금액</th>
-                            @if($program->ticket->is_free)
-                                {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
+                        @if($program->ticket->is_free)
+                            <tr>
+                                <th>결제금액</th>
                                 <td><em>무료</em></td>
-                            @else
+                            </tr>
+                        @else
+                            <tr>
                                 <td><em>1000원</em></td>
-                            @endif
-                        </tr>
-                        <tr>
-                            <th>결제방식</th>
-                            <td>
-                                <p>신용카드</p>
-                            </td>
-                        </tr>
+                            </tr>
+                            <tr>
+                                <th>결제방식</th>
+                                <td>
+                                    <p>신용카드</p>
+                                </td>
+                            </tr>
+                        @endif
                     </table>
                 </section>
 
