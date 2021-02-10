@@ -73,9 +73,10 @@ class PaymentsController extends Controller
 
         ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('ticket_id', '=', $program->ticket->id)
-            ->first()->update(['payment_id' => $payment->id]);
-
-        logger($response->getBody());
+            ->first()->update([
+                'payment_id' => $payment->id,
+                'expired_at' => now()->addDays($program->ticket->term),
+            ]);
 
         return redirect()->route('lectures.result', $program->id);
     }
