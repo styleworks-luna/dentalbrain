@@ -2,6 +2,7 @@
 
 namespace App\Models\Program;
 
+use App\Models\Payments\Payment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,11 @@ class ProgramStudent extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'payment_id', 'id');
     }
 
     public function getLeftDaysAttribute()

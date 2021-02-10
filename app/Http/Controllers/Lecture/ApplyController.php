@@ -208,9 +208,14 @@ class ApplyController extends Controller
         $surveys = Survey::result($program->id)
             ->get();
 
+        $programStudent = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+            ->where('user_id', '=', Auth::id())
+            ->first();
+
         return view(viewPrefix() . 'pages.lecture.lecture_result', [
             'program' => $program,
             'surveys' => $surveys,
+            'programStudent' => $programStudent,
         ]);
     }
 }
