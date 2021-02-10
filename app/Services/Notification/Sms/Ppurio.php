@@ -15,7 +15,7 @@ class Ppurio{
         $headers = array(
         'Accept: application/json',
         'Content-Type:application/json',
-        'Authorization: Basic '. base64_encode("brainspec:well5511$$")
+        'Authorization: Basic '. base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'))
         );
 
         $oCurl = curl_init();
