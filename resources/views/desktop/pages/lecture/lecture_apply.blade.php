@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <section class="content">
+    <section class="content lecture-apply">
         <div class="container">
             <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
                   enctype="multipart/form-data">

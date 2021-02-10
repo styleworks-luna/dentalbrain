@@ -55,7 +55,7 @@
 @endsection
 
 @section('content')
-    <section class="content">
+    <section class="content lecture-payment">
         <div class="container">
             <div class="row">
                 <section class="apply-title">
