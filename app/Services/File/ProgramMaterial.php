@@ -14,7 +14,7 @@ class ProgramMaterial extends FileTemplate
 
     function getDownloadUrl($file ,$path)
     {
-        return route('api.lectures.download', [$file->id]);
+        return route('api.lectures.download', [$this->model->id]);
     }
 
     protected function getSavePath(string $fileName)

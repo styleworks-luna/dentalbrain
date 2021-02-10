@@ -3,9 +3,14 @@
 namespace App\Models\Program\Survey;
 
 use App\Models\Program\Program;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
+/**
+ * @method static Builder result(int $programId)
+ */
 class Survey extends Model
 {
     use SoftDeletes;
@@ -13,6 +18,9 @@ class Survey extends Model
     protected $table = 'surveys';
     protected $guarded = [];
     protected $appends = ['type'];
+    protected $casts = [
+        'is_required' => 'boolean',
+    ];
 
     public function parent()
     {
@@ -45,6 +53,33 @@ class Survey extends Model
     public function category()
     {
         return $this->belongsTo(SurveyCategory::class, 'category_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(SurveyAnswer::class, 'survey_id', 'id');
+    }
+
+    public function answer()
+    {
+        return $this->hasOne(SurveyAnswer::class, 'survey_id', 'id');
+    }
+
+    public function scopeResult(Builder $query, $programId)
+    {
+        return $query->with(['choices',
+            'answers' => function ($query) {
+                $query->where('user_id', '=', Auth::id());
+            }, 'answer' => function ($query) {
+                $query->where('user_id', '=', Auth::id());
+            }])
+            ->where('program_id', '=', $programId)
+            ->whereNull('parent_id')
+            ->whereHas('answers', function ($query) {
+                $query->where('user_id', '=', Auth::id());
+            })->whereHas('answer', function ($query) {
+                $query->where('user_id', '=', Auth::id());
+            });
     }
 
 }

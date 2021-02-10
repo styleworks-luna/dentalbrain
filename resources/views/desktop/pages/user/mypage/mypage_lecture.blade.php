@@ -26,7 +26,7 @@
                         <li>
                             <div class="content-information-wrap">
                                 <figure class="content-image">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
+                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="강의사진">
                                 </figure>
                                 <div class="content-information">
                                     <div class="lecture-sort">

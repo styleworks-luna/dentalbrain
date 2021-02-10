@@ -45,6 +45,7 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
+    Route::get('sms', 'Test\TestController@getToken')->name('getToken');
 });
 
 /*============================ PAGES ============================*/
@@ -116,13 +117,18 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
+            // 강의 신청 폼
             Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
+            // 강의 신청
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+            // 강의 결제 폼
+            Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
+            // 강의 결제 성공
+            Route::get('success', 'Lecture\PaymentsController@success')->name('payment.success');
+            // 강의 신청 성공
+            Route::get('result', 'Lecture\ApplyController@result')->name('result');
         });
-        // 강의 신청 성공
-        Route::get('success', function () {
-            return view('desktop.pages.lecture.lecture_success');
-        });
+
 
         Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
             Route::post('/', 'Lecture\CommentController@store')->name('store');
@@ -150,7 +156,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     //마이페이지 회원탈퇴 (임시)
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
     //마이페이지 회원탈퇴 함수
-    Route::post('userSecession','Account\SecessionController@userSecession')->name('userSecession');
+    Route::post('userSecession', 'Account\SecessionController@userSecession')->name('userSecession');
 });
 
 // 관리자
@@ -189,6 +195,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => '{program}'], function () {
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');
+        });
+    });
+
+    Route::group(['prefix' => 'surveys', 'as' => 'surveys.'], function () {
+        Route::group(['prefix' => '{survey}'], function () {
+            Route::group(['prefix' => 'answers', 'as' => 'answers.'], function () {
+                Route::get('{answer}/download', 'Survey\FileController@download')->name('download');
+            });
         });
     });
 

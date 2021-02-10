@@ -1,6 +1,7 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/mypage-secession.js') }}"></script>
 @endsection
 
@@ -12,7 +13,7 @@
     <section class="content">
         <div class="container">
             @include('desktop.layouts.navigation.account')
-            <form action={{ route('account.userSecession')}} id="form-secession" method="POST">
+            <form action="{{ route('account.userSecession')}}" id="form-secession" method="POST">
                 @csrf
                 <section class="secession">
                     <h2>회원탈퇴</h2>
@@ -66,7 +67,12 @@
                                            id="secession-reason"
                                            name="secession-reason"
                                            class="secession-reason"
-                                           placeholder="사유를 입력해주세요">
+                                           placeholder="사유를 입력해주세요"
+                                           readonly="true"
+                                           data-parsley-required="false"
+                                           data-parsley-required-message="※ 사유를 입력해주세요."
+                                           data-parsley-errors-container=".reason-error-wrap">
+                                    <div class="reason-error-wrap"></div>
                                 </div>
                             </td>
                         </tr>
@@ -79,17 +85,23 @@
                         <tr>
                             <th>비밀번호 입력</th>
                             <td>
-                                <div class="input-wrap">
-                                    <input type="password"
-                                           name="password"
-                                           id="password"
-                                           class="password"
-                                           placeholder="본인인증을 위해 비밀번호를 입력해주세요.">
+                                <div class="password-wrap">
+                                    <div class="input-wrap">
+                                        <input type="password"
+                                               name="password"
+                                               id="password"
+                                               class="password"
+                                               placeholder="본인인증을 위해 비밀번호를 입력해주세요."
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
+                                               data-parsley-errors-container=".password-error-wrap">
+                                    </div>
+                                    <div class="tips">
+                                        <p>※ 시청중인 강의가 있을경우, 환불되지 않습니다.</p>
+                                        <p>※ 신청 한 강의는 전부 취소 처리 됩니다.</p>
+                                    </div>
                                 </div>
-                                <div class="tips">
-                                    <p>※ 시청중인 강의가 있을경우, 환불되지 않습니다.</p>
-                                    <p>※ 신청 한 강의는 전부 취소 처리 됩니다.</p>
-                                </div>
+                                <div class="password-error-wrap"></div>
                             </td>
                         </tr>
                     </table>

@@ -15,13 +15,15 @@
 @section('content')
     <section class="content">
         <div class="container">
-            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
+                  enctype="multipart/form-data">
                 <div class="row">
                     @csrf
                     <section class="apply-title">
                         <h1>신청하기</h1>
                         <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
                     </section>
+
                     <section class="lecture-information-wrap">
                         <div class="lecture-image">
                             <img src="{{ $program->thumbnail->url }}" alt="강의 사진">
@@ -35,7 +37,8 @@
                                 @endif
 
                                 <p class="lecture-subject">
-                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
+                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}
+                                </p>
                             </div>
                             <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
@@ -48,20 +51,25 @@
                                     <tr>
                                         <th>강의일시</th>
                                         <td>
-                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
-                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                            <p class="lecture-length">
+                                                {{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>강의장소</th>
                                         <td>
-                                            <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                            <p class="lecture-length">
+                                                {{ $program->place->address.' , '.$program->place->address_detail }}
+                                            </p>
                                         </td>
                                     </tr>
                                 @endif
                             </table>
                         </div>
                     </section>
+
                     <section class="applicant-information">
                         <h3>신청자 정보 입력</h3>
                         <table>
@@ -101,171 +109,171 @@
                             </tr>
                         </table>
                     </section>
-                    <section class="additional-information">
-                        <h3>추가 정보 입력</h3>
-                        @forelse($surveys as $idx => $survey)
-                            @switch($survey->type)
-                                @case('singleChoice')
-                                <div class="multiple-single-choice">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
-                                    <div class="choices">
-                                        <ul>
-                                            @forelse($survey->choices as $choice)
-                                                <li class="radio-wrap">
 
-                                                    <input type="radio" id="choice-{{$choice->id}}"
-                                                           name="surveys[{{ $idx }}][answer]"
-                                                           value="{{ $choice->id }}"
-                                                           data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                           data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
-                                                           data-parsley-multiple="radio{{ $survey->id }}"
-                                                           data-parsley-required-message="항목을 선택해주세요.">
-                                                    <label for="choice-{{$choice->id}}">{{ $choice->question }}</label>
-                                                </li>
-                                            @empty
-                                                질문이 없습니다.
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                    <div class="radio_error_wrap{{ $survey->id }}"></div>
-                                </div>
-                                @break
-                                @case('multipleChoice')
-                                <div class="multiple-choice">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
-                                    <div class="choices">
-                                        <ul>
-                                            @forelse($survey->choices as $choice)
-                                                <li class="checkbox-wrap">
-                                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
-                                                           value="{{ $survey->id }}">
-                                                    <input type="checkbox" id="multiple-choice-{{ $choice->id }}"
-                                                           name="surveys[{{ $idx }}][answers][]"
-                                                           value="{{ $choice->id }}"
-                                                           data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                           data-parsley-errors-container=".checkbox_error_wrap{{ $survey->id }}"
-                                                           data-parsley-multiple="checkbox{{ $survey->id }}"
-                                                           data-parsley-required-message="항목을 선택해주세요.">
-                                                    <label
-                                                        for="multiple-choice-{{ $choice->id }}">{{ $choice->question }}</label>
-                                                </li>
-                                            @empty
-                                                질문이 없습니다.
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                    <div class="checkbox_error_wrap{{ $survey->id }}"></div>
-                                </div>
-                                @break
-                                @case('shortAnswer')
-                                <div class="short-answer">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
-                                    <div class="answers">
-                                        <input type="text" id="short-answer-response" name="surveys[{{ $idx }}][answer]"
-                                               class="short-answer-response" placeholder="답변을 입력하세요."
-                                               data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                               data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}"
-                                               data-parsley-required-message="답변을 입력하세요.">
-                                    </div>
-                                    <div class="short_answer_error_wrap{{ $survey->id }}"></div>
-                                </div>
-                                @break
-                                @case('address')
-                                <div class="address-question">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
-                                    <div class="answers">
-                                        <div class="address-form-wrap">
-                                            <input type="button" class="btn-address" value="주소검색"
-                                                   data-index="{{ $idx }}">
-                                            <input type="text" id="address" name="surveys[{{ $idx }}][address]"
-                                                   class="address"
-                                                   data-index="{{ $idx }}"
-                                                   readonly="readonly"
-                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                   data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
-                                                   data-parsley-required-message="주소를 검색해주세요.">
-                                            <input type="text" id="address-detail"
-                                                   name="surveys[{{ $idx }}][address-detail]"
-                                                   class="address-detail"
-                                                   placeholder="상세주소를 입력하세요."
-                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                    data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
-                                                   data-parsley-required-message="상세주소를 입력하세요">
+                    @if($surveys->isNotEmpty())
+                        <section class="additional-information">
+                            <h3>추가 정보 입력</h3>
+                            @foreach($surveys as $idx => $survey)
+                                @switch($survey->type)
+                                    @case('singleChoice')
+                                    <div class="multiple-single-choice">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                               value="{{ $survey->id }}">
+                                        {{-- 값 초기화 --}}
+                                        <input type="hidden" name="surveys[{{ $idx }}][answer]" value="">
+                                        <div class="choices">
+                                            <ul>
+                                                @forelse($survey->choices as $choice)
+                                                    <li class="radio-wrap">
+
+                                                        <input type="radio" id="choice-{{$choice->id}}"
+                                                               name="surveys[{{ $idx }}][answer]"
+                                                               value="{{ $choice->id }}"
+                                                               data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                               data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
+                                                               data-parsley-multiple="radio{{ $survey->id }}"
+                                                               data-parsley-required-message="항목을 선택해주세요.">
+                                                        <label
+                                                            for="choice-{{$choice->id}}">{{ $choice->question }}</label>
+                                                    </li>
+                                                @empty
+                                                    질문이 없습니다.
+                                                @endforelse
+                                            </ul>
                                         </div>
-                                        <div class="address_answer_error_wrap{{ $survey->id }} address-error"></div>
+                                        <div class="radio_error_wrap{{ $survey->id }}"></div>
                                     </div>
-                                </div>
-                                @break
-                                @case('file')
-                                <div class="file-question">
-                                    <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em></h4>
-                                    <input type="hidden" name="surveys[{{ $idx }}][survey_id]" value="{{ $survey->id }}">
-                                    <div class="answers">
-                                        <div class="file-wrap">
-                                            <input type="file"
-                                                   id="file-upload"
-                                                   class="upload-hidden"
-                                                   name="surveys[{{ $idx }}][file]"
-                                                   accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
+                                    @break
+                                    @case('multipleChoice')
+                                    <div class="multiple-choice">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                               value="{{ $survey->id }}">
+                                        {{-- 값 초기화 --}}
+                                        <input type="hidden" id="multiple-choice-{{ $choice->id }}"
+                                               name="surveys[{{ $idx }}][answers]" value="">
+                                        <div class="choices">
+                                            <ul>
+                                                @forelse($survey->choices as $choice)
+                                                    <li class="checkbox-wrap">
+                                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                                               value="{{ $survey->id }}">
+                                                        <input type="checkbox" id="multiple-choice-{{ $choice->id }}"
+                                                               name="surveys[{{ $idx }}][answers][]"
+                                                               value="{{ $choice->id }}"
+                                                               data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                               data-parsley-errors-container=".checkbox_error_wrap{{ $survey->id }}"
+                                                               data-parsley-multiple="checkbox{{ $survey->id }}"
+                                                               data-parsley-required-message="항목을 선택해주세요.">
+                                                        <label
+                                                            for="multiple-choice-{{ $choice->id }}">{{ $choice->question }}</label>
+                                                    </li>
+                                                @empty
+                                                    질문이 없습니다.
+                                                @endforelse
+                                            </ul>
+                                        </div>
+                                        <div class="checkbox_error_wrap{{ $survey->id }}"></div>
+                                    </div>
+                                    @break
+                                    @case('shortAnswer')
+                                    <div class="short-answer">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                               value="{{ $survey->id }}">
+                                        <div class="answers">
+                                            <input type="text" id="short-answer-response"
+                                                   name="surveys[{{ $idx }}][answer]"
+                                                   class="short-answer-response" placeholder="답변을 입력하세요."
+                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                   data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}"
+                                                   data-parsley-required-message="답변을 입력하세요.">
+                                        </div>
+                                        <div class="short_answer_error_wrap{{ $survey->id }}"></div>
+                                    </div>
+                                    @break
+                                    @case('address')
+                                    <div class="address-question">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                               value="{{ $survey->id }}">
+                                        <div class="answers">
+                                            <div class="address-form-wrap">
+                                                <input type="button" class="btn-address" value="주소검색"
+                                                       data-index="{{ $idx }}">
+                                                <input type="text" id="address" name="surveys[{{ $idx }}][address]"
+                                                       class="address"
+                                                       data-index="{{ $idx }}"
+                                                       readonly="readonly"
+                                                       data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                       data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
+                                                       data-parsley-required-message="주소를 검색해주세요.">
+                                                <input type="text" id="address-detail"
+                                                       name="surveys[{{ $idx }}][address_detail]"
+                                                       class="address-detail"
+                                                       placeholder="상세주소를 입력하세요."
+                                                       data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                       data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"
+                                                       data-parsley-required-message="상세주소를 입력하세요">
+                                            </div>
+                                            <div class="address_answer_error_wrap{{ $survey->id }} address-error"></div>
+                                        </div>
+                                    </div>
+                                    @break
+                                    @case('file')
+                                    <div class="file-question">
+                                        <h4>{{ $survey->question }} <em>{{ $survey->is_required ? '(필수)' : null}}</em>
+                                        </h4>
+                                        <input type="hidden" name="surveys[{{ $idx }}][survey_id]"
+                                               value="{{ $survey->id }}">
+                                        <div class="answers">
+                                            <div class="file-wrap">
+                                                <input type="file"
+                                                       id="file-upload"
+                                                       class="upload-hidden"
+                                                       name="surveys[{{ $idx }}][file]"
+                                                       accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
-                                                   data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
-                                                   data-parsley-errors-container=".file_error_wrap{{ $survey->id }}"
-                                                   data-parsley-required-message="파일을 업로드해주세요.">
-                                            <label for="file-upload" class="btn-file-upload">파일선택</label>
-                                            <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
-                                                   class="file-name"
-                                                   value="파일을 업로드해주세요." disabled="disabled">
-                                        </div>
-                                        <div class="file_error_wrap{{ $survey->id }}"></div>
-                                        <div class="tips">
-                                            <p>
-                                                ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
-                                                ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx, xls,
-                                                hwp /
-                                                이미지파일 :
-                                                JPG, JPEG, PNG, GIF / 압축파일 : zip, alz, rar
-                                            </p>
+                                                       data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
+                                                       data-parsley-errors-container=".file_error_wrap{{ $survey->id }}"
+                                                       data-parsley-required-message="파일을 업로드해주세요.">
+                                                <label for="file-upload" class="btn-file-upload">파일선택</label>
+                                                <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
+                                                       class="file-name"
+                                                       value="파일을 업로드해주세요." disabled="disabled">
+                                            </div>
+                                            <div class="file_error_wrap{{ $survey->id }}"></div>
+                                            <div class="tips">
+                                                <p>
+                                                    ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
+                                                    ※ 첨부가능 확장자 : 문서파일 : Key, PDF, Doc, PPT, Pages, pptx, docx, xlsx,
+                                                    xls,
+                                                    hwp /
+                                                    이미지파일 :
+                                                    JPG, JPEG, PNG, GIF / 압축파일 : zip, alz, rar
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                @break
-                                @default
-                                <p>default</p>
-                            @endswitch
-                        @empty
-                            <p class="additional-none">추가 정보 입력이 필요하지 않은 강의입니다.</p>
-                        @endforelse
-                    </section>
+                                    @break
+                                    @default
+                                    <p>default</p>
+                                @endswitch
+                            @endforeach
+                        </section>
+                    @endif
+
                     <section class="payment-information">
                         <h3>결제정보</h3>
                         <table>
                             <tr>
                                 <th>결제금액</th>
                                 <td><em>{{ $program->ticket->is_free ? '무료' : $program->ticket->price.'원' }}</em></td>
-                            </tr>
-                            <tr>
-                                <th>결제방식</th>
-                                <td>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="credit" name="payment-method"
-                                               class="payment-method" value="신용카드">
-                                        <label for="credit">신용카드</label>
-                                    </div>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="bank-transform" name="payment-method"
-                                               class="payment-method" value="계좌이체">
-                                        <label for="bank-transform">실시간 계좌이체</label>
-                                    </div>
-                                    <div class="radio-wrap">
-                                        <input type="radio" id="deposit" name="payment-method"
-                                               class="payment-method" value="무통장입금">
-                                        <label for="deposit">무통장입금(가상계좌)</label>
-                                    </div>
-                                </td>
                             </tr>
                         </table>
                     </section>
@@ -306,10 +314,14 @@
                             </ul>
                         </div>
                     </section>
+
                     <section class="btn-wrap">
-                        <button class="make-pay">결제하기</button>
-                        <button class="cancel">취소</button>
+                        <button type="submit" class="btn-confirm">
+                            {{ $program->ticket->is_free ? '신청하기' : '결제하기' }}
+                        </button>
+                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소</a>
                     </section>
+
                 </div>
             </form>
         </div>

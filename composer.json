@@ -9,13 +9,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-curl": "*",
         "doctrine/dbal": "^2.10.0",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^6.18.35",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^1.2",
-        "ext-curl": "*"
+        "laravel/ui": "^1.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

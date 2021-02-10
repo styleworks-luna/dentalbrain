@@ -101,7 +101,6 @@
 
         .lecture-title
             +padding(top 13px)
-            +ellipse(null,2)
             font-weight: bold
             font-size: 24px
             line-height: 1.21
@@ -313,6 +312,55 @@ h3
             td
                 +padding(left 23px)
 
+// lecture payment, result blade에 적용
+.additional-information-list
+    +margin(top 60px)
+
+    .information-answers-list
+        +margin(top 18px)
+        +border(2px solid $gray-900, top)
+
+        .information-answers
+            +padding(30px 40px)
+            +border(1px solid $border-color-base, bottom)
+
+            h4
+                font-weight: bold
+                font-size: 16px
+
+                em
+                    font-weight: normal
+                    font-size: 14px
+                    color: $red
+
+
+        .for-padding
+            +padding(bottom 35px)
+
+        .answer li, p
+            +margin(top 20px)
+            +padding(left 30px)
+            position: relative
+            font-size: 16px
+
+            em
+                color: $page-color
+
+        .answer .short-answer
+            +margin(top 13px)
+
+            &::before
+                top: 13px
+
+        .answer li::before,
+        .answer p::before
+            +size(2px, 2px)
+            +background(null, null, null, $gray-200)
+            position: absolute
+            top: 7px
+            left: 20px
+            content: ''
+
 .agree
     +margin(top 60px)
 
@@ -358,24 +406,28 @@ h3
             text-decoration: underline
 
 .btn-wrap
-    +margin(top 50px)
-    text-align: center
+    +size(330px)
+    +margin(50px auto 0)
+    overflow: hidden
 
-    .make-pay
+    *[class^="btn-"]
+        +size(160px, 50px)
+        float: left
+        font-size: 16px
+        line-height: 50px
+
+        &:last-child
+            +margin(right 0)
+
+    .btn-confirm
         +btn(purple-fill)
-        +size(160px, 50px)
-        display: inline-block
+        +margin(right 10px)
         color: $white
-        font-size: 16px
 
-    .cancel
+    .btn-cancel
         +btn()
-        +size(160px, 50px)
-        +margin(left 8px)
         +background(null, null, null, $gray-700)
-        display: inline-block
         color: $white
-        font-size: 16px
 
 .form_search
     +background(null, null, null, $gray-700)
