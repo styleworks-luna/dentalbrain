@@ -75,7 +75,7 @@
                         <input type="radio" id="pay" value="0"
                                v-model="is_free">
                         <label for="pay" class="mr-3">유료</label>
-                        <input type="number"
+                        <input type="text"
                                class="form-control"
                                placeholder="신청 금액 입력"
                                :disabled="is_free == 1"
