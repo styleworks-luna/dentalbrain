@@ -406,24 +406,28 @@ h3
             text-decoration: underline
 
 .btn-wrap
-    +margin(top 50px)
-    text-align: center
+    +size(330px)
+    +margin(50px auto 0)
+    overflow: hidden
+
+    *[class^="btn-"]
+        +size(160px, 50px)
+        float: left
+        font-size: 16px
+        line-height: 50px
+
+        &:last-child
+            +margin(right 0)
 
     .btn-confirm
         +btn(purple-fill)
-        +size(160px, 50px)
-        display: inline-block
+        +margin(right 10px)
         color: $white
-        font-size: 16px
 
-    .cancel
+    .btn-cancel
         +btn()
-        +size(160px, 50px)
-        +margin(left 8px)
         +background(null, null, null, $gray-700)
-        display: inline-block
         color: $white
-        font-size: 16px
 
 .form_search
     +background(null, null, null, $gray-700)
