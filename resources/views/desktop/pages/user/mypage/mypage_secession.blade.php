@@ -70,7 +70,9 @@
                                            placeholder="사유를 입력해주세요"
                                            readonly="true"
                                            data-parsley-required="false"
-                                           data-parsley-required-message="※ 사유를 입력해주세요.">
+                                           data-parsley-required-message="※ 사유를 입력해주세요."
+                                           data-parsley-errors-container=".reason-error-wrap">
+                                    <div class="reason-error-wrap"></div>
                                 </div>
                             </td>
                         </tr>

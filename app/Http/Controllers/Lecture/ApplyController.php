@@ -47,6 +47,20 @@ class ApplyController extends Controller
         try {
             DB::beginTransaction();
 
+            if ($program->surveys()->exists()) {
+                if ($this->validateSurveyAnswers($surveyDataSet) == false) {
+                    // Validation Failed.
+
+                    DB::rollback();
+                    return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
+                }
+
+                foreach ($surveyDataSet as $idx => $data) {
+                    $survey = Survey::find($data['survey_id']);
+                    $this->storeSurveyAnswer($survey, $data);
+                }
+            }
+
             $programStudent = ProgramStudent::updateOrCreate([
                 'ticket_id' => $program->ticket->id,
                 'user_id' => Auth::id(),
@@ -58,32 +72,13 @@ class ApplyController extends Controller
                 'applied_at' => now(),
             ]);
 
-            if ($program->surveys()->doesntExist()) {
-
-                DB::commit();
-                return redirect()->route('lectures.payment.form', $program);
-            }
-
-            if ($this->validateSurveyAnswers($surveyDataSet) == false) {
-                // Validation Failed.
-
-                DB::rollback();
-                return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
-            }
-
-
-            foreach ($surveyDataSet as $idx => $data) {
-                $survey = Survey::find($data['survey_id']);
-                $this->storeSurveyAnswer($survey, $data);
-            }
-
-            if ($program->is_free) {
+            if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 $programStudent->expired_at = now()->addDays($program->ticket->term);
                 $programStudent->save();
 
                 DB::commit();
-                return redirect()->route('lectures.result');
+                return redirect()->route('lectures.result', $program->id);
             }
 
             DB::commit();

@@ -184,7 +184,7 @@
                 </section>
 
                 <section class="btn-wrap">
-                    <button class="btn-confirm">확인</button>
+                    <a href="{{ route('lectures.detail',$program->id) }}" class="btn-confirm">확인</a>
                 </section>
             </div>
         </div>
