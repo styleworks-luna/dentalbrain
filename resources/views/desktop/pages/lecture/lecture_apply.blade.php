@@ -311,8 +311,8 @@
                     </section>
 
                     <section class="btn-wrap">
-                        <button class="btn-confirm">결제하기</button>
-                        <button class="cancel">취소</button>
+                        <button type="submit" class="btn-confirm">결제하기</button>
+                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소</a>
                     </section>
 
                 </div>
