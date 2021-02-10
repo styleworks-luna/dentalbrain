@@ -37,7 +37,8 @@
                                 @endif
 
                                 <p class="lecture-subject">
-                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
+                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}
+                                </p>
                             </div>
                             <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
@@ -50,14 +51,18 @@
                                     <tr>
                                         <th>강의일시</th>
                                         <td>
-                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
-                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                            <p class="lecture-length">
+                                                {{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>강의장소</th>
                                         <td>
-                                            <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                            <p class="lecture-length">
+                                                {{ $program->place->address.' , '.$program->place->address_detail }}
+                                            </p>
                                         </td>
                                     </tr>
                                 @endif
