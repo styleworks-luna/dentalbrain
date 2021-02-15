@@ -1,7 +1,7 @@
 <template>
     <div>
-    <lecture-order></lecture-order>
-    <lecture-list></lecture-list>
+        <lecture-order></lecture-order>
+        <lecture-list></lecture-list>
     </div>
 </template>
 
