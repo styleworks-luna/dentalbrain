@@ -8,18 +8,17 @@
 
 namespace App\Http\Controllers\Admin\Banner;
 
-use App\Models\Manage\BannerCategory;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Manage\Banner;
+use App\Models\Manage\BannerCategory;
 use App\Services\File\DesktopFile;
 use App\Services\File\MobileFile;
+use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
-use App\Services\ViewCount\ViewCountImpl;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Services\Search\SearchService;
-use DateTime;
 
 class BannerController extends Controller
 {
@@ -32,12 +31,39 @@ class BannerController extends Controller
         ]);
     }
 
+    private function search(Request $request)
+    {
+        $this->search = new SearchService(Banner::query());
+
+        $this->search->addKeyword('link', $request->keyword);
+        $this->addCategoryDate($request->date);
+        $this->addPositionCategoryId($request->category_id);
+        $result = $this->search->search()->with('categories')->orderBy('id', 'desc')->paginate('20');
+
+        return $result;
+    }
+
+    private function addCategoryDate(string $date = null)
+    {
+        if (isset($date) && DateTime::createFromFormat('Y-m-d', $date) !== false) {
+            $this->search->addCategory('started_at', '<=', $date);
+            $this->search->addCategory('ended_at', '>=', $date);
+        }
+    }
+
+    private function addPositionCategoryId(string $category_id = null)
+    {
+        if (isset($category_id) && is_numeric($category_id)) {
+            $this->search->addCategory('category_id', '=', $category_id);
+        }
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'category_id' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
-            'title' => ['string','nullable'],
+            'title' => ['string', 'nullable'],
             'link' => ['required'],
             'mobile_file_id' => ['required ', ' numeric'],
             'desktop_file_id' => ['required', 'numeric'],
@@ -64,7 +90,7 @@ class BannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        $banner->load('desktopFile','mobileFile');
+        $banner->load('desktopFile', 'mobileFile');
 
         return response()->json([
             'banner' => $banner
@@ -128,39 +154,8 @@ class BannerController extends Controller
         return $statusChange->statusChange($banner, 'is_open');
     }
 
-
-    private function search(Request $request){
-        $this->search = new SearchService(Banner::query());
-
-        $this->search->addKeyword('link',$request->keyword);
-        $this->addCategoryDate($request->date);
-        $this->addPositionCategoryId($request->category_id);
-        $result = $this->search->search()->with('categories')->orderBy('id','desc')->paginate('20');
-
-        return $result;
-    }
-
-    private function addCategoryDate(string $date = null){
-        if(isset($date) && DateTime::createFromFormat('Y-m-d', $date) !== false){
-            $this->search->addCategory('started_at','<=',$date);
-            $this->search->addCategory('ended_at','>=',$date);
-        }
-    }
-
-    private function addPositionCategoryId(string $category_id = null){
-        if(isset($category_id) && is_numeric($category_id)){
-            $this->search->addCategory('category_id','=',$category_id);
-        }
-    }
-
-    public function redirectToLink(Banner $banner)
+    public function getBannerCategory()
     {
-        $viewCountIncrement = new ViewCountImpl();
-        $viewCountIncrement->viewCountAdd($banner);
-        return redirect($banner->link);
-    }
-
-    public function getBannerCategory(){
         return response()->json([
             'category' => BannerCategory::all()
         ]);

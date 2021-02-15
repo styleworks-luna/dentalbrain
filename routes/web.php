@@ -62,9 +62,9 @@ Route::get('find', function () {
 //이름과 전화번호로 아이디 찾기
 Route::post('findIdWithNameAndPhone', 'Account\FindIdController@findIdWithNameAndPhone')->name('findIdWithNameAndPhone');
 // 패스워드 변경 이메일 보내기
-Route::post('sendPasswordMail','Account\FindPasswordController@sendPasswordMail')->name('sendPasswordMail');
+Route::post('sendPasswordMail', 'Account\FindPasswordController@sendPasswordMail')->name('sendPasswordMail');
 //관리자 회원정보 상세 패스워드 변경 이메일 보내기
-Route::post('sendPasswordMailWithUser/{user}','Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
+Route::post('sendPasswordMailWithUser/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
 
 //회사 소개 (임시)
 Route::get('introduce', function () {
@@ -190,7 +190,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::get('bizppurio','Test\TestController@getToken')->name('getToken');
+    Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
@@ -208,6 +208,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
     });
+
+    Route::group(['prefix' => 'banners', 'as' => 'banners.'], function () {
+        Route::group(['prefix' => '{banner}'], function () {
+            Route::get('/', 'Main\BannerController@redirectToLink')->name('redirect');
+        });
+    });
+
 
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');

@@ -96,7 +96,7 @@
                     <div class="swiper-wrapper">
                         @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
+                                <a href="{{ route('api.banners.redirect',$bottom->id)}}">
                                     <img src="{{ $bottom->desktopFile->url }}" alt="하단배너">
                                 </a>
                             </div>
