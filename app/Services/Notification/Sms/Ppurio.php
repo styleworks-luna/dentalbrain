@@ -9,13 +9,13 @@ class Ppurio{
     public function getToken() {
         $client = new Client();
         $authorize = base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'));
-        $res = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
+        $result = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
             'headers' => [
                 'Authorization' => 'Basic '.$authorize,
                 'Content-Type' => 'application/json',
             ]
         ]);
-        return $res;
+        return $result;
     }
 
     public function checkVerification(Request $request){
@@ -29,7 +29,7 @@ class Ppurio{
         $data['to'] = $request->phone;
         $data['content'] = Str::random('6');
 
-        $res = $client->request('POST','https://api.bizppurio.com/v3/message',[
+        $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
                'Authorization' => $token['type']." ".$token['accesstoken'],
                'Content-Type' => 'application/json',
@@ -43,5 +43,7 @@ class Ppurio{
                 'phone' => $request->phone
             ]
         ]);
+
+        return $result;
     }
 }
