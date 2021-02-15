@@ -22,8 +22,10 @@ class ProgramController extends Controller
                 $query->where('user_id',Auth::id());
             }
         ]);
+        //TODO: payments 추가해야됨. 카드 새로 발급받은걸로
 
         $data = $this->setOrder($data,$request->order);
+        //var_dump($data->get()->toArray());
         return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
