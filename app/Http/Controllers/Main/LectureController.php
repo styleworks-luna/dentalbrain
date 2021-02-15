@@ -21,20 +21,8 @@ class LectureController extends Controller
 
         $data = $v->validate();
 
-        // 기본값.
-        $data['order_by'] = $data['order_by'] ?? 'newest';
 
-        $programs = Program::public()
-            ->where('major_category_id', '=', $data['category_id']);
-
-        if ($data['order_by'] == 'popular') {
-            // TODO: 인기순 정렬 만들기.
-            $programs = $programs->inRandomOrder();
-        } elseif ($data['order_by'] == 'newest') {
-            $programs = $programs->orderByDesc('created_at');
-        }
-
-        $programs = $programs->paginate($data['per_page']);
+        $programs = Program::public($data['category_id'], $data['order_by'])->paginate($data['per_page']);
 
         return response()->json(
             $programs

@@ -16,8 +16,10 @@ class MainController extends Controller
         $data['slides'] = Program::main()->take(4)->get();
         $data['bar'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BAR)->first();
         $data['bottomSlides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BOTTOM)->get();
+        $data['recommends'] = Program::public(null, 'popular')->take(10)->get();
         $data['notices'] = Notice::public()->take(3)->get();
         $data['faqs'] = Faq::public()->take(3)->get();
+
         return view(viewPrefix() . 'index', $data);
     }
 }

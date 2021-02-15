@@ -24,13 +24,13 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('lectures.detail',$slide->id) }}">
-                                    <img src="{{ $slide->thumbnail->url }}" alt="광고">
+                                    <img src="{{ $slide->thumbnail->url }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
                         @empty
                             <div class="swiper-slide">
                                 <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
                         @endforelse
@@ -49,11 +49,11 @@
             <section class="ad">
                 @if($bar)
                     <a href="{{ $bar->link }}">
-                        <img src="{{ $bar->desktopFile->url }}" alt="광고">
+                        <img src="{{ $bar->desktopFile->url }}" alt="바배너">
                     </a>
                 @else
                     <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
                     </a>
                 @endif
             </section>
@@ -62,21 +62,30 @@
                 <h2>추천강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
-                        @forelse($bottomSlides as $bottom)
+                        @forelse($recommends as $recommend)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
-                                    <img src="{{ $bottom->desktopFile->url }}" alt="광고">
+                                <a href="{{ route('lectures.detail',$recommend->id) }}">
+                                    <img src="{{ $recommend->thumbnail->url }}" alt="추천배너">
                                 </a>
                             </div>
                         @empty
-                            @for($i = 0; $i < 7; $i++)
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
-                                    </a>
-                                </div>
-                            @endfor
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
                         @endforelse
+
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
@@ -85,26 +94,21 @@
             <section class="bottom-banner">
                 <div class="bottom-swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="광고">
-                            </a>
-                        </div>
+                        @forelse($bottomSlides as $bottom)
+                            <div class="swiper-slide">
+                                <a href="{{ route('api.admin.banners.redirectToLink',['banner'=>$bottom->id])}}">
+                                    <img src="{{ $bottom->desktopFile->url }}" alt="하단배너">
+                                </a>
+                            </div>
+                        @empty
+                            @for($i = 0; $i < 7; $i++)
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
+                                    </a>
+                                </div>
+                            @endfor
+                        @endforelse
                     </div>
                 </div>
                 <div class="bottom-swiper-button-prev swiper-button-prev-common"></div>

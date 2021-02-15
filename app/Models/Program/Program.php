@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static Builder main ()
- * @method static Builder public ()
+ * @method static Builder public (string|int|null $category = null, string|null $orderBy = 'newest')
  */
 class Program extends Model
 {
@@ -152,12 +152,24 @@ class Program extends Model
             ->with('thumbnail:id,url')->orderByDesc('created_at');
     }
 
-    public function scopePublic(Builder $query)
+    public function scopePublic(Builder $query, $category, $orderBy)
     {
-        return $query->select(['id', 'thumbnail_id', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
+        $programs = $query->select(['id', 'thumbnail_id', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free']);
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free'])
+            ->withCount('students');
+
+        if ($category !== null) {
+            $programs = $programs->where('major_category_id', '=', $category);
+        }
+
+        if ($orderBy == 'popular') {
+            $programs = $programs->orderByDesc('students_count');
+
+        } else {
+            $programs = $programs->orderByDesc('created_at');
+        }
+
+        return $programs;
     }
-
-
 }
