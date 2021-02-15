@@ -34,6 +34,12 @@ export default {
             method: 'delete'
         });
     },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/lecture/offline/${id}`,
+            method: 'patch'
+        });
+    },
     getStudentsData(id) {
         return Send({
             url: `/api/admin/lecture/offline/${id}/students`,

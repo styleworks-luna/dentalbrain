@@ -58,7 +58,7 @@
                             수정</router-link>
                         <button-open :isOpen="slotProps.row.is_open"
                                      class="btn-danger text-white border-danger"
-                                     @setStatus="handleSetStudent(slotProps.row.id)"></button-open>
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
             </table-grid>
@@ -165,6 +165,12 @@ export default {
             }).catch(err => {
                 this.lectures = [];
             });
+        },
+        handleSetStatus(id) {
+            Offline.setStatus(id).then(res => {
+                this.getData();
+                alert('수정되었습니다.');
+            })
         },
         handleSetStudent(id) {
             Offline.setStudent(id).then(res => {
