@@ -15,8 +15,8 @@ return [
 
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
-    'after' => 'The :attribute must be a date after :date.',
-    'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
+    'after' => ':attribute 은 :date 보다 늦어야 합니다.',
+    'after_or_equal' => ':attribute 은 :date 보다 늦거나 같아야 합니다.',
     'alpha' => 'The :attribute may only contain letters.',
     'alpha_dash' => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num' => 'The :attribute may only contain letters and numbers.',
@@ -96,7 +96,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => 'The :attribute field is required.',
+    'required' => ':attribute 를 작성해야 합니다.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => 'The :attribute field is required when :values is present.',
@@ -115,7 +115,7 @@ return [
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'The :attribute format is invalid.',
+    'url' => ':attribute 형식이 맞지 않습니다.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
     /*
@@ -133,6 +133,23 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'login_id' => [
+            'required' => '※ 아이디를 입력해주세요.'
+        ],
+        'password' => [
+            'required' => '※ 비밀번호를 입력해주세요.'
+        ],
+        'thumbnail_id' => [
+            'required' => '대표 썸네일을 추가하셔야 합니다.'
+        ],
+        'major_category_id' => [
+            'required' => '대분류를 설정해 주세요.'
+        ],
+        'minor_category_id' => [
+            'required' => '소분류를 설정해 주세요.'
+        ]
+
+
     ],
 
     /*
@@ -146,6 +163,16 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'content' => '내용',
+        'title' => '제목',
+        'running_time' => '강의 시간',
+        'lectures.*.url' => '강의 URL',
+        'lectures.*.title' => '강의 제목',
+        '*.question' => '질문',
+        '*.choices.*.question' => '선택 항목',
+        'question'=> '질문',
+        'answer'=> '답변',
+    ],
 
 ];
