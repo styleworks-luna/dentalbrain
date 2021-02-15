@@ -61,6 +61,12 @@ class OnlineProgramController extends Controller
         }
     }
 
+    public function changeOpen(Request $request, Program $program)
+    {
+        $this->onlineConcrete->changeOpenStatus($program);
+        return response()->json(['is_open' => $program->is_open]);
+    }
+
     public function students(Program $program)
     {
         return $this->onlineConcrete->getStudents($program);

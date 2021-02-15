@@ -28,6 +28,41 @@ class OfflineProgramController extends Controller
         ]);
     }
 
+    private function search(Request $request)
+    {
+        $this->search = new SearchService(Program::query());
+
+        $this->search->addKeyword('title', $request->keyword);
+        $this->addMajorCategoryId($request);
+        $this->addMinorCategoryId($request);
+
+        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+            ->with('place:id,program_id,started_at,ended_at')
+            ->withCount('students')->orderByDesc('id')->paginate('10');
+
+        return $search;
+    }
+
+    private function addMajorCategoryId(Request $request)
+    {
+        if (isset($request->major_category_id) && is_numeric($request->major_category_id)) {
+            $this->search->addCategory('major_category_id', '=', $request->major_category_id);
+        }
+    }
+
+    private function addMinorCategoryId(Request $request)
+    {
+        if (isset($request->minor_category_id) && is_numeric($request->minor_category_id)) {
+            $this->search->addCategory('minor_category_id', '=', $request->minor_category_id);
+        }
+    }
+
+    public function changeOpen(Request $request, Program $program)
+    {
+        $this->offlineConcrete->changeOpenStatus($program);
+        return response()->json(['is_open' => $program->is_open]);
+    }
+
     public function students(Program $program)
     {
         return $this->offlineConcrete->getStudents($program);
@@ -106,31 +141,5 @@ class OfflineProgramController extends Controller
         return response()->json([
             'msg' => '오프라인 강의가 수정되었습니다.',
         ]);
-    }
-
-    private function search(Request $request){
-        $this->search = new SearchService(Program::query());
-
-        $this->search->addKeyword('title',$request->keyword);
-        $this->addMajorCategoryId($request);
-        $this->addMinorCategoryId($request);
-
-        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
-            ->with('place:id,program_id,started_at,ended_at')
-            ->withCount('students')->orderByDesc('id')->paginate('10');
-
-        return $search;
-    }
-
-    private function addMajorCategoryId(Request $request){
-        if(isset($request->major_category_id) && is_numeric($request->major_category_id)){
-            $this->search->addCategory('major_category_id','=',$request->major_category_id);
-        }
-    }
-
-    private function addMinorCategoryId(Request $request){
-        if(isset($request->minor_category_id) && is_numeric($request->minor_category_id)){
-            $this->search->addCategory('minor_category_id','=',$request->minor_category_id);
-        }
     }
 }
