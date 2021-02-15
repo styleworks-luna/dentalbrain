@@ -68,7 +68,6 @@ class TestController extends Controller
 
     public function checkVerification(Request $request){
         $sms = new Ppurio();
-        $request->phone = '01026908173';
         return $sms->checkVerification($request);
     }
 }
