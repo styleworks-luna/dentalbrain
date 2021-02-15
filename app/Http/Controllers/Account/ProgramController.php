@@ -23,9 +23,8 @@ class ProgramController extends Controller
             }
         ]);
 
-        $this->setOrder($data,$request->order);
-
-        return response()->json(['result' => $data->get()->toArray()]);
+        $data = $this->setOrder($data,$request->order);
+        return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
 
