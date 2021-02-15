@@ -190,7 +190,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
+    Route::get('bizppurio','Test\TestController@getToken')->name('getToken');
+    Route::post('checkVerification','Test\TestController@checkVerification')->name('checkVerification');
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
