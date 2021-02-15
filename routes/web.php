@@ -163,7 +163,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 });
 
 // 관리자
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
     Route::view('/', 'admin.index');
     Route::view('{any}', 'admin.index');
 
@@ -219,7 +219,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
             Route::post('file', 'Admin\FileController@uploadFile')->name('file');
             Route::post('image', 'Admin\FileController@uploadImage')->name('image');
