@@ -242,6 +242,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
             Route::get('categories', 'Admin\OnlineProgramController@getCategories')->name('categories');
+            Route::post('upload', 'Admin\FileController@uploadContent')->name('upload');
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
                 Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
