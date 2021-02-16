@@ -193,6 +193,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
     Route::post('checkVerification', 'Test\TestController@checkVerification')->name('checkVerification');
 
+
+    Route::get('lectures', 'Account\ProgramController@index')->name('lectures');
+
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
