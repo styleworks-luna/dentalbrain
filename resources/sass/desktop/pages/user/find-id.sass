@@ -4,12 +4,11 @@
 @import '@sass/components/_input.sass'
 @import '@sass/components/_button.sass'
 
-.find
-    +margin(top 240px bottom 320px)
-
-    .container
-        +size(880px)
-        overflow: hidden
+.content
+    +size(880px)
+    +margin(0 auto)
+    +padding(240px 0 320px)
+    overflow: hidden
 
     input[type="text"],
     input[type="password"]
@@ -32,10 +31,35 @@
         font-size: 16px
 
     .find-form-common
-        +size(400px, 300px)
+        +size(400px, min 300px)
         +margin(top 10px)
         +border(1px solid $page-color)
         +box-sizing(border-box)
+
+    .message-wrap
+        .error
+            +margin(top 10px)
+            +padding(left 20px)
+            font-size: 12px
+            line-height: 15px
+            color: $red
+
+        .success
+            +margin(top 20px)
+            font-size: 14px
+            line-height: 18px
+            color: $gray-200
+
+            strong
+                color: $page-color
+
+        .send
+            +margin(top 20px)
+            font-weight: bold
+            font-size: 12px
+            line-height: 12px
+            color: $gray-200
+            white-space: nowrap
 
     .find-id
         +margin(right 80px)
@@ -54,7 +78,7 @@
         float: left
 
         .find-password-form
-            +padding(80px 50px)
+            +padding(80px 50px 50px)
 
             .email
                 +margin(top 16px)
