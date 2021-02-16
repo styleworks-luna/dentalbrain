@@ -12,14 +12,19 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $data = ProgramStudent::select('user_id','payment_id','ticket_id','expired_at')->where('user_id',Auth::id())
-            ->with([
-                'payment' => function($query){
-                    $query->select('id','totalAmount','status','method','receiptUrl','created_at','deleted_at');
-                },
-                'ticket.program:id,title,is_online'
-            ])->get()->toArray();
-        
+
+        $data = Payment::query()->select('id','totalAmount','status','method','receiptUrl','created_at','deleted_at')
+            ->with(['students'=>function($query){
+                $query->select('id','payment_id','ticket_id','user_id','expired_at');
+                $query->with(['ticket' => function($query){
+                    $query->select('id','program_id');
+                    $query->with('program:id,title,is_online');
+                }]);
+            }])
+            ->whereHas('students',function($query){
+                $query->where('user_id',Auth::id());
+            })->get()->toArray();
+
         return view(viewPrefix() . 'pages.user.mypage.mypage_payment', ['data' => $data]);
     }
 }
