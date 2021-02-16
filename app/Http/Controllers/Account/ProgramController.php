@@ -26,6 +26,7 @@ class ProgramController extends Controller
                 $query->select('user_id','payment_id','expired_at');
                 $query->where('user_id',Auth::id());
             },
+            'place:program_id,sido,gugun,started_at,ended_at',
             'students.payment:id,totalAmount'
         ]);
 
