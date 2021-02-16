@@ -41,7 +41,6 @@ class InquiryController
         ]);
         if ($validatedData['is_answer'] == 1) {
             $validatedData['answered_at'] = now();
-            Mail::to($inquiry->email)->send(new InquiryMail($inquiry));
         }
         $inquiry->update($validatedData);
 

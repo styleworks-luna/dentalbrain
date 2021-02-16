@@ -18,6 +18,7 @@ class InquiryMail extends Mailable
      * Create a new message instance.
      *
      * @return void
+     * @deprecated 2021-02-16 답변 완료 메일은 나가지 않음.
      */
     public function __construct(Inquiry $inquiry)
     {

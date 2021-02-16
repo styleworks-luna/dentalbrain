@@ -1,5 +1,9 @@
 <template>
     <table class="table table-responsive-sm table-bordered text-center">
+        <colgroup>
+            <col v-for="col in tableCol"
+                 :style="{ width: col.width }">
+        </colgroup>
         <thead>
             <tr>
                 <th v-for="col in tableCol"

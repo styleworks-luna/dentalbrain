@@ -46,13 +46,13 @@
                     <td>{{ slotProps.row.views }}</td>
                     <td>
                         <router-link :to="`/admin/banner/${slotProps.row.id}`"
-                                     class="btn btn-info mr-3">
+                                     class="btn btn-info float-left mr-2">
                             수정
                         </router-link>
-                        <button-open  class="btn btn-warning text-white  border-warning mr-3"
+                        <button-open  class="btn btn-warning text-white border-warning float-left mr-2"
                                         :isOpen="slotProps.row.is_open"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
-                        <button class="btn btn-danger" @click="destroy(slotProps.row.id)">삭제</button>
+                        <button class="btn btn-danger float-left" @click="destroy(slotProps.row.id)">삭제</button>
                     </td>
                 </template>
             </table-grid>
@@ -114,31 +114,38 @@ export default {
             return [
                 {
                     name: 'id',
-                    text: '번호'
+                    text: '번호',
+                    width: '6%'
                 },
                 {
                     name: 'category_id',
-                    text: '종류'
+                    text: '종류',
+                    width: '10%'
                 },
                 {
                     name: 'order',
-                    text: '중요도'
+                    text: '중요도',
+                    width: '8%'
                 },
                 {
                     name: 'link',
-                    text: '연결링크'
+                    text: '연결링크',
+                    width: '20%'
                 },
                 {
                     name: 'started_at',
-                    text: '표시기간'
+                    text: '표시기간',
+                    width: '25%'
                 },
                 {
                     name: 'views',
-                    text: '클릭회수'
+                    text: '클릭회수',
+                    width: '9%'
                 },
                 {
                     name: 'commend',
-                    text: '명령'
+                    text: '명령',
+                    width: '22%'
                 }
             ]
         },

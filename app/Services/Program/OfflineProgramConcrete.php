@@ -22,7 +22,7 @@ class OfflineProgramConcrete extends ProgramTemplate
     {
         $v = Validator::make($request->all()['program_place'], array_merge([
             'address' => ['required', 'string',],
-            'address_detail' => ['required', 'nullable', 'string',],
+            'address_detail' => ['nullable', 'string',],
 
             'sido' => ['required', 'string',],
             'gugun' => ['required', 'string',],

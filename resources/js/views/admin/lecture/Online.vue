@@ -42,20 +42,25 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.major_category_name }}</td>
                     <td>{{ slotProps.row.minor_category_name }}</td>
-                    <td>{{ slotProps.row.title }} </td>
+                    <td>
+                        <a :href="Helper.urlFormat(`/lectures/${slotProps.row.id}`)" target="_blank">
+                            {{ slotProps.row.title }}
+                        </a>
+                    </td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
-                                     class="btn btn-info ml-4">
+                                     class="btn btn-info ml-2">
                             보기
                         </router-link>
                     </td>
                     <td>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}`"
-                                     class="btn btn-warning text-white mr-3">
-                            수정</router-link>
+                                     class="btn btn-warning text-white float-left mr-2">
+                            수정
+                        </router-link>
                         <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger text-white border-danger"
+                                     class="btn-danger text-white border-danger float-left"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
@@ -112,27 +117,33 @@
                 return [
                     {
                         name: 'id',
-                        text: '번호'
+                        text: '번호',
+                        width: '7%'
                     },
                     {
                         name: 'category',
-                        text: '대분류'
+                        text: '대분류',
+                        width: '10%'
                     },
                     {
                         name: 'subclass',
-                        text: '소분류'
+                        text: '소분류',
+                        width: '8%'
                     },
                     {
                         name: 'title',
-                        text: '강의 제목'
+                        text: '강의 제목',
+                        width: '43%'
                     },
                     {
                         name: 'count',
-                        text: '수강현황'
+                        text: '수강현황',
+                        width: '14%'
                     },
                     {
                         name: 'control',
-                        text: '수정'
+                        text: '수정',
+                        width: '18%'
                     },
                 ]
             }

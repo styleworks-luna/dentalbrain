@@ -85,19 +85,23 @@
                 return [
                     {
                         name: 'id',
-                        text: '번호'
+                        text: '번호',
+                        width: '10%'
                     },
                     {
                         name: 'question',
-                        text: '제목'
+                        text: '제목',
+                        width: '60%'
                     },
                     {
                         name: 'created_at',
-                        text: '작성일'
+                        text: '작성일',
+                        width: '20%'
                     },
                     {
                         name: 'is_open',
                         text: '상태',
+                        width: '10%',
                         isSort: true
                     }
                 ]

@@ -15,20 +15,13 @@ class Ppurio{
                 'Content-Type' => 'application/json',
             ]
         ]);
-        return $result;
+        return response()->json(['data' => $result]);
     }
 
     public function checkVerification(Request $request){
         $client = new Client();
         $token = $this->getToken();
-
-        $data = array();
-        $data['account'] = env('PPURIO_ID');
-        $data['type'] = 'SMS';
-        $data['from'] = $request->phone;
-        $data['to'] = $request->phone;
-        $data['content'] = Str::random('6');
-
+        var_dump($token);
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
                'Authorization' => $token['type']." ".$token['accesstoken'],

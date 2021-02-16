@@ -34,6 +34,7 @@ class FindIdController extends Controller
         if(isset($user) && !empty($user)){
             return response()->json([
                 'message' => '가입 된 아이디는 "'.$user->login_id.'" 입니다.',
+                'login_id' => $user->login_id,
                 'success' => true
             ]);
         }else {

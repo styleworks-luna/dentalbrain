@@ -243,7 +243,7 @@
                 </section>
 
                 <div class="btn-wrap">
-                    <input type="button" class="btn-register btn-purple" value="가입완료">
+                    <input type="submit" class="btn-register btn-purple" value="가입완료">
                 </div>
 
                 <div class="dim"></div>
