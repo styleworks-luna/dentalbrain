@@ -20,7 +20,7 @@ class Ppurio{
 
     public function checkVerification(Request $request){
         $client = new Client();
-        $token = $this->getToken();
+        $token = $this->getToken()->getBody()->getContents();
 
         $data = array();
         $data['account'] = env('PPURIO_ID');
