@@ -46,7 +46,7 @@
                           :isRow="true"
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
-                    <button class="btn btn-info">변경하기</button>
+                    <button class="btn btn-info" @click="findPassword">변경하기</button>
                 </template>
             </single-group>
 
@@ -150,6 +150,14 @@ export default {
                 this.$router.push('/admin/user');
             })
         },
+        findPassword(e) {
+            e.target.disabled = true;
+
+            User.findPassword(this.id).then(res => {
+                e.target.disabled = false;
+                alert(res.data.message);
+            })
+        }
     }
 }
 </script>

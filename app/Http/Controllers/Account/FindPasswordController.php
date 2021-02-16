@@ -55,7 +55,7 @@ class FindPasswordController extends Controller{
             ]);
         }catch(\Exception $e){
             return response()->json([
-                'message' => '회원님의 메일로 비밀번호 재설정 안내 메일이 발송되었습니다.',
+                'message' => '오류가 발생했습니다.',
                 'success' => false
             ]);
         }
