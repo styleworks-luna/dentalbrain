@@ -68,5 +68,35 @@ class FileController extends Controller
         return Storage::download($file->path, $file->name, $headers);
     }
 
+    public function uploadContent(Request $request)
+    {
+        Validator::make($request->all(), [
+            'image' => ['required', 'image']
+        ])->validate();
+
+        $uploadedFile = $request->file('image');
+
+        $name = $uploadedFile->getClientOriginalName();
+        $extension = $uploadedFile->extension();
+        $size = $uploadedFile->getSize();
+
+        $randomName = Str::random('50') . '.' . $extension;
+
+        $path = Storage::putFileAs('public/program/images', $uploadedFile, $randomName);
+
+        $file = File::create([
+            'path' => $path,
+            'name' => $name,
+            'size' => $size,
+        ]);
+
+        $file->url = '/storage/program/images/' . $randomName;
+        $file->save();
+
+        return response()->json([
+            'file' => $file,
+        ]);
+    }
+
 }
 

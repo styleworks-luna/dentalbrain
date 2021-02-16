@@ -54,7 +54,7 @@ abstract class FileTemplate
 
     /**
      * 저장할 곳 지정.
-     * ex) 'public/banners/' . $banner->id . '/desktop/' . $fileName;
+     * ex) 'public/banners/' . $this->model->id . '/desktop/' . $fileName;
      * @param string $fileName
      * @return string
      */

@@ -61,7 +61,7 @@ async function uploadImage(image) {
     const headers = {
         'Content-type': 'multipart/form-data'
     };
-    const response = await axios.post('/api/admin/upload/image', uploadForm, {headers: headers} );
+    const response = await axios.post('/api/admin/lecture/upload', uploadForm, {headers: headers} );
     return response.data.file.url
 }
 
