@@ -67,4 +67,10 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
+    dateCompare(date) {
+        date = new Date(date);
+        let datenow = new Date();
+
+        return datenow.getTime() - date.getTime()
+    }
 };

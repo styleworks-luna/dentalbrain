@@ -2,11 +2,11 @@ import '@babel/polyfill';
 import 'es6-promise/auto';
 
 import Vue from 'vue';
-import LectureAll from '@/components/lecture/LectureAll.vue';
-import Lecture from '@/components/mypage/lecture/Lecture.vue';
 import '@/bootstrap';
 import { Helper } from '@/helper.js';
 import Pagination from 'laravel-vue-pagination';
+import LectureAll from '@/components/lecture/LectureAll.vue';
+import Lecture from '@/components/mypage/lecture/Lecture.vue';
 
 Vue.prototype.Helper = Helper;
 
