@@ -82,6 +82,17 @@ abstract class ProgramTemplate
             'minor' => $minor,
         ]);
     }
+
+    /**
+     * @param Program $program
+     * @return Program
+     */
+    function changeOpenStatus(Program $program)
+    {
+        $program->is_open = !$program->is_open;
+        $program->save();
+        return $program;
+    }
     /*
      * ========================= Validation =========================
      */
