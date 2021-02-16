@@ -31,6 +31,7 @@ class LectureController extends Controller
 
     public function categories(Request $request)
     {
-        return response()->json(ProgramMajorCategory::query()->orderBy('id')->select(['id', 'name'])->get());
+        return response()->json(ProgramMajorCategory::query()->orderBy('id')
+            ->select(['id', 'name'])->take(2)->get());
     }
 }
