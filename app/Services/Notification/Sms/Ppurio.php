@@ -20,7 +20,7 @@ class Ppurio{
 
     public function checkVerification(Request $request){
         $client = new Client();
-        $token = $this->getToken()->getBody()->getContents();
+        $token = json_decode($this->getToken()->getBody(),true);
         var_dump($token);
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
