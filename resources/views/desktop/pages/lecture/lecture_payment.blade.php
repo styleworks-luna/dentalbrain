@@ -7,16 +7,16 @@
         $(function () {
             // select menu
             var select_menu = $('.select-menu');
-
-            if(select_menu.length > 0){
-                select_menu.selectmenu();
-            }
-
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
 
+            // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
+
+            if (select_menu.length > 0) {
+                select_menu.selectmenu();
+            }
 
             $('.btn-submit').click(function (e) {
                 var paymentObj;
