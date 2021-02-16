@@ -13,39 +13,39 @@ use Illuminate\Database\Eloquent\Builder;
 class ProgramController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
         return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
     public function lecturesData(Request $request)
     {
-        $data = Program::select('id','is_online','title','running_time','major_category_id','minor_category_id','thumbnail_id')
+        $data = ProgramStudent::query()->select('id','user_id','payment_id','ticket_id','expired_at')
         ->with([
-            'ticket:program_id,price',
-            'students' => function($query){
-                $query->select('user_id','payment_id','expired_at');
-                $query->where('user_id',Auth::id());
-            },
-            'place:program_id,sido,gugun,started_at,ended_at',
-            'students.payment:id,totalAmount',
-            'thumbnail:id,path,url'
-        ]);
+            'payment:id,totalAmount,receiptUrl,method,status',
+            'ticket.program' => function($query){
+                $query->select('id','title','is_online','running_time','major_category_id','minor_category_id')
+                ->with('place:id,program_id,sido,gugun,started_at,ended_at');
+            }
+        ])->where('user_id','=',Auth::id())->get();
 
-        $data = $this->setOrder($data,$request->order);
-        return response()->json(['data' => $data->get()]);
+        $data = $this->setOrder($data, $request->order);
+
+        return response()->json(['data'=> $data]);
     }
 
 
-    private function setOrder($data, $order){
-        switch($order){
+    private function setOrder($data, $order)
+    {
+        switch ($order) {
             case 'newest' :
-                $data->orderBy('id','desc');
+                $data->orderBy('id', 'desc');
                 break;
             case 'online' :
-                $data->where('is_online','1');
+                $data->where('is_online', '1');
                 break;
             case 'offline' :
-                $data->where('is_online','0');
+                $data->where('is_online', '0');
                 break;
             default :
                 break;
