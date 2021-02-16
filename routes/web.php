@@ -194,7 +194,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('checkVerification', 'Test\TestController@checkVerification')->name('checkVerification');
 
 
-    Route::get('lectures', 'Account\ProgramController@index')->name('lectures');
+    Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');

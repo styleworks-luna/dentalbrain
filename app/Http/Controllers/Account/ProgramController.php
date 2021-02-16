@@ -12,7 +12,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProgramController extends Controller
 {
-    public function index(Request $request)
+
+    public function index(Request $request){
+        return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
+    }
+
+    public function lecturesData(Request $request)
     {
         $data = Program::select('id','is_online','title','running_time','major_category_id','minor_category_id','thumbnail_id')
         ->with([
@@ -26,7 +31,6 @@ class ProgramController extends Controller
 
         $data = $this->setOrder($data,$request->order);
         return response()->json(['data' => $data->get()]);
-        //return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
 
