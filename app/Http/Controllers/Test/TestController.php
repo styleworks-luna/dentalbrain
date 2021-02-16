@@ -66,15 +66,8 @@ class TestController extends Controller
         return $sms->getToken();
     }
 
-    public function purio() {
-        $client = new Client();
-        $res = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
-            'headers' => [
-                'Authorization' => 'Basic YnJhaW5zcGVjOndlbGw1NTExJCQ=',
-                'Content-Type' => 'application/json',
-            ]
-        ]);
-
-        return $res;
+    public function checkVerification(Request $request){
+        $sms = new Ppurio();
+        return $sms->checkVerification($request);
     }
 }

@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => '※ 입력하신 아이디 또는 비밀번호가 일치하지 않습니다. 다시 한번 확인하신 후 로그인해주세요.',
+    'throttle' => '※ 로그인 시도가 너무 많습니다. :seconds 초 후에 다시 시도해주세요.',
 
 ];

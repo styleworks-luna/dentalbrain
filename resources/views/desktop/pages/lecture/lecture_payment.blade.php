@@ -2,33 +2,58 @@
 
 @section('script')
     <script src="https://js.tosspayments.com/v1"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script>
         $(function () {
+            // select menu
+            var select_menu = $('.select-menu');
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
 
+            // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
 
-            $('.btn-submit').click(function (e) {
-                e.preventDefault();
-                var paymentType = $('.payment-method:checked').val();
+            if (select_menu.length > 0) {
+                select_menu.selectmenu();
+            }
 
-                if (!paymentType) {
-                    alert('결제 방식을 선택해 주세요.');
-                    return false;
+            $('.btn-submit').click(function (e) {
+                var paymentObj;
+                var cardCompany = $('.ui-selectmenu-text').text();
+                var paymentmethod = $('.payment-method:checked').val();
+
+                e.preventDefault();
+
+                if(paymentmethod === '가상계좌') {
+                    paymentObj = {
+                        amount: {{ $program->ticket->price }},
+                        orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
+                        orderName: '{{$program->title . ', ' . $program->ticket->name}}',
+                        customerName: '{{ auth()->user()->name }}',
+                        successUrl: '{{ route('lectures.payment.success',$program->id) }}',
+                        failUrl: window.location.href,
+                        customerEmail: '{{ auth()->user()->email }}',
+                        customerMobilePhone: '{{ auth()->user()->phone }}',
+                    };
+                } else if (paymentmethod === '카드') {
+                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                    paymentObj = {
+                        amount: {{ $program->ticket->price }},
+                        orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
+                        orderName: '{{$program->title . ', ' . $program->ticket->name}}',
+                        customerName: '{{ auth()->user()->name }}',
+                        successUrl: '{{ route('lectures.payment.success',$program->id) }}',
+                        failUrl: window.location.href,
+                        customerEmail: '{{ auth()->user()->email }}',
+                        customerMobilePhone: '{{ auth()->user()->phone }}',
+                        maxCardInstallmentPlan: maxCardInstallmentPlan,
+                        cardCompany: cardCompany,
+                    };
                 }
 
-                tossPayments.requestPayment(paymentType, {
-                    amount: {{ $program->ticket->price }},
-                    orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
-                    orderName: '{{$program->title . ', ' . $program->ticket->name}}',
-                    customerName: '{{ auth()->user()->name }}',
-                    successUrl: '{{ route('lectures.payment.success',$program->id) }}',
-                    failUrl: window.location.href,
-                    customerEmail: '{{ auth()->user()->email }}',
-                    customerMobilePhone: '{{ auth()->user()->phone }}',
-                }).catch(function (err) {
+                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
                     alert('취소');
                 });
             });
@@ -226,9 +251,37 @@
                             <th>결제방식</th>
                             <td>
                                 <div class="radio-wrap">
-                                    <input type="radio" id="credit" name="payment-method"
+                                    <input type="radio" id="card" name="payment-method"
                                            class="payment-method" value="카드">
-                                    <label for="credit">신용카드</label>
+                                    <label for="card">신용카드</label>
+
+                                    <select name="payment-method" id="credit" class="select-menu">
+                                        <option value="신한">신한</option>
+                                        <option value="현대">현대</option>
+                                        <option value="삼성">삼성</option>
+                                        <option value="우리">우리</option>
+                                        <option value="BC">BC</option>
+                                        <option value="국민">국민</option>
+                                        <option value="롯데">롯데</option>
+                                        <option value="농협">농협</option>
+                                        <option value="하나">하나</option>
+                                        <option value="씨티">씨티</option>
+                                        <option value="카카오뱅크">카카오뱅크</option>
+                                        <option value="수협">수협</option>
+                                        <option value="전북">전북</option>
+                                        <option value="우체국">우체국</option>
+                                        <option value="새마을">새마을</option>
+                                        <option value="저축">저축</option>
+                                        <option value="제주">제주</option>
+                                        <option value="광주">광주</option>
+                                        <option value="신협">신협</option>
+                                        <option value="JCB">JCB</option>
+                                        <option value="유니온페이">유니온페이</option>
+                                        <option value="마스터">마스터</option>
+                                        <option value="비자">비자</option>
+                                        <option value="다이너스">다이너스</option>
+                                        <option value="디스커버">디스커버</option>
+                                    </select>
                                 </div>
                                 <div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"

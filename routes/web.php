@@ -163,7 +163,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 });
 
 // 관리자
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
     Route::view('/', 'admin.index');
     Route::view('{any}', 'admin.index');
 
@@ -191,6 +191,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], fu
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
+    Route::post('checkVerification', 'Test\TestController@checkVerification')->name('checkVerification');
 
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
@@ -219,7 +220,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
             Route::post('file', 'Admin\FileController@uploadFile')->name('file');
             Route::post('image', 'Admin\FileController@uploadImage')->name('image');
@@ -247,6 +248,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
                 Route::get('{program}', 'Admin\OnlineProgramController@edit')->name('edit');
                 Route::put('{program}', 'Admin\OnlineProgramController@update')->name('update');
+                Route::patch('{program}', 'Admin\OnlineProgramController@changeOpen')->name('changeOpen');
 //                Route::delete('{program}', 'Admin\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
@@ -255,6 +257,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('{program}/students', 'Admin\OfflineProgramController@getStudentInfo')->name('students');
                 Route::get('{program}', 'Admin\OfflineProgramController@edit')->name('edit');
                 Route::put('{program}', 'Admin\OfflineProgramController@update')->name('update');
+                Route::patch('{program}', 'Admin\OfflineProgramController@changeOpen')->name('changeOpen');
 //                Route::delete('{program}', 'Admin\OfflineProgramController@index');
 
             });

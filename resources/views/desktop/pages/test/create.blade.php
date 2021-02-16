@@ -107,9 +107,17 @@
 
             <br>
             id 검색 함수
-            <form method="post" action="{{ route('account.findId') }}">
+            <form method="post" action="{{ route('findIdWithNameAndPhone') }}">
                 @csrf
                 <input type="text" name="name" id="name" placeholder="이름">
+                <input type="text" name="phone" id="phone" placeholder="휴대전화">
+                <input type="submit">
+            </form>
+
+            <br>
+            문자인증번호
+            <form method="post" action="{{route('api.checkVerification')}}">
+                @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="submit">
             </form>

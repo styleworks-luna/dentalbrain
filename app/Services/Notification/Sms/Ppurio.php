@@ -2,18 +2,48 @@
 
 namespace App\Services\Notification\Sms;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Ppurio{
     public function getToken() {
         $client = new Client();
         $authorize = base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'));
-        $res = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
+        $result = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
             'headers' => [
                 'Authorization' => 'Basic '.$authorize,
                 'Content-Type' => 'application/json',
             ]
         ]);
+        return $result;
+    }
 
-        return $res;
+    public function checkVerification(Request $request){
+        $client = new Client();
+        $token = $this->getToken();
+
+        $data = array();
+        $data['account'] = env('PPURIO_ID');
+        $data['type'] = 'SMS';
+        $data['from'] = $request->phone;
+        $data['to'] = $request->phone;
+        $data['content'] = Str::random('6');
+
+        $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
+           'headers'=>[
+               'Authorization' => $token['type']." ".$token['accesstoken'],
+               'Content-Type' => 'application/json',
+           ],
+            'form_params' =>[
+                'account' => env('PPURIO_ID'),
+                'type' => 'SMS',
+                'from' => $request->phone,
+                'to' => $request->phone,
+                'content' => Str::random('6'),
+                'phone' => $request->phone
+            ]
+        ]);
+
+        return $result;
     }
 }

@@ -12,12 +12,12 @@
     <div id="content">
 
         <section class="lecture-title-wrap">
-                <h1>전체 강의</h1>
+            <h1>전체 강의</h1>
         </section>
 
         <section class="lecture-wrap">
             <div class="container">
-            <lecture-all :is_pagination="true" :per_page="12"></lecture-all>
+                <lecture-all :is_pagination="true" :per_page="12"></lecture-all>
             </div>
         </section>
 

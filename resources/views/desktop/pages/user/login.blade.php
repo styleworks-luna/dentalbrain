@@ -17,11 +17,11 @@
                         <input type="password" id="password" name="password" class="password" placeholder="비밀번호를 입력하세요">
                         <input type="submit" class="btn-login" value="로그인">
                     </div>
-                    @foreach($errors->all() as $error)
+                    @if($errors->any())
                         <br>
-                        {{ $error }}
+                        {{$errors->first()}}
                         <br>
-                    @endforeach
+                    @endif
                     <div class="login-addition">
                         <a href="{{ url('find') }}" class="find-id">아이디/비밀번호 찾기</a>
                         <a href="{{ url('register') }}" class="go-register">회원가입</a>

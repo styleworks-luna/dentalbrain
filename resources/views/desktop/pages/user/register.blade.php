@@ -5,6 +5,30 @@
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/register.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#confirmAuthentication").on('click',function(){
+                console.log('1');
+                var phone = $('#verification_number').val();
+                var data = {"phone" : phone};
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url:"{{route('api.checkVerification')}}",
+                    type:"POST",
+                    data:data,
+                    success:function(data){
+                        alert('success');
+                    },
+                    error: function (request, status, error){
+
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 
 @section('style')
@@ -133,7 +157,7 @@
                                        data-parsley-errors-container=".phone-check-error-wrap"
                                        value="{{ old('phone') }}"
                                 >
-                                <button class="btn-basic btn-verification">인증번호발송</button>
+                                <button class="btn-basic btn-verification" id="confirmAuthentication">인증번호발송</button>
 
                                 <div class="phone-check-error-wrap parsley-error-wrap"></div>
 
@@ -219,7 +243,7 @@
                 </section>
 
                 <div class="btn-wrap">
-                    <input type="submit" class="btn-register btn-purple" value="가입완료">
+                    <input type="button" class="btn-register btn-purple" value="가입완료">
                 </div>
 
                 <div class="dim"></div>
