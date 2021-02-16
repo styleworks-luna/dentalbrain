@@ -14,18 +14,18 @@ class ProgramController extends Controller
 {
     public function index(Request $request)
     {
-        $data = Program::select('id','is_online','title','running_time')
+        $data = Program::select('id','is_online','title','running_time','major_category_id','minor_category_id','thumbnail_id')
         ->with([
-            'ticket',
+            'ticket:program_id,price',
             'students' => function($query){
-                $query->select('user_id','expired_at');
+                $query->select('user_id','payment_id','expired_at');
                 $query->where('user_id',Auth::id());
-            }
+            },
+            'students.payment:id,totalAmount'
         ]);
-        //TODO: payments 추가해야됨. 카드 새로 발급받은걸로
 
         $data = $this->setOrder($data,$request->order);
-        //var_dump($data->get()->toArray());
+        //dd($data->get()->toArray());
         return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
