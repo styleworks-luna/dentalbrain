@@ -89,27 +89,33 @@ export default {
             return [
                 {
                     name: 'id',
-                    text: '번호'
+                    text: '번호',
+                    width: '8%'
                 },
                 {
                     name: 'category',
-                    text: '구분'
+                    text: '구분',
+                    width: '8%'
                 },
                 {
                     name: 'title',
-                    text: '제목'
+                    text: '제목',
+                    width: '42%'
                 },
                 {
                     name: 'name',
-                    text: '이름'
+                    text: '이름',
+                    width: '12%'
                 },
                 {
                     name: 'created_at',
-                    text: '작성일'
+                    text: '작성일',
+                    width: '20%'
                 },
                 {
                     name: 'is_answer',
-                    text: '답변상태'
+                    text: '답변상태',
+                    width: '10%'
                 },
             ]
         },

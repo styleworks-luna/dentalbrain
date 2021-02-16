@@ -86,23 +86,28 @@ export default {
             return [
                 {
                     name: 'id',
-                    text: '번호'
+                    text: '번호',
+                    width: '8%'
                 },
                 {
                     name: 'title2',
-                    text: '제목'
+                    text: '제목',
+                    width: '53%'
                 },
                 {
                     name: 'created_at',
-                    text: '작성일'
+                    text: '작성일',
+                    width: '20%'
                 },
                 {
                     name: 'views',
-                    text: '조회수'
+                    text: '조회수',
+                    width: '9%'
                 },
                 {
                     name: 'is_open',
                     text: '상태',
+                    width: '10%',
                     isSort: true
                 }
             ]

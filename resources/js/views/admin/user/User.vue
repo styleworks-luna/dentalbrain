@@ -22,7 +22,6 @@
             </div>
         </template>
 
-
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="users.data">
@@ -88,31 +87,38 @@ export default {
             return [
                 {
                     name: 'id',
-                    text: '번호'
+                    text: '번호',
+                    width: '6%'
                 },
                 {
                     name: 'login_id',
-                    text: '아이디'
+                    text: '아이디',
+                    width: '17%'
                 },
                 {
                     name: 'name',
-                    text: '이름'
+                    text: '이름',
+                    width: '12%'
                 },
                 {
                     name: 'email',
-                    text: '이메일'
+                    text: '이메일',
+                    width: '25%'
                 },
                 {
                     name: 'phone',
-                    text: '전화번호'
+                    text: '전화번호',
+                    width: '15%'
                 },
                 {
                     name: 'job_id',
-                    text: '직업군'
+                    text: '직업군',
+                    width: '15%'
                 },
                 {
                     name: 'edit',
-                    text: '정보수정'
+                    text: '정보수정',
+                    width: '10%'
                 }
             ]
         }
