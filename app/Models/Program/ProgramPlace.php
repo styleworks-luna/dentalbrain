@@ -8,10 +8,17 @@ class ProgramPlace extends Model
 {
     protected $table = 'program_places';
     protected $guarded = [];
-    protected $casts = [];
+    protected $appends = ['korean_time'];
 
     public function program()
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
+    }
+
+    public function getKoreanTimeAttribute(){
+        $started_at =  date('Y',strtotime($this->attributes['started_at'])).'년 '.date('m',strtotime($this->attributes['started_at'])).'월 '.date('d',strtotime($this->attributes['started_at'])).'일 '.'('.carbonDate($this->attributes['started_at'],'ddd').') '.date('H:i',strtotime($this->attributes['started_at']));
+        $tilde = ' ~ ';
+        $ended_at = date('Y',strtotime($this->attributes['ended_at'])).'년 '.date('m',strtotime($this->attributes['ended_at'])).'월 '.date('d',strtotime($this->attributes['ended_at'])).'일 '.'('.carbonDate($this->attributes['ended_at'],'ddd').') '.date('H:i',strtotime($this->attributes['ended_at']));
+        return $started_at.$tilde.$ended_at;
     }
 }
