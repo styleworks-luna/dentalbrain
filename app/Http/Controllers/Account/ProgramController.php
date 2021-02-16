@@ -27,7 +27,8 @@ class ProgramController extends Controller
                 $query->where('user_id',Auth::id());
             },
             'place:program_id,sido,gugun,started_at,ended_at',
-            'students.payment:id,totalAmount'
+            'students.payment:id,totalAmount',
+            'thumbnail'
         ]);
 
         $data = $this->setOrder($data,$request->order);
