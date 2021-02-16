@@ -12,25 +12,21 @@
                 select_menu.selectmenu();
             }
 
-            $('#credit-button').click(function() {
-               $('.payment-method').attr('checked', false);
-            });
-
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
 
-
             paymentMessage(message);
 
             $('.btn-submit').click(function (e) {
+                var paymentObj;
                 var cardCompany = $('.ui-selectmenu-text').text();
-                var paymentmethod = $('.payment-method');
+                var paymentmethod = $('.payment-method:checked').val();
 
                 e.preventDefault();
 
-                if(paymentmethod.is(":checked")) {
-                    tossPayments.requestPayment(paymentmethod.val(), {
+                if(paymentmethod === '가상계좌') {
+                    paymentObj = {
                         amount: {{ $program->ticket->price }},
                         orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
                         orderName: '{{$program->title . ', ' . $program->ticket->name}}',
@@ -39,41 +35,27 @@
                         failUrl: window.location.href,
                         customerEmail: '{{ auth()->user()->email }}',
                         customerMobilePhone: '{{ auth()->user()->phone }}',
-                    }).catch(function (err) {
-                        alert('취소');
-                    });
-                } else {
-                    if (cardCompany == 'BC') {
-                        tossPayments.requestPayment('카드', {
-                            amount: {{ $program->ticket->price }},
-                            orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
-                            orderName: '{{$program->title . ', ' . $program->ticket->name}}',
-                            customerName: '{{ auth()->user()->name }}',
-                            successUrl: '{{ route('lectures.payment.success',$program->id) }}',
-                            failUrl: window.location.href,
-                            customerEmail: '{{ auth()->user()->email }}',
-                            customerMobilePhone: '{{ auth()->user()->phone }}',
-                            maxCardInstallmentPlan: 3,
-                            cardCompany: 'BC',
-                        }).catch(function (err) {
-                            alert('취소');
-                        });
-                    } else {
-                        tossPayments.requestPayment('카드', {
-                            amount: {{ $program->ticket->price }},
-                            orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
-                            orderName: '{{$program->title . ', ' . $program->ticket->name}}',
-                            customerName: '{{ auth()->user()->name }}',
-                            successUrl: '{{ route('lectures.payment.success',$program->id) }}',
-                            failUrl: window.location.href,
-                            customerEmail: '{{ auth()->user()->email }}',
-                            customerMobilePhone: '{{ auth()->user()->phone }}',
-                            cardCompany: cardCompany,
-                        }).catch(function (err) {
-                            alert('취소');
-                        });
-                    }
+                    };
+                } else if (paymentmethod === '카드') {
+                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                    paymentObj = {
+                        amount: {{ $program->ticket->price }},
+                        orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
+                        orderName: '{{$program->title . ', ' . $program->ticket->name}}',
+                        customerName: '{{ auth()->user()->name }}',
+                        successUrl: '{{ route('lectures.payment.success',$program->id) }}',
+                        failUrl: window.location.href,
+                        customerEmail: '{{ auth()->user()->email }}',
+                        customerMobilePhone: '{{ auth()->user()->phone }}',
+                        maxCardInstallmentPlan: maxCardInstallmentPlan,
+                        cardCompany: cardCompany,
+                    };
                 }
+
+                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                    alert('취소');
+                });
             });
         });
 
@@ -269,6 +251,10 @@
                             <th>결제방식</th>
                             <td>
                                 <div class="radio-wrap">
+                                    <input type="radio" id="card" name="payment-method"
+                                           class="payment-method" value="카드">
+                                    <label for="card">신용카드</label>
+
                                     <select name="payment-method" id="credit" class="select-menu">
                                         <option value="신한">신한</option>
                                         <option value="현대">현대</option>
