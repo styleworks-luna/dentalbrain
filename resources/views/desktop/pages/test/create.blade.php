@@ -107,7 +107,7 @@
 
             <br>
             id 검색 함수
-            <form method="post" action="{{ route('findIdWithNameAndPhone') }}">
+            <form method="post" action="{{ route('api.find.id') }}">
                 @csrf
                 <input type="text" name="name" id="name" placeholder="이름">
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
