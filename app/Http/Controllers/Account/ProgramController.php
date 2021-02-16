@@ -28,7 +28,7 @@ class ProgramController extends Controller
             },
             'place:program_id,sido,gugun,started_at,ended_at',
             'students.payment:id,totalAmount',
-            'thumbnail'
+            'thumbnail:id,path,url'
         ]);
 
         $data = $this->setOrder($data,$request->order);
