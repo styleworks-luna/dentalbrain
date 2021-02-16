@@ -8,6 +8,7 @@
 @import '@sass/components/_file.sass'
 @import '@sass/components/_emailbox.sass'
 @import '@sass/components/_button.sass'
+@import '@sass/components/_selectbox.sass'
 
 .content
     +background(null, null, null, #f5f4f5)
@@ -29,6 +30,13 @@
         +input(white-lignt-fill)
         +size(240px, 50px)
         +margin(right 5px)
+
+    select
+        +selectbox(240px, 50px)
+
+        + .ui-selectmenu-button
+            +margin(left 20px)
+            float: left
 
     .ui-emailbox
         +emailbox()
@@ -305,6 +313,10 @@ h3
                 .radio-wrap
                     +margin(right 40px)
                     float: left
+                    line-height: 48px
+
+                    input[type="radio"]
+                        +margin(top 16px)
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)
