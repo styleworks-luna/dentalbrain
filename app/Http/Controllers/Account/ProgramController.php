@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 class ProgramController extends Controller
 {
 
-    public function index(Request $request){
+    public function index(){
         return view(viewPrefix() . 'pages.user.mypage.mypage_lecture');
     }
 
