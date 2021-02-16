@@ -38,15 +38,26 @@ class FindPasswordController extends Controller{
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            return redirect()->back()->with('alert','해당 이메일로 가입한 아이디가 없습니다.');
+
+            return response()->json([
+                'message' => '존재하지 않는 이메일 입니다',
+                'success' => false
+            ]);
         }
 
         try{
             Mail::to($email)
                 ->send(new Reset($user,$newPassword));
-            return redirect()->back()->with('alert', "패스워드 재설정 메일이 전송되었습니다");
+
+            return response()->json([
+                'message' => '회원님의 메일로 비밀번호 재설정 안내 메일이 발송되었습니다.',
+                'success' => true
+            ]);
         }catch(\Exception $e){
-            return redirect()->back()->with('alert', "메일 전송 오류");
+            return response()->json([
+                'message' => '회원님의 메일로 비밀번호 재설정 안내 메일이 발송되었습니다.',
+                'success' => false
+            ]);
         }
     }
 
