@@ -32,7 +32,7 @@ class ProgramController extends Controller
             $query = $this->addWhereOnlineOrOffline($request->order,$query);
         })->where('user_id','=',Auth::id());
 
-        $data = $this->setNewest($data, $request->input('order'));
+        $data = $this->setNewest($request->input('order'), $data);
         
         return response()->json(['data'=> $data->paginate('10')]);
     }
