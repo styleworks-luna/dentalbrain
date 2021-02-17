@@ -48,13 +48,14 @@
             overflow: hidden
 
             .content-information-wrap
-                +size(895px, 225px)
+                +size(895px)
                 +padding(top 20px bottom 20px)
                 +border(1px solid $border-color-light, right)
+                +box-sizing(border-box)
                 float: left
 
                 .content-image
-                    +size(300px, 225px)
+                    +size(300px)
                     display: block
                     float: left
 
@@ -62,10 +63,12 @@
                         +size(298px, 223px)
                         +border(1px solid rgba(0, 0, 0, 0.1))
                         +border-radius(8px)
+                        display: block
 
 .content-information
     +size(500px)
     +margin(21px 38px 20px 40px)
+    +box-sizing(border-box)
     float: left
 
     .lecture-sort
@@ -121,9 +124,10 @@
 
 .content-time,
 .offline-lecture-pay
-    +size(190px, 225px)
+    +size(195px, 265px)
     +padding(top 20px bottom 20px)
     +border(1px solid $border-color-light, right)
+    +box-sizing(border-box)
     float: left
     text-align: center
 
@@ -147,8 +151,9 @@
 
 .content-button,
 .content-button-offline
-    +size(190px, 225px)
+    +size(190px, 265px)
     +padding(top 20px bottom 20px)
+    +box-sizing(border-box)
     float: left
     text-align: center
 
