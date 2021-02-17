@@ -15,13 +15,27 @@ class Ppurio{
                 'Content-Type' => 'application/json',
             ]
         ]);
-        return $result;
+        return json_decode($result->getBody()->getContents(),true);
     }
 
     public function checkVerification(Request $request){
         $client = new Client();
-        $token = $this->getToken()->getBody();
-        var_dump($token);
+        $token = $this->getToken();
+        $content = json_encode([
+                "sms" => array(
+                    "message" => "Test"
+                )
+            ]
+        );
+        $resend = json_encode([
+            "first" => "sms"
+        ]);
+        $recontent = json_encode([
+            "sms" => array(
+                "message" => "SMS 대체 발송"
+            )
+        ]);
+
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
                'Authorization' => $token['type']." ".$token['accesstoken'],
@@ -29,14 +43,13 @@ class Ppurio{
            ],
             'form_params' =>[
                 'account' => env('PPURIO_ID'),
-                'type' => 'SMS',
+                'type' => 'sms',
                 'from' => $request->phone,
                 'to' => $request->phone,
-                'content' => Str::random('6'),
-                'phone' => $request->phone
+                'content' => $content
             ]
         ]);
 
-        return $result;
+        return json_decode($result->getBody()->getContents(),true);
     }
 }
