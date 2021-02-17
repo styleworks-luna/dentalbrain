@@ -37,7 +37,7 @@
                             </tr>
                             <tr>
                                 <th>강의장소</th>
-                                <td><p class="lecture-length">{{ lecture.ticket.program.place.sido }} {{ lecture.ticket.program.place.gugun }}</p></td>
+                                <td><p class="lecture-length">{{ lecture.ticket.program.place.full_address }}</p></td>
                             </tr>
                         </table>
                     </div>
