@@ -38,6 +38,6 @@ class Ppurio{
             ]
         ]);
 
-        return $result;
+        return json_decode($result->getBody()->getContents(),true);
     }
 }
