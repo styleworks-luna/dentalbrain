@@ -21,7 +21,7 @@
         computed: {
             thumbnailPreview() {
                 return {
-                    backgroundImage: `url(${this.Helper.thumbnail(this.file)})`
+                    backgroundImage: `url(${this.file.url})`
                 };
             }
         },
