@@ -28,11 +28,14 @@ class Ppurio{
            ],
             'form_params' =>[
                 'account' => env('PPURIO_ID'),
-                'type' => 'SMS',
+                'type' => 'sms',
                 'from' => $request->phone,
                 'to' => $request->phone,
-                'content' => array("sms" => array("message" => Str::random('6'))),
-                'phone' => $request->phone
+                'content' => array(
+                    "sms" => array(
+                        "message" => "Test"
+                    )
+                )
             ]
         ]);
 
