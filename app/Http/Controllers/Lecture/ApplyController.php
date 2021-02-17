@@ -186,6 +186,9 @@ class ApplyController extends Controller
             $returnable = SurveyAnswer::create($createData);
 
         } elseif ($survey->category_id == SurveyCategory::$FILE) {
+            if (!isset($data['file'])) {
+                return true;
+            }
             if ($data['file'] === null) {
                 return true;
             }
