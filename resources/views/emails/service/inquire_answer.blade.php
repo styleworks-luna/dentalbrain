@@ -3,7 +3,7 @@
     <thead>
     <tr>
         <td width="720" height="60">
-            <img src="{{ asset('images/desktop/global/logo.png') }}" style="border: 0;" width="146" height="29">
+            <img src="{{ asset('images/desktop/global/logo.png') }}" style="display: block; margin-bottom: 10px; border: 0;" width="100" height="70">
         </td>
     </tr>
     <tr>
@@ -54,7 +54,7 @@
     </tr>
     <tr>
         <td style="line-height: 15px; padding: 23px 0 29px 30px; font-size: 12px; color: #666; background-color: #efefef">
-            <h4 style="float: left; margin: 6px 22px 0 0"><img src="{{ asset('images/desktop/global/logo.png') }}" alt="덴탈브레인" width="80" height="34"></h4>
+            <h4 style="float: left; margin: 6px 22px 0 0"><img src="{{ asset('images/desktop/global/logo.png') }}" alt="덴탈브레인" width="90" height="25"></h4>
             <p style="float: left; margin: 0; padding: 0; line-height: 24px">
                 서울특별시 서초구 효령로 140 (방배동,3층) / 070-8222-3179<br>
                 copyright © BRAINSPEC. ALL RIGHTS RESERVED
