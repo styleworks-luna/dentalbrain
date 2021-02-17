@@ -1,6 +1,7 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_pagination.sass'
 
 .lecture-title-wrap
     +background('/images/desktop/global/lecture-top-image.png', no-repeat, center center)
@@ -157,65 +158,3 @@
         .lecture-card:nth-child(2),
         .lecture-card:nth-child(3)
             +margin(top 0)
-
-    .paging-wrap
-        +margin(top 80px)
-        text-align: center
-
-        nav
-            display: inline-block
-
-            ul
-                clear: both
-
-                li
-                    +margin(right 16px)
-                    +border-radius(50%)
-                    float: left
-
-                .pagination-page-nav
-                    .page-link
-                        +size(16px, 14px)
-                        +padding(8px 7px)
-                        display: block
-
-                    &:hover .page-link
-                        color: $page-color
-                        text-decoration: underline
-
-                .pagination-prev-nav
-                    +border(1px solid $border-color-light)
-                    +border-radius(50%)
-                    +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, center center)
-
-                    &:hover
-                        border-color: $gray-900
-
-                .pagination-next-nav
-                    +margin(right 0)
-                    +border(1px solid $border-color-light)
-                    +border-radius(50%)
-                    +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, center center)
-
-                    &:hover
-                        border-color: $gray-900
-
-                .next-nav,
-                .prev-nav
-                    +size(7px,10px)
-
-                .next-nav
-                    +padding(top 9px right 11px bottom 9px left 10px)
-
-                .prev-nav
-                    +padding(top 9px right 10px bottom 9px left 11px)
-
-                .sr-only
-                    display: none
-
-                li.active
-                    +background(null, null, null, $page-color)
-
-                    .page-link
-                        color: $white
-                        text-decoration: none

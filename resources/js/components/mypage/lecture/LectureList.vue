@@ -4,7 +4,9 @@
             <li v-for="lecture in lectures" :key="lecture.id">
                 <div class="content-information-wrap">
                     <figure class="content-image">
-                        <img :src="lecture.ticket.program.thumbnail.url" alt="강의사진">
+                        <a :href="'/lectures/' + lecture.ticket.program.id">
+                            <img :src="lecture.ticket.program.thumbnail.url" alt="강의사진">
+                        </a>
                     </figure>
                     <div class="content-information">
                         <div class="lecture-sort">
@@ -13,7 +15,7 @@
                             <p class="lecture-subject">{{ lecture.ticket.program.major_category_name }} &middot
                                 {{ lecture.ticket.program.minor_category_name }}</p>
                         </div>
-                        <h3 class="lecture-title">{{ lecture.ticket.program.title }}</h3>
+                        <h3 class="lecture-title"><a :href="'/lectures/' + lecture.ticket.program.id">{{ lecture.ticket.program.title }}</a></h3>
                         <table v-if="lecture.ticket.program.is_online">
                             <tr>
                                 <th>강의시간</th>
@@ -23,7 +25,9 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}</p></td>
+                                    {{
+                                        lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
+                                    }}</p></td>
                             </tr>
                         </table>
                         <table v-else>
@@ -53,7 +57,9 @@
                     </div>
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
-                        <div class="d-day"><em>{{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}</em></div>
+                        <div class="d-day"><em>{{
+                                lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
+                            }}</em></div>
                     </div>
                 </div>
                 <div class="btn-zone">
@@ -64,7 +70,8 @@
                         <a href="" class="apply-btn">강의신청</a>
                         <p>재수강시<br>30% 할인 적용됩니다.</p>
                     </div>
-                    <div class="content-button-offline" v-else-if="!lecture.ticket.program.is_online && Helper.dateCompare(lecture.ticket.program.place.ended_at) < 0">
+                    <div class="content-button-offline"
+                         v-else-if="!lecture.ticket.program.is_online && Helper.dateCompare(lecture.ticket.program.place.ended_at) < 0">
                         <div class="btn-wrap">
                             <a href="">수정하기</a>
                             <a href="" class="cancel">취소하기</a>

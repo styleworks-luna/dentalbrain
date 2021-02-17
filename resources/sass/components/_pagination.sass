@@ -45,6 +45,46 @@
                         a, span
                             text-decoration: none
 
+            .pagination-page-nav
+                .page-link
+                    +size(16px, 14px)
+                    +padding(8px 7px)
+                    display: block
+
+                &:hover .page-link
+                    color: $page-color
+                    text-decoration: underline
+
+                .pagination-prev-nav
+                    +border(1px solid $border-color-light)
+                    +border-radius(50%)
+                    +background('/images/desktop/global/icon_left_arrow_purple.png', no-repeat, center center)
+
+                    &:hover
+                        border-color: $gray-900
+
+                .pagination-next-nav
+                    +margin(right 0)
+                    +border(1px solid $border-color-light)
+                    +border-radius(50%)
+                    +background('/images/desktop/global/icon_right_arrow_purple.png', no-repeat, center center)
+
+                    &:hover
+                        border-color: $gray-900
+
+                .next-nav,
+                .prev-nav
+                    +size(7px,10px)
+
+                .next-nav
+                    +padding(top 9px right 11px bottom 9px left 10px)
+
+                .prev-nav
+                    +padding(top 9px right 10px bottom 9px left 11px)
+
+                .sr-only
+                    display: none
+
             li.active
                 +background(null, null, null, $page-color)
 
