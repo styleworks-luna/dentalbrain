@@ -21,8 +21,6 @@ class Ppurio{
     public function checkVerification(Request $request){
         $client = new Client();
         $token = $this->getToken();
-        var_dump(is_array($token));
-        var_dump($token);
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
                'Authorization' => $token['type']." ".$token['accesstoken'],
@@ -33,7 +31,7 @@ class Ppurio{
                 'type' => 'SMS',
                 'from' => $request->phone,
                 'to' => $request->phone,
-                'content' => Str::random('6'),
+                'content' => array("sms" => array("message" => Str::random('6'))),
                 'phone' => $request->phone
             ]
         ]);
