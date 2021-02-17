@@ -35,6 +35,14 @@ class Ppurio{
                     "sms" => array(
                         "message" => "Test"
                     )
+                ),
+                "resend"=>array(
+                    "first" => "sms"
+                ),
+                "recontent" => array(
+                    "sms" => array(
+                        "message" => "SMS 대체 발송"
+                    )
                 )
             ]
         ]);
