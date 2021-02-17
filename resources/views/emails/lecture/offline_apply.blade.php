@@ -18,7 +18,7 @@
     <tr>
         <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
-                <b>{{ $community->user->name }}</b>님의 <b>{{ $program->name }}</b> 강의 신청이 완료되었습니다.<br>
+                <b>{{ $user->name }}</b>님의 <b>{{ $program[0]['title']  }}</b> 강의 신청이 완료되었습니다.<br>
                 마이페이지 신청한 강의에서 확인 가능합니다.
             </p>
         </td>
@@ -39,7 +39,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program->name }}
+                            {{ $program[0]['title'] }}
                         </p>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-top: 1px solid #d8d8d8;  border-bottom: 1px solid #d8d8d8; font-size: 12px; color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program->started_at }} ~ {{ $program->ended_at }}
+                            {{ $program[0]['place']['korean_time'] }}
                         </p>
                     </td>
                 </tr>
@@ -63,7 +63,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-top: 1px solid #d8d8d8;  border-bottom: 1px solid #d8d8d8; font-size: 12px; color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program->place }}
+                            {{ $program[0]['place']['full_address'] }}
                         </p>
                     </td>
                 </tr>

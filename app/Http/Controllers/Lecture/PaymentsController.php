@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
+use App\Mail\paymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -15,6 +16,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentsController extends Controller
 {
@@ -79,7 +81,21 @@ class PaymentsController extends Controller
                 'expired_at' => now()->addDays($program->ticket->term),
             ]);
 
+        Mail::to(Auth::user()->email)->send(new paymentLecture(Auth::user(),$this->getProgramQueryWithPayment($payment)));
+
         return redirect()->route('lectures.result', $program->id);
+    }
+
+    private function getProgramQueryWithPayment(Payment $payment){
+        return ProgramStudent::query()
+            ->select('id','payment_id','ticket_id','expired_at')
+            ->where('user_id', '=', Auth::id())
+            ->with('payment:id,totalAmount,method','ticket.program:id,title')
+            ->whereHas('payment', function($query) use($payment) {
+                $query->where('id', $payment->id);
+            })
+            ->get()
+            ->toArray();
     }
 
     public function showPaymentForm(Request $request, Program $program)

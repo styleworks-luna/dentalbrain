@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
+use App\Mail\applyOfflineLecture;
+use App\Mail\applyOnlineLecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -15,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ApplyController extends Controller
 {
@@ -83,6 +86,8 @@ class ApplyController extends Controller
                 $programStudent->save();
 
                 DB::commit();
+                $this->sendLectureApplyFreeMailWithIsOnline($program->is_online,$request,$program);
+
                 return redirect()->route('lectures.result', $program->id);
             }
 
@@ -93,6 +98,21 @@ class ApplyController extends Controller
             return redirect()->back(302)->with(['alert' => '오류']);
         }
         return redirect()->route('lectures.payment.form', $program)->with(['fromApply' => true]);
+    }
+
+    private function sendLectureApplyFreeMailWithIsOnline($is_online,Request $request, Program $program){
+        if($is_online){
+            Mail::to($request->get('email'))->send(new applyOnlineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
+        }else{
+            Mail::to($request->get('email'))->send(new applyOfflineLecture(Auth::user(),$this->programQueryWithPlaceAndTicket($program)));
+        }
+    }
+
+    private function programQueryWithPlaceAndTicket(Program $program){
+        return Program::query()
+            ->select('id','title','running_time')
+            ->with('place:id,program_id,started_at,ended_at,address,address_detail','ticket:id,program_id,name')
+            ->where('id',$program->id)->get();
     }
 
     /**
