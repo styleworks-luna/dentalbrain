@@ -13,8 +13,10 @@ use App\Services\TossPayments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller
 {
@@ -54,17 +56,18 @@ class PaymentsController extends Controller
                 'expired_at' => now()->addDays($program->ticket->term),
             ]);
 
-        Mail::to(Auth::user()->email)->send(new paymentLecture(Auth::user(),$this->getProgramQueryWithPayment($payment)));
+        Mail::to(Auth::user()->email)->send(new paymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
 
         return redirect()->route('lectures.result', $program->id);
     }
 
-    private function getProgramQueryWithPayment(Payment $payment){
+    private function getProgramQueryWithPayment(Payment $payment)
+    {
         return ProgramStudent::query()
-            ->select('id','payment_id','ticket_id','expired_at')
+            ->select('id', 'payment_id', 'ticket_id', 'expired_at')
             ->where('user_id', '=', Auth::id())
-            ->with('payment:id,totalAmount,method','ticket.program:id,title')
-            ->whereHas('payment', function($query) use($payment) {
+            ->with('payment:id,totalAmount,method', 'ticket.program:id,title')
+            ->whereHas('payment', function ($query) use ($payment) {
                 $query->where('id', $payment->id);
             })
             ->get()
@@ -83,6 +86,11 @@ class PaymentsController extends Controller
             'program' => $program,
             'surveys' => $surveys,
         ]);
+    }
+
+    public function cancel(Request $request, ProgramStudent $programStudent)
+    {
+        
     }
 
 }
