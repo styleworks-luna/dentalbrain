@@ -15,12 +15,12 @@ class Ppurio{
                 'Content-Type' => 'application/json',
             ]
         ]);
-        return response()->json(['data' => $result]);
+        return $result;
     }
 
     public function checkVerification(Request $request){
         $client = new Client();
-        $token = $this->getToken();
+        $token = $this->getToken()->getBody();
         var_dump($token);
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
