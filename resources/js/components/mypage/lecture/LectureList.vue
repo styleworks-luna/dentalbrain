@@ -12,10 +12,14 @@
                         <div class="lecture-sort">
                             <span class="online" v-if="lecture.ticket.program.is_online">온라인</span>
                             <span class="offline" v-else>오프라인</span>
-                            <p class="lecture-subject">{{ lecture.ticket.program.major_category_name }} &middot
-                                {{ lecture.ticket.program.minor_category_name }}</p>
+                            <p class="lecture-subject">
+                                {{ lecture.ticket.program.major_category_name }} &middot
+                                {{ lecture.ticket.program.minor_category_name }}
+                            </p>
                         </div>
-                        <h3 class="lecture-title"><a :href="'/lectures/' + lecture.ticket.program.id">{{ lecture.ticket.program.title }}</a></h3>
+                        <h3 class="lecture-title">
+                            <a href="'/lectures/' + lecture.ticket.program.id">{{ lecture.ticket.program.title }}</a>
+                        </h3>
                         <table v-if="lecture.ticket.program.is_online">
                             <tr>
                                 <th>강의시간</th>
@@ -25,9 +29,8 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{
-                                        lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
-                                    }}</p></td>
+                                    {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
+                                </p></td>
                             </tr>
                         </table>
                         <table v-else>
@@ -58,7 +61,7 @@
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
                         <div class="d-day"><em>
-                            {{lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'}}
+                            {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
                         </em></div>
                     </div>
                 </div>
