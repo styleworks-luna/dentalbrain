@@ -20,9 +20,14 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
+        if ($program->alreadyPaid()) {
+            // 이미 신청 완료하여 결제프로세스까지 마친 경우
+            return redirect()->route('lectures.result', $program->id);
+        }
 
         if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
-            return redirect()->route('lectures.payment.form', $program->id);
+            // Survey 이미 완료하였을 경우.
+            return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
         }
 
         if ($program->is_online == 1) {
@@ -87,7 +92,7 @@ class ApplyController extends Controller
             DB::rollback();
             return redirect()->back(302)->with(['alert' => '오류']);
         }
-        return redirect()->route('lectures.payment.form', $program);
+        return redirect()->route('lectures.payment.form', $program)->with(['fromApply' => true]);
     }
 
     /**

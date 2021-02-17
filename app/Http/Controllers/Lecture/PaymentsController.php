@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller
 {
@@ -83,6 +84,10 @@ class PaymentsController extends Controller
 
     public function showPaymentForm(Request $request, Program $program)
     {
+        if (!$request->session()->get('fromApply', false)) {
+            return abort(Response::HTTP_FORBIDDEN);
+        }
+
         $surveys = Survey::result($program->id)->get();
 
         return view(viewPrefix() . 'pages.lecture.lecture_payment', [

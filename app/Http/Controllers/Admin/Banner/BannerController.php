@@ -64,7 +64,7 @@ class BannerController extends Controller
             'category_id' => ['required', 'numeric'],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
-            'link' => ['required'],
+            'link' => ['required', 'url'],
             'mobile_file_id' => ['required ', ' numeric'],
             'desktop_file_id' => ['required', 'numeric'],
             'started_at' => ['required', 'date_format:Y-m-d'],

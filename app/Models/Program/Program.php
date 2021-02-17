@@ -30,6 +30,29 @@ class Program extends Model
     ];
 
     /*
+     * ======= Custom Functions =========
+     */
+
+    /**
+     * 이미 유저가 강의를 지불했는지 확인.
+     * @return bool
+     */
+    public function alreadyPaid()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->where(function ($query) {
+                    $query->whereNotNull('expired_at')
+                        ->orWhere('expired_at', '>', now());
+                })->exists();
+        } else {
+            return false;
+        }
+    }
+
+    /*
      * ======= Define Relationships =========
      */
 

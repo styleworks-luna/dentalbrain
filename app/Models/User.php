@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Program\ProgramStudent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -38,33 +39,42 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'need_license','job_name_id','job_name','license_num',
+        'need_license', 'job_name_id', 'job_name', 'license_num',
     ];
 
-    public function getNeedLicenseAttribute(){
-        return  UserJobName::find($this->getJobNameIdAttribute())->need_license;
+    public function getNeedLicenseAttribute()
+    {
+        return UserJobName::find($this->getJobNameIdAttribute())->need_license;
     }
 
-    public function getJobNameIdAttribute(){
+    public function getJobNameIdAttribute()
+    {
         return UserJob::find($this->attributes['job_id'])->job_name_id;
     }
 
-    public function getJobNameAttribute(){
+    public function getJobNameAttribute()
+    {
         return UserJobName::find($this->getJobNameIdAttribute())->name;
     }
 
-    public function getLicenseNumAttribute(){
+    public function getLicenseNumAttribute()
+    {
         return UserJob::find($this->attributes['job_id'])->license_num;
     }
 
 
     public function job()
     {
-        return $this->belongsTo(UserJob::class, 'job_id','id');
+        return $this->belongsTo(UserJob::class, 'job_id', 'id');
     }
 
     public function isAdmin()
     {
         return $this->attributes['is_admin'] ? true : false;
+    }
+
+    public function students()
+    {
+        return $this->hasOne(ProgramStudent::class, 'user_id', 'id');
     }
 }
