@@ -18,7 +18,7 @@
                             </p>
                         </div>
                         <h3 class="lecture-title">
-                            <a href="'/lectures/' + lecture.ticket.program.id">{{ lecture.ticket.program.title }}</a>
+                            <a :href="'/lectures/' + lecture.ticket.program.id">{{ lecture.ticket.program.title }}</a>
                         </h3>
                         <table v-if="lecture.ticket.program.is_online">
                             <tr>
