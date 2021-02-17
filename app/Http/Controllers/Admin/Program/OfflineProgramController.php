@@ -1,29 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
-use App\Services\Program\OnlineProgramConcrete;
+use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
-class OnlineProgramController extends Controller
+class OfflineProgramController extends Controller
 {
-    protected $onlineConcrete;
+    protected $offlineConcrete;
     private $search;
 
     public function __construct()
     {
-        $this->onlineConcrete = new OnlineProgramConcrete();
-    }
-
-    public function getCategories()
-    {
-        return $this->onlineConcrete->getCategories();
+        $this->offlineConcrete = new OfflineProgramConcrete();
     }
 
     public function index(Request $request)
@@ -41,7 +36,8 @@ class OnlineProgramController extends Controller
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', 1)
+        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+            ->with('place:id,program_id,started_at,ended_at')
             ->withCount('students')->orderByDesc('id')->paginate('10');
 
         return $search;
@@ -63,43 +59,38 @@ class OnlineProgramController extends Controller
 
     public function changeOpen(Request $request, Program $program)
     {
-        $this->onlineConcrete->changeOpenStatus($program);
+        $this->offlineConcrete->changeOpenStatus($program);
         return response()->json([
             'is_open' => $program->is_open,
             'msg' => '변경되었습니다.'
         ]);
     }
 
-    public function students(Program $program)
+    public function edit(Program $program)
     {
-        return $this->onlineConcrete->getStudents($program);
+        return response()->json(
+            array_merge($this->offlineConcrete->getProgramDetail($program),
+                ['place' => $program->place])
+        );
     }
 
     public function store(Request $request)
     {
-        $programData = $this->onlineConcrete->validateProgram($request,
-            [
-                'running_time' => ['required', 'string']
-            ]);
-
-        $ticketData = $this->onlineConcrete->validateTickets($request);
-
-        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
+        $programData = $this->offlineConcrete->validateProgram($request);
+        $ticketData = $this->offlineConcrete->validateTickets($request);
+        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
+        $placeData = $this->offlineConcrete->validatePlace($request);
 
         try {
             DB::beginTransaction();
-
-            $program = $this->onlineConcrete->storeProgram($programData);
-            $ticket = $this->onlineConcrete->storeTickets($program, $ticketData);
-            $surveys = $this->onlineConcrete->storeSurveys($program, $surveyDateSet);
-            $lectures = $this->onlineConcrete->storeLectures($program, $lectureDataSet);
-
+            $program = $this->offlineConcrete->storeProgram($programData);
+            $this->offlineConcrete->storeTickets($program, $ticketData);
+            $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
+            $this->offlineConcrete->storePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDateSet, $lectureDataSet]);
+                [$exception, $programData, $ticketData, $surveyDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);
@@ -107,48 +98,38 @@ class OnlineProgramController extends Controller
         DB::commit();
 
         return response()->json([
-            'msg' => '온라인 강의가 생성되었습니다.',
+            'msg' => '오프라인 강의가 생성되었습니다.',
         ]);
     }
 
-    public function edit(Program $program)
+    public function getCategories()
     {
-        return response()->json(
-            array_merge($this->onlineConcrete->getProgramDetail($program),
-                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
-        );
+        return $this->offlineConcrete->getCategories();
     }
 
     public function update(Request $request, Program $program)
     {
-        $programData = $this->onlineConcrete->validateProgram($request, [
-            'running_time' => ['required', 'string']
-        ]);
-
-        $ticketData = $this->onlineConcrete->validateTickets($request);
-
-        $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
+        $programData = $this->offlineConcrete->validateProgram($request);
+        $ticketData = $this->offlineConcrete->validateTickets($request);
+        $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [
             '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
             '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
             '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
         ]);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request, [
-            'lectures.*.id' => ['sometimes', 'required', Rule::exists('lectures', 'id')]
+        $placeData = $this->offlineConcrete->validatePlace($request, [
+            'id' => ['required', Rule::exists('program_places', 'id')],
         ]);
 
         try {
             DB::beginTransaction();
-
-            $this->onlineConcrete->updateProgram($program, $programData);
-            $this->onlineConcrete->updateTickets($program, $ticketData);
-            $this->onlineConcrete->updateSurveys($program, $surveyDataSet);
-            $this->onlineConcrete->updateLectures($program, $lectureDataSet);
-
+            $program = $this->offlineConcrete->updateProgram($program, $programData);
+            $this->offlineConcrete->updateTickets($program, $ticketData);
+            $this->offlineConcrete->updateSurveys($program, $surveyDataSet);
+            $this->offlineConcrete->updatePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception]);
+                [$exception, $programData, $ticketData, $surveyDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);
@@ -156,7 +137,7 @@ class OnlineProgramController extends Controller
         DB::commit();
 
         return response()->json([
-            'msg' => '온라인 강의가 수정되었습니다.',
+            'msg' => '오프라인 강의가 수정되었습니다.',
         ]);
     }
 }

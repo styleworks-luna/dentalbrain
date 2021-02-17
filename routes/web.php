@@ -245,25 +245,30 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
-            Route::get('categories', 'Admin\OnlineProgramController@getCategories')->name('categories');
+            Route::get('categories', 'Admin\Program\OnlineProgramController@getCategories')->name('categories');
             Route::post('upload', 'Admin\FileController@uploadContent')->name('upload');
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
-                Route::get('/', 'Admin\OnlineProgramController@index')->name('index');
-                Route::post('/', 'Admin\OnlineProgramController@store')->name('store');
-                Route::get('{program}/students', 'Admin\OnlineProgramController@getStudentInfo')->name('students');
-                Route::get('{program}', 'Admin\OnlineProgramController@edit')->name('edit');
-                Route::put('{program}', 'Admin\OnlineProgramController@update')->name('update');
-                Route::patch('{program}', 'Admin\OnlineProgramController@changeOpen')->name('changeOpen');
-//                Route::delete('{program}', 'Admin\OnlineProgramController@index');
+                Route::get('/', 'Admin\Program\OnlineProgramController@index')->name('index');
+                Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
+                Route::group(['prefix' => '{program}'], function () {
+                    Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
+                    Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
+                    Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
+                    Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                });
+//                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
-                Route::get('/', 'Admin\OfflineProgramController@index')->name('index');
-                Route::post('/', 'Admin\OfflineProgramController@store')->name('store');
-                Route::get('{program}/students', 'Admin\OfflineProgramController@getStudentInfo')->name('students');
-                Route::get('{program}', 'Admin\OfflineProgramController@edit')->name('edit');
-                Route::put('{program}', 'Admin\OfflineProgramController@update')->name('update');
-                Route::patch('{program}', 'Admin\OfflineProgramController@changeOpen')->name('changeOpen');
-//                Route::delete('{program}', 'Admin\OfflineProgramController@index');
+                Route::get('/', 'Admin\Program\OfflineProgramController@index')->name('index');
+                Route::post('/', 'Admin\Program\OfflineProgramController@store')->name('store');
+                Route::group(['prefix' => '{program}'], function () {
+                    Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
+                    Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');
+                    Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
+                    Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                });
+
+//                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
 
             });
         });
