@@ -6,6 +6,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * @method static Builder public ()
  */
@@ -34,7 +35,8 @@ class Banner extends Model
         return File::find($this->mobile_file_id)->name;
     }
 
-    public function getBannerCategoryNameAttribute(){
+    public function getBannerCategoryNameAttribute()
+    {
         return BannerCategory::find($this->category_id)->name;
     }
 
@@ -48,8 +50,9 @@ class Banner extends Model
         return $this->belongsTo(File::class, 'mobile_file_id', 'id');
     }
 
-    public function categories(){
-        return $this->belongsTo(BannerCategory::class,'category_id','id');
+    public function categories()
+    {
+        return $this->belongsTo(BannerCategory::class, 'category_id', 'id');
 
     }
 
@@ -62,6 +65,7 @@ class Banner extends Model
         return $query->where('is_open', '=', 1)
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
+            ->inRandomOrder()
             ->orderByDesc('order')
             ->with('desktopFile', 'mobileFile');
     }
