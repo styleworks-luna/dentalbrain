@@ -32,7 +32,7 @@ class Ppurio{
                 'from' => $request->phone,
                 'to' => $request->phone,
                 'content' => array(
-                    "sms" => array(
+                    "lms" => array(
                         "message" => "Test"
                     )
                 ),
