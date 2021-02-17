@@ -21,6 +21,21 @@ class Ppurio{
     public function checkVerification(Request $request){
         $client = new Client();
         $token = $this->getToken();
+        $content = json_encode([
+                "sms" => array(
+                    "message" => "Test"
+                )
+            ]
+        );
+        $resend = json_encode([
+            "first" => "sms"
+        ]);
+        $recontent = json_encode([
+            "sms" => array(
+                "message" => "SMS 대체 발송"
+            )
+        ]);
+
         $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
            'headers'=>[
                'Authorization' => $token['type']." ".$token['accesstoken'],
@@ -31,19 +46,7 @@ class Ppurio{
                 'type' => 'sms',
                 'from' => $request->phone,
                 'to' => $request->phone,
-                'content' => array(
-                    "lms" => array(
-                        "message" => "Test"
-                    )
-                ),
-                "resend"=>array(
-                    "first" => "sms"
-                ),
-                "recontent" => array(
-                    "sms" => array(
-                        "message" => "SMS 대체 발송"
-                    )
-                )
+                'content' => $content
             ]
         ]);
 
