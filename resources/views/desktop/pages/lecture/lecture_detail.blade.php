@@ -47,7 +47,7 @@
                                     <tr>
                                         <th>강의장소</th>
                                         <td>
-                                            <p class="lecture-place">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                            <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
                                             <a href="" class="btn-map">지도보기</a>
                                         </td>
                                     </tr>

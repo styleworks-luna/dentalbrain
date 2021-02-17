@@ -49,7 +49,7 @@
                                 <tr>
                                     <th>강의장소</th>
                                     <td>
-                                        <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                        <p class="lecture-length">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
                                     </td>
                                 </tr>
                             @endif

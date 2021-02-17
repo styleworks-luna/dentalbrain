@@ -24,7 +24,7 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('lectures.detail',$slide->id) }}">
-                                    <img src="{{ $slide->thumbnail->url }}" alt="최상단 슬라이드">
+                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
                         @empty
