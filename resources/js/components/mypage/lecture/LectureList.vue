@@ -57,9 +57,9 @@
                     </div>
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
-                        <div class="d-day"><em>{{
-                                lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
-                            }}</em></div>
+                        <div class="d-day"><em>
+                            {{lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'}}
+                        </em></div>
                     </div>
                 </div>
                 <div class="btn-zone">
@@ -67,7 +67,7 @@
                         <a href="">강의 시청하기</a>
                     </div>
                     <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
-                        <a href="" class="apply-btn">강의신청</a>
+                        <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
                         <p>재수강시<br>30% 할인 적용됩니다.</p>
                     </div>
                     <div class="content-button-offline"
