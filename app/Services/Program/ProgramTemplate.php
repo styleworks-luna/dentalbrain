@@ -60,15 +60,17 @@ abstract class ProgramTemplate
      * 강의 수강현황
      *
      * @param Program $program
-     * @return JsonResponse
+     * @param int $perPage = 7
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    function getStudents(Program $program)
+    function getStudents(Program $program, $perPage = 7)
     {
-        $students = $program->students()->orderByDesc('id')->with('ticket')->paginate(10);
-        return response()->json([
-            'students' => $students,
-        ]);
+        return $program->students()->orderByDesc('id')
+            ->with(['ticket', 'payment' => function ($query) {
+                $query->select('id', 'totalAmount', 'status', 'refundStatus');
+            }, 'user:id,login_id'])->paginate($perPage);
     }
+
 
     /**
      * @return JsonResponse
@@ -93,6 +95,7 @@ abstract class ProgramTemplate
         $program->save();
         return $program;
     }
+
     /*
      * ========================= Validation =========================
      */
@@ -149,6 +152,7 @@ abstract class ProgramTemplate
 
         return $validatedData;
     }
+
     /*
      * ========================= STORE =========================
      */
@@ -293,7 +297,8 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
-    public function updateTickets(Program $program, array $data)
+    public
+    function updateTickets(Program $program, array $data)
     {
         if ($data['is_free'] == true) {
             $data['price'] = 0;
@@ -307,7 +312,8 @@ abstract class ProgramTemplate
         ]);
     }
 
-    public function updateSurveys(Program $program, array $dataSet)
+    public
+    function updateSurveys(Program $program, array $dataSet)
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
@@ -64,11 +64,6 @@ class OfflineProgramController extends Controller
             'is_open' => $program->is_open,
             'msg' => '변경되었습니다.'
         ]);
-    }
-
-    public function students(Program $program)
-    {
-        return $this->offlineConcrete->getStudents($program);
     }
 
     public function edit(Program $program)

@@ -42,24 +42,37 @@ class User extends Authenticatable
         'need_license', 'job_name_id', 'job_name', 'license_num',
     ];
 
-    public function getNeedLicenseAttribute()
+    protected function getNeedLicenseAttribute()
     {
-        return UserJobName::find($this->getJobNameIdAttribute())->need_license;
+        $jobNameId = $this->getJobNameIdAttribute();
+        if ($jobNameId !== null) {
+            return UserJobName::find($jobNameId)->need_license;
+        }
+        return null;
     }
 
-    public function getJobNameIdAttribute()
+    protected function getJobNameIdAttribute()
     {
-        return UserJob::find($this->attributes['job_id'])->job_name_id;
+        if (isset($this->attributes['job_id'])) {
+            return UserJob::find($this->attributes['job_id'])->job_name_id;
+        }
+        return null;
     }
 
-    public function getJobNameAttribute()
+    protected function getJobNameAttribute()
     {
-        return UserJobName::find($this->getJobNameIdAttribute())->name;
+        if ($this->getJobNameIdAttribute()) {
+            return UserJobName::find($this->getJobNameIdAttribute())->name;
+        }
+        return null;
     }
 
-    public function getLicenseNumAttribute()
+    protected function getLicenseNumAttribute()
     {
-        return UserJob::find($this->attributes['job_id'])->license_num;
+        if (isset($this->attributes['job_id'])) {
+            return UserJob::find($this->attributes['job_id'])->license_num;
+        }
+        return null;
     }
 
 

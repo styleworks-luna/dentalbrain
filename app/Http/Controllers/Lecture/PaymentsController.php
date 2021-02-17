@@ -9,12 +9,10 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
+use App\Services\TossPayments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Mail;
 
@@ -26,37 +24,12 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.']);
         }
 
-        try {
-            $client = new Client();
-            $url = 'https://api.tosspayments.com/v1/payments/' . $request->get('paymentKey');
-            $response = $client->post($url, [
-                'auth' => [
-                    env('TOSS_PAYMENTS_SECRET'),
-                    '',
-                ],
-                'headers' => [
-                    'Accept' => 'application/json',
-                ],
-                'json' => [
-                    "orderId" => $request->get('orderId'),
-                    "amount" => $request->get('amount'),
-                ],
-            ]);
-        } catch (GuzzleException $e) {
-            Log::error('TOSS API CALL ERROR', [$e, $request->all()]);
-            return redirect()->back()->with(['alert' => '오류가 발생했습니다. 다시 시도해주세요.']);
-        }
+        $toss = new TossPayments($request->get('paymentKey'));
+        $responseBody = $toss->success($request->get('orderId'), $request->get('amount'));
 
-        if ($response->getStatusCode() !== 200) {
-            Log::error('TOSS API CALL ERROR', [
-                'code' => $response->getStatusCode(),
-                'body' => $response->getBody(),
-                'request' => $request->all()]);
-            return redirect()->back()->with(['alert' => '오류가 발생했습니다. 다시 시도해주세요.']);
+        if ($responseBody === false) {
+            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
-
-        $fullContent = $response->getBody()->getContents();
-        $responseBody = json_decode($fullContent, true);
 
         $payment = Payment::query()->create([
             'paymentKey' => $responseBody['paymentKey'],
@@ -65,11 +38,11 @@ class PaymentsController extends Controller
             'receiptUrl' => $responseBody['card'] ? $responseBody['card']['receiptUrl'] : null,
             'method' => $responseBody['method'],
             'status' => $responseBody['status'],
-            'refundStatus' => $responseBody['virtualAccount'] ? $responseBody['card']['receiptUrl'] : null,
+            'refundStatus' => $responseBody['virtualAccount'] ? $responseBody['virtualAccount']['refundStatus'] : null,
             'useDiscount' => $responseBody['useDiscount'],
             'discountAmount' => $responseBody['discountAmount'],
             'secret' => $responseBody['secret'],
-            'full_response' => $fullContent,
+            'full_response' => $toss->getFullResponse(),
             'requestedAt' => Carbon::parse($responseBody['requestedAt'])->toDateTime(),
             'approvedAt' => Carbon::parse($responseBody['approvedAt'])->toDateTime(),
         ]);
