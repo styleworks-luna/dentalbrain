@@ -23,7 +23,7 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{ lecture.ticket.price == 0 ? '무료' : lecture.ticket.price }}</p></td>
+                                    {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}</p></td>
                             </tr>
                         </table>
                         <table v-else>
@@ -31,7 +31,7 @@
                                 <th>강의일시</th>
                                 <td>
                                     <p class="lecture-length">
-                                        {{ lecture.ticket.program.place.started_at }} ~ {{ lecture.ticket.program.place.ended_at }}
+                                        {{ lecture.ticket.program.place.korean_time }}
                                     </p>
                                 </td>
                             </tr>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
-                        <div class="d-day"><em>{{ lecture.ticket.price }}</em></div>
+                        <div class="d-day"><em>{{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}</em></div>
                     </div>
                 </div>
                 <div class="btn-zone">

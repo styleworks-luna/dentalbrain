@@ -72,5 +72,9 @@ export const Helper = {
         let datenow = new Date();
 
         return datenow.getTime() - date.getTime()
+    },
+    numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+
 };
