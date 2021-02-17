@@ -29,7 +29,7 @@ class ProgramController extends Controller
                 ->with('thumbnail:id,path,url');
             },
         ])->whereHas('ticket.program',function($query) use($request) {
-            $query = $this->addOnlineorOffline($request->order,$query);
+            $query = $this->addWhereOnlineOrOffline($request->order,$query);
         })->where('user_id','=',Auth::id());
 
         $data = $this->setNewest($data, $request->input('order'));
@@ -37,7 +37,7 @@ class ProgramController extends Controller
         return response()->json(['data'=> $data->paginate('10')]);
     }
 
-    private function addOnlineorOffline($order,$query){
+    private function addWhereOnlineOrOffline($order,$query){
         if($order == 'online'){
             $query->where('is_online','1');
         }else if($order == 'offline'){
