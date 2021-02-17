@@ -25,14 +25,14 @@ class ProgramController extends Controller
             'payment:id,totalAmount,receiptUrl,method,status',
             'ticket.program' => function($query){
                 $query->select('id','thumbnail_id','title','is_online','running_time','major_category_id','minor_category_id')
-                ->with('place:id,program_id,sido,gugun,started_at,ended_at')
+                ->with('place:id,program_id,address,address_detail,sido,gugun,started_at,ended_at')
                 ->with('thumbnail:id,path,url');
             },
 
         ])->where('user_id','=',Auth::id())->get();
 
         $data = $this->setOrder($data, $request->order);
-
+        
         return response()->json(['data'=> $data]);
     }
 

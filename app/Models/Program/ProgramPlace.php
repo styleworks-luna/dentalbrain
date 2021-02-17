@@ -8,7 +8,7 @@ class ProgramPlace extends Model
 {
     protected $table = 'program_places';
     protected $guarded = [];
-    protected $appends = ['korean_time'];
+    protected $appends = ['korean_time','full_address'];
 
     public function program()
     {
@@ -20,5 +20,9 @@ class ProgramPlace extends Model
         $tilde = ' ~ ';
         $ended_at = date('Y',strtotime($this->attributes['ended_at'])).'년 '.date('m',strtotime($this->attributes['ended_at'])).'월 '.date('d',strtotime($this->attributes['ended_at'])).'일 '.'('.carbonDate($this->attributes['ended_at'],'ddd').') '.date('H:i',strtotime($this->attributes['ended_at']));
         return $started_at.$tilde.$ended_at;
+    }
+
+    public function getFullAddressAttribute(){
+        return $this->attributes['address'].' '.$this->attributes['address_detail'];
     }
 }
