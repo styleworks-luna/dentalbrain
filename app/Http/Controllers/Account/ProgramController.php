@@ -46,11 +46,11 @@ class ProgramController extends Controller
         return $query;
     }
 
-    private function setNewest($data, $order)
+    private function setNewest($order,$query)
     {
         if($order == 'newest'){
-            $data->orderBy('id','desc');
+            $query->orderBy('id','desc');
         }
-        return $data;
+        return $query;
     }
 }
