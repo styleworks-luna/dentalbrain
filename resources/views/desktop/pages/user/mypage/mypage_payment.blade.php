@@ -18,7 +18,7 @@
                     <ul>
                         <li>
                             <div class="lecture-information">
-                                <span class="online">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
+                                <span class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
                                 <h3 class="lecture-name">{{ $value['students'][0]['ticket']['program']['title'] }}</h3>
                             </div>
                             <table class="payment-information">
