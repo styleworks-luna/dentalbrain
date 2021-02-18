@@ -23,7 +23,7 @@ class Ppurio{
 
     public function checkVerification($phoneNumber){
         $token = $this->getToken();
-        $verification_num = Str::random('6');
+        $verification_num = str_pad(mt_rand(0,999999),6,'0');
         $message = "문자 인증번호: ".$verification_num;
         $sms = array("message" => $message);
         $content = array("sms" => $sms);
