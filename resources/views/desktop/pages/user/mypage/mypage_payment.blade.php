@@ -30,7 +30,7 @@
                                     <th>결제일{{ isset($value['deleted_at']) ? "/취소일" : '' }}</th>
                                 </tr>
                                 <tr>
-                                    <td>{{ $value['totalAmount'] }}원</td>
+                                    <td>{{ number_format($value['totalAmount']) }}원</td>
                                     <td>{{ $value['status'] == 'DONE' ? '결제완료' : '결제취소' }}</td>
                                     <td>
                                         {{ changePaymentMethodName($value['method']) }}
