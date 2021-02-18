@@ -83,6 +83,22 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
+    getTimeFormat(date) {
+        date = new Date(date);
+
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+
+        if (hour < 10) {
+            hour = `0${hour}`;
+        }
+
+        if (minute < 10) {
+            minute = `0${minute}`;
+        }
+
+        return `${hour}:${minute}`;
+    },
     dateCompareWithNow(date) {
         date = new Date(date);
         let datenow = new Date();

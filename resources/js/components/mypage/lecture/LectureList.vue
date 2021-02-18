@@ -52,8 +52,11 @@
                 <div class="lecture-sub-information">
                     <div class="content-time" v-if="lecture.ticket.program.is_online">
                         <p>시청 가능 기간</p>
-                        <div class="d-day" v-if="lecture.left_days >= 0">
+                        <div class="d-day" v-if="lecture.left_days > 0">
                             <em>{{ lecture.left_days }}일</em> 남음
+                        </div>
+                        <div class="d-day" v-else-if="lecture.left_days == 0">
+                            <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
                         </div>
                         <div class="d-day" v-else><em>만료</em></div>
                         <div class="dedicate">{{ Helper.dateFormatYDM(lecture.expired_at) }} 까지</div>
@@ -66,7 +69,7 @@
                     </div>
                 </div>
                 <div class="btn-zone">
-                    <div class="content-button" v-if="lecture.ticket.program.is_online && lecture.left_days != 0">
+                    <div class="content-button" v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
                         <a href="">강의 시청하기</a>
                     </div>
                     <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
