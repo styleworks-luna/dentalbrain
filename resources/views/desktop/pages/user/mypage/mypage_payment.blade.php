@@ -14,11 +14,12 @@
 
             <section class="payment-history">
                 <h2>결제내역</h2>
-                @foreach($data as $key => $value)
-                    <ul>
+                <ul>
+                    @foreach($data as $key => $value)
                         <li>
                             <div class="lecture-information">
-                                <span class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
+                                <span
+                                    class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
                                 <h3 class="lecture-name">{{ $value['students'][0]['ticket']['program']['title'] }}</h3>
                             </div>
                             <table class="payment-information">
@@ -39,8 +40,8 @@
                                 </tr>
                             </table>
                         </li>
-                    </ul>
-                @endforeach
+                    @endforeach
+                </ul>
             </section>
         </div>
     </section>
