@@ -79,8 +79,8 @@
                     <div class="content-button-offline"
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) < 0">
                         <div class="btn-wrap">
-                            <a href="">수정하기</a>
-                            <a href="">취소하기</a>
+                            <a href="" :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < 0 ? '' : 'for-margin'">수정하기</a>
+                            <a href="" v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < 0">취소하기</a>
                         </div>
                     </div>
                 </div>
