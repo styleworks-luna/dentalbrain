@@ -8,8 +8,7 @@ class ProgramPlace extends Model
 {
     protected $table = 'program_places';
     protected $guarded = [];
-    protected $casts = [];
-    protected $appends = ['korean_time', 'full_address'];
+    protected $appends = ['korean_time','full_address'];
 
     public function program()
     {

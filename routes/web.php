@@ -183,6 +183,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('bizppurio', 'Notification\PhoneVerificationController@checkVerification')->name('checkVerification');
 
+
+    Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
+
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
         Route::post('id', 'Account\FindIdController@findIdWithNameAndPhone')->name('id');
@@ -190,7 +193,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         // 회원 비밀번호 찾기
         Route::post('password', 'Account\FindPasswordController@sendPasswordMail')->name('password');
     });
-
+    
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
