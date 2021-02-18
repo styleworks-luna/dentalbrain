@@ -45,8 +45,6 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
-    Route::get('sms', 'Test\TestController@getToken')->name('getToken');
-    Route::get('purio', 'Test\TestController@purio');
 });
 
 /*============================ PAGES ============================*/
@@ -183,8 +181,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
-    Route::post('bizppurio', 'Test\TestController@checkVerification')->name('checkVerification');
+    Route::post('bizppurio', 'Notification\PhoneVerificationController@checkVerification')->name('checkVerification');
 
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
