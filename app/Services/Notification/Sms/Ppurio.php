@@ -27,7 +27,7 @@ class Ppurio{
         $data['account'] = env('PPURIO_ID');
         $data['refkey']=Str::random('10');
         $data['type'] = "sms";
-        $data['from'] = $request->phone;
+        $data['from'] = env('PPURIO_PHONE');
         $data['to'] = $request->phone;
         $data['content'] = $content;
 
@@ -51,7 +51,5 @@ class Ppurio{
         $curl_error = curl_error($oCurl);
 
         curl_close($oCurl);
-        
-        return json_decode($response);
     }
 }
