@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Services\Notification\Sms;
+use App\Models\Notification\PhoneVerification;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Ppurio{
@@ -18,9 +21,11 @@ class Ppurio{
         return json_decode($result->getBody()->getContents(),true);
     }
 
-    public function checkVerification(Request $request){
+    public function checkVerification($phoneNumber){
         $token = $this->getToken();
-        $sms = array("message" => "SMS 테스트");
+        $verification_num = Str::random('6');
+        $message = "문자 인증번호: ".$verification_num;
+        $sms = array("message" => $message);
         $content = array("sms" => $sms);
 
         $data =array();
@@ -28,7 +33,7 @@ class Ppurio{
         $data['refkey']=Str::random('10');
         $data['type'] = "sms";
         $data['from'] = env('PPURIO_PHONE');
-        $data['to'] = $request->phone;
+        $data['to'] = $phoneNumber;
         $data['content'] = $content;
 
         $json_data = json_encode($data,JSON_UNESCAPED_SLASHES);
@@ -50,6 +55,20 @@ class Ppurio{
         $response = curl_exec($oCurl);
 
         curl_close($oCurl);
+
+        try{
+            DB::beginTransaction();
+            if($response['code'] == '1000'){
+                PhoneVerification::updateOrCreate(
+                    ['phone'=> $phoneNumber,'verfication_num'=> $verification_num, 'expired_at'=> $token['expired']]
+                );
+                DB::commit();
+            }
+        }catch(\Exception $exception){
+            Log::error('CREATE PPURIO CHECKVERIFICATION ERROR',[$exception]);
+            DB::rollBack();
+        }
+
         return $response;
     }
 }
