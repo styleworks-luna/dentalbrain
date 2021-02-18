@@ -45,6 +45,29 @@ export const Helper = {
 
         return `${year}-${month}-${day}`;
     },
+    dateFormatDMW(date) {
+        if (this.nullCheck(date)) {
+            return '';
+        }
+
+        date = new Date(date);
+
+        var week = new Array('일', '월', '화', '수', '목', '금', '토');
+
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        var dayLabel = week[date.getDay()];
+
+        if (month < 10) {
+            month = `0${month}`;
+        }
+
+        if (day < 10) {
+            day = `0${day}`;
+        }
+
+        return `${month}.${day} (${dayLabel})`;
+    },
     dateFullFormat(date) {
         date = date.split(' ');
         let dateArr = date[0].split('-');
