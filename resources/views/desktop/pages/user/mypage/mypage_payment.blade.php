@@ -15,7 +15,7 @@
             <section class="payment-history">
                 <h2>결제내역</h2>
                 <ul>
-                    @foreach($data as $key => $value)
+                    @forelse($data as $key => $value)
                         <li>
                             <div class="lecture-information">
                                 <span
@@ -40,7 +40,9 @@
                                 </tr>
                             </table>
                         </li>
-                    @endforeach
+                    @empty
+                        <li>결제내역이 없습니다.</li>
+                    @endforelse
                 </ul>
             </section>
         </div>
