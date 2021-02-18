@@ -90,14 +90,30 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
-    dateCompare(date) {
+    dateCompareWithNow(date) {
         date = new Date(date);
         let datenow = new Date();
 
         return datenow.getTime() - date.getTime()
     },
+    dateCompare(dateStart, dateEnd) {
+        dateStart = new Date(dateStart);
+        dateEnd = new Date(dateEnd);
+
+        const yearStart = dateStart.getFullYear();
+        let monthStart = dateStart.getMonth() + 1;
+        let dayStart = dateStart.getDate();
+
+        const yearEnd = dateEnd.getFullYear();
+        let monthEnd = dateEnd.getMonth() + 1;
+        let dayEnd = dateEnd.getDate();
+
+        if (yearStart == yearEnd && monthStart == monthEnd && dayStart == dayEnd) {
+            return true;
+        } else return false;
+    },
     numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 };

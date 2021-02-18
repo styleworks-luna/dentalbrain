@@ -74,7 +74,7 @@
                         <p>재수강시<br>30% 할인 적용됩니다.</p>
                     </div>
                     <div class="content-button-offline"
-                         v-else-if="!lecture.ticket.program.is_online && Helper.dateCompare(lecture.ticket.program.place.ended_at) < 0">
+                         v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) < 0">
                         <div class="btn-wrap">
                             <a href="">수정하기</a>
                             <a href="">취소하기</a>
