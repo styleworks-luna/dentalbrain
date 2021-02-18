@@ -27,6 +27,7 @@ class Ppurio{
 
         $data =array();
         $data['account'] = env('PPURIO_ID');
+        $data['refkey']=env('PPURIO_KEY');
         $data['type'] = "sms";
         $data['from'] = $request->phone;
         $data['to'] = $request->phone;
