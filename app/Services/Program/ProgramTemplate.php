@@ -33,7 +33,7 @@ abstract class ProgramTemplate
      * ProgramTemplate constructor.
      * @param bool|int $is_online
      */
-    public function __construct($is_online)
+    public function __construct($is_online /*TODO Program 요구하도록 수정하기*/)
     {
         $this->is_online = $is_online;
     }
@@ -378,5 +378,61 @@ abstract class ProgramTemplate
         Survey::query()->whereIn('id', $deletable)->delete();
 
         return $returnableDataSet;
+    }
+
+    /*
+     *  ========================= DELETE =========================
+     */
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @param User|Authenticatable $user
+     * @return false
+     */
+    public function cancel(Request $request, Program $program, $user)
+    {
+        $base = $program->students()
+            ->where('user_id', '=', $user->id)
+            ->where('is_refund', '=', 0);;
+        if ($base->count() > 1) {
+            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+            return false;
+        }
+        $student = $base->first();
+
+        $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $user->id);
+
+        $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
+            ->get()->mapInto(SurveyFile::class);
+
+        $surveyFiles->map(function ($item, $key) {
+            return $item->deleteFile();
+        });
+
+        $student->is_refund = 1;
+        $student->save();
+
+
+        $payment = $student->payment;
+        $tossPayment = new TossPayments($payment->paymentKey);
+
+        switch ($payment->method) {
+            case '카드':
+                $tossPayment->cancelCard($request->get('reason'));
+                break;
+            case '가상계좌':
+                $tossPayment->cancelVirtualAccount($request->get('reason'), '1', '2', '3');
+                break;
+            case '휴대폰':
+                break;
+            default:
+                return false;
+        }
+        return true;
+
+        // 1. survey_answers
+        // 4. student
+        // final. refund
     }
 }

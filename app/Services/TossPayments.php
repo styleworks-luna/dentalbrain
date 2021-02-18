@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Http\Requests\Payments\TossPaymentsResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
@@ -81,17 +82,28 @@ class TossPayments
     }
 
     /**
+     *
+     *
      * @param string $reason
-     * @param int|string $cancelAmount
-     * @param int|string $taxAmount
-     * @return false|mixed
+     * @param int|string|null $cancelAmount
+     * @param int|string|null $taxAmount
+     * @return false|TossPaymentsResponse 실패시 false, 성공시 결과 DTO 반환.
      * @see https://docs.tosspayments.com/api#%EA%B2%B0%EC%A0%9C-%EC%B7%A8%EC%86%8C
      */
-    public function cancelCard(string $reason, $cancelAmount, $taxAmount)
+    public function cancelCard(string $reason, $cancelAmount = null, $taxAmount = null)
     {
         return $this->cancel($reason, null, null, null, $cancelAmount, $taxAmount);
     }
 
+    /**
+     * @param string $reason
+     * @param string|null $bank
+     * @param string|null $accountNumber
+     * @param string|null $holderName
+     * @param int|string|null $cancelAmount
+     * @param int|string|null $taxAmount
+     * @return TossPaymentsResponse|false
+     */
     protected function cancel(string $reason, $bank = null, $accountNumber = null, $holderName = null, $cancelAmount = null, $taxAmount = null)
     {
         $this->getCancelUrl();
@@ -134,9 +146,9 @@ class TossPayments
             return false;
         }
 
-        $this->response = $response->getBody()->getContents();
+        $this->response = new TossPaymentsResponse($response->getBody()->getContents());
 
-        return json_decode($this->response, true) ?: false;
+        return $this->response ?: false;
     }
 
     /**
@@ -150,16 +162,16 @@ class TossPayments
 
     /**
      * @param string $reason
-     * @param null|string $bank
-     * @param null|string $accountNumber
-     * @param null|string $holderName
+     * @param string $bank
+     * @param string $accountNumber
+     * @param string $holderName
      * @param null|int|string $cancelAmount
      * @param null|int|string $taxAmount
-     * @return false|mixed
+     * @return false|TossPaymentsResponse
      * @see https://docs.tosspayments.com/api#%EA%B2%B0%EC%A0%9C-%EC%B7%A8%EC%86%8C
      */
-    public function cancelVirtualAccount(string $reason, $bank = null, $accountNumber = null,
-                                         $holderName = null, $cancelAmount = null, $taxAmount = null)
+    public function cancelVirtualAccount(string $reason, string $bank, string $accountNumber,
+                                         string $holderName, $cancelAmount = null, $taxAmount = null)
     {
         return $this->cancel($reason, $bank . $accountNumber, $holderName, $cancelAmount, $taxAmount);
     }

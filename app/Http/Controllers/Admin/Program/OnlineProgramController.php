@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
+use App\Models\User;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
@@ -153,5 +155,14 @@ class OnlineProgramController extends Controller
         return response()->json([
             'msg' => '온라인 강의가 수정되었습니다.',
         ]);
+    }
+
+    public function cancel(Request $request, Program $program, ProgramStudent $student)
+    {
+        $response = $this->onlineConcrete->cancel($request, $program, User::find($student->user_id));
+        if ($response === false) {
+            return response()->json(['msg' => '실패']);
+        }
+        //TODO : response로 payment 갱신하기.
     }
 }

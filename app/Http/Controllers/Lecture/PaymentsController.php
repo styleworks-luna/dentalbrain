@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
+use App\Http\Requests\Payments\TossPaymentsResponse;
 use App\Mail\paymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
@@ -33,21 +34,7 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        $payment = Payment::query()->create([
-            'paymentKey' => $responseBody['paymentKey'],
-            'orderId' => $responseBody['orderId'],
-            'totalAmount' => $responseBody['totalAmount'],
-            'receiptUrl' => $responseBody['card'] ? $responseBody['card']['receiptUrl'] : null,
-            'method' => $responseBody['method'],
-            'status' => $responseBody['status'],
-            'refundStatus' => $responseBody['virtualAccount'] ? $responseBody['virtualAccount']['refundStatus'] : null,
-            'useDiscount' => $responseBody['useDiscount'],
-            'discountAmount' => $responseBody['discountAmount'],
-            'secret' => $responseBody['secret'],
-            'full_response' => $toss->getFullResponse(),
-            'requestedAt' => Carbon::parse($responseBody['requestedAt'])->toDateTime(),
-            'approvedAt' => Carbon::parse($responseBody['approvedAt'])->toDateTime(),
-        ]);
+        $payment = Payment::createByToss(new TossPaymentsResponse($responseBody));
 
         ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('ticket_id', '=', $program->ticket->id)
@@ -86,11 +73,6 @@ class PaymentsController extends Controller
             'program' => $program,
             'surveys' => $surveys,
         ]);
-    }
-
-    public function cancel(Request $request, ProgramStudent $programStudent)
-    {
-        
     }
 
 }
