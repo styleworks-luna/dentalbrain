@@ -173,12 +173,16 @@
         &:nth-child(2)
             +margin(top 8px)
 
-    .cancel
-        color: $page-color
+        &:hover
+            color: $page-color
 
     .apply-btn
         +background(null, null, null, $page-color)
         color: $white
+
+        &:hover
+            +background(null, null, null, $purple-400)
+            color: $white
 
     p
         +padding(top 16px left 7px)

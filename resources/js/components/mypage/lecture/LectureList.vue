@@ -77,7 +77,7 @@
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompare(lecture.ticket.program.place.ended_at) < 0">
                         <div class="btn-wrap">
                             <a href="">수정하기</a>
-                            <a href="" class="cancel">취소하기</a>
+                            <a href="">취소하기</a>
                         </div>
                     </div>
                 </div>
