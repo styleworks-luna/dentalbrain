@@ -56,7 +56,6 @@ class Ppurio{
 
         try{
             DB::beginTransaction();
-            var_dump(json_decode($response,true));
             if(json_decode($response,true)['code'] == '1000'){
                 PhoneVerification::query()->updateOrCreate(
                     ['phone'=>$phoneNumber],['phone'=> $phoneNumber,'verfication_num'=> $verification_num, 'expired_at'=> $token['expired']]
