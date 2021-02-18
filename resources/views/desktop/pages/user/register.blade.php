@@ -8,7 +8,6 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $("#confirmAuthentication").on('click',function(){
-                console.log('1');
                 var phone = $('#verification_number').val();
                 var data = {"phone" : phone};
 
