@@ -37,6 +37,7 @@ class Ppurio{
 
         $oCurl = curl_init();
         curl_setopt($oCurl,CURLOPT_URL,$url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1); //result로 true, false 대신 해당 값들을 return함.
         curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
@@ -47,9 +48,8 @@ class Ppurio{
         curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
         $response = curl_exec($oCurl);
-        $curl_errno = curl_errno($oCurl);
-        $curl_error = curl_error($oCurl);
 
         curl_close($oCurl);
+        return $response;
     }
 }
