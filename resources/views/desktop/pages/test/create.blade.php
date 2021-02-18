@@ -121,6 +121,15 @@
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="submit">
             </form>
+
+            <br>
+            문자 인증확인
+            <form method="post" action="{{ route('api.getVerificationNumber') }}">
+                @csrf
+                <input type="text" name="phone" id="phone" placeholder="휴대전화">
+                <input type="text" name="verficationNumber" placeholder="인증번호">
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

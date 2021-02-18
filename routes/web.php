@@ -182,7 +182,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('bizppurio', 'Notification\PhoneVerificationController@checkVerification')->name('checkVerification');
-
+    Route::post('getVerificationNumber','Notification\PhoneVerificationController@getVerificationNumber')->name('getVerificationNumber');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
 
