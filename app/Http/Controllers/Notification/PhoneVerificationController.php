@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Notification;
 
 use App\Models\Notification\PhoneVerification;
 use Illuminate\Http\Request;
