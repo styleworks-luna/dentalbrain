@@ -54,10 +54,9 @@ class Ppurio{
 
         $response = curl_exec($oCurl);
 
-
         try{
             DB::beginTransaction();
-            var_dump($response['code']);
+            var_dump($response);
             if($response['code'] == '1000'){
                 PhoneVerification::query()->updateOrCreate(
                     ['phone'=> $phoneNumber,'verfication_num'=> $verification_num, 'expired_at'=> $token['expired']]
