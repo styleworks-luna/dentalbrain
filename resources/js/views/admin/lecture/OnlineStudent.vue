@@ -99,7 +99,6 @@ export default {
     },
     mounted() {
         this.getData();
-        this.test();
     },
     computed: {
         tableCol() {
@@ -161,16 +160,6 @@ export default {
                 this.students = [];
             });
         },
-        test() {
-            console.log('123');
-            return new Promise((resolve, reject) => {
-                console.log(resolve);
-                console.log(reject);
-                resolve('test');
-            }).then(res => {
-                console.log(res);
-            });
-        }
     }
 }
 </script>
