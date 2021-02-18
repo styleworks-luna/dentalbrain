@@ -6,6 +6,7 @@ use App\Models\Notification\PhoneVerification;
 use Illuminate\Http\Request;
 use App\Services\Notification\Sms\Ppurio;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\Controller;
 
 class PhoneVerificationController extends Controller
 {
