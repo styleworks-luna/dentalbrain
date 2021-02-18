@@ -60,14 +60,4 @@ class TestController extends Controller
     public function Search(){
         return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all(), 'userCategory' => UserJobName::all()]);
     }
-
-    public function getToken(){
-        $sms = new Ppurio();
-        return $sms->getToken();
-    }
-
-    public function checkVerification(Request $request){
-        $sms = new Ppurio();
-        return $sms->checkVerification($request);
-    }
 }
