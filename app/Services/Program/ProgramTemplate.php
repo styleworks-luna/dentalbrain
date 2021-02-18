@@ -11,11 +11,16 @@ use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
+use App\Models\User;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
+use App\Services\File\SurveyFile;
+use App\Services\TossPayments;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -66,10 +71,9 @@ abstract class ProgramTemplate
     function getStudents(Program $program, $perPage = 10)
     {
         return $program->students()->orderByDesc('id')
-                ->with(['ticket', 'payment' => function ($query) {
-                    $query->select('id', 'totalAmount', 'status', 'refundStatus');
-                }, 'user:id,login_id'])->paginate($perPage)
-        ;
+            ->with(['ticket', 'payment' => function ($query) {
+                $query->select('id', 'totalAmount', 'status', 'refundStatus');
+            }, 'user:id,login_id'])->paginate($perPage);
     }
 
 
@@ -144,6 +148,7 @@ abstract class ProgramTemplate
 
     function validateTickets(Request $request, array $additionalRules = [])
     {
+        // TODO: 가격 변경시에 신청자 있는지 체크하기.(필수)
         $v = Validator::make($request->all(), array_merge([
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
@@ -255,7 +260,7 @@ abstract class ProgramTemplate
             $fileService = new ProgramThumbnail($this->program);
 
             // 기존 파일 삭제
-            $fileService->deletePublicFile();
+            $fileService->deleteFile();
 
             // 새로운 파일 등록
             $file = $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
@@ -272,7 +277,7 @@ abstract class ProgramTemplate
             $fileService = new ProgramMaterial($program);
 
             //기존 파일 삭제
-            $fileService->deletePublicFile();
+            $fileService->deleteFile();
 
             if ($data['material_id'] !== null) {
                 // 새 파일 생성

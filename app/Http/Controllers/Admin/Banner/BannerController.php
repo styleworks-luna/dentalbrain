@@ -113,12 +113,12 @@ class BannerController extends Controller
 
         if ($validatedData['desktop_file_id'] != $banner->desktop_file_id) {
             $desktopFile = new DesktopFile($banner);
-            $desktopFile->deletePublicFile();
+            $desktopFile->deleteFile();
             $desktopFile->moveTempToPublic(File::find($validatedData['desktop_file_id']));
         }
         if ($validatedData['mobile_file_id'] != $banner->mobile_file_id) {
             $mobileFile = new MobileFile($banner);
-            $mobileFile->deletePublicFile();
+            $mobileFile->deleteFile();
             $mobileFile->moveTempToPublic(File::find($validatedData['mobile_file_id']));
         }
 
@@ -134,10 +134,10 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
         $desktopFile = new DesktopFile($banner);
-        $desktopFile->deletePublicFile();
+        $desktopFile->deleteFile();
 
         $mobileFile = new MobileFile($banner);
-        $mobileFile->deletePublicFile();
+        $mobileFile->deleteFile();
 
         Storage::disk('banners')->deleteDirectory($banner->id); // 배너 자체가 사라지니까 폴더 자체를 없애버림.
         $banner->delete();

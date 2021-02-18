@@ -81,7 +81,7 @@ class OnlineProgramConcrete extends ProgramTemplate
 
                     // 기존 썸네일 삭제
                     if ($lecture->thumbnail != null) {
-                        $fileService->deletePublicFile();
+                        $fileService->deleteFile();
                     }
 
                     if ($data['thumbnail_id'] !== null) {
