@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProgramStudent extends Model
 {
@@ -36,6 +37,6 @@ class ProgramStudent extends Model
 
     public function getLeftDaysAttribute()
     {
-        return Carbon::now()->diff($this->attributes['expired_at'])->days;
+        return Carbon::now()->diff($this->attributes['expired_at'])->format('%r%a');
     }
 }

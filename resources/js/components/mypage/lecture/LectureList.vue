@@ -52,7 +52,7 @@
                 <div class="lecture-sub-information">
                     <div class="content-time" v-if="lecture.ticket.program.is_online">
                         <p>시청 가능 기간</p>
-                        <div class="d-day" v-if="lecture.left_days != 0">
+                        <div class="d-day" v-if="lecture.left_days >= 0">
                             <em>{{ lecture.left_days }}일</em> 남음
                         </div>
                         <div class="d-day" v-else><em>만료</em></div>
