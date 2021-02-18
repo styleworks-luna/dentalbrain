@@ -54,12 +54,12 @@ class Ppurio{
 
         $response = curl_exec($oCurl);
 
-        curl_close($oCurl);
 
         try{
             DB::beginTransaction();
+            var_dump($response['code']);
             if($response['code'] == '1000'){
-                PhoneVerification::updateOrCreate(
+                PhoneVerification::query()->updateOrCreate(
                     ['phone'=> $phoneNumber,'verfication_num'=> $verification_num, 'expired_at'=> $token['expired']]
                 );
                 DB::commit();
@@ -68,7 +68,7 @@ class Ppurio{
             Log::error('CREATE PPURIO CHECKVERIFICATION ERROR',[$exception]);
             DB::rollBack();
         }
-
+        curl_close($oCurl);
         return $response;
     }
 }
