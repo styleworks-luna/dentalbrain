@@ -14,8 +14,8 @@
 
             <section class="payment-history">
                 <h2>결제내역</h2>
-                @foreach($data as $key => $value)
-                    <ul>
+                <ul>
+                    @forelse($data as $key => $value)
                         <li>
                             <div class="lecture-information">
                                 <span class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
@@ -39,8 +39,10 @@
                                 </tr>
                             </table>
                         </li>
-                    </ul>
-                @endforeach
+                    @empty
+                        <li>결제내역이 없습니다.</li>
+                    @endforeach
+                </ul>
             </section>
         </div>
     </section>
