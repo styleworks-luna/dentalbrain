@@ -12,7 +12,7 @@ class PhoneVerificationController extends Controller
 {
     public function checkVerification(Request $request){
         $validatedData = $request->validate([
-            'phone' => 'required|min:11|max:11'
+            'phone' => 'required|min:10|max:12'
         ]);
 
         $sms = new Ppurio();
@@ -21,8 +21,8 @@ class PhoneVerificationController extends Controller
 
     public function getVerificationNumber(Request $request){
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|min:11|max:12',
-            'verficationNumber' => 'required|min:6|max:7'
+            'phone' => 'required|min:10|max:12',
+            'verficationNumber' => 'required|min:6|max:6'
         ]);
 
         if($validator->fails()){
