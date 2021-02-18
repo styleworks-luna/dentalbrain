@@ -49,7 +49,7 @@ class Ppurio{
         $response = curl_exec($oCurl);
         $curl_errno = curl_errno($oCurl);
         $curl_error = curl_error($oCurl);
-
+        var_dump($content);
         curl_close($oCurl);
         echo 'Response :';
         echo '<pre>';
