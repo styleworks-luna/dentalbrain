@@ -26,7 +26,7 @@ class AlterVerificationNumColumnToPhoneVerificationsTable extends Migration
     public function down()
     {
         Schema::table('phone_verifications', function (Blueprint $table) {
-            $table->unsignedTinyInteger('verfication_num')->change();
+            
         });
     }
 }
