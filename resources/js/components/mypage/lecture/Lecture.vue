@@ -21,7 +21,7 @@ import LectureList from '@/components/mypage/lecture/LectureList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
 
 // api
-import Mypage from '@/api/mypage/Mypage.js'
+import Mypage from '@/api/mypage/Mypage.js';
 
 export default {
     name: 'MypageLecture',
