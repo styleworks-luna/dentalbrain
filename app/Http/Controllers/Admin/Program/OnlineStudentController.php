@@ -13,8 +13,9 @@ class OnlineStudentController extends OnlineProgramController
 
     public function students(Program $program)
     {
-        return response()->json(
-            $this->onlineConcrete->getStudents($program)
-        );
+        return response()->json([
+            'program_name' => $program->title,
+            'students' => $this->onlineConcrete->getStudents($program)
+        ]);
     }
 }

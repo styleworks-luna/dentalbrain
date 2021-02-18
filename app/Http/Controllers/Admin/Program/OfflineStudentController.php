@@ -13,8 +13,9 @@ class OfflineStudentController extends OfflineProgramController
 
     public function students(Program $program)
     {
-        return response()->json(
-            $this->offlineConcrete->getStudents($program)
-        );
+        return response()->json([
+            'program_name' => $program->title,
+            'students' => $this->offlineConcrete->getStudents($program)
+        ]);
     }
 }

@@ -63,12 +63,13 @@ abstract class ProgramTemplate
      * @param int $perPage = 7
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    function getStudents(Program $program, $perPage = 7)
+    function getStudents(Program $program, $perPage = 10)
     {
         return $program->students()->orderByDesc('id')
-            ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status', 'refundStatus');
-            }, 'user:id,login_id'])->paginate($perPage);
+                ->with(['ticket', 'payment' => function ($query) {
+                    $query->select('id', 'totalAmount', 'status', 'refundStatus');
+                }, 'user:id,login_id'])->paginate($perPage)
+        ;
     }
 
 
