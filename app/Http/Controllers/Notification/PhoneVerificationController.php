@@ -33,7 +33,7 @@ class PhoneVerificationController extends Controller
         }
 
         $validatedData = $validator->validate();
-        $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->where('expired_at','>',now())->get();
+        $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->where('expired_at','>',now())->first();
 
         var_dump($validatedData);
         var_dump($data->toArray());
