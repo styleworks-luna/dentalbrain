@@ -19,10 +19,10 @@ class PhoneVerificationController extends Controller
         return $sms->sendVerificationNumber($validatedData['phone']);
     }
 
-    public function comapreVerificationNumber(Request $request){
+    public function compareVerificationNumber(Request $request){
         $validator = Validator::make($request->all(), [
             'phone' => 'required|min:11|max:11',
-            'verficationNumber' => 'required|min:6|max:6'
+            'verificationNumber' => 'required|min:6|max:6'
         ]);
 
         if($validator->fails()){
@@ -35,7 +35,7 @@ class PhoneVerificationController extends Controller
         $validatedData = $validator->validate();
         $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->whereDate('expired_at','>',date("Y-m-d H:i:s"))->first();
 
-        if(!empty($data) && $data->verfication_num == $validatedData['verficationNumber']){
+        if(!empty($data) && $data->verfication_num == $validatedData['verificationNumber']){
             $result = array(
                 'success' => true
             );

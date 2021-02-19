@@ -8,14 +8,20 @@ use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
+use App\Models\Program\ProgramStudent;
 use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
+use App\Models\User;
+use App\Payments\TossPayments\TossPayments;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
+use App\Services\File\SurveyFile;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +34,7 @@ abstract class ProgramTemplate
      * ProgramTemplate constructor.
      * @param bool|int $is_online
      */
-    public function __construct($is_online)
+    public function __construct($is_online /*TODO Program 요구하도록 수정하기*/)
     {
         $this->is_online = $is_online;
     }
@@ -63,7 +69,7 @@ abstract class ProgramTemplate
      * @param int $perPage = 7
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    function getStudents(Program $program, $perPage = 7)
+    function getStudents(Program $program, $perPage = 10)
     {
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
@@ -143,6 +149,7 @@ abstract class ProgramTemplate
 
     function validateTickets(Request $request, array $additionalRules = [])
     {
+        // TODO: 가격 변경시에 신청자 있는지 체크하기.(필수)
         $v = Validator::make($request->all(), array_merge([
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
@@ -254,7 +261,7 @@ abstract class ProgramTemplate
             $fileService = new ProgramThumbnail($this->program);
 
             // 기존 파일 삭제
-            $fileService->deletePublicFile();
+            $fileService->deleteFile();
 
             // 새로운 파일 등록
             $file = $fileService->moveTempToPublic(File::find($data['thumbnail_id']));
@@ -271,7 +278,7 @@ abstract class ProgramTemplate
             $fileService = new ProgramMaterial($program);
 
             //기존 파일 삭제
-            $fileService->deletePublicFile();
+            $fileService->deleteFile();
 
             if ($data['material_id'] !== null) {
                 // 새 파일 생성
@@ -297,8 +304,7 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
-    public
-    function updateTickets(Program $program, array $data)
+    public function updateTickets(Program $program, array $data)
     {
         if ($data['is_free'] == true) {
             $data['price'] = 0;
@@ -312,8 +318,7 @@ abstract class ProgramTemplate
         ]);
     }
 
-    public
-    function updateSurveys(Program $program, array $dataSet)
+    public function updateSurveys(Program $program, array $dataSet)
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');
@@ -372,5 +377,70 @@ abstract class ProgramTemplate
         Survey::query()->whereIn('id', $deletable)->delete();
 
         return $returnableDataSet;
+    }
+
+    /*
+     *  ========================= DELETE =========================
+     */
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @param User|Authenticatable $user
+     * @return boolean
+     */
+    public function cancel(Request $request, Program $program, $user)
+    {
+        $v = Validator::make($request->all(), [
+            'reason' => ['required', 'string'],
+        ]);
+
+        $data = $v->validate();
+
+        $base = $program->students()
+            ->where('user_id', '=', $user->id)
+            ->where('pay_status', '=', 2);
+        if ($base->count() > 1) {
+            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+            return false;
+        }
+        $student = $base->first();
+
+        // 삭제 진행
+
+        // 질문 답변 삭제 진행
+        $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $user->id);
+
+        //질문 답변 - 파일 삭제
+        $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
+            ->get()->mapInto(SurveyFile::class);
+
+        $surveyFiles->map(function ($item, $key) {
+            return $item->deleteFile();
+        });
+
+        $program->answers()->where('user_id', '=', $user->id)->delete();
+
+        // 환불 상태 기록
+        $student->pay_status = ProgramStudent::$PAY_REFUNDED;
+        $student->save();
+
+        // 결제 취소 진행.
+        $payment = $student->payment;
+        $tossPayment = new TossPayments($payment->paymentKey);
+
+        switch ($payment->method) {
+            case '카드':
+                $response = $tossPayment->cancelCard($data['reason']);
+                $payment->updateByToss($response);
+                return true;
+            case '가상계좌':
+                $response = $tossPayment->cancelVirtualAccount($data['reason'], '1', '2', '3');
+                $payment->updateByToss($response);
+                return true;
+            //case '휴대폰':
+            default:
+                return false;
+        }
     }
 }
