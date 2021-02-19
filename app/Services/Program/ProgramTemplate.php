@@ -8,6 +8,7 @@ use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
+use App\Models\Program\ProgramStudent;
 use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
@@ -398,7 +399,7 @@ abstract class ProgramTemplate
 
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->where('is_refund', '=', 0);
+            ->where('pay_status', '=', 2);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;
@@ -421,7 +422,7 @@ abstract class ProgramTemplate
         $program->answers()->where('user_id', '=', $user->id)->delete();
 
         // 환불 상태 기록
-        $student->is_refund = 1;
+        $student->pay_status = ProgramStudent::$PAY_REFUNDED;
         $student->save();
 
         // 결제 취소 진행.
@@ -441,8 +442,5 @@ abstract class ProgramTemplate
             default:
                 return false;
         }
-        // 1. survey_answers
-        // 4. student
-        // final. refund
     }
 }

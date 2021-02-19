@@ -23,7 +23,7 @@ class TossPaymentsResponse implements \ArrayAccess
      * 토스 결과 전체를 string으로 변환한 값.
      * @return string
      */
-    public function getFullResponse() : string
+    public function getFullResponse(): string
     {
         return $this->fullResponse;
     }
@@ -32,9 +32,19 @@ class TossPaymentsResponse implements \ArrayAccess
      * 토스 결과를 배열로 반환.
      * @return array
      */
-    public function getArray() : array
+    public function getArray(): array
     {
         return $this->data;
+    }
+
+    public function isCard(): bool
+    {
+        return $this->data['method'] == '카드';
+    }
+
+    public function isVirtualAccount(): bool
+    {
+        return $this->data['method'] == '가상계좌';
     }
 
     /*
