@@ -114,7 +114,7 @@
 
             <br>
             id 존재 함수
-            <form method="post" action="{{ route('api.find.check-id') }}">
+            <form method="post" action="{{ route('api.check-id') }}">
                 @csrf
                 <input type="text" name="login_id" id="login_id" placeholder="아이디">
                 <input type="submit">
@@ -130,7 +130,7 @@
 
             <br>
             문자 인증확인
-            <form method="post" action="{{ route('api.comapreVerificationNumber') }}">
+            <form method="post" action="{{ route('api.compareVerificationNumber') }}">
                 @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="text" name="verficationNumber" placeholder="인증번호">
