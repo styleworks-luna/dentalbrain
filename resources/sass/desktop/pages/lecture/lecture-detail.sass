@@ -122,18 +122,31 @@
     +margin(top 22px)
     overflow: hidden
 
-    .apply-btn
+    .btn-wrap
+        float: right
+
+        .edit
+            +margin(top 10px left 135px)
+            display: block
+            color: $page-color
+            text-decoration: underline
+
+    .apply-btn,
+    .btn-apply-complete
         +size(308px, 54px)
         +margin(left 22px)
         +border-radius(27px)
         +background(null, null, null, $page-color)
         display: block
-        float: right
         font-weight: bold
         font-size: 18px
         color: $white
         text-align: center
         line-height: 3
+
+    .btn-apply-complete
+        +background(null, null, null, $border-color-light)
+        color: $gray-900
 
     .apply-btn:hover
         +background(null, null, null, $purple-400)
