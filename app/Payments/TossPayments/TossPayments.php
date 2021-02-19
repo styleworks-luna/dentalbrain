@@ -55,9 +55,9 @@ class TossPayments
             return false;
         }
 
-        $this->response = $response->getBody()->getContents();
+        $this->response = new TossPaymentsResponse($response->getBody()->getContents());
 
-        return json_decode($this->response, true) ?: false;
+        return $this->response ?: false;
     }
 
     /**
@@ -65,19 +65,9 @@ class TossPayments
      *
      * @return string
      */
-    private function getAcceptUrl()
+    protected function getAcceptUrl()
     {
         return 'https://api.tosspayments.com/v1/payments/' . $this->paymentKey;
-    }
-
-    /**
-     * 했던 API 콜 결과 전부 받아옴.
-     *
-     * @return null|string 결과 받은 적이 없으면 null.
-     */
-    public function getFullResponse()
-    {
-        return $this->response;
     }
 
     /**
@@ -154,7 +144,7 @@ class TossPayments
      * 결제 취소 주소
      * @return string
      */
-    private function getCancelUrl()
+    protected function getCancelUrl()
     {
         return 'https://api.tosspayments.com/v1/payments/' . $this->paymentKey . '/cancel';
     }

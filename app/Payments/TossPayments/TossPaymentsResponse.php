@@ -9,22 +9,37 @@ class TossPaymentsResponse implements \ArrayAccess
     private $data;
     private $fullResponse;
 
+    /**
+     * TossPaymentsResponse constructor.
+     * @param string $tossResponse 토스 결과 전달 전체를 string 으로 변환 한 값.
+     */
     public function __construct(string $tossResponse)
     {
         $this->data = json_decode($tossResponse, true);
         $this->fullResponse = $tossResponse;
     }
 
-    public function getFullResponse()
+    /**
+     * 토스 결과 전체를 string으로 변환한 값.
+     * @return string
+     */
+    public function getFullResponse() : string
     {
         return $this->fullResponse;
     }
 
-    public function getArray()
+    /**
+     * 토스 결과를 배열로 반환.
+     * @return array
+     */
+    public function getArray() : array
     {
         return $this->data;
     }
 
+    /*
+     * ===================== FOR ARRAY ACCESS =======================
+     */
     public function offsetExists($offset)
     {
         return isset($this->data[$offset]);
@@ -47,5 +62,14 @@ class TossPaymentsResponse implements \ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
+    }
+
+    /*
+    * ===================== TO STRING =====================
+    */
+
+    function __toString()
+    {
+        return $this->fullResponse;
     }
 }

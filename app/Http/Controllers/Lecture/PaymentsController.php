@@ -10,7 +10,6 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
-use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -25,13 +24,13 @@ class PaymentsController extends Controller
         }
 
         $toss = new TossPayments($request->get('paymentKey'));
-        $responseBody = $toss->success($request->get('orderId'), $request->get('amount'));
+        $response = $toss->success($request->get('orderId'), $request->get('amount'));
 
-        if ($responseBody === false) {
+        if ($response === false) {
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        $payment = Payment::createByToss(new TossPaymentsResponse($responseBody));
+        $payment = Payment::createByToss($response);
 
         ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('ticket_id', '=', $program->ticket->id)
