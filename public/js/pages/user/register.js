@@ -59,8 +59,8 @@ $(function () {
         });
     });
 
-    $('login_id').change(function () {
-        $('#login_id_check').val('N').attr('data-parsley-pattern','[N]');
+    $('#login_id').change(function () {
+        $('#login_id_check').val('N');
     })
 
     // 약관 동의 내용보기

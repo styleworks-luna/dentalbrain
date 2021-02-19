@@ -17,6 +17,9 @@
         <div class="small-container">
             <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
+                @foreach($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
 
                 <section class="register">
                     <h2>회원가입</h2>
