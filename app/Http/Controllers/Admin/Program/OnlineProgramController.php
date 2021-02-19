@@ -157,12 +157,5 @@ class OnlineProgramController extends Controller
         ]);
     }
 
-    public function cancel(Request $request, Program $program, ProgramStudent $student)
-    {
-        $response = $this->onlineConcrete->cancel($request, $program, User::find($student->user_id));
-        if ($response === false) {
-            return response()->json(['msg' => '실패']);
-        }
-        //TODO : response로 payment 갱신하기.
-    }
+
 }

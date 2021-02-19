@@ -29,4 +29,24 @@ class Payment extends Model
             'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
         ]);
     }
+
+    public function updateByToss(TossPaymentsResponse $response)
+    {
+        return $this->update([
+                'paymentKey' => $response['paymentKey'],
+                'orderId' => $response['orderId'],
+                'totalAmount' => $response['totalAmount'],
+                'receiptUrl' => $response['card'] ? $response['card']['receiptUrl'] : null,
+                'method' => $response['method'],
+                'status' => $response['status'],
+                'refundStatus' => $response['virtualAccount'] ? $response['virtualAccount']['refundStatus'] : null,
+                'useDiscount' => $response['useDiscount'],
+                'discountAmount' => $response['discountAmount'],
+                'secret' => $response['secret'],
+                'full_response' => $response->getFullResponse(),
+                'requestedAt' => Carbon::parse($response['requestedAt'])->toDateTime(),
+                'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
+            ]
+        );
+    }
 }

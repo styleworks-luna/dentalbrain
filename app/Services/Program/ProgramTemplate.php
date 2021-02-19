@@ -303,8 +303,7 @@ abstract class ProgramTemplate
         return $this->program;
     }
 
-    public
-    function updateTickets(Program $program, array $data)
+    public function updateTickets(Program $program, array $data)
     {
         if ($data['is_free'] == true) {
             $data['price'] = 0;
@@ -318,8 +317,7 @@ abstract class ProgramTemplate
         ]);
     }
 
-    public
-    function updateSurveys(Program $program, array $dataSet)
+    public function updateSurveys(Program $program, array $dataSet)
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');
@@ -388,21 +386,31 @@ abstract class ProgramTemplate
      * @param Request $request
      * @param Program $program
      * @param User|Authenticatable $user
-     * @return false
+     * @return boolean
      */
     public function cancel(Request $request, Program $program, $user)
     {
+        $v = Validator::make($request->all(), [
+            'reason' => ['required', 'string'],
+        ]);
+
+        $data = $v->validate();
+
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->where('is_refund', '=', 0);;
+            ->where('is_refund', '=', 0);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;
         }
         $student = $base->first();
 
+        // 삭제 진행
+
+        // 질문 답변 삭제 진행
         $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $user->id);
 
+        //질문 답변 - 파일 삭제
         $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
             ->get()->mapInto(SurveyFile::class);
 
@@ -410,27 +418,29 @@ abstract class ProgramTemplate
             return $item->deleteFile();
         });
 
+        $program->answers()->where('user_id', '=', $user->id)->delete();
+
+        // 환불 상태 기록
         $student->is_refund = 1;
         $student->save();
 
-
+        // 결제 취소 진행.
         $payment = $student->payment;
         $tossPayment = new TossPayments($payment->paymentKey);
 
         switch ($payment->method) {
             case '카드':
-                $tossPayment->cancelCard($request->get('reason'));
-                break;
+                $response = $tossPayment->cancelCard($data['reason']);
+                $payment->updateByToss($response);
+                return true;
             case '가상계좌':
-                $tossPayment->cancelVirtualAccount($request->get('reason'), '1', '2', '3');
-                break;
-            case '휴대폰':
-                break;
+                $response = $tossPayment->cancelVirtualAccount($data['reason'], '1', '2', '3');
+                $payment->updateByToss($response);
+                return true;
+            //case '휴대폰':
             default:
                 return false;
         }
-        return true;
-
         // 1. survey_answers
         // 4. student
         // final. refund
