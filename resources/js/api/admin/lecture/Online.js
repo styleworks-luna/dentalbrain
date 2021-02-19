@@ -1,6 +1,6 @@
 import Send from '@/utils/Send.js';
 
-export default {
+export const Online = {
     getData(params) {
         return Send({
             url: '/api/admin/lecture/online',
@@ -39,17 +39,28 @@ export default {
             url: `/api/admin/lecture/online/${id}`,
             method: 'patch'
         });
-    },
-    getStudentsData(id) {
+    }
+};
+
+export const Student = {
+    getStudentsData(id, params) {
         return Send({
             url: `/api/admin/lecture/online/${id}/students`,
-            method: 'get'
+            method: 'get',
+            params: params
         });
     },
     setStudent(id) {
         return Send({
-            url: `/api/admin/lecture/online/${id}/student`,
+            url: `/api/admin/lecture/online/${id}/students`,
             method: 'patch'
         });
     },
+    cancelPayment(id, studentId, params) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}/students/${studentId}`,
+            method: 'delete',
+            params: params
+        });
+    }
 }

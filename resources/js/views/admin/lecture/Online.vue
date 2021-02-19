@@ -85,7 +85,7 @@
     import SelectBox from '@/components/common/SelectBox.vue';
 
     //api
-    import Online from '@/api/admin/lecture/Online.js';
+    import { Online } from '@/api/admin/lecture/Online.js';
 
     // mixins
     import { ProgramCategoryMixin } from '@/mixins/admin/lecture/Form.js';
