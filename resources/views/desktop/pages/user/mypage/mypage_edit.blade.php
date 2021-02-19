@@ -54,7 +54,7 @@
                                 <select name="job" id="job" class="select-menu">
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}"
-                                                @if ($category->id == auth()->user()->job_id)
+                                                @if ($category->id == auth()->user()->job->job_name_id)
                                                 selected
                                             @endif
                                         >{{ $category->name }}</option>

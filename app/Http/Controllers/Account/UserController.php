@@ -30,7 +30,7 @@ class UserController extends Controller
         $v = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
-            'job' => ['required', 'min:0', 'max:5'],
+            'job' => ['required', 'min:1', 'max:6'],
             'phone' => ['required'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
@@ -39,7 +39,7 @@ class UserController extends Controller
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
-
+        
         if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
             $userJob = UserJob::find($user->job_id);
             $userJob->license_num = $license_num;

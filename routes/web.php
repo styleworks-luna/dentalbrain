@@ -189,6 +189,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
+
     Route::post('compare-verification','Notification\PhoneVerificationController@comapreVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
