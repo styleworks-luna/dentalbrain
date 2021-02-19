@@ -190,7 +190,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
     Route::post('compare-verification','Notification\PhoneVerificationController@comapreVerificationNumber')->name('compare-verification');
-    
+
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
     // 회원 아이디 중복체크
     Route::post('check-id','Account\FindIdController@checkIdDuplication')->name('check-id');

@@ -105,9 +105,8 @@ $(function () {
             data: data,
             success: function (data) {
                 $('#phone').attr('readonly', true);
-
                 startTimer();
-                alert(data.message);
+                alert('인증번호를 전송하였습니다.');
             },
             error: function (request, status, error) {
                 alert(error);
