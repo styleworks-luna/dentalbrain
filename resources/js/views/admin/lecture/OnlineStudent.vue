@@ -193,9 +193,6 @@ export default {
                 reason: this.cancelReason
             };
 
-            console.log(params);
-            return false;
-
             Student.cancelPayment(this.id, this.cancelStudentId, params).then(res => {
                 alert(res.data.msg);
                 this.getData();
