@@ -182,7 +182,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('sendVerificationNumber', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('sendVerificationNumber');
-    Route::post('comapreVerificationNumber','Notification\PhoneVerificationController@comapreVerificationNumber')->name('comapreVerificationNumber');
+    Route::post('compareVerificationNumber','Notification\PhoneVerificationController@compareVerificationNumber')->name('compareVerificationNumber');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
     // 회원 아이디 중복체크
