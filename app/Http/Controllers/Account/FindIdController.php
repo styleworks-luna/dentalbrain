@@ -46,15 +46,15 @@ class FindIdController extends Controller
         }
     }
 
-    public function findId(Request $request){
+    public function checkIdDuplication(Request $request){
         $validator = Validator::make($request->except('_token'),[
             'login_id' => 'required | min:4'
         ]);
 
         if($validator->fails()){
             return response()->json([
-                'success'=> 'false',
-                'message' => '입력되지 않았습니다.'
+                'success'=> false,
+                'message' => '아이디를 4자리 이상 입력해주세요.'
             ]);
         }
 
@@ -67,13 +67,13 @@ class FindIdController extends Controller
     private function getResultOfFindId($user){
         if(isset($user) && !empty($user)){
             return response()->json([
-                'message' => '존재하는 아이디입니다.',
-                'success' => true
+                'message' => '중복되는 아이디 입니다.',
+                'success' => false
             ]);
         }else{
             return response()->json([
-                'message' => '존재하지 않는 아이디입니다.',
-                'success' => false
+                'message' => '중복되지 않는 아이디입니다.',
+                'success' => true
             ]);
         }
     }
