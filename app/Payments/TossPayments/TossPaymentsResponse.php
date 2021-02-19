@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Requests\Payments;
+namespace App\Payments\TossPayments;
 
 
 class TossPaymentsResponse implements \ArrayAccess

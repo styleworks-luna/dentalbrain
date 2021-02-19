@@ -1,10 +1,9 @@
 <?php
 
 
-namespace App\Services;
+namespace App\Payments\TossPayments;
 
 
-use App\Http\Requests\Payments\TossPaymentsResponse;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;

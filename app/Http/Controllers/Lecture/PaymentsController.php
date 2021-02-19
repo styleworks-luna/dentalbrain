@@ -4,19 +4,16 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
-use App\Http\Requests\Payments\TossPaymentsResponse;
 use App\Mail\paymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use App\Services\TossPayments;
+use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller

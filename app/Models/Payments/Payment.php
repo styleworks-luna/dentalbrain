@@ -2,7 +2,7 @@
 
 namespace App\Models\Payments;
 
-use App\Http\Requests\Payments\TossPaymentsResponse;
+use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
