@@ -9,12 +9,11 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use App\Services\TossPayments;
+use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller
 {
@@ -25,46 +24,45 @@ class PaymentsController extends Controller
         }
 
         $toss = new TossPayments($request->get('paymentKey'));
-        $responseBody = $toss->success($request->get('orderId'), $request->get('amount'));
+        $response = $toss->success($request->get('orderId'), $request->get('amount'));
 
-        if ($responseBody === false) {
+        if ($response === false) {
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        $payment = Payment::query()->create([
-            'paymentKey' => $responseBody['paymentKey'],
-            'orderId' => $responseBody['orderId'],
-            'totalAmount' => $responseBody['totalAmount'],
-            'receiptUrl' => $responseBody['card'] ? $responseBody['card']['receiptUrl'] : null,
-            'method' => $responseBody['method'],
-            'status' => $responseBody['status'],
-            'refundStatus' => $responseBody['virtualAccount'] ? $responseBody['virtualAccount']['refundStatus'] : null,
-            'useDiscount' => $responseBody['useDiscount'],
-            'discountAmount' => $responseBody['discountAmount'],
-            'secret' => $responseBody['secret'],
-            'full_response' => $toss->getFullResponse(),
-            'requestedAt' => Carbon::parse($responseBody['requestedAt'])->toDateTime(),
-            'approvedAt' => Carbon::parse($responseBody['approvedAt'])->toDateTime(),
-        ]);
+        $payment = Payment::createByTossSuccess($response);
 
-        ProgramStudent::query()->where('user_id', '=', Auth::id())
-            ->where('ticket_id', '=', $program->ticket->id)
-            ->first()->update([
-                'payment_id' => $payment->id,
-                'expired_at' => now()->addDays($program->ticket->term),
-            ]);
+        if ($response->isCard()) {
+            ProgramStudent::query()->where('user_id', '=', Auth::id())
+                ->where('ticket_id', '=', $program->ticket->id)
+                ->first()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => now()->addDays($program->ticket->term),
+                    'pay_status' => ProgramStudent::$PAY_PAID,
+                ]);
+        } elseif ($response->isVirtualAccount()) {
+            ProgramStudent::query()->where('user_id', '=', Auth::id())
+                ->where('ticket_id', '=', $program->ticket->id)
+                ->first()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => now()->addDays($program->ticket->term),
+                    'pay_status' => ProgramStudent::$PAY_IN_PROCESS,
+                ]);
+        }
 
-        Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(),$this->getProgramQueryWithPayment($payment)));
+
+        Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
 
         return redirect()->route('lectures.result', $program->id);
     }
 
-    private function getProgramQueryWithPayment(Payment $payment){
+    private function getProgramQueryWithPayment(Payment $payment)
+    {
         return ProgramStudent::query()
-            ->select('id','payment_id','ticket_id','expired_at')
+            ->select('id', 'payment_id', 'ticket_id', 'expired_at')
             ->where('user_id', '=', Auth::id())
-            ->with('payment:id,totalAmount,method','ticket.program:id,title')
-            ->whereHas('payment', function($query) use($payment) {
+            ->with('payment:id,totalAmount,method', 'ticket.program:id,title')
+            ->whereHas('payment', function ($query) use ($payment) {
                 $query->where('id', $payment->id);
             })
             ->get()

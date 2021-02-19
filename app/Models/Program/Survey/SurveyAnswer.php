@@ -5,9 +5,12 @@ namespace App\Models\Program\Survey;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SurveyAnswer extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'survey_answers';
     protected $guarded = [];
 

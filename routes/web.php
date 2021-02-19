@@ -45,6 +45,10 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
     Route::get('search', 'Test\TestController@search')->name('search');
+    Route::get('sms', 'Test\TestController@getToken')->name('getToken');
+    Route::get('purio', 'Test\TestController@purio');
+
+    Route::get('cancel', 'Test\TestController@cancelTest');
 });
 
 /*============================ PAGES ============================*/
@@ -161,7 +165,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     // lecture
     Route::view('lecture/{any}', 'admin.index');
     Route::view('lecture/online/{any}', 'admin.index');
+    Route::view('lecture/online/{user}/{any}', 'admin.index');
     Route::view('lecture/offline/{any}', 'admin.index');
+    Route::view('lecture/offline/{user}/{any}', 'admin.index');
     Route::view('lecture/question/{any}', 'admin.index');
 
     // user
@@ -253,6 +259,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
+                    Route::delete('students/{student}', 'Admin\Program\OnlineStudentController@cancel')->name('students.cancel');
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
@@ -264,6 +271,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('/', 'Admin\Program\OfflineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
                     Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
+                    Route::delete('students/{student}', 'Admin\Program\OfflineStudentController@cancel')->name('students.cancel');
                     Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
