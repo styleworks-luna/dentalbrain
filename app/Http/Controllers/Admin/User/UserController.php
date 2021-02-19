@@ -42,7 +42,7 @@ class UserController
             'name' => 'required',
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required'],
-            'job_name_id' => ['required', 'min:0', 'max:5'],
+            'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.

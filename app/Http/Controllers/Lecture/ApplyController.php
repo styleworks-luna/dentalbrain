@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
-use App\Mail\applyOfflineLecture;
-use App\Mail\applyOnlineLecture;
+use App\Mail\ApplyOfflineLecture;
+use App\Mail\ApplyOnlineLecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -102,9 +102,9 @@ class ApplyController extends Controller
 
     private function sendLectureApplyFreeMailWithIsOnline($is_online,Request $request, Program $program){
         if($is_online){
-            Mail::to($request->get('email'))->send(new applyOnlineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
+            Mail::to($request->get('email'))->send(new ApplyOnlineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
         }else{
-            Mail::to($request->get('email'))->send(new applyOfflineLecture(Auth::user(),$this->programQueryWithPlaceAndTicket($program)));
+            Mail::to($request->get('email'))->send(new ApplyOfflineLecture(Auth::user(),$this->programQueryWithPlaceAndTicket($program)));
         }
     }
 

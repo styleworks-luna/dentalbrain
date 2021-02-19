@@ -115,8 +115,16 @@
             </form>
 
             <br>
+            id 존재 함수
+            <form method="post" action="{{ route('api.find.findIdWithLoginId') }}">
+                @csrf
+                <input type="text" name="login_id" id="login_id" placeholder="아이디">
+                <input type="submit">
+            </form>
+
+            <br>
             문자인증번호
-            <form method="post" action="{{route('api.checkVerification')}}">
+            <form method="post" action="{{route('api.sendVerificationNumber')}}">
                 @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="submit">
@@ -124,7 +132,7 @@
 
             <br>
             문자 인증확인
-            <form method="post" action="{{ route('api.getVerificationNumber') }}">
+            <form method="post" action="{{ route('api.comapreVerificationNumber') }}">
                 @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="text" name="verficationNumber" placeholder="인증번호">

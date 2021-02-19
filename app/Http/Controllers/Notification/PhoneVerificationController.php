@@ -10,16 +10,16 @@ use App\Http\Controllers\Controller;
 
 class PhoneVerificationController extends Controller
 {
-    public function checkVerification(Request $request){
+    public function sendVerificationNumber(Request $request){
         $validatedData = $request->validate([
             'phone' => 'required|min:11|max:11'
         ]);
 
         $sms = new Ppurio();
-        return $sms->checkVerification($validatedData['phone']);
+        return $sms->sendVerificationNumber($validatedData['phone']);
     }
 
-    public function getVerificationNumber(Request $request){
+    public function comapreVerificationNumber(Request $request){
         $validator = Validator::make($request->all(), [
             'phone' => 'required|min:11|max:11',
             'verficationNumber' => 'required|min:6|max:6'

@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FindIdController extends Controller
 {
@@ -46,11 +47,34 @@ class FindIdController extends Controller
     }
 
     public function findId(Request $request){
-        $validatedData = $request->validate([
-            'login_id' => 'required'
+        $validator = Validator::make($request->except('_token'),[
+            'login_id' => 'required | min:4'
         ]);
 
+        if($validator->fails()){
+            return response()->json([
+                'success'=> 'false',
+                'message' => '입력되지 않았습니다.'
+            ]);
+        }
+
+        $validatedData = $validator->validate();
+
         $user = User::where('login_id',$validatedData['login_id'])->first();
-        return isset($user) && !empty($user);
+        return $this->getResultOfFindId($user);
+    }
+
+    private function getResultOfFindId($user){
+        if(isset($user) && !empty($user)){
+            return response()->json([
+                'message' => '존재하는 아이디입니다.',
+                'success' => true
+            ]);
+        }else{
+            return response()->json([
+                'message' => '존재하지 않는 아이디입니다.',
+                'success' => false
+            ]);
+        }
     }
 }

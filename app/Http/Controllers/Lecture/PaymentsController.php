@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
-use App\Mail\paymentLecture;
+use App\Mail\PaymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -54,7 +54,7 @@ class PaymentsController extends Controller
                 'expired_at' => now()->addDays($program->ticket->term),
             ]);
 
-        Mail::to(Auth::user()->email)->send(new paymentLecture(Auth::user(),$this->getProgramQueryWithPayment($payment)));
+        Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(),$this->getProgramQueryWithPayment($payment)));
 
         return redirect()->route('lectures.result', $program->id);
     }
