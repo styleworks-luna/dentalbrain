@@ -114,7 +114,7 @@
 
             <br>
             id 존재 함수
-            <form method="post" action="{{ route('api.find.checkIdDuplication') }}">
+            <form method="post" action="{{ route('api.find.check-id') }}">
                 @csrf
                 <input type="text" name="login_id" id="login_id" placeholder="아이디">
                 <input type="submit">
