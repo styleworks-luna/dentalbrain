@@ -181,19 +181,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::post('bizppurio', 'Notification\PhoneVerificationController@checkVerification')->name('checkVerification');
-    Route::post('getVerificationNumber','Notification\PhoneVerificationController@getVerificationNumber')->name('getVerificationNumber');
+    Route::post('sendVerificationNumber', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('sendVerificationNumber');
+    Route::post('comapreVerificationNumber','Notification\PhoneVerificationController@comapreVerificationNumber')->name('comapreVerificationNumber');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
+    // 회원 아이디 중복체크
+    Route::post('check-id','Account\FindIdController@checkIdDuplication')->name('check-id');
 
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
         Route::post('id', 'Account\FindIdController@findIdWithNameAndPhone')->name('id');
-
         // 회원 비밀번호 찾기
         Route::post('password', 'Account\FindPasswordController@sendPasswordMail')->name('password');
     });
-    
+
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');

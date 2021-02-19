@@ -4,30 +4,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/register.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#confirmAuthentication").on('click',function(){
-                var phone = $('#verification_number').val();
-                var data = {"phone" : phone};
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url:"{{route('api.checkVerification')}}",
-                    type:"POST",
-                    data:data,
-                    success:function(data){
-                        alert('success');
-                    },
-                    error: function (request, status, error){
-
-                    }
-                });
-            });
-        });
-    </script>
 @endsection
 
 @section('style')
@@ -35,13 +13,14 @@
 @endsection
 
 @section('content')
-    @foreach($errors->all() as $error)
-        <p>{{ $error }}</p>
-    @endforeach
     <section id="content" class="content">
         <div class="small-container">
             <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
+                @foreach($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+
                 <section class="register">
                     <h2>회원가입</h2>
                     <table>
@@ -55,8 +34,7 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 이름을 입력해주세요."
                                        data-parsley-errors-container=".name-error-wrap"
-                                       value="{{ old('name') }}"
-                                >
+                                       value="{{ old('name') }}">
 
                                 <div class="name-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -72,9 +50,16 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 아이디를 입력해주세요."
                                        data-parsley-errors-container=".id-error-wrap"
-                                       value="{{ old('login_id') }}"
-                                >
-                                <button class="btn-basic check-overlap-id">중복확인</button>
+                                       value="{{ old('login_id') }}">
+                                <button type="button" id="login_id_confirm" class="btn-basic check-overlap-id">중복확인</button>
+
+                                <input type="hidden"
+                                       name="test"
+                                       id="login_id_check"
+                                       value="N"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".id-error-wrap"
+                                       data-parsley-pattern-message="※ 중복확인 요청.">
 
                                 <div class="id-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -91,8 +76,7 @@
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-class-handler=".ui-emailbox"
                                        data-parsley-errors-container=".email-error-wrap"
-                                       value="{{ old('email') }}"
-                                >
+                                       value="{{ old('email') }}">
 
                                 <div class="email-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -113,8 +97,7 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
                                        data-parsley-errors-container=".license-error-wrap"
-                                       value="{{ old('license_num') }}"
-                                >
+                                       value="{{ old('license_num') }}">
 
                                 <div class="license-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -125,8 +108,9 @@
                                 <input type="password" id="password" name="password"
                                        placeholder="비밀번호 입력 (최소 6자 이상)"
                                        data-parsley-required="true"
-                                       data-parsley-required-message="※ 비밀번호를 입력해주세요."
-                                       data-parsley-errors-container=".password-error-wrap">
+                                       data-parsley-minlength="6"
+                                       data-parsley-errors-container=".password-error-wrap"
+                                       data-parsley-required-message="※ 비밀번호를 입력해주세요.">
 
                                 <div class="password-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -137,6 +121,8 @@
                                 <input type="password" id="password_confirmation" name="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
                                        data-parsley-required="true"
+                                       data-parsley-minlength="6"
+                                       data-parsley-equalto="#password"
                                        data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
                                        data-parsley-errors-container=".password-check-error-wrap">
 
@@ -154,9 +140,8 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap"
-                                       value="{{ old('phone') }}"
-                                >
-                                <button class="btn-basic btn-verification" id="confirmAuthentication">인증번호발송</button>
+                                       value="{{ old('phone') }}">
+                                <button type="button" id="confirmAuthentication" class="btn-basic btn-verification" >인증번호발송</button>
 
                                 <div class="phone-check-error-wrap parsley-error-wrap"></div>
 
@@ -168,11 +153,10 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap"
-                                       value="{{ old('verification_number') }}"
-                                >
+                                       value="{{ old('verification_number') }}">
                                 <button class="btn-basic btn-verification mt-10">인증번호확인</button>
 
-                                <div class="verification-check-error-wrap parsley-error-wrap"></div>
+                                <div type="button" class="verification-check-error-wrap parsley-error-wrap"></div>
                             </td>
                         </tr>
                     </table>

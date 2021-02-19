@@ -21,7 +21,7 @@ class Ppurio{
         return json_decode($result->getBody()->getContents(),true);
     }
 
-    public function checkVerification($phoneNumber){
+    public function sendVerificationNumber($phoneNumber){
         $token = $this->getToken();
         $verification_num = str_pad(mt_rand(0,999999),6,'0');
         $message = "문자 인증번호: ".$verification_num;

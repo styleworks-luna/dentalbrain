@@ -114,7 +114,8 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form">
+                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form" method="POST">
+                        @csrf
                         <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                         <input type="submit" value="등록" class="comment-input-btn">
                     </form>
