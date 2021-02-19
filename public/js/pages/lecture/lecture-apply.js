@@ -36,7 +36,6 @@ $(function () {
     });
 
     $('.btn-address').click(function () {
-        console.log($(this).data('index'));
         var index = $(this).data('index');
         DaumPostcode(index);
     });

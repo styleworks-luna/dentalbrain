@@ -14,11 +14,12 @@
 
             <section class="payment-history">
                 <h2>결제내역</h2>
-                @foreach($data as $key => $value)
-                    <ul>
+                <ul>
+                    @forelse($data as $key => $value)
                         <li>
                             <div class="lecture-information">
-                                <span class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
+                                <span
+                                    class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
                                 <h3 class="lecture-name">{{ $value['students'][0]['ticket']['program']['title'] }}</h3>
                             </div>
                             <table class="payment-information">
@@ -29,7 +30,7 @@
                                     <th>결제일{{ isset($value['deleted_at']) ? "/취소일" : '' }}</th>
                                 </tr>
                                 <tr>
-                                    <td>{{ $value['totalAmount'] }}원</td>
+                                    <td>{{ number_format($value['totalAmount']) }}원</td>
                                     <td>{{ $value['status'] == 'DONE' ? '결제완료' : '결제취소' }}</td>
                                     <td>
                                         {{ changePaymentMethodName($value['method']) }}
@@ -39,8 +40,10 @@
                                 </tr>
                             </table>
                         </li>
-                    </ul>
-                @endforeach
+                    @empty
+                        <li>결제내역이 없습니다.</li>
+                    @endforelse
+                </ul>
             </section>
         </div>
     </section>

@@ -107,7 +107,6 @@ export default {
     methods: {
         getData() {
             Online.getStudentsData().then(res => {
-                console.log(res);
             }).catch(err => {
                 this.lectures = [];
             });

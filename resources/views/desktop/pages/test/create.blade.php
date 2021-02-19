@@ -18,7 +18,6 @@
                     dataType: "json",
                     {{--data : {__token : "{{csrf_token()}}", file},--}}
                     success: function(response) {
-                        console.log(response);
                         $('#mobile_file_id').val(response['file'].id);
                     },
                     cache: false,
@@ -37,7 +36,6 @@
                     data : formData,
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
                         $('#desktop_file_id').val(response['file'].id);
                     },
                     cache: false,
