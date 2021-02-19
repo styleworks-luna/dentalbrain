@@ -43,10 +43,9 @@ class Program extends Model
         if ($user != null) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->where(function ($query) {
-                    $query->whereNotNull('expired_at')
-                        ->orWhere('expired_at', '>', now());
-                })->exists();
+                ->where('pay_status', '=', ProgramStudent::$PAY_PAID)
+                ->where('expired_at', '>', now())
+                ->exists();
         } else {
             return false;
         }

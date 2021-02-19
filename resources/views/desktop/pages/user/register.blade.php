@@ -54,7 +54,7 @@
                                 <button type="button" id="login_id_confirm" class="btn-basic check-overlap-id">중복확인</button>
 
                                 <input type="hidden"
-                                       name="test"
+                                       name="login_id_check"
                                        id="login_id_check"
                                        value="N"
                                        data-parsley-pattern="[Y]"
@@ -141,7 +141,17 @@
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap"
                                        value="{{ old('phone') }}">
-                                <button type="button" id="confirmAuthentication" class="btn-basic btn-verification" >인증번호발송</button>
+                                <input type="hidden"
+                                       name="phone-check"
+                                       id="login_id_check"
+                                       value="N"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".id-error-wrap"
+                                       data-parsley-pattern-message="※ 중복확인 요청.">
+                                <button type="button" id="send_authentication" class="btn-basic btn-verification" >인증번호발송</button>
+                                <button type="button" id="edit_phone" class="btn-basic btn-edit-phone" >변경</button>
+
+                                <p class="timer"></p>
 
                                 <div class="phone-check-error-wrap parsley-error-wrap"></div>
 
@@ -154,9 +164,9 @@
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap"
                                        value="{{ old('verification_number') }}">
-                                <button class="btn-basic btn-verification mt-10">인증번호확인</button>
+                                <button type="button"  id="confirm_authentication" class="btn-basic btn-verification mt-10">인증번호확인</button>
 
-                                <div type="button" class="verification-check-error-wrap parsley-error-wrap"></div>
+                                <div class="verification-check-error-wrap parsley-error-wrap"></div>
                             </td>
                         </tr>
                     </table>

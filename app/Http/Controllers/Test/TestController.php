@@ -14,10 +14,10 @@ use App\Models\Manage\BannerCategory;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\Notice;
+use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Models\UserJobName;
 use App\Services\Notification\Sms\Ppurio;
-use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 
@@ -44,8 +44,9 @@ class TestController extends Controller
         return view(viewPrefix() . 'pages.test.testInquiryUpdate', ['inquiry' => $inquiry]);
     }
 
-    public function BannerEdit(Banner $banner){
-        return view(viewPrefix().'pages.test.testBannerUpdate',['banner'=> $banner]);
+    public function BannerEdit(Banner $banner)
+    {
+        return view(viewPrefix() . 'pages.test.testBannerUpdate', ['banner' => $banner]);
     }
 
     public function FileUpload(Request $request)
@@ -53,11 +54,31 @@ class TestController extends Controller
         return view(viewPrefix() . 'pages.test.testFileUpload');
     }
 
-    public function UserEdit($userId){
-        return view(viewPrefix(). 'pages.test.testUserUpdate',['user' => User::find($userId)]);
+    public function UserEdit($userId)
+    {
+        return view(viewPrefix() . 'pages.test.testUserUpdate', ['user' => User::find($userId)]);
     }
 
-    public function Search(){
-        return view(viewPrefix(). 'pages.test.search',['bannerCategory' => BannerCategory::all(), 'userCategory' => UserJobName::all()]);
+    public function Search()
+    {
+        return view(viewPrefix() . 'pages.test.search', ['bannerCategory' => BannerCategory::all(), 'userCategory' => UserJobName::all()]);
+    }
+
+    public function getToken()
+    {
+        $sms = new Ppurio();
+        return $sms->getToken();
+    }
+
+    public function checkVerification(Request $request)
+    {
+        $sms = new Ppurio();
+        return $sms->checkVerification($request);
+    }
+
+    public function cancelTest(Request $request)
+    {
+        $students = ProgramStudent::all();
+        return view(viewPrefix() . 'pages.test.testCancel', ['students' => $students]);
     }
 }

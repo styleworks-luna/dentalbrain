@@ -76,7 +76,7 @@ abstract class FileTemplate
      *
      * @return bool 실패시 false 반환, 성공시 true 반환.
      */
-    public function deletePublicFile()
+    public function deleteFile()
     {
         $path = $this->deleteFileInDB();
         if ($path === false) {
