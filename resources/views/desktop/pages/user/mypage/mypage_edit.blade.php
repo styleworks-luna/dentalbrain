@@ -4,6 +4,7 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/mypage-edit.js') }}"></script>
 @endsection
 
@@ -44,7 +45,6 @@
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-errors-container=".email-error-wrap"
                                        value="{{ old('email',auth()->user()->email) }}">
-                                <button class="btn-basic btn-email-change">변경</button>
                                 <div class="email-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
@@ -104,7 +104,8 @@
                                 <input type="password" id="password" name="password"
                                        placeholder="변경할 비밀번호를 입력해주세요."
                                        data-parsley-required="true"
-                                       data-parsley-required-message="※ 비밀번호를 입력해주세요."
+                                       data-parsley-minlength="6"
+                                       data-parsley-errors-message="※ 비밀번호를 입력해주세요."
                                        data-parsley-errors-container=".password-error-wrap">
 
                                 <div class="password-error-wrap error-wrap-common"></div>
@@ -117,10 +118,10 @@
                                 <input type="password" id="password_confirmation" name="password_confirmation"
                                        class="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
-                                       data-parsley-required="true"
-                                       data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
+                                       data-parsley-minlength="6"
+                                       data-parsley-equalto="#password"
+                                       data-parsley-errors-message="※ 비밀번호가 일치하지 않습니다."
                                        data-parsley-errors-container=".password-check-error-wrap">
-                                <button class="btn-basic btn-password-change">변경</button>
                                 <div class="password-check-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>

@@ -120,7 +120,6 @@
                             <td>
                                 <input type="password" id="password_confirmation" name="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
-                                       data-parsley-required="true"
                                        data-parsley-minlength="6"
                                        data-parsley-equalto="#password"
                                        data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
@@ -153,6 +152,7 @@
                                        name="verification_number"
                                        class="verification-number"
                                        placeholder="인증번호 6자리를 입력"
+                                       readonly="true"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap"

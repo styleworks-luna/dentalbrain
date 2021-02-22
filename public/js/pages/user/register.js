@@ -110,6 +110,7 @@ $(function () {
             data: data,
             success: function () {
                 $('#phone').attr('readonly', true);
+                $('#verification_number').attr('readonly',false);
                 startTimer();
                 alert('인증번호를 전송하였습니다.');
             },
@@ -154,7 +155,7 @@ $(function () {
         clearInterval(timer);
         $('timer').text('');
         $('#phone').val('').attr('readonly', false);
-        $('#verification_number').val('').attr('readonly',false);
+        $('#verification_number').val('').attr('readonly',true);
         $('#phone-check').val('N');
     });
 
