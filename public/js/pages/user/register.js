@@ -65,7 +65,7 @@ $(function () {
 
     //초기화
     function reset() {
-        $('timer').text('');
+        $('.timer').text('');
         clearInterval(timer);
 
         $('#phone').val('').attr('readonly', false);
@@ -139,15 +139,19 @@ $(function () {
             url: "/api/compare-verification",
             type: "POST",
             data: data,
-            success: function () {
-                clearInterval(timer);
-                $('timer').text('');
+            success: function (data) {
+                if(data.success) {
+                    clearInterval(timer);
+                    $('.timer').text('');
 
-                $('#verification_number').attr('readonly',true);
-                $('#confirm_authentication').css('pointer-events', 'none');
-                $('#phone-check').val('Y');
+                    $('#verification_number').attr('readonly',true);
+                    $('#confirm_authentication').css('pointer-events', 'none');
+                    $('#phone-check').val('Y');
+                } else {
+                    $('#phone-check').val('N');
+                }
+                alert(data.msg);
 
-                alert("인증번호 확인이 완료되었습니다.");
             },
             error: function () {
                 alert('인증번호를 다시 입력해 주시기 바랍니다.');
