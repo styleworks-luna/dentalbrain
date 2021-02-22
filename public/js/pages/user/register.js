@@ -105,9 +105,8 @@ $(function () {
             data: data,
             success: function (data) {
                 $('#phone').attr('readonly', true);
-
                 startTimer();
-                alert(data.message);
+                alert('인증번호를 전송하였습니다.');
             },
             error: function (request, status, error) {
                 alert(error);
@@ -128,8 +127,11 @@ $(function () {
             url: "/api/compare-verification",
             type: "POST",
             data: data,
-            success: function (data) {
-                alert(data.message);
+            success: function () {
+                $('#verification_number').attr('readonly',true);
+                clearInterval(timer);
+                $('timer').text('');
+                alert("인증번호 확인이 완료되었습니다.");
             },
             error: function (request, status, error) {
                 alert(error);
