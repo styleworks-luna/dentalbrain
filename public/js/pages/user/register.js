@@ -59,14 +59,29 @@ $(function () {
         });
     });
 
+    $('#login_id').change(function () {
+        $('#login_id_check').val('N');
+    });
+
+    //초기화
+    function reset() {
+        $('timer').text('');
+        clearInterval(timer);
+
+        $('#phone').val('').attr('readonly', false);
+        $('#send_authentication').css('pointer-events', 'auto');
+
+        $('#verification_number').val('').attr('readonly',true);
+        $('#confirm_authentication').css('pointer-events', 'none');
+        $('#phone-check').val('N');
+    }
+
     // 타이머
     var timer = 0;
 
     function startTimer() {
 
         var SetTime = 180;
-
-        $('#send_authentication').css('pointer-events', 'none');
 
         timer = setInterval(function() {
             m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
@@ -77,19 +92,11 @@ $(function () {
             SetTime--;
 
             if (SetTime < 0) {
-                $('#send_authentication').css('pointer-events', 'auto');
-                clearInterval(timer);
+                reset();
                 alert("인증시간이 초과하였습니다. 다시 시도해주시기 바랍니다.");
             }
         }, 1000);
-    }
-
-    $("#edit_phone").click(function(){
-        $('#phone').attr('readonly', false);
-        clearInterval(timer);
-        $('#send_authentication').css('pointer-events', 'auto');
-        $('.timer').text("");
-    });
+    };
 
     // 인증번호 발송
     $('#send_authentication').click(function(){
@@ -103,13 +110,18 @@ $(function () {
             url: "/api/send-verification",
             type: "POST",
             data: data,
-            success: function (data) {
-                $('#phone').attr('readonly', true);
+            success: function () {
                 startTimer();
+                $('#phone').attr('readonly', true);
+                $('#send_authentication').css('pointer-events', 'none');
+
+                $('#verification_number').attr('readonly',false);
+                $('#confirm_authentication').css('pointer-events', 'auto');
+
                 alert('인증번호를 전송하였습니다.');
             },
-            error: function (request, status, error) {
-                alert(error);
+            error: function () {
+                alert('인증번호를 전송하지 못하였습니다.');
             }
         });
     });
@@ -128,19 +140,28 @@ $(function () {
             type: "POST",
             data: data,
             success: function () {
-                $('#verification_number').attr('readonly',true);
                 clearInterval(timer);
                 $('timer').text('');
+
+                $('#verification_number').attr('readonly',true);
+                $('#confirm_authentication').css('pointer-events', 'none');
+                $('#phone-check').val('Y');
+
                 alert("인증번호 확인이 완료되었습니다.");
             },
-            error: function (request, status, error) {
-                alert(error);
+            error: function () {
+                alert('인증번호를 다시 입력해 주시기 바랍니다.');
             }
         });
     });
 
-    $('#login_id').change(function () {
-        $('#login_id_check').val('N');
+    $('#verification_number').change(function() {
+        $('#phone-check').val('N');
+    });
+
+    // 변경 버튼
+    $('#edit_phone').click(function() {
+        reset();
     });
 
     // 약관 동의 내용보기
