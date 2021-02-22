@@ -149,8 +149,8 @@ $(function () {
     $('#edit_phone').click(function() {
         clearInterval(timer);
         $('timer').text('');
-        $('#phone').attr('readonly', false);
-        $('#verification_number').attr('readonly',false);
+        $('#phone').val('').attr('readonly', false);
+        $('#verification_number').val('').attr('readonly',false);
         $('#phone-check').val('N');
     });
 
