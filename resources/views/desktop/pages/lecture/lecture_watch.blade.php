@@ -45,14 +45,14 @@
                         <h3>플레이리스트</h3>
                         <ul>
                             @foreach($lectures as $lecture)
-                                <a href="{{ route('lectures.watch',[$program->id,$lecture->id]) }}">
-                                    <li>
+                                <li @if($now->id == $lecture->id)class="active"@endif>
+                                    <a href="{{ route('lectures.watch',[$program->id,$lecture->id]) }}">
                                         <div class="thumbnail">
                                             <img src="{{ $lecture->thumbnail ?? $program->thumbnail->url }}" alt="">
                                         </div>
                                         <p>{{ $lecture->title }}</p>
-                                    </li>
-                                </a>
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
