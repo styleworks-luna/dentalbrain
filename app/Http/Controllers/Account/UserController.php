@@ -8,7 +8,9 @@ use App\Models\UserJob;
 use App\Models\UserJobName;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -28,10 +30,10 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
             'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
             'job' => ['required', 'min:1', 'max:6'],
-            'phone' => ['required'],
+            'phone' => ['required','unique:users,phone'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job)->need_license == true;
@@ -39,18 +41,27 @@ class UserController extends Controller
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
-        
-        if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
-            $userJob = UserJob::find($user->job_id);
-            $userJob->license_num = $license_num;
-            $userJob->job_name_id = $data['job'];
-            $userJob->save();
-        }
 
-        $user->email = $data['email'];
-        $user->password = Hash::make($data['password']);
-        $user->phone = $data['phone'];
-        $user->save();
+        try{
+            DB::beginTransaction();
+            if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
+                $userJob = UserJob::find($user->job_id);
+                $userJob->license_num = $license_num;
+                $userJob->job_name_id = $data['job'];
+                $userJob->save();
+            }
+
+            $user->email = $data['email'];
+            $user->password = Hash::make($data['password']);
+            $user->phone = $data['phone'];
+            $user->save();
+
+            DB::commit();
+        }catch(\Exception $exception){
+            Log::error('ACCOUNT UPDATE ERROR',[$exception]);
+            DB::rollBack();
+            return redirect('/')->with('alert',$exception->getMessage().'오류가 발생하였습니다.');
+        }
 
         Auth::logout();
 
