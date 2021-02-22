@@ -42,7 +42,7 @@ class UserController
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users.email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone' => ['required', 'unique:users,phone'],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean']
