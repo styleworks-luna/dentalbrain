@@ -110,15 +110,21 @@ $(function () {
             url: "/api/send-verification",
             type: "POST",
             data: data,
-            success: function () {
-                startTimer();
-                $('#phone').attr('readonly', true);
-                $('#send_authentication').css('pointer-events', 'none');
+            success: function (data) {
+                console.log(data);
+                if(data.code == 1000) {
+                    startTimer();
+                    $('#phone').attr('readonly', true);
+                    $('#send_authentication').css('pointer-events', 'none');
 
-                $('#verification_number').attr('readonly',false);
-                $('#confirm_authentication').css('pointer-events', 'auto');
+                    $('#verification_number').attr('readonly',false);
+                    $('#confirm_authentication').css('pointer-events', 'auto');
 
-                alert('인증번호를 전송하였습니다.');
+                    alert('인증번호를 전송하였습니다.');
+                } else {
+                    alert(data.description);
+                }
+
             },
             error: function () {
                 alert('인증번호를 전송하지 못하였습니다.');
