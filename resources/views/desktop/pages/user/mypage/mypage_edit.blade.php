@@ -145,7 +145,7 @@
                     </table>
                     <div class="btn-wrap">
                         <input type="submit" class="btn-edit btn-common" value="수정완료">
-                        <button class="btn-cancel btn-common">취소하기</button>
+                        <a href="/" class="btn-cancel btn-common">취소하기</a>
                     </div>
                 </section>
             </form>
