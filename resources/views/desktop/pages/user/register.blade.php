@@ -141,13 +141,6 @@
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap"
                                        value="{{ old('phone') }}">
-                                <input type="hidden"
-                                       name="phone-check"
-                                       id="login_id_check"
-                                       value="N"
-                                       data-parsley-pattern="[Y]"
-                                       data-parsley-errors-container=".id-error-wrap"
-                                       data-parsley-pattern-message="※ 중복확인 요청.">
                                 <button type="button" id="send_authentication" class="btn-basic btn-verification" >인증번호발송</button>
                                 <button type="button" id="edit_phone" class="btn-basic btn-edit-phone" >변경</button>
 
@@ -165,6 +158,14 @@
                                        data-parsley-errors-container=".verification-check-error-wrap"
                                        value="{{ old('verification_number') }}">
                                 <button type="button"  id="confirm_authentication" class="btn-basic btn-verification mt-10">인증번호확인</button>
+
+                                <input type="hidden"
+                                       name="phone-check"
+                                       id="phone-check"
+                                       value="N"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".verification-check-error-wrap"
+                                       data-parsley-pattern-message="※ 인증번호 확인 요청.">
 
                                 <div class="verification-check-error-wrap parsley-error-wrap"></div>
                             </td>
