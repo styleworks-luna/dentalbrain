@@ -43,8 +43,8 @@ class UserController
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'. Auth::id()],
-            'phone' => ['required', 'unique:users,phone'.Auth::id()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'unique:users,phone'],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
@@ -72,6 +72,10 @@ class UserController
         }catch(\Exception $exception){
             Log::error('ACCOUNT UPDATE ERROR',[$exception]);
             DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'msg' => '오류가 발생하였습니다.'
+            ]);
         }
 
 
