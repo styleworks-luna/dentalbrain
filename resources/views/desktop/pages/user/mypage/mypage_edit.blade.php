@@ -83,7 +83,7 @@
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                            data-parsley-errors-container=".phone-check-error-wrap"
-                                           value="{{ old('phone',auth()->user()->phone) }}">
+                                           value="{{ auth()->user()->phone }}">
                                     <button type="button" id="send_authentication" class="btn-basic btn-verification">
                                         인증번호발송
                                     </button>
