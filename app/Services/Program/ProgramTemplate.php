@@ -276,9 +276,10 @@ abstract class ProgramTemplate
         if ($program->material_id != $data['material_id']) {
             // 변경 있음.
             $fileService = new ProgramMaterial($program);
-
-            //기존 파일 삭제
-            $fileService->deleteFile();
+            if ($program->material()->exists()) {
+                //기존 파일 삭제
+                $fileService->deleteFile();
+            }
 
             if ($data['material_id'] !== null) {
                 // 새 파일 생성
