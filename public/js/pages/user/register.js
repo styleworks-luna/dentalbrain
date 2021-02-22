@@ -145,6 +145,10 @@ $(function () {
         });
     });
 
+    $('#verification_number').change(function() {
+        $('#phone-check').val('N');
+    });
+
     // 변경 버튼
     $('#edit_phone').click(function() {
         clearInterval(timer);
