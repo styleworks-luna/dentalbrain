@@ -26,7 +26,8 @@ class ProgramController extends Controller
             'ticket.program' => function($query) use ($request) {
                 $query->select('id','thumbnail_id','title','is_online','running_time','major_category_id','minor_category_id')
                 ->with('place:id,program_id,address,address_detail,sido,gugun,started_at,ended_at')
-                ->with('thumbnail:id,path,url');
+                ->with('thumbnail:id,path,url')
+                ->with('lectures:id,program_id');
             },
         ])->whereHas('ticket.program',function($query) use($request) {
             $query = $this->addWhereOnlineOrOffline($request->order,$query);
