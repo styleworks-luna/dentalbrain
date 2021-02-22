@@ -147,10 +147,11 @@ $(function () {
                     $('#verification_number').attr('readonly',true);
                     $('#confirm_authentication').css('pointer-events', 'none');
                     $('#phone-check').val('Y');
+                    alert('인증번호 확인이 완료되었습니다.');
                 } else {
                     $('#phone-check').val('N');
+                    alert(data.msg);
                 }
-                alert(data.msg);
 
             },
             error: function () {
