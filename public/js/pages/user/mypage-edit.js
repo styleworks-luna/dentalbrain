@@ -121,4 +121,10 @@ $(function () {
     $('#edit_phone').click(function () {
         reset();
     });
+
+    // 비밀번호 변경 버튼
+    $('#edit_password').click(function() {
+       $('#password').attr({'readonly': false, 'data-parsley-required': true});
+       $('#password_confirmation').attr('readonly', false);
+    });
 });
