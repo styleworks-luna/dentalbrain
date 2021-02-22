@@ -44,7 +44,7 @@
                                        data-parsley-type="email"
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-errors-container=".email-error-wrap"
-                                       value="{{ old('email',auth()->user()->email) }}">
+                                       value="{{ auth()->user()->email }}">
                                 <div class="email-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
@@ -66,7 +66,7 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
                                        data-parsley-errors-container=".license-error-wrap"
-                                       value="{{ old('license_num',auth()->user()->job->license_num) }}">
+                                       value="{{ auth()->user()->job->license_num }}">
                                 <div class="license-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>

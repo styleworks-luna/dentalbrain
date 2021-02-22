@@ -30,14 +30,19 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
-            'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users,email,'.Auth::id()],
             'job' => ['required', 'min:1', 'max:6'],
-            'phone' => ['required','unique:users,phone'],
+            'phone' => ['nullable', 'unique:users,phone,'.Auth::id()],
+            'password' => ['nullable','string', 'min:6', 'max:40', 'confirmed'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
-            return UserJobName::find($input->job)->need_license == true;
+            return UserJobName::query()->find($input->job)->need_license == true;
         });
+
+        if($v->fails()) {
+            return redirect()->back()->with('alert','양식에 맞게 작성해주십시오.');
+        }
+
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
@@ -50,17 +55,16 @@ class UserController extends Controller
                 $userJob->job_name_id = $data['job'];
                 $userJob->save();
             }
-
             $user->email = $data['email'];
-            $user->password = Hash::make($data['password']);
-            $user->phone = $data['phone'];
+            if(isset($data['password'])) $user->password = Hash::make($data['password']);
+            if(isset($data['phone'])) $user->phone = $data['phone'];
             $user->save();
 
             DB::commit();
         }catch(\Exception $exception){
             Log::error('ACCOUNT UPDATE ERROR',[$exception]);
             DB::rollBack();
-            return redirect('/')->with('alert',$exception->getMessage().'오류가 발생하였습니다.');
+            return redirect('/')->with('alert',$exception->getMessage());
         }
 
         Auth::logout();
