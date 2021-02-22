@@ -21,7 +21,7 @@ $(function () {
         $('#phone').val('').attr('readonly', false);
         $('#send_authentication').css('pointer-events', 'auto');
 
-        $('#verification_number').val('').attr('readonly',true);
+        $('#verification_number').val('').attr('readonly', true);
         $('#confirm_authentication').css('pointer-events', 'none');
         $('#phone-check').val('N');
     }
@@ -33,7 +33,7 @@ $(function () {
 
         var SetTime = 180;
 
-        timer = setInterval(function() {
+        timer = setInterval(function () {
             m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
 
             var msg = "시간: " + m;
@@ -49,7 +49,7 @@ $(function () {
     };
 
     // 인증번호 발송
-    $('#send_authentication').click(function(){
+    $('#send_authentication').click(function () {
         var phone = $('#phone').val();
         var data = {"phone": phone};
 
@@ -60,15 +60,19 @@ $(function () {
             url: "/api/send-verification",
             type: "POST",
             data: data,
-            success: function () {
-                startTimer();
-                $('#phone').attr('readonly', true);
-                $('#send_authentication').css('pointer-events', 'none');
+            success: function (data) {
+                if (data.code == 1000) {
+                    startTimer();
+                    $('#phone').attr('readonly', true);
+                    $('#send_authentication').css('pointer-events', 'none');
 
-                $('#verification_number').attr('readonly',false);
-                $('#confirm_authentication').css('pointer-events', 'auto');
+                    $('#verification_number').attr('readonly', false);
+                    $('#confirm_authentication').css('pointer-events', 'auto');
 
-                alert('인증번호를 전송하였습니다.');
+                    alert('인증번호를 전송하였습니다.');
+                } else {
+                    alert(data.description);
+                }
             },
             error: function () {
                 alert('인증번호를 전송하지 못하였습니다.');
@@ -77,10 +81,10 @@ $(function () {
     });
 
     // 인증번호 확인
-    $('#confirm_authentication').click(function() {
+    $('#confirm_authentication').click(function () {
         var phone = $('#phone').val();
         var verificationNumber = $('#verification_number').val();
-        var data = {"phone": phone , "verificationNumber": verificationNumber};
+        var data = {"phone": phone, "verificationNumber": verificationNumber};
 
         $.ajax({
             headers: {
@@ -90,11 +94,11 @@ $(function () {
             type: "POST",
             data: data,
             success: function (data) {
-                if(data.success) {
+                if (data.success) {
                     clearInterval(timer);
                     $('.timer').text('');
 
-                    $('#verification_number').attr('readonly',true);
+                    $('#verification_number').attr('readonly', true);
                     $('#confirm_authentication').css('pointer-events', 'none');
                     $('#phone-check').val('Y');
                     alert('인증번호 확인이 완료되었습니다.');
@@ -109,12 +113,12 @@ $(function () {
         });
     });
 
-    $('#verification_number').change(function() {
+    $('#verification_number').change(function () {
         $('#phone-check').val('N');
     });
 
     // 변경 버튼
-    $('#edit_phone').click(function() {
+    $('#edit_phone').click(function () {
         reset();
     });
 });
