@@ -70,7 +70,7 @@
                 </div>
                 <div class="btn-zone">
                     <div class="content-button" v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
-                        <a href="">강의 시청하기</a>
+                        <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의 시청하기</a>
                     </div>
                     <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
                         <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
