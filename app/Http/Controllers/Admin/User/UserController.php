@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Models\User;
 use App\Models\UserJobName;
 use App\Models\UserJob;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -42,8 +43,8 @@ class UserController
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['required', 'unique:users,phone'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'. Auth::id()],
+            'phone' => ['required', 'unique:users,phone'.Auth::id()],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
