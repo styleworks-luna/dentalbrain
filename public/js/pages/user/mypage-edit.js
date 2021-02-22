@@ -8,5 +8,113 @@ $(function () {
     }
 
     // 파슬리
-    $('#edit-from').parsley();
+    $("#edit-form").parsley({
+        excluded: 'input[type=button], input[type=submit], input[type=reset]',
+        inputs: 'input, textarea, select, input[type=hidden], :hidden',
+    });
+
+    //초기화
+    function reset() {
+        $('.timer').text('');
+        clearInterval(timer);
+
+        $('#phone').val('').attr('readonly', false);
+        $('#send_authentication').css('pointer-events', 'auto');
+
+        $('#verification_number').val('').attr('readonly',true);
+        $('#confirm_authentication').css('pointer-events', 'none');
+        $('#phone-check').val('N');
+    }
+
+    // 타이머
+    var timer = 0;
+
+    function startTimer() {
+
+        var SetTime = 180;
+
+        timer = setInterval(function() {
+            m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
+
+            var msg = "시간: " + m;
+            $('.timer').text(msg);
+
+            SetTime--;
+
+            if (SetTime < 0) {
+                reset();
+                alert("인증시간이 초과하였습니다. 다시 시도해주시기 바랍니다.");
+            }
+        }, 1000);
+    };
+
+    // 인증번호 발송
+    $('#send_authentication').click(function(){
+        var phone = $('#phone').val();
+        var data = {"phone": phone};
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/api/send-verification",
+            type: "POST",
+            data: data,
+            success: function () {
+                startTimer();
+                $('#phone').attr('readonly', true);
+                $('#send_authentication').css('pointer-events', 'none');
+
+                $('#verification_number').attr('readonly',false);
+                $('#confirm_authentication').css('pointer-events', 'auto');
+
+                alert('인증번호를 전송하였습니다.');
+            },
+            error: function () {
+                alert('인증번호를 전송하지 못하였습니다.');
+            }
+        });
+    });
+
+    // 인증번호 확인
+    $('#confirm_authentication').click(function() {
+        var phone = $('#phone').val();
+        var verificationNumber = $('#verification_number').val();
+        var data = {"phone": phone , "verificationNumber": verificationNumber};
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "/api/compare-verification",
+            type: "POST",
+            data: data,
+            success: function (data) {
+                if(data.success) {
+                    clearInterval(timer);
+                    $('.timer').text('');
+
+                    $('#verification_number').attr('readonly',true);
+                    $('#confirm_authentication').css('pointer-events', 'none');
+                    $('#phone-check').val('Y');
+                    alert('인증번호 확인이 완료되었습니다.');
+                } else {
+                    $('#phone-check').val('N');
+                    alert(data.msg);
+                }
+            },
+            error: function () {
+                alert('인증번호를 다시 입력해 주시기 바랍니다.');
+            }
+        });
+    });
+
+    $('#verification_number').change(function() {
+        $('#phone-check').val('N');
+    });
+
+    // 변경 버튼
+    $('#edit_phone').click(function() {
+        reset();
+    });
 });

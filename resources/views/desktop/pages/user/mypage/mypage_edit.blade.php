@@ -16,7 +16,7 @@
     <section class="content">
         <div class="container">
             @include('desktop.layouts.navigation.account')
-            <form action="{{ route('account.update') }}" id="edit-from" method="POST">
+            <form action="{{ route('account.update') }}" id="edit-form" method="POST">
                 @csrf
                 <section class="edit">
                     <h2>회원정보 수정</h2>
@@ -73,28 +73,45 @@
                         <tr>
                             <th><label for="phone">휴대전화</label></th>
                             <td>
-                                <input type="text"
-                                       id="phone"
-                                       name="phone"
-                                       class="phone"
-                                       placeholder="'-' 없이 입력해주세요."
-                                       data-parsley-required="true"
-                                       data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
-                                       data-parsley-errors-container=".phone-check-error-wrap"
-                                       value="{{ old('phone',auth()->user()->phone) }}">
-                                <button class="btn-basic btn-verification">인증번호발송</button>
-                                <div class="phone-check-error-wrap error-wrap-common"></div>
+                                <div class="phone-wrap">
+                                    <input type="text"
+                                           id="phone"
+                                           name="phone"
+                                           class="phone"
+                                           readonly="true"
+                                           placeholder="'-' 없이 입력해주세요."
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
+                                           data-parsley-errors-container=".phone-check-error-wrap"
+                                           value="{{ old('phone',auth()->user()->phone) }}">
+                                    <button type="button" id="send_authentication" class="btn-basic btn-verification">인증번호발송</button>
+                                    <button type="button" id="edit_phone" class="btn-basic btn-edit-phone">변경</button>
 
+                                    <p class="timer"></p>
+
+                                    <div class="phone-check-error-wrap error-wrap-common"></div>
+                                </div>
+                                <div>
                                 <input type="text"
                                        id="verification_number"
                                        name="verification_number"
                                        class="verification-number"
+                                       readonly="true"
                                        placeholder="인증번호 6자리를 입력"
-                                       data-parsley-required="true"
+                                       data-parsley-required="false"
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap">
-                                <button class="btn-basic btn-verification mt-10">인증번호확인</button>
+                                <button type="button" id="confirm_authentication" class="btn-basic btn-verification mt-10">인증번호확인</button>
                                 <div class="verification-check-error-wrap error-wrap-common"></div>
+
+                                <input type="hidden"
+                                       name="phone-check"
+                                       id="phone-check"
+                                       value="Y"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".verification-check-error-wrap"
+                                       data-parsley-pattern-message="※ 인증번호 확인 요청.">
+                                </div>
 
                             </td>
                         </tr>

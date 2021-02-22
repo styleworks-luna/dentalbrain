@@ -152,7 +152,6 @@ $(function () {
                     $('#phone-check').val('N');
                     alert(data.msg);
                 }
-
             },
             error: function () {
                 alert('인증번호를 다시 입력해 주시기 바랍니다.');
