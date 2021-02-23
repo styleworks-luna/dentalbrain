@@ -153,7 +153,9 @@
                                 </div>
                                 <div class="child-comment-area">
                                     <form action="{{ route('lectures.comments.store',$program->id) }}"
+                                          method="post"
                                           class="comment-input-form hide">
+                                        @csrf
                                         <input type="hidden" name="parent_id" value="{{ $comment->id }}">
                                         <textarea name="content" placeholder="댓글을 입력하세요."
                                                   class="comment-input-text"></textarea>
