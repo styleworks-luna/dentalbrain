@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Program\Lecture;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class LectureQuestion extends Model
@@ -15,10 +16,6 @@ class LectureQuestion extends Model
     }
 
     public function user(){
-        return $this->belongsTo(Lecture::class,'user_id','id');
-    }
-
-    public function answer(){
-        return $this->hasOne(LectureAnswer::class,'id2','id');
+        return $this->belongsTo(User::class,'user_id','id');
     }
 }

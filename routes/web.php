@@ -147,7 +147,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역
-    Route::get('questions', 'Account\QuestionController@index')->name('questions');
+    Route::group(['prefix' => 'questions', 'as' => 'questions.'], function(){
+        Route::get('/','Account\QuestionController@index')->name('index');
+        Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
+    });
+
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');
     Route::post('update', 'Account\UserController@update')->name('update');
