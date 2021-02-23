@@ -14,12 +14,17 @@
 
 @section('content')
     <section id="content" class="content">
+        @if ($errors->any())
+            <ul class="alert-danger">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
         <div class="small-container">
             <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
-                @foreach($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
 
                 <section class="register">
                     <h2>회원가입</h2>
@@ -51,7 +56,8 @@
                                        data-parsley-required-message="※ 아이디를 입력해주세요."
                                        data-parsley-errors-container=".id-error-wrap"
                                        value="{{ old('login_id') }}">
-                                <button type="button" id="login_id_confirm" class="btn-basic check-overlap-id">중복확인</button>
+                                <button type="button" id="login_id_confirm" class="btn-basic check-overlap-id">중복확인
+                                </button>
 
                                 <input type="hidden"
                                        name="login_id_check"
@@ -140,8 +146,10 @@
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap"
                                        value="{{ old('phone') }}">
-                                <button type="button" id="send_authentication" class="btn-basic btn-verification" >인증번호발송</button>
-                                <button type="button" id="edit_phone" class="btn-basic btn-edit-phone" >변경</button>
+                                <button type="button" id="send_authentication" class="btn-basic btn-verification">
+                                    인증번호발송
+                                </button>
+                                <button type="button" id="edit_phone" class="btn-basic btn-edit-phone">변경</button>
 
                                 <p class="timer"></p>
 
@@ -157,7 +165,9 @@
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap"
                                        value="{{ old('verification_number') }}">
-                                <button type="button"  id="confirm_authentication" class="btn-basic btn-verification mt-10">인증번호확인</button>
+                                <button type="button" id="confirm_authentication"
+                                        class="btn-basic btn-verification mt-10">인증번호확인
+                                </button>
 
                                 <input type="hidden"
                                        name="phone-check"

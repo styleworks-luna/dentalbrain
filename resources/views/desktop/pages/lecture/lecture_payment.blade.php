@@ -25,7 +25,7 @@
 
                 e.preventDefault();
 
-                if(paymentmethod === '가상계좌') {
+                if (paymentmethod === '가상계좌') {
                     paymentObj = {
                         amount: {{ $program->ticket->price }},
                         orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
