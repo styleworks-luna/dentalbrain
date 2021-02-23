@@ -25,7 +25,7 @@ class CommentController extends Controller
 
         Comment::create($data);
 
-        return redirect()->with([
+        return redirect()->back()->with([
             'alert' => '댓글이 등록되었습니다.',
         ]);
     }
@@ -38,7 +38,7 @@ class CommentController extends Controller
         ]);
 
         if (!Auth::user()->can('delete', $comment)) {
-            return redirect()->with([
+            return redirect()->back()->with([
                 'alert' => '권한이 없습니다.'
             ]);
         }
@@ -49,13 +49,13 @@ class CommentController extends Controller
         } catch (\Exception $exception) {
             Log::error('COMMENT DELETE ERROR');
             DB::rollBack();
-            return redirect()->with([
+            return redirect()->back()->with([
                 'alert' => '오류가 발생했습니다.'
             ]);
         }
 
         DB::commit();
-        return redirect()->with([
+        return redirect()->back()->with([
             'alert' => '댓글이 삭제되었습니다.',
         ]);
     }
@@ -68,7 +68,7 @@ class CommentController extends Controller
         ]);
 
         if (!Auth::user()->can('update', $comment)) {
-            return redirect()->with([
+            return redirect()->back()->with([
                 'alert' => '권한이 없습니다.'
             ]);
         }
@@ -85,13 +85,13 @@ class CommentController extends Controller
         } catch (\Exception $exception) {
             Log::error('COMMENT DELETE ERROR');
             DB::rollBack();
-            return redirect()->with([
+            return redirect()->back()->with([
                 'alert' => '오류가 발생했습니다.'
             ]);
         }
 
         DB::commit();
-        return redirect()->with([
+        return redirect()->back()->with([
             'alert' => '댓글이 삭제되었습니다.',
         ]);
     }

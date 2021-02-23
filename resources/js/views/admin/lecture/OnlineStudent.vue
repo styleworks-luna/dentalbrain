@@ -15,7 +15,7 @@
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.email }}</td>
-                    <td>{{ slotProps.row.phone }} </td>
+                    <td>{{ slotProps.row.phone }}</td>
                     <td>
                         <template v-if="slotProps.row.payment">
                             <template v-if="slotProps.row.payment.status === 'CANCELED'">
@@ -58,7 +58,7 @@
                             결제 취소
                         </a>
                     </td>
-                    <td>{{ slotProps.row.applied_at }} </td>
+                    <td>{{ slotProps.row.applied_at }}</td>
                 </template>
             </table-grid>
 

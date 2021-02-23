@@ -6,11 +6,25 @@
                     <img :src="lecture.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
-                            <p class="lecture-type">{{ lecture.major_category_name }}・{{ lecture.minor_category_name }}</p>
-                            <p class="lecture-time">{{ lecture.running_time }}</p>
+                            <span class="online" v-if="lecture.is_online">온라인</span>
+                            <span class="offline" v-else>오프라인</span>
+                            <p class="lecture-type">
+                                {{ lecture.major_category_name }}・{{ lecture.minor_category_name }}
+                            </p>
+                            <p class="lecture-time" v-if="lecture.place == null">{{ lecture.running_time }}</p>
+                            <p class="lecture-time"
+                               v-else-if="lecture.place != null && !Helper.dateCompare(lecture.place.started_at, lecture.place.ended_at)">
+                                {{ Helper.dateFormatDMW(lecture.place.started_at) }} ~
+                                {{ Helper.dateFormatDMW(lecture.place.ended_at) }}
+                            </p>
+                            <p class="lecture-time"
+                               v-else-if="lecture.place != null && Helper.dateCompare(lecture.place.started_at, lecture.place.ended_at)">
+                                {{ Helper.dateFormatDMW(lecture.place.started_at) }}
+                            </p>
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
-                        <p class="lecture-price" v-if="lecture.ticket.is_free == 0">{{ lecture.ticket.price }}원</p>
+                        <p class="lecture-price" v-if="lecture.ticket.is_free == 0">
+                            {{ Helper.numberWithCommas(lecture.ticket.price) }}원</p>
                         <p class="lecture-price" v-else>무료</p>
                     </div>
                 </a>
@@ -23,7 +37,7 @@
 export default {
     name: 'LectureList',
     props: {
-        'list' : Array
+        'list': Array
     },
     data() {
         return {

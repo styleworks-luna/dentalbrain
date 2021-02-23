@@ -7,11 +7,15 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class ProgramStudent extends Model
 {
     use SoftDeletes;
+
+    static $PAY_BEFORE = 0;
+    static $PAY_IN_PROCESS = 1;
+    static $PAY_PAID = 2;
+    static $PAY_REFUNDED = 3;
 
     protected $appends = ['left_days'];
     protected $guarded = [];
@@ -36,6 +40,6 @@ class ProgramStudent extends Model
 
     public function getLeftDaysAttribute()
     {
-        return Carbon::now()->diff($this->attributes['expired_at'])->days;
+        return Carbon::now()->diff($this->attributes['expired_at'])->format('%r%a');
     }
 }

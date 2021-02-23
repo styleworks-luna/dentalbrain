@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -28,6 +29,10 @@ class FindPasswordController extends Controller{
         return $this->sendResetEmail($validatedData['email']);
     }
 
+    public function sendPasswordMailWithUser(User $user){
+        return $this->sendResetEmail($user->email);
+    }
+
     private function sendResetEmail($email){
         try{
             $user = User::where('email', $email)->firstOrFail();
@@ -37,10 +42,11 @@ class FindPasswordController extends Controller{
             $user->save();
             DB::commit();
         }catch(\Exception $e){
+            Log::error('SEND RESET EMAIL ERROR',[$e]);
             DB::rollBack();
 
             return response()->json([
-                'message' => '존재하지 않는 이메일 입니다',
+                'message' => '존재하지 않는 이메일 입니다.',
                 'success' => false
             ]);
         }
@@ -59,9 +65,5 @@ class FindPasswordController extends Controller{
                 'success' => false
             ]);
         }
-    }
-
-    public function sendPasswordMailWithUser(User $user){
-        return $this->sendResetEmail($user->email);
     }
 }

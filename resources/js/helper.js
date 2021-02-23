@@ -45,6 +45,22 @@ export const Helper = {
 
         return `${year}-${month}-${day}`;
     },
+    dateFormatDMW(date) {
+        if (this.nullCheck(date)) {
+            return '';
+        }
+
+        date = new Date(date);
+
+        var week = new Array('일', '월', '화', '수', '목', '금', '토');
+
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        var dayLabel = week[date.getDay()];
+
+
+        return `${month}.${day} (${dayLabel})`;
+    },
     dateFullFormat(date) {
         date = date.split(' ');
         let dateArr = date[0].split('-');
@@ -67,4 +83,46 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
+    getTimeFormat(date) {
+        date = new Date(date);
+
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+
+        if (hour < 10) {
+            hour = `0${hour}`;
+        }
+
+        if (minute < 10) {
+            minute = `0${minute}`;
+        }
+
+        return `${hour}:${minute}`;
+    },
+    dateCompareWithNow(date) {
+        date = new Date(date);
+        let datenow = new Date();
+
+        return datenow.getTime() - date.getTime()
+    },
+    dateCompare(dateStart, dateEnd) {
+        dateStart = new Date(dateStart);
+        dateEnd = new Date(dateEnd);
+
+        const yearStart = dateStart.getFullYear();
+        let monthStart = dateStart.getMonth() + 1;
+        let dayStart = dateStart.getDate();
+
+        const yearEnd = dateEnd.getFullYear();
+        let monthEnd = dateEnd.getMonth() + 1;
+        let dayEnd = dateEnd.getDate();
+
+        if (yearStart == yearEnd && monthStart == monthEnd && dayStart == dayEnd) {
+            return true;
+        } else return false;
+    },
+    numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
 };

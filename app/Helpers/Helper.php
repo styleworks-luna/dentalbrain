@@ -31,3 +31,18 @@ if (!function_exists('carbonDate')) {
         }
     }
 }
+
+if(!function_exists('changePaymentMethodName')){
+
+    function changePaymentMethodName($paymentMethodName){
+        switch($paymentMethodName){
+            case '카드':
+                return '신용카드';
+            case '무통장입금':
+                return '무통장입금(가상계좌)';
+            default:
+                return '없음';
+                break;
+        }
+    }
+}

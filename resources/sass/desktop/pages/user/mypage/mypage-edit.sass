@@ -22,6 +22,10 @@
         +size(240px, 50px)
         +margin(right 5px)
 
+    input:read-only
+        +background(null,null,null, $background-color-readonly)
+        color: $gray-900
+
     .ui-emailbox
         +emailbox()
 
@@ -77,6 +81,12 @@
                 input[type="text"]
                     +margin(right 11px)
 
+                .phone-wrap
+                    overflow: hidden
+
+                .password-wrap
+                    overflow: hidden
+
                 .phone
                     float: left
 
@@ -86,9 +96,8 @@
                 .email_box
                     float: left
 
-                .btn-password-change,
-                .btn-email-change
-                    +size(70px, 50px)
+                #password
+                    float: left
 
                 .verification-number
                     +margin(top 10px)
@@ -97,12 +106,28 @@
                 .btn-verification
                     +size(102px, 50px)
                     +padding(0)
+                    float: left
+
+                #send_authentication
+                    pointer-events: none
+
+                #confirm_authentication
+                    pointer-events: none
+
+                .btn-edit-phone,
+                .btn-edit-password
+                    +size(70px, 50px)
+                    +margin(left 10px)
+                    float: left
+
+                .timer
+                    +padding(left 10px top 15px)
+                    float: left
+                    font-size: 14px
+                    font-weight: normal
 
                 .ui-emailbox-domain
                     +margin(left 5px)
-
-                .password_confirmation
-                    float: left
 
     .btn-wrap
         +size(330px)
@@ -121,4 +146,5 @@
         .btn-cancel
             +btn()
             +margin(left 10px)
+            +padding(top 17px)
             +background(null, null, null, $gray-700)

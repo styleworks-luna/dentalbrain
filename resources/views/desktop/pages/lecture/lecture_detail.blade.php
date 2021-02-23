@@ -67,7 +67,7 @@
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
                                         <td class="lecture-price price-hidden"
-                                            data-price="{{ $ticket->price }}">{{ $ticket->price == 0 ? '무료' : $ticket->price.'원'}}
+                                            data-price="{{ $ticket->price }}">{{ $ticket->price == 0 ? '무료' : number_format($ticket->price).'원'}}
                                         </td>
                                     @endforeach
                                 </tr>
@@ -75,13 +75,28 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
-                                @if($program->alreadyPaid())
-                                    신청내역 확인하기
-                                @else
-                                    신청하기
-                                @endif
-                            </a>
+
+                            {{--TODO: 오프라인 프로그램 기간이 지났을 경우--}}
+                           {{-- <div class="btn-wrap">
+                                    <span class="btn-apply-complete">
+                                    신청기간이 지난강의 입니다.
+                                    </span>
+                            </div>--}}
+                            @if($program->alreadyPaid())
+                                <div class="btn-wrap">
+                                    <span class="btn-apply-complete">
+                                    신청한 강의입니다.
+                                    </span>
+                                    <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역 수정</a>
+                                </div>
+                            @else
+                                <div class="btn-wrap">
+                                    <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                        신청하기
+                                    </a>
+                                </div>
+                            @endif
+
                             <a href=""
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}</a>
                         </div>
@@ -105,7 +120,9 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form">
+                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form"
+                          method="POST">
+                        @csrf
                         <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                         <input type="submit" value="등록" class="comment-input-btn">
                     </form>

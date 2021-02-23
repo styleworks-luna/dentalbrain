@@ -21,7 +21,7 @@ class ProgramMaterial extends FileTemplate
     {
         $program = $this->model;
         // NOT PUBLIC
-        return $path = '/program/' . $program->id . '/material/' . $fileName;
+        return $path = 'program/' . $program->id . '/material/' . $fileName;
     }
 
     protected function deleteFileInDB()

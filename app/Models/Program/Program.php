@@ -43,10 +43,9 @@ class Program extends Model
         if ($user != null) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->where(function ($query) {
-                    $query->whereNotNull('expired_at')
-                        ->orWhere('expired_at', '>', now());
-                })->exists();
+                ->where('pay_status', '=', ProgramStudent::$PAY_PAID)
+                ->where('expired_at', '>', now())
+                ->exists();
         } else {
             return false;
         }
@@ -177,9 +176,9 @@ class Program extends Model
 
     public function scopePublic(Builder $query, $category, $orderBy)
     {
-        $programs = $query->select(['id', 'thumbnail_id', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
+        $programs = $query->select(['id', 'thumbnail_id', 'is_online', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free'])
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free','place:id,program_id,started_at,ended_at'])
             ->withCount('students');
 
         if ($category !== null) {

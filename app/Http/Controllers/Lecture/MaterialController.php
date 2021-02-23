@@ -11,7 +11,7 @@ class MaterialController extends Controller
 {
     public function download(Program $program)
     {
-        $file = $program->material();
+        $file = $program->material;
         if (!$file) {
             return response()->json(['alert' => '파일이 없습니다.'], 404);
         }
@@ -20,7 +20,7 @@ class MaterialController extends Controller
             $headers = [];
             return Storage::download($file->path, $file->name, $headers);
         }
-        if ($program->students()->where('user_id', '=', Auth::id())->exists()) {
+        if ($program->alreadyPaid()) {
             $headers = [];
             return Storage::download($file->path, $file->name, $headers);
         }

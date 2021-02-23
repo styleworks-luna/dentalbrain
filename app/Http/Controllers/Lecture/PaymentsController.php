@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
-use App\Mail\paymentLecture;
+use App\Mail\PaymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -30,16 +30,28 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        $payment = Payment::createByToss($response);
+        $payment = Payment::createByTossSuccess($response);
 
-        ProgramStudent::query()->where('user_id', '=', Auth::id())
-            ->where('ticket_id', '=', $program->ticket->id)
-            ->first()->update([
-                'payment_id' => $payment->id,
-                'expired_at' => now()->addDays($program->ticket->term),
-            ]);
+        if ($response->isCard()) {
+            ProgramStudent::query()->where('user_id', '=', Auth::id())
+                ->where('ticket_id', '=', $program->ticket->id)
+                ->first()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => now()->addDays($program->ticket->term),
+                    'pay_status' => ProgramStudent::$PAY_PAID,
+                ]);
+        } elseif ($response->isVirtualAccount()) {
+            ProgramStudent::query()->where('user_id', '=', Auth::id())
+                ->where('ticket_id', '=', $program->ticket->id)
+                ->first()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => now()->addDays($program->ticket->term),
+                    'pay_status' => ProgramStudent::$PAY_IN_PROCESS,
+                ]);
+        }
 
-        Mail::to(Auth::user()->email)->send(new paymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
+
+        Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
 
         return redirect()->route('lectures.result', $program->id);
     }

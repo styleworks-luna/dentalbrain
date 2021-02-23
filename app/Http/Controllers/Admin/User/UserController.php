@@ -11,9 +11,12 @@ namespace App\Http\Controllers\Admin\User;
 use App\Models\User;
 use App\Models\UserJobName;
 use App\Models\UserJob;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Services\Search\SearchService;
+use Illuminate\Support\Facades\Log;
 
 class UserController
 {
@@ -40,9 +43,9 @@ class UserController
     {
         $v = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['required'],
-            'job_name_id' => ['required', 'min:0', 'max:5'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['required', 'unique:users,phone'],
+            'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
@@ -51,18 +54,30 @@ class UserController
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
 
-        if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job_name_id']) {
-            $userJob = UserJob::find($user->job_id);
-            $userJob->license_num = $license_num;
-            $userJob->job_name_id = $data['job_name_id'];
-            $userJob->save();
+        try{
+            DB::beginTransaction();
+            if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job_name_id']) {
+                $userJob = UserJob::find($user->job_id);
+                $userJob->license_num = $license_num;
+                $userJob->job_name_id = $data['job_name_id'];
+                $userJob->save();
+            }
+
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->phone = $data['phone'];
+            $user->allow_email = $data['allow_email'];
+            $user->save();
+            DB::commit();
+        }catch(\Exception $exception){
+            Log::error('ACCOUNT UPDATE ERROR',[$exception]);
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'msg' => '오류가 발생하였습니다.'
+            ]);
         }
 
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->phone = $data['phone'];
-        $user->allow_email = $data['allow_email'];
-        $user->save();
 
         return response()->json([
             'success' => true,

@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Services\Notification\Sms;
+use App\Models\Notification\PhoneVerification;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class Ppurio{
@@ -18,18 +21,19 @@ class Ppurio{
         return json_decode($result->getBody()->getContents(),true);
     }
 
-    public function checkVerification(Request $request){
-        $client = new Client();
+    public function sendVerificationNumber($phoneNumber){
         $token = $this->getToken();
-
-        $sms = array("message" => "SMS 테스트");
+        $verification_num = str_pad(mt_rand(0,999999),6,'0');
+        $message = "문자 인증번호: ".$verification_num;
+        $sms = array("message" => $message);
         $content = array("sms" => $sms);
 
         $data =array();
         $data['account'] = env('PPURIO_ID');
+        $data['refkey']=Str::random('10');
         $data['type'] = "sms";
-        $data['from'] = $request->phone;
-        $data['to'] = $request->phone;
+        $data['from'] = env('PPURIO_PHONE');
+        $data['to'] = $phoneNumber;
         $data['content'] = $content;
 
         $json_data = json_encode($data,JSON_UNESCAPED_SLASHES);
@@ -38,6 +42,7 @@ class Ppurio{
 
         $oCurl = curl_init();
         curl_setopt($oCurl,CURLOPT_URL,$url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1); //result로 true, false 대신 해당 값들을 return함.
         curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
@@ -48,38 +53,20 @@ class Ppurio{
         curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
         $response = curl_exec($oCurl);
-        $curl_errno = curl_errno($oCurl);
-        $curl_error = curl_error($oCurl);
 
+        try{
+            DB::beginTransaction();
+            if(json_decode($response,true)['code'] == '1000'){
+                PhoneVerification::query()->updateOrCreate(
+                    ['phone'=>$phoneNumber],['phone'=> $phoneNumber,'verfication_num'=> $verification_num, 'expired_at'=> date("Y-m-d H:i:s", strtotime("+3 minutes"))]
+                );
+                DB::commit();
+            }
+        }catch(\Exception $exception){
+            Log::error('CREATE PPURIO CHECKVERIFICATION ERROR',[$exception]);
+            DB::rollBack();
+        }
         curl_close($oCurl);
-        echo 'Response :';
-        echo '<pre>';
-        print_r(json_decode($response));
-        print_r($curl_error);
-        echo '</pre>';
-//
-//        $content = json_encode([
-//                "sms" => array(
-//                    "message" => "Test"
-//                )
-//            ]
-//        );
-//
-//        $result = $client->request('POST','https://api.bizppurio.com/v3/message',[
-//           'headers'=>[
-//               'Authorization' => $token['type']." ".$token['accesstoken'],
-//               'Content-Type' => 'application/json',
-//           ],
-//            'form_params' =>[
-//                'account' => env('PPURIO_ID'),
-//                'type' => 'sms',
-//                'from' => $request->phone,
-//                'to' => $request->phone,
-//                'content' => $content
-//            ]
-//        ]);
-//
-//        return json_decode($result->getBody()->getContents(),true);
-        return json_decode($response);
+        return json_decode($response,true);
     }
 }

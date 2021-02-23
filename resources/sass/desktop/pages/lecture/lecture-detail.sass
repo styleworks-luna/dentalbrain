@@ -76,6 +76,7 @@
                 color: $gray-700
 
             td
+                +size(417px)
                 +padding(left 20px)
                 clear: both
                 font-size: 16px
@@ -86,6 +87,8 @@
                 .lecture-place
                     +margin(right 10px)
                     +padding(top 4px)
+                    +ellipse()
+                    max-width: 330px
                     display: block
                     float: left
 
@@ -93,7 +96,7 @@
                     +padding(5px 10px)
                     +border(1px solid $gray-900)
                     display: block
-                    float: left
+                    float: right
                     font-size: 14px
 
                 .lecture-select-box
@@ -119,18 +122,31 @@
     +margin(top 22px)
     overflow: hidden
 
-    .apply-btn
+    .btn-wrap
+        float: right
+
+        .edit
+            +margin(top 10px left 135px)
+            display: block
+            color: $page-color
+            text-decoration: underline
+
+    .apply-btn,
+    .btn-apply-complete
         +size(308px, 54px)
         +margin(left 22px)
         +border-radius(27px)
         +background(null, null, null, $page-color)
         display: block
-        float: right
         font-weight: bold
         font-size: 18px
         color: $white
         text-align: center
         line-height: 3
+
+    .btn-apply-complete
+        +background(null, null, null, $border-color-light)
+        color: $gray-900
 
     .apply-btn:hover
         +background(null, null, null, $purple-400)
@@ -193,6 +209,25 @@
             +margin(12px)
             display: inline-block
             vertical-align: middle
+
+        ul p::before
+            +size(4px, 4px)
+            +margin(bottom 5px left 10px right 10px)
+            +border-radius(50%)
+            +background(null, null, null, $black)
+            display: inline-block
+            content: ''
+
+        ol
+            counter-reset: editor-counter
+
+            p::before
+                +size(20px)
+                +margin(left 2px right 2px)
+                counter-increment: editor-counter
+                content: counter(editor-counter) "."
+                text-align: center
+                display: inline-block
 
 .lecture-comment
     +padding(top 138px)

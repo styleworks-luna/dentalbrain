@@ -243,7 +243,7 @@
                                 {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
                                 <td><em>무료</em></td>
                             @else
-                                <td><em>{{ $program->ticket->price }}원</em></td>
+                                <td><em>{{ number_format($program->ticket->price) }}원</em></td>
                             @endif
 
                         </tr>

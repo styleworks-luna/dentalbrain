@@ -16,15 +16,19 @@
                     <div class="lecture-watch-content">
                         <div class="lecture-title-wrap">
                             <div class="lecture-title">
-                                <h1>구강위생용품교육 전문과정</h1>
-                                <h2>3강) 당신만 모르는 스케일링 꿀팁</h2>
+                                <h1>{{ $program->title }}</h1>
+                                <h2>{{ $now->title }}</h2>
                             </div>
-                            <div class="lecture-file">
-                                <a class="btn-download" href="{{ asset('/images/dummy/test.png') }}" download>강의 자료
-                                    다운로드</a>
-                            </div>
+                            @isset($program->material)
+                                <div class="lecture-file">
+                                    <a class="btn-download" href="{{ $program->material->url }}" download>강의 자료
+                                        다운로드</a>
+                                </div>
+                            @endisset
+
                         </div>
                         <div class="video-wrap">
+                            <input type="hidden" id="youtube_id" value="{{$now->youtube_id}}">
                             <div id="player"></div>
                         </div>
                         <div class="lecture-question">
@@ -40,54 +44,18 @@
                     <div class="play-list">
                         <h3>플레이리스트</h3>
                         <ul>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li class="active">
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
-                            <li>
-                                <div class="thumbnail">
-                                    <img src="{{ asset('/images/dummy/test.png') }}" alt="">
-                                </div>
-                                <p>1강) 선션이 제일 쉽다고? 천만의 말씀 만만의 콩떢!</p>
-                            </li>
+                            @foreach($lectures as $lecture)
+                                <li @if($now->id == $lecture->id)class="active"@endif>
+                                    <a href="{{ route('lectures.watch',[$program->id,$lecture->id]) }}">
+                                        <div class="thumbnail">
+                                            <img
+                                                src="{{ $lecture->thumbnail ? $lecture->thumbnail->url : $program->thumbnail->url }}"
+                                                alt="강의 썸네일">
+                                        </div>
+                                        <p>{{ $lecture->title }}</p>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

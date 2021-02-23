@@ -125,6 +125,9 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('success', 'Lecture\PaymentsController@success')->name('payment.success');
             // 강의 신청 성공
             Route::get('result', 'Lecture\ApplyController@result')->name('result');
+            // 강의 시청
+            Route::get('watch/{lecture?}', 'Lecture\WatchController@watch')->name('watch');
+
         });
 
 
@@ -133,6 +136,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::put('{comment}', 'Lecture\CommentController@update')->name('update');
             Route::delete('{comment}', 'Lecture\CommentController@delete')->name('delete');
         });
+
     });
 });
 
@@ -187,13 +191,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::get('bizppurio', 'Test\TestController@getToken')->name('getToken');
-    Route::post('bizppurio', 'Test\TestController@checkVerification')->name('checkVerification');
+    Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
+    
+    Route::post('compare-verification','Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
+
+    Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
+    // 회원 아이디 중복체크
+    Route::post('check-id', 'Account\FindIdController@checkIdDuplication')->name('check-id');
 
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
         Route::post('id', 'Account\FindIdController@findIdWithNameAndPhone')->name('id');
-
         // 회원 비밀번호 찾기
         Route::post('password', 'Account\FindPasswordController@sendPasswordMail')->name('password');
     });

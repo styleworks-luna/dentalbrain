@@ -21,6 +21,10 @@
         +size(240px, 50px)
         +margin(right 5px)
 
+    input:read-only
+        +background(null,null,null, $background-color-readonly)
+        color: $gray-900
+
     .ui-emailbox
         +emailbox()
 
@@ -90,6 +94,19 @@
                 .btn-verification
                     +size(102px, 50px)
                     +padding(0)
+                    float: left
+
+                #confirm_authentication
+                    pointer-events: none
+
+                .btn-edit-phone
+                    +size(70px, 50px)
+                    +margin(left 10px)
+                    float: left
+
+                .timer
+                    +padding(left 10px top 15px)
+                    float: left
 
                 .ui-emailbox-domain
                     +margin(left 5px)
