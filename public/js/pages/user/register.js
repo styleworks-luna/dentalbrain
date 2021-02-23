@@ -199,4 +199,9 @@ $(function () {
         $('.dim').css('display', 'none');
     });
 
+    // 알람 처리
+    let alerts = $('.alert-danger').text();
+    if(alerts.length != 0) {
+        alert(`${alerts}`);
+    }
 });

@@ -15,6 +15,7 @@
 
     .lecture-watch-content
         float: left
+        max-width: 880px
 
     .lecture-title-wrap
         overflow: hidden
@@ -23,10 +24,12 @@
             float: left
 
             h1
+                +size(640px)
                 font-size: 16px
                 color: $white
 
             h2
+                +size(640px)
                 +padding(top 12px)
                 font-weight: bold
                 font-size: 24px

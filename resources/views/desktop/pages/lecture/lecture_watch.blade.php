@@ -48,7 +48,9 @@
                                 <li @if($now->id == $lecture->id)class="active"@endif>
                                     <a href="{{ route('lectures.watch',[$program->id,$lecture->id]) }}">
                                         <div class="thumbnail">
-                                            <img src="{{ $lecture->thumbnail ?? $program->thumbnail->url }}" alt="">
+                                            <img
+                                                src="{{ $lecture->thumbnail ? $lecture->thumbnail->url : $program->thumbnail->url }}"
+                                                alt="강의 썸네일">
                                         </div>
                                         <p>{{ $lecture->title }}</p>
                                     </a>
