@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -89,5 +90,9 @@ class User extends Authenticatable
     public function students()
     {
         return $this->hasOne(ProgramStudent::class, 'user_id', 'id');
+    }
+
+    public function lectureQuestions(){
+        return $this->hasMany(LectureQuestion::class,'user_id','id');
     }
 }
