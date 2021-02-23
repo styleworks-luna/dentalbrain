@@ -142,8 +142,6 @@ export default {
             new ListItem(),
             new BulletList({ bubble: true }),
             new OrderedList({ bubble: true }),
-            new TodoItem(),
-            new TodoList(),
             new HardBreak(),
             new Indent(),
             new HorizontalRule({ bubble: true }),

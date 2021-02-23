@@ -210,6 +210,25 @@
             display: inline-block
             vertical-align: middle
 
+        ul p::before
+            +size(4px, 4px)
+            +margin(bottom 5px left 10px right 10px)
+            +border-radius(50%)
+            +background(null, null, null, $black)
+            display: inline-block
+            content: ''
+
+        ol
+            counter-reset: editor-counter
+
+            p::before
+                +size(20px)
+                +margin(left 2px right 2px)
+                counter-increment: editor-counter
+                content: counter(editor-counter) "."
+                text-align: center
+                display: inline-block
+
 .lecture-comment
     +padding(top 138px)
 

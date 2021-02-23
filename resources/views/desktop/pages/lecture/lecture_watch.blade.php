@@ -50,7 +50,7 @@
                                         <div class="thumbnail">
                                             <img
                                                 src="{{ $lecture->thumbnail ? $lecture->thumbnail->url : $program->thumbnail->url }}"
-                                                alt="">
+                                                alt="강의 썸네일">
                                         </div>
                                         <p>{{ $lecture->title }}</p>
                                     </a>
