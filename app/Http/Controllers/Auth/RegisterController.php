@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
+use App\Models\Notification\PhoneVerification;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
@@ -13,7 +14,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -82,7 +85,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $result =  Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -92,9 +95,19 @@ class RegisterController extends Controller
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
+            'verification_number' => ['required']
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
+
+        $result->after(function ($validator) use($data){
+            $data = PhoneVerification::query()->where('phone',$data['phone'])->where('expired_at','>',Carbon::now())->first()->toArray();
+            if((!empty($data) && isset($data['verfication_num']) && $data->verfication_num == $data['verification_number']) == false){
+                $validator->errors()->add('verification_number','verification_number is invalid');
+            }
+        });
+
+        return $result;
     }
 
     /**
