@@ -76,11 +76,17 @@
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
 
+                            {{--TODO: 오프라인 프로그램 기간이 지났을 경우--}}
+                           {{-- <div class="btn-wrap">
+                                    <span class="btn-apply-complete">
+                                    신청기간이 지난강의 입니다.
+                                    </span>
+                            </div>--}}
                             @if($program->alreadyPaid())
                                 <div class="btn-wrap">
                                     <span class="btn-apply-complete">
                                     신청한 강의입니다.
-                                </span>
+                                    </span>
                                     <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역 수정</a>
                                 </div>
                             @else
@@ -114,7 +120,8 @@
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form" method="POST">
+                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form"
+                          method="POST">
                         @csrf
                         <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
                         <input type="submit" value="등록" class="comment-input-btn">
