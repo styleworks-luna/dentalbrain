@@ -10,6 +10,7 @@ class LectureQuestion extends Model
 {
     protected $table = 'lecture_questions';
     protected $guarded = [];
+    protected $casts = ['is_answer' => 'boolean'];
 
     public function lecture(){
         return $this->belongsTo(Lecture::class,'lecture_id','id');
