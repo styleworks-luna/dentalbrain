@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApplyLecture;
 use App\Mail\ApplyOfflineLecture;
 use App\Mail\ApplyOnlineLecture;
 use App\Models\Program\Program;
@@ -87,7 +88,7 @@ class ApplyController extends Controller
                 $programStudent->save();
 
                 DB::commit();
-                $this->sendLectureApplyFreeMailWithIsOnline($program->is_online, $request, $program);
+                $this->sendLectureApplyFreeMailWithIsOnline($request, $program);
 
                 return redirect()->route('lectures.result', $program->id);
             }
@@ -211,21 +212,20 @@ class ApplyController extends Controller
         return $returnable;
     }
 
-    private function sendLectureApplyFreeMailWithIsOnline($is_online, Request $request, Program $program)
+    private function sendLectureApplyFreeMailWithIsOnline(Request $request, Program $program)
     {
-        if ($is_online) {
-            Mail::to($request->get('email'))->send(new ApplyOnlineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
-        } else {
-            Mail::to($request->get('email'))->send(new ApplyOfflineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
-        }
+        Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
     }
 
     private function programQueryWithPlaceAndTicket(Program $program)
     {
-        return Program::query()
-            ->select('id', 'title', 'running_time')
-            ->with('place:id,program_id,started_at,ended_at,address,address_detail', 'ticket:id,program_id,name')
-            ->where('id', $program->id)->get();
+        return ProgramStudent::query()
+            ->select('id','user_id','ticket_id','created_at','expired_at')
+            ->where('user_id',Auth::id())
+            ->with('ticket:id,program_id','ticket.program:id,title')
+            ->whereHas('ticket.program',function($query) use ($program){
+                $query->where('id',$program->id);
+            })->get();
     }
 
     public function result(Program $program)

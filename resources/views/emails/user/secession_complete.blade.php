@@ -35,7 +35,7 @@
                     </th>
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
-                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></p>
+                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $userSecession->created_at  }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -45,7 +45,7 @@
                     </th>
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
-                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></p>
+                        <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $userSecession->reason  }}</p>
                     </td>
                 </tr>
                 </tbody>

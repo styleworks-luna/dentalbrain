@@ -3,26 +3,27 @@
 namespace App\Mail;
 
 use App\Models\User;
+use App\Models\UserSecession;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApplyOfflineLecture extends Mailable
+class Secession extends Mailable
 {
     use Queueable, SerializesModels;
 
     private $user;
-    private $program;
+    private $userSecession;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $program)
+    public function __construct(User $user,UserSecession $userSecession)
     {
         $this->user = $user;
-        $this->program = $program;
+        $this->userSecession = $userSecession;
     }
 
     /**
@@ -32,12 +33,11 @@ class ApplyOfflineLecture extends Mailable
      */
     public function build()
     {
-        return $this
-            ->subject('[DBV2020] 오프라인 강의 신청 완료')
-            ->view('emails.lecture.offline_apply')
+        return $this->subject('[DBV2020] 탈퇴 완료')
+            ->view('emails.user.secession_complete')
             ->with([
                 'user' => $this->user,
-                'program' => $this->program
-            ]);;
+                'userSecession' => $this->userSecession
+            ]);
     }
 }
