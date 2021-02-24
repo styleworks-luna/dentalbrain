@@ -38,7 +38,7 @@ class SecessionController extends Controller
                 DB::beginTransaction();
                 $userSecession = new UserSecession();
                 $userSecession->user_id = Auth::id();
-                $userSecession->reason = $validatedData['secession-reason'];
+                $userSecession->reason = isset($validatedData['secession-reason']) ? $validatedData['secession-reason']: $validatedData['secession-radio'] ;
                 $userSecession->save();
                 DB::commit();
             }catch(\Exception $exception){
@@ -47,7 +47,7 @@ class SecessionController extends Controller
                 return redirect(URL::previous())->with('alert','에러가 발생했습니다.');
             }
 
-            //TODO : 회원 탈퇴 시 남아있는 강의들을 모두 지워야 함.
+            //TODO : 회원 탈퇴 시 남아있는 회원 정보들을 모두 지워야 함.
 
             Mail::to(Auth::user()->email)->send(new Secession(Auth::user(),$userSecession));
             Auth::user()->delete();
