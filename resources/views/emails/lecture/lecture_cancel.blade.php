@@ -9,7 +9,7 @@
     <tr>
         <td width="720" height="100" bgcolor="#9b00d8">
             <h4 style="line-height: 100px; margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
-                강의 신청 내역 안내
+                강의 신청 취소 안내
             </h4>
         </td>
     </tr>
@@ -18,14 +18,14 @@
     <tr>
         <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
-                <b>{{ $user->name }}</b>님의 강의 신청 내역을 안내 드립니다. 아래에서 신청 내역을 확인해 주세요.
+                <b>{{ $user->name }}</b>님의 강의 신청이 취소되었습니다. 아래에서 신청 취소 내역을 확인해 주세요
             </p>
         </td>
     </tr>
     <tr>
         <td>
             <p style="line-height: 15px; margin: 0; padding-bottom: 10px; border-bottom: 2px solid #9b00d8; font-size: 15px; font-weight: bold; color: #333;">
-                신청 내역
+                신청취소 내역
             </p>
             <table align="center" width="720" border="0" cellpadding="0" cellspacing="0"
                    style="border-collapse: collapse">
@@ -33,7 +33,7 @@
                 <tr>
                     <th align="left" colspan="1" rowspan="1" valign="top" width="150" bgcolor="#f8f8f8"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8;font-size: 12px; font-weight: bold; color: #333333; letter-spacing: -1px;">
-                        신청일시
+                        취소일시
                     </th>
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
@@ -71,7 +71,8 @@
                 안내 사항
             </p>
             <p style="line-height: 21px; margin: 20px 0; padding-left: 20px; font-size: 12px; color: #333;">
-                덴탈브레인을 믿고 이용해주셔서 진심으로 감사드립니다.
+                덴탈브레인의 강의 시청을 함께 하지 못하여 아쉽습니다.<br>
+                고객님에게 유익한 강의를 준비하도록 노력 하겠습니다.
             </p>
         </td>
     </tr>

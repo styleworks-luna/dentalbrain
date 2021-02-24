@@ -9,34 +9,33 @@
     <tr>
         <td width="720" height="100" bgcolor="#9b00d8">
             <h4 style="line-height: 100px; margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
-                비밀번호 찾기
+                비밀번호 재설정 안내입니다.
             </h4>
         </td>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td width="720" height="75" style="padding-top: 30px; padding-bottom: 30px">
+        <td width="720" height="40" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
-                <b>{{ $user->name }}</b>님의 비밀번호 요청입니다.<br>
-                <b>{{ $user->name }}</b>님의 비밀번호는 <b style="font-size: 14px;">{{ $newPassword }}</b>입니다.<br>
-                임시비밀 번호이므로 마이페이지 회원정보 변경에서 비밀번호를 변경해 주시기 바랍니다.
+                <b>{{ $user->name }}</b>님! 사용하실 비밀번호 재설정 안내입니다. 아래 버튼을 클릭하여 새로운 비밀번호를 변경할 수 있습니다.
             </p>
         </td>
     </tr>
     <tr>
-        <td>
-            <p style="line-height: 15px; margin: 50px 0 0; padding-bottom: 10px; border-bottom: 2px solid #9b00d8; font-size: 15px; font-weight: bold; color: #333;">
-                안내 사항
-            </p>
-            <p style="line-height: 21px; margin: 20px 0; padding-left: 20px; font-size: 12px; color: #333;">
-                · 임시 비밀번호 입니다.<br/>
-                · 회원정보 변경 페이지에서 비밀번호를 변경해 이용해 주시기 바랍니다.
-            </p>
+        <td height="120" align="center">
+            <a href="" style="display:block; width: 100px; margin-top: 30px; padding: 10px 10px; background-color: #9b00d8; color: #fff; text-decoration: none;">
+                비밀번호 재설정
+            </a>
         </td>
     </tr>
     <tr>
-        <td height="70"></td>
+        <td height="70" >
+            <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
+                덴탈브레인은 절대 비밀번호를 요구하지 않습니다.<br>
+                만일 원치 않는 비밀번호 재설정 안내 메일을 수신하셨다면 ‘관리자＇에게 문의 바랍니다.
+            </p>
+        </td>
     </tr>
     <tr>
         <td style="line-height: 15px; padding: 23px 0 29px 30px; font-size: 12px; color: #666; background-color: #efefef">
