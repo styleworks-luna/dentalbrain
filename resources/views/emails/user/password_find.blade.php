@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <td height="120" align="center">
-            <b>{{ $user->name }}</b>님의 비밀번호는 <b>{{  }}</b>입니다.
+            <b>{{ $user->name }}</b>님의 비밀번호는 <b>{{ $newPassword }}</b>입니다.
         </td>
     </tr>
     <tr>
