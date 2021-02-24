@@ -15,5 +15,4 @@ $(function() {
             'data-parsley-required': false
         });
     });
-
 });
