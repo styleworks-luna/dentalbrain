@@ -18,15 +18,13 @@
     <tr>
         <td width="720" height="40" style="padding-top: 30px; padding-bottom: 30px">
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
-                <b>{{ $user->name }}</b>님! 사용하실 비밀번호 재설정 안내입니다. 아래 버튼을 클릭하여 새로운 비밀번호를 변경할 수 있습니다.
+                <b>{{ $user->name }}</b>님! 사용하실 비밀번호 재설정 안내입니다.
             </p>
         </td>
     </tr>
     <tr>
         <td height="120" align="center">
-            <a href="" style="display:block; width: 100px; margin-top: 30px; padding: 10px 10px; background-color: #9b00d8; color: #fff; text-decoration: none;">
-                비밀번호 재설정
-            </a>
+            <b>{{ $user->name }}</b>님의 비밀번호는 <b>{{  }}</b>입니다.
         </td>
     </tr>
     <tr>
