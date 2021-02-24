@@ -24,11 +24,11 @@ class QuestionController extends Controller
         ]);
         DB::beginTransaction();
         try{
-                $lectureQuestion = new LectureQuestion;
-                $lectureQuestion->question = $validatedData['question'];
-                $lectureQuestion->lecture_id = $lecture->id;
-                $lectureQuestion->user_id = Auth::id();
-                $lectureQuestion->save();
+            $lectureQuestion = new LectureQuestion;
+            $lectureQuestion->question = $validatedData['question'];
+            $lectureQuestion->lecture_id = $lecture->id;
+            $lectureQuestion->user_id = Auth::id();
+            $lectureQuestion->save();
             DB::commit();
         }catch(\Exception $exception){
             DB::rollBack();
