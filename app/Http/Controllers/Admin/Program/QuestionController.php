@@ -24,8 +24,8 @@ class QuestionController extends Controller
                     $query->where('question','like','%'.$request->input('keyword').'%');
                 }
             })
-            ->with('lecture:id,title')
-            ->orwhereHas('lecture',function($query) use($request){
+            ->with('lecture:id,program_id','lecture.program:id,title')
+            ->orwhereHas('lecture.program',function($query) use($request){
                 if($request->input('keyword')) {
                     $query->where('title', 'like', '%'.$request->input('keyword').'%');
                 }
