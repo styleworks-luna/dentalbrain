@@ -83,7 +83,7 @@ class CommentController extends Controller
                 ->update(['content' => $data['content']]);
 
         } catch (\Exception $exception) {
-            Log::error('COMMENT DELETE ERROR');
+            Log::error('COMMENT UPDATE ERROR');
             DB::rollBack();
             return redirect()->back()->with([
                 'alert' => '오류가 발생했습니다.'
@@ -92,7 +92,7 @@ class CommentController extends Controller
 
         DB::commit();
         return redirect()->back()->with([
-            'alert' => '댓글이 삭제되었습니다.',
+            'alert' => '댓글이 수정되었습니다.',
         ]);
     }
 }
