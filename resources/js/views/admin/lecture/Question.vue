@@ -39,8 +39,10 @@
                         </router-link>
                     </td>
                     <td>
-                        <template v-if="slotProps.row.is_answer == 1 ">완료</template>
-                        <template v-else>미완료</template>
+                        <button-open :isOpen="slotProps.row.is_answer"
+                                     :anotherText="anotherText"
+                                     class="btn-outline-dark"
+                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                     <td>{{ slotProps.row.created_at }}</td>
                 </template>
@@ -61,6 +63,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
@@ -70,6 +73,7 @@ export default {
     name: 'AdminQuestion',
     components: {
         'table-grid': Table,
+        'button-open': ButtonOpen,
         'select-box': SelectBox
     },
     data() {
@@ -80,6 +84,7 @@ export default {
             page: 1,
             gubun: 'all',
             keyword: '',
+            anotherText: 'question',
         }
     },
     mounted() {
@@ -133,7 +138,7 @@ export default {
                     name: '완료'
                 },
             ]
-        }
+        },
     },
     methods: {
         getData(page = this.page) {
@@ -154,6 +159,12 @@ export default {
             }).catch(err => {
                 this.questions = [];
             });
+        },
+        handleSetStatus(id) {
+            Question.setStatus(id).then(res => {
+                this.getData();
+                alert('수정되었습니다.');
+            })
         },
         handleSetGubun(gubun) {
             this.gubun = gubun;

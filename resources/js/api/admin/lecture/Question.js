@@ -21,4 +21,10 @@ export default {
             data: data
         });
     },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/lecture/question/${id}/status`,
+            method: 'patch'
+        });
+    },
 }
