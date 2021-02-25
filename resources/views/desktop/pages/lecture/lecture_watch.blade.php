@@ -25,7 +25,6 @@
                                         다운로드</a>
                                 </div>
                             @endisset
-
                         </div>
                         <div class="video-wrap">
                             <input type="hidden" id="youtube_id" value="{{$now->youtube_id}}">
@@ -38,7 +37,7 @@
                                    name="question"
                                    class="question"
                                    placeholder="질문을 입력하세요.">
-                            <button class="btn-submit">전송</button>
+                            <button type="button" id="question_submit" class="btn-submit">전송</button>
                         </div>
                     </div>
                     <div class="play-list">
@@ -58,6 +57,7 @@
                             @endforeach
                         </ul>
                     </div>
+                    <input type="hidden" id="lecture_id" value="{{$now->id}}">
                 </div>
             </div>
         </section>
