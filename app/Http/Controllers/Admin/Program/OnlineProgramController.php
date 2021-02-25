@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
-use App\Models\Program\ProgramStudent;
-use App\Models\User;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
@@ -111,8 +109,10 @@ class OnlineProgramController extends Controller
     public function edit(Program $program)
     {
         return response()->json(
-            array_merge($this->onlineConcrete->getProgramDetail($program),
-                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+            array_merge($this->onlineConcrete->getProgramDetail($program), [
+                'lectures' => $program->lectures()->with('thumbnail:id,url,name')->get(),
+                'haveStudents' => $program->students()->exists()
+            ])
         );
     }
 

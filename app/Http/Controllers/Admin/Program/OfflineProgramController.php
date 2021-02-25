@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
-use App\Models\Program\ProgramStudent;
-use App\Models\User;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
@@ -71,8 +69,10 @@ class OfflineProgramController extends Controller
     public function edit(Program $program)
     {
         return response()->json(
-            array_merge($this->offlineConcrete->getProgramDetail($program),
-                ['place' => $program->place])
+            array_merge($this->offlineConcrete->getProgramDetail($program), [
+                'place' => $program->place,
+                'haveStudents' => $program->students()->exists()
+            ])
         );
     }
 

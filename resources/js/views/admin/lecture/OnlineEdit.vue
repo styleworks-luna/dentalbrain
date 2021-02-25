@@ -219,6 +219,8 @@ export default {
                 this.surveys = res.data.surveys;
 
                 this.lectures = res.data.lectures;
+
+                console.log(res.data.haveStudents);
             });
         },
         update() {

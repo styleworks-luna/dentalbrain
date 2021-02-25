@@ -217,6 +217,8 @@ export default {
                 this.receipt_started_time = this.Helper.timeFormat(this.receipt_started_date);
                 this.receipt_ended_date = this.Helper.dateFullFormat(this.program_place.receipt_ended_at);
                 this.receipt_ended_time = this.Helper.timeFormat(this.receipt_ended_date);
+
+                console.log(res.data.haveStudents);
             });
         },
         update() {
