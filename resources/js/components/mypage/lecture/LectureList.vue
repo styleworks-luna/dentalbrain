@@ -85,6 +85,7 @@
                     </div>
                 </div>
             </li>
+            <li class="content-none" v-if="lectures.length == 0">신청한 강의가 없습니다.</li>
         </ul>
     </div>
 </template>
