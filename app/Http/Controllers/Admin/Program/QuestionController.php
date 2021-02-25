@@ -37,4 +37,37 @@ class QuestionController extends Controller
 
         return $result;
     }
+
+    public function edit(LectureQuestion $question){
+        $result = LectureQuestion::query()->where('id',$question->id)->
+        with(['user:id,login_id,name,email,phone',
+            'lecture'=>function($query){
+                $query->select('id','program_id');
+                $query->with('program:id,title');
+            }])
+            ->whereHas('lecture.program',function($query){
+                $query->select('id','title');
+            })
+            ->get()
+            ->toArray();
+        return response()->json(['question' => $result]);
+    }
+
+    public function update(Request $request, LectureQuestion $question){
+        $validatedData = $request->validate([
+            'question' => 'required',
+            'is_answer' => 'required|boolean'
+        ]);
+
+        if ($validatedData['is_answer'] == 1) {
+            $validatedData['answered_at'] = now();
+        }
+
+        $question->update($validatedData);
+
+        return response()->json([
+            'success' => true,
+            'msg' => '수정되었습니다.',
+        ]);
+    }
 }
