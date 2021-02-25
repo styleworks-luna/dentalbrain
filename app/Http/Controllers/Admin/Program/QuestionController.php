@@ -30,7 +30,7 @@ class QuestionController extends Controller
                 if($request->input('keyword')) {
                     $query->where('title', 'like', '%'.$request->input('keyword').'%');
                 }
-            });
+            })->has('user');
 
         if($request->get('is_answer','all') != 'all') {
             $data->where('is_answer',$request->is_answer);
