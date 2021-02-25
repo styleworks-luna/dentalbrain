@@ -194,7 +194,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
-    
+
     Route::post('compare-verification','Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
@@ -251,9 +251,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::put('{user}', 'Admin\User\UserController@update')->name('update');
             //user 직업 모두 가져오는 데이터
             Route::get('category', 'Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
-
+            // user 검색 데이터
             Route::post('search', 'Admin\User\UserController@search')->name('search');
-
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
         });
@@ -283,16 +282,16 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
                 });
-
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
-
             });
-        });
-
-        Route::group(['prefix'=>'question', 'as' => 'question.'], function() {
-            Route::get('/','Admin\Program\QuestionController@index')->name('index');
-            Route::get('{question}/edit','Admin\Program\QuestionController@edit')->name('edit');
-            Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+            Route::group(['prefix'=>'question', 'as' => 'question.'], function() {
+                // 질문 index 페이지 데이터
+                Route::get('/','Admin\Program\QuestionController@index')->name('index');
+                // 질문 수정 페이지 데이터
+                Route::get('{question}/edit','Admin\Program\QuestionController@edit')->name('edit');
+                // 질문 업데이트 함수
+                Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+            });
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {

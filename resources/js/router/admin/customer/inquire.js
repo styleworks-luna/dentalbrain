@@ -9,7 +9,7 @@ const routes = [
     },
     {
         path: '/admin/customer/inquire/:id',
-        name: 'AdminInuireEdit',
+        name: 'AdminInquireEdit',
         component: InquireEdit
     }
 ];

@@ -48,7 +48,7 @@ class QuestionController extends Controller
             ->whereHas('lecture.program',function($query){
                 $query->select('id','title');
             })
-            ->get()
+            ->first()
             ->toArray();
         return response()->json(['question' => $result]);
     }
