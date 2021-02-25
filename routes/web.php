@@ -291,6 +291,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
 
+        Route::group(['prefix'=>'question', 'as' => 'question.'], function() {
+            Route::get('/','Admin\Program\QuestionController@index')->name('index');
+        });
+
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
 
         });
