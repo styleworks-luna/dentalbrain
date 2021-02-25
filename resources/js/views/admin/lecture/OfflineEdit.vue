@@ -221,6 +221,7 @@ export default {
                 this.receipt_ended_time = this.Helper.timeFormat(this.receipt_ended_date);
 
                 this.haveStudents = res.data.haveStudents;
+                console.log(this.haveStudents);
             });
         },
         update() {

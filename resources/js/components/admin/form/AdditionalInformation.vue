@@ -150,6 +150,9 @@ export default {
         data() {
             this.surveys = this.data;
         },
+        haveStudentValue() {
+            this.haveStudent = this.haveStudentValue;
+        }
     },
     mounted() {
         this.surveys = this.data;
@@ -157,6 +160,7 @@ export default {
     },
     methods: {
         addChoice(type) {
+            console.log(this.haveStudent);
             if (!this.haveStudent) {
                 this.surveys.push(
                     {
