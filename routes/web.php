@@ -291,6 +291,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('{question}/edit','Admin\Program\QuestionController@edit')->name('edit');
                 // 질문 업데이트 함수
                 Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+                //질문 답변 변경 함수
+                Route::patch('{question}/status', 'Admin\Program\QuestionController@statusChange')->name('statusChange');
             });
         });
 
