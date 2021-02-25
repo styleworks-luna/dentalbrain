@@ -1,5 +1,26 @@
 <template>
     <layout title="강의 질문내역">
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                :value="gubun"
+                                :options="gubunOptions"
+                                @setValue="handleSetGubun"></select-box>
+
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="강의제목, 질문내용"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </template>
+
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="questions.data">
@@ -40,6 +61,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
 import Question from '@/api/admin/lecture/Question.js';
@@ -47,14 +69,17 @@ import Question from '@/api/admin/lecture/Question.js';
 export default {
     name: 'AdminQuestion',
     components: {
-        'table-grid': Table
+        'table-grid': Table,
+        'select-box': SelectBox
     },
     data() {
         return {
             questions: {
                 data: []
             },
-            page: 1
+            page: 1,
+            gubun: 'all',
+            keyword: '',
         }
     },
     mounted() {
@@ -92,6 +117,22 @@ export default {
                     text: '질문일시'
                 }
             ]
+        },
+        gubunOptions() {
+            return [
+                {
+                    id: 'all',
+                    name: '선택'
+                },
+                {
+                    id: '0',
+                    name: '미완료'
+                },
+                {
+                    id: '1',
+                    name: '완료'
+                },
+            ]
         }
     },
     methods: {
@@ -101,8 +142,12 @@ export default {
             }
 
             let params = {
+                keyword: this.keyword,
+                is_answer: this.gubun,
                 page: page
             };
+
+            console.log(params);
 
             Question.getData(params).then(res => {
                 this.questions = res.data.question;
@@ -110,6 +155,9 @@ export default {
                 this.questions = [];
             });
         },
+        handleSetGubun(gubun) {
+            this.gubun = gubun;
+        }
     }
 }
 </script>
