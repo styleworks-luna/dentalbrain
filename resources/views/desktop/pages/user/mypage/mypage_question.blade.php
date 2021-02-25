@@ -41,7 +41,7 @@
                             </div>
                         </li>
                     @empty
-                        <li>질문내역이 없습니다.</li>
+                        <li class="history-content">질문내역이 없습니다.</li>
                     @endforelse
                 </ul>
             </section>
