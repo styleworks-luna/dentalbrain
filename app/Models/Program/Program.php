@@ -33,6 +33,20 @@ class Program extends Model
      * ======= Custom Functions =========
      */
 
+    public function canRefund()
+    {
+        $user = Auth::user();
+        if ($this->alreadyPaid()) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('applied_at', '<', now()->addDays(7))
+                ->where('is_watched', '=', 0)
+                ->exist();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 이미 유저가 강의를 지불했는지 확인.
      * @return bool
@@ -178,7 +192,7 @@ class Program extends Model
     {
         $programs = $query->select(['id', 'thumbnail_id', 'is_online', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free','place:id,program_id,started_at,ended_at'])
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free', 'place:id,program_id,started_at,ended_at'])
             ->withCount('students');
 
         if ($category !== null) {

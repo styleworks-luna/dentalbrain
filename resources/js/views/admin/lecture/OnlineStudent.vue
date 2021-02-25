@@ -1,5 +1,5 @@
 <template>
-    <layout :title="`'${program_name}'강의 수강 신청 현황`">
+    <layout :title="`'${program_name}' 수강 신청 현황`">
         <template v-slot:button>
 
         </template>
@@ -51,7 +51,10 @@
                         </router-link>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger text-white">
+                        <span v-if="slotProps.row.payment.status === 'CANCELED'">취소완료</span>
+                        <a href="#" class="btn btn-danger text-white"
+                           @click.prevent="handleSetCancelLayer(slotProps.row.id)"
+                           v-else>
                             결제 취소
                         </a>
                     </td>
@@ -67,6 +70,11 @@
                     </pagination>
                 </nav>
             </div>
+
+            <payment-cancel-layer v-if="cancelLayer"
+                                  :reason="cancelReason"
+                                  @setReason="handleSetReason"
+                                  @cancelPayment="cancelPayment"></payment-cancel-layer>
         </template>
     </layout>
 </template>
@@ -75,15 +83,17 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+import PaymentCancelLayer from '@/components/admin/form/PaymentCancelLayer.vue';
 
 //api
-import Online from '@/api/admin/lecture/Online.js'
+import { Student } from '@/api/admin/lecture/Online.js'
 
 export default {
     name: 'AdminOnlineStudent',
     components: {
         'table-grid': Table,
-        'button-open': ButtonOpen
+        'button-open': ButtonOpen,
+        'payment-cancel-layer': PaymentCancelLayer
     },
     data() {
         return {
@@ -91,7 +101,10 @@ export default {
             program_name: '',
             students: {
                 data: []
-            }
+            },
+            cancelLayer: false,
+            cancelStudentId: '',
+            cancelReason: ''
         }
     },
     created() {
@@ -152,14 +165,41 @@ export default {
         }
     },
     methods: {
-        getData() {
-            Online.getStudentsData(this.id).then(res => {
+        getData(page = this.page) {
+            if (this.page) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+
+            Student.getStudentsData(this.id, params).then(res => {
                 this.program_name = res.data.program_name;
                 this.students = res.data.students;
             }).catch(err => {
                 this.students = [];
             });
         },
+        handleSetCancelLayer(studentId) {
+            this.cancelLayer = !this.cancelLayer;
+            this.cancelStudentId = studentId;
+        },
+        handleSetReason(reason) {
+            this.cancelReason = reason;
+        },
+        cancelPayment() {
+            let params = {
+                reason: this.cancelReason
+            };
+
+            Student.cancelPayment(this.id, this.cancelStudentId, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            }).catch(err => {
+                alert('오류');
+            })
+        }
     }
 }
 </script>

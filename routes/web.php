@@ -74,11 +74,6 @@ Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
 });
 
-//강의 시청 (임시)
-Route::get('watch', function () {
-    return view('desktop.pages.lecture.lecture_watch');
-});
-
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
@@ -125,6 +120,8 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('result', 'Lecture\ApplyController@result')->name('result');
             // 강의 시청
             Route::get('watch/{lecture?}', 'Lecture\WatchController@watch')->name('watch');
+            // 강의 시청 확인
+            Route::patch('watched/{lecture?}', 'Lecture\WatchController@watched')->name('check-watch');
 
         });
 
@@ -145,8 +142,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역
-    Route::group(['prefix' => 'questions', 'as' => 'questions.'], function(){
-        Route::get('/','Account\QuestionController@index')->name('index');
+    Route::group(['prefix' => 'questions', 'as' => 'questions.'], function () {
+        Route::get('/', 'Account\QuestionController@index')->name('index');
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
 
@@ -195,7 +192,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
 
-    Route::post('compare-verification','Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
+    Route::post('compare-verification', 'Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
     // 회원 아이디 중복체크
@@ -258,44 +255,61 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
+            // 강의 카테고리 리소스
             Route::get('categories', 'Admin\Program\OnlineProgramController@getCategories')->name('categories');
+            // 강의 상세 내용 이미지 업로드
             Route::post('upload', 'Admin\FileController@uploadContent')->name('upload');
+
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
+                // 온라인 강의 리스트
                 Route::get('/', 'Admin\Program\OnlineProgramController@index')->name('index');
+                // 온라인 강의 저장
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
+                    // 온라인 강의 수강생 목록
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
+                    // 온라인 강의 수강 취소
                     Route::delete('students/{student}', 'Admin\Program\OnlineStudentController@cancel')->name('students.cancel');
+                    // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
+                    // 온라인 강의 업데이트
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
+                    // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
+                // 오프라인 강의 리스트
                 Route::get('/', 'Admin\Program\OfflineProgramController@index')->name('index');
+                // 오프라인 강의 저장
                 Route::post('/', 'Admin\Program\OfflineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
+                    // 오프라인 강의 수강생 리스트
                     Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
+                    // 오프라인 강의 수강 취소
                     Route::delete('students/{student}', 'Admin\Program\OfflineStudentController@cancel')->name('students.cancel');
+                    // 오프라인 강의 수정
                     Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');
+                    // 오프라인 강의 업데이트
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
+                    // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
-            Route::group(['prefix'=>'question', 'as' => 'question.'], function() {
+            Route::group(['prefix' => 'question', 'as' => 'question.'], function () {
                 // 질문 index 페이지 데이터
-                Route::get('/','Admin\Program\QuestionController@index')->name('index');
+                Route::get('/', 'Admin\Program\QuestionController@index')->name('index');
                 // 질문 수정 페이지 데이터
-                Route::get('{question}/edit','Admin\Program\QuestionController@edit')->name('edit');
+                Route::get('{question}/edit', 'Admin\Program\QuestionController@edit')->name('edit');
                 // 질문 업데이트 함수
-                Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+                Route::post('{question}', 'Admin\Program\QuestionController@update')->name('update');
             });
         });
 
-        Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
-
+        Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
+            Route::get('index', 'Admin\Payment\PaymentController@index')->name('index');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {

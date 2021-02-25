@@ -4,19 +4,24 @@ namespace App\Models\Payments;
 
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 class Payment extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'payments';
     protected $guarded = [];
 
-    public function students()
-    {
-        return $this->hasMany(ProgramStudent::class, 'payment_id', 'id');
-    }
-
+    /**
+     * 토스 DTO를 통해 생성
+     *
+     * @param TossPaymentsResponse $response
+     * @return Builder|Model|Payment
+     */
     static function createByTossSuccess(TossPaymentsResponse $response)
     {
         if ($response->isCard()) {
@@ -58,6 +63,12 @@ class Payment extends Model
         }
     }
 
+    /**
+     * 토스 DTO를 통해 업데이트
+     *
+     * @param TossPaymentsResponse $response
+     * @return bool
+     */
     public function updateByToss(TossPaymentsResponse $response)
     {
         if ($response->isCard()) {
@@ -98,5 +109,10 @@ class Payment extends Model
                 'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
             ]);
         }
+    }
+
+    public function student()
+    {
+        return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
     }
 }

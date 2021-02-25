@@ -32,24 +32,7 @@ class PaymentsController extends Controller
 
         $payment = Payment::createByTossSuccess($response);
 
-        if ($response->isCard()) {
-            ProgramStudent::query()->where('user_id', '=', Auth::id())
-                ->where('ticket_id', '=', $program->ticket->id)
-                ->first()->update([
-                    'payment_id' => $payment->id,
-                    'expired_at' => now()->addDays($program->ticket->term),
-                    'pay_status' => ProgramStudent::$PAY_PAID,
-                ]);
-        } elseif ($response->isVirtualAccount()) {
-            ProgramStudent::query()->where('user_id', '=', Auth::id())
-                ->where('ticket_id', '=', $program->ticket->id)
-                ->first()->update([
-                    'payment_id' => $payment->id,
-                    'expired_at' => now()->addDays($program->ticket->term),
-                    'pay_status' => ProgramStudent::$PAY_IN_PROCESS,
-                ]);
-        }
-
+        $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
         Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
 

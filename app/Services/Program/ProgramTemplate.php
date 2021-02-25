@@ -73,7 +73,7 @@ abstract class ProgramTemplate
     {
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status', 'refundStatus');
+                $query->select('id', 'totalAmount', 'status');
             }, 'user:id,login_id'])->paginate($perPage);
     }
 
