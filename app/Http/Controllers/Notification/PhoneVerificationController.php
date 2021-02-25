@@ -34,7 +34,7 @@ class PhoneVerificationController extends Controller
 
         $validatedData = $validator->validate();
         $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->where('expired_at','>',date("Y-m-d H:i:s"))->first();
-        if(!empty($data) && $data->verfication_num == $validatedData['verificationNumber']){
+        if(!empty($data) && $data->verification_number == $validatedData['verificationNumber']){
             $result = array(
                 'success' => true
             );
