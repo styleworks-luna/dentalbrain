@@ -60,7 +60,7 @@ class FindIdController extends Controller
 
         $validatedData = $validator->validate();
 
-        $user = User::where('login_id',$validatedData['login_id'])->first();
+        $user = User::withTrashed()->where('login_id',$validatedData['login_id'])->first();
         return $this->getResultOfFindId($user);
     }
 

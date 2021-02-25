@@ -106,13 +106,6 @@ class RegisterController extends Controller
             return UserJobName::find($input->job)->need_license == true;
         });
 
-        $result->after(function ($validator) use($data){
-            $data = PhoneVerification::query()->where('phone',$data['phone'])->where('expired_at','>',Carbon::now())->first()->toArray();
-            if((!empty($data) && isset($data['verfication_num']) && $data->verfication_num == $data['verification_number']) == false){
-                $validator->errors()->add('verification_number','verification_number is invalid');
-            }
-        });
-
         return $result;
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ApplyOnlineLecture extends Mailable
+class ApplyLecture extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -34,8 +34,8 @@ class ApplyOnlineLecture extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 온라인 강의 신청 완료')
-            ->view('emails.lecture.online_apply')
+            ->subject('[DBV2020] 강의 신청 완료')
+            ->view('emails.lecture.lecture_apply')
             ->with([
                 'user' => $this->user,
                 'program' => $this->program

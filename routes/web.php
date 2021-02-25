@@ -289,6 +289,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
 
+        Route::group(['prefix'=>'question', 'as' => 'question.'], function() {
+            Route::get('/','Admin\Program\QuestionController@index')->name('index');
+            Route::get('{question}/edit','Admin\Program\QuestionController@edit')->name('edit');
+            Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+        });
+
         Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
 
         });
