@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="checkbox-wrap">
-                        <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
+                        <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"  v-model="survey.is_required">
                         <label :for="'required'+ index">필수입력</label>
                     </div>
                     <div class="btn-wrap">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="checkbox-wrap">
-                        <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
+                        <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"  v-model="survey.is_required">
                         <label :for="'required'+ index">필수입력</label>
                     </div>
                     <div class="btn-wrap">
@@ -85,7 +85,7 @@
                                placeholder="주관식 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
-                        <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
+                        <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"  v-model="survey.is_required">
                         <label :for="'required'+ index">필수입력</label>
                     </div>
                     <div class="btn-wrap">
@@ -102,7 +102,7 @@
                                placeholder="주소 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
-                        <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
+                        <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true" v-model="survey.is_required">
                         <label :for="'required'+ index">필수입력</label>
                     </div>
                     <div class="btn-wrap">
@@ -119,7 +119,7 @@
                                placeholder="파일첨부 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
-                        <input type="checkbox" :id="'required' + index" v-model="survey.is_required">
+                        <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true" v-model="survey.is_required">
                         <label :for="'required'+ index">필수입력</label>
                     </div>
                     <div class="btn-wrap">
@@ -139,51 +139,64 @@ export default {
     data() {
         return {
             surveys: [],
+            haveStudent: '',
         }
     },
-    props:{
+    props: {
         'data': [Array],
+        'haveStudentValue': Boolean,
     },
     watch: {
         data() {
             this.surveys = this.data;
-        }
+        },
     },
     mounted() {
         this.surveys = this.data;
+        this.haveStudent = this.haveStudentValue;
     },
     methods: {
         addChoice(type) {
-            this.surveys.push(
-                {
-                    type: type,
-                    question: '',
-                    is_required: 0,
-                    choices: [{
-                        question:''
-                    }],
-                }
-            )
+            if (!this.haveStudent) {
+                this.surveys.push(
+                    {
+                        type: type,
+                        question: '',
+                        is_required: 0,
+                        choices: [{
+                            question: ''
+                        }],
+                    }
+                )
+            }
         },
         addquestion(type) {
-            this.surveys.push(
-                {
-                    type: type,
-                    question: '',
-                    is_required: 0,
-                }
-            )
+            if (!this.haveStudent) {
+                this.surveys.push(
+                    {
+                        type: type,
+                        question: '',
+                        is_required: 0,
+                    }
+                )
+            }
         },
         addItem(index) {
-            this.surveys[index].choices.push({
-                question:'',
-            });
+            if (!this.haveStudent) {
+                this.surveys[index].choices.push({
+                    question: '',
+                });
+            }
         },
         pop(data, index) {
-            data.splice(index, 1)
+            if (!this.haveStudent) {
+                data.splice(index, 1)
+            }
         },
         popItem(data, index) {
-            data.splice(index, 1)
+            if (!this.haveStudent) {
+                data.splice(index, 1)
+            }
         }
     },
 }

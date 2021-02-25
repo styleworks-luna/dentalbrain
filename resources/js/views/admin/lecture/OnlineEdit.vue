@@ -73,16 +73,18 @@
                 <template v-slot:content>
                     <div class="radio-wrap">
                         <input type="radio" id="pay" value="0"
+                               :disabled="haveStudents == true"
                                v-model="is_free">
                         <label for="pay" class="mr-3">유료</label>
                         <input type="text"
                                class="form-control"
                                placeholder="신청 금액 입력"
-                               :disabled="is_free == 1"
+                               :disabled="is_free == 1 || haveStudents == true"
                                v-model="price">
                     </div>
                     <div class="radio-wrap free">
                         <input type="radio" id="free" value="1"
+                               :disabled="haveStudents == true"
                                v-model="is_free">
                         <label for="free">무료</label>
                     </div>
@@ -93,7 +95,7 @@
             <single-group name="추가 정보"
                           :size="12">
                 <template v-slot:content>
-                    <additional-information :data="surveys"></additional-information>
+                    <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
                 </template>
             </single-group>
 
@@ -183,7 +185,7 @@ export default {
     data() {
         return {
             id: '',
-            data: {}
+            data: {},
         }
     },
     created() {
@@ -220,7 +222,7 @@ export default {
 
                 this.lectures = res.data.lectures;
 
-                console.log(res.data.haveStudents);
+                this.haveStudents = res.data.haveStudents;
             });
         },
         update() {
