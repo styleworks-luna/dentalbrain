@@ -70,12 +70,6 @@ class TestController extends Controller
         return $sms->getToken();
     }
 
-    public function checkVerification(Request $request)
-    {
-        $sms = new Ppurio();
-        return $sms->checkVerification($request);
-    }
-
     public function cancelTest(Request $request)
     {
         $students = ProgramStudent::all();
