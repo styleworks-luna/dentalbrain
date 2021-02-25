@@ -70,7 +70,7 @@
                 <button type="submit" class="btn btn-info"
                         @click="update">저장
                 </button>
-                <router-link to="/admin/customer/inquire"
+                <router-link to="/admin/lecture/question"
                              class="btn btn-dark">목록
                 </router-link>
             </div>

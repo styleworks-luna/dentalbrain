@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Program;
 
 use App\LectureQuestion;
 use App\Services\Search\SearchService;
+use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -70,5 +71,18 @@ class QuestionController extends Controller
             'success' => true,
             'msg' => '수정되었습니다.',
         ]);
+    }
+
+    public function statusChange(LectureQuestion $question)
+    {
+        $statusChangeImpl = new StatusChangeImpl();
+        if($question->is_answer == 0){
+            $question->answered_at = now();
+        }else{
+            $question->answered_at = null;
+        }
+        $question->save();
+
+        return $statusChangeImpl->statusChange($question, 'is_answer');
     }
 }
