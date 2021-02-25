@@ -14,7 +14,7 @@ class QuestionController extends Controller
 {
     public function index()
     {
-       $data = LectureQuestion::query()->where('user_id',Auth::id())->with('lecture:id,title')->get()->toArray();
+       $data = LectureQuestion::query()->where('user_id',Auth::id())->with('lecture.program:id,title')->has('lecture.program')->get()->toArray();
         return view(viewPrefix().'pages.user.mypage.mypage_question',['question' => $data]);
     }
 
