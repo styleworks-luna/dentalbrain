@@ -41,7 +41,7 @@
                             </table>
                         </li>
                     @empty
-                        <li>결제내역이 없습니다.</li>
+                        <li class="payment-none">결제내역이 없습니다.</li>
                     @endforelse
                 </ul>
             </section>
