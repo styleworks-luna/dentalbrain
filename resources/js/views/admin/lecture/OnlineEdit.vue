@@ -66,38 +66,44 @@
                 </template>
             </single-group>
 
-            <single-group name="결제 정보 입력"
-                          :isRow="true"
-                          :isRequired="true"
-                          :size="9">
-                <template v-slot:content>
-                    <div class="radio-wrap">
-                        <input type="radio" id="pay" value="0"
-                               :disabled="haveStudents == true"
-                               v-model="is_free">
-                        <label for="pay" class="mr-3">유료</label>
-                        <input type="text"
-                               class="form-control"
-                               placeholder="신청 금액 입력"
-                               :disabled="is_free == 1 || haveStudents == true"
-                               v-model="price">
-                    </div>
-                    <div class="radio-wrap free">
-                        <input type="radio" id="free" value="1"
-                               :disabled="haveStudents == true"
-                               v-model="is_free">
-                        <label for="free">무료</label>
-                    </div>
-                </template>
-            </single-group>
+            <div :class="haveStudents ? 'bg-light text-dark':''">
+                <single-group name="결제 정보 입력"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="9">
+                    <template v-slot:content>
 
+                        <div class="radio-wrap">
+                            <input type="radio" id="pay" value="0"
+                                   :disabled="haveStudents == true"
+                                   v-model="is_free">
+                            <label for="pay" class="mr-3">유료</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_free == 1 || haveStudents == true"
+                                   v-model="price">
+                        </div>
+                        <div class="radio-wrap free">
+                            <input type="radio" id="free" value="1"
+                                   :disabled="haveStudents == true"
+                                   v-model="is_free">
+                            <label for="free">무료</label>
+                        </div>
 
-            <single-group name="추가 정보"
-                          :size="12">
-                <template v-slot:content>
-                    <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
-                </template>
-            </single-group>
+                    </template>
+                </single-group>
+            </div>
+
+            <div :class="haveStudents ? 'bg-light text-dark':''">
+                <single-group name="추가 정보"
+                              :size="12">
+                    <template v-slot:content>
+                        <additional-information :data="surveys"
+                                                :haveStudentValue="haveStudents"></additional-information>
+                    </template>
+                </single-group>
+            </div>
 
             <single-group name="강의 설정"
                           :isRow="true"
@@ -173,7 +179,7 @@ import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/For
 import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 // api
-import { Online } from '@/api/admin/lecture/Online.js'
+import {Online} from '@/api/admin/lecture/Online.js'
 
 export default {
     name: 'AdminOnlineEdit',

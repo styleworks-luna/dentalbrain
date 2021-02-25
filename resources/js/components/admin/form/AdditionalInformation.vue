@@ -26,12 +26,14 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
+                               :disabled="haveStudent == true"
                                placeholder="객관식 (단일선택) 질문을 입력해주세요.">
                         <div class="item-wrap" v-for="(item, idx) in survey.choices">
                             <span class="circle"></span>
                             <input type="text"
                                    class="form-control choices"
                                    v-model="surveys[index].choices[idx].question"
+                                   :disabled="haveStudent == true"
                                    placeholder="항목을 입력해주세요.">
                             <button class="btn btn-outline-dark btn-item-delete"
                                     @click="popItem(survey.choices,idx)">항목삭제
@@ -54,11 +56,13 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
+                               :disabled="haveStudent == true"
                                placeholder="객관식 (다중선택) 질문을 입력해주세요.">
                         <div class="item-wrap" v-for="(item, idx) in survey.choices">
                             <span class="square"></span>
                             <input type="text"
                                    class="form-control choices"
+                                   :disabled="haveStudent == true"
                                    v-model="surveys[index].choices[idx].question"
                                    placeholder="항목을 입력해주세요.">
                             <button class="btn btn-outline-dark btn-item-delete"
@@ -82,6 +86,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
+                               :disabled="haveStudent == true"
                                placeholder="주관식 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
@@ -99,6 +104,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
+                               :disabled="haveStudent == true"
                                placeholder="주소 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
@@ -116,6 +122,7 @@
                         <input type="text"
                                class="form-control"
                                v-model="survey.question"
+                               :disabled="haveStudent == true"
                                placeholder="파일첨부 질문을 입력해주세요.">
                     </div>
                     <div class="checkbox-wrap">
