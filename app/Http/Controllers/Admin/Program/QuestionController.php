@@ -55,7 +55,6 @@ class QuestionController extends Controller
 
     public function update(Request $request, LectureQuestion $question){
         $validatedData = $request->validate([
-            'question' => 'required',
             'is_answer' => 'required|boolean'
         ]);
 
