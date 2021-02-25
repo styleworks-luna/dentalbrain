@@ -17,6 +17,8 @@ class Payment extends Model
     protected $guarded = [];
 
     /**
+     * 토스 DTO를 통해 생성
+     *
      * @param TossPaymentsResponse $response
      * @return Builder|Model|Payment
      */
@@ -61,11 +63,12 @@ class Payment extends Model
         }
     }
 
-    public function student()
-    {
-        return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
-    }
-
+    /**
+     * 토스 DTO를 통해 업데이트
+     *
+     * @param TossPaymentsResponse $response
+     * @return bool
+     */
     public function updateByToss(TossPaymentsResponse $response)
     {
         if ($response->isCard()) {
@@ -106,5 +109,10 @@ class Payment extends Model
                 'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
             ]);
         }
+    }
+
+    public function student()
+    {
+        return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
     }
 }
