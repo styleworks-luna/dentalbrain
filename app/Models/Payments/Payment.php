@@ -61,9 +61,9 @@ class Payment extends Model
         }
     }
 
-    public function students()
+    public function student()
     {
-        return $this->hasMany(ProgramStudent::class, 'payment_id', 'id');
+        return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
     }
 
     public function updateByToss(TossPaymentsResponse $response)

@@ -9,7 +9,13 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::query()->orderByDesc('id')->paginate(10);
+        $payments = Payment::query()
+            ->orderByDesc('id')
+            ->with(['student.ticket.program' => function ($query) {
+                $query->select('id', 'is_online', 'title');
+            }])
+            ->select('id','totalAmount','receiptUrl','method','status','requestedAt','approvedAt')
+            ->paginate(10);
 
         return response()->json([
             'payments' => $payments,
