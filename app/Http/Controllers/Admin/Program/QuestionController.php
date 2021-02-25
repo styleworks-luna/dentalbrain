@@ -31,7 +31,9 @@ class QuestionController extends Controller
                 }
             });
 
-        if(isset($request->is_answer)) $data->where('is_answer',$request->is_answer);
+        if($request->get('is_answer','all') != 'all') {
+            $data->where('is_answer',$request->is_answer);
+        }
 
         $result = $data->orderBy('id','desc')->paginate(20);
 
