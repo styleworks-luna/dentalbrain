@@ -25,7 +25,7 @@
                     @forelse($question as $key => $value)
                         <li class="history-content">
                             <div class="question-information">
-                                <span class="lecture-name content-common">{{ $value['lecture']['title'] }}</span>
+                                <span class="lecture-name content-common">{{ $value['lecture']['program']['title'] }}</span>
                                 <span class="question-content content-common">{{ $value['question'] }}</span>
                                 <span class="inquiry-date content-common">{{ $value['created_at'] }}</span>
                                 <span class="response-status content-common {{ !empty($value['is_answer']) ? 'response-status-complete' : '' }}">{{ !empty($value['is_answer']) ? '답변완료' : '답변대기' }}</span>

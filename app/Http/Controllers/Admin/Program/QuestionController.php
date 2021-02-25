@@ -24,14 +24,16 @@ class QuestionController extends Controller
                     $query->where('question','like','%'.$request->input('keyword').'%');
                 }
             })
-            ->with('lecture:id,title')
-            ->orwhereHas('lecture',function($query) use($request){
+            ->with('lecture:id,program_id','lecture.program:id,title','user:id,login_id,email')
+            ->orwhereHas('lecture.program',function($query) use($request){
                 if($request->input('keyword')) {
                     $query->where('title', 'like', '%'.$request->input('keyword').'%');
                 }
             });
 
-        if(isset($request->is_answer)) $data->where('is_answer',$request->is_answer);
+        if($request->get('is_answer','all') != 'all') {
+            $data->where('is_answer',$request->is_answer);
+        }
 
         $result = $data->orderBy('id','desc')->paginate(20);
 
@@ -48,14 +50,13 @@ class QuestionController extends Controller
             ->whereHas('lecture.program',function($query){
                 $query->select('id','title');
             })
-            ->get()
+            ->first()
             ->toArray();
         return response()->json(['question' => $result]);
     }
 
     public function update(Request $request, LectureQuestion $question){
         $validatedData = $request->validate([
-            'question' => 'required',
             'is_answer' => 'required|boolean'
         ]);
 
