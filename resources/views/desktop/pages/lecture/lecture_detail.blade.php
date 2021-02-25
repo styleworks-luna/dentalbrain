@@ -76,25 +76,29 @@
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
 
-                            {{--TODO: 오프라인 프로그램 기간이 지났을 경우--}}
-                           {{-- <div class="btn-wrap">
-                                    <span class="btn-apply-complete">
-                                    신청기간이 지난강의 입니다.
-                                    </span>
-                            </div>--}}
-                            @if($program->alreadyPaid())
+                            @if($program->is_online == false && $program->place->receipt_ended_at < now())
+                                {{--오프라인 강의 일 경우--}}
                                 <div class="btn-wrap">
+                                     <span class="btn-apply-complete">
+                                     신청기간이 지난강의 입니다.
+                                     </span>
+                                </div>
+                            @else
+                                @if($program->alreadyPaid())
+                                    <div class="btn-wrap">
                                     <span class="btn-apply-complete">
                                     신청한 강의입니다.
                                     </span>
-                                    <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역 수정</a>
-                                </div>
-                            @else
-                                <div class="btn-wrap">
-                                    <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
-                                        신청하기
-                                    </a>
-                                </div>
+                                        <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역
+                                            수정</a>
+                                    </div>
+                                @else
+                                    <div class="btn-wrap">
+                                        <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                            신청하기
+                                        </a>
+                                    </div>
+                                @endif
                             @endif
 
                             <a href=""
