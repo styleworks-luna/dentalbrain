@@ -4,6 +4,7 @@ namespace App\Models\Payments;
 
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -12,11 +13,10 @@ class Payment extends Model
     protected $table = 'payments';
     protected $guarded = [];
 
-    public function students()
-    {
-        return $this->hasMany(ProgramStudent::class, 'payment_id', 'id');
-    }
-
+    /**
+     * @param TossPaymentsResponse $response
+     * @return Builder|Model|Payment
+     */
     static function createByTossSuccess(TossPaymentsResponse $response)
     {
         if ($response->isCard()) {
@@ -56,6 +56,11 @@ class Payment extends Model
                 'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
             ]);
         }
+    }
+
+    public function students()
+    {
+        return $this->hasMany(ProgramStudent::class, 'payment_id', 'id');
     }
 
     public function updateByToss(TossPaymentsResponse $response)
