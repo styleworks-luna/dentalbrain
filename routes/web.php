@@ -147,8 +147,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역
-    Route::group(['prefix' => 'questions', 'as' => 'questions.'], function(){
-        Route::get('/','Account\QuestionController@index')->name('index');
+    Route::group(['prefix' => 'questions', 'as' => 'questions.'], function () {
+        Route::get('/', 'Account\QuestionController@index')->name('index');
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
 
@@ -196,8 +196,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
-    
-    Route::post('compare-verification','Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
+
+    Route::post('compare-verification', 'Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
     // 회원 아이디 중복체크
@@ -291,8 +291,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
 
-        Route::group(['prefix' => 'payment', 'as' => 'payment'], function () {
-
+        Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
+            Route::get('index', 'Admin\Payment\PaymentController@index')->name('index');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {

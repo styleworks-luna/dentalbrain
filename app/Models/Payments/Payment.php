@@ -6,10 +6,13 @@ use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 class Payment extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'payments';
     protected $guarded = [];
 
