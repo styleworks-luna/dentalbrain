@@ -313,7 +313,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
-            Route::get('index', 'Admin\Payment\PaymentController@index')->name('index');
+            Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
