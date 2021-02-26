@@ -44,7 +44,6 @@ class ProgramStudent extends Model
         } elseif ($response->isVirtualAccount()) {
             $programStudent->update([
                 'payment_id' => $payment->id,
-                'expired_at' => now()->addDays($program->ticket->term),
                 'pay_status' => ProgramStudent::$PAY_IN_PROCESS,
             ]);
         }

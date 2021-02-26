@@ -79,20 +79,31 @@ class PaymentsController extends Controller
 
         $body = $v->validate();
 
-        $payment = Payment::query()
-            ->where('secret', 'LIKE', $body['secret'])
-            ->where('orderId', 'LIKE', $body['orderId'])
-            ->first();
+        try {
+            $payment = Payment::query()
+                ->where('secret', 'LIKE', $body['secret'])
+                ->where('orderId', 'LIKE', $body['orderId'])
+                ->first();
 
-        $tossPayment = new TossPayments($payment->paymentKey);
-        $response = $tossPayment->lookup();
-        if ($response === false) {
-            Log::error('TOSS DEPOSITED LOOKUP FAILED', [encrypt([$body])]);
+            $tossPayment = new TossPayments($payment->paymentKey);
+
+            $payment->update([
+                'status' => $body['status'],
+                'approvedAt' => now(),
+            ]);
+
+            $payment->student->update([
+                'payment_id' => $payment->id,
+                'expired_at' => now()->addDays($payment->student->ticket->term),
+                'pay_status' => ProgramStudent::$PAY_PAID,
+            ]);
+
+            return response('', 200);
+
+        } catch (\Exception $e) {
+            Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
             return response('', 500);
         }
-
-        $payment->updateByToss($response);
-        return response('', 200);
     }
 
 }
