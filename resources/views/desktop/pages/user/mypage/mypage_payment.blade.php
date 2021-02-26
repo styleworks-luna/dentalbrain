@@ -15,28 +15,66 @@
             <section class="payment-history">
                 <h2>결제내역</h2>
                 <ul>
-                    @forelse($data as $key => $value)
+                    @forelse($payments as $payment)
                         <li>
                             <div class="lecture-information">
-                                <span
-                                    class="{{ $value['students'][0]['ticket']['program']['is_online'] ? 'online' : 'offline' }}">{{ $value['students'][0]['ticket']['program']['is_online']  ? '온라인' : '오프라인' }}</span>
-                                <h3 class="lecture-name">{{ $value['students'][0]['ticket']['program']['title'] }}</h3>
+                                @if ($payment->student->ticket->program->is_online)
+                                    <span class="online">'온라인'</span>
+                                @else
+                                    <span class="offline">오프라인</span>
+                                @endif
+
+                                <h3 class="lecture-name">{{ $payment->student->ticket->program->title }}</h3>
                             </div>
                             <table class="payment-information">
                                 <tr>
                                     <th>결제금액</th>
                                     <th>결제상태</th>
                                     <th>결제수단</th>
-                                    <th>결제일{{ isset($value['deleted_at']) ? "/취소일" : '' }}</th>
+                                    <th>결제일{{ isset($payment->cacel) ? "/취소일" : '' }}</th>
                                 </tr>
                                 <tr>
-                                    <td>{{ number_format($value['totalAmount']) }}원</td>
-                                    <td>{{ $value['status'] == 'DONE' ? '결제완료' : '결제취소' }}</td>
+                                    <td>{{ number_format($payment->totalAmount) }}원</td>
+                                    @switch($payment->status)
+                                        @case('READY')
+                                        @case('IN_PROGRESS')
+                                        <td>진행 중</td>
+                                        @break
+
+                                        @case('WAITING_FOR_DEPOSIT')
+                                        <td>입금 대기중</td>
+                                        @break
+
+                                        @case('DONE')
+                                        <td>결제 완료</td>
+                                        @break
+
+                                        @case('ABORTED')
+                                        <td>결제 오류</td>
+                                        @break
+
+                                        @case('CANCELED')
+                                        @case('PARTIAL_CANCELED')
+                                        <td>결제 취소</td>
+                                        @break
+
+                                        @default
+                                        <td>확인 중</td>
+                                    @endswitch
                                     <td>
-                                        {{ changePaymentMethodName($value['method']) }}
-                                        <a href="{{ $value['receiptUrl'] }}">결제 영수증</a>
+                                        {{ changePaymentMethodName($payment->method) }}
+                                        {{--TODO: 디자인 필요.--}}
+                                        @if($payment->method == '가상계좌' && $payment->status =='WAITING_FOR_DEPOSIT')
+                                            <p>입금 계좌 : {{ $payment->va_accountNumber }}</p>
+                                            <p>예금주 : {{ $payment->va_customerName }}</p>
+                                            <p>납입기한 : {{ date_format($payment->va_dueDate,'Y-m-d G:i:s') }}</p>
+                                        @endif
+                                        @isset($payment->receiptUrl)
+                                            <a href="{{ $payment->receiptUrl }}">결제 영수증</a>
+                                        @endisset
+
                                     </td>
-                                    <td>{{ date('Y-m-d',strtotime($value['created_at'])) }} {{ isset($value['deleted_at']) ? '/'.date('Y-m-d',strtotime($value['deleted_at'])) : ''   }}</td>
+                                    <td>{{ date_format($payment->requestedAt ,'Y-m-d')}} {{ $payment->cancel ? '/' . date_format($payment->cancel->canceledAt,'Y-m-d') : ''   }}</td>
                                 </tr>
                             </table>
                         </li>

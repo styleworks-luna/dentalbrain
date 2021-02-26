@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Http\Controllers\Controller;
 use App\LectureQuestion;
 use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
+
 class QuestionController extends Controller
 {
     public function index(Request $request)
@@ -18,45 +17,24 @@ class QuestionController extends Controller
         ]);
     }
 
-    private function search(Request $request){
-        $data  = LectureQuestion::query()
-            ->where(function ($query) use($request){
-                if($request->input('keyword')){
-                    $query->where('question','like','%'.$request->input('keyword').'%');
-                }
-            })
-            ->with('lecture:id,program_id','lecture.program:id,title','user:id,login_id,email')
-            ->orwhereHas('lecture.program',function($query) use($request){
-                if($request->input('keyword')) {
-                    $query->where('title', 'like', '%'.$request->input('keyword').'%');
-                }
-            });
-
-        if($request->get('is_answer','all') != 'all') {
-            $data->where('is_answer',$request->is_answer);
-        }
-
-        $result = $data->orderBy('id','desc')->paginate(20);
-
-        return $result;
-    }
-
-    public function edit(LectureQuestion $question){
-        $result = LectureQuestion::query()->where('id',$question->id)->
-        with(['user:id,login_id,name,email,phone',
-            'lecture'=>function($query){
-                $query->select('id','program_id');
-                $query->with('program:id,title');
-            }])
-            ->whereHas('lecture.program',function($query){
-                $query->select('id','title');
+    public function edit(LectureQuestion $question)
+    {
+        $result = LectureQuestion::query()->where('id', $question->id)
+            ->with(['user:id,login_id,name,email,phone',
+                'lecture' => function ($query) {
+                    $query->select('id', 'program_id');
+                    $query->with('program:id,title');
+                }])
+            ->whereHas('lecture.program', function ($query) {
+                $query->select('id', 'title');
             })
             ->first()
             ->toArray();
         return response()->json(['question' => $result]);
     }
 
-    public function update(Request $request, LectureQuestion $question){
+    public function update(Request $request, LectureQuestion $question)
+    {
         $validatedData = $request->validate([
             'is_answer' => 'required|boolean'
         ]);
@@ -76,13 +54,37 @@ class QuestionController extends Controller
     public function statusChange(LectureQuestion $question)
     {
         $statusChangeImpl = new StatusChangeImpl();
-        if($question->is_answer == 0){
+        if ($question->is_answer == 0) {
             $question->answered_at = now();
-        }else{
+        } else {
             $question->answered_at = null;
         }
         $question->save();
 
         return $statusChangeImpl->statusChange($question, 'is_answer');
+    }
+
+    private function search(Request $request)
+    {
+        $data = LectureQuestion::query()
+            ->where(function ($query) use ($request) {
+                if ($request->input('keyword')) {
+                    $query->where('question', 'like', '%' . $request->input('keyword') . '%');
+                }
+            })
+            ->with('lecture:id,program_id', 'lecture.program:id,title', 'user:id,login_id,email')
+            ->orwhereHas('lecture.program', function ($query) use ($request) {
+                if ($request->input('keyword')) {
+                    $query->where('title', 'like', '%' . $request->input('keyword') . '%');
+                }
+            });
+
+        if ($request->get('is_answer', 'all') != 'all') {
+            $data->where('is_answer', $request->is_answer);
+        }
+
+        $result = $data->orderBy('id', 'desc')->paginate(20);
+
+        return $result;
     }
 }

@@ -41,7 +41,7 @@ class Program extends Model
                 ->where('ticket_id', '=', $this->ticket->id)
                 ->where('applied_at', '<', now()->addDays(7))
                 ->where('is_watched', '=', 0)
-                ->exist();
+                ->exists();
         } else {
             return false;
         }

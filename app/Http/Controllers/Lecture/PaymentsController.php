@@ -12,7 +12,10 @@ use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller
@@ -64,6 +67,32 @@ class PaymentsController extends Controller
             'program' => $program,
             'surveys' => $surveys,
         ]);
+    }
+
+    public function deposited(Request $request)
+    {
+        $v = Validator::make($request->all(), [
+            'secret' => ['required', 'string'],
+            'status' => ['required', Rule::in(['DONE', 'CANCELED'])],
+            'orderId' => ['required', 'string'],
+        ]);
+
+        $body = $v->validate();
+
+        $payment = Payment::query()
+            ->where('secret', 'LIKE', $body['secret'])
+            ->where('orderId', 'LIKE', $body['orderId'])
+            ->first();
+
+        $tossPayment = new TossPayments($payment->paymentKey);
+        $response = $tossPayment->lookup();
+        if ($response === false) {
+            Log::error('TOSS DEPOSITED LOOKUP FAILED', [encrypt([$body])]);
+            return response('', 500);
+        }
+
+        $payment->updateByToss($response);
+        return response('', 200);
     }
 
 }
