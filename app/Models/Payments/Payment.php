@@ -89,14 +89,20 @@ class Payment extends Model
     {
         if ($response->isCard()) {
             return $this->update([
+                    // 결제정보
                     'paymentKey' => $response['paymentKey'],
                     'orderId' => $response['orderId'],
                     'totalAmount' => $response['totalAmount'],
-                    'receiptUrl' => $response['card'] ? $response['card']['receiptUrl'] : null,
                     'method' => $response['method'],
                     'status' => $response['status'],
+
+                    // 신용카드 영수증
+                    'receiptUrl' => $response['card'] ? $response['card']['receiptUrl'] : null,
+
+                    // 할인정보
                     'useDiscount' => $response['useDiscount'],
                     'discountAmount' => $response['discountAmount'],
+
                     'secret' => $response['secret'],
                     'full_response' => $response->getFullResponse(),
                     'requestedAt' => Carbon::parse($response['requestedAt'])->toDateTime(),
@@ -105,24 +111,28 @@ class Payment extends Model
             );
         } elseif ($response->isVirtualAccount()) {
             return $this->update([
+                // 결제정보
                 'paymentKey' => $response['paymentKey'],
                 'orderId' => $response['orderId'],
                 'totalAmount' => $response['totalAmount'],
                 'method' => $response['method'],
                 'status' => $response['status'],
 
+                // 가상계좌 정보
                 'va_accountNumber' => $response['virtualAccount']['accountNumber'],
                 'va_bank' => $response['virtualAccount']['bank'],
                 'va_customerName' => $response['virtualAccount']['customerName'],
-                'va_dueDate' => $response['virtualAccount']['dueDate'],
+                'va_dueDate' => Carbon::parse($response['virtualAccount']['dueDate'])->toDateTime(),
                 'va_refundStatus' => $response['virtualAccount']['refundStatus'],
 
+                // 할인정보
                 'useDiscount' => $response['useDiscount'],
                 'discountAmount' => $response['discountAmount'],
+
                 'secret' => $response['secret'],
                 'full_response' => $response->getFullResponse(),
                 'requestedAt' => Carbon::parse($response['requestedAt'])->toDateTime(),
-                'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
+                'approvedAt' => $response['approvedAt'] != null ? Carbon::parse($response['approvedAt'])->toDateTime() : null,
             ]);
         }
     }
