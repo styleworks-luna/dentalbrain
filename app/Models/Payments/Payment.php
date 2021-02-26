@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Payment extends Model
 {
@@ -44,6 +45,7 @@ class Payment extends Model
                 'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
             ]);
         } elseif ($response->isVirtualAccount()) {
+            Log::debug('debug', [$response->getFullResponse()]);
             return Payment::query()->create([
                 'paymentKey' => $response['paymentKey'],
                 'orderId' => $response['orderId'],
@@ -62,7 +64,7 @@ class Payment extends Model
                 'secret' => $response['secret'],
                 'full_response' => $response->getFullResponse(),
                 'requestedAt' => Carbon::parse($response['requestedAt'])->toDateTime(),
-                'approvedAt' => Carbon::parse($response['approvedAt'])->toDateTime(),
+                'approvedAt' => $response['approvedAt'] ? Carbon::parse($response['approvedAt'])->toDateTime() : null,
             ]);
         }
     }
