@@ -64,7 +64,7 @@ class Payment extends Model
                 'secret' => $response['secret'],
                 'full_response' => $response->getFullResponse(),
                 'requestedAt' => Carbon::parse($response['requestedAt'])->toDateTime(),
-                'approvedAt' => $response['approvedAt'] ? Carbon::parse($response['approvedAt'])->toDateTime() : null,
+                'approvedAt' => $response['approvedAt'] != null ? Carbon::parse($response['approvedAt'])->toDateTime() : null,
             ]);
         }
     }
