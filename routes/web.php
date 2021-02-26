@@ -190,7 +190,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
-    Route::post('toss/deposited', 'Lecture/PaymentsController@deposited');
+    Route::post('toss/deposited', 'Lecture\PaymentsController@deposited');
 
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
 
@@ -306,7 +306,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 // 질문 수정 페이지 데이터
                 Route::get('{question}/edit', 'Admin\Program\QuestionController@edit')->name('edit');
                 // 질문 업데이트 함수
-                Route::post('{question}','Admin\Program\QuestionController@update')->name('update');
+                Route::post('{question}', 'Admin\Program\QuestionController@update')->name('update');
                 //질문 답변 변경 함수
                 Route::patch('{question}/status', 'Admin\Program\QuestionController@statusChange')->name('statusChange');
             });
