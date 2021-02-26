@@ -12,11 +12,11 @@ use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Symfony\Component\HttpFoundation\Response;
 
 class PaymentsController extends Controller
 {
@@ -77,15 +77,17 @@ class PaymentsController extends Controller
             'orderId' => ['required', 'string'],
         ]);
 
-        $body = $v->validate();
+        if ($v->fails()) {
+            return response()->json(['code' => 0], 500);
+        }
+        $body = $v->validated();
 
         try {
+            DB::beginTransaction();
             $payment = Payment::query()
                 ->where('secret', 'LIKE', $body['secret'])
                 ->where('orderId', 'LIKE', $body['orderId'])
                 ->first();
-
-            $tossPayment = new TossPayments($payment->paymentKey);
 
             $payment->update([
                 'status' => $body['status'],
@@ -98,11 +100,14 @@ class PaymentsController extends Controller
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
 
-            return response('', 200);
+            DB::commit();
+            return response()->json(['code' => 1], 200);
 
         } catch (\Exception $e) {
             Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
-            return response('', 500);
+
+            DB::rollBack();
+            return response()->json(['code' => 2], 500);
         }
     }
 
