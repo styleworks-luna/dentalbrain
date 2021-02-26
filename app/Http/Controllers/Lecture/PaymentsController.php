@@ -92,6 +92,13 @@ class PaymentsController extends Controller
         }
 
         $payment->updateByToss($response);
+
+        $payment->student->update([
+            'payment_id' => $payment->id,
+            'expired_at' => now()->addDays($payment->student->ticket->term),
+            'pay_status' => ProgramStudent::$PAY_PAID,
+        ]);
+
         return response('', 200);
     }
 
