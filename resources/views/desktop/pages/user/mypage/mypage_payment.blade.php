@@ -29,7 +29,6 @@
                             <table class="payment-information">
                                 <tr>
                                     <th>결제금액</th>
-                                    {{$payment->id}}
                                     <th>결제상태</th>
                                     <th>결제수단</th>
                                     <th>결제일{{ isset($payment->cacel) ? "/취소일" : '' }}</th>
