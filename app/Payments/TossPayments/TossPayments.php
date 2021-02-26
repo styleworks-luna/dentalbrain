@@ -162,6 +162,6 @@ class TossPayments
     public function cancelVirtualAccount(string $reason, string $bank, string $accountNumber,
                                          string $holderName, $cancelAmount = null, $taxAmount = null)
     {
-        return $this->cancel($reason, $bank . $accountNumber, $holderName, $cancelAmount, $taxAmount);
+        return $this->cancel($reason, $bank , $accountNumber, $holderName, $cancelAmount, $taxAmount);
     }
 }
