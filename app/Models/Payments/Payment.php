@@ -14,6 +14,10 @@ class Payment extends Model
     use SoftDeletes;
 
     protected $table = 'payments';
+    protected $casts = [
+        'requestedAt' => 'datetime',
+        'va_dueDate' => 'datetime'
+    ];
     protected $guarded = [];
 
     /**
@@ -114,5 +118,10 @@ class Payment extends Model
     public function student()
     {
         return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
+    }
+
+    public function cancels()
+    {
+        return $this->hasMany(Cancel::class, 'payment_id', 'id');
     }
 }
