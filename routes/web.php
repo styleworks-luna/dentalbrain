@@ -190,6 +190,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+    Route::post('toss/deposited', 'Lecture/PaymentsController@deposited');
+
     Route::post('send-verification', 'Notification\PhoneVerificationController@sendVerificationNumber')->name('send-verification');
 
     Route::post('compare-verification', 'Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');

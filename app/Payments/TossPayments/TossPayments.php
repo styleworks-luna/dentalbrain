@@ -95,7 +95,6 @@ class TossPayments
      */
     protected function cancel(string $reason, $bank = null, $accountNumber = null, $holderName = null, $cancelAmount = null, $taxAmount = null)
     {
-        $this->getCancelUrl();
         $client = new Client();
         $jsonData = [
             'cancelReason' => $reason
@@ -128,7 +127,7 @@ class TossPayments
         if ($response->getStatusCode() !== 200) {
             Log::error('TOSS API SUCCESS CALL ERROR', [
                 'code' => $response->getStatusCode(),
-                'body' => $response->getBody(),
+                'body' => $response->getBody()->getContents(),
                 'paymentKey' => $this->paymentKey,
                 'reason' => $reason,
             ]);
@@ -149,6 +148,47 @@ class TossPayments
         return 'https://api.tosspayments.com/v1/payments/' . $this->paymentKey . '/cancel';
     }
 
+    public function lookup()
+    {
+        $client = new Client();
+
+        try {
+            $response = $client->post($this->getLookupUrl(), [
+                'auth' => [
+                    env('TOSS_PAYMENTS_SECRET'),
+                    '',
+                ],
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+            ]);
+        } catch (GuzzleException $e) {
+            Log::error('TOSS API LOOKUP CALL ERROR', [
+                $e,
+                'paymentKey' => $this->paymentKey,
+            ]);
+            return false;
+        }
+
+        if ($response->getStatusCode() !== 200) {
+            Log::error('TOSS API LOOKUP CALL ERROR', [
+                'code' => $response->getStatusCode(),
+                'body' => $response->getBody()->getContents(),
+                'paymentKey' => $this->paymentKey,
+            ]);
+            return false;
+        }
+
+        $this->response = new TossPaymentsResponse($response->getBody()->getContents());
+
+        return $this->response ?: false;
+    }
+
+    protected function getLookupUrl()
+    {
+        return 'https://api.tosspayments.com/v1/payments/' . $this->paymentKey;
+    }
+
     /**
      * @param string $reason
      * @param string $bank
@@ -162,6 +202,6 @@ class TossPayments
     public function cancelVirtualAccount(string $reason, string $bank, string $accountNumber,
                                          string $holderName, $cancelAmount = null, $taxAmount = null)
     {
-        return $this->cancel($reason, $bank , $accountNumber, $holderName, $cancelAmount, $taxAmount);
+        return $this->cancel($reason, $bank, $accountNumber, $holderName, $cancelAmount, $taxAmount);
     }
 }
