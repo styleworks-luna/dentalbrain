@@ -131,9 +131,6 @@ $(function () {
         };
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: `/api/lectures/${program_id}/comments`,
             type: "POST",
             data: data,
@@ -160,9 +157,6 @@ $(function () {
         };
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: `/api/lectures/${program_id}/comments`,
             type: "POST",
             data: data,
