@@ -31,13 +31,13 @@ class Kernel extends ConsoleKernel
         ->daily()
         ->onFailure(function (\Exception $exception) {
             Log::error('SEND EMAIL BEFORE 3 DAYS SCHEDULING ERROR',[$exception]);
-        });;
+        });
 
         $schedule->command('email:after')
-            ->daily()
-            ->onFailure(function (\Exception $exception) {
-                Log::error('SEND EMAIL AFTER END SCHEDULING ERROR',[$exception]);
-            });;;
+        ->daily()
+        ->onFailure(function (\Exception $exception) {
+            Log::error('SEND EMAIL AFTER END SCHEDULING ERROR',[$exception]);
+        });
 
         // $schedule->command('inspire')
         //          ->hourly();
