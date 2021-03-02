@@ -38,7 +38,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; font-size: 12px; color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program[0]['title'] }}
+                            {{ $program['title'] }}
                         </p>
                     </td>
                 </tr>
