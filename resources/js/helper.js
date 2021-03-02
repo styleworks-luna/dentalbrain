@@ -103,7 +103,7 @@ export const Helper = {
         date = new Date(date);
         let datenow = new Date();
 
-        return datenow.getTime() - date.getTime()
+        return date.getTime() - datenow.getTime()
     },
     dateCompare(dateStart, dateEnd) {
         dateStart = new Date(dateStart);
