@@ -120,15 +120,15 @@
                 </section>
 
                 <section id="comment" class="lecture-comment">
+                    <input type="hidden" id="program_id" value="{{ $program->id }}">
                     <div class="comment-title">
                         <h3>댓글</h3>
                         <p class="comment-length"></p>
                     </div>
-                    <form action="{{ route('lectures.comments.store',$program->id) }}" class="comment-input-form"
-                          method="POST">
+                    <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form">
                         @csrf
-                        <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text"></textarea>
-                        <input type="submit" value="등록" class="comment-input-btn">
+                        <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text comment-submit-content"></textarea>
+                        <input type="button" value="등록" class="comment-input-btn comment-submit">
                     </form>
                     <ul class="comment-list">
                         @forelse($comments as $comment)
@@ -138,6 +138,13 @@
                                         <img src="{{ asset('/images/desktop/global/profile_default.png') }}"
                                              alt="profile image">
                                     </div>
+                                    <div class="modify-input">
+                                        <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form">
+                                            @csrf
+                                            <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text comment-submit-content">{{ $comment->content }}</textarea>
+                                            <input type="button" value="등록" class="comment-input-btn comment-modify-submit">
+                                        </form>
+                                    </div>
                                     <div class="write-info">
                                         <span class="write-name">{{ $comment->user->name }}</span>
                                         <span class="date">{{ $comment->created_at }}</span>
@@ -146,24 +153,24 @@
                                     </div>
                                     <div class="comment-btn-area">
                                         <form action="">
+                                            <input type="hidden" name="comment_id" class="comment_id" value="{{ $comment->id }}">
                                             @can('update',$comment)
-                                                <button type="submit" class="btn-comment-modified">수정</button>
+                                                <button type="button" class="btn-comment-modified comment-modify">수정</button>
                                             @endcan
                                             @can('delete',$comment)
-                                                <button type="submit" class="btn-comment-delete">삭제</button>
+                                                <button type="button" class="btn-comment-delete comment-delete">삭제</button>
                                             @endcan
                                         </form>
                                     </div>
                                 </div>
                                 <div class="child-comment-area">
-                                    <form action="{{ route('lectures.comments.store',$program->id) }}"
-                                          method="post"
+                                    <form action="{{ route('api.lectures.comments.store',$program->id) }}"
                                           class="comment-input-form hide">
                                         @csrf
-                                        <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                        <input type="hidden" name="parent_id" class="parent_id" value="{{ $comment->id }}">
                                         <textarea name="content" placeholder="댓글을 입력하세요."
-                                                  class="comment-input-text"></textarea>
-                                        <input type="submit" value="등록" class="comment-input-btn">
+                                                  class="comment-input-text comment-child-submit-content"></textarea>
+                                        <input type="button" value="등록" class="comment-input-btn comment-child-submit">
                                     </form>
                                     <ul class="child-comment-list">
                                         @foreach($comment->children as $child)
@@ -174,6 +181,14 @@
                                                             src="{{ asset('/images/desktop/global/profile_default.png') }}"
                                                             alt="profile image">
                                                     </div>
+                                                    <div class="modify-input">
+                                                        <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form comment-modify-form">
+                                                            @csrf
+                                                            <textarea name="content" placeholder="댓글을 입력하세요."
+                                                                      class="comment-input-text comment-child-modify-content">{{ $child->content }}</textarea>
+                                                            <input type="button" value="등록" class="comment-input-btn comment-child-modify-submit">
+                                                        </form>
+                                                    </div>
                                                     <div class="write-info">
                                                         <span class="write-name">{{ $child->user->name }}</span>
                                                         <span class="date">{{ $child->created_at }}</span>
@@ -181,9 +196,10 @@
                                                     </div>
                                                     <div class="comment-btn-area">
                                                         <form action="">
-                                                            <button type="submit" class="btn-comment-modified">수정
+                                                            <input type="hidden" name="comment_id" class="comment_id" value="{{ $child->id }}">
+                                                            <button type="button" class="btn-comment-modified comment-modify">수정
                                                             </button>
-                                                            <button type="submit" class="btn-comment-delete">삭제
+                                                            <button type="button" class="btn-comment-delete comment-child-delete">삭제
                                                             </button>
                                                         </form>
                                                     </div>
