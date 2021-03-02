@@ -23,7 +23,7 @@
                             </template>
 
                             <template v-else>
-                                {{ slotProps.row.payment.totalAmount }}원
+                                {{ Helper.numberWithCommas(slotProps.row.payment.totalAmount) }}원
                             </template>
                         </template>
                         <template v-else>

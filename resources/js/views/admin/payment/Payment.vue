@@ -17,7 +17,7 @@
                         <br>
                         {{ slotProps.row.student.email }}
                     </td>
-                    <td>{{ slotProps.row.totalAmount }}</td>
+                    <td>{{ Helper.numberWithCommas(slotProps.row.totalAmount) }}</td>
                     <td>{{ slotProps.row.method }}</td>
                     <td>
                         {{ paymentStatus(slotProps.row.status) }}<br>
