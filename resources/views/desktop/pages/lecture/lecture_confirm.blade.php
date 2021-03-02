@@ -12,7 +12,7 @@
                     <h1>강의 시청 하시면 환불이 불가능합니다.<br>시청 하시겠습니까?</h1>
                     <div class="btn-wrap">
                     <a href="">확인</a>
-                    <a href="">취소</a>
+                    <a href="#" onClick="history.back()">취소</a>
                     </div>
                 </div>
             </div>
