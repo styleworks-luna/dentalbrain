@@ -42,13 +42,12 @@ class BeforeEndProgramCommand extends Command
      */
     public function handle()
     {
-        $days = 3;
         $data = ProgramStudent::query()
             ->select('id','user_id','ticket_id','expired_at','email')
             ->with('user:id,login_id','ticket.program:id,title')
             ->has('user')
             ->has('ticket.program')
-            ->whereDate('expired_at','=',date("Y-m-d",strtotime("+".$days."days")))
+            ->whereDate('expired_at','=',date("Y-m-d",strtotime("+3days")))
             ->get()->toArray();
 
         try{
