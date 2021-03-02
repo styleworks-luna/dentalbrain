@@ -122,7 +122,6 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('watch/{lecture?}', 'Lecture\WatchController@watch')->name('watch');
             // 강의 시청 확인
             Route::patch('watched/{lecture?}', 'Lecture\WatchController@watched')->name('check-watch');
-
         });
 
     });

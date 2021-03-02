@@ -29,18 +29,16 @@
             +size(260px)
             +margin(25px auto 0 auto)
 
-            a
+            a,
+            .btn-confirm
                 +size(120px, 40px)
-                +padding(top 12px)
                 +btn(purple-fill)
                 float: left
                 font-size: 16px
 
-                &:first-child
-                    +margin(right 20px)
+            .btn-confirm
+                +margin(right 20px)
 
-                &:last-child
-                    +background(null,null,null,$gray-900)
-
-
-
+            a
+                +padding(top 12px)
+                +background(null,null,null,$gray-900)

@@ -48,6 +48,6 @@ class WatchController extends Controller
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
         }
-        return redirect()->route('lectures.watch', $program, $lecture);
+        return redirect()->route('lectures.watch', [$program, $lecture]);
     }
 }
