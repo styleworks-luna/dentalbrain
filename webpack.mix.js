@@ -52,7 +52,8 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
     .sass('resources/sass/desktop/pages/lecture/lecture-apply.sass', 'public/css/desktop/pages/lecture')
     .sass('resources/sass/desktop/pages/lecture/lecture-watch.sass', 'public/css/desktop/pages/lecture')
-    .sass('resources/sass/desktop/pages/lecture/lecture-all.sass', 'public/css/desktop/pages/lecture');
+    .sass('resources/sass/desktop/pages/lecture/lecture-all.sass', 'public/css/desktop/pages/lecture')
+    .sass('resources/sass/desktop/pages/lecture/lecture-confirm.sass', 'public/css/desktop/pages/lecture');
 
 // 회원가입, 로그인, 아이디 비밀번호 찾기
 mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/pages/user')
