@@ -82,9 +82,9 @@
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
                         <div class="btn-wrap">
                             <a href="" :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0 ? '' : 'for-margin'">수정하기</a>
-                            <a href="" v-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 172800000">환불하기(자동)</a>
+                            <a href="" v-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay*2">환불하기(자동)</a>
                             <a href=""
-                               v-else-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < 86400000
+                               v-else-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay
                                && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0">환불하기</a>
                             <a href="" v-else-if="lecture.ticket.price == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0">취소하기</a>
                         </div>
@@ -104,7 +104,8 @@ export default {
     },
     data() {
         return {
-            lectures: []
+            lectures: [],
+            milliSecondsDay: 86400000,
         }
     },
     watch: {
