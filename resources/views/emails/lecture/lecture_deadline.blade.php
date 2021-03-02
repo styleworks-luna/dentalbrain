@@ -9,7 +9,7 @@
     <tr>
         <td width="720" height="100" bgcolor="#9b00d8">
             <h4 style="line-height: 100px; margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
-                강의 신청 마감 D-3 안내
+                강의 시청 마감 D-3 안내
             </h4>
         </td>
     </tr>

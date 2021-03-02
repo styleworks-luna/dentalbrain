@@ -32,7 +32,7 @@ class AfterEndProgram extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 강의 신청 마감 안내')
+            ->subject('[DBV2020] 강의 시청 마감 안내')
             ->view('emails.lecture.lecture_end')
             ->with([
                 'user' => $this->user,

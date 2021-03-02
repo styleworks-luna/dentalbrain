@@ -57,7 +57,7 @@ class AfterEndProgramCommand extends Command
 
             $this->info('강의 마감 안내 email sent successfully!');
         }catch(\Exception $exception){
-            Log::error('SEND EMAIL BEFORE 3 DAYS',[$exception]);
+            Log::error('SEND EMAIL AFTER END',[$exception]);
             $this->info('강의 마감 안내 email NOT SENT');
         }
     }
