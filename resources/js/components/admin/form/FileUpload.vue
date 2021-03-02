@@ -3,7 +3,7 @@
         <input type="file" class="d-none" :id="inputId"
                @change="fileUpload"
                accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
-                       .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar">
+                       .xls, .hwp, .JPG, .JPEG, .PNG, .GIF, .zip, .alz, .rar">
         <label class="btn btn-info float-left w-30"
                :for="inputId">
             파일선택
