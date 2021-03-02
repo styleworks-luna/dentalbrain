@@ -28,13 +28,13 @@ class Kernel extends ConsoleKernel
     {
 
         $schedule->command('email:before')
-        ->everyFiveMinutes()
+        ->daily()
         ->onFailure(function (\Exception $exception) {
             Log::error('SEND EMAIL BEFORE 3 DAYS SCHEDULING ERROR',[$exception]);
         });
 
         $schedule->command('email:after')
-        ->everyFiveMinutes()
+        ->daily()
         ->onFailure(function (\Exception $exception) {
             Log::error('SEND EMAIL AFTER END SCHEDULING ERROR',[$exception]);
         });
