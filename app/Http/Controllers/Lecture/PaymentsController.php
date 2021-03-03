@@ -76,7 +76,7 @@ class PaymentsController extends Controller
      *
      * @param Request $request
      * @param Program $program
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function cancel(Request $request, Program $program)
     {
@@ -89,12 +89,11 @@ class PaymentsController extends Controller
         $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
 
         $data = $concrete->validateUserCancel($request, $program);
-
         if ($data == false) {
             // validation 실패 처리
-            return redirect()->back()->with([
-                'alert' => '유효하지 않은 요청입니다.'
-            ]);
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
         }
 
         $success = $concrete->cancel($program, $student, $data);
@@ -103,13 +102,13 @@ class PaymentsController extends Controller
             // 실패
             // 서버 오류 처리
             Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
-            return redirect()->back()->with([
-                'alert' => '오류가 발생했습니다.'
-            ]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.'
+            ], 500);
         }
 
-        return redirect()->back()->with([
-            'alert' => '환불이 완료되었습니다.',
+        return response()->json([
+            'msg' => '환불이 완료되었습니다.',
         ]);
     }
 
