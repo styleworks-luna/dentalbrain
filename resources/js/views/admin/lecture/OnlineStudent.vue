@@ -51,14 +51,14 @@
                         </router-link>
                     </td>
                     <td>
-                        <template v-if="slotProps.row.payment">
-                            <span v-if="slotProps.row.payment.status === 'CANCELED'">취소완료</span>
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id)"
-                               v-else>
-                                결제 취소
-                            </a>
+                        <template v-if="slotProps.row.pay_status === 3">
+                            취소 완료
                         </template>
+                        <a href="#" class="btn btn-danger text-white"
+                           @click.prevent="handleSetCancelLayer(slotProps.row.id)"
+                           v-else>
+                            결제 취소
+                        </a>
                     </td>
                     <td>{{ slotProps.row.applied_at }}</td>
                 </template>
@@ -76,6 +76,7 @@
             <payment-cancel-layer v-if="cancelLayer"
                                   :reason="cancelReason"
                                   @setReason="handleSetReason"
+                                  @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
         </template>
     </layout>
@@ -185,7 +186,8 @@ export default {
         },
         handleSetCancelLayer(studentId) {
             this.cancelLayer = !this.cancelLayer;
-            this.cancelStudentId = studentId;
+
+            if (studentId) this.cancelStudentId = studentId;
         },
         handleSetReason(reason) {
             this.cancelReason = reason;
