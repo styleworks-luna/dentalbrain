@@ -33,7 +33,7 @@ class Program extends Model
      * ======= Custom Functions =========
      */
 
-    public function canRefund()
+    public function canOnlineRefund()
     {
         $user = Auth::user();
         if ($this->alreadyPaid()) {
@@ -57,7 +57,7 @@ class Program extends Model
         if ($user != null) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->where('pay_status', '=', ProgramStudent::$PAY_PAID)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
                 ->where('expired_at', '>', now())
                 ->exists();
         } else {
@@ -65,9 +65,21 @@ class Program extends Model
         }
     }
 
+    public function canRequestRefund()
+    {
+        return $this->place()->where('stated_at', '>', now()->addDay())
+            ->where('started_at', '<', now()->addDays(2))
+            ->exists();
+    }
+
     /*
      * ======= Define Relationships =========
      */
+
+    public function place()
+    {
+        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
+    }
 
     public function majorCategory()
     {
@@ -83,7 +95,6 @@ class Program extends Model
     {
         return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
     }
-
 
     public function ticket()
     {
@@ -120,11 +131,6 @@ class Program extends Model
     public function lectures()
     {
         return $this->hasMany(Lecture::class, 'program_id', 'id');
-    }
-
-    public function place()
-    {
-        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
     }
 
     public function like()

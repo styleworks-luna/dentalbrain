@@ -96,7 +96,6 @@ class ProgramStudent extends Model
      */
     public function cancelAvailable()
     {
-        $now = now()->unix();
         if ($this->attributes['pay_status'] != self::$PAY_PAID) {
             return false;
         }

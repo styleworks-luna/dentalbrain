@@ -9,6 +9,9 @@ class ProgramPlace extends Model
     protected $table = 'program_places';
     protected $guarded = [];
     protected $appends = ['korean_time','full_address'];
+    protected $casts = [
+        'started_at' => 'datetime'
+    ];
 
     public function program()
     {

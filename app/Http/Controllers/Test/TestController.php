@@ -75,4 +75,26 @@ class TestController extends Controller
         $students = ProgramStudent::all();
         return view(viewPrefix() . 'pages.test.testCancel', ['students' => $students]);
     }
+
+    public function mailView()
+    {
+        return view('emails.payment.cancel_request', [
+            'student' => ProgramStudent::find(4),
+            'reason' => '호에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥',
+            'bank' => '국민',
+            'accountNumber' => '12312412458071',
+            'holderName' => '박재현',
+        ]);
+    }
+
+    public function mailViewAdmin()
+    {
+        return view('emails.payment.cancel_request_admin', [
+            'student' => ProgramStudent::find(4),
+            'reason' => '호에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥에엥',
+            'bank' => '국민',
+            'accountNumber' => '12312412458071',
+            'holderName' => '박재현',
+        ]);
+    }
 }

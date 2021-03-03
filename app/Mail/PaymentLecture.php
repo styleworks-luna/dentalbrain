@@ -38,6 +38,6 @@ class PaymentLecture extends Mailable
             ->with([
                 'user' => $this->user,
                 'program' => $this->program
-            ]);;
+            ]);
     }
 }
