@@ -38,9 +38,6 @@ $(function () {
         var data = {"login_id": login_id};
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: "/api/check-id",
             type: "POST",
             data: data,
@@ -104,9 +101,6 @@ $(function () {
         var data = {"phone": phone};
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: "/api/send-verification",
             type: "POST",
             data: data,
@@ -137,9 +131,6 @@ $(function () {
         var data = {"phone": phone, "verificationNumber": verificationNumber};
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             url: "/api/compare-verification",
             type: "POST",
             data: data,

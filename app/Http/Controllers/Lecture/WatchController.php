@@ -23,7 +23,7 @@ class WatchController extends Controller
         }
         if ($program->canRefund()) {
             // 환불 가능 상태일 경우.
-            return view(viewPrefix() . 'pages.lecture.lecture_refundCheckSomethingBlaBla', [
+            return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
                 'program' => $program
             ]);
         }
@@ -48,6 +48,6 @@ class WatchController extends Controller
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
         }
-        return redirect()->route('lectures.watch', $program, $lecture);
+        return redirect()->route('lectures.watch', [$program, $lecture]);
     }
 }
