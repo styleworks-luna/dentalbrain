@@ -23,7 +23,7 @@ if(!function_exists('changePaymentMethodName')){
             case '가상계좌':
                 return '무통장입금(가상계좌)';
             default:
-                return '없음';
+                return $paymentMethodName;
                 break;
         }
     }

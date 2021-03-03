@@ -70,7 +70,12 @@
                                             <p>납입기한 : {{ date_format($payment->va_dueDate,'Y-m-d G:i:s') }}</p>
                                         @endif
                                         @isset($payment->receiptUrl)
-                                            <a href="{{ $payment->receiptUrl }}">결제 영수증</a>
+                                            @if($payment->status == 'CANCELED')
+                                                <a href="{{ $payment->receiptUrl }}">취소 결제 영수증</a>
+                                            @else
+                                                <a href="{{ $payment->receiptUrl }}">결제 영수증</a>
+                                            @endif
+
                                         @endisset
 
                                     </td>
