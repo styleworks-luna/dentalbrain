@@ -51,12 +51,18 @@
                         </router-link>
                     </td>
                     <td>
-                        <template v-if="slotProps.row.pay_status === 3">
+                        <template v-if="slotProps.row.pay_status === 0">
+                            결제 전
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 1">
+                            입금 대기
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
                         </template>
                         <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)"
-                           v-else>
+                           @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)"
+                           v-else-if="slotProps.row.pay_status === 2">
                             결제 취소
                         </a>
                     </td>
