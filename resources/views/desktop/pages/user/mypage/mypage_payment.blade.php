@@ -71,7 +71,7 @@
                                         @endif
                                         @isset($payment->receiptUrl)
                                             @if($payment->status == 'CANCELED')
-                                                <a href="{{ $payment->receiptUrl }}">취소 결제 영수증</a>
+                                                <a href="{{ $payment->receiptUrl }}">취소 영수증</a>
                                             @else
                                                 <a href="{{ $payment->receiptUrl }}">결제 영수증</a>
                                             @endif
