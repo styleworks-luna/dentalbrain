@@ -55,7 +55,7 @@
                             취소 완료
                         </template>
                         <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.id)"
+                           @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)"
                            v-else>
                             결제 취소
                         </a>
@@ -74,8 +74,7 @@
             </div>
 
             <payment-cancel-layer v-if="cancelLayer"
-                                  :reason="cancelReason"
-                                  @setReason="handleSetReason"
+                                  :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
         </template>
@@ -107,7 +106,7 @@ export default {
             },
             cancelLayer: false,
             cancelStudentId: '',
-            cancelReason: ''
+            paymentMethod: ''
         }
     },
     created() {
@@ -184,19 +183,12 @@ export default {
                 this.students = [];
             });
         },
-        handleSetCancelLayer(studentId) {
+        handleSetCancelLayer(studentId, paymentMethod) {
             this.cancelLayer = !this.cancelLayer;
-
-            if (studentId) this.cancelStudentId = studentId;
+            this.cancelStudentId = studentId || '';
+            this.paymentMethod = paymentMethod || '';
         },
-        handleSetReason(reason) {
-            this.cancelReason = reason;
-        },
-        cancelPayment() {
-            let params = {
-                reason: this.cancelReason
-            };
-
+        cancelPayment(params) {
             Student.cancelPayment(this.id, this.cancelStudentId, params).then(res => {
                 alert(res.data.msg);
                 this.getData();
