@@ -24,7 +24,7 @@ class Ppurio{
     public function sendVerificationNumber($phoneNumber){
         $token = $this->getToken();
         $verification_num = str_pad(mt_rand(0,999999),6,'0');
-        $message = "문자 인증번호: ".$verification_num;
+        $message = "덴탈 브레인 문자 인증번호: ".$verification_num;
         $sms = array("message" => $message);
         $content = array("sms" => $sms);
 
@@ -66,6 +66,44 @@ class Ppurio{
             Log::error('CREATE PPURIO CHECKVERIFICATION ERROR',[$exception]);
             DB::rollBack();
         }
+        curl_close($oCurl);
+        return json_decode($response,true);
+    }
+
+    public function sendMessage($phoneNumber,$message){
+        $token = $this->getToken();
+        $sms = array("message" => $message);
+        $content = array("sms" => $sms);
+
+        $data =array();
+        $data['account'] = env('PPURIO_ID');
+        $data['refkey']=Str::random('10');
+        if(Str::length($message) < 80 ){
+            $data['type'] = "sms";
+        }else{
+            $data['type'] = "lms";
+        }
+        $data['from'] = env('PPURIO_PHONE');
+        $data['to'] = $phoneNumber;
+        $data['content'] = $content;
+
+        $json_data = json_encode($data,JSON_UNESCAPED_SLASHES);
+
+        $url = 'https://api.bizppurio.com/v3/message';
+
+        $oCurl = curl_init();
+        curl_setopt($oCurl,CURLOPT_URL,$url);
+        curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1); //result로 true, false 대신 해당 값들을 return함.
+        curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($oCurl, CURLOPT_HTTPHEADER, array('Accept:application/json','Content-Type:application/json','Authorization:'.$token['type']." ".$token['accesstoken']));
+        curl_setopt($oCurl, CURLOPT_VERBOSE, true);
+        curl_setopt($oCurl, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
+
+        $response = curl_exec($oCurl);
         curl_close($oCurl);
         return json_decode($response,true);
     }

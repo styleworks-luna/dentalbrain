@@ -308,6 +308,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 //질문 답변 변경 함수
                 Route::patch('{question}/status', 'Admin\Program\QuestionController@statusChange')->name('statusChange');
             });
+
+            Route::group(['prefix'=>'notification', 'as' => 'notification.'], function(){
+                Route::get('{program}','Admin\Program\NotificationController@index')->name('index');
+                Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
+                Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
+            });
         });
 
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
