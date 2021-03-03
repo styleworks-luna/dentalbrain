@@ -15,4 +15,11 @@ export default {
             params: data,
         });
     },
+    destroyManual(id,data) {
+        return Send({
+            url: `/api/lectures/${id}/cancel-request`,
+            method: 'delete',
+            params: data,
+        });
+    }
 }

@@ -94,7 +94,7 @@
                             <a href=""
                                v-else-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
                                && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
-                               @click.prevent="">환불하기</a>
+                               @click.prevent="popUpManualStatus(lecture.id)">환불하기</a>
                             <a href=""
                                v-else-if="lecture.ticket.is_free != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
                                @click.prevent="popUpStatus(lecture.id)">취소하기</a>
@@ -115,19 +115,27 @@
                          @close="toggleModal">
         </refund-free-pop>
 
-        <div class="dim" v-if="showModal"></div>
+        <refund-manual-pop v-if="modalData.ticket.is_free == 0 && showManualModal"
+                           :programIdTo="modalData.ticket.program.id"
+                           @close="toggleManualModal">
+
+        </refund-manual-pop>
+
+        <div class="dim" v-if="showModal || showManualModal"></div>
     </div>
 </template>
 
 <script>
 import RefundPop from '@/components/mypage/lecture/RefundPop.vue'
 import RefundFreePop from '@/components/mypage/lecture/RefundFreePop.vue'
+import RefundManualPop from '@/components/mypage/lecture/RefundManualPop.vue'
 
 export default {
     name: 'MypageLectureList',
     components: {
         RefundPop,
         RefundFreePop,
+        RefundManualPop,
     },
     props: {
         'list': Array
@@ -138,6 +146,7 @@ export default {
             lectures: [],
             milliSecondsDay: 86400000,
             showModal: false,
+            showManualModal: false,
             modalData: {
                 ticket: {},
                 payment: {}
@@ -155,11 +164,21 @@ export default {
                 this.modalData = this.list.find(data => data.id === id);
             }
             this.showModal = true;
-            window.scrollTo({top:0, left:0, behavior:'smooth'});
+            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        },
+        popUpManualStatus(id) {
+            if (id) {
+                this.modalData = this.list.find(data => data.id === id);
+            }
+            this.showManualModal = true;
+            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         },
         toggleModal() {
             this.showModal = !this.showModal;
         },
+        toggleManualModal() {
+            this.showManualModal = !this.showManualModal;
+        }
     }
 }
 </script>

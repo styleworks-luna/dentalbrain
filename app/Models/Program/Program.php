@@ -67,7 +67,7 @@ class Program extends Model
 
     public function canRequestRefund()
     {
-        return $this->place()->where('stated_at', '>', now()->addDay())
+        return $this->place()->where('started_at', '>', now()->addDay())
             ->where('started_at', '<', now()->addDays(2))
             ->exists();
     }
