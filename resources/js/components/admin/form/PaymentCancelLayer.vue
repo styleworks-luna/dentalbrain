@@ -12,8 +12,29 @@
                     <h4>환불사유</h4>
                     <input type="text"
                            class="form-control"
-                           @input="handleSetReason">
+                           v-model="reason">
                 </article>
+
+                <template v-if="checkPaymentMethod">
+                    <article>
+                        <h4>은행</h4>
+                        <input type="text"
+                               class="form-control"
+                               v-model="bank">
+                    </article>
+                    <article>
+                        <h4>예금주</h4>
+                        <input type="text"
+                               class="form-control"
+                               v-model="holderName">
+                    </article>
+                    <article>
+                        <h4>계좌번호</h4>
+                        <input type="text"
+                               class="form-control"
+                               v-model="accountNumber">
+                    </article>
+                </template>
 
                 <article class="btn-area">
                     <button class="btn btn-dark text-white"
@@ -30,17 +51,37 @@
 export default {
     name: 'PaymentCancelLayer',
     props: {
-        reason: String
+        'paymentMethod': String
+    },
+    data() {
+        return {
+            reason: '',
+            bank: '',
+            holderName: '',
+            accountNumber: ''
+        }
+    },
+    computed: {
+        checkPaymentMethod() {
+            return this.paymentMethod === '가상계좌';
+        }
     },
     methods: {
-        handleSetReason(e) {
-            this.$emit('setReason', e.target.value);
-        },
         handleCancelPayment() {
             this.$emit('cancelPayment');
         },
         handleSetCancelLayer() {
-            this.$emit('setCancelLayer');
+            const params = {
+                reason: this.reason
+            };
+
+            if (this.paymentMethod === '가상계좌') {
+                params.bank = this.bank;
+                params.holderName = this.holderName;
+                params.accountNumber = this.accountNumber;
+            }
+
+            this.$emit('setCancelLayer', params);
         }
     }
 }

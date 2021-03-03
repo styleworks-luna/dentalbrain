@@ -74,7 +74,7 @@ abstract class ProgramTemplate
     {
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status');
+                $query->select('id', 'totalAmount', 'status', 'method');
             }, 'user:id,login_id'])->paginate($perPage);
     }
 
@@ -526,18 +526,50 @@ abstract class ProgramTemplate
 //            *  # 온라인 강의
 //            *      1. 7일 내
 //            *      2. 강의 미 시청시. ( is_watched == 0)
-//            $canRefund = $base->where('applied_at', '>', now()->subDays(7))
-//                ->where('is_watched', '=', 0)->exists();
 //        } else {
 //             *  # 오프라인 강의
 //             *      1. 2일 전, 1일 안됨
-//            $canRefund = $base->where('expired_at', '>', now()->subDays(2))
-//                ->where('expired_at', '<', now()->subDays(1))
-//                ->where('is_watched', '=', 0)->exists();
 //        }
         */
 
         if (!$student->cancelAvailable()) {
+            return false;
+        }
+
+        if ($program->ticket->is_free) {
+            return ['reason' => '무료 강의 취소 신청'];
+        } else {
+            $v = Validator::make($request->all(), [
+                'reason' => ['required', 'string'],
+            ])->sometimes(
+            // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
+                ['bank', 'accountNumber', 'holderName'],
+                ['required', 'string'],
+                function ($input) use ($student) {
+                    return $student->payment->method == '가상계좌';
+                });
+
+            return $v->validated();
+        }
+    }
+
+    public function validateUserRequestCancel(Request $request, Program $program)
+    {
+        if ($program->is_online == 1) {
+            return false;
+        }
+
+        $base = $program->students()
+            ->where('user_id', '=', Auth::id())
+            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
+        if ($base->count() > 1) {
+            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+            return false;
+        }
+
+        $student = $base->first();
+
+        if (!$program->canRequestRefund()) {
             return false;
         }
 

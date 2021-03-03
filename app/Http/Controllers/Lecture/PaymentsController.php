@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\PaymentLecture;
+use App\Mail\RequestProgramCancel;
+use App\Mail\RequestProgramCancelAdmin;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -119,10 +121,36 @@ class PaymentsController extends Controller
      * @param Request $request
      * @param Program $program
      */
-    public
-    function cancelRequest(Request $request, Program $program)
+    public function cancelRequest(Request $request, Program $program)
     {
+        if ($program->is_online) {
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
+        }
+        $concrete = new OfflineProgramConcrete();
+        $data = $concrete->validateUserRequestCancel($request, $program);
+        if ($data == false) {
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
+        }
 
+        $student = $program->students()->where('user_id', '=', Auth::id())->first();
+
+        Mail::to($student->email)
+            ->send(new RequestProgramCancel($student,
+                $request->get('reason'), $request->get('bank'),
+                $request->get('accountNumber'), $request->get('holderName')));
+
+        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))
+            ->send(new RequestProgramCancelAdmin($student,
+                $request->get('reason'), $request->get('bank'),
+                $request->get('accountNumber'), $request->get('holderName')));
+
+        return response()->json([
+            'msg' => '요청되었습니다.'
+        ]);
     }
 
     /**
@@ -131,8 +159,7 @@ class PaymentsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public
-    function deposited(Request $request)
+    public function deposited(Request $request)
     {
         $v = Validator::make($request->all(), [
             'secret' => ['required', 'string'],

@@ -21,7 +21,7 @@ class WatchController extends Controller
             // 오프라인 강의
             return redirect()->back()->with(['alert' => '오프라인 강의입니다.']);
         }
-        if ($program->canRefund()) {
+        if ($program->canOnlineRefund()) {
             // 환불 가능 상태일 경우.
             return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
                 'program' => $program
@@ -43,7 +43,7 @@ class WatchController extends Controller
 
     public function watched(Program $program, Lecture $lecture = null)
     {
-        if ($program->canRefund()) {
+        if ($program->canOnlineRefund()) {
             ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
