@@ -51,12 +51,14 @@
                         </router-link>
                     </td>
                     <td>
-                        <span v-if="slotProps.row.payment.status === 'CANCELED'">취소완료</span>
-                        <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.id)"
-                           v-else>
-                            결제 취소
-                        </a>
+                        <template v-if="slotProps.row.payment">
+                            <span v-if="slotProps.row.payment.status === 'CANCELED'">취소완료</span>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id)"
+                               v-else>
+                                결제 취소
+                            </a>
+                        </template>
                     </td>
                     <td>{{ slotProps.row.applied_at }}</td>
                 </template>

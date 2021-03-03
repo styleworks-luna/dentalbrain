@@ -13,7 +13,7 @@
                             <span class="online" v-if="lecture.ticket.program.is_online">온라인</span>
                             <span class="offline" v-else>오프라인</span>
                             <p class="lecture-subject">
-                                {{ lecture.ticket.program.major_category_name }} &middot
+                                {{ lecture.ticket.program.major_category_name }} &middot;
                                 {{ lecture.ticket.program.minor_category_name }}
                             </p>
                         </div>
@@ -81,12 +81,12 @@
                     <div class="content-button-offline"
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
                         <div class="btn-wrap">
-                            <a href="" :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0 ? '' : 'for-margin'">수정하기</a>
-                            <a href="" v-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay*2">환불하기(자동)</a>
+                            <a href="" :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
+                            <a href="" v-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">환불하기(자동)</a>
                             <a href=""
-                               v-else-if="lecture.ticket.price != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay
-                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0">환불하기</a>
-                            <a href="" v-else-if="lecture.ticket.price == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > 0">취소하기</a>
+                               v-else-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
+                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">환불하기</a>
+                            <a href="" v-else-if="lecture.ticket.is_free != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">취소하기</a>
                         </div>
                     </div>
                 </div>
