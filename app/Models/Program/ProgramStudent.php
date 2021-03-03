@@ -22,7 +22,9 @@ class ProgramStudent extends Model
     protected $appends = ['left_days'];
     protected $guarded = [];
     protected $casts = [
-        'is_repeated' => 'boolean'
+        'is_repeated' => 'boolean',
+        'applied_at' => 'datetime',
+        'expired_at' => 'datetime',
     ];
 
     /**
@@ -70,7 +72,7 @@ class ProgramStudent extends Model
                 'email' => $email,
                 'phone' => $phone,
                 'applied_at' => now(),
-                'expired_at' => now()->addDays($program->ticket->term),
+                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
         } else {
@@ -84,6 +86,38 @@ class ProgramStudent extends Model
                 'phone' => $phone,
                 'applied_at' => now(),
             ]);
+        }
+    }
+
+    /**
+     *  환불 가능 상태인지 체크.
+     *
+     * @return bool
+     */
+    public function cancelAvailable()
+    {
+        $now = now()->unix();
+        if ($this->attributes['pay_status'] != self::$PAY_PAID) {
+            return false;
+        }
+        if ($this->ticket->program->is_online) {
+            if (
+                strtotime($this->attributes['applied_at']) > now()->subDays(7)->unix()
+                && $this->attributes['is_watched'] == 0
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (
+                strtotime($this->attributes['expired_at'] > now()->subDays(2)->unix())
+                && strtotime($this->attributes['expired_at'] < now()->subDays(1)->unix())
+            ) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

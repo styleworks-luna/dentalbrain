@@ -139,6 +139,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::redirect('/', '/account/lectures')->name('index');
     // 신청한 강의
     Route::get('lectures', 'Account\ProgramController@index')->name('lectures');
+    Route::delete('lectures/{program}/cancel', 'Lecture\PaymentsController@cancel')->name('lectures.cancel');
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역

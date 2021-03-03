@@ -10,6 +10,8 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
+use App\Services\Program\OfflineProgramConcrete;
+use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -69,7 +71,72 @@ class PaymentsController extends Controller
         ]);
     }
 
-    public function deposited(Request $request)
+    /**
+     *  유저 측 자동 환불 요청 받는 컨트롤러 로직
+     *
+     * @param Request $request
+     * @param Program $program
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function cancel(Request $request, Program $program)
+    {
+        if ($program->is_online) {
+            $concrete = new OnlineProgramConcrete();
+        } else {
+            $concrete = new OfflineProgramConcrete();
+        }
+
+        $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
+
+        $data = $concrete->validateUserCancel($request, $program);
+
+        if ($data == false) {
+            // validation 실패 처리
+            return redirect()->back()->with([
+                'alert' => '유효하지 않은 요청입니다.'
+            ]);
+        }
+
+        DB::beginTransaction();
+
+        $success = $concrete->cancel($program, $student, $data);
+
+        if (!$success) {
+            // 실패
+            // 서버 오류 처리
+            DB::rollBack();
+            Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
+            return redirect()->back()->with([
+                'alert' => '오류가 발생했습니다.'
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'alert' => '환불이 완료되었습니다.',
+        ]);
+    }
+
+
+    /**
+     *  유저 측 관리자 수동 환불 요청 받는 컨트롤러 로직
+     *
+     * @param Request $request
+     * @param Program $program
+     */
+    public
+    function cancelRequest(Request $request, Program $program)
+    {
+
+    }
+
+    /**
+     * 토스에서 가상계좌 입금이 완료 콜백.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public
+    function deposited(Request $request)
     {
         $v = Validator::make($request->all(), [
             'secret' => ['required', 'string'],
