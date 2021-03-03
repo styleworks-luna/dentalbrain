@@ -414,14 +414,19 @@ abstract class ProgramTemplate
             if ($program->ticket->is_free) {
                 // 무료일 경우, 처리 끝.
                 $student->pay_status = ProgramStudent::$PAY_BEFORE;
+                $student->is_watched = 0;
+                $student->expired_at = null;
                 $student->save();
 
+                DB::commit();
                 return true;
             }
             // 유료일 경우,
 
             // 환불 상태 기록
             $student->pay_status = ProgramStudent::$PAY_REFUNDED;
+            $student->is_watched = 0;
+            $student->expired_at = null;
             $student->save();
 
             // 결제 취소 진행.
@@ -431,13 +436,25 @@ abstract class ProgramTemplate
             switch ($payment->method) {
                 case '카드':
                     $response = $tossPayment->cancelCard($validatedData['reason']);
+                    if (!$response) {
+                        DB::rollBack();
+                        return false;
+                    }
                     $payment->updateByToss($response);
+
+                    DB::commit();
                     return true;
                 case '가상계좌':
                     $response = $tossPayment->cancelVirtualAccount(
                         $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
                     );
+                    if (!$response) {
+                        DB::rollBack();
+                        return false;
+                    }
                     $payment->updateByToss($response);
+
+                    DB::commit();
                     return true;
                 //case '휴대폰':
                 default:
@@ -446,7 +463,9 @@ abstract class ProgramTemplate
             }
 
         } catch (Exception $exception) {
+            Log::error('CANCEL ERROR', [$exception]);
             DB::rollBack();
+            return false;
         }
 
     }
@@ -479,7 +498,7 @@ abstract class ProgramTemplate
                 return $student->payment->method == '가상계좌';
             });
 
-        return $v->validate();
+        return $v->validated();
     }
 
     /**
@@ -501,24 +520,22 @@ abstract class ProgramTemplate
 
         $student = $base->first();
 
+        /*
 //        if ($program->is_online) {
-//            /*
 //            *  조건
 //            *  # 온라인 강의
 //            *      1. 7일 내
 //            *      2. 강의 미 시청시. ( is_watched == 0)
-//            */
 //            $canRefund = $base->where('applied_at', '>', now()->subDays(7))
 //                ->where('is_watched', '=', 0)->exists();
 //        } else {
-//            /*
 //             *  # 오프라인 강의
 //             *      1. 2일 전, 1일 안됨
-//             */
 //            $canRefund = $base->where('expired_at', '>', now()->subDays(2))
 //                ->where('expired_at', '<', now()->subDays(1))
 //                ->where('is_watched', '=', 0)->exists();
 //        }
+        */
 
         if (!$student->cancelAvailable()) {
             return false;
@@ -537,7 +554,7 @@ abstract class ProgramTemplate
                     return $student->payment->method == '가상계좌';
                 });
 
-            return $v->validate();
+            return $v->validated();
         }
     }
 }

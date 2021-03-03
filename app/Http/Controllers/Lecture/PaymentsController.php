@@ -97,14 +97,11 @@ class PaymentsController extends Controller
             ]);
         }
 
-        DB::beginTransaction();
-
         $success = $concrete->cancel($program, $student, $data);
 
         if (!$success) {
             // 실패
             // 서버 오류 처리
-            DB::rollBack();
             Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
             return redirect()->back()->with([
                 'alert' => '오류가 발생했습니다.'
