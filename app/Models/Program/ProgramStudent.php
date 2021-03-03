@@ -18,6 +18,7 @@ class ProgramStudent extends Model
     static $PAY_IN_PROCESS = 1;
     static $PAY_PAID = 2;
     static $PAY_REFUNDED = 3;
+    static $PAY_IN_REFUND_PROCESS = 4;
 
     protected $appends = ['left_days'];
     protected $guarded = [];
@@ -40,7 +41,7 @@ class ProgramStudent extends Model
         if ($response->isCard()) {
             $programStudent->update([
                 'payment_id' => $payment->id,
-                'expired_at' => now()->addDays($program->ticket->term),
+                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
         } elseif ($response->isVirtualAccount()) {
@@ -111,8 +112,7 @@ class ProgramStudent extends Model
             }
         } else {
             if (
-                strtotime($this->attributes['expired_at'] > now()->subDays(2)->unix())
-                && strtotime($this->attributes['expired_at'] < now()->subDays(1)->unix())
+                strtotime($this->attributes['expired_at']) > now()->addDays(2)->unix()
             ) {
                 return true;
             } else {

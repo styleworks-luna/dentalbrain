@@ -8,4 +8,11 @@ export default {
             params: value
         });
     },
+    destroy(id,data) {
+        return Send({
+            url: `/api/lectures/${id}/cancel`,
+            method: 'delete',
+            params: data,
+        });
+    },
 }
