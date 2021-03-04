@@ -47,6 +47,9 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('search', 'Test\TestController@search')->name('search');
 
     Route::get('cancel', 'Test\TestController@cancelTest');
+    Route::get('mail', 'Test\TestController@mailView');
+    Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
+
 });
 
 /*============================ PAGES ============================*/
@@ -203,6 +206,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
         Route::group(['prefix' => '{program}'], function () {
+
+            // 유저 자동환불 신청
+            Route::delete('cancel', 'Lecture\PaymentsController@cancel')->name('cancel')->middleware('auth');
+            Route::delete('cancel-request', 'Lecture\PaymentsController@cancelRequest')->name('cancel-request')->middleware('auth');
+
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');
 

@@ -43,6 +43,26 @@ class User extends Authenticatable
         'need_license', 'job_name_id', 'job_name', 'license_num',
     ];
 
+    public function job()
+    {
+        return $this->belongsTo(UserJob::class, 'job_id', 'id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->attributes['is_admin'] ? true : false;
+    }
+
+    public function students()
+    {
+        return $this->hasMany(ProgramStudent::class, 'user_id', 'id');
+    }
+
+    public function lectureQuestions()
+    {
+        return $this->hasMany(LectureQuestion::class, 'user_id', 'id');
+    }
+
     protected function getNeedLicenseAttribute()
     {
         $jobNameId = $this->getJobNameIdAttribute();
@@ -74,25 +94,5 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
-    }
-
-
-    public function job()
-    {
-        return $this->belongsTo(UserJob::class, 'job_id', 'id');
-    }
-
-    public function isAdmin()
-    {
-        return $this->attributes['is_admin'] ? true : false;
-    }
-
-    public function students()
-    {
-        return $this->hasOne(ProgramStudent::class, 'user_id', 'id');
-    }
-
-    public function lectureQuestions(){
-        return $this->hasMany(LectureQuestion::class,'user_id','id');
     }
 }

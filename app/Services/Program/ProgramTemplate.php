@@ -18,9 +18,10 @@ use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\File\SurveyFile;
 use Exception;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -73,7 +74,7 @@ abstract class ProgramTemplate
     {
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status');
+                $query->select('id', 'totalAmount', 'status', 'method');
             }, 'user:id,login_id'])->paginate($perPage);
     }
 
@@ -385,63 +386,207 @@ abstract class ProgramTemplate
      */
 
     /**
-     * @param Request $request
+     *  어드민 삭제 플로우
+     *
      * @param Program $program
-     * @param User|Authenticatable $user
+     * @param ProgramStudent $student
+     * @param array $validatedData
      * @return boolean
      */
-    public function cancel(Request $request, Program $program, $user)
+    public function cancel(Program $program, ProgramStudent $student, array $validatedData)
     {
-        $v = Validator::make($request->all(), [
-            'reason' => ['required', 'string'],
-        ]);
+        try {
+            DB::beginTransaction();
 
-        $data = $v->validate();
+            // 질문 답변 삭제 진행
+            $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $student->user_id);
 
+            //질문 답변 - 파일 삭제
+            $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
+                ->get()->mapInto(SurveyFile::class);
+
+            $surveyFiles->map(function ($item, $key) {
+                return $item->deleteFile();
+            });
+
+            $program->answers()->where('user_id', '=', $student->user_id)->delete();
+
+            if ($program->ticket->is_free) {
+                // 무료일 경우, 처리 끝.
+                $student->pay_status = ProgramStudent::$PAY_BEFORE;
+                $student->is_watched = 0;
+                $student->expired_at = null;
+                $student->save();
+
+                DB::commit();
+                return true;
+            }
+            // 유료일 경우,
+
+            // 환불 상태 기록
+            $student->pay_status = ProgramStudent::$PAY_REFUNDED;
+            $student->is_watched = 0;
+            $student->expired_at = null;
+            $student->save();
+
+            // 결제 취소 진행.
+            $payment = $student->payment;
+            $tossPayment = new TossPayments($payment->paymentKey);
+
+            switch ($payment->method) {
+                case '카드':
+                    $response = $tossPayment->cancelCard($validatedData['reason']);
+                    if (!$response) {
+                        DB::rollBack();
+                        return false;
+                    }
+                    $payment->updateByToss($response);
+
+                    DB::commit();
+                    return true;
+                case '가상계좌':
+                    $response = $tossPayment->cancelVirtualAccount(
+                        $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
+                    );
+                    if (!$response) {
+                        DB::rollBack();
+                        return false;
+                    }
+                    $payment->updateByToss($response);
+
+                    DB::commit();
+                    return true;
+                //case '휴대폰':
+                default:
+                    DB::rollBack();
+                    return false;
+            }
+
+        } catch (Exception $exception) {
+            Log::error('CANCEL ERROR', [$exception]);
+            DB::rollBack();
+            return false;
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @param User $user
+     * @return array|false validated data
+     */
+    public function validateAdminCancel(Request $request, Program $program, User $user)
+    {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->where('pay_status', '=', 2);
+            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;
         }
+
         $student = $base->first();
 
-        // 삭제 진행
+        $v = Validator::make($request->all(), [
+            'reason' => ['required', 'string'],
+        ])->sometimes(
+        // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
+            ['bank', 'accountNumber', 'holderName'],
+            ['required', 'string'],
+            function ($input) use ($student) {
+                return $student->payment->method == '가상계좌';
+            });
 
-        // 질문 답변 삭제 진행
-        $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $user->id);
+        return $v->validated();
+    }
 
-        //질문 답변 - 파일 삭제
-        $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
-            ->get()->mapInto(SurveyFile::class);
+    /**
+     *  유저의 자동환불 요청 validation 하는 함수.
+     *
+     * @param Request $request
+     * @param Program $program
+     * @return array|false validated data, 실패시 false 리턴함.
+     */
+    public function validateUserCancel(Request $request, Program $program)
+    {
+        $base = $program->students()
+            ->where('user_id', '=', Auth::id())
+            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
+        if ($base->count() > 1) {
+            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+            return false;
+        }
 
-        $surveyFiles->map(function ($item, $key) {
-            return $item->deleteFile();
-        });
+        $student = $base->first();
 
-        $program->answers()->where('user_id', '=', $user->id)->delete();
+        /*
+//        if ($program->is_online) {
+//            *  조건
+//            *  # 온라인 강의
+//            *      1. 7일 내
+//            *      2. 강의 미 시청시. ( is_watched == 0)
+//        } else {
+//             *  # 오프라인 강의
+//             *      1. 2일 전, 1일 안됨
+//        }
+        */
 
-        // 환불 상태 기록
-        $student->pay_status = ProgramStudent::$PAY_REFUNDED;
-        $student->save();
+        if (!$student->cancelAvailable()) {
+            return false;
+        }
 
-        // 결제 취소 진행.
-        $payment = $student->payment;
-        $tossPayment = new TossPayments($payment->paymentKey);
+        if ($program->ticket->is_free) {
+            return ['reason' => '무료 강의 취소 신청'];
+        } else {
+            $v = Validator::make($request->all(), [
+                'reason' => ['required', 'string'],
+            ])->sometimes(
+            // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
+                ['bank', 'accountNumber', 'holderName'],
+                ['required', 'string'],
+                function ($input) use ($student) {
+                    return $student->payment->method == '가상계좌';
+                });
 
-        switch ($payment->method) {
-            case '카드':
-                $response = $tossPayment->cancelCard($data['reason']);
-                $payment->updateByToss($response);
-                return true;
-            case '가상계좌':
-                $response = $tossPayment->cancelVirtualAccount($data['reason'], '1', '2', '3');
-                $payment->updateByToss($response);
-                return true;
-            //case '휴대폰':
-            default:
-                return false;
+            return $v->validated();
+        }
+    }
+
+    public function validateUserRequestCancel(Request $request, Program $program)
+    {
+        if ($program->is_online == 1) {
+            return false;
+        }
+
+        $base = $program->students()
+            ->where('user_id', '=', Auth::id())
+            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
+        if ($base->count() > 1) {
+            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+            return false;
+        }
+
+        $student = $base->first();
+
+        if (!$program->canRequestRefund()) {
+            return false;
+        }
+
+        if ($program->ticket->is_free) {
+            return ['reason' => '무료 강의 취소 신청'];
+        } else {
+            $v = Validator::make($request->all(), [
+                'reason' => ['required', 'string'],
+            ])->sometimes(
+            // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
+                ['bank', 'accountNumber', 'holderName'],
+                ['required', 'string'],
+                function ($input) use ($student) {
+                    return $student->payment->method == '가상계좌';
+                });
+
+            return $v->validated();
         }
     }
 }

@@ -146,4 +146,14 @@ class Payment extends Model
     {
         return $this->hasMany(Cancel::class, 'payment_id', 'id');
     }
+
+    public function isCard()
+    {
+        return $this->attributes['method'] == '카드';
+    }
+
+    public function isVirtualAccount()
+    {
+        return $this->attributes['method'] == '가상계좌';
+    }
 }
