@@ -19,7 +19,7 @@
                         <li>
                             <div class="lecture-information">
                                 @if ($payment->student->ticket->program->is_online)
-                                    <span class="online">'온라인'</span>
+                                    <span class="online">온라인</span>
                                 @else
                                     <span class="offline">오프라인</span>
                                 @endif
