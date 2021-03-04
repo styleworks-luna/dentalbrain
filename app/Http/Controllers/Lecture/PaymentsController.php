@@ -162,7 +162,6 @@ class PaymentsController extends Controller
      */
     public function deposited(Request $request)
     {
-        Log::debug('Toss Deposited', [$request, $request->all()]);
         $v = Validator::make($request->all(), [
             'secret' => ['required', 'string'],
             'status' => ['required', Rule::in(['DONE', 'CANCELED'])],
@@ -176,10 +175,16 @@ class PaymentsController extends Controller
 
         try {
             DB::beginTransaction();
-            $payment = Payment::query()
-                ->where('secret', 'LIKE', $body['secret'])
-                ->where('orderId', 'LIKE', $body['orderId'])
-                ->first();
+            if (env('APP_ENV') == 'production') {
+                $payment = Payment::query()
+                    ->where('secret', 'LIKE', $body['secret'])
+                    ->where('orderId', 'LIKE', $body['orderId'])
+                    ->first();
+            } else {
+                $payment = Payment::query()
+                    ->where('orderId', 'LIKE', $body['orderId'])
+                    ->first();
+            }
 
             $payment->update([
                 'status' => $body['status'],
