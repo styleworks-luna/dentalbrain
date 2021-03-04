@@ -141,7 +141,7 @@
             엑셀 다운로드
             <form method="post" action="{{ route('api.admin.lecture.excel.export')  }}">
                 @csrf
-                <input type="text" placeholder="is_online" name="is_online" id="is_online">
+                <input type="text" placeholder="program_id" name="program_id" id="program_id">
                 <input type="submit">
             </form>
         </section>
