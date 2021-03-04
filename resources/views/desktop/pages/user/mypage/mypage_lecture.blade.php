@@ -2,17 +2,10 @@
 
 @section('vue')
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
-    <script>
-        $(function() {
-            // select menu
-            var select_menu = $('.select-menu');
+@endsection
 
-            if (select_menu.length > 0) {
-                select_menu.selectmenu();
-            }
-        });
-    </script>
+@section('script')
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
 @endsection
 
 @section('style')
