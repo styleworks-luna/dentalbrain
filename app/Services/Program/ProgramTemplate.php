@@ -478,7 +478,8 @@ abstract class ProgramTemplate
 
         if ($program->ticket->is_free) {
             // 무료의 경우 reason 및 다른 params 필요없음
-            return true;
+            // 더미 값.
+            return ['reason' => '무료 강의 취소'];
         }
         $v = Validator::make($request->all(), [
             'reason' => ['required', 'string'],
