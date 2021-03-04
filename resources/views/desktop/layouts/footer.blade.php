@@ -31,22 +31,22 @@
             <div class="footer-right">
                 <ul>
                     <li>
-                        <a href="http://www.brainspec.co.kr/" class="footer-right-brainspec">
+                        <a href="http://www.brainspec.co.kr/" class="footer-right-brainspec" target="_blank">
                             <img src="{{ asset('/images/desktop/global/logo-brainspec.png') }}" alt="brainspec">
                         </a>
                     </li>
                     <li>
-                        <a href="https://smartstore.naver.com/ohcshop/" class="footer-right-ohc">
+                        <a href="https://smartstore.naver.com/ohcshop/" class="footer-right-ohc" target="_blank">
                             <img src="{{ asset('/images/desktop/global/logo-ohc.png') }}" alt="ohc 칫솔샵">
                         </a>
                     </li>
                     <li>
-                        <a href="http://www.kadh.or.kr/" class="footer-right-kadh">
+                        <a href="http://www.kadh.or.kr/" class="footer-right-kadh" target="_blank">
                             <img src="{{ asset('/images/desktop/global/logo-kadh.png') }}" alt="KADH 대한치과위생학회">
                         </a>
                     </li>
                     <li>
-                        <a href="http://kmma.co.kr/" class="footer-right-kdma">
+                        <a href="http://kmma.co.kr/" class="footer-right-kdma" target="_blank">
                             <img src="{{ asset('/images/desktop/global/logo-kdma.png') }}" alt="KDMA 대한치과경영관리협회">
                         </a>
                     </li>
