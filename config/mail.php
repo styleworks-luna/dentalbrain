@@ -133,4 +133,8 @@ return [
 
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
+    'admin_emails' => [
+        env('DEFAULT_ADMIN_EMAIL', 'dentalbrainon@gmail.com'), 'galmma@onoffmix.com',
+    ]
+
 ];

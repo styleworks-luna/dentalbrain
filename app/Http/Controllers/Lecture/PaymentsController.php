@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\PaymentLecture;
+use App\Mail\RequestProgramCancel;
+use App\Mail\RequestProgramCancelAdmin;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
+use App\Services\Program\OfflineProgramConcrete;
+use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -69,6 +74,92 @@ class PaymentsController extends Controller
         ]);
     }
 
+    /**
+     *  유저 측 자동 환불 요청 받는 컨트롤러 로직
+     *
+     * @param Request $request
+     * @param Program $program
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancel(Request $request, Program $program)
+    {
+        if ($program->is_online) {
+            $concrete = new OnlineProgramConcrete();
+        } else {
+            $concrete = new OfflineProgramConcrete();
+        }
+
+        $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
+
+        $data = $concrete->validateUserCancel($request, $program);
+        if ($data == false) {
+            // validation 실패 처리
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
+        }
+
+        $success = $concrete->cancel($program, $student, $data);
+
+        if (!$success) {
+            // 실패
+            // 서버 오류 처리
+            Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.'
+            ], 500);
+        }
+
+        return response()->json([
+            'msg' => '환불이 완료되었습니다.',
+        ]);
+    }
+
+
+    /**
+     *  유저 측 관리자 수동 환불 요청 받는 컨트롤러 로직
+     *
+     * @param Request $request
+     * @param Program $program
+     */
+    public function cancelRequest(Request $request, Program $program)
+    {
+        if ($program->is_online) {
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
+        }
+        $concrete = new OfflineProgramConcrete();
+        $data = $concrete->validateUserRequestCancel($request, $program);
+        if ($data == false) {
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
+        }
+
+        $student = $program->students()->where('user_id', '=', Auth::id())->first();
+
+        Mail::to($student->email)
+            ->send(new RequestProgramCancel($student,
+                $request->get('reason'), $request->get('bank'),
+                $request->get('accountNumber'), $request->get('holderName')));
+
+        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))
+            ->send(new RequestProgramCancelAdmin($student,
+                $request->get('reason'), $request->get('bank'),
+                $request->get('accountNumber'), $request->get('holderName')));
+
+        return response()->json([
+            'msg' => '요청되었습니다.'
+        ]);
+    }
+
+    /**
+     * 토스에서 가상계좌 입금이 완료 콜백.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deposited(Request $request)
     {
         $v = Validator::make($request->all(), [
@@ -84,19 +175,27 @@ class PaymentsController extends Controller
 
         try {
             DB::beginTransaction();
-            $payment = Payment::query()
-                ->where('secret', 'LIKE', $body['secret'])
-                ->where('orderId', 'LIKE', $body['orderId'])
-                ->first();
+            if (env('APP_ENV') == 'production') {
+                $payment = Payment::query()
+                    ->where('secret', 'LIKE', $body['secret'])
+                    ->where('orderId', 'LIKE', $body['orderId'])
+                    ->first();
+            } else {
+                $payment = Payment::query()
+                    ->where('orderId', 'LIKE', $body['orderId'])
+                    ->first();
+            }
 
             $payment->update([
                 'status' => $body['status'],
                 'approvedAt' => now(),
             ]);
 
+            $program = $payment->student->ticket->program;
+
             $payment->student()->update([
                 'payment_id' => $payment->id,
-                'expired_at' => now()->addDays($payment->student->ticket->term),
+                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
 
