@@ -136,6 +136,14 @@
                 <input type="text" name="verificationNumber" placeholder="인증번호">
                 <input type="submit">
             </form>
+
+            <br>
+            엑셀 다운로드
+            <form method="post" action="{{ route('api.admin.lecture.excel.export')  }}">
+                @csrf
+                <input type="text" placeholder="is_online" name="is_online" id="is_online">
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

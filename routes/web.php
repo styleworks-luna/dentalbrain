@@ -47,6 +47,8 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
     Route::get('search', 'Test\TestController@search')->name('search');
 
     Route::get('cancel', 'Test\TestController@cancelTest');
+
+    Route::post('excel','Admin\Program\ExcelController@export')->name('excel');
 });
 
 /*============================ PAGES ============================*/
@@ -313,6 +315,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('{program}','Admin\Program\NotificationController@index')->name('index');
                 Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
                 Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
+            });
+
+            Route::group(['prefix' => 'excel', 'as'=>'excel.'],function(){
+                Route::post('/','Admin\Program\ExcelController@export')->name('export');
             });
         });
 
