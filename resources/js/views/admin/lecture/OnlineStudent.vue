@@ -196,7 +196,8 @@ export default {
         },
         cancelPayment(params) {
             Student.cancelPayment(this.id, this.cancelStudentId, params).then(res => {
-                alert(res.data.msg);
+                this.handleSetCancelLayer();
+                alert(res.data.message);
                 this.getData();
             }).catch(err => {
                 alert('오류');

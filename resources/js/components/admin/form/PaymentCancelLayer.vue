@@ -68,9 +68,6 @@ export default {
     },
     methods: {
         handleCancelPayment() {
-            this.$emit('cancelPayment');
-        },
-        handleSetCancelLayer() {
             const params = {
                 reason: this.reason
             };
@@ -81,7 +78,10 @@ export default {
                 params.accountNumber = this.accountNumber;
             }
 
-            this.$emit('setCancelLayer', params);
+            this.$emit('cancelPayment', params);
+        },
+        handleSetCancelLayer() {
+            this.$emit('setCancelLayer');
         }
     }
 }

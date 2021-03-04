@@ -99,6 +99,14 @@ class TossPayments
         $jsonData = [
             'cancelReason' => $reason
         ];
+
+        if ($bank !== null) {
+            $jsonData['refundReceiveAccount'] = [
+                'bank' => $bank,
+                'accountNumber' => $accountNumber,
+                'holderName' => $holderName,
+            ];
+        }
         if ($cancelAmount !== null) {
             $jsonData['cancelAmount'] = $cancelAmount;
         }
