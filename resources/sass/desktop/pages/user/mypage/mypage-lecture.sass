@@ -241,6 +241,8 @@
         text-align: left
 
     .input-wrap
+        +margin(bottom 10px)
+
         label
             +size(80px)
             +margin(right 10px)
@@ -250,7 +252,6 @@
         input[type="text"]
             +input(white-lignt-fill)
             +size(240px, 45px)
-            +margin(right 5px bottom 10px)
 
         select
             +selectbox(240px, 50px)
@@ -259,6 +260,9 @@
             + .ui-selectmenu-button
                 +margin(right 10px)
                 float: left
+
+        &:last-child
+            +margin(bottom 0)
 
     .btn-wrap
         +size(210px)
