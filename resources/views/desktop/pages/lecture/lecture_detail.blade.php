@@ -54,11 +54,17 @@
                                 @endif
                                 <tr>
                                     <th>옵션선택</th>
+                                    {{$student->id}}
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
+                                                @if ($program->canRepeat())\
                                                 <option value="{{$ticket->id}}"
-                                                        data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
+                                                        data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
+                                                @else
+                                                    <option value="{{$ticket->id}}"
+                                                            data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </td>
@@ -66,9 +72,15 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        <td class="lecture-price price-hidden"
-                                            data-price="{{ $ticket->price }}">{{ $ticket->price == 0 ? '무료' : number_format($ticket->price).'원'}}
-                                        </td>
+                                        @if ($program->canRepeat())
+                                            <td class="lecture-price price-hidden"
+                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가 :' . number_format($ticket->repeat_price).'원'}}
+                                            </td>
+                                        @else
+                                            <td class="lecture-price price-hidden"
+                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
+                                            </td>
+                                        @endif
                                     @endforeach
                                 </tr>
                             </table>
@@ -76,30 +88,48 @@
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
 
-                            @if($program->is_online == false && $program->place->receipt_ended_at < now())
-                                {{--오프라인 강의 일 경우--}}
-                                <div class="btn-wrap">
+                            @isset($student)
+                                @if($program->is_online == false && $program->place->receipt_ended_at < now())
+                                    {{--오프라인 강의 신청 마감--}}
+                                    <div class="btn-wrap">
                                      <span class="btn-apply-complete">
                                      신청기간이 지난강의 입니다.
                                      </span>
-                                </div>
-                            @else
-                                @if($program->alreadyPaid())
-                                    <div class="btn-wrap">
+                                    </div>
+                                @else
+                                    @if($program->alreadyApplied())
+                                        {{--이미 신청 한 강의 일 경우--}}
+                                        <div class="btn-wrap">
                                     <span class="btn-apply-complete">
                                     신청한 강의입니다.
                                     </span>
-                                        <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역
-                                            수정</a>
-                                    </div>
-                                @else
-                                    <div class="btn-wrap">
-                                        <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
-                                            신청하기
-                                        </a>
-                                    </div>
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역
+                                                수정</a>
+                                        </div>
+                                    @elseif ($program->canRepeat())
+                                        {{--재수강 가능할 경우--}}
+                                        <div class="btn-wrap">
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                                재수강 신청하기
+                                            </a>
+                                        </div>
+                                    @else
+                                        {{-- 일반 --}}
+                                        <div class="btn-wrap">
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                                신청하기
+                                            </a>
+                                        </div>
+                                    @endif
                                 @endif
-                            @endif
+                            @else
+                                <div class="btn-wrap">
+                                    <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                        신청하기
+                                    </a>
+                                </div>
+                            @endisset
+
 
                             <a href=""
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}</a>
@@ -127,7 +157,8 @@
                     </div>
                     <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form">
                         @csrf
-                        <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text comment-submit-content"></textarea>
+                        <textarea name="content" placeholder="댓글을 입력하세요."
+                                  class="comment-input-text comment-submit-content"></textarea>
                         <input type="button" value="등록" class="comment-input-btn comment-submit">
                     </form>
                     <ul class="comment-list">
@@ -139,10 +170,13 @@
                                              alt="profile image">
                                     </div>
                                     <div class="modify-input">
-                                        <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form">
+                                        <form action="{{ route('api.lectures.comments.store',$program->id) }}"
+                                              class="comment-input-form">
                                             @csrf
-                                            <textarea name="content" placeholder="댓글을 입력하세요." class="comment-input-text comment-submit-content">{{ $comment->content }}</textarea>
-                                            <input type="button" value="등록" class="comment-input-btn comment-modify-submit">
+                                            <textarea name="content" placeholder="댓글을 입력하세요."
+                                                      class="comment-input-text comment-submit-content">{{ $comment->content }}</textarea>
+                                            <input type="button" value="등록"
+                                                   class="comment-input-btn comment-modify-submit">
                                         </form>
                                     </div>
                                     <div class="write-info">
@@ -153,12 +187,15 @@
                                     </div>
                                     <div class="comment-btn-area">
                                         <form action="">
-                                            <input type="hidden" name="comment_id" class="comment_id" value="{{ $comment->id }}">
+                                            <input type="hidden" name="comment_id" class="comment_id"
+                                                   value="{{ $comment->id }}">
                                             @can('update',$comment)
-                                                <button type="button" class="btn-comment-modified comment-modify">수정</button>
+                                                <button type="button" class="btn-comment-modified comment-modify">수정
+                                                </button>
                                             @endcan
                                             @can('delete',$comment)
-                                                <button type="button" class="btn-comment-delete comment-delete">삭제</button>
+                                                <button type="button" class="btn-comment-delete comment-delete">삭제
+                                                </button>
                                             @endcan
                                         </form>
                                     </div>
@@ -167,7 +204,8 @@
                                     <form action="{{ route('api.lectures.comments.store',$program->id) }}"
                                           class="comment-input-form hide">
                                         @csrf
-                                        <input type="hidden" name="parent_id" class="parent_id" value="{{ $comment->id }}">
+                                        <input type="hidden" name="parent_id" class="parent_id"
+                                               value="{{ $comment->id }}">
                                         <textarea name="content" placeholder="댓글을 입력하세요."
                                                   class="comment-input-text comment-child-submit-content"></textarea>
                                         <input type="button" value="등록" class="comment-input-btn comment-child-submit">
@@ -182,11 +220,14 @@
                                                             alt="profile image">
                                                     </div>
                                                     <div class="modify-input">
-                                                        <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form comment-modify-form">
+                                                        <form
+                                                            action="{{ route('api.lectures.comments.store',$program->id) }}"
+                                                            class="comment-input-form comment-modify-form">
                                                             @csrf
                                                             <textarea name="content" placeholder="댓글을 입력하세요."
                                                                       class="comment-input-text comment-child-modify-content">{{ $child->content }}</textarea>
-                                                            <input type="button" value="등록" class="comment-input-btn comment-child-modify-submit">
+                                                            <input type="button" value="등록"
+                                                                   class="comment-input-btn comment-child-modify-submit">
                                                         </form>
                                                     </div>
                                                     <div class="write-info">
@@ -196,10 +237,13 @@
                                                     </div>
                                                     <div class="comment-btn-area">
                                                         <form action="">
-                                                            <input type="hidden" name="comment_id" class="comment_id" value="{{ $child->id }}">
-                                                            <button type="button" class="btn-comment-modified comment-modify">수정
+                                                            <input type="hidden" name="comment_id" class="comment_id"
+                                                                   value="{{ $child->id }}">
+                                                            <button type="button"
+                                                                    class="btn-comment-modified comment-modify">수정
                                                             </button>
-                                                            <button type="button" class="btn-comment-delete comment-child-delete">삭제
+                                                            <button type="button"
+                                                                    class="btn-comment-delete comment-child-delete">삭제
                                                             </button>
                                                         </form>
                                                     </div>

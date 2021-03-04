@@ -208,8 +208,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => '{program}'], function () {
 
             // 유저 자동환불 신청
-            Route::delete('cancel', 'Lecture\PaymentsController@cancel')->name('cancel')->middleware('auth');
-            Route::delete('cancel-request', 'Lecture\PaymentsController@cancelRequest')->name('cancel-request')->middleware('auth');
+            Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel')->middleware('auth');
+            // 유저 수동환불 신청
+            Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request')->middleware('auth');
 
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');

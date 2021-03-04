@@ -40,18 +40,6 @@ abstract class ProgramTemplate
         $this->is_online = $is_online;
     }
 
-    /**
-     * @return JsonResponse
-     */
-    function getPrograms()
-    {
-        $programs = Program::query()->where('is_online', '=', $this->is_online)
-            ->withCount('students')->orderByDesc('id')->paginate('10');
-        return response()->json([
-            'programs' => $programs,
-        ]);
-    }
-
     function getProgramDetail(Program $program)
     {
         return [
@@ -59,7 +47,7 @@ abstract class ProgramTemplate
             'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
             'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
                 ->with('choices:id,question,parent_id')->get()
-                ->whereNull('parent_id')->values(),
+                ->whereNull('parent_id')->values()
         ];
     }
 
