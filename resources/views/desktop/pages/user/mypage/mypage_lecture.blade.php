@@ -11,6 +11,8 @@
             // select menu
             var select_menu = $('.select-menu');
 
+            console.log(select_menu);
+
             if (select_menu.length > 0) {
                 select_menu.selectmenu();
             }
