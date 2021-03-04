@@ -28,12 +28,12 @@ class OnlineStudentController extends OnlineProgramController
         if ($validatedData) {
             $response = $this->onlineConcrete->cancel($program, $student, $validatedData);
         } else {
-            return response()->json(['msg' => '유효하지 않은 요청입니다.'], 422);
+            return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
         }
 
         if ($response === false) {
-            return response()->json(['msg' => '취소 오류 발생 하였습니다.'], 500);
+            return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
         }
-        return response()->json(['msg' => '취소되었습니다.']);
+        return response()->json(['message' => '취소되었습니다.']);
     }
 }
