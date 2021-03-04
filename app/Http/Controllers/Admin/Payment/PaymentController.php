@@ -40,7 +40,6 @@ class PaymentController extends Controller
      */
     public function cancel(Request $request, Program $program, ProgramStudent $student)
     {
-
         if ($program->is_online) {
             $concrete = new OnlineProgramConcrete();
         } else {

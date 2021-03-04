@@ -476,6 +476,10 @@ abstract class ProgramTemplate
 
         $student = $base->first();
 
+        if ($program->ticket->is_free) {
+            // 무료의 경우 reason 및 다른 params 필요없음
+            return true;
+        }
         $v = Validator::make($request->all(), [
             'reason' => ['required', 'string'],
         ])->sometimes(
