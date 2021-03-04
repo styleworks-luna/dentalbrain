@@ -258,7 +258,10 @@
 
             + .ui-selectmenu-button
                 +margin(right 10px)
-                float: left
+                display: inline-block
+
+        .select-label
+            transform: translateY(-18px)
 
         &:last-child
             +margin(bottom 0)
@@ -277,3 +280,7 @@
             &:last-child
                 +margin(left 10px)
                 +background(null, null, null, $gray-900)
+
+
+.ui-selectmenu-open
+    z-index: 250
