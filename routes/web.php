@@ -278,7 +278,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 온라인 강의 수강생 목록
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
                     // 온라인 강의 수강 취소
-                    Route::delete('students/{student}', 'Admin\Program\PaymentController@cancel')->name('students.cancel');
+                    Route::delete('students/{student}', 'Admin\Payment\PaymentController@cancel')->name('students.cancel');
                     // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
                     // 온라인 강의 업데이트
@@ -297,7 +297,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 오프라인 강의 수강생 리스트
                     Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
                     // 오프라인 강의 수강 취소
-                    Route::delete('students/{student}', 'Admin\Program\PaymentController@cancel')->name('students.cancel');
+                    Route::delete('students/{student}', 'Admin\Payment\PaymentController@cancel')->name('students.cancel');
                     // 오프라인 강의 수정
                     Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');
                     // 오프라인 강의 업데이트

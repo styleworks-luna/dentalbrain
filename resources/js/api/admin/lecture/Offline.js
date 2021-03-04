@@ -1,6 +1,6 @@
 import Send from '@/utils/Send.js';
 
-export default {
+export const Offline = {
     getData(params) {
         return Send({
             url: '/api/admin/lecture/offline',
@@ -39,17 +39,21 @@ export default {
             url: `/api/admin/lecture/offline/${id}`,
             method: 'patch'
         });
-    },
-    getStudentsData(id) {
+    }
+};
+
+export const Student = {
+    getStudentsData(id, params) {
         return Send({
             url: `/api/admin/lecture/offline/${id}/students`,
-            method: 'get'
+            method: 'get',
+            params: params
         });
     },
     setStudent(id) {
         return Send({
-            url: `/api/admin/lecture/offline/${id}/student`,
+            url: `/api/admin/lecture/offline/${id}/students`,
             method: 'patch'
         });
-    },
-}
+    }
+};

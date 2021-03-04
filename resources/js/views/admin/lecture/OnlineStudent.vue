@@ -60,11 +60,19 @@
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
                         </template>
-                        <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)"
-                           v-else-if="slotProps.row.pay_status === 2">
-                            결제 취소
-                        </a>
+                        <template v-else-if="slotProps.row.pay_status === 2">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.ticket.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                신청 취소
+                            </a>
+
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)">
+                                결제 취소
+                            </a>
+                        </template>
                     </td>
                     <td>{{ slotProps.row.applied_at }}</td>
                 </template>
@@ -91,17 +99,21 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
-import PaymentCancelLayer from '@/components/admin/form/PaymentCancelLayer.vue';
 
 //api
-import { Student } from '@/api/admin/lecture/Online.js'
+import { Student } from '@/api/admin/lecture/Online.js';
+
+// mixins
+import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
 
 export default {
     name: 'AdminOnlineStudent',
+    mixins: [
+        PaymentCancelMixin
+    ],
     components: {
         'table-grid': Table,
-        'button-open': ButtonOpen,
-        'payment-cancel-layer': PaymentCancelLayer
+        'button-open': ButtonOpen
     },
     data() {
         return {
@@ -110,9 +122,7 @@ export default {
             students: {
                 data: []
             },
-            cancelLayer: false,
-            cancelStudentId: '',
-            paymentMethod: ''
+            page: 1
         }
     },
     created() {
@@ -188,20 +198,6 @@ export default {
             }).catch(err => {
                 this.students = [];
             });
-        },
-        handleSetCancelLayer(studentId, paymentMethod) {
-            this.cancelLayer = !this.cancelLayer;
-            this.cancelStudentId = studentId || '';
-            this.paymentMethod = paymentMethod || '';
-        },
-        cancelPayment(params) {
-            Student.cancelPayment(this.id, this.cancelStudentId, params).then(res => {
-                this.handleSetCancelLayer();
-                alert(res.data.message);
-                this.getData();
-            }).catch(err => {
-                alert('오류');
-            })
         }
     }
 }
