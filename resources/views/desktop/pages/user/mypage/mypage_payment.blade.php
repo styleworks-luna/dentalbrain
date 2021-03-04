@@ -1,6 +1,7 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/pages/user/mypage-payment.js') }}"></script>
 @endsection
 
 @section('style')
@@ -55,7 +56,7 @@
 
                                         @case('CANCELED')
                                         @case('PARTIAL_CANCELED')
-                                        <td>결제 취소</td>
+                                        <td class="cancel">결제 취소</td>
                                         @break
 
                                         @default
@@ -65,12 +66,15 @@
                                         {{ changePaymentMethodName($payment->method) }}
                                         {{--TODO: 디자인 필요.--}}
                                         @if($payment->method == '가상계좌' && $payment->status =='WAITING_FOR_DEPOSIT')
-                                            <p>입금 계좌 : {{ $payment->va_accountNumber }}</p>
-                                            <p>예금주 : {{ $payment->va_customerName }}</p>
-                                            <p>납입기한 : {{ date_format($payment->va_dueDate,'Y-m-d G:i:s') }}</p>
+                                            <a href="" class="waiting-deposit">자세히 보기</a>
+                                            <div class="deposit-detail">
+                                                <p>입금 계좌 : {{ $payment->va_accountNumber }}</p>
+                                                <p>예금주 : {{ $payment->va_customerName }}</p>
+                                                <p>납입기한 : {{ date_format($payment->va_dueDate,'Y-m-d G:i:s') }}</p>
+                                            </div>
                                         @endif
                                         @isset($payment->receiptUrl)
-                                            <a href="{{ $payment->receiptUrl }}">결제 영수증</a>
+                                            <a href="{{ $payment->receiptUrl }}" target="_blank">결제 영수증</a>
                                         @endisset
 
                                     </td>
