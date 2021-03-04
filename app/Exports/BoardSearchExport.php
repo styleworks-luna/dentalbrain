@@ -106,7 +106,8 @@ class BoardSearchExport implements FromCollection,WithMapping,withHeadings,Shoul
             "연락처",
             "결제금액",
             "시청기간",
-            "신청일시"
+            "신청일시",
+            "추가정보"
         ];
     }
 }
