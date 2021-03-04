@@ -11,7 +11,7 @@
                 <div class="input-wrap">
                     <label :for="'bank' + programId">은행</label>
                     <select name="payment-method" :id="'bank' + programId" class="select-menu" v-model="bank">
-                        <option value="농협" selected>NH농협은행</option>
+                        <option value="농협">NH농협은행</option>
                         <option value="국민">KB국민은행</option>
                         <option value="우리">우리은행</option>
                         <option value="신한">신한은행</option>

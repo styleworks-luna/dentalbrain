@@ -2,9 +2,6 @@
 
 @section('vue')
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
-@endsection
-
-@section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
 @endsection
 
