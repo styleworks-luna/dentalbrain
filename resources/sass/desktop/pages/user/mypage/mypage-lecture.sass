@@ -242,16 +242,22 @@
 
     .input-wrap
         label
+            +size(80px)
             +margin(right 10px)
+            display: inline-block
             font-size: 16px
 
         input[type="text"]
             +input(white-lignt-fill)
             +size(240px, 45px)
-            +margin(right 5px)
+            +margin(right 5px bottom 10px)
+
+            &:last-child
+                +margin(bottom 0)
 
         select
             +selectbox(240px, 50px)
+            +margin(bottom 10px)
 
             + .ui-selectmenu-button
                 +margin(right 10px)
