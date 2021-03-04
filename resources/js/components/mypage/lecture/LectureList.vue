@@ -29,7 +29,9 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
+                                    {{
+                                        lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
+                                    }}
                                 </p></td>
                             </tr>
                         </table>
@@ -69,10 +71,13 @@
                     </div>
                 </div>
                 <div class="btn-zone">
-                    <div :class="lecture.is_watched == 0 && lecture.left_days > 91 ? 'content-button-offline' : 'content-button'"
-                         v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
-                        <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의 시청하기</a>
-                        <a href="" v-if="lecture.left_days > 91 && lecture.is_watched == 0">환불요청</a>
+                    <div
+                        :class="lecture.is_watched == 0 && lecture.left_days > 91 ? 'content-button-offline' : 'content-button'"
+                        v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
+                        <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
+                            시청하기</a>
+                        <a href="" v-if="lecture.left_days > 91 && lecture.is_watched == 0"
+                           @click.prevent="popUpStatus(lecture.id)">환불요청</a>
                     </div>
                     <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
                         <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
@@ -81,36 +86,98 @@
                     <div class="content-button-offline"
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
                         <div class="btn-wrap">
-                            <a href="" :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
-                            <a href="" v-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">환불하기(자동)</a>
+                            <a href=""
+                               :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
+                            <a href=""
+                               v-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2"
+                               @click.prevent="popUpStatus(lecture.id)">취소하기</a>
                             <a href=""
                                v-else-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
-                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">환불하기</a>
-                            <a href="" v-else-if="lecture.ticket.is_free != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">취소하기</a>
+                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
+                               @click.prevent="popUpManualStatus(lecture.id)">환불하기</a>
+                            <a href=""
+                               v-else-if="lecture.ticket.is_free != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
+                               @click.prevent="popUpStatus(lecture.id)">취소하기</a>
                         </div>
                     </div>
                 </div>
             </li>
             <li class="content-none" v-if="lectures.length == 0">신청한 강의가 없습니다.</li>
         </ul>
+
+        <refund-pop v-if="modalData.ticket.is_free == 0 && showModal"
+                    :methodTo="modalData.payment.method"
+                    :programIdTo="modalData.ticket.program.id"
+                    @close="toggleModal"></refund-pop>
+
+        <refund-free-pop v-if="modalData.ticket.is_free != 0 && showModal"
+                         :programIdTo="modalData.ticket.program.id"
+                         @close="toggleModal">
+        </refund-free-pop>
+
+        <refund-manual-pop v-if="modalData.ticket.is_free == 0 && showManualModal"
+                           :programIdTo="modalData.ticket.program.id"
+                           @close="toggleManualModal">
+
+        </refund-manual-pop>
+
+        <div class="dim" v-if="showModal || showManualModal"></div>
     </div>
 </template>
 
 <script>
+import RefundPop from '@/components/mypage/lecture/RefundPop.vue'
+import RefundFreePop from '@/components/mypage/lecture/RefundFreePop.vue'
+import RefundManualPop from '@/components/mypage/lecture/RefundManualPop.vue'
+
 export default {
     name: 'MypageLectureList',
+    components: {
+        RefundPop,
+        RefundFreePop,
+        RefundManualPop,
+    },
     props: {
         'list': Array
     },
+    computed: {},
     data() {
         return {
             lectures: [],
             milliSecondsDay: 86400000,
+            showModal: false,
+            showManualModal: false,
+            modalData: {
+                ticket: {},
+                payment: {}
+            }
         }
     },
     watch: {
         list() {
             this.lectures = this.list;
+        }
+    },
+    methods: {
+        popUpStatus(id) {
+            if (id) {
+                this.modalData = this.list.find(data => data.id === id);
+            }
+            this.showModal = true;
+            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        },
+        popUpManualStatus(id) {
+            if (id) {
+                this.modalData = this.list.find(data => data.id === id);
+            }
+            this.showManualModal = true;
+            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        },
+        toggleModal() {
+            this.showModal = !this.showModal;
+        },
+        toggleManualModal() {
+            this.showManualModal = !this.showManualModal;
         }
     }
 }

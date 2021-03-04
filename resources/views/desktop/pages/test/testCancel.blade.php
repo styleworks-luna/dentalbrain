@@ -7,11 +7,9 @@
         <br>
         <ul>
             @foreach($students as $student)
+                @isset ($student->payment)
                 <li>
-                    <form
-                        action="{{ route('account.lectures.cancel',['program' => $student->ticket->program->id]) }}"
-                        method="POST"
-                    >
+                    <form method="POST">
                         <p>ID : {{$student->id }}</p>
                         <p>신청자 이름 :{{$student->user->name}}</p>
                         <p>결제수단 : {{$student->payment->method}}</p>
@@ -32,6 +30,7 @@
                         <input type="submit">
                     </form>
                 </li>
+                @endisset
                 <br>
             @endforeach
         </ul>
