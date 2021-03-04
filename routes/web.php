@@ -48,7 +48,6 @@ Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
 
     Route::get('cancel', 'Test\TestController@cancelTest');
 
-    Route::post('excel','Admin\Program\ExcelController@export')->name('excel');
     Route::get('mail', 'Test\TestController@mailView');
     Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
 });
