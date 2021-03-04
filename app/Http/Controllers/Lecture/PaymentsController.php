@@ -138,6 +138,9 @@ class PaymentsController extends Controller
         }
 
         $student = $program->students()->where('user_id', '=', Auth::id())->first();
+        $student->update([
+            'pay_status' => ProgramStudent::$PAY_IN_REFUND_PROCESS,
+        ]);
 
         Mail::to($student->email)
             ->send(new RequestProgramCancel($student,
