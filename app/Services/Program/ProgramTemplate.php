@@ -75,7 +75,7 @@ abstract class ProgramTemplate
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
                 $query->select('id', 'totalAmount', 'status', 'method');
-            }, 'user:id,login_id'])->paginate($perPage);
+            }, 'user:id,login_id,name'])->paginate($perPage);
     }
 
 
@@ -497,7 +497,10 @@ abstract class ProgramTemplate
             function ($input) use ($student) {
                 return $student->payment->method == '가상계좌';
             });
-
+        if ($v->fails()) {
+            Log::debug('VALIDATE INFO', $v->failed());
+            return false;
+        }
         return $v->validated();
     }
 
