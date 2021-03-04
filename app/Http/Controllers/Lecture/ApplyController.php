@@ -92,6 +92,7 @@ class ApplyController extends Controller
     private function sendLectureApplyFreeMailWithIsOnline(Request $request, Program $program)
     {
         Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
+        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
     }
 
     private function programQueryWithPlaceAndTicket(Program $program)
