@@ -74,7 +74,11 @@
                                             </div>
                                         @endif
                                         @isset($payment->receiptUrl)
-                                            <a href="{{ $payment->receiptUrl }}" target="_blank">결제 영수증</a>
+                                            @if ($payment->status == 'DONE')
+                                                <a href="{{ $payment->receiptUrl }}" target="_blank">결제 영수증</a>
+                                            @elseif($payment->status == 'CANCELED')
+                                                <a href="{{ $payment->receiptUrl }}" target="_blank">취소 영수증</a>
+                                            @endif
                                         @endisset
 
                                     </td>
