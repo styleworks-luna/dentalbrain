@@ -52,11 +52,12 @@
                             </template>
 
                             <template v-else>
-                                {{ slotProps.row.left_days }}일 남음
+                                <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음 <template v-if="slotProps.row.is_watched">(시청함)</template>
+                                <div v-if="slotProps.row.is_repeated">(재수강)</div>
                             </template>
                         </template>
                         <template v-else>
-                            무료
+                            <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
                         </template>
                     </td>
                     <td>
