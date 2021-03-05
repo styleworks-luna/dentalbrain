@@ -62,7 +62,7 @@ abstract class ProgramTemplate
     {
          $query = $program->students()
              ->select([
-                 'program_tickets.program_id',
+                 'program_tickets.program_id','program_tickets.is_free',
                  'program_students.id','program_students.email','program_students.phone','program_students.pay_status','program_students.applied_at','program_students.payment_id',
                  'payments.id','payments.totalAmount','payments.status','payments.method',
                  'users.id','users.login_id','users.name'
@@ -75,6 +75,7 @@ abstract class ProgramTemplate
         }else if($order == 'login_id'){
             $query->orderBy('users.login_id', 'DESC');
         }else if($order == 'left_days'){
+            $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
             return collect($query->paginate($perPage))->sortByDesc('program_students.left_days');
         }else{
             $query->orderBy('program_students.id', 'DESC');
