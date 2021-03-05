@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_answer"
-                                     :anotherText="anotherText"
+                                     :anotherText="'question'"
                                      class="btn-outline-dark"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
@@ -84,7 +84,6 @@ export default {
             page: 1,
             gubun: 'all',
             keyword: '',
-            anotherText: 'question',
         }
     },
     mounted() {
