@@ -57,8 +57,53 @@ class Program extends Model
         if ($user != null) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->where('expired_at', '>', now())
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 이미 유저가 강의를 신청했는지 확인.
+     * @return bool
+     */
+    public function alreadyApplied()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
                 ->where('expired_at', '>', now())
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    public function canRepeat()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->where('expired_at', '<', now())
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    public function repeated()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('is_repeated', '=', true)
                 ->exists();
         } else {
             return false;

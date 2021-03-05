@@ -8,6 +8,8 @@
 @import '@sass/components/_selectbox.sass'
 @import '@sass/components/_emailbox.sass'
 
+@import '@sass/desktop/pages/agreement/agreement.sass'
+
 .content
     h2
         font-size: 24px
@@ -151,73 +153,6 @@
                 color: $gray-700
                 text-decoration: underline
                 transform: translateY(3px)
-
-.dim
-    +background(null,null,null,$white)
-    display: none
-    width: 100%
-    height: 100%
-    position: fixed
-    top: 0
-    left: 0
-    background-color: rgba(0, 0, 0, 0.5)
-    cursor: pointer
-    z-index: 210
-
-.service-layer-wrapper,
-.privacy-layer-wrapper,
-.email-layer-wrapper
-    .layer
-        +size(750px, 500px)
-        +padding(22px)
-        +border(2px solid $page-color)
-        +background(null,null,null, $white)
-        +box-sizing(border-box)
-        display: none
-        position: fixed
-        left: 50%
-        top: 50%
-        transform: translate(-50%, -50%)
-        z-index: 220
-
-    .layer-header
-        overflow: hidden
-
-        h3
-            float: left
-            font-weight: bold
-            font-size: 18px
-
-        .btn-close
-            +size(18px, 18px)
-            +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
-            float: right
-
-            &:hover
-                +background('/images/desktop/global/icon_layer_close_ov.png')
-
-    .layer-content-wrapper
-        +size(706px, 428px)
-        +margin(top 10px)
-        +padding(20px 10px 0 20px)
-        +border(1px solid $border-color-base)
-        +box-sizing(border-box)
-        overflow: hidden
-
-        .layer-content
-            +size(null, 408px)
-            overflow-y: scroll
-
-            p
-                +margin(right 4px)
-                line-height: 1.3
-
-            &::-webkit-scrollbar
-                +size(6px, 120px)
-
-            &::-webkit-scrollbar-thumb
-                +border-radius(3px)
-                +background(null, null, null, rgba(0, 0, 0, 0.5) )
 
 .content .btn-wrap
     +margin(top 50px bottom 80px)

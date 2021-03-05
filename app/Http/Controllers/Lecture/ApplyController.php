@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApplyLecture;
-use App\Mail\ApplyOfflineLecture;
-use App\Mail\ApplyOnlineLecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -22,7 +20,7 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if ($program->alreadyPaid()) {
+        if ($program->alreadyApplied()) {
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
@@ -38,11 +36,14 @@ class ApplyController extends Controller
             $programService = new OfflineProgramConcrete();
         }
 
+        $student = $program->students()->where('user_id', '=', Auth::id())->first();
+
         $programDetail = $programService->getProgramDetail($program);
 
         return view(viewPrefix() . 'pages.lecture.lecture_apply', [
             'program' => $programDetail['program'],
-            'surveys' => $programDetail['surveys']
+            'surveys' => $programDetail['surveys'],
+            'student' => $student,
         ]);
     }
 
@@ -70,6 +71,8 @@ class ApplyController extends Controller
 
             ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
 
+            // TODO : 재수강 시에 질문 답변 삭제
+
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
@@ -83,7 +86,7 @@ class ApplyController extends Controller
 
         } catch (\Exception $exception) {
             Log::error('STORE SURVEY ANSWER ERROR', [$exception]);
-            
+
             DB::rollback();
             return redirect()->back(302)->with(['alert' => '오류']);
         }
@@ -98,11 +101,11 @@ class ApplyController extends Controller
     private function programQueryWithPlaceAndTicket(Program $program)
     {
         return ProgramStudent::query()
-            ->select('id','user_id','ticket_id','created_at','expired_at')
-            ->where('user_id',Auth::id())
-            ->with('ticket:id,program_id','ticket.program:id,title')
-            ->whereHas('ticket.program',function($query) use ($program){
-                $query->where('id',$program->id);
+            ->select('id', 'user_id', 'ticket_id', 'created_at', 'expired_at')
+            ->where('user_id', Auth::id())
+            ->with('ticket:id,program_id', 'ticket.program:id,title')
+            ->whereHas('ticket.program', function ($query) use ($program) {
+                $query->where('id', $program->id);
             })->get();
     }
 

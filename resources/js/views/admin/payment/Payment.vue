@@ -28,7 +28,20 @@
                     </td>
                     <td>{{ slotProps.row.approvedAt || '결제 대기중' }}</td>
                     <td>
-
+                        <template v-if="slotProps.row.student.pay_status === 0">
+                            결제 전
+                        </template>
+                        <template v-else-if="slotProps.row.student.pay_status === 1">
+                            입금 대기
+                        </template>
+                        <template v-else-if="slotProps.row.student.pay_status === 3">
+                            취소 완료
+                        </template>
+                        <a href="#" class="btn btn-danger text-white"
+                           @click.prevent="handleSetCancelLayer(slotProps.row.student.id, slotProps.row.student.payment.method)"
+                           v-else-if="slotProps.row.pay_status === 2">
+                            결제 취소
+                        </a>
                     </td>
                 </template>
             </table-grid>
@@ -41,6 +54,11 @@
                     </pagination>
                 </nav>
             </div>
+
+            <payment-cancel-layer v-if="cancelLayer"
+                                  :paymentMethod="paymentMethod"
+                                  @setCancelLayer="handleSetCancelLayer"
+                                  @cancelPayment="cancelPayment"></payment-cancel-layer>
         </template>
     </layout>
 </template>
@@ -50,10 +68,16 @@
 import Table from '@/components/admin/grid/Table.vue';
 
 //api
-import Payment from '@/api/admin/payment/Payment.js'
+import { getData } from '@/api/admin/payment/Payment.js'
+
+// mixins
+import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
 
 export default {
     name: 'AdminPayment',
+    mixins: [
+        PaymentCancelMixin
+    ],
     components: {
         'table-grid': Table
     },
@@ -129,7 +153,7 @@ export default {
                 page: page
             };
 
-            Payment.getData(params).then(res => {
+            getData(params).then(res => {
                 this.payments = res.data.payments;
             }).catch(err => {
                 this.payments = [];

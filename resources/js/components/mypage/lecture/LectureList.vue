@@ -164,14 +164,12 @@ export default {
                 this.modalData = this.list.find(data => data.id === id);
             }
             this.showModal = true;
-            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         },
         popUpManualStatus(id) {
             if (id) {
                 this.modalData = this.list.find(data => data.id === id);
             }
             this.showManualModal = true;
-            window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
         },
         toggleModal() {
             this.showModal = !this.showModal;
