@@ -152,8 +152,6 @@ export default {
                 page: page
             };
 
-            console.log(params);
-
             Question.getData(params).then(res => {
                 this.questions = res.data.question;
             }).catch(err => {

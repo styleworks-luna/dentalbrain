@@ -128,7 +128,8 @@ class TossPayments
             Log::error('TOSS API CANCEL CALL ERROR', [
                 $e,
                 'paymentKey' => $this->paymentKey,
-                'reason' => $reason]);
+                'json' => $jsonData,
+                ]);
             return false;
         }
 

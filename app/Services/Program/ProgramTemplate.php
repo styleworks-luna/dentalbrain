@@ -468,7 +468,7 @@ abstract class ProgramTemplate
     {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID,ProgramStudent::$PAY_IN_REFUND_PROCESS]);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;

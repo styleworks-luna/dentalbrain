@@ -72,11 +72,11 @@
                 </div>
                 <div class="btn-zone">
                     <div
-                        :class="lecture.is_watched == 0 && lecture.left_days > 91 ? 'content-button-offline' : 'content-button'"
+                        :class="lecture.is_watched == 0 && lecture.left_days > lecture.ticket.term - 8 ? 'content-button-offline' : 'content-button'"
                         v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
                         <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
                             시청하기</a>
-                        <a href="" v-if="lecture.left_days > 91 && lecture.is_watched == 0"
+                        <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
                            @click.prevent="popUpStatus(lecture.id)">환불요청</a>
                     </div>
                     <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
@@ -88,16 +88,22 @@
                         <div class="btn-wrap">
                             <a href=""
                                :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
-                            <a href=""
-                               v-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2"
-                               @click.prevent="popUpStatus(lecture.id)">취소하기</a>
-                            <a href=""
-                               v-else-if="lecture.ticket.is_free == 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
-                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
-                               @click.prevent="popUpManualStatus(lecture.id)">환불하기</a>
-                            <a href=""
-                               v-else-if="lecture.ticket.is_free != 0 && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
-                               @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                            <template v-if="lecture.ticket.is_free == 0">
+                                <template v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">
+                                    <a href="" @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                                </template>
+                                <template v-else-if=" Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
+                                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">
+                                    <a href="" v-if="lecture.pay_status === 2" @click.prevent="popUpManualStatus(lecture.id)">
+                                        취소하기
+                                    </a>
+                                    <a href="" v-else-if="lecture.pay_status ===4" @click.prevent>환불요청 중</a>
+                                </template>
+                            </template>
+                            <template v-else-if="lecture.ticket.is_free != 0">
+                                <a href="" v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
+                                   @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                            </template>
                         </div>
                     </div>
                 </div>
@@ -116,9 +122,9 @@
         </refund-free-pop>
 
         <refund-manual-pop v-if="modalData.ticket.is_free == 0 && showManualModal"
+                           :methodTo="modalData.payment.method"
                            :programIdTo="modalData.ticket.program.id"
                            @close="toggleManualModal">
-
         </refund-manual-pop>
 
         <div class="dim" v-if="showModal || showManualModal"></div>
