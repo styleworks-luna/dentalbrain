@@ -10,7 +10,7 @@ export default {
     },
     update(data) {
         return Send({
-            url: '/api/admin/lecture/notification/email/',
+            url: '/api/admin/lecture/notification/email',
             method: 'post',
             data: data
         });
