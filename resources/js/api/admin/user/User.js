@@ -32,5 +32,11 @@ export default {
             url: `/api/admin/user/find/password/${id}`,
             method: 'post'
         });
-    }
+    },
+    setStatus(id) {
+        return Send({
+            url: `/api/admin/user/${id}/paid`,
+            method: 'patch'
+        });
+    },
 }

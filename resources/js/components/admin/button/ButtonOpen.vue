@@ -7,6 +7,10 @@
             <template v-if="isOpen">완료</template>
             <template v-else>미완료</template>
         </div>
+        <div v-if="anotherText == 'paid'">
+            <template v-if="isOpen">유료</template>
+            <template v-else>무료</template>
+        </div>
         <div v-else>
             <template v-if="isOpen">공개</template>
             <template v-else>비공개</template>

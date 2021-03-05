@@ -23,6 +23,7 @@ export const UserMixin = {
             license_num: '',
             allow_email: false,
             jobOptions: [],
+            is_paid: false,
         }
     },
     mounted() {
