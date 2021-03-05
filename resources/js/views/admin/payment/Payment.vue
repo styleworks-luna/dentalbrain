@@ -39,7 +39,7 @@
                         </template>
                         <a href="#" class="btn btn-danger text-white"
                            @click.prevent="handleSetCancelLayer(slotProps.row.student.id, slotProps.row.student.payment.method)"
-                           v-else-if="slotProps.row.pay_status === 2">
+                           v-else-if="slotProps.row.student.pay_status === 2">
                             결제 취소
                         </a>
                     </td>
