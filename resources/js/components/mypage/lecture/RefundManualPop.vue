@@ -1,33 +1,33 @@
 <template>
     <div class="pop-up">
         <h1>취소 요청 확인</h1>
-        <template v-if="method == '가상계좌'">
-            <div class="input-wrap">
-                <label :for="'accountNumber'  + programId">계좌번호</label>
-                <input type="text" id="accountNumber" placeholder="계좌번호를 입력해주세요." v-model="accountNumber"/>
-            </div>
-            <div class="input-wrap">
-                <label :for="'bank' + programId" class="select-label">은행</label>
-                <select name="payment-method" :id="'bank' + programId" class="select-menu" v-model="bank">
-                    <option value="농협">NH농협은행</option>
-                    <option value="국민">KB국민은행</option>
-                    <option value="우리">우리은행</option>
-                    <option value="신한">신한은행</option>
-                    <option value="기업">IBK기업은행</option>
-                    <option value="하나">하나은행</option>
-                    <option value="경남">경남은행</option>
-                    <option value="대구">대구은행</option>
-                    <option value="부산">부산은행</option>
-                    <option value="수협">Sh수협은행</option>
-                    <option value="우체국">우체국예금보험</option>
-                </select>
-            </div>
-            <div class="input-wrap">
-                <label :for="'holderName' + programId">예금주</label>
-                <input type="text" :id="'holderName' + programId" placeholder="예금주를 입력해주세요." v-model="holderName"/>
-            </div>
-        </template>
         <div class="form-wrap">
+            <template v-if="method == '가상계좌'">
+                <div class="input-wrap">
+                    <label :for="'accountNumber'  + programId">계좌번호</label>
+                    <input type="text" id="accountNumber" placeholder="계좌번호를 입력해주세요." v-model="accountNumber"/>
+                </div>
+                <div class="input-wrap">
+                    <label :for="'bank' + programId" class="select-label">은행</label>
+                    <select name="payment-method" :id="'bank' + programId" class="select-menu" v-model="bank">
+                        <option value="농협">NH농협은행</option>
+                        <option value="국민">KB국민은행</option>
+                        <option value="우리">우리은행</option>
+                        <option value="신한">신한은행</option>
+                        <option value="기업">IBK기업은행</option>
+                        <option value="하나">하나은행</option>
+                        <option value="경남">경남은행</option>
+                        <option value="대구">대구은행</option>
+                        <option value="부산">부산은행</option>
+                        <option value="수협">Sh수협은행</option>
+                        <option value="우체국">우체국예금보험</option>
+                    </select>
+                </div>
+                <div class="input-wrap">
+                    <label :for="'holderName' + programId">예금주</label>
+                    <input type="text" :id="'holderName' + programId" placeholder="예금주를 입력해주세요." v-model="holderName"/>
+                </div>
+            </template>
             <div class="input-wrap">
                 <label :for="'reason' + programId">취소이유</label>
                 <input type="text" :id="'reason' + programId" placeholder="환불 이유를 입력해주세요." v-model="reason"/>
@@ -62,7 +62,7 @@ export default {
     mounted() {
         this.method = this.methodTo;
         this.programId = this.programIdTo;
-        $(function() {
+        $(function () {
             // select menu
             var select_menu = $('.select-menu');
 
