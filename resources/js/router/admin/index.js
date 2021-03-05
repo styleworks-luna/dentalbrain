@@ -6,6 +6,7 @@ import Customer from '@/router/admin/customer/index.js';
 import User from '@/router/admin/user/index.js';
 import Banner from '@/router/admin/banner/index.js';
 import Payment from '@/router/admin/payment/index.js';
+import Email from '@/router/admin/email/index.js';
 
 Vue.use(Router);
 
@@ -14,7 +15,8 @@ const routes = [
     ...Customer,
     ...User,
     ...Banner,
-    ...Payment
+    ...Payment,
+    ...Email
 ];
 
 const router = new Router({
