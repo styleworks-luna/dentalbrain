@@ -24,10 +24,12 @@
 
                             <template v-else>
                                 {{ Helper.numberWithCommas(slotProps.row.payment.totalAmount) }}원
+                                <template v-if="slotProps.row.pay_status === 4"><strong class="text-danger">(환불요청)</strong></template>
                             </template>
                         </template>
                         <template v-else>
                             무료
+                            <template v-if="slotProps.row.pay_status === 4"><strong class="text-danger">(환불요청)</strong></template>
                         </template>
                     </td>
                     <td>
@@ -45,6 +47,18 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 4">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.ticket.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                신청 취소
+                            </a>
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)">
+                                결제 취소
+                            </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
