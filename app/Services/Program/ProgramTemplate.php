@@ -73,7 +73,7 @@ abstract class ProgramTemplate
         if($order == 'latest'){
             $query->orderBy('program_students.id', 'DESC');
         }else if($order == 'login_id'){
-            $query->orderBy('users.login_id', 'DESC');
+            $query->orderBy('users.login_id', 'ASC');
         }else if($order == 'left_days'){
             $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
             $query->orderBy('expired_at','desc');
