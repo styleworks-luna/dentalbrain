@@ -254,14 +254,15 @@
             +size(240px, 45px)
 
         select
-            +selectbox(240px, 45px)
-
-            + .ui-selectmenu-button
-                +margin(right 10px)
-                display: inline-block
-
-        .select-label
-            transform: translateY(-18px)
+            +size(240px, 45px)
+            +padding(left 19px)
+            +border(1px solid $border-color-base)
+            +border-radius(25px)
+            +background(null, null, null, $white-light)
+            +box-sizing(border-box)
+            display: inline-block
+            cursor: pointer
+            outline: none
 
         &:last-child
             +margin(bottom 0)

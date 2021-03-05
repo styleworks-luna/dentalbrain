@@ -442,7 +442,7 @@ abstract class ProgramTemplate
             switch ($payment->method) {
                 case '카드':
                     $response = $tossPayment->cancelCard($validatedData['reason']);
-                    if (!$response) {
+                    if ($response === false) {
                         DB::rollBack();
                         return false;
                     }
@@ -454,7 +454,7 @@ abstract class ProgramTemplate
                     $response = $tossPayment->cancelVirtualAccount(
                         $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
                     );
-                    if (!$response) {
+                    if ($response === false) {
                         DB::rollBack();
                         return false;
                     }
@@ -486,7 +486,7 @@ abstract class ProgramTemplate
     {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID,ProgramStudent::$PAY_IN_REFUND_PROCESS]);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;
