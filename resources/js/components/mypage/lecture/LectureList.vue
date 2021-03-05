@@ -122,9 +122,9 @@
         </refund-free-pop>
 
         <refund-manual-pop v-if="modalData.ticket.is_free == 0 && showManualModal"
+                           :methodTo="modalData.payment.method"
                            :programIdTo="modalData.ticket.program.id"
                            @close="toggleManualModal">
-
         </refund-manual-pop>
 
         <div class="dim" v-if="showModal || showManualModal"></div>

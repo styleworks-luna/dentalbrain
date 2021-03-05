@@ -99,6 +99,7 @@ export default {
             Mypage.destroy(this.programId, data).then(res => {
                 alert(res.data.msg);
                 this.$emit('close');
+                window.location.reload()
             }).catch(err => {
                 alert(err);
             });
