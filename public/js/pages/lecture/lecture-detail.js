@@ -245,7 +245,6 @@ $(function () {
         var comment_id = target.parents('.comment-area').find('.comment-btn-area').find('.comment_id').val();
 
         var content = target.parents('.comment-area').find('.comment-submit-content').val();
-        console.log(content)
 
         var data = {
             "content": content,

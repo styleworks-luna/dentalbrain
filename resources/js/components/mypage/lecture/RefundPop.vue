@@ -9,7 +9,7 @@
                     <input type="text" id="accountNumber" placeholder="계좌번호를 입력해주세요." v-model="accountNumber"/>
                 </div>
                 <div class="input-wrap">
-                    <label :for="'bank' + programId" class="select-label">은행</label>
+                    <label :for="'bank' + programId">은행</label>
                     <select name="payment-method" :id="'bank' + programId" class="select-menu" v-model="bank">
                         <option value="농협">NH농협은행</option>
                         <option value="국민">KB국민은행</option>
@@ -63,14 +63,6 @@ export default {
     mounted() {
         this.method = this.methodTo;
         this.programId = this.programIdTo;
-        $(function() {
-            // select menu
-            var select_menu = $('.select-menu');
-
-            if (select_menu.length > 0) {
-                select_menu.selectmenu();
-            }
-        });
     },
     watch: {
         methodTo() {
@@ -99,6 +91,7 @@ export default {
             Mypage.destroy(this.programId, data).then(res => {
                 alert(res.data.msg);
                 this.$emit('close');
+                window.location.reload()
             }).catch(err => {
                 alert(err);
             });
