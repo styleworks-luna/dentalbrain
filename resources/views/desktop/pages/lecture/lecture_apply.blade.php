@@ -6,6 +6,7 @@
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-apply.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/agreement/agreement.js') }}"></script>
 @endsection
 
 @section('style')
@@ -295,7 +296,7 @@
                                         <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                     </div>
                                     <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
-                                    <a href="">내용보기</a>
+                                    <a href="" class="trigger-service">내용보기</a>
                                     <div class="offer_error_wrap"></div>
                                 </li>
                                 <li>
@@ -308,7 +309,7 @@
                                         <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                     </div>
                                     <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
-                                    <a href="">내용보기</a>
+                                    <a href="" class="trigger-refund">내용보기</a>
                                     <div class="refund_error_wrap"></div>
                                 </li>
                             </ul>
@@ -324,6 +325,11 @@
 
                 </div>
             </form>
+            <div class="dim"></div>
+            <div class="popup-control">
+                @include('desktop.pages.agreement.service')
+                @include('desktop.pages.agreement.refund')
+            </div>
         </div>
     </section>
 @endsection
