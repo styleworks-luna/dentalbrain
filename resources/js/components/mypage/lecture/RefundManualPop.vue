@@ -8,7 +8,7 @@
                     <input type="text" id="accountNumber" placeholder="계좌번호를 입력해주세요." v-model="accountNumber"/>
                 </div>
                 <div class="input-wrap">
-                    <label :for="'bank' + programId" class="select-label">은행</label>
+                    <label :for="'bank' + programId">은행</label>
                     <select name="payment-method" :id="'bank' + programId" class="select-menu" v-model="bank">
                         <option value="농협">NH농협은행</option>
                         <option value="국민">KB국민은행</option>
