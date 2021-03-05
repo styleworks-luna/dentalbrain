@@ -221,7 +221,6 @@ export default {
             Student.getStudentsData(this.id, params).then(res => {
                 this.program_name = res.data.program_name;
                 this.students = res.data.students;
-                console.log(this.students);
             }).catch(err => {
                 this.students = [];
             });
