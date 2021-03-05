@@ -167,7 +167,6 @@ export default {
     },
     methods: {
         addChoice(type) {
-            console.log(this.haveStudent);
             if (!this.haveStudent) {
                 this.surveys.push(
                     {
