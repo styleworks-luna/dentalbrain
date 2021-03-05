@@ -321,7 +321,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
 
             Route::group(['prefix'=>'notification', 'as' => 'notification.'], function(){
-                Route::get('{program}','Admin\Program\NotificationController@index')->name('index');
+                Route::get('email/{program}','Admin\Program\NotificationController@email')->name('emailData');
+                Route::get('sms/{program}','Admin\Program\NotificationController@sms')->name('smsData');
                 Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
                 Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
             });

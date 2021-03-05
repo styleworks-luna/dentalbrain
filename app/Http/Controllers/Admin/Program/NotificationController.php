@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class NotificationController extends Controller{
-   public function index(Program $program){
+   public function email(Program $program){
         $result = $program->students()
         ->orderByDesc('id')
         ->with(['ticket', 'payment' => function ($query) {
@@ -27,12 +27,28 @@ class NotificationController extends Controller{
         }])->get();
        return response()->json(['students'=> $result]);
    }
+    public function sms(Program $program){
+        $result = $program->students()
+            ->orderByDesc('id')
+            ->with(['ticket', 'payment' => function ($query) {
+                $query->select('id');
+            }, 'user' => function($query){
+                $query->select('id','login_id','allow_email');
+            }])->get();
+        return response()->json(['students'=> $result]);
+    }
 
     public function sendEmail(Request $request){
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'message' => 'required|string',
+            'email' => 'required|array'
+        ]);
+
         try{
-            array_values(function ($value) use($request){
-                Mail::to($value)->send(new Lecture($request->title,$request->message));
-            },$request->email);
+            array_values(function ($value) use($validatedData){
+                Mail::to($value)->send(new Lecture($validatedData['title'],$validatedData['message']));
+            },$validatedData['email']);
             return response()->json(['success' => true]);
         }catch(\Exception $exception){
             Log::error('SEND LECTURE SMS ERROR',[$exception]);
@@ -41,11 +57,16 @@ class NotificationController extends Controller{
     }
 
     public function sendSms(Request $request){
+        $validatedData = $request->validate([
+            'message' => 'required|string',
+            'email' => 'required|array'
+        ]);
+
         try{
             $ppurio = new Ppurio();
-            array_values(function($value) use($request, $ppurio){
-                $ppurio->sendMessage($value,$request->message);
-            },$request->phone);
+            array_values(function($value) use($validatedData, $ppurio){
+                $ppurio->sendMessage($value,$validatedData['message']);
+            },$validatedData['phone']);
             return response()->json(['success' => true]);
         }catch(\Exception $exception){
             Log::error('SEND LECTURE SMS ERROR',[$exception]);
