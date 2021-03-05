@@ -58,12 +58,29 @@ abstract class ProgramTemplate
      * @param int $perPage = 7
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    function getStudents(Program $program, $perPage = 10)
+    function getStudents(Program $program, $perPage = 10,$order)
     {
-        return $program->students()->orderByDesc('id')
-            ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status', 'method');
-            }, 'user:id,login_id,name'])->paginate($perPage);
+         $query = $program->students()
+             ->select([
+                 'program_tickets.program_id',
+                 'program_students.id','program_students.email','program_students.phone','program_students.pay_status','program_students.applied_at','program_students.payment_id',
+                 'payments.id','payments.totalAmount','payments.status','payments.method',
+                 'users.id','users.login_id','users.name'
+             ])
+             ->leftjoin('payments','payments.id','=','program_students.payment_id')
+             ->join('users','users.id','=','program_students.user_id');
+
+        if($order == 'latest'){
+            $query->orderBy('program_students.id', 'DESC');
+        }else if($order == 'login_id'){
+            $query->orderBy('users.login_id', 'DESC');
+        }else if($order == 'left_days'){
+            return collect($query->paginate($perPage))->sortByDesc('program_students.left_days');
+        }else{
+            $query->orderBy('program_students.id', 'DESC');
+        }
+
+        return $query->paginate($perPage);
     }
 
 
