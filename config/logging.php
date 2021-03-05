@@ -57,7 +57,7 @@ return [
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'DBV2020 LOG',
+            'username' => 'DBV2020 LOG/' . env('APP_ENV'),
             'emoji' => ':boom:',
             'level' => 'error',
         ],
