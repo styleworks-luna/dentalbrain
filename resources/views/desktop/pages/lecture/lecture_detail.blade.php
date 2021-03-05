@@ -54,7 +54,6 @@
                                 @endif
                                 <tr>
                                     <th>옵션선택</th>
-                                    {{$student->id}}
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
