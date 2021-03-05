@@ -19,10 +19,8 @@ class NotificationController extends Controller{
    public function email(Program $program){
         $result = $program->students()
         ->orderByDesc('id')
-        ->with(['ticket', 'payment' => function ($query) {
-            $query->select('id');
-        }, 'user' => function($query){
-            $query->select('id','login_id','allow_email');
+        ->with(['user' => function($query){
+            $query->select('id','name','login_id','allow_email');
             $query->where('allow_email',true);
         }])->get();
        return response()->json(['students'=> $result]);
@@ -30,10 +28,8 @@ class NotificationController extends Controller{
     public function sms(Program $program){
         $result = $program->students()
             ->orderByDesc('id')
-            ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id');
-            }, 'user' => function($query){
-                $query->select('id','login_id','allow_email');
+            ->with(['user' => function($query){
+                $query->select('id','name','login_id','allow_email');
             }])->get();
         return response()->json(['students'=> $result]);
     }
