@@ -63,14 +63,6 @@ export default {
     mounted() {
         this.method = this.methodTo;
         this.programId = this.programIdTo;
-        $(function() {
-            // select menu
-            var select_menu = $('.select-menu');
-
-            if (select_menu.length > 0) {
-                select_menu.selectmenu();
-            }
-        });
     },
     watch: {
         methodTo() {
