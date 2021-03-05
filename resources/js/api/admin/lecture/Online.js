@@ -55,12 +55,5 @@ export const Student = {
             url: `/api/admin/lecture/online/${id}/students`,
             method: 'patch'
         });
-    },
-    cancelPayment(id, studentId, params) {
-        return Send({
-            url: `/api/admin/lecture/online/${id}/students/${studentId}`,
-            method: 'delete',
-            params: params
-        });
     }
 }

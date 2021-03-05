@@ -23,11 +23,19 @@ class DetailController extends Controller
         $children = Comment::ofProgram($program->id)
             ->whereNotNull('parent_id')->orderBy('id')->get();
 
+        if (Auth::check()) {
+            $student = $program->students()->where('user_id', '=', Auth::id())
+                ->first();
+        } else {
+            $student = null;
+        }
+
         return view(viewPrefix() . 'pages.lecture.lecture_detail', [
             'program' => $program,
             'heart' => $heart,
             'comments' => $parents,
             'children' => $children,
+            'student' => $student,
         ]);
     }
 

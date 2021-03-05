@@ -40,18 +40,6 @@ abstract class ProgramTemplate
         $this->is_online = $is_online;
     }
 
-    /**
-     * @return JsonResponse
-     */
-    function getPrograms()
-    {
-        $programs = Program::query()->where('is_online', '=', $this->is_online)
-            ->withCount('students')->orderByDesc('id')->paginate('10');
-        return response()->json([
-            'programs' => $programs,
-        ]);
-    }
-
     function getProgramDetail(Program $program)
     {
         return [
@@ -59,7 +47,7 @@ abstract class ProgramTemplate
             'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
             'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
                 ->with('choices:id,question,parent_id')->get()
-                ->whereNull('parent_id')->values(),
+                ->whereNull('parent_id')->values()
         ];
     }
 
@@ -488,6 +476,11 @@ abstract class ProgramTemplate
 
         $student = $base->first();
 
+        if ($program->ticket->is_free) {
+            // 무료의 경우 reason 및 다른 params 필요없음
+            // 더미 값.
+            return ['reason' => '무료 강의 취소'];
+        }
         $v = Validator::make($request->all(), [
             'reason' => ['required', 'string'],
         ])->sometimes(

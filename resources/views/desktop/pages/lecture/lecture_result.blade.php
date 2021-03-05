@@ -171,7 +171,12 @@
                         @else
                             <tr>
                                 <th>결제금액</th>
-                                <td><em>{{ number_format($program->ticket->price) }}원</em></td>
+                                @if($program->repeated())
+                                    <td><em>{{ number_format($program->ticket->repeat_price) }}원</em></td>
+                                @else
+                                    <td><em>{{ number_format($program->ticket->price) }}원</em></td>
+                                @endif
+
                             </tr>
                             <tr>
                                 <th>결제방식</th>

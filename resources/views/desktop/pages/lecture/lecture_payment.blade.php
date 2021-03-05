@@ -27,7 +27,11 @@
 
                 if (paymentmethod === '가상계좌') {
                     paymentObj = {
+                        @if ($program->repeated())
+                        amount: {{ $program->ticket->repeat_price }},
+                        @else
                         amount: {{ $program->ticket->price }},
+                        @endif
                         orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
                         orderName: '{{$program->title . ', ' . $program->ticket->name}}',
                         customerName: '{{ auth()->user()->name }}',
@@ -40,7 +44,11 @@
                     var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
                     paymentObj = {
+                        @if ($program->repeated())
+                        amount: {{ $program->ticket->repeat_price }},
+                        @else
                         amount: {{ $program->ticket->price }},
+                        @endif
                         orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
                         orderName: '{{$program->title . ', ' . $program->ticket->name}}',
                         customerName: '{{ auth()->user()->name }}',
@@ -239,9 +247,9 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            @if($program->ticket->is_free)
+                            @if($program->repeated())
                                 {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
-                                <td><em>무료</em></td>
+                                <td><em>재수강 할인가 :{{ number_format($program->ticket->repeat_price) }}원</em></td>
                             @else
                                 <td><em>{{ number_format($program->ticket->price) }}원</em></td>
                             @endif

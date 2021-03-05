@@ -175,7 +175,7 @@
 
 <script>
 //api
-import Offline from '@/api/admin/lecture/Offline.js'
+import { Offline } from '@/api/admin/lecture/Offline.js'
 
 //mixins
 import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';

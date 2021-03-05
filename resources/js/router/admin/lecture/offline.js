@@ -15,7 +15,7 @@ const routes = [
         component: OfflineCreate
     },
     {
-        path: '/admin/lecture/offline/student',
+        path: '/admin/lecture/offline/:id/student',
         name: 'AdminOfflineStudent',
         component: OfflineStudent
     },

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Admin\Program;
 
 use App\Models\Program\Program;
-use App\Models\Program\ProgramStudent;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class OfflineStudentController extends OfflineProgramController
 {
@@ -14,6 +12,12 @@ class OfflineStudentController extends OfflineProgramController
         parent::__construct();
     }
 
+    /**
+     * 강의 수강 현황
+     *
+     * @param Program $program
+     * @return JsonResponse
+     */
     public function students(Program $program)
     {
         return response()->json([
@@ -22,12 +26,4 @@ class OfflineStudentController extends OfflineProgramController
         ]);
     }
 
-    public function cancel(Request $request, Program $program, ProgramStudent $student)
-    {
-        $response = $this->offlineConcrete->cancel($request, $program, User::find($student->user_id));
-        if ($response === false) {
-            return response()->json(['msg' => '실패'], 500);
-        }
-        return response()->json(['msg' => '성공']);
-    }
 }

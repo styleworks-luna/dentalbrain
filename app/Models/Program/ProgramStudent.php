@@ -14,10 +14,30 @@ class ProgramStudent extends Model
 {
     use SoftDeletes;
 
+    /**
+     * 결제 아직 안했을 경우
+     * @var int
+     */
     static $PAY_BEFORE = 0;
+    /**
+     *  가상계좌 결제 진행중
+     * @var int
+     */
     static $PAY_IN_PROCESS = 1;
+    /**
+     * 결제 완료
+     * @var int
+     */
     static $PAY_PAID = 2;
+    /**
+     * 환불 완료
+     * @var int
+     */
     static $PAY_REFUNDED = 3;
+    /**
+     * 환불 요청됨
+     * @var int
+     */
     static $PAY_IN_REFUND_PROCESS = 4;
 
     protected $appends = ['left_days'];
@@ -29,6 +49,8 @@ class ProgramStudent extends Model
     ];
 
     /**
+     *  토스 결제 승인 시에 업데이트 하는 쿼리
+     *
      * @param TossPaymentsResponse $response
      * @param Program $program
      * @param Payment $payment
@@ -56,6 +78,8 @@ class ProgramStudent extends Model
     }
 
     /**
+     *  신청 성공 시에 업데이트 하는 쿼리
+     *
      * @param Program $program
      * @param string $email
      * @param string $phone
@@ -75,6 +99,7 @@ class ProgramStudent extends Model
                 'applied_at' => now(),
                 'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
+                'is_repeated' => $program->canRepeat(),
             ]);
         } else {
             return ProgramStudent::updateOrCreate([
@@ -86,6 +111,7 @@ class ProgramStudent extends Model
                 'email' => $email,
                 'phone' => $phone,
                 'applied_at' => now(),
+                'is_repeated' => $program->canRepeat(),
             ]);
         }
     }
@@ -119,6 +145,10 @@ class ProgramStudent extends Model
             }
         }
     }
+
+    /*
+     * ====================================== Relations ===============================
+     */
 
     public function ticket()
     {

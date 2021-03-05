@@ -274,7 +274,12 @@
                         <table>
                             <tr>
                                 <th>결제금액</th>
-                                <td><em>{{ $program->ticket->is_free ? '무료' : number_format($program->ticket->price).'원' }}</em></td>
+                                @if ($program->canRepeat())
+                                    <td><em>{{ $program->ticket->is_free ? '무료' : '재수강 할인가:' . number_format($program->ticket->repeat_price).'원' }}</em></td>
+                                @else
+                                    <td><em>{{ $program->ticket->is_free ? '무료' : number_format($program->ticket->price).'원' }}</em></td>
+                                @endif
+
                             </tr>
                         </table>
                     </section>
