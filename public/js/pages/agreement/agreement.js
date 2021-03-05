@@ -18,12 +18,19 @@ $(function(){
         return false;
     });
 
+    $('.trigger-refund').on('click', function () {
+        $('.refund-layer-wrapper .layer').slideDown();
+        $('.dim').css('display','block');
+        return false
+    });
+
     $('.btn-close, .dim').on('click', function (e) {
         e.preventDefault();
 
         $('.service-layer-wrapper .layer').slideUp();
         $('.privacy-layer-wrapper .layer').slideUp();
         $('.email-layer-wrapper .layer').slideUp();
+        $('.refund-layer-wrapper .layer').slideUp();
         $('.dim').css('display', 'none');
     });
 });
