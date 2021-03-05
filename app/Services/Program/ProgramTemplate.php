@@ -63,7 +63,7 @@ abstract class ProgramTemplate
          $query = $program->students()
              ->select([
                  'program_tickets.program_id','program_tickets.is_free',
-                 'program_students.id','program_students.email','program_students.phone','program_students.pay_status','program_students.applied_at','program_students.payment_id',
+                 'program_students.id','program_students.email','program_students.phone','program_students.pay_status','program_students.applied_at','program_students.payment_id','program_students.is_repeated'
                  'payments.id','payments.totalAmount','payments.status','payments.method',
                  'users.id','users.login_id','users.name'
              ])
