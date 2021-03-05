@@ -27,8 +27,7 @@
                         :data="users.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <!--TODO 예쁘게 바꿔주세용-->
-                    <td>{{ slotProps.row.is_paid }}</td>
+                    <td>{{ slotProps.row.is_paid ? '유료회원' : '무료회원'}}</td>
                     <td>{{ slotProps.row.login_id }} </td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
@@ -36,10 +35,14 @@
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.id}`"
-                                     class="btn btn-info">
+                                     class="btn btn-info float-left">
                             수정
                         </router-link>
-                        <!--TODO 유저 유료회원 전환 버튼 넣기. 경로 : web.php 265번줄-->
+                        <button-open :isOpen="slotProps.row.is_paid"
+                                     :anotherText="'paid'"
+                                     class="btn-outline-dark"
+                                     @setStatus="handleSetStatus(slotProps.row.id)">
+                        </button-open>
                     </td>
                 </template>
             </table-grid>
@@ -60,6 +63,7 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 // api
 import User from '@/api/admin/user/User.js';
@@ -68,7 +72,8 @@ export default {
     name: 'AdminUser',
     components: {
         'table-grid': Table,
-        'select-box': SelectBox
+        'select-box': SelectBox,
+        ButtonOpen,
     },
     data() {
         return {
@@ -157,6 +162,12 @@ export default {
         handleSetJobyId(value) {
             this.job_name_id = value;
         },
+        handleSetStatus(id) {
+            User.setStatus(id).then(res => {
+                this.getData();
+                alert(res.data.msg);
+            })
+        }
     }
 }
 </script>

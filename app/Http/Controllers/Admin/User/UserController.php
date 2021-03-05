@@ -113,6 +113,8 @@ class UserController
     public function updatePaid(User $user)
     {
         $user->is_paid = !$user->is_paid;
+        $user->save();
+
         return response()->json([
             'success' => true,
             'msg' => '변경되었습니다.'
