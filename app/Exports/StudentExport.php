@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class BoardSearchExport implements FromCollection,WithMapping,withHeadings,ShouldAutoSize
+class StudentExport implements FromCollection,WithMapping,withHeadings,ShouldAutoSize
 {
     use Exportable;
     /**
