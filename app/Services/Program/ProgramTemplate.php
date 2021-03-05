@@ -424,7 +424,7 @@ abstract class ProgramTemplate
             switch ($payment->method) {
                 case '카드':
                     $response = $tossPayment->cancelCard($validatedData['reason']);
-                    if (!$response) {
+                    if ($response === false) {
                         DB::rollBack();
                         return false;
                     }
@@ -436,7 +436,7 @@ abstract class ProgramTemplate
                     $response = $tossPayment->cancelVirtualAccount(
                         $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
                     );
-                    if (!$response) {
+                    if ($response === false) {
                         DB::rollBack();
                         return false;
                     }
