@@ -38,7 +38,7 @@
                 덴탈 브레인 회원님들께 소책자를 드립니다.<br>
                 제목 : 환자의 마음을 사로잡는 전화멘트
             </p>
-            <a href="" style="display: block; width: 100px; margin: 0 auto; padding: 8px 12px 8px 12px; background-color: #9b00d8; color: #fff; text-decoration: none" download>
+            <a href="{{ asset('attachment.pdf') }}" style="display: block; width: 100px; margin: 0 auto; padding: 8px 12px 8px 12px; background-color: #9b00d8; color: #fff; text-decoration: none" download>
                 다운로드
             </a>
             </div>
