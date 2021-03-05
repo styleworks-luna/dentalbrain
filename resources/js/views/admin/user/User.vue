@@ -27,6 +27,8 @@
                         :data="users.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
+                    <!--TODO 예쁘게 바꿔주세용-->
+                    <td>{{ slotProps.row.is_paid }}</td>
                     <td>{{ slotProps.row.login_id }} </td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
@@ -37,6 +39,7 @@
                                      class="btn btn-info">
                             수정
                         </router-link>
+                        <!--TODO 유저 유료회원 전환 버튼 넣기. 경로 : web.php 265번줄-->
                     </td>
                 </template>
             </table-grid>
@@ -91,9 +94,14 @@ export default {
                     width: '6%'
                 },
                 {
+                    name: 'is_paid',
+                    text: '유료회원',
+                    width: '6%'
+                },
+                {
                     name: 'login_id',
                     text: '아이디',
-                    width: '17%'
+                    width: '11%'
                 },
                 {
                     name: 'name',

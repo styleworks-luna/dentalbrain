@@ -83,6 +83,16 @@
                 </template>
             </single-group>
 
+            <!-- 유료회원 여부 -->
+            <single-group name="유료회원 여부"
+                          :isRow="true"
+                          :size="2.5">
+                <template v-slot:content>
+                    <input type="checkbox" name="paid-check" id="paid-check" v-model="is_paid">
+                    <label for="paid-check">유료회원 선택</label>
+                </template>
+            </single-group>
+
         </template>
 
         <template v-slot:footer>
@@ -132,6 +142,7 @@ export default {
                 this.job_name_id = result.job_name_id;
                 this.license_num = result.license_num;
                 this.allow_email = result.allow_email;
+                this.is_paid = result.is_paid;
             });
         },
         update() {
@@ -143,6 +154,7 @@ export default {
                 job_name_id : this.job_name_id,
                 license_num : this.license_num,
                 allow_email : this.allow_email,
+                is_paid : this.is_paid,
             };
 
             User.update(this.id, data).then(res => {

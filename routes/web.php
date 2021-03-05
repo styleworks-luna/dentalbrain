@@ -261,6 +261,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::post('search', 'Admin\User\UserController@search')->name('search');
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
+            // user 유료회원 <-> 무료회원 전환
+            Route::patch('{user}/paid', 'Admin\User\UserController@updatePaid')->name('change.paid');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {

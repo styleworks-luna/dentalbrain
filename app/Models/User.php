@@ -36,7 +36,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'allow_email' => 'boolean'
+        'allow_email' => 'boolean',
+        'is_paid' => 'boolean',
     ];
 
     protected $appends = [
