@@ -88,16 +88,11 @@ class Survey extends Model
         return $query->with(['choices',
             'answers' => function ($query) use($userId){
                 $query->where('user_id', '=', $userId);
-            }, 'answer' => function ($query) use($userId){
-                $query->where('user_id', '=', $userId);
             }])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id')
             ->whereHas('answers', function ($query) {
                 $query->where('user_id', '=', Auth::id());
-            })->whereHas('answer', function ($query) {
-                $query->where('user_id', '=', Auth::id());
             });
     }
-
 }
