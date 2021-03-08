@@ -309,6 +309,11 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
+
+            Route::group(['prefix' => 'surveys','as'=> 'surveys.'],function(){
+                Route::get('{program}/{user}','Admin\Program\SurveyController@index')->name('index');
+            });
+
             Route::group(['prefix' => 'question', 'as' => 'question.'], function () {
                 // 질문 index 페이지 데이터
                 Route::get('/', 'Admin\Program\QuestionController@index')->name('index');
