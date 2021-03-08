@@ -13,19 +13,21 @@ class WatchController extends Controller
 {
     public function watch(Program $program, Lecture $lecture = null)
     {
-        if (!$program->alreadyPaid()) {
-            // 미 결제
-            return abort(Response::HTTP_UNAUTHORIZED);
-        }
         if ($program->is_online == 0) {
             // 오프라인 강의
             return redirect()->back()->with(['alert' => '오프라인 강의입니다.']);
         }
-        if ($program->canOnlineRefund()) {
-            // 환불 가능 상태일 경우.
-            return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
-                'program' => $program
-            ]);
+
+        if (Auth::user()->is_admin == false) {
+            if (!$program->alreadyPaid()) {
+                // 미 결제
+                return abort(Response::HTTP_UNAUTHORIZED);
+            } else if ($program->canOnlineRefund()) {
+                // 환불 가능 상태일 경우.
+                return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
+                    'program' => $program
+                ]);
+            }
         }
 
         if ($lecture === null) {
