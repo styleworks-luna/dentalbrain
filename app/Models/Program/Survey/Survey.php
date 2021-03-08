@@ -92,7 +92,7 @@ class Survey extends Model
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id')
             ->whereHas('answers', function ($query) {
-                $query->where('user_id', '=', Auth::id());
+                $query->where('user_id', '=', $userId);
             });
     }
 }
