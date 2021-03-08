@@ -27,7 +27,7 @@
                                     <th>결제금액</th>
                                     <th>결제상태</th>
                                     <th>결제수단</th>
-                                    <th>결제일{{ isset($value['deleted_at']) ? "/취소일" : '' }}</th>
+                                    <th>결제일{{ $payment->cancel != 'null' ? "/취소일" : '' }}</th>
                                 </tr>
                                 <tr>
                                     <td>{{ number_format($value['totalAmount']) }}원</td>
@@ -36,7 +36,8 @@
                                         {{ changePaymentMethodName($value['method']) }}
                                         <a href="{{ $value['receiptUrl'] }}">결제 영수증</a>
                                     </td>
-                                    <td>{{ date('Y-m-d',strtotime($value['created_at'])) }} {{ isset($value['deleted_at']) ? '/'.date('Y-m-d',strtotime($value['deleted_at'])) : ''   }}</td>
+                                    <td>{{ date_format($payment->requestedAt ,'Y-m-d')}} {{ $payment->cancel != 'null'  ? '/' . date('Y-m-d',strtotime($payment->canceledAt)) : ''   }}</td>
+
                                 </tr>
                             </table>
                         </li>
