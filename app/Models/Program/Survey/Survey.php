@@ -91,7 +91,7 @@ class Survey extends Model
             }])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id')
-            ->whereHas('answers', function ($query) {
+            ->whereHas('answers', function ($query) use($userId) {
                 $query->where('user_id', '=', $userId);
             });
     }
