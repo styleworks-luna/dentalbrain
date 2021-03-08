@@ -79,9 +79,6 @@ export default {
     props: {
       'content' : String
     },
-    components: {
-        'el-tiptap': ElementTiptap
-    },
     data() {
         return {
             extensions: [
