@@ -39,8 +39,6 @@ export const LectureFormMixin = {
             this.thumbnail = file;
         },
         handleSetEditor(data) {
-            console.log('emit data----------');
-            console.log(data);
             this.content = data;
         },
         handleSetIsOpen(checked) {

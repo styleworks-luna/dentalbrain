@@ -1,7 +1,6 @@
 <template>
     <el-tiptap  height="400"
                 placeholder="Write something ..."
-                :lang="'ko'"
                 :content="content"
                 :extensions="extensions"
                 @onUpdate="handleSetEditor"/>
@@ -9,20 +8,18 @@
 
 <script>
 import Vue from 'vue';
-
-import { ElementTiptap } from 'element-tiptap';
-import 'element-ui/lib/theme-chalk/index.css';
-import 'element-tiptap/lib/index.css';
 import {
     Doc,
     Text,
     Paragraph,
+    FontType,
     FontSize,
     Bold,
     Underline,
     Italic,
     Strike,
     TextColor,
+    TextHighlight,
     TextAlign,
     BulletList,
     OrderedList,
@@ -31,6 +28,7 @@ import {
     TodoList,
     Indent,
     HardBreak,
+    LineHeight,
     Blockquote,
     Link,
     Image,
@@ -39,7 +37,8 @@ import {
     TableCell,
     TableRow,
     CodeView,
-    HorizontalRule
+    HorizontalRule,
+    History,
 } from "element-tiptap";
 
 import codemirror from "codemirror";
@@ -47,6 +46,16 @@ import "codemirror/lib/codemirror.css"; // import base style
 import "codemirror/mode/xml/xml.js"; // language
 import "codemirror/addon/selection/active-line.js"; // require active-line.js
 import "codemirror/addon/edit/closetag.js"; // autoCloseTags
+import ElementUI from 'element-ui';
+import { ElementTiptapPlugin } from 'element-tiptap';
+import 'element-ui/lib/theme-chalk/index.css';
+import 'element-tiptap/lib/index.css';
+
+Vue.use(ElementUI);
+Vue.use(ElementTiptapPlugin, {
+    lang: "ko",
+     spellcheck: false,
+});
 
 // editor file upload
 let uploadImage = async (image) => {
@@ -124,13 +133,18 @@ export default {
                 new TableHeader(),
                 new TableRow(),
                 new TableCell(),
+                new CodeView({
+                    codemirror,
+                    codemirrorOptions: {
+                        styleActiveLine: true,
+                        autoCloseTags: true
+                    }
+                })
             ]
         }
     },
     methods: {
         handleSetEditor(e) {
-            console.log('handleSeteditor ---------');
-            console.log(e);
             this.$emit('setEditor', e);
         },
     }
