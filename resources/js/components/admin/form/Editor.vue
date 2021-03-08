@@ -129,6 +129,8 @@ export default {
     },
     methods: {
         handleSetEditor(e) {
+            console.log('handleSeteditor ---------');
+            console.log(e);
             this.$emit('setEditor', e);
         },
     }
