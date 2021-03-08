@@ -22,8 +22,8 @@ class PaymentController extends Controller
             }])
             ->whereHas('student', function ($query) {
                 $query->where('user_id', Auth::id());
-            })->get()
-            
+            })->get();
+
         return view(viewPrefix() . 'pages.user.mypage.mypage_payment', [
             'payments' => $payments,
         ]);
