@@ -57,7 +57,7 @@
                         <div class="d-day" v-if="lecture.left_days > 0">
                             <em>{{ lecture.left_days }}일</em> 남음
                         </div>
-                        <div class="d-day" v-else-if="lecture.left_days == 0">
+                        <div class="d-day" v-else-if="lecture.left_days === '0'">
                             <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
                         </div>
                         <div class="d-day" v-else><em>만료</em></div>
@@ -71,18 +71,20 @@
                     </div>
                 </div>
                 <div class="btn-zone">
-                    <div
-                        :class="lecture.is_watched == 0 && lecture.left_days > lecture.ticket.term - 8 ? 'content-button-offline' : 'content-button'"
-                        v-if="lecture.ticket.program.is_online && lecture.left_days >= 0">
-                        <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
-                            시청하기</a>
-                        <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
-                           @click.prevent="popUpStatus(lecture.id)">환불요청</a>
-                    </div>
-                    <div class="content-button" v-else-if="lecture.ticket.program.is_online && lecture.left_days <= 0">
-                        <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
-                        <p>재수강시<br>30% 할인 적용됩니다.</p>
-                    </div>
+                    <template v-if="lecture.ticket.program.is_online">
+                        <div
+                            :class="lecture.is_watched == 0 && lecture.left_days > lecture.ticket.term - 8 ? 'content-button-offline' : 'content-button'"
+                            v-if="lecture.left_days > 0 || lecture.left_days === '0'">
+                            <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
+                                시청하기</a>
+                            <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
+                               @click.prevent="popUpStatus(lecture.id)">환불요청</a>
+                        </div>
+                        <div class="content-button" v-else>
+                            <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
+                            <p>재수강시<br>30% 할인 적용됩니다.</p>
+                        </div>
+                    </template>
                     <div class="content-button-offline"
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
                         <div class="btn-wrap">
