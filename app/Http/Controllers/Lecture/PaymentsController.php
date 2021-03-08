@@ -35,15 +35,17 @@ class PaymentsController extends Controller
      */
     public function success(SuccessPayments $request, Program $program)
     {
-        if ($program->ticket->price != $request->get('amount')) {
-            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.']);
+        $realPrice = $program->canRepeat() ? $program->ticket->repeat_price : $program->ticket->price;
+
+        if ($realPrice != $request->get('amount')) {
+            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
         }
 
         $toss = new TossPayments($request->get('paymentKey'));
         $response = $toss->success($request->get('orderId'), $request->get('amount'));
 
         if ($response === false) {
-            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
+            return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
         }
 
         $payment = Payment::createByTossSuccess($response);
@@ -84,7 +86,7 @@ class PaymentsController extends Controller
         $surveys = Survey::result($program->id)->get();
 
         // 새로고침 가능 하게끔.
-        session()->flash('fromApply',true);
+        session()->flash('fromApply', true);
 
         return view(viewPrefix() . 'pages.lecture.lecture_payment', [
             'program' => $program,
