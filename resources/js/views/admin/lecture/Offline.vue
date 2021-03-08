@@ -88,7 +88,7 @@ import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
-import Offline from '@/api/admin/lecture/Offline.js'
+import { Offline } from '@/api/admin/lecture/Offline.js'
 
 // mixins
 import { ProgramCategoryMixin } from '@/mixins/admin/lecture/Form.js';

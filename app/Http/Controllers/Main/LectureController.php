@@ -21,8 +21,9 @@ class LectureController extends Controller
 
         $data = $v->validate();
 
+        $orderBy = $data['order_by'] ?? 'popular';
 
-        $programs = Program::public($data['category_id'], $data['order_by'])->paginate($data['per_page']);
+        $programs = Program::public($data['category_id'], $orderBy)->paginate($data['per_page']);
 
         return response()->json(
             $programs
@@ -32,6 +33,6 @@ class LectureController extends Controller
     public function categories(Request $request)
     {
         return response()->json(ProgramMajorCategory::query()->orderBy('id')
-            ->select(['id', 'name'])->take(2)->get());
+            ->select(['id', 'name'])->get());
     }
 }

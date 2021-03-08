@@ -33,9 +33,7 @@
                                 </div>
                                 <div class="answer">
                                     <em>A</em>
-                                    <p>
-                                        {{ $value->answer }}
-                                    </p>
+                                    <p>{{ $value->answer }}</p>
                                 </div>
                             </li>
                         @empty

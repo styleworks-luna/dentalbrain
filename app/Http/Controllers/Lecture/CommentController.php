@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function store(Request $request, Program $program)
     {
         $data = $request->validate([
-            'parent_id' => 'numeric',
+            'parent_id' => ['numeric', 'nullable'],
             'content' => ['required', 'string', 'max:300'],
         ]);
 
@@ -25,52 +25,54 @@ class CommentController extends Controller
 
         Comment::create($data);
 
-        return redirect()->with([
-            'alert' => '댓글이 등록되었습니다.',
+        return response()->json([
+            'msg' => '댓글이 등록되었습니다.',
         ]);
     }
 
     public function delete(Request $request, Program $program, Comment $comment)
     {
         $request->validate([
-            'parent_id' => 'numeric',
-            'content' => 'required',
+            'parent_id' => ['numeric', 'nullable'],
+            'content' => ['required', 'string', 'max:300'],
         ]);
 
         if (!Auth::user()->can('delete', $comment)) {
-            return redirect()->with([
-                'alert' => '권한이 없습니다.'
-            ]);
+            return response()->json([
+                'msg' => '권한이 없습니다.'
+            ], 403);
         }
         try {
             DB::beginTransaction();
-            $comment->children->delete();
+
+            $comment->children()->delete();
             $comment->delete();
+
         } catch (\Exception $exception) {
-            Log::error('COMMENT DELETE ERROR');
+            Log::error('COMMENT DELETE ERROR', [$exception]);
             DB::rollBack();
-            return redirect()->with([
-                'alert' => '오류가 발생했습니다.'
-            ]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.'
+            ], 500);
         }
 
         DB::commit();
-        return redirect()->with([
-            'alert' => '댓글이 삭제되었습니다.',
+        return response()->json([
+            'msg' => '댓글이 삭제되었습니다.',
         ]);
     }
 
     public function update(Request $request, Program $program, Comment $comment)
     {
         $data = $request->validate([
-            'parent_id' => 'numeric',
-            'content' => 'required',
+            'parent_id' => ['numeric', 'nullable'],
+            'content' => ['required', 'string', 'max:300'],
         ]);
 
         if (!Auth::user()->can('update', $comment)) {
-            return redirect()->with([
-                'alert' => '권한이 없습니다.'
-            ]);
+            return response()->json([
+                'msg' => '권한이 없습니다.'
+            ], 403);
         }
 
         $data['user_id'] = Auth::id();
@@ -83,16 +85,16 @@ class CommentController extends Controller
                 ->update(['content' => $data['content']]);
 
         } catch (\Exception $exception) {
-            Log::error('COMMENT DELETE ERROR');
+            Log::error('COMMENT UPDATE ERROR', [$exception]);
             DB::rollBack();
-            return redirect()->with([
-                'alert' => '오류가 발생했습니다.'
-            ]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.'
+            ], 500);
         }
 
         DB::commit();
-        return redirect()->with([
-            'alert' => '댓글이 삭제되었습니다.',
+        return response()->json([
+            'msg' => '댓글이 수정되었습니다.',
         ]);
     }
 }

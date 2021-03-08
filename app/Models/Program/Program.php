@@ -33,6 +33,20 @@ class Program extends Model
      * ======= Custom Functions =========
      */
 
+    public function canOnlineRefund()
+    {
+        $user = Auth::user();
+        if ($this->alreadyPaid()) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('applied_at', '<', now()->addDays(7))
+                ->where('is_watched', '=', 0)
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 이미 유저가 강의를 지불했는지 확인.
      * @return bool
@@ -43,18 +57,74 @@ class Program extends Model
         if ($user != null) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->where(function ($query) {
-                    $query->whereNotNull('expired_at')
-                        ->orWhere('expired_at', '>', now());
-                })->exists();
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->where('expired_at', '>', now())
+                ->exists();
         } else {
             return false;
         }
     }
 
+    /**
+     * 이미 유저가 강의를 신청했는지 확인.
+     * @return bool
+     */
+    public function alreadyApplied()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
+                ->where('expired_at', '>', now())
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    public function canRepeat()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->where('expired_at', '<', now())
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    public function repeated()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('is_repeated', '=', true)
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
+    public function canRequestRefund()
+    {
+        return $this->place()->where('started_at', '>', now()->addDay())
+            ->where('started_at', '<', now()->addDays(2))
+            ->exists();
+    }
+
     /*
      * ======= Define Relationships =========
      */
+
+    public function place()
+    {
+        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
+    }
 
     public function majorCategory()
     {
@@ -70,7 +140,6 @@ class Program extends Model
     {
         return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
     }
-
 
     public function ticket()
     {
@@ -107,11 +176,6 @@ class Program extends Model
     public function lectures()
     {
         return $this->hasMany(Lecture::class, 'program_id', 'id');
-    }
-
-    public function place()
-    {
-        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
     }
 
     public function like()
@@ -179,7 +243,7 @@ class Program extends Model
     {
         $programs = $query->select(['id', 'thumbnail_id', 'is_online', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free','place:id,program_id,started_at,ended_at'])
+            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free', 'place:id,program_id,started_at,ended_at'])
             ->withCount('students');
 
         if ($category !== null) {

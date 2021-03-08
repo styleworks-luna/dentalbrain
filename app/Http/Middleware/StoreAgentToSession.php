@@ -20,7 +20,7 @@ class StoreAgentToSession
 
         $agent = new Agent();
         if ($agent->isMobile()) {
-            $request->session()->put(['agent' => 'mobile']);
+            $request->session()->put(['agent' => 'desktop']);
         } else {
             $request->session()->put(['agent' => 'desktop']);
         }

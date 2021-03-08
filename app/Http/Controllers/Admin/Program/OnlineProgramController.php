@@ -109,8 +109,10 @@ class OnlineProgramController extends Controller
     public function edit(Program $program)
     {
         return response()->json(
-            array_merge($this->onlineConcrete->getProgramDetail($program),
-                ['lectures' => $program->lectures()->with('thumbnail:id,url,name')->get()])
+            array_merge($this->onlineConcrete->getProgramDetail($program), [
+                'lectures' => $program->lectures()->with('thumbnail:id,url,name')->get(),
+                'haveStudents' => $program->students()->exists()
+            ])
         );
     }
 
@@ -154,4 +156,6 @@ class OnlineProgramController extends Controller
             'msg' => '온라인 강의가 수정되었습니다.',
         ]);
     }
+
+
 }

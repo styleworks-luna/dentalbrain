@@ -10,19 +10,19 @@ use App\Http\Controllers\Controller;
 
 class PhoneVerificationController extends Controller
 {
-    public function checkVerification(Request $request){
+    public function sendVerificationNumber(Request $request){
         $validatedData = $request->validate([
-            'phone' => 'required|min:10|max:12'
+            'phone' => 'required|min:11|max:11'
         ]);
 
         $sms = new Ppurio();
-        return $sms->checkVerification($validatedData['phone']);
+        return $sms->sendVerificationNumber($validatedData['phone']);
     }
 
-    public function getVerificationNumber(Request $request){
+    public function compareVerificationNumber(Request $request){
         $validator = Validator::make($request->all(), [
-            'phone' => 'required|min:10|max:12',
-            'verficationNumber' => 'required|min:6|max:6'
+            'phone' => 'required|min:11|max:11',
+            'verificationNumber' => 'required|min:6|max:6'
         ]);
 
         if($validator->fails()){
@@ -33,9 +33,8 @@ class PhoneVerificationController extends Controller
         }
 
         $validatedData = $validator->validate();
-        $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->where('expired_at','>',now())->get();
-
-        if(!empty($data) && $data->verfication_num == $validatedData['verficationNumber']){
+        $data = PhoneVerification::query()->where('phone',$validatedData['phone'])->where('expired_at','>',date("Y-m-d H:i:s"))->first();
+        if(!empty($data) && $data->verification_number == $validatedData['verificationNumber']){
             $result = array(
                 'success' => true
             );

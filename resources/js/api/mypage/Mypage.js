@@ -8,4 +8,18 @@ export default {
             params: value
         });
     },
+    destroy(id,data) {
+        return Send({
+            url: `/api/lectures/${id}/cancel`,
+            method: 'delete',
+            params: data,
+        });
+    },
+    destroyManual(id,data) {
+        return Send({
+            url: `/api/lectures/${id}/cancel-request`,
+            method: 'delete',
+            params: data,
+        });
+    }
 }

@@ -173,7 +173,7 @@ import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/For
 import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 //api
-import Online from '@/api/admin/lecture/Online.js'
+import { Online } from '@/api/admin/lecture/Online.js'
 
 export default {
     name: 'AdminOnlineCreate',

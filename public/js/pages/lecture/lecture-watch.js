@@ -10,7 +10,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         width: '880',
         height: '495',
-        videoId: '2GeXmWkifuI',
+        videoId: document.getElementById('youtube_id').value,
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -33,5 +33,25 @@ function onPlayerStateChange(event) {
 }
 
 $(function () {
+    let lecture = $('#lecture_id').val()
 
+    $('#question_submit').click(function () {
+        var question = $('#question').val();
+        var data = {"question": question};
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: `/account/questions/${lecture}`,
+            type: "POST",
+            data: data,
+            success: function (data) {
+                alert('질문 등록이 완료되었습니다.');
+            },
+            error: function () {
+                alert('질문 등록이 오류로 인해 수행하지 못하였습니다.')
+            }
+        });
+    });
 });

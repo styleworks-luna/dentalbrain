@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class PhoneVerification extends Model
 {
-    protected $tables='phone_verifications';
+    protected $table = 'phone_verifications';
     protected $guarded  = [];
 }

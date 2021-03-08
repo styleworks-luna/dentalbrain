@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payments\Payment;
-use App\Models\Program\ProgramStudent;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -24,8 +22,8 @@ class PaymentController extends Controller
             }])
             ->whereHas('student', function ($query) {
                 $query->where('user_id', Auth::id());
-            })->get();
-        
+            })->get()
+            
         return view(viewPrefix() . 'pages.user.mypage.mypage_payment', [
             'payments' => $payments,
         ]);

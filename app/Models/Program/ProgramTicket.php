@@ -13,8 +13,13 @@ class ProgramTicket extends Model
 
     protected $guarded = [];
 
+    protected $appends = [
+        'repeat_price'
+    ];
+
     protected $casts = [
         'is_required' => 'boolean',
+        'is_free' => 'boolean'
     ];
 
     public function program()
@@ -25,5 +30,10 @@ class ProgramTicket extends Model
     public function students()
     {
         return $this->hasMany(ProgramStudent::class, 'ticket_id', 'id');
+    }
+
+    public function getRepeatPriceAttribute()
+    {
+        return $this->attributes['price'] * 7 / 10 ;
     }
 }

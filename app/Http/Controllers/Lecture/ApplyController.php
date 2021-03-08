@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
-use App\Mail\applyOfflineLecture;
-use App\Mail\applyOnlineLecture;
+use App\Mail\ApplyLecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use App\Models\Program\Survey\SurveyAnswer;
-use App\Models\Program\Survey\SurveyCategory;
-use App\Services\File\SurveyFile;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Program\OnlineProgramConcrete;
+use App\Services\Survey\SurveyAnswerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +20,7 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if ($program->alreadyPaid()) {
+        if ($program->alreadyApplied()) {
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
@@ -39,11 +36,14 @@ class ApplyController extends Controller
             $programService = new OfflineProgramConcrete();
         }
 
+        $student = $program->students()->where('user_id', '=', Auth::id())->first();
+
         $programDetail = $programService->getProgramDetail($program);
 
         return view(viewPrefix() . 'pages.lecture.lecture_apply', [
             'program' => $programDetail['program'],
-            'surveys' => $programDetail['surveys']
+            'surveys' => $programDetail['surveys'],
+            'student' => $student,
         ]);
     }
 
@@ -52,178 +52,61 @@ class ApplyController extends Controller
         // 파일을 함께 조회하기 위해 all 사용.
         $surveyDataSet = $request->all('surveys')['surveys'];
 
+        $surveyAnswerService = new SurveyAnswerService();
+
         try {
             DB::beginTransaction();
 
             if ($program->surveys()->exists()) {
-                if ($this->validateSurveyAnswers($surveyDataSet) == false) {
+                // 질문이 존재하는 경우
+                if ($surveyAnswerService->validateSurveyAnswers($surveyDataSet) == false) {
                     // Validation Failed.
 
                     DB::rollback();
                     return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
                 }
 
-                foreach ($surveyDataSet as $idx => $data) {
-                    $survey = Survey::find($data['survey_id']);
-                    $this->storeSurveyAnswer($survey, $data);
-                }
+                $surveyAnswerService->storeSurveyAnswers($surveyDataSet);
             }
 
-            $programStudent = ProgramStudent::updateOrCreate([
-                'ticket_id' => $program->ticket->id,
-                'user_id' => Auth::id(),
-            ], [
-                'ticket_id' => $program->ticket->id,
-                'user_id' => Auth::id(),
-                'email' => $request->get('email'),
-                'phone' => $request->get('phone'),
-                'applied_at' => now(),
-            ]);
+            ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
+
+            // TODO : 재수강 시에 질문 답변 삭제
 
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
-                $programStudent->expired_at = now()->addDays($program->ticket->term);
-                $programStudent->save();
-
                 DB::commit();
-                $this->sendLectureApplyFreeMailWithIsOnline($program->is_online,$request,$program);
+                $this->sendLectureApplyFreeMailWithIsOnline($request, $program);
 
                 return redirect()->route('lectures.result', $program->id);
             }
 
             DB::commit();
+            return redirect()->route('lectures.payment.form', $program)->with(['fromApply' => true]);
+
         } catch (\Exception $exception) {
             Log::error('STORE SURVEY ANSWER ERROR', [$exception]);
+
             DB::rollback();
             return redirect()->back(302)->with(['alert' => '오류']);
         }
-        return redirect()->route('lectures.payment.form', $program)->with(['fromApply' => true]);
     }
 
-    private function sendLectureApplyFreeMailWithIsOnline($is_online,Request $request, Program $program){
-        if($is_online){
-            Mail::to($request->get('email'))->send(new applyOnlineLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
-        }else{
-            Mail::to($request->get('email'))->send(new applyOfflineLecture(Auth::user(),$this->programQueryWithPlaceAndTicket($program)));
-        }
-    }
-
-    private function programQueryWithPlaceAndTicket(Program $program){
-        return Program::query()
-            ->select('id','title','running_time')
-            ->with('place:id,program_id,started_at,ended_at,address,address_detail','ticket:id,program_id,name')
-            ->where('id',$program->id)->get();
-    }
-
-    /**
-     * 추가 질문사항 검증.
-     *
-     * @param $surveyDataSet
-     * @return bool
-     */
-    private function validateSurveyAnswers($surveyDataSet)
+    private function sendLectureApplyFreeMailWithIsOnline(Request $request, Program $program)
     {
-        foreach ($surveyDataSet as $idx => $data) {
-            $survey = Survey::find($data['survey_id']);
-            if ($survey->category_id == SurveyCategory::$SINGLE_CHOICE) {
-                if ($survey->is_required && $data['answer'] === null) {
-                    return false;
-                }
-            } elseif ($survey->category_id == SurveyCategory::$MULTIPLE_CHOICE) {
-                if ($survey->is_required && $data['answers'] === null) {
-                    return false;
-                }
-            } elseif ($survey->category_id == SurveyCategory::$SHORT_ANSWER) {
-                if ($survey->is_required && $data['answer'] === null) {
-                    return false;
-                }
-            } elseif ($survey->category_id == SurveyCategory::$ADDRESS) {
-                if ($survey->is_required && $data['address'] === null) {
-                    return false;
-                }
-            } elseif ($survey->category_id == SurveyCategory::$FILE) {
-                if ($survey->is_required && $data['file'] === null) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-        return true;
+        Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
+        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
     }
 
-
-    /**
-     * @param Survey $survey
-     * @param $data
-     * @return array|bool|SurveyAnswer false 면 오류. 배열이면 다중선택 질문. 보통 SurveyAnswer 모델 반환.
-     */
-    private function storeSurveyAnswer(Survey $survey, $data)
+    private function programQueryWithPlaceAndTicket(Program $program)
     {
-        $createData = [
-            'survey_id' => $survey->id,
-            'user_id' => Auth::id(),
-        ];
-
-        $returnable = false;
-
-        if ($survey->category_id == SurveyCategory::$SINGLE_CHOICE) {
-            if ($data['answer'] === null) {
-                return true;
-            }
-            $createData['choice_id'] = $data['answer'];
-            $createData['content'] = Survey::find($data['answer'])->question;
-            $returnable = SurveyAnswer::create($createData);
-
-        } elseif ($survey->category_id == SurveyCategory::$MULTIPLE_CHOICE) {
-            if ($data['answers'] === null) {
-                return true;
-            }
-            $returnableDataSet = [];
-            foreach ($data['answers'] as $answer) {
-                $createData['choice_id'] = $answer;
-                $createData['content'] = Survey::find($answer)->question;
-                $returnableDataSet[] = SurveyAnswer::create($createData);
-            }
-
-            $returnable = $returnableDataSet;
-
-        } elseif ($survey->category_id == SurveyCategory::$SHORT_ANSWER) {
-            if ($data['answer'] === null) {
-                return true;
-            }
-            $createData['content'] = $data['answer'];
-
-            $returnable = SurveyAnswer::create($createData);
-
-        } elseif ($survey->category_id == SurveyCategory::$ADDRESS) {
-            if ($data['address'] === null) {
-                return true;
-            }
-            $createData['address'] = $data['address'];
-            $createData['address_detail'] = $data['address_detail'];
-
-            $returnable = SurveyAnswer::create($createData);
-
-        } elseif ($survey->category_id == SurveyCategory::$FILE) {
-            if (!isset($data['file'])) {
-                return true;
-            }
-            if ($data['file'] === null) {
-                return true;
-            }
-            // 파일 만들기 부터
-            $surveyAnswer = SurveyAnswer::create($createData);
-            $surveyFileService = new SurveyFile($surveyAnswer);
-            $file = $surveyFileService->saveFile($data['file']);
-            $surveyAnswer->file_id = $file->id;
-            $surveyAnswer->save();
-
-            $returnable = $surveyAnswer;
-        }
-
-
-        return $returnable;
+        return ProgramStudent::query()
+            ->select('id', 'user_id', 'ticket_id', 'created_at', 'expired_at')
+            ->where('user_id', Auth::id())
+            ->with('ticket:id,program_id', 'ticket.program:id,title')
+            ->whereHas('ticket.program', function ($query) use ($program) {
+                $query->where('id', $program->id);
+            })->get();
     }
 
     public function result(Program $program)

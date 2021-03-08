@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Program;
 
 use App\Models\Program\Program;
+use Illuminate\Http\JsonResponse;
 
 class OnlineStudentController extends OnlineProgramController
 {
@@ -11,10 +12,17 @@ class OnlineStudentController extends OnlineProgramController
         parent::__construct();
     }
 
+    /**
+     *  강의 수강 현황
+     *
+     * @param Program $program
+     * @return JsonResponse
+     */
     public function students(Program $program)
     {
-        return response()->json(
-            $this->onlineConcrete->getStudents($program)
-        );
+        return response()->json([
+            'program_name' => $program->title,
+            'students' => $this->onlineConcrete->getStudents($program)
+        ]);
     }
 }

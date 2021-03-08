@@ -271,4 +271,50 @@
             &:first-child
                 +border(0, top)
 
+.popup-container
+    +size(100%, 100%)
+    display: flex
+    justify-content: center
+    align-items: center
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 10000
 
+    .layer
+        +size(100%, 100%)
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        z-index: 1
+        background-color: rgba(0, 0, 0, 0.6)
+
+    .popup-wrap
+        +size(500px, auto)
+        +padding(20px 15px)
+        +box-sizing(border-box)
+        position: absolute
+        z-index: 10
+        background: $white
+
+    .popup-header h2
+        font-size: 24px
+
+    .popup-content
+        +margin(top 20px)
+
+        article
+            +margin(top 15px)
+
+        h4
+            font-size: 18px
+            line-height: 30px
+
+        .btn-area
+            display: flex
+            justify-content: center
+
+            .btn
+                +margin(0 5px)

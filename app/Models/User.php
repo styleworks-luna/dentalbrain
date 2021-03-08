@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,12 +36,33 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'allow_email' => 'boolean'
+        'allow_email' => 'boolean',
+        'is_paid' => 'boolean',
     ];
 
     protected $appends = [
         'need_license', 'job_name_id', 'job_name', 'license_num',
     ];
+
+    public function job()
+    {
+        return $this->belongsTo(UserJob::class, 'job_id', 'id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->attributes['is_admin'] ? true : false;
+    }
+
+    public function students()
+    {
+        return $this->hasMany(ProgramStudent::class, 'user_id', 'id');
+    }
+
+    public function lectureQuestions()
+    {
+        return $this->hasMany(LectureQuestion::class, 'user_id', 'id');
+    }
 
     protected function getNeedLicenseAttribute()
     {
@@ -73,21 +95,5 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
-    }
-
-
-    public function job()
-    {
-        return $this->belongsTo(UserJob::class, 'job_id', 'id');
-    }
-
-    public function isAdmin()
-    {
-        return $this->attributes['is_admin'] ? true : false;
-    }
-
-    public function students()
-    {
-        return $this->hasOne(ProgramStudent::class, 'user_id', 'id');
     }
 }

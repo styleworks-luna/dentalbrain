@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
+use App\Models\Notification\PhoneVerification;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
@@ -13,10 +14,13 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -82,19 +86,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $result =  Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
-            'phone' => ['required', 'digits_between:9,11', 'unique:users'],
+            'phone' => ['bail', 'required', 'digits_between:9,11', 'unique:users',],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
+
+            'verification_number' => ['required', 'string', 'size:6',
+                Rule::exists('phone_verifications')->where(function ($query) use ($data) {
+                    $query->where('phone', $data['phone'])->where('expired_at', '>', Carbon::now())
+                        ->where('verification_number', '=', $data['verification_number']);
+                })],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
+
+        return $result;
     }
 
     /**

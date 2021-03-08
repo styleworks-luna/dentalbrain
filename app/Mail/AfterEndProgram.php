@@ -2,13 +2,12 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class paymentLecture extends Mailable
+class AfterEndProgram extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +18,7 @@ class paymentLecture extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user,$program)
+    public function __construct($user,$program)
     {
         $this->user = $user;
         $this->program = $program;
@@ -33,8 +32,8 @@ class paymentLecture extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 강의 결제 완료')
-            ->view('emails.lecture.lecture_payment')
+            ->subject('[DBV2020] 강의 시청 마감 안내')
+            ->view('emails.lecture.lecture_end')
             ->with([
                 'user' => $this->user,
                 'program' => $this->program

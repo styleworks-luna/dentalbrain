@@ -69,8 +69,10 @@ class OfflineProgramController extends Controller
     public function edit(Program $program)
     {
         return response()->json(
-            array_merge($this->offlineConcrete->getProgramDetail($program),
-                ['place' => $program->place])
+            array_merge($this->offlineConcrete->getProgramDetail($program), [
+                'place' => $program->place,
+                'haveStudents' => $program->students()->exists()
+            ])
         );
     }
 

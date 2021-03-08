@@ -105,28 +105,34 @@
                 </template>
             </single-group>
 
+            <div :class="haveStudents ? 'bg-light text-dark':''">
             <single-group name="결제 정보 입력"
                           :isRow="true"
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="radio-wrap">
-                        <input type="radio" id="pay" value="0"
-                               v-model="is_free">
-                        <label for="pay">유료</label>
-                        <input type="text"
-                               class="form-control ml-3"
-                               placeholder="신청 금액 입력"
-                               :disabled="is_free == 1"
-                               v-model="price">
-                    </div>
-                    <div class="radio-wrap mt-1">
-                        <input type="radio" id="free" value="1"
-                               v-model="is_free">
-                        <label for="free">무료</label>
+                    <div>
+                        <div class="radio-wrap">
+                            <input type="radio" id="pay" value="0"
+                                   :disabled="haveStudents == true"
+                                   v-model="is_free">
+                            <label for="pay">유료</label>
+                            <input type="text"
+                                   class="form-control ml-3"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_free == 1 || haveStudents == true"
+                                   v-model="price">
+                        </div>
+                        <div class="radio-wrap mt-1">
+                            <input type="radio" id="free" value="1"
+                                   :disabled="haveStudents == true"
+                                   v-model="is_free">
+                            <label for="free">무료</label>
+                        </div>
                     </div>
                 </template>
             </single-group>
+            </div>
 
             <single-group name="상세정보입력" :size="12">
                 <template v-slot:content>
@@ -134,11 +140,13 @@
                 </template>
             </single-group>
 
+            <div :class="haveStudents ? 'bg-light text-dark':''">
             <single-group name="추가정보" :size="12">
                 <template v-slot:content>
-                    <additional-information :data="surveys"></additional-information>
+                    <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
                 </template>
             </single-group>
+            </div>
 
             <!-- 공개 여부 -->
             <single-group name="공개여부"
@@ -167,10 +175,10 @@
 
 <script>
 //api
-import Offline from '@/api/admin/lecture/Offline.js'
+import { Offline } from '@/api/admin/lecture/Offline.js'
 
 //mixins
-import {LectureFormMixin,ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
@@ -217,6 +225,8 @@ export default {
                 this.receipt_started_time = this.Helper.timeFormat(this.receipt_started_date);
                 this.receipt_ended_date = this.Helper.dateFullFormat(this.program_place.receipt_ended_at);
                 this.receipt_ended_time = this.Helper.timeFormat(this.receipt_ended_date);
+
+                this.haveStudents = res.data.haveStudents;
             });
         },
         update() {

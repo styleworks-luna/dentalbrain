@@ -113,7 +113,7 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values.',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
+    'unique' => '이미 사용중인 :attribute 입니다.',
     'uploaded' => 'The :attribute failed to upload.',
     'url' => ':attribute 형식이 맞지 않습니다.',
     'uuid' => 'The :attribute must be a valid UUID.',
@@ -171,8 +171,11 @@ return [
         'lectures.*.title' => '강의 제목',
         '*.question' => '질문',
         '*.choices.*.question' => '선택 항목',
-        'question'=> '질문',
-        'answer'=> '답변',
+        'question' => '질문',
+        'answer' => '답변',
+        'verification_number' => '인증 번호',
+        'phone' => '핸드폰 번호',
+        'email' => '이메일',
     ],
 
 ];

@@ -18,7 +18,6 @@
                     dataType: "json",
                     {{--data : {__token : "{{csrf_token()}}", file},--}}
                     success: function(response) {
-                        console.log(response);
                         $('#mobile_file_id').val(response['file'].id);
                     },
                     cache: false,
@@ -37,7 +36,6 @@
                     data : formData,
                     dataType: "json",
                     success: function(response) {
-                        console.log(response);
                         $('#desktop_file_id').val(response['file'].id);
                     },
                     cache: false,
@@ -115,8 +113,16 @@
             </form>
 
             <br>
+            id 존재 함수
+            <form method="post" action="{{ route('api.check-id') }}">
+                @csrf
+                <input type="text" name="login_id" id="login_id" placeholder="아이디">
+                <input type="submit">
+            </form>
+
+            <br>
             문자인증번호
-            <form method="post" action="{{route('api.checkVerification')}}">
+            <form method="post" action="{{route('api.send-verification')}}">
                 @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
                 <input type="submit">
@@ -124,10 +130,18 @@
 
             <br>
             문자 인증확인
-            <form method="post" action="{{ route('api.getVerificationNumber') }}">
+            <form method="post" action="{{ route('api.compare-verification') }}">
                 @csrf
                 <input type="text" name="phone" id="phone" placeholder="휴대전화">
-                <input type="text" name="verficationNumber" placeholder="인증번호">
+                <input type="text" name="verificationNumber" placeholder="인증번호">
+                <input type="submit">
+            </form>
+
+            <br>
+            엑셀 다운로드
+            <form method="post" action="{{ route('api.admin.lecture.excel.export')  }}">
+                @csrf
+                <input type="text" placeholder="program_id" name="program_id" id="program_id">
                 <input type="submit">
             </form>
         </section>

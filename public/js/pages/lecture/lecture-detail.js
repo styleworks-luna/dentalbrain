@@ -87,13 +87,6 @@ $(function () {
         }
     });
 
-    //삭제 버튼 이벤트
-    $('.btn-comment-delete').click(function (e) {
-        e.preventDefault();
-        var target = $(this);
-        target.parent().parent().parent().parent().remove();
-    });
-
     //지도보기 팝업
     $('.btn-map').click(function(e) {
         e.preventDefault();
@@ -126,6 +119,176 @@ $(function () {
         marker = new naver.maps.Marker({
             position: new naver.maps.LatLng(map_y, map_x),
             map: map
+        });
+    });
+
+    // 댓글 등록
+    $(".comment-submit").click(function () {
+        var program_id = $('#program_id').val();
+        var content = $('.comment-submit-content').val();
+        var data = {
+            "content": content,
+        };
+
+        $.ajax({
+            url: `/api/lectures/${program_id}/comments`,
+            type: "POST",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });
+    });
+
+    $('.comment-child-submit').click(function() {
+        var target = $(this);
+
+        var program_id = $('#program_id').val();
+        var parent_id = target.parent().find('.parent_id').val();
+
+        var content = target.parent().find('.comment-child-submit-content').val();
+        var data = {
+            "parent_id": parent_id,
+            "content": content,
+        };
+
+        $.ajax({
+            url: `/api/lectures/${program_id}/comments`,
+            type: "POST",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });
+    });
+
+    // 댓글 삭제
+    $('.comment-delete').click(function() {
+        var target = $(this).closest('form');
+
+        var program_id = $('#program_id').val();
+        var comment_id = target.find('.comment_id').val();
+
+        var content = $(this).closest('.comment-area').find('.comment-text').text();
+        var data = {
+            "content": content,
+        };
+
+        $.ajax({
+            url: '/api/lectures/' + program_id + '/comments/' + comment_id,
+            method: "DELETE",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });
+    });
+
+    $('.comment-child-delete').click(function() {
+        var target = $(this).closest('form');
+
+        var program_id = $('#program_id').val();
+        var parent_id = target.find('.parent_id').val();
+        var comment_id = target.find('.comment_id').val();
+
+        var content = $(this).closest('.comment-area').find('.comment-text').text();
+        var data = {
+            "content": content,
+            "parent_id": parent_id,
+        };
+
+        $.ajax({
+            url: '/api/lectures/' + program_id + '/comments/' + comment_id,
+            method: "DELETE",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });
+    });
+
+    // 댓글 수정
+    $('.comment-modify').click(function() {
+        var target = $(this).closest('form');
+
+        var modify_input = target.parents('.comment-area').find('.modify-input');
+        var image = target.parents('.comment-area').find('.profile-img');
+        var write_info = target.parents('.comment-area').find('.write-info');
+        var comment_btn = target.parents('.comment-area').find('.comment-btn-area');
+
+        modify_input.css('display', 'block');
+        image.css('display', 'none');
+        write_info.css('display','none');
+        comment_btn.css('display','none');
+    });
+
+    $('.comment-modify-submit').click(function() {
+        var target = $(this).closest('form');
+
+        var program_id = $('#program_id').val();
+        var comment_id = target.parents('.comment-area').find('.comment-btn-area').find('.comment_id').val();
+
+        var content = target.parents('.comment-area').find('.comment-submit-content').val();
+
+        var data = {
+            "content": content,
+        };
+
+        $.ajax({
+            url: '/api/lectures/' + program_id + '/comments/' + comment_id,
+            method: "PUT",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
+        });
+    });
+
+    $('.comment-child-modify-submit').click(function() {
+        var target = $(this).closest('form');
+
+        var program_id = $('#program_id').val();
+        var parent_id = target.parents('.child-comment-area').find('.parent_id').val();
+        var comment_id = target.parents('.comment-area').find('.comment-btn-area').find('.comment_id').val();
+
+        var content = target.parents('.comment-area').find('.comment-child-modify-content').val();
+
+        var data = {
+            "parent_id": parent_id,
+            "content": content,
+        };
+
+        $.ajax({
+            url: '/api/lectures/' + program_id + '/comments/' + comment_id,
+            method: "PUT",
+            data: data,
+            success: function (data) {
+                alert(data.msg);
+                location.reload()
+            },
+            error: function (request, status, error) {
+                alert(error);
+            }
         });
     });
 });

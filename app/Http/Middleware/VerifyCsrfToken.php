@@ -20,5 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        // 토스 입금확인 콜백
+        'api/toss/*'
     ];
 }

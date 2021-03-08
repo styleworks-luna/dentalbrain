@@ -22,9 +22,7 @@
                             </div>
                         </div>
                         <div class="notice-detail-content">
-                            <p>
-                                {{ $notice -> content }}
-                            </p>
+                            <p>{{ $notice -> content }}</p>
                         </div>
 
                     </div>

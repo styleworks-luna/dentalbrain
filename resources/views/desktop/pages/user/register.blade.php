@@ -4,31 +4,9 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/register.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#confirmAuthentication").on('click',function(){
-                console.log('1');
-                var phone = $('#verification_number').val();
-                var data = {"phone" : phone};
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url:"{{route('api.checkVerification')}}",
-                    type:"POST",
-                    data:data,
-                    success:function(data){
-                        alert('success');
-                    },
-                    error: function (request, status, error){
-
-                    }
-                });
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{{ asset('js/pages/agreement/agreement.js') }}"></script>
 @endsection
 
 @section('style')
@@ -36,13 +14,19 @@
 @endsection
 
 @section('content')
-    @foreach($errors->all() as $error)
-        <p>{{ $error }}</p>
-    @endforeach
     <section id="content" class="content">
+        @if ($errors->any())
+            <ul class="alert-danger">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+
         <div class="small-container">
             <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
+
                 <section class="register">
                     <h2>회원가입</h2>
                     <table>
@@ -56,8 +40,7 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 이름을 입력해주세요."
                                        data-parsley-errors-container=".name-error-wrap"
-                                       value="{{ old('name') }}"
-                                >
+                                       value="{{ old('name') }}">
 
                                 <div class="name-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -73,9 +56,17 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 아이디를 입력해주세요."
                                        data-parsley-errors-container=".id-error-wrap"
-                                       value="{{ old('login_id') }}"
-                                >
-                                <button class="btn-basic check-overlap-id">중복확인</button>
+                                       value="{{ old('login_id') }}">
+                                <button type="button" id="login_id_confirm" class="btn-basic check-overlap-id">중복확인
+                                </button>
+
+                                <input type="hidden"
+                                       name="login_id_check"
+                                       id="login_id_check"
+                                       value="N"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".id-error-wrap"
+                                       data-parsley-pattern-message="※ 중복확인 요청.">
 
                                 <div class="id-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -92,8 +83,7 @@
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-class-handler=".ui-emailbox"
                                        data-parsley-errors-container=".email-error-wrap"
-                                       value="{{ old('email') }}"
-                                >
+                                       value="{{ old('email') }}">
 
                                 <div class="email-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -114,8 +104,7 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
                                        data-parsley-errors-container=".license-error-wrap"
-                                       value="{{ old('license_num') }}"
-                                >
+                                       value="{{ old('license_num') }}">
 
                                 <div class="license-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -126,8 +115,9 @@
                                 <input type="password" id="password" name="password"
                                        placeholder="비밀번호 입력 (최소 6자 이상)"
                                        data-parsley-required="true"
-                                       data-parsley-required-message="※ 비밀번호를 입력해주세요."
-                                       data-parsley-errors-container=".password-error-wrap">
+                                       data-parsley-minlength="6"
+                                       data-parsley-errors-container=".password-error-wrap"
+                                       data-parsley-required-message="※ 비밀번호를 입력해주세요.">
 
                                 <div class="password-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -137,7 +127,8 @@
                             <td>
                                 <input type="password" id="password_confirmation" name="password_confirmation"
                                        placeholder="위의 비밀번호를 다시 입력하세요."
-                                       data-parsley-required="true"
+                                       data-parsley-minlength="6"
+                                       data-parsley-equalto="#password"
                                        data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
                                        data-parsley-errors-container=".password-check-error-wrap">
 
@@ -155,9 +146,13 @@
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                        data-parsley-errors-container=".phone-check-error-wrap"
-                                       value="{{ old('phone') }}"
-                                >
-                                <button class="btn-basic btn-verification" id="confirmAuthentication">인증번호발송</button>
+                                       value="{{ old('phone') }}">
+                                <button type="button" id="send_authentication" class="btn-basic btn-verification">
+                                    인증번호발송
+                                </button>
+                                <button type="button" id="edit_phone" class="btn-basic btn-edit-phone">변경</button>
+
+                                <p class="timer"></p>
 
                                 <div class="phone-check-error-wrap parsley-error-wrap"></div>
 
@@ -166,12 +161,22 @@
                                        name="verification_number"
                                        class="verification-number"
                                        placeholder="인증번호 6자리를 입력"
+                                       readonly="true"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 일치하지 않습니다."
                                        data-parsley-errors-container=".verification-check-error-wrap"
-                                       value="{{ old('verification_number') }}"
-                                >
-                                <button class="btn-basic btn-verification mt-10">인증번호확인</button>
+                                       value="{{ old('verification_number') }}">
+                                <button type="button" id="confirm_authentication"
+                                        class="btn-basic btn-verification mt-10">인증번호확인
+                                </button>
+
+                                <input type="hidden"
+                                       name="phone-check"
+                                       id="phone-check"
+                                       value="N"
+                                       data-parsley-pattern="[Y]"
+                                       data-parsley-errors-container=".verification-check-error-wrap"
+                                       data-parsley-pattern-message="※ 인증번호 확인 요청.">
 
                                 <div class="verification-check-error-wrap parsley-error-wrap"></div>
                             </td>
@@ -247,174 +252,11 @@
                 </div>
 
                 <div class="dim"></div>
-                <div class="service-layer-wrapper">
-                    <div class="layer">
-                        <div class="layer-header">
-                            <h3>이용약관 동의</h3>
-                            <a href="" class="btn-close"></a>
-                        </div>
-                        <div class="layer-content-wrapper">
-                            <div class="layer-content">
-                                <p>이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관
-                                    동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="popup-control">
+                    @include('desktop.pages.agreement.service')
+                    @include('desktop.pages.agreement.privacy')
+                    @include('desktop.pages.agreement.email')
                 </div>
-
-                <div class="privacy-layer-wrapper">
-                    <div class="layer">
-                        <div class="layer-header">
-                            <h3>개인정보 수집 및 동의</h3>
-                            <a href="" class="btn-close"></a>
-                        </div>
-                        <div class="layer-content-wrapper">
-                            <div class="layer-content">
-                                <p>이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관
-                                    동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의
-                                    내용
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="email-layer-wrapper">
-                    <div class="layer">
-                        <div class="layer-header">
-                            <h3>이메일 수신 동의</h3>
-                            <a href="" class="btn-close"></a>
-                        </div>
-                        <div class="layer-content-wrapper">
-                            <div class="layer-content">
-                                <p>이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의
-                                    내용
-                                    이용약관
-                                    동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용약관 동의 내용 이용약관
-                                    동의 내용
-                                    이용약관 동의 내용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관
-                                    동의 내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                    이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용 이용약관 동의 내용
-                                    이용약관 동의
-                                    내용
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </form>
         </div>
     </section>

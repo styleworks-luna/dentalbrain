@@ -29,6 +29,7 @@ export const LectureFormMixin = {
             content: '',
             surveys: [],
             is_open: false,
+            haveStudents: '',
         }
     },
     computed: {
