@@ -1,7 +1,7 @@
 <template>
     <el-tiptap  height="400"
                 placeholder="Write something ..."
-                :lang="'en'"
+                :lang="'ko'"
                 :content="content"
                 :extensions="extensions"
                 @onUpdate="handleSetEditor"/>
@@ -124,13 +124,6 @@ export default {
                 new TableHeader(),
                 new TableRow(),
                 new TableCell(),
-                new CodeView({
-                    codemirror,
-                    codemirrorOptions: {
-                        styleActiveLine: true,
-                        autoCloseTags: true
-                    }
-                })
             ]
         }
     },
