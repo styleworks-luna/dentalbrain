@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin\Program;
 use App\Http\Controllers\Controller;
 use App\Mail\Lecture;
 use App\Models\Program\Program;
+use App\Models\User;
 use App\Services\Notification\Sms\Ppurio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -68,5 +69,23 @@ class NotificationController extends Controller{
             Log::error('SEND LECTURE SMS ERROR',[$exception]);
             return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.']);
         }
+    }
+
+    public function findIdWIthNameAndEmailInSendEmail(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        return User::FindIdWithNameAndEmail($validatedData['name'],$validatedData['email']);
+    }
+
+    public function findIdWithNameAndPhoneInSendSms(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
+
+        return User::FindIdWithNameAndPhone($validatedData['name'],$validatedData['phone']);
     }
 }

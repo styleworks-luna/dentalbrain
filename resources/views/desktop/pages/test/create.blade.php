@@ -144,6 +144,24 @@
                 <input type="text" placeholder="program_id" name="program_id" id="program_id">
                 <input type="submit">
             </form>
+
+            <br>
+            이름과 이메일로 id 찾기
+            <form method="post" action="{{ route('api.admin.lecture.notification.findId.email') }}">
+                @csrf
+                <input type="text" placeholder="name" name="name" id="name">
+                <input type="text" placeholder="email" name="email" id="email">
+                <input type="submit">
+            </form>
+
+            <br>
+            이름과 전화번호로 id 찾기
+            <form method="post" action="{{ route('api.admin.lecture.notification.findId.phone') }}">
+                @csrf
+                <input type="text" placeholder="name" name="name" id="name">
+                <input type="text" placeholder="phone" name="phone" id="phone">
+                <input type="submit">
+            </form>
         </section>
     </section>
 @endsection

@@ -96,4 +96,18 @@ class User extends Authenticatable
         }
         return null;
     }
+
+    public function scopeFindIdWithNameAndEmail($query,$name,$email){
+        return $query->where([
+            'name' => $name,
+            'email' => $email
+        ])->first();
+    }
+
+    public function scopeFindIdWithNameAndPhone($query,$name,$phone){
+        return $query->where([
+            'name' => $name,
+            'phone' => $phone
+        ])->first();
+    }
 }

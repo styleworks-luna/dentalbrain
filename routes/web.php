@@ -325,6 +325,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('sms/{program}','Admin\Program\NotificationController@sms')->name('smsData');
                 Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
                 Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
+                Route::post('id-email','Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
+                Route::post('id-phone','Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
             });
 
             Route::group(['prefix' => 'excel', 'as'=>'excel.'],function(){
