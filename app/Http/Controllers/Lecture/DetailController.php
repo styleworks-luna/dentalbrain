@@ -41,6 +41,13 @@ class DetailController extends Controller
 
     public function like(Request $request, Program $program)
     {
+        if(empty(Auth::id())){
+           return response()->json([
+                'code' => 3,
+                'cnt' => $program->user_like_cnt,
+           ],400);
+        }
+
         if ($request->get('like') === 'true') {
             // 찜
             UserLike::updateOrCreate([
