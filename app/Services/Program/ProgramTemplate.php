@@ -55,15 +55,14 @@ abstract class ProgramTemplate
      * 강의 수강현황
      *
      * @param Program $program
-     * @param int $perPage = 7
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    function getStudents(Program $program, $perPage = 10)
+    function getStudents(Program $program)
     {
         return $program->students()->orderByDesc('id')
             ->with(['ticket', 'payment' => function ($query) {
                 $query->select('id', 'totalAmount', 'status', 'method');
-            }, 'user:id,login_id,name'])->paginate($perPage);
+            }, 'user:id,login_id,name']);
     }
 
 
@@ -468,7 +467,7 @@ abstract class ProgramTemplate
     {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID,ProgramStudent::$PAY_IN_REFUND_PROCESS]);
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS]);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;

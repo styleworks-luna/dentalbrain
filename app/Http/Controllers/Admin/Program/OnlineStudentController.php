@@ -22,7 +22,7 @@ class OnlineStudentController extends OnlineProgramController
     {
         return response()->json([
             'program_name' => $program->title,
-            'students' => $this->onlineConcrete->getStudents($program)
+            'students' => $this->onlineConcrete->getStudents($program)->paginate(10),
         ]);
     }
 }

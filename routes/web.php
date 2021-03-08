@@ -287,6 +287,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel','Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
@@ -306,6 +308,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel','Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
@@ -324,10 +328,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('{program}','Admin\Program\NotificationController@index')->name('index');
                 Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
                 Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
-            });
-
-            Route::group(['prefix' => 'excel', 'as'=>'excel.'],function(){
-                Route::post('/','Admin\Program\ExcelController@export')->name('export');
             });
         });
 

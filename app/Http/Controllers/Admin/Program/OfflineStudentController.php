@@ -22,7 +22,7 @@ class OfflineStudentController extends OfflineProgramController
     {
         return response()->json([
             'program_name' => $program->title,
-            'students' => $this->offlineConcrete->getStudents($program)
+            'students' => $this->offlineConcrete->getStudents($program)->paginate(10),
         ]);
     }
 
