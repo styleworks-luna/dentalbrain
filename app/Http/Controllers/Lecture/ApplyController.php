@@ -72,11 +72,10 @@ class ApplyController extends Controller
             ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
 
             // TODO : 재수강 시에 질문 답변 삭제
-
+            $this->sendLectureApplyMail($request, $program);
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
-                $this->sendLectureApplyFreeMailWithIsOnline($request, $program);
 
                 return redirect()->route('lectures.result', $program->id);
             }
@@ -92,7 +91,7 @@ class ApplyController extends Controller
         }
     }
 
-    private function sendLectureApplyFreeMailWithIsOnline(Request $request, Program $program)
+    private function sendLectureApplyMail(Request $request, Program $program)
     {
         Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
         Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
