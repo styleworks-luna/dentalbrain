@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\LectureQuestion;
+use App\Models\Program\LectureQuestion;
 use App\Models\Program\Lecture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

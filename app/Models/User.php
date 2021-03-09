@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\LectureQuestion;
+use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
