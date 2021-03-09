@@ -38,7 +38,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program[0]['created_at'] }}
+                            {{ carbonDate($programStudent->created_at,'Y년 MMMM Do HH:mm') }}
                         </p>
                     </td>
                 </tr>
@@ -50,7 +50,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-top: 1px solid #d8d8d8;  border-bottom: 1px solid #d8d8d8; font-size: 12px; color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program[0]['ticket']['program']['title'] }}
+                            {{ $program->title }}
                         </p>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="{{ route('lectures.detail',['program' => $program[0]['ticket']['program']['id']]) }}" style="display:block; width: 100px; margin-top: 30px; padding: 10px 10px; background-color: #9b00d8; color: #fff; text-decoration: none;">
+            <a href="{{ route('lectures.detail',['program' => $program->id]) }}" style="display:block; width: 100px; margin-top: 30px; padding: 10px 10px; background-color: #9b00d8; color: #fff; text-decoration: none;">
                 강의 바로가기
             </a>
         </td>
