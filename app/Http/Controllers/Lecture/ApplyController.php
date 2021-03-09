@@ -69,13 +69,15 @@ class ApplyController extends Controller
                 $surveyAnswerService->storeSurveyAnswers($surveyDataSet);
             }
 
-            ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
-
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
             // TODO : 재수강 시에 질문 답변 삭제
             $this->sendLectureApplyMail($request, $program);
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
+
+                Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $programStudent));
+                Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
                 return redirect()->route('lectures.result', $program->id);
             }
@@ -89,23 +91,6 @@ class ApplyController extends Controller
             DB::rollback();
             return redirect()->back(302)->with(['alert' => '오류']);
         }
-    }
-
-    private function sendLectureApplyMail(Request $request, Program $program)
-    {
-        Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
-        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $this->programQueryWithPlaceAndTicket($program)));
-    }
-
-    private function programQueryWithPlaceAndTicket(Program $program)
-    {
-        return ProgramStudent::query()
-            ->select('id', 'user_id', 'ticket_id', 'created_at', 'expired_at')
-            ->where('user_id', Auth::id())
-            ->with('ticket:id,program_id', 'ticket.program:id,title')
-            ->whereHas('ticket.program', function ($query) use ($program) {
-                $query->where('id', $program->id);
-            })->get();
     }
 
     public function result(Program $program)

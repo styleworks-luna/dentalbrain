@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
+use App\Mail\ApplyLecture;
 use App\Mail\PaymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
@@ -52,22 +53,10 @@ class PaymentsController extends Controller
 
         $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
-        Mail::to(Auth::user()->email)->send(new PaymentLecture(Auth::user(), $this->getProgramQueryWithPayment($payment)));
+        Mail::to($programStudent->email)->send(new ApplyLecture(Auth::user(), $programStudent));
+        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
         return redirect()->route('lectures.result', $program->id);
-    }
-
-    private function getProgramQueryWithPayment(Payment $payment)
-    {
-        return ProgramStudent::query()
-            ->select('id', 'payment_id', 'ticket_id', 'expired_at')
-            ->where('user_id', '=', Auth::id())
-            ->with('payment:id,totalAmount,method', 'ticket.program:id,title')
-            ->whereHas('payment', function ($query) use ($payment) {
-                $query->where('id', $payment->id);
-            })
-            ->get()
-            ->toArray();
     }
 
     /**
