@@ -6,6 +6,8 @@
 import CKEditor from '@ckeditor/ckeditor5-vue2';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
+console.dir(DecoupledEditor.builtinPlugins.map( plugin => plugin.pluginName ));
+
 export default {
     name: "Editor",
     props: {
@@ -16,8 +18,12 @@ export default {
         return {
             editor: DecoupledEditor,
             editorConfig: {
-                ckfinder: {
-                    uploadUrl: '/api/admin/lecture/upload' // 내가 지정한 업로드 url (post로 요청감)
+                simpleUpload: {
+                    uploadUrl: '/api/admin/lecture/upload' ,// 내가 지정한 업로드 url
+                    withCredentials: true,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
                 }
             },
         }

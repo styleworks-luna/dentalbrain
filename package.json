@@ -26,6 +26,8 @@
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
         "@ckeditor/ckeditor5-build-decoupled-document": "^26.0.0",
+        "@ckeditor/ckeditor5-image": "^26.0.0",
+        "@ckeditor/ckeditor5-upload": "^26.0.0",
         "@ckeditor/ckeditor5-vue2": "^1.0.5",
         "@coreui/coreui": "^3.4.0",
         "@coreui/icons": "^2.0.0-rc.0",
