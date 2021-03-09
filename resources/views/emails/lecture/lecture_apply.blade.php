@@ -38,7 +38,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-bottom: 1px solid #d8d8d8; font-size: 12px;color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program[0]['created_at'] }}
+                            {{ $student[0]['created_at'] }}
                         </p>
                     </td>
                 </tr>
@@ -50,7 +50,7 @@
                     <td width="570"
                         style="line-height: 24px; padding: 8px 0 8px 20px; border-top: 1px solid #d8d8d8;  border-bottom: 1px solid #d8d8d8; font-size: 12px; color: #333;">
                         <p style="float: left; max-width: 520px; margin: 0 10px 0 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            {{ $program[0]['ticket']['program']['title'] }}
+                            {{ $student[0]['ticket']['program']['title'] }}
                         </p>
                     </td>
                 </tr>

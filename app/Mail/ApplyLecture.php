@@ -13,17 +13,17 @@ class ApplyLecture extends Mailable
     use Queueable, SerializesModels;
 
     private $user;
-    private $program;
+    private $student;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user, $program)
+    public function __construct(User $user, $student)
     {
         $this->user = $user;
-        $this->program = $program;
+        $this->student = $student;
     }
 
     /**
@@ -38,7 +38,7 @@ class ApplyLecture extends Mailable
             ->view('emails.lecture.lecture_apply')
             ->with([
                 'user' => $this->user,
-                'program' => $this->program
+                'student' => $this->student
             ]);;
     }
 }
