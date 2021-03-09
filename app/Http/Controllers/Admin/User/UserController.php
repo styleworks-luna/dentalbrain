@@ -44,6 +44,9 @@ class UserController
             ->addKeyword('phone', $request->keyword)
             ->addKeyword('email', $request->keyword);
 
+        if(isset($request->is_paid))
+            $this->search->addCategory('is_paid','=',$request->is_paid);
+
         $result = $this->search->search()->orderBy('id', 'desc')->paginate('20');
         return $result;
     }
