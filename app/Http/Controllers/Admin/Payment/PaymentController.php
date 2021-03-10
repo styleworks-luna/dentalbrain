@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Payment;
 
+use App\Exports\PaymentExport;
 use App\Http\Controllers\Controller;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
@@ -11,6 +12,7 @@ use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Program\OnlineProgramConcrete;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
@@ -27,6 +29,11 @@ class PaymentController extends Controller
         return response()->json([
             'payments' => $payments,
         ]);
+    }
+
+    public function paymentExport()
+    {
+        return Excel::download(new PaymentExport(),'결제 정보 엑셀.xlsx');
     }
 
     /**
