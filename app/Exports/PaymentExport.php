@@ -15,16 +15,10 @@ class PaymentExport implements FromView
 {
     use Exportable;
 
-    private $payment;
-
     /**
      * StudentExport constructor.
      * @param Program $program
      */
-    public function __construct()
-    {
-        $this->payment = Payment::query()->orderBy('id','desc');
-    }
 
     public function view(): View
     {
