@@ -22,6 +22,9 @@ export default {
     },
     watch: {
         content(newValue, oldValue) {
+            if(newValue != null && oldValue == '') {
+                $('#editor-area').froalaEditor('html.set', newValue);
+            }
             this.contents = this.content;
         }
     },
@@ -31,7 +34,7 @@ export default {
     methods: {
         initEditor() {
             $('#editor-area').froalaEditor({
-                key: '7TYPASIBGMWG1YLMP==',
+                key: env.FROALA_LICENSE_KEY,
                 height: 450,
                 requestHeaders: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -39,7 +42,7 @@ export default {
                 imageUploadParam: 'image',
                 imageUploadURL: '/api/admin/lecture/upload',
                 fileUploadURL: '/api/admin/lecture/upload',
-            }).on('froalaEditor.input', (e, editor) => {
+            }).on('froalaEditor.contentChanged', (e, editor) => {
                 const data = editor.html.get();
                 this.onEditorInput(data);
             })
