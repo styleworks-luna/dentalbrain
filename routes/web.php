@@ -23,34 +23,38 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 /*============================ TESTING ============================*/
 
+if (env('APP_ENV') != 'production') {
+    Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
+        //FAQ, 공지사항, 문의하기 생성 페이지
+        Route::get('/', 'Test\TestController@index')->name('index');
 
-Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
-    //FAQ, 공지사항, 문의하기 생성 페이지
-    Route::get('/', 'Test\TestController@index')->name('index');
+        //공지사항 업데이트 확인 페이지
+        Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
 
-    //공지사항 업데이트 확인 페이지
-    Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
+        //공지사항 업데이트 확인 페이지
+        Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
 
-    //공지사항 업데이트 확인 페이지
-    Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
+        //문의하기 업데이트 확인 페이지
+        Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
 
-    //문의하기 업데이트 확인 페이지
-    Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
+        //업로드 파일 확인 페이지
+        Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
+        //배너 업데이트 확인 페이지
+        Route::get('banner/{banner}', 'Test\TestController@bannerEdit')->name('bannerEdit');
+        //유저 관리자 업로드 확인 페이지
+        Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
 
-    //업로드 파일 확인 페이지
-    Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
-    //배너 업데이트 확인 페이지
-    Route::get('banner/{banner}', 'Test\TestController@bannerEdit')->name('bannerEdit');
-    //유저 관리자 업로드 확인 페이지
-    Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
+        Route::get('search', 'Test\TestController@search')->name('search');
 
-    Route::get('search', 'Test\TestController@search')->name('search');
+        Route::get('cancel', 'Test\TestController@cancelTest');
 
-    Route::get('cancel', 'Test\TestController@cancelTest');
+        Route::get('mail', 'Test\TestController@mailView');
+        Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
 
-    Route::get('mail', 'Test\TestController@mailView');
-    Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
-});
+        // 테스팅 계정 생성
+        Route::get('register', 'Test\TestController@showRegistrationForm');
+    });
+}
 
 /*============================ PAGES ============================*/
 
@@ -287,6 +291,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
@@ -306,12 +312,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
 
-            Route::group(['prefix' => 'surveys','as'=> 'surveys.'],function(){
-                Route::get('{program}/{user}','Admin\Program\SurveyController@index')->name('index');
+            Route::group(['prefix' => 'surveys', 'as' => 'surveys.'], function () {
+                Route::get('{program}/{user}', 'Admin\Program\SurveyController@index')->name('index');
             });
 
             Route::group(['prefix' => 'question', 'as' => 'question.'], function () {
@@ -325,17 +333,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::patch('{question}/status', 'Admin\Program\QuestionController@statusChange')->name('statusChange');
             });
 
-            Route::group(['prefix'=>'notification', 'as' => 'notification.'], function(){
-                Route::get('email/{program}','Admin\Program\NotificationController@email')->name('emailData');
-                Route::get('sms/{program}','Admin\Program\NotificationController@sms')->name('smsData');
-                Route::post('email','Admin\Program\NotificationController@sendEmail')->name('email');
-                Route::post('sms','Admin\Program\NotificationController@sendSms')->name('sms');
-                Route::post('id-email','Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
-                Route::post('id-phone','Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
-            });
-
-            Route::group(['prefix' => 'excel', 'as'=>'excel.'],function(){
-                Route::post('/','Admin\Program\ExcelController@export')->name('export');
+            Route::group(['prefix' => 'notification', 'as' => 'notification.'], function () {
+                Route::get('email/{program}', 'Admin\Program\NotificationController@email')->name('emailData');
+                Route::get('sms/{program}', 'Admin\Program\NotificationController@sms')->name('smsData');
+                Route::post('email', 'Admin\Program\NotificationController@sendEmail')->name('email');
+                Route::post('sms', 'Admin\Program\NotificationController@sendSms')->name('sms');
+                Route::post('id-email', 'Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
+                Route::post('id-phone', 'Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
             });
         });
 

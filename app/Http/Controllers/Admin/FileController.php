@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -68,6 +69,11 @@ class FileController extends Controller
         return Storage::download($file->path, $file->name, $headers);
     }
 
+    /**
+     * 강의 상세 작성시에 이미지 업로드 컨트롤러
+     * @param Request $request
+     * @return JsonResponse {string link , Model file}
+     */
     public function uploadContent(Request $request)
     {
         Validator::make($request->all(), [
@@ -94,6 +100,7 @@ class FileController extends Controller
         $file->save();
 
         return response()->json([
+            'link' => $file->url,
             'file' => $file,
         ]);
     }

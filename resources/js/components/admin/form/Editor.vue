@@ -1,149 +1,74 @@
 <template>
-    <el-tiptap  height="400"
-                placeholder="Write something ..."
-                :content="content"
-                :extensions="extensions"
-                @onUpdate="handleSetEditor"/>
+    <textarea id="editor-area"></textarea>
 </template>
 
 <script>
-import Vue from 'vue';
-import {
-    Doc,
-    Text,
-    Paragraph,
-    FontType,
-    FontSize,
-    Bold,
-    Underline,
-    Italic,
-    Strike,
-    TextColor,
-    TextHighlight,
-    TextAlign,
-    BulletList,
-    OrderedList,
-    ListItem,
-    TodoItem,
-    TodoList,
-    Indent,
-    HardBreak,
-    LineHeight,
-    Blockquote,
-    Link,
-    Image,
-    Table,
-    TableHeader,
-    TableCell,
-    TableRow,
-    CodeView,
-    HorizontalRule,
-    History,
-} from "element-tiptap";
+import 'font-awesome/css/font-awesome.min.css';
 
-import codemirror from "codemirror";
-import "codemirror/lib/codemirror.css"; // import base style
-import "codemirror/mode/xml/xml.js"; // language
-import "codemirror/addon/selection/active-line.js"; // require active-line.js
-import "codemirror/addon/edit/closetag.js"; // autoCloseTags
-import ElementUI from 'element-ui';
-import { ElementTiptapPlugin } from 'element-tiptap';
-import 'element-ui/lib/theme-chalk/index.css';
-import 'element-tiptap/lib/index.css';
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/css/froala_style.min.css';
 
-Vue.use(ElementUI);
-Vue.use(ElementTiptapPlugin, {
-    lang: "ko",
-     spellcheck: false,
-});
-
-// editor file upload
-let uploadImage = async (image) => {
-    let uploadForm = new FormData();
-    uploadForm.append('image', image);
-    const headers = {
-        'Content-type': 'multipart/form-data'
-    };
-
-    try {
-        const response = await axios.post('/api/admin/lecture/upload', uploadForm, {headers: headers} );
-        return response.data.file.url;
-    } catch(e) {
-        alert('오류');
-        return e;
-    }
-}
+import 'froala-editor/js/froala_editor.pkgd.min.js';
 
 export default {
     name: "Editor",
     props: {
-      'content' : String
+        content: String,
     },
     data() {
         return {
-            extensions: [
-                new Doc(),
-                new Text(),
-                new Paragraph(),
-                new FontSize({
-                    fontSizes: ['8', '10', '12', '14', '16', '18', '20', '24', '30', '36', '48', '60']
-                }),
-                new Bold({ bubble: true }),
-                new Underline({ bubble: true }),
-                new Italic(),
-                new Strike(),
-                new TextColor({
-                    colors: [
-                        '#f44336',
-                        '#e91e63',
-                        '#9c27b0',
-                        '#673ab7',
-                        '#3f51b5',
-                        '#2196f3',
-                        '#03a9f4',
-                        '#00bcd4',
-                        '#009688',
-                        '#4caf50',
-                        '#8bc34a',
-                        '#cddc39',
-                        '#ffeb3b',
-                        '#ffc107',
-                        '#ff9800',
-                        '#ff5722',
-                        '#000000',]
-                }),
-                new TextAlign(),
-                new ListItem(),
-                new BulletList(),
-                new OrderedList(),
-                new HardBreak(),
-                new Indent(),
-                new HorizontalRule({ bubble: true }),
-                new Blockquote(),
-                new Link({ bubble: true }),
-                new Image({
-                    uploadRequest: uploadImage
-                }),
-                new Table({
-                    resizable: true
-                }),
-                new TableHeader(),
-                new TableRow(),
-                new TableCell(),
-                new CodeView({
-                    codemirror,
-                    codemirrorOptions: {
-                        styleActiveLine: true,
-                        autoCloseTags: true
-                    }
-                })
-            ]
+            contents: '',
         }
     },
+    watch: {
+        content(newValue, oldValue) {
+            if (newValue != null && oldValue == '') {
+                $('#editor-area').froalaEditor('html.set', newValue);
+            }
+            this.contents = this.content;
+        }
+    },
+    mounted() {
+        this.initEditor();
+    },
     methods: {
-        handleSetEditor(e) {
-            this.$emit('setEditor', e);
+        initEditor() {
+            $('#editor-area').froalaEditor({
+                key: env.FROALA_LICENSE_KEY,
+                height: 450,
+                requestHeaders: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                imageUploadParam: 'image',
+                imageUploadURL: '/api/admin/lecture/upload',
+                fileUploadURL: '/api/admin/lecture/upload',
+                toolbarButtons: [
+                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+                    '|',
+                    'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight',
+                    '|',
+                    'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
+                    '-',
+                    'insertLink', 'insertImage', 'insertTable',
+                    '|',
+                    'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
+                    '|',
+                    'print', 'getPDF', 'spellChecker', 'help', 'html',
+                    '|',
+                    'undo', 'redo'
+                ]
+            }).on('froalaEditor.contentChanged', (e, editor) => {
+                const data = editor.html.get();
+                this.onEditorInput(data);
+            })
         },
+        onEditorInput(data) {
+            this.$emit('setEditor', data);
+        }
     }
 };
 </script>
+
+<style scoped>
+
+</style>

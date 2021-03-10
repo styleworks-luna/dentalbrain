@@ -55,33 +55,32 @@ abstract class ProgramTemplate
      * 강의 수강현황
      *
      * @param Program $program
-     * @param int $perPage = 7
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    function getStudents(Program $program, $perPage = 10,$order)
+    function getStudents(Program $program, $order)
     {
-         $query = $program->students()
-             ->select([
-                 'program_tickets.program_id','program_tickets.is_free',
-                 'program_students.id','program_students.email','program_students.phone','program_students.pay_status','program_students.applied_at','program_students.payment_id','program_students.is_repeated',
-                 'payments.id','payments.totalAmount','payments.status','payments.method',
-                 'users.id','users.login_id','users.name'
-             ])
-             ->leftjoin('payments','payments.id','=','program_students.payment_id')
-             ->join('users','users.id','=','program_students.user_id');
+        $query = $program->students()
+            ->select([
+                'program_tickets.program_id', 'program_tickets.is_free',
+                'program_students.id', 'program_students.email', 'program_students.phone', 'program_students.pay_status', 'program_students.applied_at', 'program_students.payment_id', 'program_students.is_repeated',
+                'payments.id', 'payments.totalAmount', 'payments.status', 'payments.method',
+                'users.id', 'users.login_id', 'users.name'
+            ])
+            ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
+            ->join('users', 'users.id', '=', 'program_students.user_id');
 
-        if($order == 'latest'){
+        if ($order == 'latest') {
             $query->orderBy('program_students.id', 'DESC');
-        }else if($order == 'login_id'){
+        } elseif ($order == 'login_id') {
             $query->orderBy('users.login_id', 'ASC');
-        }else if($order == 'left_days'){
+        } elseif ($order == 'left_days') {
             $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
-            $query->orderBy('expired_at','desc');
-        }else{
+            $query->orderBy('expired_at', 'desc');
+        } else {
             $query->orderBy('program_students.id', 'DESC');
         }
 
-        return $query->paginate($perPage);
+        return $query;
     }
 
 
@@ -486,7 +485,7 @@ abstract class ProgramTemplate
     {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID,ProgramStudent::$PAY_IN_REFUND_PROCESS]);
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS]);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;

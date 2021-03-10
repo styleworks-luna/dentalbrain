@@ -97,4 +97,11 @@ class TestController extends Controller
             'holderName' => '박재현',
         ]);
     }
+
+    public function showRegistrationForm()
+    {
+        return view('desktop.pages.test.testRegister', [
+            'jobs' => UserJobName::query()->orderBy('id')->get()
+        ]);
+    }
 }

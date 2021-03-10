@@ -19,12 +19,11 @@ class OnlineStudentController extends OnlineProgramController
      * @param Program $program
      * @return JsonResponse
      */
-    public function students(Request $request,Program $program)
-
+    public function students(Request $request, Program $program)
     {
         return response()->json([
             'program_name' => $program->title,
-            'students' => $this->onlineConcrete->getStudents($program,10,$request->order)
+            'students' => $this->onlineConcrete->getStudents($program, $request->order)->paginate(10),
         ]);
     }
 }
