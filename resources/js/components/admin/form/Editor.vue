@@ -22,8 +22,6 @@ export default {
     },
     watch: {
         content(newValue, oldValue) {
-            console.log(newValue);
-            console.log(oldValue);
             this.contents = this.content;
         }
     },
@@ -44,8 +42,6 @@ export default {
             }).on('froalaEditor.input', (e, editor) => {
                 const data = editor.html.get();
                 this.onEditorInput(data);
-            }).on('froalaEditor.commands.before', (e,editor) => {
-                console.log(editor);
             })
         },
         onEditorInput(data) {
