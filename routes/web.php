@@ -291,6 +291,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
@@ -310,6 +312,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                    // 엑셀 다운로드
+                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
@@ -336,10 +340,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('sms', 'Admin\Program\NotificationController@sendSms')->name('sms');
                 Route::post('id-email', 'Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
                 Route::post('id-phone', 'Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
-            });
-
-            Route::group(['prefix' => 'excel', 'as' => 'excel.'], function () {
-                Route::post('/', 'Admin\Program\ExcelController@export')->name('export');
             });
         });
 

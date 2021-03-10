@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
+use App\Models\Program\Survey\SurveyAnswer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,6 +63,11 @@ class User extends Authenticatable
     public function lectureQuestions()
     {
         return $this->hasMany(LectureQuestion::class, 'user_id', 'id');
+    }
+
+    public function surveyAnswers()
+    {
+        return $this->hasMany(SurveyAnswer::class, 'user_id', 'id');
     }
 
     protected function getNeedLicenseAttribute()

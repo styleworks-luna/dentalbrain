@@ -167,6 +167,10 @@ class ProgramStudent extends Model
 
     public function getLeftDaysAttribute()
     {
-        return Carbon::now()->diff($this->attributes['expired_at'])->format('%r%a');
+        if (isset($this->attributes['expired_at'])) {
+            return Carbon::now()->diff($this->attributes['expired_at'])->format('%r%a');
+        } else {
+            return null;
+        }
     }
 }
