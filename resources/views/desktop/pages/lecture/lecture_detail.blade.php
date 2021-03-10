@@ -8,6 +8,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-detail.css') }}">
+
 @endsection
 
 @section('content')
@@ -144,7 +145,9 @@
                         </ul>
                     </div>
                     <div class="lecture-detail-content">
+                        <div class="fr-element fr-view">
                         {!! $program->content !!}
+                        </div>
                     </div>
                 </section>
 

@@ -23,7 +23,8 @@ mix.webpackConfig({
         new webpack.DefinePlugin({
             env: {
                 APP_URL: JSON.stringify(process.env.APP_URL),
-                NAVER_CLOUD_ID: JSON.stringify(process.env.NAVER_CLOUD_ID)
+                NAVER_CLOUD_ID: JSON.stringify(process.env.NAVER_CLOUD_ID),
+                FROALA_LICENSE_KEY: JSON.stringify(process.env.FROALA_LICENSE_KEY)
             }
         })
     ]
