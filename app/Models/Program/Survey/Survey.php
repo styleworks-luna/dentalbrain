@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @method static Builder result(int $programId)
+ * @method static Builder resultWithUser(int $programId,int $userId)
  */
 class Survey extends Model
 {
@@ -82,4 +84,12 @@ class Survey extends Model
             });
     }
 
+    public function scopeResultWithUser(Builder $query, $programId, $userId){
+        return $query->with(['choices',
+            'answers' => function ($query) use($userId){
+                $query->where('user_id', '=', $userId);
+            }])
+            ->where('program_id', '=', $programId)
+            ->whereNull('parent_id');
+    }
 }

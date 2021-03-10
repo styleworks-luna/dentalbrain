@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\LectureQuestion;
+use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -101,5 +101,19 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
+    }
+
+    public function scopeFindIdWithNameAndEmail($query,$name,$email){
+        return $query->where([
+            'name' => $name,
+            'email' => $email
+        ])->first();
+    }
+
+    public function scopeFindIdWithNameAndPhone($query,$name,$phone){
+        return $query->where([
+            'name' => $name,
+            'phone' => $phone
+        ])->first();
     }
 }

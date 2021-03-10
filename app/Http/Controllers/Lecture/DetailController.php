@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class DetailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('like');
+    }
+
     public function detail(Program $program)
     {
         $heart = UserLike::query()->where('program_id', '=', $program->id)

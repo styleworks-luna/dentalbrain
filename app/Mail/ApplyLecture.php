@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,6 +14,7 @@ class ApplyLecture extends Mailable
     use Queueable, SerializesModels;
 
     private $user;
+    private $programStudent;
     private $program;
 
     /**
@@ -20,10 +22,11 @@ class ApplyLecture extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, $program)
+    public function __construct(User $user, ProgramStudent $programStudent)
     {
         $this->user = $user;
-        $this->program = $program;
+        $this->programStudent = $programStudent;
+        $this->program = $programStudent->ticket->program()->get()->first();
     }
 
     /**
@@ -38,7 +41,8 @@ class ApplyLecture extends Mailable
             ->view('emails.lecture.lecture_apply')
             ->with([
                 'user' => $this->user,
+                'programStudent' => $this->programStudent,
                 'program' => $this->program
-            ]);;
+            ]);
     }
 }

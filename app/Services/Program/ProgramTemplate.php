@@ -57,12 +57,30 @@ abstract class ProgramTemplate
      * @param Program $program
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    function getStudents(Program $program)
+    function getStudents(Program $program, $order)
     {
-        return $program->students()->orderByDesc('id')
-            ->with(['ticket', 'payment' => function ($query) {
-                $query->select('id', 'totalAmount', 'status', 'method');
-            }, 'user:id,login_id,name']);
+        $query = $program->students()
+            ->select([
+                'program_tickets.program_id', 'program_tickets.is_free',
+                'program_students.id', 'program_students.email', 'program_students.phone', 'program_students.pay_status', 'program_students.applied_at', 'program_students.payment_id', 'program_students.is_repeated',
+                'payments.id', 'payments.totalAmount', 'payments.status', 'payments.method',
+                'users.id', 'users.login_id', 'users.name'
+            ])
+            ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
+            ->join('users', 'users.id', '=', 'program_students.user_id');
+
+        if ($order == 'latest') {
+            $query->orderBy('program_students.id', 'DESC');
+        } elseif ($order == 'login_id') {
+            $query->orderBy('users.login_id', 'ASC');
+        } elseif ($order == 'left_days') {
+            $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
+            $query->orderBy('expired_at', 'desc');
+        } else {
+            $query->orderBy('program_students.id', 'DESC');
+        }
+
+        return $query;
     }
 
 

@@ -32,7 +32,7 @@
                                     <th>결제금액</th>
                                     <th>결제상태</th>
                                     <th>결제수단</th>
-                                    <th>결제일{{ isset($payment->cacel) ? "/취소일" : '' }}</th>
+                                    <th>결제일{{ $payment->cancel != 'null' ? "/취소일" : '' }}</th>
                                 </tr>
                                 <tr>
                                     <td>{{ number_format($payment->totalAmount) }}원</td>
@@ -82,7 +82,7 @@
                                         @endisset
 
                                     </td>
-                                    <td>{{ date_format($payment->requestedAt ,'Y-m-d')}} {{ $payment->cancel ? '/' . date_format($payment->cancel->canceledAt,'Y-m-d') : ''   }}</td>
+                                    <td>{{ date_format($payment->requestedAt ,'Y.m.d')}} {{ $payment->cancel != 'null'  ? '/ ' . date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}</td>
                                 </tr>
                             </table>
                         </li>

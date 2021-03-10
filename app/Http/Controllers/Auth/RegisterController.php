@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Register;
-use App\Models\Notification\PhoneVerification;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
@@ -16,7 +15,6 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -75,7 +73,7 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
+            ?: redirect($this->redirectPath())->with('alert', '회원가입이 완료되었습니다.');
     }
 
     /**
@@ -86,17 +84,27 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        $result =  Validator::make($data, [
+        // 6글자 이상, 대문자 혹은 소문자 | 숫자 포함된 패스워드여야 함.
+        $passwordPattern = '/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/';
+
+        if (env('APP_ENV') == 'local') {
+            return $this->inLocalValidation($data);
+        }
+
+        $result = Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'max:40', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'max:40',
+                'regex:' . $passwordPattern,
+                // custom validations rule : without_spaces
+                'without_spaces',
+                'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
             'phone' => ['bail', 'required', 'digits_between:9,11', 'unique:users',],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
-
             'verification_number' => ['required', 'string', 'size:6',
                 Rule::exists('phone_verifications')->where(function ($query) use ($data) {
                     $query->where('phone', $data['phone'])->where('expired_at', '>', Carbon::now())
@@ -106,7 +114,30 @@ class RegisterController extends Controller
             return UserJobName::find($input->job)->need_license == true;
         });
 
+        ddd($result->validated());
+
         return $result;
+    }
+
+    private function inLocalValidation($data)
+    {
+        return Validator::make($data, [
+            'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
+            'name' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'max:40',
+                // custom validations rule : without_spaces
+                'without_spaces',
+                'confirmed'],
+            'job' => ['required', 'exists:user_job_names,id'],
+            'phone' => ['bail', 'required', 'digits_between:9,11', 'unique:users',],
+            'email-consent' => ['nullable'],
+            'privacy-consent' => ['accepted'],
+            'service-consent' => ['accepted'],
+            'verification_number' => ['required', 'string', 'size:6',],
+        ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
+            return UserJobName::find($input->job)->need_license == true;
+        });
     }
 
     /**

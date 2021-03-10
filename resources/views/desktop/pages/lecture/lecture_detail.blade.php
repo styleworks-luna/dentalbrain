@@ -8,6 +8,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-detail.css') }}">
+
 @endsection
 
 @section('content')
@@ -144,7 +145,9 @@
                         </ul>
                     </div>
                     <div class="lecture-detail-content">
+                        <div class="fr-element fr-view">
                         {!! $program->content !!}
+                        </div>
                     </div>
                 </section>
 
@@ -238,12 +241,16 @@
                                                         <form action="">
                                                             <input type="hidden" name="comment_id" class="comment_id"
                                                                    value="{{ $child->id }}">
+                                                            @can('update',$child)
                                                             <button type="button"
                                                                     class="btn-comment-modified comment-modify">수정
                                                             </button>
+                                                            @endcan
+                                                            @can('delete',$child)
                                                             <button type="button"
                                                                     class="btn-comment-delete comment-child-delete">삭제
                                                             </button>
+                                                            @endcan
                                                         </form>
                                                     </div>
                                                 </div>

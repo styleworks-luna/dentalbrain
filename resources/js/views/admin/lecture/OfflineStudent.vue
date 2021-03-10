@@ -1,7 +1,23 @@
 <template>
     <layout title="오프라인 강의 수강 신청 현황">
         <template v-slot:button>
+            <router-link :to="`/admin/email`" class="btn btn-primary text-white">이메일 보내기</router-link>
+            <router-link :to="`/admin/sns`" class="btn btn-primary text-white">sns 보내기</router-link>
+        </template>
 
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                text="정렬 선택"
+                                :value="order"
+                                :options="orderOptions"
+                                @setValue="handleSetOrder"></select-box>
+                    <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                    </span>
+                </form>
+            </div>
         </template>
 
         <template v-slot:body>
@@ -10,20 +26,20 @@
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.user.id}`">
-                            {{ slotProps.row.user.login_id }}
+                        <router-link :to="`/admin/user/${slotProps.row.user_id}`">
+                            {{ slotProps.row.login_id }}
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }} </td>
                     <td>
-                        <template v-if="slotProps.row.payment">
-                            <template v-if="slotProps.row.payment.status === 'CANCELED'">
+                        <template v-if="slotProps.row.status">
+                            <template v-if="slotProps.row.status === 'CANCELED'">
                                 결제 취소
                             </template>
 
                             <template v-else>
-                                {{ Helper.numberWithCommas(slotProps.row.payment.totalAmount) }}원
+                                {{ Helper.numberWithCommas(slotProps.row.totalAmount) }}원
                                 <template v-if="slotProps.row.pay_status === 4"><strong class="text-danger">(환불요청)</strong></template>
                             </template>
                         </template>
@@ -50,26 +66,26 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.ticket.is_free"
+                               v-if="slotProps.row.is_free"
                                @click.prevent="cancelLecture(slotProps.row.id)">
                                 신청 취소
                             </a>
                             <a href="#" class="btn btn-danger text-white"
                                v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)">
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
                                 결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.ticket.is_free"
+                               v-if="slotProps.row.is_free"
                                @click.prevent="cancelLecture(slotProps.row.id)">
                                 신청 취소
                             </a>
 
                             <a href="#" class="btn btn-danger text-white"
                                v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.payment.method)">
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
                                 결제 취소
                             </a>
                         </template>
@@ -99,6 +115,7 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
 import { Student } from '@/api/admin/lecture/Offline.js'
@@ -113,7 +130,8 @@ export default {
     ],
     components: {
         'table-grid': Table,
-        'button-open': ButtonOpen
+        'button-open': ButtonOpen,
+        'select-box': SelectBox,
     },
     data() {
         return {
@@ -122,6 +140,7 @@ export default {
             students: {
                 data: []
             },
+            order: 'latest',
             page: 1
         }
     },
@@ -175,6 +194,18 @@ export default {
                     width: '15%'
                 },
             ]
+        },
+        orderOptions() {
+            return [
+                {
+                    id: 'latest',
+                    name: '최신순'
+                },
+                {
+                    id: 'login_id',
+                    name: '가나다순'
+                }
+            ]
         }
     },
     methods: {
@@ -184,7 +215,8 @@ export default {
             }
 
             let params = {
-                page: page
+                page: page,
+                order: this.order
             };
 
             Student.getStudentsData(this.id, params).then(res => {
@@ -193,6 +225,9 @@ export default {
             }).catch(err => {
                 this.students = [];
             });
+        },
+        handleSetOrder(order) {
+            this.order = order;
         }
     }
 }
