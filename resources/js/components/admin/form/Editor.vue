@@ -1,5 +1,5 @@
 <template>
-    <textarea name="editor" id="editor-area" :content="content" @input="onEditorInput"></textarea>
+    <textarea id="editor-area"></textarea>
 </template>
 
 <script>
@@ -10,21 +10,6 @@ import 'froala-editor/css/froala_style.min.css';
 
 import 'froala-editor/js/froala_editor.pkgd.min.js';
 
-function editor() {
-    $('#editor-area').froalaEditor({
-        key: '7TYPASIBGMWG1YLMP==',
-        height: 450,
-        requestHeaders: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        imageUploadParam: 'image',
-        imageUploadURL: '/api/admin/lecture/upload',
-        fileUploadURL: '/api/admin/lecture/upload',
-    }).on('froalaEditor.eventName', function (e, editor, param1, param2) {
-        // Callback code here.
-    })
-}
-
 export default {
     name: "Editor",
     props: {
@@ -32,14 +17,39 @@ export default {
     },
     data() {
         return {
+            contents: '',
+        }
+    },
+    watch: {
+        content(newValue, oldValue) {
+            console.log(newValue);
+            console.log(oldValue);
+            this.contents = this.content;
         }
     },
     mounted() {
-        editor();
+        this.initEditor();
     },
     methods: {
-        onEditorInput() {
-            this.$emit('setEditor');
+        initEditor() {
+            $('#editor-area').froalaEditor({
+                key: '7TYPASIBGMWG1YLMP==',
+                height: 450,
+                requestHeaders: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                imageUploadParam: 'image',
+                imageUploadURL: '/api/admin/lecture/upload',
+                fileUploadURL: '/api/admin/lecture/upload',
+            }).on('froalaEditor.input', (e, editor) => {
+                const data = editor.html.get();
+                this.onEditorInput(data);
+            }).on('froalaEditor.commands.before', (e,editor) => {
+                console.log(editor);
+            })
+        },
+        onEditorInput(data) {
+            this.$emit('setEditor', data);
         }
     }
 };

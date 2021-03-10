@@ -203,7 +203,6 @@ export default {
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
-                console.log(res);
                 const ticket = res.data.ticket;
                 const program = res.data.program;
 
