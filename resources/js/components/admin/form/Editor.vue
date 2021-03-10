@@ -22,7 +22,7 @@ export default {
     },
     watch: {
         content(newValue, oldValue) {
-            if(newValue != null && oldValue == '') {
+            if (newValue != null && oldValue == '') {
                 $('#editor-area').froalaEditor('html.set', newValue);
             }
             this.contents = this.content;
@@ -42,6 +42,21 @@ export default {
                 imageUploadParam: 'image',
                 imageUploadURL: '/api/admin/lecture/upload',
                 fileUploadURL: '/api/admin/lecture/upload',
+                toolbarButtons: [
+                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+                    '|',
+                    'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight',
+                    '|',
+                    'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
+                    '-',
+                    'insertLink', 'insertImage', 'insertTable',
+                    '|',
+                    'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
+                    '|',
+                    'print', 'getPDF', 'spellChecker', 'help', 'html',
+                    '|',
+                    'undo', 'redo'
+                ]
             }).on('froalaEditor.contentChanged', (e, editor) => {
                 const data = editor.html.get();
                 this.onEditorInput(data);
