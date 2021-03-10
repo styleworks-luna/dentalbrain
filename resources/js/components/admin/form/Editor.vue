@@ -1,55 +1,50 @@
 <template>
-    <ckeditor :editor="editor" @ready="onReady" :content="content" :config="editorConfig" @input="onEditorInput"></ckeditor>
+    <textarea name="editor" id="editor-area" :content="content" @input="onEditorInput"></textarea>
 </template>
 
 <script>
-import CKEditor from '@ckeditor/ckeditor5-vue2';
-import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import 'font-awesome/css/font-awesome.min.css';
 
-console.dir(DecoupledEditor.builtinPlugins.map( plugin => plugin.pluginName ));
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/css/froala_style.min.css';
+
+import 'froala-editor/js/froala_editor.pkgd.min.js';
+
+function editor() {
+    $('#editor-area').froalaEditor({
+        key: '7TYPASIBGMWG1YLMP==',
+        height: 450,
+        requestHeaders: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        imageUploadParam: 'image',
+        imageUploadURL: '/api/admin/lecture/upload',
+        fileUploadURL: '/api/admin/lecture/upload',
+    }).on('froalaEditor.eventName', function (e, editor, param1, param2) {
+        // Callback code here.
+    })
+}
 
 export default {
     name: "Editor",
     props: {
         content: String,
     },
-    components: { ckeditor: CKEditor.component },
     data() {
         return {
-            editor: DecoupledEditor,
-            editorConfig: {
-                simpleUpload: {
-                    uploadUrl: '/api/admin/lecture/upload' ,// 내가 지정한 업로드 url
-                    withCredentials: true,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    }
-                }
-            },
         }
     },
+    mounted() {
+        editor();
+    },
     methods: {
-        onEditorInput(e) {
-            this.$emit('setEditor', e)
-        },
-        onReady(editor) {
-            // Insert the toolbar before the editable area.
-            editor.ui.getEditableElement().parentElement.insertBefore(
-                editor.ui.view.toolbar.element,
-                editor.ui.getEditableElement()
-            );
-        },
+        onEditorInput() {
+            this.$emit('setEditor');
+        }
     }
 };
 </script>
 
 <style scoped>
-.ck-editor__editable_inline {
-    height: 450px;
-    overflow-y: scroll;
-}
 
-.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred {
-    border: 1px solid #000;
-}
 </style>

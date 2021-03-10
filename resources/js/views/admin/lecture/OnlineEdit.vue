@@ -203,6 +203,7 @@ export default {
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
+                console.log(res);
                 const ticket = res.data.ticket;
                 const program = res.data.program;
 
@@ -263,6 +264,7 @@ export default {
                 surveys: this.surveys,
                 lectures: lectures,
             };
+
 
             Online.update(this.id, data).then(res => {
                 alert(res.data.msg);
