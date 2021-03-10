@@ -69,8 +69,6 @@ abstract class ProgramTemplate
             ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
-        $k = $query;
-        logger($k->get());
         if ($order == 'latest') {
             $query->orderBy('program_students.id', 'DESC');
         } elseif ($order == 'login_id') {
