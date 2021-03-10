@@ -26,7 +26,7 @@ const routes = [
         component: OfflineEdit
     },
     {
-        path: '/admin/lecture/offline/:id/student/additional',
+        path: '/admin/lecture/offline/:program_id/:student_id/additional',
         name: 'AdminOfflineAdditional',
         component: OfflineAdditional,
     },

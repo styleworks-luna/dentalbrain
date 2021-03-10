@@ -26,7 +26,7 @@ const routes = [
         component: OnlineEdit
     },
     {
-        path: '/admin/lecture/online/:id/student/additional',
+        path: '/admin/lecture/online/:program_id/:student_id/additional',
         name: 'AdminOnlineAdditional',
         component: OnlineAdditional,
     },
