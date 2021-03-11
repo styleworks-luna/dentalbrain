@@ -16,18 +16,40 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $payments = Payment::query()
-            ->orderByDesc('id')
-            ->with(['student.ticket.program' => function ($query) {
-                $query->select('id', 'is_online', 'title');
-            }])
-            ->select('id', 'totalAmount', 'receiptUrl', 'method', 'status', 'requestedAt', 'approvedAt')
-            ->paginate(10);
+            ->select(
+                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt', 'payments.status',
+                'programs.is_online', 'programs.title',
+                'program_students.phone', 'program_students.email', 'program_students.user_id',
+                'program_tickets.program_id',
+                'users.name'
+            )
+            ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
+            ->join('program_tickets', 'program_students.ticket_id', '=', 'program_tickets.id')
+            ->join('programs', 'programs.id', '=', 'program_tickets.program_id')
+            ->join('users', 'users.id', '=', 'program_students.user_id');
+
+        if (isset($request->is_online)) {
+            $payments->where('programs.is_online', '=', $request->is_online);
+        }
+
+        if (isset($request->status)) {
+            $payments->where('payments.status', '=', $request->status);
+        }
+
+        if (isset($request->keyword)) {
+            $payments->where(function ($query) use ($request) {
+                $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('program_students.phone', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('program_students.email', 'like', '%' . $request->keyword . '%');
+            });
+        }
 
         return response()->json([
-            'payments' => $payments,
+            'payments' => $payments->paginate(10)
         ]);
     }
 
