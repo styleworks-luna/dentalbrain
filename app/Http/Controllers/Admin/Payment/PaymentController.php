@@ -20,9 +20,9 @@ class PaymentController extends Controller
     {
         $payments = Payment::query()
             ->select(
-                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt', 'payments.status',
+                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
                 'programs.is_online', 'programs.title',
-                'program_students.phone', 'program_students.email', 'program_students.user_id',
+                'program_students.phone', 'program_students.email', 'program_students.user_id','program_students.pay_status',
                 'program_tickets.program_id',
                 'users.name'
             )
@@ -44,12 +44,12 @@ class PaymentController extends Controller
                 $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
                     ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
                     ->orWhere('program_students.phone', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('program_students.email', 'like', '%' . $request->keyword . '%');
+                    ->orWhere('payments.totalAmount', '=', $request->keyword);
             });
         }
 
         return response()->json([
-            'payments' => $payments->paginate(10)
+            'payments' => $payments->orderBy('id','desc')->paginate(10)
         ]);
     }
 
