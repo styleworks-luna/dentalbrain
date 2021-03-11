@@ -103,8 +103,9 @@
                                     <span class="btn-apply-complete">
                                     신청한 강의입니다.
                                     </span>
-                                            <a href="{{ route('lectures.apply',$program->id) }}" class="edit">신청내역
-                                                수정</a>
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="edit">
+                                                신청내역 확인
+                                            </a>
                                         </div>
                                     @elseif ($program->canRepeat())
                                         {{--재수강 가능할 경우--}}
@@ -146,7 +147,7 @@
                     </div>
                     <div class="lecture-detail-content">
                         <div class="fr-element fr-view">
-                        {!! $program->content !!}
+                            {!! $program->content !!}
                         </div>
                     </div>
                 </section>
@@ -242,14 +243,15 @@
                                                             <input type="hidden" name="comment_id" class="comment_id"
                                                                    value="{{ $child->id }}">
                                                             @can('update',$child)
-                                                            <button type="button"
-                                                                    class="btn-comment-modified comment-modify">수정
-                                                            </button>
+                                                                <button type="button"
+                                                                        class="btn-comment-modified comment-modify">수정
+                                                                </button>
                                                             @endcan
                                                             @can('delete',$child)
-                                                            <button type="button"
-                                                                    class="btn-comment-delete comment-child-delete">삭제
-                                                            </button>
+                                                                <button type="button"
+                                                                        class="btn-comment-delete comment-child-delete">
+                                                                    삭제
+                                                                </button>
                                                             @endcan
                                                         </form>
                                                     </div>
