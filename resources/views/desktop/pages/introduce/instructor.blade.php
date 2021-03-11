@@ -33,7 +33,7 @@
                                 <li>현)대한치과위생학회 회장</li>
                                 <li>보아치과 OHC센터장</li>
                                 <li>유튜브 MJTV 운영</li>
-                                <li>분야 : 병의원컨설팅,진료프로세스구축,조직관리,직원관리,
+                                <li>분야 : 병의원컨설팅,진료프로세스구축,조직관리,<br>직원관리,
                                     계속구강관리,기구연마
                                 </li>
                             </ul>
@@ -76,7 +76,7 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">정미</h2>
                             <ul class="instructor-career">
-                                <li>(주)브레인스펙교육개발원 치과건강보험전문강사</li>
+                                <li>㈜브레인스펙교육개발원 치과건강보험전문강사</li>
                                 <li>치과건강보험연구소 대표</li>
                                 <li>건강보험전문 유튜브 채널 치건연TV 운영자</li>
                                 <li>아주대학교 경영대학원 병원경영MBA 수료</li>
@@ -95,7 +95,7 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">온은주</h2>
                             <ul class="instructor-career">
-                                <li>(주)브레인스펙병원교육개발원 전문강사</li>
+                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
                                 <li>전)삼성소고운미치과 실장</li>
                                 <li>CS 강사</li>
                                 <li>DISC CS 강사</li>
@@ -161,12 +161,12 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">최규영</h2>
                             <ul class="instructor-career">
-                                <li>(주)브레인스펙병원교육개발원 전문강사</li>
+                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
                                 <li>충청대학교 치위생과 겸임교수</li>
                                 <li>보건학 박사</li>
                                 <li>SDA(SWISS DENTAL ACADEMY) 교육수료</li>
-                                <li>분야 : 치과방사선, 고객응대, 고객상담</li>
-                                <li>분야 : 임플란트,치과방사선,조직관리</li>
+                                <li>분야 : 치과방사선, 고객응대, 고객상담,<br>
+                                    임플란트,치과방사선,조직관리</li>
                             </ul>
                         </div>
                     </li>
@@ -210,7 +210,7 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">강혜민</h2>
                             <ul class="instructor-career">
-                                <li>(주)브레인스펙병원개발원 전문강사</li>
+                                <li>㈜브레인스펙병원개발원 전문강사</li>
                                 <li>수원과학대 치위생과 겸임교수</li>
                                 <li>가톨릭대학교 보건학박사 수료</li>
                                 <li>전)치과위생사 국가고시 실기시험 채점위원</li>

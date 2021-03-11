@@ -171,8 +171,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     Route::view('lecture/offline/{any}', 'admin.index');
     Route::view('lecture/offline/{user}/{any}', 'admin.index');
     Route::view('lecture/question/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}/additional', 'admin.index');
-    Route::view('lecture/offline/{user}/{any}/additional', 'admin.index');
 
     // user
     Route::view('user', 'admin.index');
@@ -347,6 +345,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
+
+            Route::get('export','Admin\Payment\PaymentController@paymentExport')->name('export');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {

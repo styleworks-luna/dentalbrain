@@ -28,3 +28,27 @@ if(!function_exists('changePaymentMethodName')){
         }
     }
 }
+
+if(!function_exists('changePaymentStatusName')){
+    function changePaymentStatusName($status){
+        switch($status){
+            case 'READY':
+                return '준비됨';
+            case 'IN_PROGRESS':
+                return '진행중';
+            case 'WAITING_FOR_DEPOSIT':
+                return '입금 대기중';
+            case 'DONE':
+                return '결제 완료';
+            case 'CANCELED':
+                return '결제 취소';
+            case 'ABORTED':
+                return '결제 중단';
+            case 'PARTIAL_CANCELED ':
+                return '부분 취소';
+            default:
+                return $status;
+                break;
+        }
+    }
+}
