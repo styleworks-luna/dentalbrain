@@ -130,7 +130,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             // 강의 시청 확인
             Route::patch('watched/{lecture?}', 'Lecture\WatchController@watched')->name('check-watch');
         });
-
+        Route::get('excel', 'Admin\Program\ExcelController@export')->name('excel')->middleware('admin');
     });
 });
 
@@ -291,8 +291,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
-                    // 엑셀 다운로드
-                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
@@ -312,8 +310,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
-                    // 엑셀 다운로드
-                    Route::get('/excel', 'Admin\Program\ExcelController@export')->name('export');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });
@@ -346,7 +342,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
 
-            Route::get('export','Admin\Payment\PaymentController@paymentExport')->name('export');
+            Route::get('export', 'Admin\Payment\PaymentController@paymentExport')->name('export');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
