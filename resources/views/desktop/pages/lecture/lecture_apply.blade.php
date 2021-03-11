@@ -301,7 +301,7 @@
                                         <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                     </div>
                                     <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
-                                    <a href="" class="trigger-service">내용보기</a>
+                                    <a href="" class="trigger-privacy-to-third">내용보기</a>
                                     <div class="offer_error_wrap"></div>
                                 </li>
                                 <li>
@@ -332,7 +332,7 @@
             </form>
             <div class="dim"></div>
             <div class="popup-control">
-                @include('desktop.pages.agreement.service')
+                @include('desktop.pages.agreement.privacy_to_third')
                 @include('desktop.pages.agreement.refund')
             </div>
         </div>

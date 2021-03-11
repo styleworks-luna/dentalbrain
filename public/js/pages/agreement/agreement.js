@@ -12,8 +12,8 @@ $(function(){
         return false;
     });
 
-    $('.trigger-email').on('click', function () {
-        $('.email-layer-wrapper .layer').slideDown();
+    $('.trigger-privacy-to-third').on('click', function () {
+        $('.privacy-to-third-layer-wrapper .layer').slideDown();
         $('.dim').css('display', 'block');
         return false;
     });
@@ -28,8 +28,8 @@ $(function(){
         e.preventDefault();
 
         $('.service-layer-wrapper .layer').slideUp();
+        $('.privacy-to-third-layer-wrapper .layer').slideUp();
         $('.privacy-layer-wrapper .layer').slideUp();
-        $('.email-layer-wrapper .layer').slideUp();
         $('.refund-layer-wrapper .layer').slideUp();
         $('.dim').css('display', 'none');
     });
