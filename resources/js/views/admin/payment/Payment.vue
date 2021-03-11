@@ -16,7 +16,7 @@
                     <div class="input-group">
                         <input class="form-control"
                                type="text"
-                               placeholder="제목"
+                               placeholder="제목, 이름, 이메일주소, 결제금액"
                                v-model="keyword">
                         <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
@@ -39,7 +39,9 @@
                         </a>
                     </td>
                     <td>
+                        <router-link :to="`/admin/user/${slotProps.row.user_id}`">
                         {{ slotProps.row.name }}
+                        </router-link>
                         <br>
                         {{ slotProps.row.email }}
                     </td>
@@ -62,6 +64,18 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
+                        </template>
+                        <template v-else-if=" slotProps.row.is_free == 0 && slotProps.row.pay_status === 4">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                신청 취소
+                            </a>
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
+                                결제 취소
+                            </a>
                         </template>
                         <a href="#" class="btn btn-danger text-white"
                            @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)"
@@ -115,7 +129,7 @@ export default {
                 data: []
             },
             page: 1,
-            order: 1,
+            order: '',
             keyword: '',
             orderStatus: '',
         }
@@ -176,11 +190,11 @@ export default {
         orderOptions() {
             return [
                 {
-                    id: 1,
+                    id: '1',
                     name: '온라인'
                 },
                 {
-                    id: 0,
+                    id: '0',
                     name: '오프라인'
                 },
             ]
