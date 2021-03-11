@@ -71,7 +71,6 @@ class ApplyController extends Controller
 
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
             // TODO : 재수강 시에 질문 답변 삭제
-            $this->sendLectureApplyMail($request, $program);
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
