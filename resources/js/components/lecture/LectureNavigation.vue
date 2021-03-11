@@ -1,7 +1,7 @@
 <template>
     <div class="lecture-menu">
         <ul>
-            <li v-for="menu in menus" :class="{'active-menu': isActive == menu.id}" @click="handleSetLectureMenu(menu.id,menu.id)">{{ menu.name }}</li>
+            <li v-for="menu in menus" :class="{'active-menu': isActive == menu.id}" @click="handleSetLectureMenu(menu.id,menu.id)" v-html="replace(menu.name)"></li>
         </ul>
     </div>
 </template>
@@ -29,6 +29,10 @@ export default {
             Lecture.getCategory().then(res => {
                 this.menus = res.data;
             })
+        },
+        replace(data) {
+            var replaceData = data.replace(' ', '<br>');
+            return replaceData;
         }
     }
 }

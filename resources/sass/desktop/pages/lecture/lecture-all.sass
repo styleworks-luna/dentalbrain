@@ -49,12 +49,13 @@
 
         li
             +margin(right 40px)
-            +padding(top 25px right 29px bottom 25px left 67px)
+            +padding(top 17px right 26px bottom 17px left 62px)
             +border(1px solid #d8d8d8)
-            +border-radius(35px)
-            +background('/images/desktop/lecture/lecture_menu_icon_1.png', no-repeat, 25px 19px, #fafafa)
+            +border-radius(39px)
+            +background('/images/desktop/lecture/lecture_menu_icon_1.png', no-repeat, 25px center, #fafafa)
             +box-sizing(border-box)
-            display: block
+            display: flex
+            align-items: center
             float: left
             font-size: 20px
             color: $gray-700
@@ -62,9 +63,9 @@
 
         li:hover,
         .active-menu
-            +padding(top 24px right 28px bottom 24px left 66px)
+            +padding(top 16px right 25px bottom 16px left 61px)
             +border(2px solid $page-color)
-            +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px 18px)
+            +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px center)
             font-weight: bold
             color: $font-color-base
 

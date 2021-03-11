@@ -12,5 +12,5 @@ export default {
             url: `/api/admin/lecture/surveys/${program_id}/${user_id}`,
             method: 'get'
         })
-    }
+    },
 }
