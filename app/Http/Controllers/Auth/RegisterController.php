@@ -93,7 +93,7 @@ class RegisterController extends Controller
 
         $result = Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'min:2', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'max:40',
                 'regex:' . $passwordPattern,
