@@ -238,7 +238,6 @@
                                                    @if(old('email-consent')) checked @endif>
                                             <label for="email-consent"> (선택) 이메일 수신</label>
                                         </div>
-                                        <a href="" class="trigger-email">내용보기</a>
                                     </div>
                                 </li>
                             </ul>
@@ -255,7 +254,6 @@
                 <div class="popup-control">
                     @include('desktop.pages.agreement.service')
                     @include('desktop.pages.agreement.privacy')
-                    @include('desktop.pages.agreement.email')
                 </div>
             </form>
         </div>
