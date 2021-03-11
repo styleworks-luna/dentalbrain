@@ -44,12 +44,12 @@ class PaymentController extends Controller
                 $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
                     ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
                     ->orWhere('program_students.phone', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('program_students.email', 'like', '%' . $request->keyword . '%');
+                    ->orWhere('payments.totalAmount', '=', $request->keyword);
             });
         }
 
         return response()->json([
-            'payments' => $payments->paginate(10)
+            'payments' => $payments->orderBy('id','desc')->paginate(10)
         ]);
     }
 
