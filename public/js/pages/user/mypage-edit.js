@@ -127,4 +127,6 @@ $(function () {
        $('#password').attr({'readonly': false, 'data-parsley-required': true});
        $('#password_confirmation').attr('readonly', false);
     });
+
+    form_submit_check();
 });

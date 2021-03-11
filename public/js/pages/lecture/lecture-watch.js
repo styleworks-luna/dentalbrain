@@ -54,4 +54,5 @@ $(function () {
             }
         });
     });
+    form_submit_check();
 });

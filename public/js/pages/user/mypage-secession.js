@@ -15,4 +15,6 @@ $(function() {
             'data-parsley-required': false
         });
     });
+
+    form_submit_check();
 });

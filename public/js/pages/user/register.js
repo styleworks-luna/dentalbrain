@@ -175,4 +175,6 @@ $(function () {
     if(alerts.length != 0) {
         alert(`${alerts}`);
     }
+
+    form_submit_check();
 });

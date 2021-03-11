@@ -40,6 +40,7 @@ $(function () {
         DaumPostcode(index);
     });
 
+    form_submit_check();
 });
 
 function DaumPostcode(index) {

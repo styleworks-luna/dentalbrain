@@ -21,3 +21,18 @@ function email_box(email){
         $('.ui-emailbox-menu').css('display', 'none');
     }, 100);
 }
+function form_submit_check(element){
+    if(element == '' || element == null || element == 'undefined'){
+        element = 'form';
+    }
+
+    $(element).submit(function(){
+        var form = $(this);
+        if (form.parsley().isValid()){
+            form.find('input[type="submit"]').attr('disabled','disabled');
+            form.find('button[type="submit"]').attr('disabled','disabled');
+        }else{
+            return false;
+        }
+    });
+}

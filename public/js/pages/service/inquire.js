@@ -11,4 +11,6 @@ $(function() {
 
     // 파슬리
     $('#inquire-form').parsley();
+
+    form_submit_check();
 });
