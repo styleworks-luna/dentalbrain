@@ -16,13 +16,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
 {
-    private $search;
-
-    public function __construct()
-    {
-        $this->search = new SearchService(Payment::query());
-    }
-
     public function index(Request $request)
     {
         $payments = Payment::query()
