@@ -43,7 +43,7 @@ class PaymentController extends Controller
             $payments->where(function ($query) use ($request) {
                 $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
                     ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('program_students.phone', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('program_students.email', 'like', '%' . $request->keyword . '%')
                     ->orWhere('payments.totalAmount', '=', $request->keyword);
             });
         }
