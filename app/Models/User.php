@@ -15,12 +15,16 @@ class User extends Authenticatable
     use SoftDeletes;
 
     /**
+     * // 6글자 이상, 대문자 혹은 소문자 | 숫자 포함된 패스워드여야 함.
+     * @var string
+     */
+    static $passwordPattern = '/^.*(?=.{6,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x]).*$/';
+    /**
      * mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -29,7 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token', 'last_login_at'
     ];
-
     /**
      * The attributes that should be cast to native types.
      *
@@ -40,7 +43,6 @@ class User extends Authenticatable
         'allow_email' => 'boolean',
         'is_paid' => 'boolean',
     ];
-
     protected $appends = [
         'need_license', 'job_name_id', 'job_name', 'license_num',
     ];
@@ -68,6 +70,22 @@ class User extends Authenticatable
     public function surveyAnswers()
     {
         return $this->hasMany(SurveyAnswer::class, 'user_id', 'id');
+    }
+
+    public function scopeFindIdWithNameAndEmail($query, $name, $email)
+    {
+        return $query->where([
+            'name' => $name,
+            'email' => $email
+        ])->first();
+    }
+
+    public function scopeFindIdWithNameAndPhone($query, $name, $phone)
+    {
+        return $query->where([
+            'name' => $name,
+            'phone' => $phone
+        ])->first();
     }
 
     protected function getNeedLicenseAttribute()
@@ -101,19 +119,5 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
-    }
-
-    public function scopeFindIdWithNameAndEmail($query,$name,$email){
-        return $query->where([
-            'name' => $name,
-            'email' => $email
-        ])->first();
-    }
-
-    public function scopeFindIdWithNameAndPhone($query,$name,$phone){
-        return $query->where([
-            'name' => $name,
-            'phone' => $phone
-        ])->first();
     }
 }

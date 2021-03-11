@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Account;
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserJob;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -29,25 +31,33 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        /* @see RegisterController validator()
+         */
         $v = Validator::make($request->all(), [
-            'email' => ['required', 'string', 'email', 'max:255','unique:users,email,'.Auth::id()],
-            'job' => ['required', 'min:1', 'max:6'],
-            'phone' => ['nullable', 'unique:users,phone,'.Auth::id()],
-            'password' => ['nullable','string', 'min:6', 'max:40', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255',
+                Rule::unique('users', 'email')->ignore(Auth::id()),],
+            'job' => ['required', 'exists:user_job_names,id'],
+            'phone' => ['nullable', Rule::unique('users', 'phone')->ignore(Auth::id()),],
+            'password' => ['required', 'string', 'min:6', 'max:40',
+                'regex:' . User::$passwordPattern,
+                // custom validations rule : without_spaces
+                'without_spaces',
+                'confirmed'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::query()->find($input->job)->need_license == true;
         });
 
-        if($v->fails()) {
-            return redirect()->back()->with('alert','양식에 맞게 작성해주십시오.');
+        // TODO validation 메시지 작업하기
+        if ($v->fails()) {
+            return redirect()->back()->with('alert', '양식에 맞게 작성해주십시오.');
         }
 
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
         $user = Auth::user();
 
-        try{
+        try {
             DB::beginTransaction();
             if ($user->job->license_num != $license_num || $user->job->job_name_id != $data['job']) {
                 $userJob = UserJob::find($user->job_id);
@@ -56,20 +66,20 @@ class UserController extends Controller
                 $userJob->save();
             }
             $user->email = $data['email'];
-            if(isset($data['password'])) $user->password = Hash::make($data['password']);
-            if(isset($data['phone'])) $user->phone = $data['phone'];
+            if (isset($data['password'])) $user->password = Hash::make($data['password']);
+            if (isset($data['phone'])) $user->phone = $data['phone'];
             $user->save();
 
             DB::commit();
-        }catch(\Exception $exception){
-            Log::error('ACCOUNT UPDATE ERROR',[$exception]);
+        } catch (\Exception $exception) {
+            Log::error('ACCOUNT UPDATE ERROR', [$exception]);
             DB::rollBack();
-            return redirect('/')->with('alert',$exception->getMessage());
+            return redirect('/')->with('alert', '오류가 발생하였습니다.');
         }
 
         Auth::logout();
 
-        return redirect('/')->with('alert','변경되었습니다. 다시 로그인 해주세요.');
+        return redirect('/')->with('alert', '변경되었습니다. 다시 로그인 해주세요.');
     }
 
     public function needConfirm(Request $request)
