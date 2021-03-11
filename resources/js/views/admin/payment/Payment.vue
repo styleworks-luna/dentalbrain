@@ -1,21 +1,47 @@
 <template>
     <layout title="결제정보">
+        <template v-slot:search>
+            <div class="float-right">
+                <form @submit.prevent="getData">
+                    <select-box class="form-control"
+                                text="구분 선택"
+                                :value="order"
+                                :options="orderOptions"
+                                @setValue="handleSetOrder"></select-box>
+                    <select-box class="form-control"
+                                text="상태 선택"
+                                :value="orderStatus"
+                                :options="orderStatusOptions"
+                                @setValue="handleSetStatusOrder"></select-box>
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="제목"
+                               v-model="keyword">
+                        <span class="input-group-append">
+                            <button class="btn btn-primary" type="submit">검색</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </template>
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="payments.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
-                        {{ slotProps.row.student.ticket.program.is_online ? '온라인' : '오프라인' }}
+                        {{ slotProps.row.is_online ? '온라인' : '오프라인' }}
                     </td>
                     <td>
-                        <a :href="Helper.urlFormat(`/lectures/${slotProps.row.student.ticket.program.id}`)">
-                            {{ slotProps.row.student.ticket.program.title }}
+                        <a :href="Helper.urlFormat(`/lectures/${slotProps.row.program_id}`)" target="_blank">
+                            {{ slotProps.row.title }}
                         </a>
                     </td>
                     <td>
+                        {{ slotProps.row.name }}
                         <br>
-                        {{ slotProps.row.student.email }}
+                        {{ slotProps.row.email }}
                     </td>
                     <td>{{ Helper.numberWithCommas(slotProps.row.totalAmount) }}</td>
                     <td>{{ slotProps.row.method }}</td>
@@ -28,18 +54,18 @@
                     </td>
                     <td>{{ slotProps.row.approvedAt || '결제 대기중' }}</td>
                     <td>
-                        <template v-if="slotProps.row.student.pay_status === 0">
+                        <template v-if="slotProps.row.pay_status === 0">
                             결제 전
                         </template>
-                        <template v-else-if="slotProps.row.student.pay_status === 1">
+                        <template v-else-if="slotProps.row.pay_status === 1">
                             입금 대기
                         </template>
-                        <template v-else-if="slotProps.row.student.pay_status === 3">
+                        <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
                         </template>
                         <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.student.id, slotProps.row.student.payment.method)"
-                           v-else-if="slotProps.row.student.pay_status === 2">
+                           @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)"
+                           v-else-if="slotProps.row.pay_status === 2">
                             결제 취소
                         </a>
                     </td>
@@ -66,6 +92,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
 import { getData } from '@/api/admin/payment/Payment.js'
@@ -79,14 +106,18 @@ export default {
         PaymentCancelMixin
     ],
     components: {
-        'table-grid': Table
+        'table-grid': Table,
+        SelectBox,
     },
     data() {
         return {
             payments: {
                 data: []
             },
-            page: 1
+            page: 1,
+            order: 1,
+            keyword: '',
+            orderStatus: '',
         }
     },
     mounted() {
@@ -141,6 +172,30 @@ export default {
                     width: '13%'
                 }
             ]
+        },
+        orderOptions() {
+            return [
+                {
+                    id: 1,
+                    name: '온라인'
+                },
+                {
+                    id: 0,
+                    name: '오프라인'
+                },
+            ]
+        },
+        orderStatusOptions() {
+            return [
+                {
+                    id: 'DONE',
+                    name: '결제완료'
+                },
+                {
+                    id: 'CANCELED',
+                    name: '결제취소'
+                }
+            ]
         }
     },
     methods: {
@@ -150,10 +205,14 @@ export default {
             }
 
             let params = {
-                page: page
+                page: page,
+                is_online: this.order,
+                keyword: this.keyword,
+                status: this.orderStatus,
             };
 
             getData(params).then(res => {
+                console.log(res);
                 this.payments = res.data.payments;
             }).catch(err => {
                 this.payments = [];
@@ -182,7 +241,13 @@ export default {
                 case 'PARTIAL_CANCELED':
                     return '부분 취소';
             }
-        }
+        },
+        handleSetOrder(order) {
+            this.order = order;
+        },
+        handleSetStatusOrder(order) {
+            this.orderStatus = order;
+        },
     }
 }
 </script>
