@@ -20,9 +20,9 @@ class PaymentController extends Controller
     {
         $payments = Payment::query()
             ->select(
-                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt', 'payments.status',
+                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
                 'programs.is_online', 'programs.title',
-                'program_students.phone', 'program_students.email', 'program_students.user_id',
+                'program_students.phone', 'program_students.email', 'program_students.user_id','program_students.pay_status',
                 'program_tickets.program_id',
                 'users.name'
             )
