@@ -77,11 +77,19 @@
                                 결제 취소
                             </a>
                         </template>
-                        <a href="#" class="btn btn-danger text-white"
-                           @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)"
-                           v-else-if="slotProps.row.pay_status === 2">
-                            결제 취소
-                        </a>
+                        <template v-else-if="slotProps.row.pay_status === 2">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                신청 취소
+                            </a>
+
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
+                                결제 취소
+                            </a>
+                        </template>
                     </td>
                 </template>
             </table-grid>
@@ -153,7 +161,7 @@ export default {
                 {
                     name: 'title',
                     text: '제목',
-                    width: '33%'
+                    width: '30%'
                 },
                 {
                     name: 'user',
@@ -163,7 +171,7 @@ export default {
                 {
                     name: 'price',
                     text: '금액',
-                    width: '8%'
+                    width: '7%'
                 },
                 {
                     name: 'method',
@@ -183,7 +191,7 @@ export default {
                 {
                     name: 'is_change',
                     text: '변경',
-                    width: '13%'
+                    width: '17%'
                 }
             ]
         },
