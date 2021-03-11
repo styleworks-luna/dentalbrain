@@ -88,7 +88,7 @@ class Survey extends Model
         return $query->with(['choices',
             'answers' => function ($query) use($userId){
                 $query->where('user_id', '=', $userId);
-            }])
+            },'answers.file'])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id');
     }

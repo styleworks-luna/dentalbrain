@@ -62,7 +62,7 @@
                         </template>
                     </td>
                     <td>
-                        <router-link :to="``"
+                        <router-link :to="`/admin/lecture/online/${id}/${slotProps.row.user_id}/additional`"
                                      class="btn btn-info">
                             보기
                         </router-link>

@@ -2,6 +2,7 @@ import Online from '@/views/admin/lecture/Online.vue';
 import OnlineCreate from '@/views/admin/lecture/OnlineCreate.vue';
 import OnlineEdit from '@/views/admin/lecture/OnlineEdit.vue';
 import OnlineStudent from '@/views/admin/lecture/OnlineStudent.vue';
+import OnlineAdditional from '@/views/admin/lecture/OnlineAdditional.vue';
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         name: 'AdminOnlineEdit',
         component: OnlineEdit
     },
+    {
+        path: '/admin/lecture/online/:program_id/:student_id/additional',
+        name: 'AdminOnlineAdditional',
+        component: OnlineAdditional,
+    }
 ];
 
 export default routes;
