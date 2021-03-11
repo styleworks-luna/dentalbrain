@@ -113,9 +113,7 @@ class RegisterController extends Controller
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
-
-        ddd($result->validated());
-
+        
         return $result;
     }
 
