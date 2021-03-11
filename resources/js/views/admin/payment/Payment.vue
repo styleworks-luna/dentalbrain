@@ -68,25 +68,25 @@
                         <template v-else-if=" slotProps.row.is_free == 0 && slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
                                v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.id)">
+                               @click.prevent="cancelLecture(slotProps.row.user_id)">
                                 신청 취소
                             </a>
                             <a href="#" class="btn btn-danger text-white"
                                v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
+                               @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)">
                                 결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
                                v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.id)">
+                               @click.prevent="cancelLecture(slotProps.row.user_id)">
                                 신청 취소
                             </a>
 
                             <a href="#" class="btn btn-danger text-white"
                                v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
+                               @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)">
                                 결제 취소
                             </a>
                         </template>
@@ -234,7 +234,6 @@ export default {
             };
 
             getData(params).then(res => {
-                console.log(res);
                 this.payments = res.data.payments;
             }).catch(err => {
                 this.payments = [];
