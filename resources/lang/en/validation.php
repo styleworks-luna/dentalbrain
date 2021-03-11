@@ -137,7 +137,8 @@ return [
             'required' => '※ 아이디를 입력해주세요.'
         ],
         'password' => [
-            'required' => '※ 비밀번호를 입력해주세요.'
+            'required' => '※ 비밀번호를 입력해주세요.',
+            'regex' => '비밀번호는 영문자와 숫자를 포함하여 6글자 이상이여야 합니다.'
         ],
         'thumbnail_id' => [
             'required' => '대표 썸네일을 추가하셔야 합니다.'
@@ -148,8 +149,6 @@ return [
         'minor_category_id' => [
             'required' => '소분류를 설정해 주세요.'
         ]
-
-
     ],
 
     /*
