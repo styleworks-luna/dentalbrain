@@ -11,6 +11,8 @@ $(function () {
                 var value = $('.ui-selectmenu-text').text();
                 if( value == '학생' || value == '기타') {
                     $('#license_num').css('display',' none').attr('data-parsley-required', false);
+                } else {
+                    $('#license_num').css('display',' block').attr('data-parsley-required', true);
                 }
             }
         });
