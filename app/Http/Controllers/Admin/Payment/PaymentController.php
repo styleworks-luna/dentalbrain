@@ -22,7 +22,7 @@ class PaymentController extends Controller
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
                 'programs.is_online', 'programs.title',
-                'program_students.phone', 'program_students.email', 'program_students.user_id','program_students.pay_status',
+                'program_students.id as student_id','program_students.phone', 'program_students.email', 'program_students.user_id','program_students.pay_status',
                 'program_tickets.program_id',
                 'users.name'
             )
@@ -49,7 +49,7 @@ class PaymentController extends Controller
         }
 
         return response()->json([
-            'payments' => $payments->orderBy('id','desc')->paginate(10)
+            'payments' => $payments->orderBy('payments.id','desc')->paginate(10)
         ]);
     }
 

@@ -67,13 +67,13 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
                                 결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
                                 결제 취소
                             </a>
                         </template>
