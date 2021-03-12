@@ -120,7 +120,7 @@
                             <input type="text"
                                    class="form-control ml-3"
                                    placeholder="신청 금액 입력"
-                                   :disabled="is_free == 1 || haveStudents == true"
+                                   :disabled="is_free == 'true' || haveStudents == true"
                                    v-model="price">
                         </div>
                         <div class="radio-wrap mt-1">

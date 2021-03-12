@@ -24,7 +24,7 @@ export const LectureFormMixin = {
             thumbnail: {},
             title: '',
             lecture_info: '',
-            is_free: true,
+            is_free: 'true',
             price: '',
             content: '',
             surveys: [],
