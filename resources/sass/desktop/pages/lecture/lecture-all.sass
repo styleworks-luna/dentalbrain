@@ -43,29 +43,31 @@
     .lecture-menu
         ul
             +margin(0 auto)
+            +margin(bottom 40px)
             display: flex
             overflow: hidden
             justify-content: center
 
         li
             +margin(right 30px)
-            +padding(top 17px right 26px bottom 17px left 62px)
+            +padding(top 13px right 27px bottom 14px left 59px)
             +border(1px solid #d8d8d8)
             +border-radius(39px)
-            +background('/images/desktop/lecture/lecture_menu_icon_1.png', no-repeat, 25px center, #fafafa)
+            +background('/images/desktop/lecture/lecture_menu_icon_1.png', no-repeat, 20px center, #fafafa)
             +box-sizing(border-box)
             display: flex
-            align-items: center
             float: left
             font-size: 20px
             color: $gray-700
             cursor: pointer
+            align-items: center
+            line-height: 24px
 
         li:hover,
         .active-menu
-            +padding(top 16px right 25px bottom 16px left 61px)
+            +padding(top 12px right 26px bottom 13px left 58px)
             +border(2px solid $page-color)
-            +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 24px center)
+            +background('/images/desktop/lecture/lecture_menu_icon_on_1.png', no-repeat, 19px center, #fff)
             font-weight: bold
             color: $font-color-base
 
