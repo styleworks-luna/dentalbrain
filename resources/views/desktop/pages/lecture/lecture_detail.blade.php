@@ -54,7 +54,7 @@
                                     </tr>
                                 @endif
                                 <tr>
-                                    <th>옵션선택</th>
+                                    <th>강의정보</th>
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
