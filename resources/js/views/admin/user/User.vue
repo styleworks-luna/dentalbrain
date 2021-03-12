@@ -4,6 +4,12 @@
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
+                                text="회원"
+                                :value="member"
+                                :options="userOption"
+                                @setValue="handleSetMember"></select-box>
+
+                    <select-box class="form-control"
                                 text="분류"
                                 :value="job_name_id"
                                 :options="jobOptions"
@@ -27,8 +33,8 @@
                         :data="users.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.is_paid ? '유료회원' : '일반'}}</td>
-                    <td>{{ slotProps.row.login_id }} </td>
+                    <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
+                    <td>{{ slotProps.row.login_id }}</td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
@@ -80,6 +86,7 @@ export default {
             users: {
                 data: []
             },
+            member: '',
             jobOptions: [],
             job_name_id: '',
             keyword: '',
@@ -134,6 +141,18 @@ export default {
                     width: '10%'
                 }
             ]
+        },
+        userOption() {
+            return [
+                {
+                    id: 'normal',
+                    name: '일반회원',
+                },
+                {
+                    id:'paid',
+                    name: '유료회원',
+                }
+            ]
         }
     },
     methods: {
@@ -158,6 +177,9 @@ export default {
             User.getCategory().then(res => {
                 this.jobOptions = res.data.userJob;
             });
+        },
+        handleSetMember(value) {
+            this.member = value;
         },
         handleSetJobyId(value) {
             this.job_name_id = value;
