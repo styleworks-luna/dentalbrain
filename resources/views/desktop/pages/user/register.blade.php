@@ -113,7 +113,7 @@
                             <th><label for="upw">비밀번호</label></th>
                             <td>
                                 <input type="password" id="password" name="password"
-                                       placeholder="비밀번호 (최소 6자, 영문자, 숫자 포함)"
+                                       placeholder="비밀번호 (영문, 숫자 포함 최소 6자)"
                                        data-parsley-required="true"
                                        data-parsley-minlength="6"
                                        data-parsley-errors-container=".password-error-wrap"
