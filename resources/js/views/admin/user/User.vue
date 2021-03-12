@@ -27,7 +27,7 @@
                         :data="users.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.is_paid ? '유료회원' : '무료회원'}}</td>
+                    <td>{{ slotProps.row.is_paid ? '유료회원' : '일반'}}</td>
                     <td>{{ slotProps.row.login_id }} </td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
