@@ -19,8 +19,6 @@
 
     .swiper-controller-wrap
         +size(354px, 30px)
-
-
         +border-radius(15px)
         +background(null,null,null,rgba(0,0,0,0.2))
         position: absolute
@@ -58,13 +56,13 @@
 
         .swiper-button-prev,
         .swiper-button-next
-            +margin(top -5px)
-            +size(7px, 10px)
+            +margin(top -15px)
+            +size(21px, 30px)
 
         .swiper-button-prev
             +background('/images/desktop/global/icon_left_arrow_white.png',no-repeat,center center,null)
             background-size: 7px 10px
-            transform: translateX(295px)
+            transform: translateX(288px)
 
             &:hover
                 +background('/images/desktop/global/icon_left_arrow_purple.png')
@@ -72,7 +70,7 @@
         .swiper-button-next
             +background('/images/desktop/global/icon_right_arrow_white.png',no-repeat,center center,null)
             background-size: 7px 10px
-            transform: translateX(-10px)
+            transform: translateX(-3px)
 
             &:hover
                 +background('/images/desktop/global/icon_right_arrow_purple.png')
