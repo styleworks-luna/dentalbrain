@@ -171,9 +171,15 @@ $(function () {
     });
 
     // 알람 처리
-    let alerts = $('.alert-danger').text();
+    let alerts = $('.alert-danger-list');
+    let errorString = '';
+
+    alerts.map(function (key,item) {
+        errorString += item.innerText + '\n';
+    })
+
     if(alerts.length != 0) {
-        alert(`${alerts}`);
+        alert(`${errorString}`);
     }
 
     form_submit_check();
