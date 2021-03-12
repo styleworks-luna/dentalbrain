@@ -23,7 +23,7 @@
                     <div class="swiper-wrapper">
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
-                                <a href="{{ route('lectures.detail',$slide->id) }}">
+                                <a href="{{ route('api.banners.redirect',$slide->id) }}">
                                     <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
@@ -48,7 +48,7 @@
 
             <section class="ad">
                 @if($bar)
-                    <a href="{{ $bar->link }}">
+                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="바배너">
                     </a>
                 @else
