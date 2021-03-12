@@ -29,8 +29,10 @@ $(function() {
             success: function(res) {
                 if (res.success) {
                     messageWrap.html('<p class="success">가입된 사용자 아이디는 <strong>' + res.login_id + '</strong> 입니다.</p>');
+                    $('.find-id-form').css('height', '338px');
                 } else {
-                    messageWrap.html('<p class="error">' + res.message + '</p>');
+                    messageWrap.html('<p class="error">' + '※ ' + res.message + '</p>');
+                    $('.find-id-form').css('height', '322px');
                 }
             },
             fail: function(err) {
@@ -63,7 +65,7 @@ $(function() {
                 if (res.success) {
                     messageWrap.html('<p class="send">' + res.message + '</p>');
                 } else {
-                    messageWrap.html('<p class="error">' + res.message + '</p>');
+                    messageWrap.html('<p class="error">' + '※ ' + + res.message + '</p>');
                 }
             },
             fail: function(err) {
