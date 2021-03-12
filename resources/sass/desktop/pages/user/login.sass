@@ -26,6 +26,7 @@
 
     .login-form
         +margin(top 17px)
+
         .password
             +margin(top 10px)
 
@@ -36,13 +37,29 @@
             font-size: 16px
 
     .login-addition
-        +margin(top 21px)
+        +margin(top 25px)
         text-align: right
 
         .find-id
             +margin(right 17px)
             color: $gray-700
 
+            &:hover
+                text-decoration: underline
+
         .go-register
             font-weight: bold
             color: $gray-700
+
+            &:hover
+                text-decoration: underline
+
+    .error-wrap
+        +margin(top 6px)
+
+        .error
+            +size(320px, 30px)
+            +margin(0 auto)
+            font-size: 12px
+            color: $red
+            line-height: 1.5

@@ -18,9 +18,9 @@
                         <input type="submit" class="btn-login" value="로그인">
                     </div>
                     @if($errors->any())
-                        <br>
-                        {{$errors->first()}}
-                        <br>
+                        <div class="error-wrap">
+                        <p class="error">{{$errors->first()}}</p>
+                        </div>
                     @endif
                     <div class="login-addition">
                         <a href="{{ url('find') }}" class="find-id">아이디/비밀번호 찾기</a>
