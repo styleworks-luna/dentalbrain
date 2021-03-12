@@ -65,28 +65,15 @@
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
                         </template>
-                        <template v-else-if=" slotProps.row.is_free == 0 && slotProps.row.pay_status === 4">
+                        <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.user_id)">
-                                신청 취소
-                            </a>
-                            <a href="#" class="btn btn-danger text-white"
-                               v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)">
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
                                 결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.user_id)">
-                                신청 취소
-                            </a>
-
-                            <a href="#" class="btn btn-danger text-white"
-                               v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method)">
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.user_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
                                 결제 취소
                             </a>
                         </template>
@@ -133,6 +120,7 @@ export default {
     },
     data() {
         return {
+            id: '',
             payments: {
                 data: []
             },
@@ -262,6 +250,9 @@ export default {
                 case 'PARTIAL_CANCELED':
                     return '부분 취소';
             }
+        },
+        getProgramId(data) {
+          this.id = data;
         },
         handleSetOrder(order) {
             this.order = order;
