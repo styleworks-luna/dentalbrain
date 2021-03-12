@@ -9,19 +9,21 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Reset;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
-use App\Models\User;
-use App\Mail\Reset;
+use Illuminate\Support\Str;
 
 
-class FindPasswordController extends Controller{
-    public function sendPasswordMail(Request $request){
+class FindPasswordController extends Controller
+{
+    public function sendPasswordMail(Request $request)
+    {
         $validatedData = $request->validate([
             'email' => 'required|email'
         ]);
@@ -29,20 +31,19 @@ class FindPasswordController extends Controller{
         return $this->sendResetEmail($validatedData['email']);
     }
 
-    public function sendPasswordMailWithUser(User $user){
-        return $this->sendResetEmail($user->email);
-    }
-
-    private function sendResetEmail($email){
-        try{
+    private function sendResetEmail($email)
+    {
+        try {
+            DB::beginTransaction();
             $user = User::where('email', $email)->firstOrFail();
             $newPassword = Str::random(6);
-            DB::beginTransaction();
+
+
             $user->password = Hash::make($newPassword);
             $user->save();
             DB::commit();
-        }catch(\Exception $e){
-            Log::error('SEND RESET EMAIL ERROR',[$e]);
+        } catch (ModelNotFoundException $e) {
+            Log::info('SEND RESET EMAIL MISMATCH', [$e]);
             DB::rollBack();
 
             return response()->json([
@@ -51,19 +52,26 @@ class FindPasswordController extends Controller{
             ]);
         }
 
-        try{
+        try {
             Mail::to($email)
-                ->send(new Reset($user,$newPassword));
+                ->send(new Reset($user, $newPassword));
 
             return response()->json([
                 'message' => '회원님의 메일로 비밀번호 재설정 안내 메일이 발송되었습니다.',
                 'success' => true
             ]);
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
+            Log::error('SEND RESET EMAIL ERROR', [$e]);
+
             return response()->json([
                 'message' => '오류가 발생했습니다.',
                 'success' => false
             ]);
         }
+    }
+
+    public function sendPasswordMailWithUser(User $user)
+    {
+        return $this->sendResetEmail($user->email);
     }
 }
