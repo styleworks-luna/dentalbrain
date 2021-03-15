@@ -127,8 +127,10 @@
                                             <ul>
                                                 @forelse($survey->choices as $choice)
                                                     <li class="radio-wrap">
-
                                                         <input type="radio" id="choice-{{$choice->id}}"
+                                                               @if($choice->choiceAnswer)
+                                                               checked
+                                                               @endif
                                                                name="surveys[{{ $idx }}][answer]"
                                                                value="{{ $choice->id }}"
                                                                data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
@@ -164,6 +166,9 @@
                                                         <input type="checkbox" id="multiple-choice-{{ $choice->id }}"
                                                                name="surveys[{{ $idx }}][answers][]"
                                                                value="{{ $choice->id }}"
+                                                               @if($choice->choiceAnswer)
+                                                               checked
+                                                               @endif
                                                                data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                                data-parsley-errors-container=".checkbox_error_wrap{{ $survey->id }}"
                                                                data-parsley-multiple="checkbox{{ $survey->id }}"
@@ -189,6 +194,7 @@
                                             <input type="text" id="short-answer-response"
                                                    name="surveys[{{ $idx }}][answer]"
                                                    class="short-answer-response" placeholder="답변을 입력하세요."
+                                                   value="@isset($survey->answer) {{ $survey->answer->content }} @endisset"
                                                    data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                    data-parsley-errors-container=".short_answer_error_wrap{{ $survey->id }}"
                                                    data-parsley-required-message="답변을 입력하세요.">
@@ -208,6 +214,7 @@
                                                        data-index="{{ $idx }}">
                                                 <input type="text" id="address" name="surveys[{{ $idx }}][address]"
                                                        class="address"
+                                                       value="@isset($survey->answer) {{ $survey->answer->address }} @endisset"
                                                        data-index="{{ $idx }}"
                                                        readonly="readonly"
                                                        data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
@@ -216,6 +223,7 @@
                                                 <input type="text" id="address-detail"
                                                        name="surveys[{{ $idx }}][address_detail]"
                                                        class="address-detail"
+                                                       value="@isset($survey->answer) {{ $survey->answer->address_detail }} @endisset"
                                                        placeholder="상세주소를 입력하세요."
                                                        data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                        data-parsley-errors-container=".address_answer_error_wrap{{ $survey->id }}"

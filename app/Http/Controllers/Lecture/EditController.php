@@ -12,7 +12,7 @@ class EditController extends Controller
 {
     public function showEditForm(Program $program, ProgramStudent $student)
     {
-        $surveys = Survey::result($program->id)
+        $surveys = Survey::edit($program->id)
             ->get();
 
         $programStudent = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
