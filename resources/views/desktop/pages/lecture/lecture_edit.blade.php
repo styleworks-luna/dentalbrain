@@ -6,7 +6,6 @@
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-apply.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/agreement/agreement.js') }}"></script>
 @endsection
 
 @section('style')
@@ -21,8 +20,8 @@
                 <div class="row">
                     @csrf
                     <section class="apply-title">
-                        <h1>신청하기</h1>
-                        <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
+                        <h1>강의 신청 정보 수정</h1>
+                        {{--<p><em>수정하기</em></p>--}}
                     </section>
 
                     <section class="lecture-information-wrap">
@@ -89,7 +88,7 @@
                                            id="email"
                                            name="email"
                                            class="email_box"
-                                           value="{{ old('email') ?? $student->email}}"
+                                           value="{{old('email') ?? $programStudent->email}}"
                                            data-parsley-required="true"
                                            data-parsley-type="email"
                                            data-parsley-class-handler=".ui-emailbox"
@@ -103,7 +102,7 @@
                                            id="phone"
                                            name="phone"
                                            class="phone"
-                                           value="{{old('phone') ?? $student->phone}}"
+                                           value="{{old('phone') ?? $programStudent->phone}}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="전화번호를 입력해주세요.">
                                 </td>
@@ -132,7 +131,6 @@
                                                         <input type="radio" id="choice-{{$choice->id}}"
                                                                name="surveys[{{ $idx }}][answer]"
                                                                value="{{ $choice->id }}"
-                                                               @if ($choice->id == $choice->answer)
                                                                data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                                data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
                                                                data-parsley-multiple="radio{{ $survey->id }}"
@@ -270,63 +268,11 @@
                         </section>
                     @endif
 
-                    <section class="payment-information">
-                        <h3>결제정보</h3>
-                        <table>
-                            <tr>
-                                <th>결제금액</th>
-                                @if ($program->canRepeat())
-                                    <td><em>{{ $program->ticket->is_free ? '무료' : '재수강 할인가:' . number_format($program->ticket->repeat_price).'원' }}</em></td>
-                                @else
-                                    <td><em>{{ $program->ticket->is_free ? '무료' : number_format($program->ticket->price).'원' }}</em></td>
-                                @endif
-
-                            </tr>
-                        </table>
-                    </section>
-                    <section class="agree">
-                        <h3>신청자 동의</h3>
-                        <div class="agreement-all-wrap checkbox-wrap">
-                            <input type="checkbox" id="agree-all" name="agree-all" class="agree-all">
-                            <label for="agree-all">전체동의</label>
-                        </div>
-                        <div class="agreement-wrap">
-                            <ul>
-                                <li>
-                                    <div class="checkbox-wrap">
-                                        <input type="checkbox" id="offer-consent" name="offer-consent"
-                                               class="offer-consent"
-                                               data-parsley-required="true"
-                                               data-parsley-errors-container=".offer_error_wrap"
-                                               data-parsley-required-message="동의를 선택해주세요.">
-                                        <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
-                                    </div>
-                                    <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
-                                    <a href="" class="trigger-privacy-to-third">내용보기</a>
-                                    <div class="offer_error_wrap"></div>
-                                </li>
-                                <li>
-                                    <div class="checkbox-wrap">
-                                        <input type="checkbox" id="refund-consent" name="refund-consent"
-                                               class="refund-consent"
-                                               data-parsley-required="true"
-                                               data-parsley-errors-container=".refund_error_wrap"
-                                               data-parsley-required-message="동의를 선택해주세요.">
-                                        <label for="refund-consent">(필수) 취소/환불약관 동의</label>
-                                    </div>
-                                    <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
-                                    <a href="" class="trigger-refund">내용보기</a>
-                                    <div class="refund_error_wrap"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </section>
-
                     <section class="btn-wrap">
                         <button type="submit" class="btn-confirm">
-                            {{ $program->ticket->is_free ? '신청하기' : '결제하기' }}
+                            수정하기
                         </button>
-                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소</a>
+                        <a href="{{ session()->previousUrl() }}" class="btn-cancel">취소</a>
                     </section>
 
                 </div>

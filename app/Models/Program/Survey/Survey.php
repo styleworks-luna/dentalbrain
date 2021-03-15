@@ -92,4 +92,16 @@ class Survey extends Model
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id');
     }
+
+    public function scopeEdit(Builder $query, $programId)
+    {
+        return $query->with(['choices',
+            'answers' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            }, 'answer' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            }])
+            ->where('program_id', '=', $programId)
+            ->whereNull('parent_id');
+    }
 }
