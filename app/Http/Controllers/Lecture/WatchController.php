@@ -22,22 +22,17 @@ class WatchController extends Controller
             ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
-
-            return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
-                'program' => $program
-            ]);
+        } else {
+            if (!$program->alreadyPaid()) {
+                // 미 결제
+                return abort(Response::HTTP_UNAUTHORIZED);
+            } else if ($program->canOnlineRefund()) {
+                // 환불 가능 상태일 경우.
+                return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
+                    'program' => $program
+                ]);
+            }
         }
-
-        if (!$program->alreadyPaid()) {
-            // 미 결제
-            return abort(Response::HTTP_UNAUTHORIZED);
-        } else if ($program->canOnlineRefund()) {
-            // 환불 가능 상태일 경우.
-            return view(viewPrefix() . 'pages.lecture.lecture_confirm', [
-                'program' => $program
-            ]);
-        }
-
 
         if ($lecture === null) {
             $now = $program->lectures()->orderBy('id')->first();
