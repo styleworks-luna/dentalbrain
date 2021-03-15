@@ -87,18 +87,25 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-
-                            @isset($student)
-                                @if($program->is_online == false && $program->place->receipt_ended_at < now())
-                                    {{--오프라인 강의 신청 마감--}}
-                                    <div class="btn-wrap">
+                            @if($program->is_online == false && $program->place->receipt_ended_at < now())
+                                {{--오프라인 강의 신청 마감--}}
+                                <div class="btn-wrap">
                                         <span class="btn-apply-complete">
                                             신청기간이 지난강의 입니다
                                         </span>
-                                    </div>
-                                @else
+                                </div>
+                            @elseif ($program->is_online == false && $program->exceedCapacity())
+                                {{--강의 정원을 넘길 경우--}}
+                                <div class="btn-wrap">
+                                    <span class="btn-apply-complete">
+                                        모집정원이 마감되었습니다.
+                                    </span>
+                                </div>
+                            @else
+                                @isset($student)
+                                    {{--이미 신청한 기록이 있을 경우--}}
                                     @if($program->alreadyApplied())
-                                        {{--이미 신청 한 강의 일 경우--}}
+                                        {{--이미 신청 한 강의 일 경우 (Paid, expired_at < now)--}}
                                         <div class="btn-wrap">
                                             @if($program->alreadyPaid() && $program->is_online)
                                                 <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
@@ -114,34 +121,33 @@
                                             </a>
                                         </div>
                                     @elseif ($program->canRepeat())
-                                        {{--재수강 가능할 경우--}}
+                                        {{--재수강 가능할 경우 (Paid, expired_at > now)--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
                                                 재수강 신청하기
                                             </a>
                                         </div>
                                     @else
-                                        {{-- 일반 --}}
+                                        {{--환불 관련 (환불 중이거나, 환불 받은 상황)--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
                                                 신청하기
                                             </a>
                                         </div>
                                     @endif
-                                @endif
-                            @else
-                                <div class="btn-wrap">
-                                    <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
-                                        신청하기
-                                    </a>
-                                </div>
-                            @endisset
-
-
+                                @else
+                                    {{--일반적 상황--}}
+                                    <div class="btn-wrap">
+                                        <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                            신청하기
+                                        </a>
+                                    </div>
+                                @endisset
+                            @endif
                             <a href=""
-                               class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}</a>
+                               class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
+                            </a>
                         </div>
-                    </div>
                 </section>
 
                 <section class="lecture-detail">

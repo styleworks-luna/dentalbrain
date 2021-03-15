@@ -85,7 +85,7 @@ return [
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
-        'numeric' => 'The :attribute must be at least :min.',
+        'numeric' => ':attribute :min 이상이여야 합니다.',
         'file' => 'The :attribute must be at least :min kilobytes.',
         'string' => ':min 자 이상이여야 합니다.',
         'array' => 'The :attribute must have at least :min items.',
@@ -176,6 +176,12 @@ return [
         'verification_number' => '인증 번호',
         'phone' => '핸드폰 번호',
         'email' => '이메일',
+        'capacity' => '정원',
+        'receipt_started_at' => '신청 시작',
+        'receipt_ended_at' => '신청 마감',
+        'started_at' => '시작',
+        'ended_at' => '종료',
+        'address' => '주소',
     ],
 
 ];

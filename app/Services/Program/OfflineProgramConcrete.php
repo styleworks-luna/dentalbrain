@@ -31,7 +31,7 @@ class OfflineProgramConcrete extends ProgramTemplate
             'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
             'longitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
 
-            'capacity' => ['required', 'numeric'],
+            'capacity' => ['required', 'numeric','min:1'],
 
             'started_at' => ['required', 'date', 'before:ended_at'],
             'ended_at' => ['required', 'date', 'after:started_at'],

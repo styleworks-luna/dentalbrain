@@ -30,9 +30,16 @@ class ApplyController extends Controller
             return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
         }
 
+
         if ($program->is_online == 1) {
+            // 온라인 강의
             $programService = new OnlineProgramConcrete();
         } else {
+            // 오프라인 강의
+            if ($program->exceedCapacity()) {
+                // 강의 정원보다 수강생이 많을 경우
+                return redirect()->back()->with('alert', '모집정원이 마감되었습니다.');
+            }
             $programService = new OfflineProgramConcrete();
         }
 

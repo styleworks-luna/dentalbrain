@@ -49,6 +49,7 @@ class Program extends Model
 
     /**
      * 이미 유저가 강의를 지불했는지 확인.
+     * alreadyApplied > alreadyPaid
      * @return bool
      */
     public function alreadyPaid()
@@ -67,6 +68,7 @@ class Program extends Model
 
     /**
      * 이미 유저가 강의를 신청했는지 확인.
+     * alreadyApplied > alreadyPaid
      * @return bool
      */
     public function alreadyApplied()
@@ -85,6 +87,9 @@ class Program extends Model
 
     public function canRepeat()
     {
+        if ($this->is_online == false) {
+            return false;
+        }
         $user = Auth::user();
         if ($user != null) {
             return $user->students()
@@ -110,16 +115,32 @@ class Program extends Model
         }
     }
 
+    public function exceedCapacity()
+    {
+        return $this->place->capacity <= $this->students()->count();
+    }
+
+    /*
+     * ======= Define Relationships =========
+     */
+
+    public function students()
+    {
+        return $this->hasManyThrough(ProgramStudent::class, ProgramTicket::class,
+            'program_id', 'ticket_id',
+            'id', 'id');
+    }
+
+    /**
+     * 오프라인 전용. 환불 요청 할 수 있는지 확인함.
+     * @return bool
+     */
     public function canRequestRefund()
     {
         return $this->place()->where('started_at', '>', now()->addDay())
             ->where('started_at', '<', now()->addDays(2))
             ->exists();
     }
-
-    /*
-     * ======= Define Relationships =========
-     */
 
     public function place()
     {
@@ -149,13 +170,6 @@ class Program extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'program_id', 'id');
-    }
-
-    public function students()
-    {
-        return $this->hasManyThrough(ProgramStudent::class, ProgramTicket::class,
-            'program_id', 'ticket_id',
-            'id', 'id');
     }
 
     public function thumbnail()
