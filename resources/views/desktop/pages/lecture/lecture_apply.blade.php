@@ -89,7 +89,7 @@
                                            id="email"
                                            name="email"
                                            class="email_box"
-                                           value="{{ old('email') ?? $student->email}}"
+                                           value="{{old('email') ?? auth()->user()->email}}"
                                            data-parsley-required="true"
                                            data-parsley-type="email"
                                            data-parsley-class-handler=".ui-emailbox"
@@ -103,7 +103,7 @@
                                            id="phone"
                                            name="phone"
                                            class="phone"
-                                           value="{{old('phone') ?? $student->phone}}"
+                                           value="{{old('phone') ?? auth()->user()->phone}}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="전화번호를 입력해주세요.">
                                 </td>
@@ -132,7 +132,6 @@
                                                         <input type="radio" id="choice-{{$choice->id}}"
                                                                name="surveys[{{ $idx }}][answer]"
                                                                value="{{ $choice->id }}"
-                                                               @if ($choice->id == $choice->answer)
                                                                data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                                data-parsley-errors-container=".radio_error_wrap{{ $survey->id }}"
                                                                data-parsley-multiple="radio{{ $survey->id }}"
