@@ -38,7 +38,9 @@ class OfflineProgramController extends Controller
 
         $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
             ->with('place:id,program_id,started_at,ended_at,address,address_detail')
-            ->withCount('students')->orderByDesc('id')->paginate('10');
+            ->withCount(['students' => function($query){
+                $query->where('pay_status','!=','0')->where('pay_status','!=','3');
+            }])->orderByDesc('id')->paginate('10');
 
         return $search;
     }
