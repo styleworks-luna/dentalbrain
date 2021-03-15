@@ -13,7 +13,7 @@ class MainController extends Controller
 {
     public function index(Request $request)
     {
-        $data['slides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_TOP)->take(4)->get();
+        $data['slides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_TOP)->take(8)->get();
         $data['bar'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BAR)->first();
         $data['bottomSlides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BOTTOM)->get();
         $data['recommends'] = Program::public(null, 'popular')->take(10)->get();

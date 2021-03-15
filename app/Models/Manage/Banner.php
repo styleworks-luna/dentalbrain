@@ -65,8 +65,8 @@ class Banner extends Model
         return $query->where('is_open', '=', 1)
             ->where('started_at', '<=', now())
             ->where('ended_at', '>=', now())
-            ->inRandomOrder()
             ->orderByDesc('order')
+            ->inRandomOrder()
             ->with('desktopFile', 'mobileFile');
     }
 }
