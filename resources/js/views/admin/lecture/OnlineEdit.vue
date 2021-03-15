@@ -74,7 +74,7 @@
                     <template v-slot:content>
 
                         <div class="radio-wrap">
-                            <input type="radio" id="pay" value="false"
+                            <input type="radio" id="pay" :value="false"
                                    :disabled="haveStudents == true"
                                    v-model="is_free">
                             <label for="pay" class="mr-3">유료</label>
@@ -85,7 +85,7 @@
                                    v-model="price">
                         </div>
                         <div class="radio-wrap free">
-                            <input type="radio" id="free" value="true"
+                            <input type="radio" id="free" :value="true"
                                    :disabled="haveStudents == true"
                                    v-model="is_free">
                             <label for="free">무료</label>
