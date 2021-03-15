@@ -81,7 +81,7 @@
                             <input type="text"
                                    class="form-control"
                                    placeholder="신청 금액 입력"
-                                   :disabled="is_free == 'true' || haveStudents == true"
+                                   :disabled="is_free == true || haveStudents == true"
                                    v-model="price">
                         </div>
                         <div class="radio-wrap free">
