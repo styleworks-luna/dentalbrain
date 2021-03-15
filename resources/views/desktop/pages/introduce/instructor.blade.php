@@ -146,7 +146,7 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">박진아</h2>
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원</li>
+                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
                                 <li>월야치과 실장</li>
                                 <li>임플란트 전문치과위생사과정 이수</li>
                                 <li>한국병원서비스코디네이터교육 이수</li>
@@ -200,7 +200,7 @@
                             <ul class="instructor-career">
                                 <li>㈜브레인스펙병원교육개발원 전문강사</li>
                                 <li>서울이오스치과 실장</li>
-                                <li>보험청구협회1급자격증</li>
+                                <li>보험청구협회 1급 자격증</li>
                                 <li>분야 : 데스크업무,치과보험청구, 고객관리</li>
                             </ul>
                         </div>
