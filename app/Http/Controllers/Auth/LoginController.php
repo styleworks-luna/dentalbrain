@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -58,9 +59,28 @@ class LoginController extends Controller
 
     protected function validateLogin(Request $request)
     {
+        // 로그인 폼 하나도 안채웠을 시 에러 따로 표시해달라는 요청이 있었으므로
+        // validation 두개로 분리하여 작성하였음.
         $request->validate([
             $this->username() => 'bail|required|string',
+        ]);
+
+        $request->validate([
             'password' => 'required|string',
+        ]);
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param Request $request
+     *
+     * @throws ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'login_failed' => [trans('auth.failed')],
         ]);
     }
 }
