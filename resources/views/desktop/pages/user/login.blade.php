@@ -19,7 +19,7 @@
                     </div>
                     @if($errors->any())
                         <div class="error-wrap">
-                        <p class="error">{{$errors->first()}}</p>
+                            <p class="error">{{$errors->first()}}</p>
                         </div>
                     @endif
                     <div class="login-addition">
