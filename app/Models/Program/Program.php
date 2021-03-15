@@ -117,7 +117,9 @@ class Program extends Model
 
     public function exceedCapacity()
     {
-        return $this->place->capacity <= $this->students()->count();
+        return $this->place->capacity <= $this->students()
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
+                ->count();
     }
 
     /*
