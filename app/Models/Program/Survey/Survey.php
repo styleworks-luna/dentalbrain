@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 /**
  * @method static Builder result(int $programId)
- * @method static Builder resultWithUser(int $programId,int $userId)
+ * @method static Builder resultWithUser(int $programId, int $userId)
  */
 class Survey extends Model
 {
@@ -71,9 +70,9 @@ class Survey extends Model
     {
         return $query->with(['choices',
             'answers' => function ($query) {
-                $query->where('user_id', '=', Auth::id());
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
             }, 'answer' => function ($query) {
-                $query->where('user_id', '=', Auth::id());
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
             }])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id')
@@ -84,11 +83,12 @@ class Survey extends Model
             });
     }
 
-    public function scopeResultWithUser(Builder $query, $programId, $userId){
+    public function scopeResultWithUser(Builder $query, $programId, $userId)
+    {
         return $query->with(['choices',
-            'answers' => function ($query) use($userId){
+            'answers' => function ($query) use ($userId) {
                 $query->where('user_id', '=', $userId);
-            },'answers.file'])
+            }, 'answers.file'])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id');
     }
