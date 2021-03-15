@@ -80,7 +80,7 @@
                             <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
                                @click.prevent="popUpStatus(lecture.id)">환불요청</a>
                         </div>
-                        <div class="content-button" v-else>
+                        <div class="content-button" v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
                             <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
                             <p>재수강시<br>30% 할인 적용됩니다.</p>
                         </div>
