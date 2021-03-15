@@ -85,7 +85,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        if (env('APP_ENV') == 'local') {
+        if (env('APP_ENV') != 'development') {
             return $this->inLocalValidation($data);
         }
 
