@@ -36,7 +36,7 @@
                                 <input type="text"
                                        id="name"
                                        name="name"
-                                       placeholder="이름입력 (최소 2자 이상)"
+                                       placeholder="이름 입력 (최소 2자 이상)"
                                        data-parsley-required="true"
                                        data-parsley-required-message="※ 이름을 입력해주세요."
                                        data-parsley-errors-container=".name-error-wrap"
@@ -126,8 +126,9 @@
                             <th><label for="check-upw">비밀번호 확인</label></th>
                             <td>
                                 <input type="password" id="password_confirmation" name="password_confirmation"
-                                       placeholder="위의 비밀번호를 다시 입력하세요."
+                                       placeholder="비밀번호를 다시 입력해주세요."
                                        data-parsley-minlength="6"
+                                       data-parsley-required="true"
                                        data-parsley-equalto="#password"
                                        data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
                                        data-parsley-errors-container=".password-check-error-wrap">
@@ -161,9 +162,10 @@
                                        name="verification_number"
                                        class="verification-number"
                                        placeholder="인증번호 6자리를 입력"
-                                       readonly="true"
+                                       readonly="readonly"
                                        data-parsley-required="true"
-                                       data-parsley-errors-container=".verification-check-error-wrap">
+                                       data-parsley-errors-container=".verification-check-error-wrap"
+                                       data-parsley-required-message="※ 일치하지 않습니다.">
                                 <button type="button" id="confirm_authentication"
                                         class="btn-basic btn-verification mt-10">인증번호 확인
                                 </button>
@@ -174,7 +176,7 @@
                                        value="N"
                                        data-parsley-pattern="[Y]"
                                        data-parsley-errors-container=".verification-check-error-wrap"
-                                       data-parsley-pattern-message="※ 인증번호를 확인해주세요.">
+                                       data-parsley-pattern-message="※ 일치하지 않습니다.">
 
                                 <div class="verification-check-error-wrap parsley-error-wrap"></div>
                             </td>
