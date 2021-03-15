@@ -39,7 +39,7 @@ class Program extends Model
         if ($this->alreadyPaid()) {
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->where('applied_at', '<', now()->addDays(7))
+                ->where('applied_at', '>', now()->subDays(7))
                 ->where('is_watched', '=', 0)
                 ->exists();
         } else {
