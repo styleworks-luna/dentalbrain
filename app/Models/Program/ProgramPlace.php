@@ -30,8 +30,12 @@ class ProgramPlace extends Model
 
     public function getFullAddressAttribute()
     {
-        if (isset($this->attributes['address']) && isset($this->attributes['address_detail'])) {
-            return $this->attributes['address'] . ' ' . $this->attributes['address_detail'];
+        if (isset($this->attributes['address'])) {
+            if(isset($this->attributes['address_detail'])){
+                return $this->attributes['address'] . ' ' . $this->attributes['address_detail'];
+            }else{
+                return $this->attributes['address'];
+            }
         }
         return null;
     }
