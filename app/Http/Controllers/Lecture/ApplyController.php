@@ -27,6 +27,10 @@ class ApplyController extends Controller
 
         if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
             // Survey 이미 완료하였을 경우.
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program,
+                '',''
+            /*TODO programstudent->email, programstudent->phone 넣기*/
+            );
             return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
         }
 
