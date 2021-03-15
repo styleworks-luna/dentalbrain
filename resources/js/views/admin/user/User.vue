@@ -86,7 +86,7 @@ export default {
             users: {
                 data: []
             },
-            member: '',
+            member: null,
             jobOptions: [],
             job_name_id: '',
             keyword: '',
@@ -145,11 +145,11 @@ export default {
         userOption() {
             return [
                 {
-                    id: 'normal',
+                    id: 0,
                     name: '일반회원',
                 },
                 {
-                    id:'paid',
+                    id: 1,
                     name: '유료회원',
                 }
             ]
@@ -163,6 +163,7 @@ export default {
 
             let params = {
                 job_name_id: this.job_name_id,
+                is_paid: this.member,
                 keyword: this.keyword,
                 page: page
             };
