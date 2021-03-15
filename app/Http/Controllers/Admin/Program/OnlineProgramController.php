@@ -42,8 +42,9 @@ class OnlineProgramController extends Controller
         $this->addMinorCategoryId($request);
 
         $search = $this->search->search()->where('is_online', '=', 1)
-            ->withCount('students')->orderByDesc('id')->paginate('10');
-
+            ->withCount(['students' => function($query){
+                $query->where('pay_status','!=','0')->where('pay_status','!=','3');
+            }])->orderByDesc('id')->paginate('10');
         return $search;
     }
 
