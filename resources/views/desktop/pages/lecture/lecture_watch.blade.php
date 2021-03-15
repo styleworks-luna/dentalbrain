@@ -16,7 +16,7 @@
                     <div class="lecture-watch-content">
                         <div class="lecture-title-wrap">
                             <div class="lecture-title">
-                                <h1>{{ $program->title }}</h1>
+                                <h1><a href="{{ route('lectures.detail',$program->id) }}">{{ $program->title }}</a></h1>
                                 <h2>{{ $now->title }}</h2>
                             </div>
                             @isset($program->material)
