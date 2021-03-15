@@ -302,7 +302,7 @@
                 </section>
 
                 <section class="btn-wrap">
-                    <button type="button" class="btn-confirm btn-submit">확인</button>
+                    <button type="button" class="btn-confirm btn-submit">결제하기</button>
                 </section>
             </div>
         </div>
