@@ -1,7 +1,7 @@
 <template>
     <div class="pop-up">
 
-        <h1>환불 확인</h1>
+        <h1>취소하기</h1>
         <div class="form-wrap">
             <template v-if="method == '가상계좌'">
                 <div class="input-wrap">
@@ -30,8 +30,8 @@
                 </div>
             </template>
             <div class="input-wrap">
-                <label :for="'reason' + programId">환불이유</label>
-                <input type="text" :id="'reason' + programId" placeholder="환불 이유를 입력해주세요." v-model="reason"/>
+                <label :for="'reason' + programId">취소이유</label>
+                <input type="text" :id="'reason' + programId" placeholder="취소 이유를 입력해주세요." v-model="reason"/>
             </div>
         </div>
         <div class="btn-wrap">
