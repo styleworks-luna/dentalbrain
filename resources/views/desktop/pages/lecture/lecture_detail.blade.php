@@ -92,17 +92,23 @@
                                 @if($program->is_online == false && $program->place->receipt_ended_at < now())
                                     {{--오프라인 강의 신청 마감--}}
                                     <div class="btn-wrap">
-                                     <span class="btn-apply-complete">
-                                     신청기간이 지난강의 입니다.
-                                     </span>
+                                        <span class="btn-apply-complete">
+                                            신청기간이 지난강의 입니다
+                                        </span>
                                     </div>
                                 @else
                                     @if($program->alreadyApplied())
                                         {{--이미 신청 한 강의 일 경우--}}
                                         <div class="btn-wrap">
-                                    <span class="btn-apply-complete">
-                                    신청한 강의입니다.
-                                    </span>
+                                            @if($program->alreadyPaid() && $program->is_online)
+                                                <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
+                                                    강의 시청하기
+                                                </a>
+                                            @else
+                                                <span class="btn-apply-complete">
+                                                    신청한 강의입니다
+                                                </span>
+                                            @endif
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="edit">
                                                 신청내역 확인
                                             </a>
