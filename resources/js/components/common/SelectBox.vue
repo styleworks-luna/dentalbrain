@@ -21,7 +21,7 @@
         },
         methods: {
             isSelected(value) {
-                return value == this.value;
+                return value === this.value;
             },
             handleSetValue(value) {
                 this.$emit('setValue', value);

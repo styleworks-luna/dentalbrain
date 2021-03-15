@@ -86,7 +86,7 @@ export default {
             users: {
                 data: []
             },
-            member: null,
+            member: '',
             jobOptions: [],
             job_name_id: '',
             keyword: '',
