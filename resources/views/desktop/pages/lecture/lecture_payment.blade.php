@@ -93,7 +93,7 @@
             <div class="row">
                 <section class="apply-title">
                     <h1>신청내역 확인</h1>
-                    <p>Step 1. 신청하기 <span class="for-padding">&gt;</span> <em>Step 2. 신청내역 확인</em></p>
+                    <p><em>Step 1. 신청하기</em> <span class="for-padding">&gt;</span> Step 2. 신청내역 확인</p>
                 </section>
 
                 <section class="lecture-information-wrap">
