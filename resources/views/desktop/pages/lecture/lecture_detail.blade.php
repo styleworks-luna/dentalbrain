@@ -77,8 +77,8 @@
                                                 data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </td>
                                         @else
-                                            <td class="lecture-price price-hidden"
-                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
+                                            <td class="lecture-price"
+                                                data-price="{{ $student->is_repeated ?  $ticket->repeat_price :  $ticket->price  }}"> {{ $ticket->is_free ? '무료' : number_format($student->is_repeated ?  $ticket->repeat_price :  $ticket->price).'원'}}
                                             </td>
                                         @endif
                                     @endforeach

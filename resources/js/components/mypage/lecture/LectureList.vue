@@ -29,9 +29,12 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{
-                                        lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
-                                    }}
+                                    <template v-if="!lecture.is_repeated">
+                                        {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
+                                    </template>
+                                    <template v-else>
+                                        {{ '재수강 할인가: ' + Helper.numberWithCommas(lecture.ticket.repeat_price) + '원' }}
+                                    </template>
                                 </p></td>
                             </tr>
                         </table>
