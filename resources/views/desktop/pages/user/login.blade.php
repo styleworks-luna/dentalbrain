@@ -14,11 +14,11 @@
                     <div class="login-form">
                         <input type="text" id="login_id" name="login_id"
                                class="login-id @error('login_failed') input-error @enderror @error('login_id') input-error @enderror"
-                               placeholder=" 아이디를 입력"
+                               placeholder=" 아이디 입력"
                                value="{{ old('login_id') ?? '' }}">
                         <input type="password" id="password" name="password"
                                class="password @error('login_failed') input-error @enderror @error('password') input-error @enderror"
-                               placeholder="비밀번호를 입력">
+                               placeholder="비밀번호 입력">
                         <input type="submit" class="btn-login" value="로그인">
                     </div>
                     @if($errors->any())

@@ -15,7 +15,7 @@
 
             <div class="find-id-form find-form-common">
                 <p>아이디를 찾기 위해 다음 항목을 입력해주세요.</p>
-                <input type="text" id="name" name="name" class="name" placeholder="이름을 입력 (최소 2자 이상)">
+                <input type="text" id="name" name="name" class="name" placeholder="이름 입력 (최소 2자 이상)">
                 <input type="text" id="phone" name="phone" class="phone" placeholder="휴대전화 번호 입력 ('-'없이 숫자만 입력)">
                 <input type="button" class="btn-confirm btn-find-id" value="확인">
 
