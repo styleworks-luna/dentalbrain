@@ -26,6 +26,7 @@
                         :data="students.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.user_id}`">
                             {{ slotProps.row.login_id }}
@@ -169,6 +170,11 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
+                    width: '6%'
+                },
+                {
+                    name: 'is_paid',
+                    text: '회원구분',
                     width: '7%'
                 },
                 {
@@ -179,7 +185,7 @@ export default {
                 {
                     name: 'email',
                     text: '이메일',
-                    width: '16%'
+                    width: '10%'
                 },
                 {
                     name: 'phone',
