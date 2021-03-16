@@ -121,8 +121,9 @@
             +background(null, null, null, $gray-700)
             color: $white
 
-    .parsley-required
-        +padding(left 0)
+    .radio-error-wrap
+        .parsley-required
+            +padding(left 0)
 
 
 .reason-error-wrap > .parsley-errors-list
@@ -130,3 +131,10 @@
 
 .password-error-wrap > .parsley-errors-list
     +padding(bottom 10px)
+
+.password-error-wrap
+    p
+        +padding(10px 0 0 20px)
+        font-size: 12px
+        line-height: 12px
+        color: #ff0000

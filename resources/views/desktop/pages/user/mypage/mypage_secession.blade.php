@@ -2,6 +2,7 @@
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/user/mypage-secession.js') }}"></script>
 @endsection
 
@@ -105,6 +106,7 @@
                                                class="password"
                                                placeholder="본인인증을 위해 비밀번호를 입력해주세요."
                                                data-parsley-required="true"
+                                               data-parsley-minlength="6"
                                                data-parsley-required-message="※ 비밀번호가 일치하지 않습니다."
                                                data-parsley-errors-container=".password-error-wrap">
                                     </div>
@@ -113,7 +115,11 @@
                                         <p>※ 신청 한 강의는 전부 취소 처리 됩니다.</p>
                                     </div>
                                 </div>
-                                <div class="password-error-wrap"></div>
+                                <div class="password-error-wrap">
+                                    @error('password_wrong')
+                                        <p>{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </td>
                         </tr>
                     </table>
