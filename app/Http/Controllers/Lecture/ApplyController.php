@@ -54,6 +54,13 @@ class ApplyController extends Controller
         ]);
     }
 
+    /**
+     *  재수강 시에 질문을 새로 작성하지 않음.
+     *
+     * @param Request $request
+     * @param Program $program
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function apply(Request $request, Program $program)
     {
         // 파일을 함께 조회하기 위해 all 사용.
@@ -77,7 +84,7 @@ class ApplyController extends Controller
             }
 
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
-            // TODO : 재수강 시에 질문 답변 삭제
+
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
@@ -95,7 +102,7 @@ class ApplyController extends Controller
             Log::error('STORE SURVEY ANSWER ERROR', [$exception]);
 
             DB::rollback();
-            return redirect()->back(302)->with(['alert' => '오류']);
+            return redirect()->back(302)->with(['alert' => '오류가 발생했습니다']);
         }
     }
 

@@ -15,7 +15,7 @@
 @section('content')
     <section class="content lecture-apply">
         <div class="container">
-            <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
+            <form action="{{ route('account.lectures.update',$program->id) }}" id="lecture-apply-form" method="POST"
                   enctype="multipart/form-data">
                 <div class="row">
                     @csrf
@@ -241,6 +241,8 @@
                                                value="{{ $survey->id }}">
                                         <div class="answers">
                                             <div class="file-wrap">
+                                                <input type="hidden" name="surveys[{{ $idx }}][previous]"
+                                                       value="@isset($survey->answer) {{ $survey->answer->file->id }} @endisset">
                                                 <input type="file"
                                                        id="file-upload"
                                                        class="upload-hidden"
@@ -253,7 +255,8 @@
                                                 <label for="file-upload" class="btn-file-upload">파일선택</label>
                                                 <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
                                                        class="file-name"
-                                                       value="파일을 업로드해주세요." disabled="disabled">
+                                                       value="@isset($survey->answer){{ $survey->answer->file->name }} @else 파일을 업로드해주세요. @endisset"
+                                                       disabled="disabled">
                                             </div>
                                             <div class="file_error_wrap{{ $survey->id }}"></div>
                                             <div class="tips">

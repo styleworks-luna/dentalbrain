@@ -39,7 +39,7 @@ class SurveyAnswerService
                     return false;
                 }
             } elseif ($survey->category_id == SurveyCategory::$FILE) {
-                if ($survey->is_required && $data['file'] === null) {
+                if ($survey->is_required && $data['file'] === null && $data['previous'] === null) {
                     return false;
                 }
             } else {
@@ -115,6 +115,11 @@ class SurveyAnswerService
                 $surveyAnswer->save();
             }
         }
+        return true;
+    }
+
+    public function updateSurveyAnswers(array $surveyDataSet): bool
+    {
         return true;
     }
 }
