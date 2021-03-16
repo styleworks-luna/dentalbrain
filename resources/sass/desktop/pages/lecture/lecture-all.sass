@@ -119,7 +119,7 @@
         overflow: hidden
 
         .lecture-card
-            +margin(80px 40px 0 0)
+            +margin(73px 40px 0 0)
             +box-sizing(border-box)
             float: left
 
@@ -187,3 +187,8 @@
         .lecture-card:nth-child(2),
         .lecture-card:nth-child(3)
             +margin(top 0)
+
+// 전체강의 페이지만 적용
+.lecture-wrap .lecture-contents
+    .lecture-card
+        +margin(top 80px)
