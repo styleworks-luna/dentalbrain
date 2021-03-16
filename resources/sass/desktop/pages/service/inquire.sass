@@ -8,7 +8,6 @@
 @import '@sass/components/_textarea.sass'
 @import '@sass/components/_selectbox.sass'
 
-
 .inquire
     +margin(top 60px bottom 80px)
 
@@ -19,14 +18,22 @@
         +input(white-lignt-fill)
         +size(240px, 50px)
         +margin(right 5px)
+        font-size: 14px
 
     textarea
         +textarea()
         +size(1058px, 150px)
+        +padding(top 13px)
 
     .ui-emailbox
         +emailbox()
         float: left
+
+        .ui-emailbox-button .ui-icon
+            +margin(top 22px)
+
+        .at
+            +margin(0 8px)
 
     select
         +selectbox(240px, 50px)
@@ -39,7 +46,7 @@
         font-size: 24px
 
     .inquire-form-wrap
-        +margin(top 18px)
+        +margin(top 21px)
 
         table
             +size(1280px)
@@ -73,7 +80,7 @@
                 overflow: hidden
 
                 p
-                    +padding(left 20px top 15px)
+                    +padding(left 20px top 18px)
                     float: left
                     color: $gray-700
 
