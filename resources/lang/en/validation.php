@@ -149,6 +149,13 @@ return [
         ],
         'minor_category_id' => [
             'required' => '소분류를 설정해 주세요.'
+        ],
+        'receipt_ended_at' => [
+            'before_or_equal' => '신청일시 종료시점이 강의종료 시점보다 늦습니다.',
+            'after:receipt_started_at' => '신청일시 종료시점이 신청시작 시점보다 빠릅니다.',
+        ],
+        'ended_at' => [
+            'after' => '강의일시의 종료시점이 시작시점보다 이전입니다.'
         ]
     ],
 
