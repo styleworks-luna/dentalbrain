@@ -58,7 +58,7 @@
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
-                                                @if ($program->canRepeat())\
+                                                @if ($program->canRepeat() || $program->repeated())
                                                 <option value="{{$ticket->id}}"
                                                         data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
                                                 @else
@@ -72,13 +72,13 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        @if ($program->canRepeat())
-                                            <td class="lecture-price price-hidden"
+                                        @if ($program->canRepeat() || $program->repeated())
+                                            <td class="lecture-price"
                                                 data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </td>
                                         @else
                                             <td class="lecture-price"
-                                                data-price="{{ $student->is_repeated ?  $ticket->repeat_price :  $ticket->price  }}"> {{ $ticket->is_free ? '무료' : number_format($student->is_repeated ?  $ticket->repeat_price :  $ticket->price).'원'}}
+                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
                                             </td>
                                         @endif
                                     @endforeach
