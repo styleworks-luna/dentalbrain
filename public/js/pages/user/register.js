@@ -167,6 +167,10 @@ $(function () {
         $('#phone-check').val('N');
     });
 
+    if($('.verification-check-error-wrap > ul > li').hasClass('parsley-required')) {
+        $('.verification-check-error-wrap > ul > li.parsley-pattern').closest('ul').css('display', 'none');
+    }
+
     // 변경 버튼
     $('#edit_phone').click(function () {
         reset();

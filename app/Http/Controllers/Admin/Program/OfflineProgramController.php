@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
@@ -38,8 +39,9 @@ class OfflineProgramController extends Controller
 
         $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
             ->with('place:id,program_id,started_at,ended_at,address,address_detail')
-            ->withCount(['students' => function($query){
-                $query->where('pay_status','!=','0')->where('pay_status','!=','3');
+            ->withCount(['students' => function ($query) {
+                $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
+                    ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
             }])->orderByDesc('id')->paginate('10');
 
         return $search;

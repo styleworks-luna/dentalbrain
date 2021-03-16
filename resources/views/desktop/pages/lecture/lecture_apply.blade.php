@@ -323,9 +323,9 @@
 
                     <section class="btn-wrap">
                         <button type="submit" class="btn-confirm">
-                            {{ $program->ticket->is_free ? '신청하기' : '결제하기' }}
+                            신청하기
                         </button>
-                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소</a>
+                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소하기</a>
                     </section>
 
                 </div>

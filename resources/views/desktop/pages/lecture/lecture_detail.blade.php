@@ -74,11 +74,11 @@
                                     @foreach($program->tickets as $ticket)
                                         @if ($program->canRepeat())
                                             <td class="lecture-price price-hidden"
-                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가 :' . number_format($ticket->repeat_price).'원'}}
+                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </td>
                                         @else
-                                            <td class="lecture-price price-hidden"
-                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
+                                            <td class="lecture-price"
+                                                data-price="{{ $student->is_repeated ?  $ticket->repeat_price :  $ticket->price  }}"> {{ $ticket->is_free ? '무료' : number_format($student->is_repeated ?  $ticket->repeat_price :  $ticket->price).'원'}}
                                             </td>
                                         @endif
                                     @endforeach
@@ -87,40 +87,28 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-                            @if($program->is_online == false && $program->place->receipt_ended_at < now())
-                                {{--오프라인 강의 신청 마감--}}
+                            @if ($program->alreadyApplied())
+                                {{--이미 신청한 경우--}}
                                 <div class="btn-wrap">
+                                    @if($program->is_online && $program->alreadyPaid())
+                                        {{--온라인 && 결제 완료됨 (= 시청 가능 상태)--}}
+                                        <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
+                                            강의 시청하기
+                                        </a>
+                                    @else
+                                        {{--오프라인 || 결제 미완료됨--}}
                                         <span class="btn-apply-complete">
-                                            신청기간이 지난강의 입니다
+                                            신청한 강의입니다
                                         </span>
-                                </div>
-                            @elseif ($program->is_online == false && $program->exceedCapacity())
-                                {{--강의 정원을 넘길 경우--}}
-                                <div class="btn-wrap">
-                                    <span class="btn-apply-complete">
-                                        모집정원이 마감되었습니다.
-                                    </span>
+                                    @endif
+                                    <a href="{{ route('lectures.apply',$program->id) }}" class="edit">
+                                        신청내역 확인
+                                    </a>
                                 </div>
                             @else
-                                @isset($student)
-                                    {{--이미 신청한 기록이 있을 경우--}}
-                                    @if($program->alreadyApplied())
-                                        {{--이미 신청 한 강의 일 경우 (Paid, expired_at < now)--}}
-                                        <div class="btn-wrap">
-                                            @if($program->alreadyPaid() && $program->is_online)
-                                                <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
-                                                    강의 시청하기
-                                                </a>
-                                            @else
-                                                <span class="btn-apply-complete">
-                                                    신청한 강의입니다
-                                                </span>
-                                            @endif
-                                            <a href="{{ route('lectures.apply',$program->id) }}" class="edit">
-                                                신청내역 확인
-                                            </a>
-                                        </div>
-                                    @elseif ($program->canRepeat())
+                                @if($program->is_online)
+                                    {{--온라인일 경우--}}
+                                    @if ($program->canRepeat())
                                         {{--재수강 가능할 경우 (Paid, expired_at > now)--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
@@ -128,7 +116,7 @@
                                             </a>
                                         </div>
                                     @else
-                                        {{--환불 관련 (환불 중이거나, 환불 받은 상황)--}}
+                                        {{--일반적 상황--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
                                                 신청하기
@@ -136,14 +124,38 @@
                                         </div>
                                     @endif
                                 @else
-                                    {{--일반적 상황--}}
-                                    <div class="btn-wrap">
-                                        <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
-                                            신청하기
-                                        </a>
-                                    </div>
-                                @endisset
-                            @endif
+                                    {{--오프라인일 경우--}}
+                                    @if($program->ended_at > now())
+                                        {{--오프라인 강의 종료--}}
+                                        <div class="btn-wrap">
+                                            <span class="btn-apply-complete">
+                                                이미 종료된 강의 입니다
+                                            </span>
+                                        </div>
+                                    @elseif($program->place->receipt_ended_at < now())
+                                        {{--오프라인 강의 신청 마감--}}
+                                        <div class="btn-wrap">
+                                            <span class="btn-apply-complete">
+                                                신청기간이 지난 강의 입니다
+                                            </span>
+                                        </div>
+                                    @elseif ($program->exceedCapacity())
+                                        {{--강의 정원을 넘길 경우--}}
+                                        <div class="btn-wrap">
+                                            <span class="btn-apply-complete">
+                                                모집정원이 마감되었습니다.
+                                            </span>
+                                        </div>
+                                    @else
+                                        {{--일반적 상황--}}
+                                        <div class="btn-wrap">
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                                신청하기
+                                            </a>
+                                        </div>
+                                    @endif {{--오프라인 상황 구분--}}
+                                @endif {{--온/오프라인 구분--}}
+                            @endif {{--신청자 구분--}}
                             <a href=""
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
                             </a>

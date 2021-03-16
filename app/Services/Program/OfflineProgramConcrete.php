@@ -33,10 +33,10 @@ class OfflineProgramConcrete extends ProgramTemplate
 
             'capacity' => ['required', 'numeric','min:1'],
 
-            'started_at' => ['required', 'date', 'before:ended_at'],
+            'started_at' => ['required', 'date',],
             'ended_at' => ['required', 'date', 'after:started_at'],
 
-            'receipt_started_at' => ['required', 'date', 'before:receipt_ended_at'],
+            'receipt_started_at' => ['required', 'date',],
             'receipt_ended_at' => ['required', 'date', 'after:receipt_started_at', 'before_or_equal:ended_at'],
         ], $additionalRules));
 

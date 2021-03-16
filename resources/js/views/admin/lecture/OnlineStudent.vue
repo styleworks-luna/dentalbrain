@@ -54,12 +54,23 @@
                             </template>
 
                             <template v-else>
-                                <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음 <template v-if="slotProps.row.is_watched">(시청함)</template>
-                                <div v-if="slotProps.row.is_repeated">(재수강)</div>
+                                <template v-if="Helper.dateCompareWithNow(slotProps.row.expired_at) < 0">
+                                    <p>기간종료</p>
+                                </template>
+                                <template v-else>
+                                    <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
+                                    <template v-if="slotProps.row.is_watched">(시청함)</template>
+                                    <div v-if="slotProps.row.is_repeated">(재수강)</div>
+                                </template>
                             </template>
                         </template>
                         <template v-else>
-                            <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
+                            <template v-if="Helper.dateCompareWithNow(slotProps.row.expired_at) < 0">
+                                <p>기간종료</p>
+                            </template>
+                            <template v-else>
+                                <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
+                            </template>
                         </template>
                     </td>
                     <td>

@@ -23,7 +23,7 @@ class ProgramController extends Controller
         ]);
 
         //TODO: 사용자에 따른 강의 구분 정보 넣기.
-        $queryBuilder = ProgramStudent::query()->select('id', 'user_id', 'payment_id', 'ticket_id', 'expired_at', 'is_watched', 'pay_status')
+        $queryBuilder = ProgramStudent::query()->select('id', 'user_id', 'payment_id', 'ticket_id', 'expired_at', 'is_watched','is_repeated', 'pay_status','applied_at')
             ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS])
             ->with([
                 'payment:id,totalAmount,receiptUrl,method,status',
@@ -34,7 +34,7 @@ class ProgramController extends Controller
                         ->with('lectures:id,program_id');
                 },
                 // 기본 정렬
-            ])->orderByDesc('id')
+            ])->orderByDesc('applied_at')
             ->where('user_id', '=', Auth::id());
 
         if ($request->input('order', 'newest') == 'online') {

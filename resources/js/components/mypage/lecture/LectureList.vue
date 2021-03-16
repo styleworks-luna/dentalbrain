@@ -29,9 +29,12 @@
                             <tr>
                                 <th>결제금액</th>
                                 <td><p class="lecture-pay">
-                                    {{
-                                        lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
-                                    }}
+                                    <template v-if="!lecture.is_repeated">
+                                        {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
+                                    </template>
+                                    <template v-else>
+                                        {{ '재수강 할인가: ' + Helper.numberWithCommas(lecture.ticket.repeat_price) + '원' }}
+                                    </template>
                                 </p></td>
                             </tr>
                         </table>
@@ -61,7 +64,7 @@
                             <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
                         </div>
                         <div class="d-day" v-else><em>만료</em></div>
-                        <div class="dedicate">{{ Helper.dateFormatYDM(lecture.expired_at) }} 까지</div>
+                        <div class="dedicate">{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
                     </div>
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
@@ -80,7 +83,7 @@
                             <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
                                @click.prevent="popUpStatus(lecture.id)">환불요청</a>
                         </div>
-                        <div class="content-button" v-else>
+                        <div class="content-button-offline" v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
                             <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
                             <p>재수강시<br>30% 할인 적용됩니다.</p>
                         </div>

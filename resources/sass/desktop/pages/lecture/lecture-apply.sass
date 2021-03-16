@@ -37,7 +37,7 @@
         +selectbox(240px, 50px)
 
         + .ui-selectmenu-button
-            +margin(left 20px)
+            +margin(left 13px top 12px bottom 12px)
             float: left
 
     .ui-emailbox
@@ -318,13 +318,19 @@ h3
                     line-height: 48px
 
                     input[type="radio"]
-                        +margin(top 16px)
+                        +margin(top 30px)
+
+                        & + label
+                            +margin(top 13px)
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)
 
             td
                 +padding(left 23px)
+
+.lecture-apply .payment-information tr
+    height: 77px
 
 // lecture payment, result blade에 적용
 .additional-information-list
@@ -376,7 +382,7 @@ h3
             content: ''
 
 .agree
-    +margin(top 60px)
+    +margin(top 63px)
 
     h3
         +padding(bottom 18px)
@@ -420,8 +426,7 @@ h3
             text-decoration: underline
 
 
-.lecture-result,
-.lecture-payment
+.lecture-result
     .btn-wrap
         +size(160px)
 
