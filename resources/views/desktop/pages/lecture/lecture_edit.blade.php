@@ -83,29 +83,11 @@
                             </tr>
                             <tr>
                                 <th>이메일</th>
-                                <td>
-                                    <input type="email"
-                                           id="email"
-                                           name="email"
-                                           class="email_box"
-                                           value="{{old('email') ?? $programStudent->email}}"
-                                           data-parsley-required="true"
-                                           data-parsley-type="email"
-                                           data-parsley-class-handler=".ui-emailbox"
-                                           data-parsley-required-message="이메일을 입력해주세요.">
-                                </td>
+                                <td><em>{{ $programStudent->email }}</em></td>
                             </tr>
                             <tr>
                                 <th>휴대전화</th>
-                                <td>
-                                    <input type="text"
-                                           id="phone"
-                                           name="phone"
-                                           class="phone"
-                                           value="{{old('phone') ?? $programStudent->phone}}"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="전화번호를 입력해주세요.">
-                                </td>
+                                <td><em>{{ $programStudent->phone }}</em></td>
                             </tr>
                         </table>
                     </section>

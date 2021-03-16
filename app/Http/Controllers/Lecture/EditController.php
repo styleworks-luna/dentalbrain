@@ -35,7 +35,6 @@ class EditController extends Controller
         $surveyDataSet = $request->all('surveys')['surveys'];
 
         $surveyAnswerService = new SurveyAnswerService();
-        ddd($surveyDataSet);
         try {
             DB::beginTransaction();
 
@@ -50,13 +49,6 @@ class EditController extends Controller
 
                 $surveyAnswerService->updateSurveyAnswers($surveyDataSet);
             }
-
-            ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
-                ->where('user_id', '=', Auth::id())->first()
-                ->update([
-                    'phone' => $request->get('phone'),
-                    'email' => $request->get('email')
-                ]);
 
             DB::commit();
             return redirect()->route('account.lectures', $program)->with('alert', '수정되었습니다.');

@@ -120,6 +120,21 @@ class SurveyAnswerService
 
     public function updateSurveyAnswers(array $surveyDataSet): bool
     {
+        $this->deleteSurveyAnswers($surveyDataSet);
+        return true;
+    }
+
+    public function deleteSurveyAnswers(array $surveyDataSet): bool
+    {
+        $ids = collect($surveyDataSet)->pluck('survey_id');
+
+        $fileAnswers = SurveyAnswer::query()->whereIn('survey_id', $ids)
+            ->where('user_id', '=', Auth::id())
+            ->whereNotNull('file_id')->get();
+
+        $surveyFiles = $fileAnswers->mapInto(SurveyFile::class);
+
+
         return true;
     }
 }
