@@ -64,7 +64,6 @@
                                     @endswitch
                                     <td>
                                         {{ changePaymentMethodName($payment->method) }}
-                                        {{--TODO: 디자인 필요.--}}
                                         @if($payment->method == '가상계좌' && $payment->status =='WAITING_FOR_DEPOSIT')
                                             <a href="" class="waiting-deposit">자세히 보기</a>
                                             <div class="deposit-detail">
@@ -82,7 +81,11 @@
                                         @endisset
 
                                     </td>
-                                    <td>{{ date_format($payment->requestedAt ,'Y.m.d')}} {{ $payment->cancel != 'null'  ? '/ ' . date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}</td>
+                                    <td>
+                                        <div class="@if($payment->cancel != null) payment-cancel @endif">{{ date_format($payment->requestedAt ,'Y.m.d')}} </div>
+
+                                        {{ $payment->cancel != 'null'  ? '/ ' . date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}
+                                    </td>
                                 </tr>
                             </table>
                         </li>

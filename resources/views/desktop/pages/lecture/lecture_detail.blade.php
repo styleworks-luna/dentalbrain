@@ -74,7 +74,7 @@
                                     @foreach($program->tickets as $ticket)
                                         @if ($program->canRepeat())
                                             <td class="lecture-price price-hidden"
-                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가 :' . number_format($ticket->repeat_price).'원'}}
+                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </td>
                                         @else
                                             <td class="lecture-price price-hidden"
