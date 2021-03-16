@@ -82,7 +82,7 @@
                                         @endisset
 
                                     </td>
-                                    <td>{{ date_format($payment->requestedAt ,'Y.m.d')}} {{ $payment->cancel != 'null'  ? '/ ' . date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}</td>
+                                    <td>{{ date_format($payment->requestedAt ,'Y.m.d')}} {{ $payment->full_response->cancels != null  ? '/ ' . date('Y.m.d',strtotime($payment->full_response->cancels[0]->canceledAt)) : ''   }}</td>
                                 </tr>
                             </table>
                         </li>
