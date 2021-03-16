@@ -61,7 +61,7 @@
                             <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
                         </div>
                         <div class="d-day" v-else><em>만료</em></div>
-                        <div class="dedicate">{{ Helper.dateFormatYDM(lecture.expired_at) }} 까지</div>
+                        <div class="dedicate">{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
                     </div>
                     <div class="offline-lecture-pay" v-else>
                         <p>결제금액</p>
