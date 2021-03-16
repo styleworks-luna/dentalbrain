@@ -26,7 +26,12 @@ class ApplyController extends Controller
         }
 
         if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
+            $student = ProgramStudent::query()->where('ticket_id',$program->ticket()->first()->id)->where('user_id','=',Auth::id())->first();
             // Survey 이미 완료하였을 경우.
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program,
+                $student->email,
+                $student->phone
+            );
             return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
         }
 
@@ -60,7 +65,7 @@ class ApplyController extends Controller
         $surveyDataSet = $request->all('surveys')['surveys'];
 
         $surveyAnswerService = new SurveyAnswerService();
-
+        
         try {
             DB::beginTransaction();
 
