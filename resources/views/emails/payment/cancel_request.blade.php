@@ -118,7 +118,7 @@
     </tr>
     <tr>
         <td style="line-height: 15px; padding: 23px 0 29px 30px; font-size: 12px; color: #666; background-color: #efefef">
-            <h4 style="float: left; margin: 6px 22px 0 0"><img src="{{ asset('images/desktop/global/logo.png') }}"
+            <h4 style="float: left; margin: 6px 22px 0 0"><img src="{{ asset('images/desktop/global/footer-logo.png') }}"
                                                                style="margin-top: 30px; margin-right: 20px;" alt="덴탈브레인"
                                                                width="90" height="25"></h4>
             <p style="float: left; margin: 0; padding: 0; line-height: 24px">
