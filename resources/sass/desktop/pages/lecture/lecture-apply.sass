@@ -37,7 +37,7 @@
         +selectbox(240px, 50px)
 
         + .ui-selectmenu-button
-            +margin(left 20px)
+            +margin(left 13px top 12px bottom 12px)
             float: left
 
     .ui-emailbox
@@ -318,7 +318,10 @@ h3
                     line-height: 48px
 
                     input[type="radio"]
-                        +margin(top 16px)
+                        +margin(top 30px)
+
+                        & + label
+                            +margin(top 13px)
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)
@@ -421,7 +424,6 @@ h3
 
 
 .lecture-result,
-.lecture-payment
     .btn-wrap
         +size(160px)
 
