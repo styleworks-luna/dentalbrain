@@ -26,7 +26,7 @@ class ApplyController extends Controller
         }
 
         if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
-            $student = ProgramStudent::query()->where('ticket_id',$program->ticket()->id)->where('user_id','=',Auth::id())->first();
+            $student = ProgramStudent::query()->where('ticket_id',$program->ticket()->first()->id)->where('user_id','=',Auth::id())->first();
             // Survey 이미 완료하였을 경우.
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program,
                 $student->email,
