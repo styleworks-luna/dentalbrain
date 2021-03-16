@@ -112,8 +112,8 @@
                         </tr>
                     </table>
                     <div class="btn-wrap">
-                        <button class="btn-cancel btn-common">취소하기</button>
-                        <button class="btn-secession btn-common" form="form-secession">회원탈퇴</button>
+                        <a href="/" class="btn-cancel">취소하기</a>
+                        <button class="btn-secession" form="form-secession">회원탈퇴</button>
                     </div>
                 </section>
             </form>
