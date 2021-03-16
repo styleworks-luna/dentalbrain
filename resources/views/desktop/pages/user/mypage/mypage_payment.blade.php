@@ -82,9 +82,9 @@
 
                                     </td>
                                     <td>
-                                        <div class="@if($payment->cancel != null) payment-cancel @endif">{{ date_format($payment->requestedAt ,'Y.m.d')}} </div>
+                                        <div class="@if($payment->cancel != null) payment-cancel @endif">{{ date_format($payment->requestedAt ,'Y.m.d') . ' /'}}</div>
 
-                                        {{ $payment->cancel != 'null'  ? '/ ' . date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}
+                                        {{ $payment->cancel != 'null'  ? date('Y.m.d',strtotime($payment->canceledAt)) : ''   }}
                                     </td>
                                 </tr>
                             </table>
