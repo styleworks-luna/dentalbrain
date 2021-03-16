@@ -85,6 +85,19 @@ class Program extends Model
         }
     }
 
+    public function waitDeposit()
+    {
+        $user = Auth::user();
+        if ($user != null) {
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_IN_PROCESS])
+                ->exists();
+        } else {
+            return false;
+        }
+    }
+
     public function canRepeat()
     {
         if ($this->is_online == false) {

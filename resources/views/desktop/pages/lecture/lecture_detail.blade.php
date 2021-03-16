@@ -59,8 +59,8 @@
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
                                                 @if ($program->canRepeat() || $program->repeated())
-                                                <option value="{{$ticket->id}}"
-                                                        data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
+                                                    <option value="{{$ticket->id}}"
+                                                            data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
                                                 @else
                                                     <option value="{{$ticket->id}}"
                                                             data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
@@ -87,7 +87,13 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-                            @if ($program->alreadyApplied())
+                            @if($program->waitDeposit())
+                                <div class="btn-wrap">
+                                    <span class="btn-apply-complete">
+                                        입금 대기중
+                                    </span>
+                                </div>
+                            @elseif ($program->alreadyApplied())
                                 {{--이미 신청한 경우--}}
                                 <div class="btn-wrap">
                                     @if($program->is_online && $program->alreadyPaid())

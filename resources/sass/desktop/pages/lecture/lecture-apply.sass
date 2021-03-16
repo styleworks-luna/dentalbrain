@@ -323,6 +323,18 @@ h3
                         & + label
                             +margin(top 13px)
 
+                .payment-method
+                    +padding(top 11px)
+                    float: left
+                    font-weight: bold
+
+                .tip
+                    +padding(left 17px)
+                    float: left
+                    font-size: 12px
+                    color: $page-color
+                    line-height: 1.5
+
         tr:last-child
             +border(2px solid $border-color-base,bottom)
 
@@ -428,7 +440,12 @@ h3
 
 .lecture-result
     .btn-wrap
-        +size(160px)
+        +size(200px)
+        +margin(top 63px)
+        +padding(top 10px)
+
+        .btn-confirm
+            +size(200px)
 
 .btn-wrap
     +size(330px)

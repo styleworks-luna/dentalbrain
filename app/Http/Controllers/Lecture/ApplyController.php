@@ -20,7 +20,7 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if ($program->alreadyApplied()) {
+        if ($program->alreadyApplied() || $program->waitDeposit()) {
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
@@ -72,7 +72,7 @@ class ApplyController extends Controller
         $surveyDataSet = $request->all('surveys')['surveys'];
 
         $surveyAnswerService = new SurveyAnswerService();
-        
+
         try {
             DB::beginTransaction();
 
