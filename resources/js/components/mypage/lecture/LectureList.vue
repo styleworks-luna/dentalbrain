@@ -91,7 +91,7 @@
                     <div class="content-button-offline"
                          v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
                         <div class="btn-wrap">
-                            <a href=""
+                            <a :href="`/account/lectures/${lecture.ticket.program.id}`"
                                :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
                             <template v-if="lecture.ticket.is_free == 0">
                                 <template v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">
