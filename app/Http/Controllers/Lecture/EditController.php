@@ -33,7 +33,6 @@ class EditController extends Controller
     public function update(Request $request, Program $program)
     {
         $surveyDataSet = $request->all('surveys')['surveys'];
-
         $surveyAnswerService = new SurveyAnswerService();
         try {
             DB::beginTransaction();

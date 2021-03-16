@@ -6,6 +6,7 @@ namespace App\Services\File;
 
 use App\Models\File;
 use App\Models\Program\Survey\SurveyAnswer;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SurveyFile extends FileTemplate
@@ -22,7 +23,8 @@ class SurveyFile extends FileTemplate
         $extension = $uploadedFile->extension();
         $size = $uploadedFile->getSize();
 
-        $path = Storage::putFileAs('survey/' . $this->model->survey->id . '/' . $name,
+        $prefix = Auth::id() ?? 'null';
+        $path = Storage::putFileAs('survey/' . $this->model->survey->id . '/' . $prefix,
             $uploadedFile, $name);
 
         $file = File::create([
@@ -31,7 +33,7 @@ class SurveyFile extends FileTemplate
             'size' => $size,
         ]);
 
-        $file->url = $this->getDownloadUrl($file,$file->path);
+        $file->url = $this->getDownloadUrl($file, $file->path);
         $file->save();
 
         return $file;
