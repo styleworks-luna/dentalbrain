@@ -12,7 +12,10 @@
 
 
 /*============================ AUTH ============================*/
+
 // 회원가입
+use Illuminate\Support\Facades\Route;
+
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 // 로그인
@@ -138,6 +141,10 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::redirect('/', '/account/lectures')->name('index');
     // 신청한 강의
     Route::get('lectures', 'Account\ProgramController@index')->name('lectures');
+    Route::group(['prefix' => 'lectures/{program}', 'as' => 'lectures.'], function () {
+        Route::get('/', 'Lecture\EditController@showEditForm')->name('edit');
+        Route::post('/', 'Lecture\EditController@update')->name('update');
+    });
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역

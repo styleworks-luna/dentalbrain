@@ -101,8 +101,8 @@
                                             신청한 강의입니다
                                         </span>
                                     @endif
-                                    <a href="{{ route('lectures.apply',$program->id) }}" class="edit">
-                                        신청내역 확인
+                                    <a href="{{ route('account.lectures.edit',$program->id) }}" class="edit">
+                                        신청내역 수정
                                     </a>
                                 </div>
                             @else

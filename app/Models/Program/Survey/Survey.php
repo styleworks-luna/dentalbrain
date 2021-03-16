@@ -66,6 +66,16 @@ class Survey extends Model
         return $this->hasOne(SurveyAnswer::class, 'survey_id', 'id');
     }
 
+    public function choiceAnswer()
+    {
+        return $this->hasOne(SurveyAnswer::class, 'choice_id', 'id');
+    }
+
+    public function choiceAnswers()
+    {
+        return $this->hasMany(SurveyAnswer::class, 'choice_id', 'id');
+    }
+
     public function scopeResult(Builder $query, $programId)
     {
         return $query->with(['choices',
@@ -89,6 +99,24 @@ class Survey extends Model
             'answers' => function ($query) use ($userId) {
                 $query->where('user_id', '=', $userId);
             }, 'answers.file'])
+            ->where('program_id', '=', $programId)
+            ->whereNull('parent_id');
+    }
+
+    public function scopeEdit(Builder $query, $programId)
+    {
+        return $query->with(['choices',
+            'choices.choiceAnswer' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            },
+            'choices.choiceAnswers' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            },
+            'answers' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            }, 'answer' => function ($query) {
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+            }])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id');
     }

@@ -39,7 +39,7 @@ class SurveyAnswerService
                     return false;
                 }
             } elseif ($survey->category_id == SurveyCategory::$FILE) {
-                if ($survey->is_required && $data['file'] === null) {
+                if ($survey->is_required && $data['file'] === null && $data['previous'] === null) {
                     return false;
                 }
             } else {
@@ -114,6 +114,97 @@ class SurveyAnswerService
                 $surveyAnswer->file_id = $file->id;
                 $surveyAnswer->save();
             }
+        }
+        return true;
+    }
+
+    public function updateSurveyAnswers(array $surveyDataSet): bool
+    {
+        foreach ($surveyDataSet as $idx => $data) {
+            $survey = Survey::find($data['survey_id']);
+
+            $columnData = [
+                'survey_id' => $survey->id,
+                'user_id' => Auth::id(),
+            ];
+
+            if ($survey->category_id == SurveyCategory::$SINGLE_CHOICE) {
+                // 관련 정보 삭제.
+                SurveyAnswer::where($columnData)->delete();
+                if ($data['answer'] === null) {
+                    continue;
+                }
+                $columnData['choice_id'] = $data['answer'];
+                $columnData['content'] = Survey::find($data['answer'])->question;
+                SurveyAnswer::create($columnData);
+
+            } elseif ($survey->category_id == SurveyCategory::$MULTIPLE_CHOICE) {
+                // 관련 정보 삭제.
+                SurveyAnswer::where($columnData)->delete();
+                if ($data['answers'] === null) {
+                    continue;
+                }
+                foreach ($data['answers'] as $answer) {
+                    $columnData['choice_id'] = $answer;
+                    $columnData['content'] = Survey::find($answer)->question;
+                    SurveyAnswer::create($columnData);
+                }
+
+            } elseif ($survey->category_id == SurveyCategory::$SHORT_ANSWER) {
+                // 관련 정보 삭제.
+                SurveyAnswer::where($columnData)->delete();
+                if ($data['answer'] === null) {
+                    continue;
+                }
+                $columnData['content'] = $data['answer'];
+
+                SurveyAnswer::create($columnData);
+
+            } elseif ($survey->category_id == SurveyCategory::$ADDRESS) {
+                // 관련 정보 삭제.
+                SurveyAnswer::where($columnData)->delete();
+                if ($data['address'] === null) {
+                    continue;
+                }
+                $columnData['address'] = $data['address'];
+                $columnData['address_detail'] = $data['address_detail'];
+
+                SurveyAnswer::create($columnData);
+
+            } elseif ($survey->category_id == SurveyCategory::$FILE) {
+
+                if (!$this->exists($data, 'file')) {
+                    // 답변을 하지 않았을 경우.
+                    continue;
+                }
+
+                if ($this->exists($data, 'previous')) {
+                    // 기존 답변이 있었던 경우
+                    $fileAnswer = SurveyAnswer::where($columnData)->first();
+                    $surveyFileService = new SurveyFile($fileAnswer);
+                    $surveyFileService->deleteFile();
+                    $fileAnswer->delete();
+                }
+
+                // 파일 만들기 부터
+                $surveyAnswer = SurveyAnswer::create($columnData);
+                $surveyFileService = new SurveyFile($surveyAnswer);
+                $file = $surveyFileService->saveFile($data['file']);
+                $surveyAnswer->file_id = $file->id;
+                $surveyAnswer->save();
+            }
+        }
+
+        return true;
+    }
+
+    private function exists($array, $key): bool
+    {
+        if (!isset($array[$key])) {
+            return false;
+        }
+        if ($array[$key] === null) {
+            return false;
         }
         return true;
     }
