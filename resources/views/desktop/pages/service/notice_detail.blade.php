@@ -18,7 +18,7 @@
                             <div class="notice-info">
                                 <span class="writer">{{ $notice -> name }}</span>
                                 <span class="bar"></span>
-                                <span class="date">{{ $notice ->created_at }}</span>
+                                <span class="date">{{ date_format($notice ->created_at, 'Y.m.d H:m:s') }}</span>
                             </div>
                         </div>
                         <div class="notice-detail-content">

@@ -26,7 +26,7 @@
                                 <a href="{{ route('customer.notices.show',$notice->id) }}"
                                    class="title list-common">{{ $notice->title }}</a>
                                 <p class="writer list-common">{{ $notice->name }}</p>
-                                <p class="date list-common">{{ date_format($notice->created_at,'Y-m-d') }}</p>
+                                <p class="date list-common">{{ date_format($notice->created_at,'Y.m.d') }}</p>
                                 <p class="views list-common">{{ $notice->views }}</p>
                             </li>
                         @empty
