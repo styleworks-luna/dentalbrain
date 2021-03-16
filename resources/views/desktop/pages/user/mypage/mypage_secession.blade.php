@@ -21,65 +21,71 @@
                         <tr>
                             <th>탈퇴사유</th>
                             <td class="wrap">
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-01"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="다른 이메일을 사용하기 위해">
-                                    <label for="secession-radio-01">다른 이메일을 사용하기 위해</label>
-                                </div>
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-02"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="사용빈도가 낮고, 개인정보 유출이 우려되어서">
-                                    <label for="secession-radio-02">사용빈도가 낮고, 개인정보 유출이 우려되어서</label>
-                                </div>
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-03"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="사이트 이용시 장애가 있어서">
-                                    <label for="secession-radio-03">사이트 이용시 장애가 있어서</label>
-                                </div>
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-04"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="서비스의 질에 대한 불만이 있어서">
-                                    <label for="secession-radio-04">서비스의 질에 대한 불만이 있어서</label>
-                                </div>
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-05"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="사이트 이용시 고객응대가 나빠서">
-                                    <label for="secession-radio-05">사이트 이용시 고객응대가 나빠서</label>
-                                </div>
-                                <div class="radio-wrap">
-                                    <input type="radio"
-                                           id="secession-radio-06"
-                                           name="secession-radio"
-                                           class="secession-radio"
-                                           value="기타">
-                                    <label for="secession-radio-06">기타</label>
+                                <div class="form-wrap">
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-01"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="다른 이메일을 사용하기 위해"
+                                               data-parsley-required="true"
+                                               data-parsley-errors-container=".radio-error-wrap"
+                                               data-parsley-required-message="※ 사유를 선택해주세요.">
+                                        <label for="secession-radio-01">다른 이메일을 사용하기 위해</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-02"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="사용빈도가 낮고, 개인정보 유출이 우려되어서">
+                                        <label for="secession-radio-02">사용빈도가 낮고, 개인정보 유출이 우려되어서</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-03"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="사이트 이용시 장애가 있어서">
+                                        <label for="secession-radio-03">사이트 이용시 장애가 있어서</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-04"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="서비스의 질에 대한 불만이 있어서">
+                                        <label for="secession-radio-04">서비스의 질에 대한 불만이 있어서</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-05"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="사이트 이용시 고객응대가 나빠서">
+                                        <label for="secession-radio-05">사이트 이용시 고객응대가 나빠서</label>
+                                    </div>
+                                    <div class="radio-wrap">
+                                        <input type="radio"
+                                               id="secession-radio-06"
+                                               name="secession-radio"
+                                               class="secession-radio"
+                                               value="기타">
+                                        <label for="secession-radio-06">기타</label>
 
-                                    <input type="text"
-                                           id="secession-reason"
-                                           name="secession-reason"
-                                           class="secession-reason"
-                                           placeholder="사유를 입력해주세요"
-                                           readonly="true"
-                                           data-parsley-required="false"
-                                           data-parsley-required-message="※ 사유를 입력해주세요."
-                                           data-parsley-errors-container=".reason-error-wrap">
-                                    <div class="reason-error-wrap"></div>
+                                        <input type="text"
+                                               id="secession-reason"
+                                               name="secession-reason"
+                                               class="secession-reason"
+                                               placeholder="사유를 입력해주세요"
+                                               readonly="true"
+                                               data-parsley-required="false"
+                                               data-parsley-required-message="※ 사유를 입력해주세요."
+                                               data-parsley-errors-container=".reason-error-wrap">
+                                        <div class="reason-error-wrap"></div>
+                                    </div>
                                 </div>
+                                <div class="radio-error-wrap"></div>
                             </td>
                         </tr>
                         <tr>
