@@ -142,11 +142,6 @@ class Payment extends Model
         return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
     }
 
-    public function cancels()
-    {
-        return $this->hasMany(Cancel::class, 'payment_id', 'id');
-    }
-
     public function isCard()
     {
         return $this->attributes['method'] == '카드';
