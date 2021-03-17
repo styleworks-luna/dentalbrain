@@ -10,9 +10,9 @@
                 <div class="select-wrap waiting-wrap">
                     <div class="select-list">
                         <ul class="user-list">
-                            <li v-for="student in students">
+                            <li v-for="(student,index) in students">
                                 <label>
-                                    <input type="checkbox" v-model="checks" value="false">
+                                    <input type="checkbox" :id="`user${index}`" v-model="checks[index]">
                                     <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
                                     <span class="phone">{{ student.phone }}</span>
@@ -60,8 +60,7 @@ export default {
         return {
             id: '',
             students: [],
-            checks: [
-            ],
+            checks:[],
         }
     },
     created() {
@@ -77,7 +76,6 @@ export default {
             })
         },
         selectAll() {
-            console.log(this.checks);
         }
     }
 }
