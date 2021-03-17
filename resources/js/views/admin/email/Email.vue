@@ -8,6 +8,12 @@
                 </div>
 
                 <div class="select-wrap">
+                    <div class="input-wrap">
+                        <input type="text">
+                        <input type="text">
+                        <a href="">추가</a>
+                    </div>
+
                     <div class="select-list">
                         <ul class="user-list">
                             <li v-for="student in students">
@@ -15,7 +21,6 @@
                                     <input type="checkbox" @click="countNumber">
                                     <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
-                                    <span class="phone">{{ student.phone }}</span>
                                 </label>
                             </li>
                         </ul>
