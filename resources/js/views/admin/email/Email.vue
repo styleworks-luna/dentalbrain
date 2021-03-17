@@ -7,12 +7,12 @@
                     <p>이메일 발송을 원하는 대상을 선택하여 오른쪽 영역에 추가해주세요.</p>
                 </div>
 
-                <div class="select-wrap wait-wrap">
+                <div class="select-wrap">
                     <div class="select-list">
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" @click="countNumber">
                                     <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
                                     <span class="phone">{{ student.phone }}</span>
@@ -24,18 +24,9 @@
                         <a href="" @click.prevent="selectAll">전체선택</a>
                         <a href="" @click.prevent="releaseAll">전체해제</a>
                         <div class="count">
-                            <span class="total-count">명</span>
+                            <span class="total-count">{{ count }}명</span>
                         </div>
                     </div>
-                </div>
-
-                <div class="buttons">
-                    <a href="">이동 ▶</a>
-                    <a href="">전체이동 ▶</a>
-                </div>
-
-                <div class="select-wrap selected-wrap">
-
                 </div>
 
             </section>
@@ -60,6 +51,7 @@ export default {
         return {
             id: '',
             students: [],
+            count: 0,
         }
     },
     created() {
@@ -81,6 +73,7 @@ export default {
             checkboxs.forEach(checkbox => {
                 checkbox.checked = true;
             });
+            this.count = checkboxs.length;
         },
         releaseAll(event) {
             let parent = event.target.closest('.select-wrap');
@@ -89,6 +82,15 @@ export default {
             checkboxs.forEach(checkbox => {
                 checkbox.checked = false;
             });
+
+            this.count = 0;
+        },
+        countNumber(event) {
+            if(event.target.checked == true) {
+                this.count++;
+            } else {
+                this.count--;
+            }
         }
     }
 }
