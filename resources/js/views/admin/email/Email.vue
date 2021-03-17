@@ -9,9 +9,9 @@
 
                 <div class="select-wrap">
                     <div class="input-wrap">
-                        <input type="text">
-                        <input type="text">
-                        <a href="">추가</a>
+                        <input type="text" v-model="addStudent.user.name">
+                        <input type="text" v-model="addStudent.email">
+                        <a href="" @click.prevent="add">추가</a>
                     </div>
 
                     <div class="select-list">
@@ -57,6 +57,12 @@ export default {
             id: '',
             students: [],
             count: 0,
+            addStudent: {
+                user: {
+                    name: ''
+                },
+                email: ''
+            },
         }
     },
     created() {
@@ -96,6 +102,9 @@ export default {
             } else {
                 this.count--;
             }
+        },
+        add() {
+            this.students.push(this.addStudent);
         }
     }
 }
