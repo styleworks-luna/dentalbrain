@@ -338,3 +338,31 @@
 
         p
             +margin(0)
+
+// 이메일 보내기
+.email
+    .title-area
+        +border(1px solid $gray-300, bottom)
+
+        h4
+            float: left
+            font-weight: bold
+
+        p
+            +padding(left 10px)
+            float: left
+
+    .send-area
+        overflow: hidden
+
+        .select-wrap
+            +size(510px)
+            +margin(top 50px)
+            float: left
+            overflow: hidden
+
+            .select-list
+                +size(508px)
+                +border(1px solid $border-color-base)
+
+
