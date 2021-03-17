@@ -38,7 +38,7 @@ class UserController extends Controller
                 Rule::unique('users', 'email')->ignore(Auth::id()),],
             'job' => ['required', 'exists:user_job_names,id'],
             'phone' => ['nullable', Rule::unique('users', 'phone')->ignore(Auth::id()),],
-            'password' => ['required', 'string', 'min:6', 'max:40',
+            'password' => ['nullable', 'string', 'min:6', 'max:40',
                 'regex:' . User::$passwordPattern,
                 // custom validations rule : without_spaces
                 'without_spaces',
