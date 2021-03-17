@@ -4,17 +4,16 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Secession;
-use App\Models\Payments\Payment;
-use App\Models\Program\ProgramStudent;
+use App\Models\Program\Survey\SurveyCategory;
 use App\Models\User;
 use App\Models\UserSecession;
+use App\Services\File\SurveyFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -35,50 +34,71 @@ class SecessionController extends Controller
             return $input->get('secession-radio') == '기타';
         });
 
+        if (Auth::user()->is_admin) {
+            return redirect()->back()->with('alert', '관리자는 회원 탈퇴가 불가능합니다.');
+        }
+
         $validatedData = $validator->validate();
 
-        if ($this->checkPasswordOfCurrentUser($validatedData['password'])) {
-            try {
-                DB::beginTransaction();
-                if(Auth::user()->is_admin == false) {
-                    $userSecession = new UserSecession();
-                    $userSecession->user_id = Auth::id();
-                    $userSecession->reason = isset($validatedData['secession-reason']) ? $validatedData['secession-reason'] : $validatedData['secession-radio'];
-                    $userSecession->save();
-
-                    $user = User::find(Auth::id());
-
-                    $user->surveyAnswers()->delete();
-                    $user->lectureQuestions()->delete();
-                    $user->likes()->delete();
-                    $user->comments()->delete();
-
-                    $programStudent = ProgramStudent::query()->where('user_id',Auth::id());
-                    foreach($programStudent->get() as $student){
-                        Payment::find($student->payment_id)->delete();
-                    }
-                    $programStudent->delete();
-                    DB::commit();
-                }else{
-                    DB::rollBack();
-                    return redirect()->back()->with('alert','관리자는 회원 탈퇴가 불가능합니다.');
-                }
-            } catch (\Exception $exception) {
-                DB::rollBack();
-                Log::error('USER SECESSION ERROR',[$exception]);
-                return redirect()->back()->with('alert','에러가 발생했습니다.');
-            }
-            //TODO : 회원 탈퇴 시 남아있는 회원 정보들을 모두 지워야 함.
-
-            Mail::to(Auth::user()->email)->send(new Secession(Auth::user(), $userSecession));
-            Auth::user()->delete();
-            return redirect('/')->with('alert', '회원 탈퇴 되었습니다.');
-        } else {
+        if (!$this->checkPasswordOfCurrentUser($validatedData['password'])) {
             throw ValidationException::withMessages([
                 'password_wrong' => '※ 비밀번호가 일치하지 않습니다.',
             ]);
-            return redirect()->back();
         }
+
+        try {
+            DB::beginTransaction();
+
+            $userSecession = new UserSecession();
+            $userSecession->user_id = Auth::id();
+            $userSecession->reason = isset($validatedData['secession-reason']) ? $validatedData['secession-reason'] : $validatedData['secession-radio'];
+            $userSecession->save();
+
+            $user = User::find(Auth::id());
+
+            // 추가정보 답변 파일 삭제
+            $surveyFiles = $user->surveyAnswers()->whereNotNull('file_id')->get()
+                ->mapInto(SurveyFile::class);
+            $surveyFiles->each(function ($item, $key) {
+                $item->deleteFile();
+            });
+
+            // 추가정보 삭제
+            $user->surveyAnswers()->delete();
+
+            // 강의 질문 삭제
+            $user->lectureQuestions()->delete();
+
+            // 강의 좋아요 삭제
+            $user->likes()->delete();
+
+            // 대댓글 삭제.
+            if ($user->comments) {
+                $user->comments->each(function ($item, $key) {
+                    $item->children()->delete();
+                });
+            }
+            // 댓글 삭제
+            $user->comments()->delete();
+
+            if ($user->students) {
+                $user->students->each(function ($item, $key) {
+                    $item->payment()->delete();
+                });
+                $user->students()->delete();
+            }
+            DB::commit();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('USER SECESSION ERROR', [$exception]);
+            return redirect()->back()->with('alert', '에러가 발생했습니다.');
+        }
+
+        Mail::to(Auth::user()->email)->send(new Secession(Auth::user(), $userSecession));
+        Auth::user()->delete();
+        return redirect('/')->with('alert', '회원 탈퇴 되었습니다.');
+
     }
 
     public function checkPasswordOfCurrentUser($password)

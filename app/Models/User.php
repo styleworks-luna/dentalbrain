@@ -59,12 +59,14 @@ class User extends Authenticatable
         return $this->attributes['is_admin'] ? true : false;
     }
 
-    public function likes(){
-        return $this->hasMany(UserLike::class, 'user_id','id');
+    public function likes()
+    {
+        return $this->hasMany(UserLike::class, 'user_id', 'id');
     }
 
-    public function comments(){
-        return $this->hasMany(Comment::class,'user_id','id');
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
     public function students()
