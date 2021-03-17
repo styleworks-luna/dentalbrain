@@ -12,7 +12,7 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" v-model="checks" value="false">
                                     <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
                                     <span class="phone">{{ student.phone }}</span>
@@ -59,7 +59,9 @@ export default {
     data() {
         return {
             id: '',
-            students: []
+            students: [],
+            checks: [
+            ],
         }
     },
     created() {
@@ -75,7 +77,7 @@ export default {
             })
         },
         selectAll() {
-            var list = document.querySelectorAll('.user-list > li');
+            console.log(this.checks);
         }
     }
 }
