@@ -1,11 +1,10 @@
 import Send from '@/utils/Send.js';
 
 export default {
-    getData(value,id) {
+    getData(id) {
         return Send({
             url: `/api/admin/lecture/notification/email/${id}`,
             method: 'get',
-            params: value
         });
     },
     update(data) {
