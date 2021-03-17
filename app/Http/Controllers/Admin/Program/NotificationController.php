@@ -20,10 +20,11 @@ class NotificationController extends Controller{
    public function email(Program $program){
         $result = $program->students()
         ->orderByDesc('id')
-        ->with(['user' => function($query){
-            $query->select('id','name','login_id','allow_email');
+        ->with(['user:id,name,login_id,allow_email'])
+        ->whereHas('user',function($query){
             $query->where('allow_email',true);
-        }])->get();
+        })
+        ->get();
        return response()->json(['students'=> $result]);
    }
     public function sms(Program $program){
