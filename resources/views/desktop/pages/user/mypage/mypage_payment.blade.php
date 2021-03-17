@@ -69,7 +69,7 @@
                                             <div class="deposit-detail">
                                                 <p>입금 계좌 : {{ $payment->va_accountNumber }}</p>
                                                 <p>예금주 : {{ $payment->va_customerName }}</p>
-                                                <p>납입기한 : {{ date_format($payment->va_dueDate,'Y-m-d G:i:s') }}</p>
+                                                <p>납입기한 : {{ date_format($payment->va_dueDate,'Y.m.d G:i:s') }}</p>
                                             </div>
                                         @endif
                                         @isset($payment->receiptUrl)
