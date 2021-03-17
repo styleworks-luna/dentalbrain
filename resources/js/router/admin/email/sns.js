@@ -2,7 +2,7 @@ import Sns from '@/views/admin/email/Sns.vue';
 
 const routes = [
     {
-        path: '/admin/sns',
+        path: '/admin/:id/sns',
         name: 'AdminSns',
         component: Sns
     },
