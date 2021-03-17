@@ -13,7 +13,7 @@
                             <li v-for="student in students">
                                 <label>
                                     <input type="checkbox">
-                                    <span class="name">{{ student.user_id }}</span>
+                                    <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
                                     <span class="phone">{{ student.phone }}</span>
                                 </label>
@@ -21,7 +21,7 @@
                         </ul>
                     </div>
                     <div class="manage-area">
-                        <a href="">전체선택</a>
+                        <a href="" @click.prevent="selectAll">전체선택</a>
                         <a href="">전체해제</a>
                         <div class="count">
                             <span class="total-count">명</span>
@@ -73,6 +73,9 @@ export default {
             Email.getData(this.id).then(res => {
                 this.students = res.data.students;
             })
+        },
+        selectAll() {
+            var list = document.querySelectorAll('.user-list > li');
         }
     }
 }
