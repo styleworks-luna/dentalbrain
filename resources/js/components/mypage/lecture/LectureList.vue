@@ -87,9 +87,12 @@
                         <div class="offline-lecture-pay">
                             <p>결제금액</p>
                             <div class="d-day"><em>
-                                {{
-                                    lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
-                                }}
+                                <template v-if="lecture.is_repeated">
+                                    {{ Helper.numberWithCommas(lecture.ticket.repeat_price) + '원' }}
+                                </template>
+                                <template v-else>
+                                {{ Helper.numberWithCommas(lecture.ticket.price) + '원' }}
+                                </template>
                             </em></div>
                         </div>
                     </template>
