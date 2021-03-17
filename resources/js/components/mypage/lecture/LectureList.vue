@@ -28,14 +28,21 @@
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td><p class="lecture-pay">
-                                    <template v-if="!lecture.is_repeated">
-                                        {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
-                                    </template>
-                                    <template v-else>
-                                        {{ '재수강 할인가: ' + Helper.numberWithCommas(lecture.ticket.repeat_price) + '원' }}
-                                    </template>
-                                </p></td>
+                                <td>
+                                    <p class="lecture-pay">
+                                        <template v-if="!lecture.is_repeated">
+                                            {{
+                                                lecture.ticket.price == 0 ? '무료' :
+                                                    Helper.numberWithCommas(lecture.ticket.price) + '원'
+                                            }}
+                                        </template>
+                                        <template v-else>
+                                            {{
+                                                '재수강 할인가: ' + Helper.numberWithCommas(lecture.ticket.repeat_price) + '원'
+                                            }}
+                                        </template>
+                                    </p>
+                                </td>
                             </tr>
                         </table>
                         <table v-else>
@@ -55,62 +62,89 @@
                     </div>
                 </div>
                 <div class="lecture-sub-information">
-                    <div class="content-time" v-if="lecture.ticket.program.is_online">
-                        <p>시청 가능 기간</p>
-                        <div class="d-day" v-if="lecture.left_days > 0">
-                            <em>{{ lecture.left_days }}일</em> 남음
+                    <template v-if="lecture.pay_status != 1">
+                        <div class="content-time" v-if="lecture.ticket.program.is_online">
+                            <p>시청 가능 기간</p>
+                            <div class="d-day" v-if="lecture.left_days > 0">
+                                <em>{{ lecture.left_days }}일</em> 남음
+                            </div>
+                            <div class="d-day" v-else-if="lecture.left_days === '0'">
+                                <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
+                            </div>
+                            <div class="d-day" v-else><em>만료</em></div>
+                            <div class="dedicate">{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
                         </div>
-                        <div class="d-day" v-else-if="lecture.left_days === '0'">
-                            <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
-                        </div>
-                        <div class="d-day" v-else><em>만료</em></div>
-                        <div class="dedicate">{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
-                    </div>
-                    <div class="offline-lecture-pay" v-else>
-                        <p>결제금액</p>
-                        <div class="d-day"><em>
-                            {{ lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원' }}
-                        </em></div>
-                    </div>
-                </div>
-                <div class="btn-zone">
-                    <template v-if="lecture.ticket.program.is_online">
-                        <div
-                            :class="lecture.is_watched == 0 && lecture.left_days > lecture.ticket.term - 8 ? 'content-button-offline' : 'content-button'"
-                            v-if="lecture.left_days > 0 || lecture.left_days === '0'">
-                            <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
-                                시청하기</a>
-                            <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
-                               @click.prevent="popUpStatus(lecture.id)">환불요청</a>
-                        </div>
-                        <div class="content-button-offline" v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
-                            <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
-                            <p>재수강시<br>30% 할인 적용됩니다.</p>
+                        <div class="offline-lecture-pay" v-else>
+                            <p>결제금액</p>
+                            <div class="d-day"><em>
+                                {{
+                                    lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
+                                }}
+                            </em></div>
                         </div>
                     </template>
-                    <div class="content-button-offline"
-                         v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
-                        <div class="btn-wrap">
-                            <a :href="`/account/lectures/${lecture.ticket.program.id}`"
-                               :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
-                            <template v-if="lecture.ticket.is_free == 0">
-                                <template v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">
-                                    <a href="" @click.prevent="popUpStatus(lecture.id)">취소하기</a>
-                                </template>
-                                <template v-else-if=" Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
-                                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">
-                                    <a href="" v-if="lecture.pay_status === 2" @click.prevent="popUpManualStatus(lecture.id)">
-                                        취소하기
-                                    </a>
-                                    <a href="" v-else-if="lecture.pay_status ===4" @click.prevent>환불요청 중</a>
-                                </template>
-                            </template>
-                            <template v-else-if="lecture.ticket.is_free != 0">
-                                <a href="" v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
-                                   @click.prevent="popUpStatus(lecture.id)">취소하기</a>
-                            </template>
+                    <template v-else>
+                        <div class="offline-lecture-pay">
+                            <p>결제금액</p>
+                            <div class="d-day"><em>
+                                {{
+                                    lecture.ticket.price == 0 ? '무료' : Helper.numberWithCommas(lecture.ticket.price) + '원'
+                                }}
+                            </em></div>
                         </div>
-                    </div>
+                    </template>
+                </div>
+                <div class="btn-zone">
+                    <template v-if="lecture.pay_status != 1">
+                        <template v-if="lecture.ticket.program.is_online">
+                            <div
+                                :class="lecture.is_watched == 0 && lecture.left_days > lecture.ticket.term - 8 ? 'content-button-offline' : 'content-button'"
+                                v-if="lecture.left_days > 0 || lecture.left_days === '0'">
+                                <a :href="`/lectures/${lecture.ticket.program.id}/watch/${lecture.ticket.program.lectures[0].id}`">강의
+                                    시청하기</a>
+                                <a href="" v-if="lecture.left_days > lecture.ticket.term - 8 && lecture.is_watched == 0"
+                                   @click.prevent="popUpStatus(lecture.id)">환불요청</a>
+                            </div>
+                            <div class="content-button-offline"
+                                 v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
+                                <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
+                                <p>재수강시<br>30% 할인 적용됩니다.</p>
+                            </div>
+                        </template>
+                        <div class="content-button-offline"
+                             v-else-if="!lecture.ticket.program.is_online && Helper.dateCompareWithNow(lecture.ticket.program.place.ended_at) > 0">
+                            <div class="btn-wrap">
+                                <a :href="`/account/lectures/${lecture.ticket.program.id}`"
+                                   :class="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
+                                <template v-if="lecture.ticket.is_free == 0">
+                                    <template
+                                        v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay * 2">
+                                        <a href="" @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                                    </template>
+                                    <template v-else-if=" Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) < milliSecondsDay * 2
+                                               && Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay">
+                                        <a href="" v-if="lecture.pay_status === 2"
+                                           @click.prevent="popUpManualStatus(lecture.id)">
+                                            취소하기
+                                        </a>
+                                        <a href="" v-else-if="lecture.pay_status ===4" @click.prevent>환불요청 중</a>
+                                    </template>
+                                </template>
+                                <template v-else-if="lecture.ticket.is_free != 0">
+                                    <a href=""
+                                       v-if="Helper.dateCompareWithNow(lecture.ticket.program.place.started_at) > milliSecondsDay"
+                                       @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-else>
+                        <div class="content-button">
+                            <div class="btn-wrap">
+                                <a href="" @click.prevent class="btn-none-active">입금대기중</a>
+                            </div>
+                        </div>
+                    </template>
                 </div>
             </li>
             <li class="content-none" v-if="lectures.length == 0">신청한 강의가 없습니다.</li>
