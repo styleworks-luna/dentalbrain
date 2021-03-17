@@ -7,12 +7,12 @@
                     <p>이메일 발송을 원하는 대상을 선택하여 오른쪽 영역에 추가해주세요.</p>
                 </div>
 
-                <div class="select-wrap waiting-wrap">
+                <div class="select-wrap wait-wrap">
                     <div class="select-list">
                         <ul class="user-list">
-                            <li v-for="(student,index) in students">
+                            <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" :id="`user${index}`" v-model="checks[index]">
+                                    <input type="checkbox">
                                     <span class="name">{{ student.user.name }}</span>
                                     <span class="email">{{ student.email }}</span>
                                     <span class="phone">{{ student.phone }}</span>
@@ -22,14 +22,14 @@
                     </div>
                     <div class="manage-area">
                         <a href="" @click.prevent="selectAll">전체선택</a>
-                        <a href="">전체해제</a>
+                        <a href="" @click.prevent="releaseAll">전체해제</a>
                         <div class="count">
                             <span class="total-count">명</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="button">
+                <div class="buttons">
                     <a href="">이동 ▶</a>
                     <a href="">전체이동 ▶</a>
                 </div>
@@ -60,7 +60,6 @@ export default {
         return {
             id: '',
             students: [],
-            checks:[],
         }
     },
     created() {
@@ -75,7 +74,21 @@ export default {
                 this.students = res.data.students;
             })
         },
-        selectAll() {
+        selectAll(event) {
+            let parent = event.target.closest('.select-wrap');
+            let checkboxs = parent.querySelectorAll('.user-list li input[type="checkbox"]');
+
+            checkboxs.forEach(checkbox => {
+                checkbox.checked = true;
+            });
+        },
+        releaseAll(event) {
+            let parent = event.target.closest('.select-wrap');
+            let checkboxs = parent.querySelectorAll('.user-list li input[type="checkbox"]');
+
+            checkboxs.forEach(checkbox => {
+                checkbox.checked = false;
+            });
         }
     }
 }
