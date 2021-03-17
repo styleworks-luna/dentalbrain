@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
+use App\Models\Program\UserLike;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +57,14 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->attributes['is_admin'] ? true : false;
+    }
+
+    public function likes(){
+        return $this->hasMany(UserLike::class, 'user_id','id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class,'user_id','id');
     }
 
     public function students()
