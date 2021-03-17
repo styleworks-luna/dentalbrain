@@ -186,10 +186,13 @@
             color: $page-color
 
     .btn-none-active
+        +border(0)
+        +background(null, null, null, $border-color-light)
+        color: $gray-900
         cursor: auto
 
         &:hover
-            color: $black
+            color: $gray-900
 
     .for-margin
         +margin(top 88px)
