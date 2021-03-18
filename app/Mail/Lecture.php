@@ -34,7 +34,7 @@ class Lecture extends Mailable
     {
         return $this
             ->subject($this->title)
-            ->view('')
+            ->view('emails.content')
             ->with([
                 'content' => $this->content
             ]);
