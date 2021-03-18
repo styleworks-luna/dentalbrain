@@ -143,9 +143,9 @@
                     </div>
                     <div class="community-menu">
                         <ul>
-                            <li><a href="{{ route('account.index') }}">마이페이지</a></li>
-                            <li><a href="{{ route('customer.index') }}">고객센터</a></li>
-                            <li><a href="{{ url('lectures') }}">전체강의</a></li>
+                            <li><a href="{{ route('account.index') }}"><p>마이페이지</p></a></li>
+                            <li><a href="{{ route('customer.index') }}"><p>고객센터</p></a></li>
+                            <li><a href="{{ url('lectures') }}"><p>전체강의</p></a></li>
                         </ul>
                     </div>
                 </div>
