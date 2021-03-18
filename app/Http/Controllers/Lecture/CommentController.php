@@ -9,16 +9,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
     //
     public function store(Request $request, Program $program)
     {
-        $data = $request->validate([
+        $v = Validator::make($request->all(), [
             'parent_id' => ['numeric', 'nullable'],
-            'content' => ['required', 'string', 'max:300'],
+            'content' => ['required', 'string', 'max:200'],
         ]);
+
+        if ($v->fails()) {
+            return response()->json([
+                'msg' => $v->errors()->get('content'),
+            ], 400);
+        }
+
+        $data = $v->validated();
 
         $data['user_id'] = Auth::id();
         $data['program_id'] = $program->id;
@@ -32,11 +41,6 @@ class CommentController extends Controller
 
     public function delete(Request $request, Program $program, Comment $comment)
     {
-        $request->validate([
-            'parent_id' => ['numeric', 'nullable'],
-            'content' => ['required', 'string', 'max:300'],
-        ]);
-
         if (!Auth::user()->can('delete', $comment)) {
             return response()->json([
                 'msg' => '권한이 없습니다.'
@@ -64,10 +68,18 @@ class CommentController extends Controller
 
     public function update(Request $request, Program $program, Comment $comment)
     {
-        $data = $request->validate([
+        $v = Validator::make($request->all(), [
             'parent_id' => ['numeric', 'nullable'],
-            'content' => ['required', 'string', 'max:300'],
+            'content' => ['required', 'string', 'max:200'],
         ]);
+
+        if ($v->fails()) {
+            return response()->json([
+                'msg' => $v->errors()->get('content'),
+            ], 400);
+        }
+
+        $data = $v->validated();
 
         if (!Auth::user()->can('update', $comment)) {
             return response()->json([

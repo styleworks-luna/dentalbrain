@@ -139,7 +139,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
@@ -165,7 +165,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
@@ -191,7 +191,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
@@ -218,7 +218,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
@@ -259,7 +259,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
@@ -287,7 +287,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(error);
+                alert(request.responseJSON.msg);
             }
         });
     });
