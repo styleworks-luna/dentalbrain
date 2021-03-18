@@ -175,8 +175,6 @@ export default {
                 message: this.content,
             }
 
-            console.log(data);
-
             SMS.update(data).then(res => {
                 this.showModal = false;
                 alert(res.data.msg);
