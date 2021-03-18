@@ -6,7 +6,18 @@
                 </a>
             </div>
             <div class="footer-left">
-                <ul>
+                <ul class="agreement">
+                    <li>
+                        <a href="">이용약관</a>
+                    </li>
+                    <li>
+                        <a href="">개인정보처리방침</a>
+                    </li>
+                    <li>
+                        <a href="">환불약관</a>
+                    </li>
+                </ul>
+                <ul class="footer-information">
                     <li>
                         <p>상호 : 주식회사 브레인스펙병원교육개발원 </p>
                     </li>

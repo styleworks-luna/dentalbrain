@@ -3,27 +3,55 @@
     min-width: 1280px
 
     .container
-        height: 132px
+        height: 187px
 
-        .footer-logo-wrap
-            +padding(top 41px)
-            float: left
+    .footer-logo-wrap
+        +padding(top 70px)
+        float: left
 
-            .footer-logo
-                width: 90px
-                height: 25px
+        .footer-logo
+            width: 90px
+            height: 25px
 
-        .footer-left
-            +padding(26px 0 0 50px)
-            overflow: hidden
-            float: left
-            width: 543px
+    .footer-left
+        +padding(30px 0 0 50px)
+        overflow: hidden
+        float: left
+        width: 543px
 
-            ul
-                +size(510px)
+        li::after
+            content: ''
+            position: absolute
+            right: 13px
+            top: 3px
+            width: 1px
+            height: 12px
+            background: $gray-700
+
+        .agreement
+            li
+                +padding(right 32px)
+                display: inline-block
+                position: relative
+
+                a
+                    font-size: 13px
+                    line-height: 1.54
+                    color: $gray-700
+
+                    &:hover
+                        font-weight: bold
+
+                &:last-child::after
+                    +size(0,0)
+
+
+        .footer-information
+            +size(512px)
+            +padding(top 11px)
 
             li
-                +padding(right 30px)
+                +padding(right 32px)
                 display: inline-block
                 position: relative
 
@@ -32,15 +60,6 @@
                     color: $gray-700
                     letter-spacing: 0
                     line-height: 1.54
-
-            li::after
-                content: ''
-                position: absolute
-                right: 11px
-                top: 3px
-                width: 1px
-                height: 15px
-                background: $gray-700
 
             li:nth-child(2)::after
                 width: 0
@@ -54,39 +73,39 @@
                 width: 0
                 height: 0
 
-            .office-address
-                font-size: 13px
-                color: $gray-700
-                line-height: 1.54
+        .office-address
+            font-size: 13px
+            color: $gray-700
+            line-height: 1.54
 
-        .footer-right
-            overflow: hidden
-            float: right
-            padding: 40px 13px
+    .footer-right
+        +padding(68px 13px)
+        overflow: hidden
+        float: right
 
-            li
-                float: left
+        li
+            float: left
 
-                .footer-right-brainspec
-                    display: block
-                    width: 123px
-                    height: 25px
-                    margin-top: 2px
-                    margin-right: 31px
+            .footer-right-brainspec
+                display: block
+                width: 123px
+                height: 25px
+                margin-top: 2px
+                margin-right: 31px
 
-                .footer-right-ohc
-                    display: block
-                    width: 86px
-                    height: 26px
-                    margin-right: 39px
+            .footer-right-ohc
+                display: block
+                width: 86px
+                height: 26px
+                margin-right: 39px
 
-                .footer-right-kadh
-                    display: block
-                    width: 59px
-                    height: 31px
-                    margin-right: 36px
+            .footer-right-kadh
+                display: block
+                width: 59px
+                height: 31px
+                margin-right: 36px
 
-                .footer-right-kdma
-                    display: block
-                    width: 101px
-                    height: 27px
+            .footer-right-kdma
+                display: block
+                width: 101px
+                height: 27px
