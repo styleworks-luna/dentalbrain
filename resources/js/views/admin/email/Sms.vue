@@ -43,7 +43,10 @@
                 </div>
 
                 <div class="editor-wrap">
-                    <textarea name="sms_content" id="sms_input" v-model="content"></textarea>
+                    <textarea name="sms_content" id="sms_input" v-model="content" @keyup="countText"></textarea>
+                    <div class="text-num-wrap">
+                        <span class="text-number">{{ textNum }}자</span>
+                    </div>
                 </div>
             </section>
 
@@ -78,6 +81,7 @@ export default {
             id: '',
             students: [],
             count: 0,
+            textNum: 0,
             content: '',
             phone: [],
             showModal: false,
@@ -153,17 +157,15 @@ export default {
             document.getElementById('name').value = '';
             document.getElementById('phone').value = '';
         },
-        handleSetEditor(data) {
-            this.content = data;
+        countText(event) {
+            this.textNum = event.target.value.length;
         },
         sendSms() {
             let textLength = document.getElementById('sms_input').value.length;
 
-            if(textLength > 80) {
-                var confirmFlag = confirm('80자가 넘으면 lms로 전송됩니다. 계속하시겠습니까?')
-                if(!confirmFlag) {
-                    return false;
-                }
+            if (textLength > 80) {
+                alert('80자 이하로 작성하세요.');
+                return false;
             }
 
             this.showModal = true;
