@@ -20,6 +20,9 @@
                 @csrf
                 <section class="edit">
                     <h2>회원정보 수정</h2>
+                    @foreach($errors->all() as $error)
+                        {{ $error }}
+                    @endforeach
                     <table>
                         <tr>
                             <th><h3>이름</h3></th>
@@ -45,6 +48,11 @@
                                        data-parsley-required-message="※ 이메일 주소를 입력해주세요."
                                        data-parsley-errors-container=".email-error-wrap"
                                        value="{{ auth()->user()->email }}">
+                                <p>
+                                    @error('email')
+                                    {{$message}}
+                                    @enderror
+                                </p>
                                 <div class="email-error-wrap error-wrap-common"></div>
                             </td>
                         </tr>
@@ -67,7 +75,12 @@
                                        data-parsley-required-message="※ 면허번호를 입력해주세요."
                                        data-parsley-errors-container=".license-error-wrap"
                                        value="{{ auth()->user()->job->license_num }}">
-                                <div class="license-error-wrap error-wrap-common"></div>
+                                @error('license_num')
+                                {{$message}}
+                                @enderror
+                                <div class="license-error-wrap error-wrap-common">
+
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -135,6 +148,9 @@
                                         변경
                                     </button>
                                 </div>
+                                @error('password')
+                                {{$message}}
+                                @enderror
                                 <div class="password-error-wrap error-wrap-common"></div>
 
                             </td>

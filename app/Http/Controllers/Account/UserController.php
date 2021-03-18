@@ -31,27 +31,30 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        ddd($request->all());
         /* @see RegisterController validator()
          */
-        $v = Validator::make($request->all(), [
+        $data = $request->all();
+
+        $v = Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255',
                 Rule::unique('users', 'email')->ignore(Auth::id()),],
             'job' => ['required', 'exists:user_job_names,id'],
-            'phone' => ['nullable', Rule::unique('users', 'phone')->ignore(Auth::id()),],
+            'phone' => ['required', Rule::unique('users', 'phone')->ignore(Auth::id()),],
             'password' => ['nullable', 'string', 'min:6', 'max:40',
                 'regex:' . User::$passwordPattern,
                 // custom validations rule : without_spaces
-                'without_spaces',
-                'confirmed'],
+                'without_spaces', 'confirmed'],
+        ], [
+            'email.unique' => '* 가입 된 이메일입니다.',
+            'license_num.*' => '* 면허번호가 잘못되었습니다.',
+            'password.regex' => '* 비밀번호는 영문 숫자 포함하여 6자 이상입니다.',
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::query()->find($input->job)->need_license == true;
         });
 
-        // TODO validation 메시지 작업하기
-        if ($v->fails()) {
-            return redirect()->back()->with('alert', '양식에 맞게 작성해주십시오.');
-        }
+        $needLogout = false;
 
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
@@ -66,8 +69,14 @@ class UserController extends Controller
                 $userJob->save();
             }
             $user->email = $data['email'];
-            if (isset($data['password'])) $user->password = Hash::make($data['password']);
-            if (isset($data['phone'])) $user->phone = $data['phone'];
+            if ($data['password'] != null) {
+                $user->password = Hash::make($data['password']);
+                $needLogout = true;
+            }
+            if ($data['phone'] != $user->phone) {
+                $user->phone = $data['phone'];
+                $needLogout = true;
+            }
             $user->save();
 
             DB::commit();
@@ -77,9 +86,12 @@ class UserController extends Controller
             return redirect('/')->with('alert', '오류가 발생하였습니다.');
         }
 
-        Auth::logout();
+        if ($needLogout) {
+            Auth::logout();
+            return redirect('/')->with('alert', '변경되었습니다. 다시 로그인 해주세요.');
+        }
 
-        return redirect('/')->with('alert', '변경되었습니다. 다시 로그인 해주세요.');
+        return redirect('/')->with('alert', '변경되었습니다.');
     }
 
     public function needConfirm(Request $request)
