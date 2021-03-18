@@ -167,6 +167,8 @@ export default {
         sendEmail() {
             this.showModal = true;
 
+            document.getElementById('btn-send').style.pointerEvents = 'none';
+
             let data = {
                 email: this.email,
                 message: this.content,
@@ -178,7 +180,8 @@ export default {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
             }).catch(err => {
-                console.log(err);
+                this.showModal = false;
+                document.getElementById('btn-send').style.pointerEvents = 'auto';
             });
         }
     }

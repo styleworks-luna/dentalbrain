@@ -51,12 +51,13 @@ class NotificationController extends Controller
 
 
         try {
-            Mail::to($validatedData['email'])->send(new Lecture($validatedData['title'], $validatedData['message']));
+            Mail::to('do-not-reply@dentalbrain.co.kr')
+                ->bcc($validatedData['email'])->send(new Lecture($validatedData['title'], $validatedData['message']));
 
-            return response()->json(['success' => true, 'msg' => '이메일 발신되었습니다.']);
+            return response()->json(['success' => true, 'msg' => '이메일 발신되었습니다.'], 200);
         } catch (\Exception $exception) {
             Log::error('SEND LECTURE EMAIL ERROR', [$exception]);
-            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.']);
+            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.'], 500);
         }
     }
 
