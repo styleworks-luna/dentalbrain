@@ -1,9 +1,9 @@
 import Email from '@/router/admin/email/email.js';
-import Sns from '@/router/admin/email/sns.js';
+import Sms from '@/router/admin/email/sms.js';
 
 const routes = [
     ...Email,
-    ...Sns,
+    ...Sms,
 ];
 
 export default routes;

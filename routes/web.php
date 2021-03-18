@@ -183,7 +183,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
     //email
     Route::view('{any}/email', 'admin.index');
-    Route::view('{any}/sns', 'admin.index');
+    Route::view('{any}/sms', 'admin.index');
 
 
     // user

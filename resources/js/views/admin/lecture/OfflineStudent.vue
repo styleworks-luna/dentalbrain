@@ -3,7 +3,7 @@
         <template v-slot:button>
             <a :href="`/lectures/${id}/excel`" class="btn btn-info" download>엑셀 다운로드</a>
             <router-link :to="`/admin/${id}/email`" class="btn btn-primary text-white">이메일 보내기</router-link>
-            <router-link :to="`/admin/${id}/sns`" class="btn btn-primary text-white">sns 보내기</router-link>
+            <router-link :to="`/admin/${id}/sms`" class="btn btn-primary text-white">sms 보내기</router-link>
         </template>
 
         <template v-slot:search>
