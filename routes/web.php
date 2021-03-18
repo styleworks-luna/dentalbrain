@@ -84,6 +84,18 @@ Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
 });
 
+// 이용 약관
+Route::get('service', function () {
+    return view(viewPrefix() . 'pages.term.service');
+});
+
+Route::get('privacy', function () {
+    return view(viewPrefix() . 'pages.term.privacy');
+});
+
+Route::get('refund', function () {
+    return view(viewPrefix() . 'pages.term.refund');
+});
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');

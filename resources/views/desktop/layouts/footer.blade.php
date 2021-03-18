@@ -8,13 +8,13 @@
             <div class="footer-left">
                 <ul class="agreement">
                     <li>
-                        <a href="">이용약관</a>
+                        <a href="{{ url('service') }}">이용약관</a>
                     </li>
                     <li>
-                        <a href="">개인정보처리방침</a>
+                        <a href="{{ url('privacy') }}">개인정보처리방침</a>
                     </li>
                     <li>
-                        <a href="">환불약관</a>
+                        <a href="{{ url('refund') }}">환불약관</a>
                     </li>
                 </ul>
                 <ul class="footer-information">
