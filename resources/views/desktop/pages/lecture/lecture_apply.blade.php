@@ -332,8 +332,8 @@
             </form>
             <div class="dim"></div>
             <div class="popup-control">
-                @include('desktop.pages.agreement.privacy_to_third')
-                @include('desktop.pages.agreement.refund')
+                @include('desktop.component.popup.agreement.privacy_to_third')
+                @include('desktop.component.popup.agreement.refund')
             </div>
         </div>
     </section>
