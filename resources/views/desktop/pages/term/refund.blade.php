@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="content">
+    <section class="term">
         <div class="container">
             @include('desktop.layouts.navigation.term')
 
