@@ -1,5 +1,5 @@
 <template>
-    <layout title="문자 보내기" class="sms">
+    <layout title="SMS 보내기" class="sms">
         <template v-slot:body>
             <section class="send-area">
                 <div class="title-area overflow-hidden">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="editor-wrap">
-                    <textarea name="" id=""></textarea>
+                    <textarea name="sms_content" id="sms_input" v-model="content"></textarea>
                 </div>
             </section>
 
@@ -66,7 +66,7 @@
 import Table from '@/components/admin/grid/Table.vue';
 
 // api
-import SMS from '@/api/admin/email/Sns.js'
+import SMS from '@/api/admin/email/Sms.js'
 
 export default {
     name: 'AdminSms',
@@ -136,10 +136,10 @@ export default {
         add() {
             let inputName = document.getElementById('name').value;
             let inputPhone = document.getElementById('phone').value;
-            let regExpPhone = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/
+            let regExpPhone = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 
             if (regExpPhone.test(inputPhone) == false) {
-                alert('이메일 형식이 올바르지 않습니다.')
+                alert('전화번호 형식이 올바르지 않습니다.')
                 return false;
             }
 
@@ -157,6 +157,15 @@ export default {
             this.content = data;
         },
         sendSms() {
+            let textLength = document.getElementById('sms_input').value.length;
+
+            if(textLength > 80) {
+                var confirmFlag = confirm('80자가 넘으면 lms로 전송됩니다. 계속하시겠습니까?')
+                if(!confirmFlag) {
+                    return false;
+                }
+            }
+
             this.showModal = true;
 
             document.getElementById('btn-send').style.pointerEvents = 'none';
@@ -165,6 +174,8 @@ export default {
                 phone: this.phone,
                 message: this.content,
             }
+
+            console.log(data);
 
             SMS.update(data).then(res => {
                 this.showModal = false;

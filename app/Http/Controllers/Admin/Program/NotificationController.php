@@ -65,18 +65,19 @@ class NotificationController extends Controller
     {
         $validatedData = $request->validate([
             'message' => 'required|string',
-            'email' => 'required|array'
+            'phone' => 'required|array'
         ]);
 
         try {
             $ppurio = new Ppurio();
-            array_values(function ($value) use ($validatedData, $ppurio) {
-                $ppurio->sendMessage($value, $validatedData['message']);
-            }, $validatedData['phone']);
-            return response()->json(['success' => true]);
+            foreach ($validatedData['phone'] as $phone) {
+                $ppurio->sendMessage($phone, $validatedData['message']);
+            }
+
+            return response()->json(['success' => true, 'msg' => 'SMS 발신되었습니다.']);
         } catch (\Exception $exception) {
             Log::error('SEND LECTURE SMS ERROR', [$exception]);
-            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.']);
+            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.'],500);
         }
     }
 

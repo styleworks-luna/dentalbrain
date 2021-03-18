@@ -339,8 +339,9 @@
         p
             +margin(0)
 
-// 이메일 보내기
-.email
+// 이메일,sms 보내기
+.email,
+.sms
     .title-area
         +border(1px solid $gray-300, bottom)
 
@@ -407,6 +408,10 @@
 
         .editor-wrap
             +margin(top 20px)
+
+        #sms_input
+            +size(100%, 600px)
+            +border(1px solid $border-color-base)
 
     .btn-zone
         +margin(top 30px)
