@@ -9,8 +9,8 @@
 
                 <div class="select-wrap">
                     <div class="input-wrap">
-                        <input type="text" v-model="addStudent.user.name">
-                        <input type="text" v-model="addStudent.email">
+                        <input type="text" id="name">
+                        <input type="text" id="email">
                         <a href="" @click.prevent="add">추가</a>
                     </div>
 
@@ -57,12 +57,6 @@ export default {
             id: '',
             students: [],
             count: 0,
-            addStudent: {
-                user: {
-                    name: ''
-                },
-                email: ''
-            },
         }
     },
     created() {
@@ -104,7 +98,24 @@ export default {
             }
         },
         add() {
-            this.students.push(this.addStudent);
+            let inputName = document.getElementById('name').value;
+            let inputEmail = document.getElementById('email').value;
+            let regExpEmail = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/
+
+            if(regExpEmail.test(inputEmail) == false) {
+                alert('이메일 형식이 올바르지 않습니다.')
+                return false;
+            }
+
+            this.students.push({
+                user : {
+                    name: inputName
+                },
+                email : inputEmail
+            });
+            
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
         }
     }
 }
