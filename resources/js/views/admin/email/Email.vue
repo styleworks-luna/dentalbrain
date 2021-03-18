@@ -36,6 +36,18 @@
 
             </section>
 
+            <section class="write-area">
+                <div class="title-area overflow-hidden">
+                    <h4>발송 내용</h4>
+                    <p>발송할 이메일 내용을 적어주세요.</p>
+                </div>
+                <editor :content="content" @setEditor="handleSetEditor"></editor>
+            </section>
+
+            <section class="btn-zone">
+                <button>전송</button>
+            </section>
+
         </template>
     </layout>
 </template>
@@ -43,6 +55,7 @@
 <script>
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import Editor from '@/components/admin/form/Editor.vue';
 
 // api
 import Email from '@/api/admin/email/Email.js'
@@ -51,12 +64,14 @@ export default {
     name: 'AdminEmail',
     components: {
         'table-grid': Table,
+        Editor,
     },
     data() {
         return {
             id: '',
             students: [],
             count: 0,
+            content: ''
         }
     },
     created() {
@@ -113,10 +128,13 @@ export default {
                 },
                 email : inputEmail
             });
-            
+
             document.getElementById('name').value = '';
             document.getElementById('email').value = '';
-        }
+        },
+        handleSetEditor(data) {
+            this.content = data;
+        },
     }
 }
 </script>
