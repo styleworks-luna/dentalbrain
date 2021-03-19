@@ -381,14 +381,14 @@
                             <ul>
                                 <li>• 이름: 김민정</li>
                                 <li>• 소속(직위): 대표</li>
-                                <li>• E•mail: [brainspec@brainspec.co.kr]</li>
+                                <li>• E-mail: [brainspec@brainspec.co.kr]</li>
                             </ul>
                         </td>
                         <td>
                             <ul>
                                 <li>• 이름: 김귀옥</li>
                                 <li>• 소속(직위): 교육부이사</li>
-                                <li>• E•mail: [brainspec@brainspec.co.kr]</li>
+                                <li>• E-mail: [brainspec@brainspec.co.kr]</li>
                             </ul>
                         </td>
                     </tr>
