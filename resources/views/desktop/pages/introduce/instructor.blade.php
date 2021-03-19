@@ -251,6 +251,17 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_16.png') }}" alt="이연아" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">이연아</h2>
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
+                                <li>서울이오스치과 총괄실장</li>
+                                <li>분야: 치과매출분석관리, 고객상담, 데스크업무</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
