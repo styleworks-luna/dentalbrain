@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -40,7 +39,7 @@ class SecessionController extends Controller
         if ($this->checkPasswordOfCurrentUser($validatedData['password'])) {
             try {
                 DB::beginTransaction();
-                if(Auth::user()->is_admin == false) {
+                if (Auth::user()->is_admin == false) {
                     $userSecession = new UserSecession();
                     $userSecession->user_id = Auth::id();
                     $userSecession->reason = isset($validatedData['secession-reason']) ? $validatedData['secession-reason'] : $validatedData['secession-radio'];
@@ -53,20 +52,22 @@ class SecessionController extends Controller
                     $user->likes()->delete();
                     $user->comments()->delete();
 
-                    $programStudent = ProgramStudent::query()->where('user_id',Auth::id());
-                    foreach($programStudent->get() as $student){
-                        Payment::find($student->payment_id)->delete();
+                    $programStudent = ProgramStudent::query()->where('user_id', Auth::id());
+                    foreach ($programStudent->get() as $student) {
+                        if ($student->payment_id) {
+                            Payment::find($student->payment_id)->delete();
+                        }
                     }
                     $programStudent->delete();
                     DB::commit();
-                }else{
+                } else {
                     DB::rollBack();
-                    return redirect()->back()->with('alert','관리자는 회원 탈퇴가 불가능합니다.');
+                    return redirect()->back()->with('alert', '관리자는 회원 탈퇴가 불가능합니다.');
                 }
             } catch (\Exception $exception) {
                 DB::rollBack();
-                Log::error('USER SECESSION ERROR',[$exception]);
-                return redirect()->back()->with('alert','에러가 발생했습니다.');
+                Log::error('USER SECESSION ERROR', [$exception]);
+                return redirect()->back()->with('alert', '에러가 발생했습니다.');
             }
             //TODO : 회원 탈퇴 시 남아있는 회원 정보들을 모두 지워야 함.
 
