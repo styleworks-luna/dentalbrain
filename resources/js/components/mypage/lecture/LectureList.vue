@@ -13,8 +13,13 @@
                             <span class="online" v-if="lecture.ticket.program.is_online">온라인</span>
                             <span class="offline" v-else>오프라인</span>
                             <p class="lecture-subject">
+                                <template v-if="lecture.ticket.program.minor_category_name">
                                 {{ lecture.ticket.program.major_category_name }} &middot;
                                 {{ lecture.ticket.program.minor_category_name }}
+                                </template>
+                                <template v-else>
+                                    {{ lecture.ticket.program.major_category_name }}
+                                </template>
                             </p>
                         </div>
                         <h3 class="lecture-title">
