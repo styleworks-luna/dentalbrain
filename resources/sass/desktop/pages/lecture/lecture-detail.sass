@@ -21,6 +21,7 @@
             +margin(70px auto 80px auto)
 
 .lecture-information-wrap
+    +padding(bottom 80px)
     overflow: hidden
 
     .lecture-image
@@ -121,17 +122,19 @@
         tr:last-child
             +padding(0)
 
-
 .lecture-btn
     +margin(top 22px)
-    overflow: hidden
+    position: relative
+    clear: both
 
     .btn-wrap
         float: right
 
         .edit
-            +margin(top 10px left 135px)
-            display: block
+            position: absolute
+            bottom: -79px
+            right: 117px
+            font-size: 13px
             color: $page-color
             text-decoration: underline
 
@@ -172,7 +175,6 @@
         display: block
 
 .lecture-detail
-    +padding(top 80px)
 
     .lecture-detail-menu
         +size(1140px)
