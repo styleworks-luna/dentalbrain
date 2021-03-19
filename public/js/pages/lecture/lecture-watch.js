@@ -48,6 +48,7 @@ $(function () {
             data: data,
             success: function (data) {
                 alert('질문 등록이 완료되었습니다.');
+                $('#question').val('');
             },
             error: function () {
                 alert('질문 등록이 오류로 인해 수행하지 못하였습니다.')
