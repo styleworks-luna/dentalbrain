@@ -44,8 +44,8 @@ class UserController
             ->addKeyword('phone', $request->keyword)
             ->addKeyword('email', $request->keyword);
 
-        if(isset($request->is_paid))
-            $this->search->addCategory('is_paid','=',$request->is_paid);
+        if (isset($request->is_paid))
+            $this->search->addCategory('is_paid', '=', $request->is_paid);
 
         $result = $this->search->search()->orderBy('id', 'desc')->paginate('20');
         return $result;
@@ -68,9 +68,9 @@ class UserController
         $v = Validator::make($request->all(), [
             'name' => 'required',
             'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users', 'email')->whereNot('id', $user->id)],
+                Rule::unique('users', 'email')->whereNull('deleted_at')->ignore($user->id)],
             'phone' => ['required',
-                Rule::unique('users', 'phone')->whereNot('id', $user->id)],
+                Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore($user->id)],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
             'is_paid' => ['nullable', 'boolean'],

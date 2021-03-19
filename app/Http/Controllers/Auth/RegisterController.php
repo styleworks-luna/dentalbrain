@@ -90,18 +90,21 @@ class RegisterController extends Controller
         }
 
         /* @see UserController update()
+         * @see \App\Http\Controllers\Admin\User\UserController update()
          */
         $result = Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'min:2', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255',
+                Rule::unique('users', 'email')->whereNull('deleted_at')],
             'password' => ['required', 'string', 'min:6', 'max:40',
                 'regex:' . User::$passwordPattern,
                 // custom validations rule : without_spaces
                 'without_spaces',
                 'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
-            'phone' => ['bail', 'required', 'digits_between:9,11', 'unique:users',],
+            'phone' => ['bail', 'required', 'digits_between:9,11',
+                Rule::unique('users', 'phone')->whereNull('deleted_at')],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
@@ -122,13 +125,15 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255',
+                Rule::unique('users', 'email')->whereNull('deleted_at')],
             'password' => ['required', 'string', 'min:6', 'max:40',
                 // custom validations rule : without_spaces
                 'without_spaces',
                 'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
-            'phone' => ['bail', 'required', 'digits_between:9,11', 'unique:users',],
+            'phone' => ['bail', 'required', 'digits_between:9,11',
+                Rule::unique('users', 'phone')->whereNull('deleted_at')],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],

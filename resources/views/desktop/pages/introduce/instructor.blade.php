@@ -33,8 +33,8 @@
                                 <li>현)대한치과위생학회 회장</li>
                                 <li>보아치과 OHC센터장</li>
                                 <li>유튜브 MJTV 운영</li>
-                                <li>분야 : 병의원컨설팅,진료프로세스구축,조직관리,<br>직원관리,
-                                    계속구강관리,기구연마
+                                <li>분야 : 병의원컨설팅,진료프로세스구축,조직관리,
+                                    <br>직원관리,계속구강관리,기구연마
                                 </li>
                             </ul>
                         </div>
@@ -248,6 +248,17 @@
                                 <li>백석문화대학교 치위생과 시간강사</li>
                                 <li>연세대학교 치의학 석사</li>
                                 <li>분야 : 치과임상재료</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_16.png') }}" alt="이연아" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">이연아</h2>
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
+                                <li>서울이오스치과 총괄실장</li>
+                                <li>분야: 치과매출분석관리, 고객상담, 데스크업무</li>
                             </ul>
                         </div>
                     </li>

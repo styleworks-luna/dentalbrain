@@ -27,7 +27,7 @@
                             @endif
 
                             <p class="lecture-subject">
-                                {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
+                                {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <div class="lecture-information-text">

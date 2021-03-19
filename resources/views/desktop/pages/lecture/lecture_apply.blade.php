@@ -38,8 +38,7 @@
                                 @endif
 
                                 <p class="lecture-subject">
-                                    {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}
-                                </p>
+                                    {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
                             </div>
                             <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
@@ -275,9 +274,13 @@
                             <tr>
                                 <th>결제금액</th>
                                 @if ($program->canRepeat())
-                                    <td><em>{{ $program->ticket->is_free ? '무료' : '재수강 할인가:' . number_format($program->ticket->repeat_price).'원' }}</em></td>
+                                    <td>
+                                        <em>{{ $program->ticket->is_free ? '무료' : '재수강 할인가:' . number_format($program->ticket->repeat_price).'원' }}</em>
+                                    </td>
                                 @else
-                                    <td><em>{{ $program->ticket->is_free ? '무료' : number_format($program->ticket->price).'원' }}</em></td>
+                                    <td>
+                                        <em>{{ $program->ticket->is_free ? '무료' : number_format($program->ticket->price).'원' }}</em>
+                                    </td>
                                 @endif
 
                             </tr>
@@ -325,15 +328,16 @@
                         <button type="submit" class="btn-confirm">
                             신청하기
                         </button>
-                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}" class="btn-cancel">취소하기</a>
+                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}"
+                           class="btn-cancel">취소하기</a>
                     </section>
 
                 </div>
             </form>
             <div class="dim"></div>
             <div class="popup-control">
-                @include('desktop.pages.agreement.privacy_to_third')
-                @include('desktop.pages.agreement.refund')
+                @include('desktop.component.popup.agreement.privacy_to_third')
+                @include('desktop.component.popup.agreement.refund')
             </div>
         </div>
     </section>

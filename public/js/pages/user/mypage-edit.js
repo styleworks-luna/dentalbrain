@@ -1,10 +1,27 @@
 $(function () {
 
+    // 학생, 기타일때 라이센스 번호 삭제
+    function hiddenLicense() {
+        var value = $('.ui-selectmenu-text').text();
+        if( value == '학생' || value == '기타') {
+            $('#license_num').css('display',' none').attr('data-parsley-required', false);
+        } else {
+            $('#license_num').css('display',' block').attr('data-parsley-required', true);
+        }
+    }
+
     // select menu
     var select_menu = $('.select-menu');
 
     if (select_menu.length > 0) {
-        select_menu.selectmenu();
+        select_menu.selectmenu({
+            change: function(event) {
+                hiddenLicense();
+            },
+            create: function() {
+                hiddenLicense();
+            }
+        });
     }
 
     // 파슬리

@@ -75,4 +75,7 @@ mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop
     .sass('resources/sass/desktop/pages/service/notice-detail.sass', `public/css/desktop/pages/service`)
     .sass('resources/sass/desktop/pages/service/inquire.sass', 'public/css/desktop/pages/service');
 
+// 이용약관
+mix.sass('resources/sass/desktop/pages/term/term-common.sass', 'public/css/desktop/pages/term');
+
 mix.version();

@@ -1,0 +1,86 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/term.sass'
+
+.term
+    .content
+        +margin(top 39px bottom 81px)
+
+        h4
+            +padding(top 21px)
+            font-weight: bold
+            font-size: 20px
+            color: $page-color
+            line-height: 26px
+
+        h5
+            +padding(top 27px)
+            font-weight: bold
+            font-size: 14px
+            line-height: 26px
+
+        h6
+            +padding(top 27px)
+
+        p
+            line-height: 26px
+
+        ul
+            +margin(left 28px)
+
+            li
+                line-height: 26px
+
+        table
+            +margin(top 30px)
+            +border(1px solid $border-color-base)
+
+            tr
+                +border(1px solid $border-color-base, bottom)
+
+                &:first-child
+                    +background(null, null, null,$background-color-menu)
+                    font-weight: bold
+
+                    td
+                        text-align: center
+
+                &:last-child
+                    +border(0)
+
+            th
+                +size(209px)
+                +border(1px solid $border-color-base, right)
+                font-weight: bold
+                line-height: 1.5
+                vertical-align: middle
+
+            td
+                +size(669px)
+                +padding(13px 0)
+
+                ul
+                    +margin(left 17px)
+
+                p
+                    +padding(left 17px)
+
+        .table-another
+            +size(600px)
+
+            .table-border
+                +border(1px solid $border-color-base, right)
+
+            tr:first-child th
+                +padding(15px 0)
+
+        .for-margin
+            +margin(bottom 20px)
+
+
+.privacy .content
+    +margin(top 60px)
+
+.refund .content
+    +margin(top 33px)

@@ -9,7 +9,10 @@
                             <span class="online" v-if="lecture.is_online">온라인</span>
                             <span class="offline" v-else>오프라인</span>
                             <p class="lecture-type">
+                                <template v-if="lecture.minor_category_name">
                                 {{ lecture.major_category_name }}・{{ lecture.minor_category_name }}
+                                </template>
+                                <template v-else>{{ lecture.major_category_name }}</template>
                             </p>
                             <p class="lecture-time" v-if="lecture.place == null">{{ lecture.running_time }}</p>
                             <p class="lecture-time"

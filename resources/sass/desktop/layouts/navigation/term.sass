@@ -1,0 +1,27 @@
+.term-menu
+    +margin(top 80px)
+
+    ul
+        +border(1px solid $border-color-base)
+        overflow: hidden
+
+    li
+        +size(425px)
+        +border(1px solid $border-color-base, right)
+        float: left
+        text-align: center
+
+        a
+            +padding(24px)
+            font-size: 18px
+            display: block
+            letter-spacing: 0.6px
+
+        &:last-child
+            +border(0)
+
+    .active
+        +background(null, null, null, $page-color)
+
+        a
+            color: $white

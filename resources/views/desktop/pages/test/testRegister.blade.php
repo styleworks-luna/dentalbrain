@@ -213,8 +213,8 @@
 
                 <div class="dim"></div>
                 <div class="popup-control">
-                    @include('desktop.pages.agreement.service')
-                    @include('desktop.pages.agreement.privacy')
+                    @include('desktop.component.popup.agreement.service')
+                    @include('desktop.component.popup.agreement.privacy')
                 </div>
             </form>
         </div>
