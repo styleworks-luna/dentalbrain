@@ -35,9 +35,10 @@ class UserController extends Controller
          */
         $v = Validator::make($request->all(), [
             'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users', 'email')->ignore(Auth::id()),],
+                Rule::unique('users', 'email')->whereNull('deleted_at')->ignore(Auth::id()),],
             'job' => ['required', 'exists:user_job_names,id'],
-            'phone' => ['nullable', Rule::unique('users', 'phone')->ignore(Auth::id()),],
+            'phone' => ['nullable',
+                Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore(Auth::id()),],
             'password' => ['nullable', 'string', 'min:6', 'max:40',
                 'regex:' . User::$passwordPattern,
                 // custom validations rule : without_spaces
