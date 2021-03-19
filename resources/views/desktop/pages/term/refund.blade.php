@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="term">
+    <section class="term refund">
         <div class="container">
             @include('desktop.layouts.navigation.term')
 
