@@ -31,7 +31,6 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        ddd($request->all());
         /* @see RegisterController validator()
          */
         $data = $request->all();
@@ -47,9 +46,9 @@ class UserController extends Controller
                 // custom validations rule : without_spaces
                 'without_spaces', 'confirmed'],
         ], [
-            'email.unique' => '* 가입 된 이메일입니다.',
-            'license_num.*' => '* 면허번호가 잘못되었습니다.',
-            'password.regex' => '* 비밀번호는 영문 숫자 포함하여 6자 이상입니다.',
+            'email.unique' => '※ 가입 된 이메일입니다.',
+            'license_num.*' => '※ 면허번호가 잘못되었습니다.',
+            'password.regex' => '※ 비밀번호는 영문 숫자 포함하여 6자 이상입니다.',
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::query()->find($input->job)->need_license == true;
