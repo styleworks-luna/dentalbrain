@@ -33,7 +33,7 @@
                         </li>
                     @empty
                         <li>
-                            <p>관련 뉴스가 없습니다.</p>
+                            <p class="none">관련 뉴스가 없습니다.</p>
                         </li>
                     @endforelse
                 </ul>
