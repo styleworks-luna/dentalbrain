@@ -14,7 +14,7 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.title }}</td>
                     <td>
-                        노출 종료 : {{ slotProps.row.date }}
+                        {{ slotProps.row.created_at }}
                     </td>
                     <td>
                         <router-link :to="`/admin/community/${slotProps.row.id}`"
@@ -101,6 +101,7 @@ export default {
 
             Community.getData(params).then(res => {
                 this.articles = res.data.articles;
+                console.log(this.articles)
             }).catch(err => {
                 this.articles = [];
             });
