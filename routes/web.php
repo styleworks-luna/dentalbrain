@@ -79,6 +79,9 @@ Route::get('information', function () {
     return view(viewPrefix() . 'pages.introduce.lecture_information');
 });
 
+//강의 안내
+Route::get('articles', 'ArticleController@index')->name('articles');
+
 //강사 소개
 Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
