@@ -164,6 +164,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
+                <button @click="duplicate">복사</button>
                 <button type="button" class="btn btn-info" @click="update">수정</button>
                 <router-link to="/admin/lecture/offline"
                              class="btn btn-dark">취소
@@ -230,6 +231,40 @@ export default {
 
 
             });
+        },
+        duplicate() {
+            const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
+            const ended_at = `${this.Helper.dateFormatYDM(this.ended_date)} ${this.ended_time}`;
+            const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
+            const receipt_ended_at = `${this.Helper.dateFormatYDM(this.receipt_ended_date)} ${this.receipt_ended_time}`;
+
+            this.program_place.started_at = started_at;
+            this.program_place.ended_at = ended_at;
+            this.program_place.receipt_started_at = receipt_started_at;
+            this.program_place.receipt_ended_at = receipt_ended_at;
+
+            let data = {
+                thumbnail_id: this.thumbnail.id,
+                major_category_id: this.major_category_id,
+                minor_category_id: this.minor_category_id,
+                title: this.title,
+                lecture_info: this.lecture_info,
+
+                is_free: this.is_free,
+                price: this.price,
+
+                content: this.content,
+
+                surveys: this.surveys,
+
+                is_open: this.is_open,
+                program_place: this.program_place
+            };
+
+            Offline.duplicate(this.id,data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline');
+            })
         },
         update() {
             const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
