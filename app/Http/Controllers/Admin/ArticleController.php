@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Manage\Article;
+use App\Services\File\ArticleFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +31,10 @@ class ArticleController extends Controller
 
         $data = $v->validate();
 
-        Article::create($data);
+        $article = Article::create($data);
+
+        $articleFile = new ArticleFile($article);
+        $articleFile->moveTempToPublic(File::find($data['thumbnail_id']));
 
         return response()->json([
             'alert' => '생성되었습니다.',
@@ -63,6 +68,9 @@ class ArticleController extends Controller
 
     public function delete(Request $request, Article $article)
     {
+
+        $articleFile = new ArticleFile($article);
+        $articleFile->deleteFile();
 
         $article->delete();
 
