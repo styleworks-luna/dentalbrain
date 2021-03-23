@@ -1,6 +1,7 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_pagination.sass'
 
 .title-wrap
     +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
@@ -20,42 +21,43 @@
     h2
         font-size: 24px
 
-    ul
-        +margin(top 18px)
+    .community-list
+        +margin(top 18px bottom 50px)
         +border(2px solid $gray-900, top)
 
-    li
-        +padding(20px 0)
-        +border(1px solid $border-color-base, bottom)
-        overflow: hidden
+        li
+            +padding(20px 0)
+            +border(1px solid $border-color-base, bottom)
+            overflow: hidden
 
-        .image-wrap
-            float: left
+            .image-wrap
+                float: left
 
-            img
-                +size(160px, 120px)
-                +border(1px solid rgba(0, 0, 0, 0.1))
-                +border-radius(8px)
+                img
+                    +size(160px, 120px)
+                    +border(1px solid rgba(0, 0, 0, 0.1))
+                    +border-radius(8px)
 
-        .community-information
-            +size(900px)
-            +margin(left 38px)
-            +padding(15px 0)
-            float: left
+            .community-information
+                +size(900px)
+                +margin(left 38px)
+                +padding(15px 0)
+                float: left
 
-            h3
-                +ellipse(900,2)
-                font-size: 20px
-                line-height: 1.45
+                h3
+                    +ellipse(900,2)
+                    min-height: 58px
+                    font-size: 20px
+                    line-height: 1.45
 
-            .date
-                +padding(top 20px)
-                font-size: 16px
-                color: $gray-700
+                .date
+                    +padding(top 20px)
+                    font-size: 16px
+                    color: $gray-700
 
-        .arrow-right
-            +size(12px, 22px)
-            +margin(left 128px top 52px)
-            +background('/images/desktop/global/icon-arrow-right.png',no-repeat,center center)
-            float: left
-            cursor: pointer
+            .arrow-right
+                +size(12px, 22px)
+                +margin(left 128px top 52px)
+                +background('/images/desktop/global/icon-arrow-right.png',no-repeat,center center)
+                float: left
+                cursor: pointer

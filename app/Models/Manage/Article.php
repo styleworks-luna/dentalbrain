@@ -9,6 +9,10 @@ class Article extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+      'date' => 'datetime'
+    ];
+
     public function thumbnail()
     {
         return $this->belongsTo(File::class, 'thumbnail_id', 'id');

@@ -19,17 +19,17 @@
         <div class="container">
             <div class="community-description">
                 <h2>관련 뉴스</h2>
-                <ul>
+                <ul class="community-list">
                     @forelse($articles as $article)
                         <li>
                             <div class="image-wrap">
                                 <img src="{{ $article->thumbnail->url }}" alt="{{ $article->thumbnail->name }}">
                             </div>
                             <div class="community-information">
-                                <h3>{{ $article->title }}</h3>
-                                <p class="date">{{ $article->date }}</p>
+                                <h3><a href="{{ $article->link }}">{{ $article->title }}</a></h3>
+                                <p class="date">{{ date_format($article->date, 'Y.m.d') }}</p>
                             </div>
-                            <span class="arrow-right"></span>
+                            <span><a href="{{ $article->link }}" class="arrow-right"></a></span>
                         </li>
                     @empty
                         <li>
@@ -37,6 +37,9 @@
                         </li>
                     @endforelse
                 </ul>
+                <div class="paging-wrap">
+                    {{ $articles->links() }}
+                </div>
             </div>
         </div>
     </section>
