@@ -451,5 +451,16 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('search', 'Admin\InquiryController@search')->name('search');
             });
         });
+
+        Route::group(['prefix' => 'article', 'as' => 'article'], function () {
+            // 커뮤니티 (기사) index 페이지 데이터
+            Route::get('/', 'Admin\ArticleController@index')->name('index');
+            // 커뮤니티 (기사) 수정하기
+            Route::get('{article}', 'Admin\ArticleController@edit')->name('edit');
+            // 커뮤니티 (기사) 수정 반영
+            Route::post('{article}', 'Admin\ArticleController@update')->name('update');
+            // 커뮤니티 (기사) 삭제
+            Route::delete('{article}', 'Admin\ArticleController@destroy')->name('destroy');
+        });
     });
 });

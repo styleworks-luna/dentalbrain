@@ -66,7 +66,7 @@ class ArticleController extends Controller
         ], 200);
     }
 
-    public function delete(Request $request, Article $article)
+    public function destroy(Request $request, Article $article)
     {
 
         $articleFile = new ArticleFile($article);
