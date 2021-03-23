@@ -80,7 +80,7 @@ Route::get('information', function () {
 });
 
 //강의 안내
-Route::get('articles', 'ArticleController@index')->name('articles');
+Route::get('community', 'ArticleController@index')->name('community');
 
 //강사 소개
 Route::get('instructor', function () {
@@ -208,6 +208,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     // banner
     Route::view('banner', 'admin.index');
     Route::view('banner/{any}', 'admin.index');
+
+    // community
+    Route::view('community', 'admin.index');
+    Route::view('community/{any}', 'admin.index');
 
     // customer
     Route::view('customer/{any}', 'admin.index');

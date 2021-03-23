@@ -61,6 +61,14 @@
                 </ul>
             </li>
 
+            <!-- 커뮤니티 관리 메뉴 -->
+            <li class="c-sidebar-nav-item">
+                <router-link to="/admin/community" class="c-sidebar-nav-link"
+                             :class="{ activeClass: checkUrl('/admin/community') }">
+                    커뮤니티
+                </router-link>
+            </li>
+
             <!-- 고객센터 메뉴 -->
             <li class="c-sidebar-nav-dropdown"
                 :class="{ showClass: checkUrl('/admin/customer') }">
