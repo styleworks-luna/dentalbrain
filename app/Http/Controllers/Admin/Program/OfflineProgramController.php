@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Program;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
@@ -145,5 +146,12 @@ class OfflineProgramController extends Controller
         return response()->json([
             'msg' => '오프라인 강의가 수정되었습니다.',
         ]);
+    }
+
+    public function duplicate(Request $request, $program)
+    {
+        $duplicatedThumbnail = ProgramThumbnail::duplicate($program->thumbnail);
+        $request->thumbnail_id = $duplicatedThumbnail->id;
+        return $this->store($request);
     }
 }

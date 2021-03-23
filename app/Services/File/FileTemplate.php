@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 abstract class FileTemplate
 {
@@ -15,6 +16,31 @@ abstract class FileTemplate
     public function __construct(Model $model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * @param File $original
+     * @return File | null
+     */
+    static function duplicate(File $original)
+    {
+        /*
+         * 1. $this->model 에서 file 추출.
+         * 2. file 을 temp 로 복사.
+         * 3. 복사한 file로 File Model 만들기.
+         * 4. return.
+         */
+        $filePath = 'temp/' . Str::random('4') . '/' . $original->name;
+        if (!Storage::copy($original->path, $filePath)) {
+            Log::error('File Duplicate Error');
+            return null;
+        }
+        $file = File::create([
+            'path' => $filePath,
+            'name' => $original->name,
+            'size' => $original->size,
+        ]);
+        return $file;
     }
 
     /**
