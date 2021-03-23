@@ -18,7 +18,7 @@
         </div>
         <div class="container">
             <div class="community-description">
-                <h2>관련 뉴스</h2>
+                <h2>관련뉴스</h2>
                 <ul class="community-list">
                     @forelse($articles as $article)
                         <li>
