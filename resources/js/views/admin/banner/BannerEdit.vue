@@ -155,6 +155,8 @@ export default {
                 this.ended_at = result.ended_at;
 
                 this.is_open = result.is_open;
+
+                console.log(result);
             });
         },
         update() {

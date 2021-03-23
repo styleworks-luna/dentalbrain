@@ -11,20 +11,17 @@
             <table-grid :tableCol="tableCol"
                         :data="articles.data">
                 <template v-slot:list="slotProps">
-<!--                    <td>{{ slotProps.row.id }}</td>-->
-<!--                    <td>{{ slotProps.row.categories.name }}</td>-->
-<!--                    <td>{{ slotProps.row.order }}</td>-->
-<!--                    <td>{{ slotProps.row.link }}</td>-->
-<!--                    <td>-->
-<!--                        노출 시작 : {{ slotProps.row.started_at }} ~<br>-->
-<!--                        노출 종료 : {{ slotProps.row.ended_at }}-->
-<!--                    </td>-->
-<!--                    <td>{{ slotProps.row.views }}</td>-->
+                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.title }}</td>
+                    <td>
+                        노출 종료 : {{ slotProps.row.date }}
+                    </td>
                     <td>
                         <router-link :to="`/admin/community/${slotProps.row.id}`"
                                      class="btn btn-info float-left mr-2">
                             수정
                         </router-link>
+                        <button class="btn btn-danger float-left" @click="destroy(slotProps.row.id)">삭제</button>
                     </td>
                 </template>
             </table-grid>
@@ -46,7 +43,7 @@ import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 // api
-// import Community from '@/api/admin/banner/Community.js';
+import Community from '@/api/admin/community/Community.js';
 
 export default {
     name: 'AdminCommunity',
@@ -72,42 +69,47 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
+                    width: '10%'
                 },
                 {
                     name: 'title',
                     text: '제목',
-                    width: '10%'
+                    width: '60%'
                 },
                 {
                     name: 'date',
                     text: '작성일자',
-                    width: '8%'
+                    width: '20%'
                 },
                 {
                     name: 'commend',
                     text: '명령',
-                    width: '22%'
+                    width: '10%'
                 }
             ]
         },
     },
     methods: {
-        // getData(page = this.page) {
-        //     if (this.Helper.nullCheck(page)) {
-        //         page = 1;
-        //     }
-        //
-        //     let params = {
-        //         page: page
-        //     };
-        //
-        //     Community.getData(params).then(res => {
-        //         this.articles = res.data.articles;
-        //     }).catch(err => {
-        //         this.articles = [];
-        //     });
-        // },
+        getData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+
+            Community.getData(params).then(res => {
+                this.articles = res.data.articles;
+            }).catch(err => {
+                this.articles = [];
+            });
+        },
+        destroy(id) {
+            Community.destroy(id).then(res => {
+                alert(res.data.msg);
+            })
+        }
     }
 }
 </script>

@@ -12,6 +12,7 @@ export const CommunityMixin = {
     },
     data() {
         return {
+            id: '',
             title: '',
             link: '',
             date: '',

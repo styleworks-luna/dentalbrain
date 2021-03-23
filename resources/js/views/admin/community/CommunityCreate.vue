@@ -42,7 +42,7 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
-                    <date-picker @setTime="handleSetStartTime"></date-picker>
+                    <date-picker @setTime="handleSetTime"></date-picker>
                 </template>
             </single-group>
 
@@ -51,7 +51,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
-                <router-link to="/admin/banner"
+                <router-link to="/admin/community"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -78,20 +78,19 @@ export default {
 
                 thumbnail_id: this.thumbnail.id,
 
-                date: this.Helper.dateFormatYDM(this.started_at),
+                date: this.Helper.dateFormatYDM(this.date),
             };
+
+            console.log(data);
 
             Community.create(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/community');
             })
         },
-        handleSetStartTime(time) {
-            this.started_at = time;
+        handleSetTime(time) {
+            this.date = time;
         },
-        handleSetEndTime(time) {
-            this.ended_at = time;
-        }
 
     }
 }

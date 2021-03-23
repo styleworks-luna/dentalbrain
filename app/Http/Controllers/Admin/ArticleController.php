@@ -25,7 +25,7 @@ class ArticleController extends Controller
         $v = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:200'],
             'link' => ['required', 'string', 'max:200'],
-            'date' => ['required', 'datetime'],
+            'date' => ['required', 'date'],
             'thumbnail_id' => ['required', 'numeric'],
         ]);
 
@@ -37,14 +37,14 @@ class ArticleController extends Controller
         $articleFile->moveTempToPublic(File::find($data['thumbnail_id']));
 
         return response()->json([
-            'alert' => '생성되었습니다.',
+            'msg' => '생성되었습니다.',
         ], 201);
     }
 
     public function edit(Request $request, Article $article)
     {
         return response()->json([
-            'article' => $article,
+            'article' => $article->with('thumbnail')->first(),
         ]);
     }
 
@@ -53,16 +53,24 @@ class ArticleController extends Controller
         $v = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:200'],
             'link' => ['required', 'string', 'max:200'],
-            'date' => ['required', 'datetime'],
+            'date' => ['required', 'date'],
             'thumbnail_id' => ['required', 'numeric'],
         ]);
 
         $data = $v->validate();
 
+        if ($article->thumbnail->id != $data['thumbnail_id']) {
+            $articleFile = new ArticleFile($article);
+            $articleFile->deleteFile();
+        }
+
         $article->update($data);
 
+        $articleFile = new ArticleFile($article);
+        $articleFile->moveTempToPublic(File::find($data['thumbnail_id']));
+
         return response()->json([
-            'alert' => '수정되었습니다.',
+            'msg' => '수정되었습니다.',
         ], 200);
     }
 
@@ -75,7 +83,7 @@ class ArticleController extends Controller
         $article->delete();
 
         return response()->json([
-            'alert' => '삭제되었습니다.',
+            'msg' => '삭제되었습니다.',
         ], 200);
     }
 }
