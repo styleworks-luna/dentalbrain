@@ -26,10 +26,10 @@
                                 <img src="{{ $article->thumbnail->url }}" alt="{{ $article->thumbnail->name }}">
                             </div>
                             <div class="community-information">
-                                <h3><a href="{{ $article->link }}">{{ $article->title }}</a></h3>
+                                <h3><a href="{{ $article->link }}" target="_blank">{{ $article->title }}</a></h3>
                                 <p class="date">{{ date_format($article->date, 'Y.m.d') }}</p>
                             </div>
-                            <span><a href="{{ $article->link }}" class="arrow-right"></a></span>
+                            <span><a href="{{ $article->link }}" class="arrow-right" target="_blank"></a></span>
                         </li>
                     @empty
                         <li>
