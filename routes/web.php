@@ -324,6 +324,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                    // 온라인 강의 복사 리소스
+                    Route::get('/duplicate', 'Admin\Program\OnlineProgramController@duplicateEdit')->name('duplicate-edit');
+                    // 온라인 강의 복사
+                    Route::post('/duplicate', 'Admin\Program\OnlineProgramController@duplicate')->name('duplicate');
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
@@ -343,6 +347,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
                     Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                    // 오프라인 강의 복사 리소스
+                    Route::get('/duplicate', 'Admin\Program\OfflineProgramController@duplicateEdit')->name('duplicate-edit');
+                    // 오프라인 강의 복사
+                    Route::post('/duplicate', 'Admin\Program\OfflineProgramController@duplicate')->name('duplicate');
                 });
 //                Route::delete('{program}', 'Admin\Program\OfflineProgramController@index');
             });

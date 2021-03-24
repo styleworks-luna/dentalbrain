@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\File\ProgramThumbnail;
@@ -71,44 +72,6 @@ class OfflineProgramController extends Controller
         ]);
     }
 
-    public function edit(Program $program)
-    {
-        return response()->json(
-            array_merge($this->offlineConcrete->getProgramDetail($program), [
-                'place' => $program->place,
-                'haveStudents' => $program->students()->exists()
-            ])
-        );
-    }
-
-    public function store(Request $request)
-    {
-        $programData = $this->offlineConcrete->validateProgram($request);
-        $ticketData = $this->offlineConcrete->validateTickets($request);
-        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
-        $placeData = $this->offlineConcrete->validatePlace($request);
-
-        try {
-            DB::beginTransaction();
-            $program = $this->offlineConcrete->storeProgram($programData);
-            $this->offlineConcrete->storeTickets($program, $ticketData);
-            $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
-            $this->offlineConcrete->storePlace($program, $placeData);
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDataSet]);
-            return response()->json([
-                'msg' => '오류가 발생했습니다.',
-            ], 500);
-        }
-        DB::commit();
-
-        return response()->json([
-            'msg' => '오프라인 강의가 생성되었습니다.',
-        ]);
-    }
-
     public function getCategories()
     {
         return $this->offlineConcrete->getCategories();
@@ -148,10 +111,56 @@ class OfflineProgramController extends Controller
         ]);
     }
 
-    public function duplicate(Request $request, $program)
+    public function duplicateEdit(Program $program)
     {
-        $duplicatedThumbnail = ProgramThumbnail::duplicate($program->thumbnail);
-        $request->thumbnail_id = $duplicatedThumbnail->id;
+        return $this->edit($program);
+    }
+
+    public function edit(Program $program)
+    {
+        return response()->json(
+            array_merge($this->offlineConcrete->getProgramDetail($program), [
+                'place' => $program->place,
+                'haveStudents' => $program->students()->exists()
+            ])
+        );
+    }
+
+    public function duplicate(Request $request, Program $program)
+    {
+        $duplicatedThumbnail = ProgramThumbnail::duplicate(File::find($request['thumbnail_id']));
+        $request['thumbnail_id'] = $duplicatedThumbnail->id;
+        logger($request->all());
         return $this->store($request);
+    }
+
+    public function store(Request $request)
+    {
+        logger($request->all());
+
+        $programData = $this->offlineConcrete->validateProgram($request);
+        $ticketData = $this->offlineConcrete->validateTickets($request);
+        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
+        $placeData = $this->offlineConcrete->validatePlace($request);
+
+        try {
+            DB::beginTransaction();
+            $program = $this->offlineConcrete->storeProgram($programData);
+            $this->offlineConcrete->storeTickets($program, $ticketData);
+            $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
+            $this->offlineConcrete->storePlace($program, $placeData);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('ONLINE PROGRAM STORE ERROR',
+                [$exception, $programData, $ticketData, $surveyDataSet]);
+            return response()->json([
+                'msg' => '오류가 발생했습니다.',
+            ], 500);
+        }
+        DB::commit();
+
+        return response()->json([
+            'msg' => '오프라인 강의가 생성되었습니다.',
+        ]);
     }
 }

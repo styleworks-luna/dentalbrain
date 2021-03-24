@@ -1,4 +1,4 @@
- import Send from '@/utils/Send.js';
+import Send from '@/utils/Send.js';
 
 export const Offline = {
     getData(params) {
@@ -21,9 +21,9 @@ export const Offline = {
             data: data
         });
     },
-    duplicate(id,data){
+    duplicate(id, data) {
         return Send({
-            url: `/api/admin/lecture/offline/${id}`,
+            url: `/api/admin/lecture/offline/${id}/duplicate`,
             method: 'post',
             data: data
         })
