@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Services\File\LectureThumbnail;
+use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
@@ -134,13 +135,19 @@ class OnlineProgramController extends Controller
     {
         $duplicatedThumbnail = ProgramThumbnail::duplicate(File::find($request['thumbnail_id']));
         $request['thumbnail_id'] = $duplicatedThumbnail->id;
+
         foreach ($request['lectures'] as $key => $lecture) {
             if ($lecture['thumbnail_id'] == null) continue;
             $duplicated = LectureThumbnail::duplicate(File::find($lecture['thumbnail_id']));
             $data[$key]['thumbnail_id'] = $duplicated->id;
             $request->merge($data);
         }
-        logger($request->all());
+
+        if ($request->get('material_id') != null) {
+            $duplicatedMaterial = ProgramMaterial::duplicate(File::find($request['material_id']));
+            $request['material_id'] = $duplicatedMaterial->id;
+        }
+
         return $this->store($request);
     }
 
