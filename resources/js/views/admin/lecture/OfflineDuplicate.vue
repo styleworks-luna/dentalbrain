@@ -1,5 +1,5 @@
 <template>
-    <layout title="오프라인 강의 수정" class="offline">
+    <layout title="오프라인 강의 복사" class="offline">
         <template v-slot:body>
             <div class="left-wrap">
                 <thumbnail :id="'thumbnail'"
@@ -106,32 +106,32 @@
             </single-group>
 
             <div :class="haveStudents ? 'bg-light text-dark':''">
-            <single-group name="결제 정보 입력"
-                          :isRow="true"
-                          :isRequired="true"
-                          :size="9">
-                <template v-slot:content>
-                    <div>
-                        <div class="radio-wrap">
-                            <input type="radio" id="pay" :value="false"
-                                   :disabled="haveStudents == true"
-                                   v-model="is_free">
-                            <label for="pay">유료</label>
-                            <input type="text"
-                                   class="form-control ml-3"
-                                   placeholder="신청 금액 입력"
-                                   :disabled="is_free == true || haveStudents == true"
-                                   v-model="price">
+                <single-group name="결제 정보 입력"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="9">
+                    <template v-slot:content>
+                        <div>
+                            <div class="radio-wrap">
+                                <input type="radio" id="pay" :value="false"
+                                       :disabled="haveStudents == true"
+                                       v-model="is_free">
+                                <label for="pay">유료</label>
+                                <input type="text"
+                                       class="form-control ml-3"
+                                       placeholder="신청 금액 입력"
+                                       :disabled="is_free == true || haveStudents == true"
+                                       v-model="price">
+                            </div>
+                            <div class="radio-wrap mt-1">
+                                <input type="radio" id="free" :value="true"
+                                       :disabled="haveStudents == true"
+                                       v-model="is_free">
+                                <label for="free">무료</label>
+                            </div>
                         </div>
-                        <div class="radio-wrap mt-1">
-                            <input type="radio" id="free" :value="true"
-                                   :disabled="haveStudents == true"
-                                   v-model="is_free">
-                            <label for="free">무료</label>
-                        </div>
-                    </div>
-                </template>
-            </single-group>
+                    </template>
+                </single-group>
             </div>
 
             <single-group name="상세정보입력" :size="12">
@@ -141,11 +141,11 @@
             </single-group>
 
             <div :class="haveStudents ? 'bg-light text-dark':''">
-            <single-group name="추가정보" :size="12">
-                <template v-slot:content>
-                    <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
-                </template>
-            </single-group>
+                <single-group name="추가정보" :size="12">
+                    <template v-slot:content>
+                        <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
+                    </template>
+                </single-group>
             </div>
 
             <!-- 공개 여부 -->
@@ -164,7 +164,7 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="button" class="btn btn-info" @click="update">수정</button>
+                <button class="btn btn-primary" @click="duplicate">복사</button>
                 <router-link to="/admin/lecture/offline"
                              class="btn btn-dark">취소
                 </router-link>
@@ -182,7 +182,7 @@ import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/For
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
-    name: 'AdminOfflineEdit',
+    name: 'AdminOfflineDuplicate',
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
@@ -231,7 +231,7 @@ export default {
 
             });
         },
-        update() {
+        duplicate() {
             const started_at = `${this.Helper.dateFormatYDM(this.started_date)} ${this.started_time}`;
             const ended_at = `${this.Helper.dateFormatYDM(this.ended_date)} ${this.ended_time}`;
             const receipt_started_at = `${this.Helper.dateFormatYDM(this.receipt_started_date)} ${this.receipt_started_time}`;
@@ -244,7 +244,6 @@ export default {
 
             let data = {
                 thumbnail_id: this.thumbnail.id,
-
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
                 title: this.title,
@@ -261,11 +260,11 @@ export default {
                 program_place: this.program_place
             };
 
-            Offline.update(this.id, data).then(res => {
+            Offline.duplicate(this.id,data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/offline');
             })
-        }
+        },
     }
 }
 

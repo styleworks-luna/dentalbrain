@@ -63,8 +63,11 @@
                                      class="btn btn-warning text-white float-left mr-2">
                             수정</router-link>
                         <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger text-white border-danger float-left"
+                                     class="btn-danger text-white border-danger float-left mr-2"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
+                        <router-link :to="`/admin/lecture/offline/${slotProps.row.id}/duplicate`"
+                                     class="btn btn-success text-white float-left">
+                            복사</router-link>
                     </td>
                 </template>
             </table-grid>

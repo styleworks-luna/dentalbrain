@@ -3,6 +3,7 @@ import OfflineCreate from '@/views/admin/lecture/OfflineCreate.vue';
 import OfflineEdit from '@/views/admin/lecture/OfflineEdit.vue';
 import OfflineStudent from '@/views/admin/lecture/OfflineStudent.vue';
 import OfflineAdditional from '@/views/admin/lecture/OfflineAdditional.vue';
+import OfflineDuplicate from '@/views/admin/lecture/OfflineDuplicate.vue';
 
 const routes = [
     {
@@ -29,6 +30,11 @@ const routes = [
         path: '/admin/lecture/offline/:program_id/:student_id/additional',
         name: 'AdminOfflineAdditional',
         component: OfflineAdditional,
+    },
+    {
+        path: '/admin/lecture/offline/:id/duplicate',
+        name: 'AdminOfflineDuplicate',
+        component: OfflineDuplicate,
     },
 ];
 
