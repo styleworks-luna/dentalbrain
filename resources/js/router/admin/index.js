@@ -5,7 +5,7 @@ import Lecture from '@/router/admin/lecture/index.js';
 import Customer from '@/router/admin/customer/index.js';
 import User from '@/router/admin/user/index.js';
 import Banner from '@/router/admin/banner/index.js';
-import Community from '@/router/admin/community/Community.js';
+import Community from '@/router/admin/community/community.js';
 import Payment from '@/router/admin/payment/index.js';
 import Email from '@/router/admin/email/index.js';
 
