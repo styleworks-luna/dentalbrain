@@ -28,6 +28,13 @@ export const Online = {
             data: data
         });
     },
+    duplicate(id, data) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}/duplicate`,
+            method: 'post',
+            data: data
+        })
+    },
     destroy(id) {
         return Send({
             url: `/api/admin/lecture/online/${id}`,

@@ -105,7 +105,7 @@
                 </template>
             </single-group>
 
-            <div :class="haveStudents ? 'bg-light text-dark':''">
+            <div>
                 <single-group name="결제 정보 입력"
                               :isRow="true"
                               :isRequired="true"
@@ -114,18 +114,16 @@
                         <div>
                             <div class="radio-wrap">
                                 <input type="radio" id="pay" :value="false"
-                                       :disabled="haveStudents == true"
                                        v-model="is_free">
                                 <label for="pay">유료</label>
                                 <input type="text"
                                        class="form-control ml-3"
                                        placeholder="신청 금액 입력"
-                                       :disabled="is_free == true || haveStudents == true"
+                                       :disabled="is_free == true"
                                        v-model="price">
                             </div>
                             <div class="radio-wrap mt-1">
                                 <input type="radio" id="free" :value="true"
-                                       :disabled="haveStudents == true"
                                        v-model="is_free">
                                 <label for="free">무료</label>
                             </div>
@@ -140,10 +138,10 @@
                 </template>
             </single-group>
 
-            <div :class="haveStudents ? 'bg-light text-dark':''">
+            <div>
                 <single-group name="추가정보" :size="12">
                     <template v-slot:content>
-                        <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
+                        <additional-information :data="surveys"></additional-information>
                     </template>
                 </single-group>
             </div>
@@ -225,10 +223,6 @@ export default {
                 this.receipt_started_time = this.Helper.timeFormat(this.receipt_started_date);
                 this.receipt_ended_date = this.Helper.dateFullFormat(this.program_place.receipt_ended_at);
                 this.receipt_ended_time = this.Helper.timeFormat(this.receipt_ended_date);
-
-                this.haveStudents = res.data.haveStudents;
-
-
             });
         },
         duplicate() {
