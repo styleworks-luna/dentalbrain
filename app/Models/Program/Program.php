@@ -283,7 +283,7 @@ class Program extends Model
             $programs = $programs->orderByDesc('students_count');
 
         } else {
-            $programs = $programs->orderByDesc('created_at');
+            $programs = $programs->orderByDesc('order')->orderByDesc('created_at');
         }
 
         return $programs;

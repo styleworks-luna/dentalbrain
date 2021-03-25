@@ -127,6 +127,7 @@ abstract class ProgramTemplate
             'content' => ['required', 'string'],
             'is_open' => ['required', 'boolean'],
             'material_id' => ['sometimes', 'nullable', 'numeric'],
+            'order' => ['required', 'numeric', 'min:1', 'max:999'],
         ], $additionalRules));
 
         return $v->validate();
@@ -188,7 +189,8 @@ abstract class ProgramTemplate
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'] ?? null,
-            'is_open' => $data['is_open']
+            'is_open' => $data['is_open'],
+            'order' => $data['order'],
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
