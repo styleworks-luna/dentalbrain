@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Program;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
 use App\Services\File\LectureThumbnail;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
@@ -47,7 +48,8 @@ class OnlineProgramController extends Controller
 
         $search = $this->search->search()->where('is_online', '=', 1)
             ->withCount(['students' => function ($query) {
-                $query->where('pay_status', '!=', '0')->where('pay_status', '!=', '3');
+                $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
+                    ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
             }])->orderByDesc('id')->paginate('10');
         return $search;
     }
