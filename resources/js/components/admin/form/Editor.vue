@@ -33,6 +33,32 @@ export default {
     },
     methods: {
         initEditor() {
+            $.FroalaEditor.DefineIcon('my_dropdown', {NAME: 'cog'});
+
+            $.FroalaEditor.RegisterCommand('my_dropdown', {
+                title: 'Advanced options',
+                type: 'dropdown',
+                focus: false,
+                undo: false,
+                refreshAfterCallback: true,
+                options: {
+                    '1': '1',
+                    '1.2': '1.2',
+                    '1.4': '1.4',
+                    '1.6': '1.6',
+                    '1.8': '1.8',
+                    '2': '2',
+                },
+                callback: function (cmd, val) {
+                },
+                // Callback on refresh.
+                refresh: function ($btn) {
+                },
+                // Callback on dropdown show.
+                refreshOnShow: function ($btn, $dropdown) {
+                }
+            });
+
             $('#editor-area').froalaEditor({
                 key: env.FROALA_LICENSE_KEY,
                 height: 450,
@@ -43,9 +69,9 @@ export default {
                 imageUploadURL: '/api/admin/lecture/upload',
                 fileUploadURL: '/api/admin/lecture/upload',
                 toolbarButtons: [
-                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'my_dropdown',
                     '|',
-                    'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle', 'lineHeight',
+                    'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle',
                     '|',
                     'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
                     '-',
@@ -64,7 +90,7 @@ export default {
         },
         onEditorInput(data) {
             this.$emit('setEditor', data);
-        }
+        },
     }
 };
 </script>
