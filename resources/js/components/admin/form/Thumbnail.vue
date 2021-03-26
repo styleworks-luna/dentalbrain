@@ -20,6 +20,7 @@
         },
         computed: {
             thumbnailPreview() {
+                console.log('file',this.file);
                 return {
                     backgroundImage: `url(${this.file.url})`
                 };

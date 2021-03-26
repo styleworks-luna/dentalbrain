@@ -229,6 +229,9 @@ export default {
                 this.lectures = res.data.lectures;
 
                 this.haveStudents = res.data.haveStudents;
+
+                console.log('this',this.thumbnail);
+                console.log('program',program.thumbnail);
             });
         },
         update() {
