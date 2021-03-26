@@ -25,7 +25,7 @@
         },
         watch: {
             file() {
-                this.url = `url(${this.file.url})`;
+                this.url = `url('${this.file.url}')`;
             }
         },
         methods: {
