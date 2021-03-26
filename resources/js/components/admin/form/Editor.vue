@@ -1,3 +1,4 @@
+
 <template>
     <textarea id="editor-area"></textarea>
 </template>
@@ -55,15 +56,14 @@ export default {
                     '2': '2',
                 },
                 callback: function (cmd, val) {
-                    console.log('callback');
+                    let selectionText  = window.getSelection();
+                    selectionText.anchorNode.parentNode.style.lineHeight = val;
                 },
                 // Callback on refresh.
                 refresh: function ($btn) {
-                    console.log('refresh');
                 },
                 // Callback on dropdown show.
                 refreshOnShow: function ($btn, $dropdown) {
-                    console.log('refreshOnShow');
                 }
             });
 
