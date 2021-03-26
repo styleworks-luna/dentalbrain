@@ -33,11 +33,16 @@ export default {
     },
     methods: {
         initEditor() {
-            $.FroalaEditor.DefineIcon('my_dropdown', {NAME: 'cog'});
+            $.FroalaEditor.DefineIconTemplate('line_height_icon', '<i class="fa fa-text-height"></i>');
+            $.FroalaEditor.DefineIcon('lineHeight',  {NAME: 'LineHeight', template: 'line_height_icon'});
 
-            $.FroalaEditor.RegisterCommand('my_dropdown', {
-                title: 'Advanced options',
+            $.FroalaEditor.DefineIconTemplate('font_size_icon', '<i class="fa fa-text-width"></i>');
+            $.FroalaEditor.DefineIcon('fontSize', {NAME: 'fontSize', template: 'font_size_icon'});
+
+            $.FroalaEditor.RegisterCommand('lineHeight', {
+                title: 'Line Height',
                 type: 'dropdown',
+                icon: 'lineHeight',
                 focus: false,
                 undo: false,
                 refreshAfterCallback: true,
@@ -50,12 +55,15 @@ export default {
                     '2': '2',
                 },
                 callback: function (cmd, val) {
+                    console.log('callback');
                 },
                 // Callback on refresh.
                 refresh: function ($btn) {
+                    console.log('refresh');
                 },
                 // Callback on dropdown show.
                 refreshOnShow: function ($btn, $dropdown) {
+                    console.log('refreshOnShow');
                 }
             });
 
@@ -69,9 +77,9 @@ export default {
                 imageUploadURL: '/api/admin/lecture/upload',
                 fileUploadURL: '/api/admin/lecture/upload',
                 toolbarButtons: [
-                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'my_dropdown',
+                    'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
                     '|',
-                    'fontFamily', 'fontSize', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle',
+                    'fontFamily', 'fontSize','lineHeight', 'color', 'inlineClass', 'inlineStyle', 'paragraphStyle',
                     '|',
                     'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
                     '-',
