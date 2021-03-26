@@ -1,6 +1,6 @@
 <template>
     <div class="thumbnail-wrap"
-         :style="thumbnailPreview">
+         :style="{backgroundImage: url}">
         <input type="file" class="d-none" :id="id"
                @change="fileUpload"
                accept=".JPG, .JPEG, .PNG, .GIF">
@@ -18,12 +18,14 @@
             id: String,
             file: Object
         },
-        computed: {
-            thumbnailPreview() {
-                console.log('file',this.file);
-                return {
-                    backgroundImage: `url(${this.file.url})`
-                };
+        data() {
+            return {
+                url: ''
+            }
+        },
+        watch: {
+            file() {
+                this.url = `url(${this.file.url})`;
             }
         },
         methods: {
