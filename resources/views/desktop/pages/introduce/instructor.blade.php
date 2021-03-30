@@ -262,6 +262,19 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_17.png') }}" alt="이연아" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">김민정</h2>
+                            <ul class="instructor-career">
+                                <li>연세하이디치과 실장</li>
+                                <li>브레인스펙 전문강사</li>
+                                <li>아바서비스커리어센터 강사</li>
+                                <li>경희대학교 경영대학원 의료경영석사</li>
+                                <li>전)강동대학교 겸임 교수</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
