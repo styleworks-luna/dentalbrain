@@ -17,7 +17,7 @@
             <form action="{{ route('account.userSecession')}}" id="form-secession" method="POST">
                 @csrf
                 <section class="secession">
-                    <h2>회원탈퇴</h2>
+                    <h2>회원탈퇴 <span class="warning"> ※ 가입제한 안내 - 탈퇴 후 15일 이후 재가입 가능합니다.</span></h2>
                     <table>
                         <tr>
                             <th>탈퇴사유</th>
