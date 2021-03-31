@@ -11,13 +11,13 @@
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
-                                text="종류 선택"
+                                text="대분류 선택"
                                 :value="major_category_id"
                                 :options="majorCategoryOptions"
                                 @setValue="handleSetMajorCategoryId"></select-box>
 
                     <select-box class="form-control"
-                                text="종류 선택"
+                                text="소분류 선택"
                                 :value="minor_category_id"
                                 :options="minorCategoryOptions"
                                 @setValue="handleSetMinorCategoryId"></select-box>
