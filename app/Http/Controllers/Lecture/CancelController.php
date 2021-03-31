@@ -90,7 +90,7 @@ class CancelController extends Controller
         ]);
 
         // 유저에게 환불 요청 알림
-        Mail::to($student->email)
+        Mail::to(Auth::user()->email)
             ->send(new RequestProgramCancel($student,
                 $request->get('reason'), $request->get('bank'),
                 $request->get('accountNumber'), $request->get('holderName')));
