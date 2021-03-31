@@ -92,11 +92,13 @@ class RegisterController extends Controller
         /* @see UserController update()
          * @see \App\Http\Controllers\Admin\User\UserController update()
          */
-        $result = Validator::make($data, [
+        return Validator::make($data, [
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'min:2', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users', 'email')->whereNull('deleted_at')],
+                Rule::unique('users', 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
+                })],
             'password' => ['required', 'string', 'min:6', 'max:40',
                 'regex:' . User::$passwordPattern,
                 // custom validations rule : without_spaces
@@ -104,7 +106,9 @@ class RegisterController extends Controller
                 'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
             'phone' => ['bail', 'required', 'digits_between:9,11',
-                Rule::unique('users', 'phone')->whereNull('deleted_at')],
+                Rule::unique('users', 'phone')->where(function ($query) {
+                    $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
+                })],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
@@ -113,11 +117,12 @@ class RegisterController extends Controller
                     $query->where('phone', $data['phone'])->where('expired_at', '>', Carbon::now())
                         ->where('verification_number', '=', $data['verification_number']);
                 })],
+        ], [
+            'email.unique' => '가입 할 수 없는 이메일입니다.',
+            'phone.unique' => '가입 할 수 없는 전화번호입니다.',
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
-
-        return $result;
     }
 
     private function inLocalValidation($data)
@@ -126,18 +131,25 @@ class RegisterController extends Controller
             'login_id' => ['required', 'string', 'min:4', 'max:40', 'unique:users'],
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users', 'email')->whereNull('deleted_at')],
+                Rule::unique('users', 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
+                })],
             'password' => ['required', 'string', 'min:6', 'max:40',
                 // custom validations rule : without_spaces
                 'without_spaces',
                 'confirmed'],
             'job' => ['required', 'exists:user_job_names,id'],
             'phone' => ['bail', 'required', 'digits_between:9,11',
-                Rule::unique('users', 'phone')->whereNull('deleted_at')],
+                Rule::unique('users', 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
+                })],
             'email-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
             'verification_number' => ['required', 'string', 'size:6',],
+        ], [
+            'email.unique' => '가입 할 수 없는 이메일입니다.',
+            'phone.unique' => '가입 할 수 없는 전화번호입니다.',
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
