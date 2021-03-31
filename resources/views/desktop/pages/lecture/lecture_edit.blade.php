@@ -83,11 +83,11 @@
                             </tr>
                             <tr>
                                 <th>이메일</th>
-                                <td><em>{{ $programStudent->email }}</em></td>
+                                <td><em>{{ auth()->user()->email }}</em></td>
                             </tr>
                             <tr>
                                 <th>휴대전화</th>
-                                <td><em>{{ $programStudent->phone }}</em></td>
+                                <td><em>{{ auth()->user()->phone }}</em></td>
                             </tr>
                         </table>
                     </section>

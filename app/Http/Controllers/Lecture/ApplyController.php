@@ -26,12 +26,10 @@ class ApplyController extends Controller
         }
 
         if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
-            $student = ProgramStudent::query()->where('ticket_id',$program->ticket()->first()->id)->where('user_id','=',Auth::id())->first();
             // Survey 이미 완료하였을 경우.
-            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program,
-                $student->email,
-                $student->phone
-            );
+            $student = ProgramStudent::query()->where('ticket_id', $program->ticket()->first()->id)
+                ->where('user_id', '=', Auth::id())->first();
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
             return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
         }
 
@@ -88,13 +86,13 @@ class ApplyController extends Controller
                 $surveyAnswerService->storeSurveyAnswers($surveyDataSet);
             }
 
-            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $request->get('email'), $request->get('phone'));
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
 
             if ($program->ticket->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
 
-                Mail::to($request->get('email'))->send(new ApplyLecture(Auth::user(), $programStudent));
+                Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
                 Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
                 return redirect()->route('lectures.result', $program->id);

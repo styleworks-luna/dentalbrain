@@ -22,9 +22,9 @@ class PaymentController extends Controller
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
                 'programs.is_online', 'programs.title',
-                'program_students.id as student_id','program_students.phone', 'program_students.email', 'program_students.user_id','program_students.pay_status',
+                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
                 'program_tickets.program_id',
-                'users.name'
+                'users.name','users.email','users.phone'
             )
             ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->join('program_tickets', 'program_students.ticket_id', '=', 'program_tickets.id')
@@ -43,19 +43,19 @@ class PaymentController extends Controller
             $payments->where(function ($query) use ($request) {
                 $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
                     ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('program_students.email', 'like', '%' . $request->keyword . '%')
+                    ->orWhere('users.email', 'like', '%' . $request->keyword . '%')
                     ->orWhere('payments.totalAmount', '=', $request->keyword);
             });
         }
 
         return response()->json([
-            'payments' => $payments->orderBy('payments.id','desc')->paginate(10)
+            'payments' => $payments->orderBy('payments.id', 'desc')->paginate(10)
         ]);
     }
 
     public function paymentExport()
     {
-        return Excel::download(new PaymentExport(),'결제 정보 엑셀.xlsx');
+        return Excel::download(new PaymentExport(), '결제 정보 엑셀.xlsx');
     }
 
     /**

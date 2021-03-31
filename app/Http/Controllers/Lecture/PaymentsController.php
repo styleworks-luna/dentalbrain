@@ -53,7 +53,7 @@ class PaymentsController extends Controller
 
         $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
-        Mail::to($programStudent->email)->send(new ApplyLecture(Auth::user(), $programStudent));
+        Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
         Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
         return redirect()->route('lectures.result', $program->id);

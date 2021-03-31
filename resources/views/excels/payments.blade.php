@@ -19,7 +19,7 @@
             <td>{{ $payment->student->ticket->program->is_online ? '온라인' : '오프라인'}}</td>
             <td>{{ $payment->student->ticket->program->title }}</td>
             <td>{{ $payment->student->user->name }}</td>
-            <td>{{ $payment->student->email }}</td>
+            <td>{{ $payment->student->user->email }}</td>
             <td>{{ number_format($payment->totalAmount) }}</td>
             <td>{{ changePaymentMethodName($payment->method) }}</td>
             <td>{{ changePaymentStatusName($payment->status) }}</td>

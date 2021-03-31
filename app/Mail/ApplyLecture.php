@@ -5,6 +5,7 @@ namespace App\Mail;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -20,7 +21,8 @@ class ApplyLecture extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User|Authenticatable $user
+     * @param ProgramStudent $programStudent
      */
     public function __construct(User $user, ProgramStudent $programStudent)
     {

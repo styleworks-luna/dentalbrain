@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class DropPrivacyColumnsToProgramStudentsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('program_students', function (Blueprint $table) {
+            $table->dropColumn('phone');
+            $table->dropColumn('email');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('program_students', function (Blueprint $table) {
+            $table->string('email')->comment('이메일 (NOT users.email)');
+            $table->string('phone')->comment('전화번호 (NOT users.phone)');
+        });
+    }
+}

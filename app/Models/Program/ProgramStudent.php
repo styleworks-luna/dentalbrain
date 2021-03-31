@@ -81,11 +81,9 @@ class ProgramStudent extends Model
      *  신청 성공 시에 업데이트 하는 쿼리
      *
      * @param Program $program
-     * @param string $email
-     * @param string $phone
      * @return ProgramStudent
      */
-    static function updateOrCreateWhenApplySuccess(Program $program, string $email, string $phone)
+    static function updateOrCreateWhenApplySuccess(Program $program)
     {
         if ($program->ticket->is_free) {
             return ProgramStudent::updateOrCreate([
@@ -94,8 +92,6 @@ class ProgramStudent extends Model
             ], [
                 'ticket_id' => $program->ticket->id,
                 'user_id' => Auth::id(),
-                'email' => $email,
-                'phone' => $phone,
                 'applied_at' => now(),
                 'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
@@ -108,8 +104,6 @@ class ProgramStudent extends Model
             ], [
                 'ticket_id' => $program->ticket->id,
                 'user_id' => Auth::id(),
-                'email' => $email,
-                'phone' => $phone,
                 'applied_at' => now(),
                 'is_repeated' => $program->canRepeat(),
             ]);
