@@ -64,8 +64,8 @@
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
                             <div class="swiper-slide">
-                                <a href="{{ route('lectures.detail',$recommend->id) }}">
-                                    <img src="{{ $recommend->thumbnail->url }}" alt="추천배너">
+                                <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                                    <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
                                 </a>
                             </div>
                         @empty

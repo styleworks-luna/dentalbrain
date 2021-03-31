@@ -16,7 +16,7 @@ class MainController extends Controller
         $data['slides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_TOP)->take(8)->get();
         $data['bar'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BAR)->first();
         $data['bottomSlides'] = Banner::public()->where('category_id', '=', Banner::$POSITION_BOTTOM)->get();
-        $data['recommends'] = Program::public(null, 'popular')->take(10)->get();
+        $data['recommends'] = Banner::public()->where('category_id', '=', Banner::$POSITION_RECOMMEND)->get();
         $data['notices'] = Notice::public()->take(3)->get();
         $data['faqs'] = Faq::public()->take(3)->get();
 
