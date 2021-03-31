@@ -23,7 +23,9 @@
                     @forelse($articles as $article)
                         <li>
                             <div class="image-wrap">
-                                <img src="{{ $article->thumbnail->url }}" alt="{{ $article->thumbnail->name }}">
+                                <img
+                                    src="{{ $article->thumbnail ? $article->thumbnail->url : asset('/images/desktop/global/logo.png') }}"
+                                    alt="{{ $article->thumbnail ? $article->thumbnail : '덴탈브레인 로고' }}">
                             </div>
                             <div class="community-information">
                                 <h3><a href="{{ $article->link }}" target="_blank">{{ $article->title }}</a></h3>
