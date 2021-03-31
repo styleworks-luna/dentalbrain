@@ -58,7 +58,7 @@
                 </section>
 
                 <section class="applicant-information">
-                    <h3>신청자 정보</h3>
+                    <h3>신청자 정보 <span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span></h3>
                     <table>
                         <tr>
                             <th>이름</th>

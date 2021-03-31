@@ -71,7 +71,7 @@
                     </section>
 
                     <section class="applicant-information">
-                        <h3>신청자 정보 입력</h3>
+                        <h3>신청자 정보 입력 <span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span></h3>
                         <table>
                             <tr>
                                 <th>이름</th>
@@ -84,27 +84,13 @@
                             <tr>
                                 <th>이메일</th>
                                 <td>
-                                    <input type="email"
-                                           id="email"
-                                           name="email"
-                                           class="email_box"
-                                           value="{{old('email') ?? auth()->user()->email}}"
-                                           data-parsley-required="true"
-                                           data-parsley-type="email"
-                                           data-parsley-class-handler=".ui-emailbox"
-                                           data-parsley-required-message="이메일을 입력해주세요.">
+                                    <em>{{ auth()->user()->email }}</em>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대전화</th>
                                 <td>
-                                    <input type="text"
-                                           id="phone"
-                                           name="phone"
-                                           class="phone"
-                                           value="{{old('phone') ?? auth()->user()->phone}}"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="전화번호를 입력해주세요.">
+                                    <em>{{ auth()->user()->phone }}</em>
                                 </td>
                             </tr>
                         </table>
