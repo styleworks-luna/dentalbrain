@@ -41,6 +41,8 @@ mix.js('resources/js/app/app.js', 'public/js/app')
 // admin
 mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
 
+// Desktop
+
 // pages TODO: 추후 수정
 mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
 
@@ -78,5 +80,11 @@ mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop
 
 // 이용약관
 mix.sass('resources/sass/desktop/pages/term/term-common.sass', 'public/css/desktop/pages/term');
+
+// mobile
+mix.sass('resources/sass/mobile/app.sass', 'public/css/mobile')
+
+// pages
+mix.sass('resources/sass/mobile/index.sass', 'public/css/mobile')
 
 mix.version();
