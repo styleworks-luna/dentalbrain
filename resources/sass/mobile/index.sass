@@ -1,0 +1,42 @@
+@import 'resources/sass/helpers/variables'
+@import 'resources/sass/helpers/extends'
+@import 'resources/sass/helpers/mixins'
+
+.swiper-button-prev:after,
+.swiper-button-next:after
+    content: ''
+
+.top-banner
+    +margin(top 40px)
+
+    .swiper-container
+        position: relative
+
+    .swiper-slide
+        img
+            width: 100%
+            height: 400px
+            +border(1px solid rgba(0,0,0,0.1))
+            +box-sizing(border-box)
+
+    .swiper-controller-wrap
+        +size(60px, 24px)
+        +border-radius(15px)
+        +background(null,null,null,rgba(0,0,0,0.2))
+        position: absolute
+        bottom: 10px
+        right: 10px
+        z-index: 100
+
+        .swiper-pagination-fraction
+            +size(48px)
+            color: $white
+
+            .swiper-pagination-current
+                +padding(right 14px)
+                font-weight: normal
+
+            .pagination-bar
+                +size(1px, 10px)
+                +background(null,null,null,rgba(255,255,255,0.5))
+                content: ''
