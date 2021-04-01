@@ -14,6 +14,7 @@ yarn-error.log
 
 package-lock.json
 /public/css/desktop
+/public/css/mobile
 /public/css/app.css
 /public/js/app/
 /public/fonts/vendor/
