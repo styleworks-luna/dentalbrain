@@ -91,6 +91,7 @@ class PaymentsController extends Controller
      */
     public function deposited(Request $request)
     {
+        logger($request->all());
         $v = Validator::make($request->all(), [
             'secret' => ['required', 'string'],
             'status' => ['required', Rule::in(['DONE', 'CANCELED'])],
