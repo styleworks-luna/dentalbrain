@@ -39,11 +39,11 @@ export default {
             return replaceData;
         },
         getUrl() {
-            this.hash = window.location.href.match(/#(.*$)/)[1];
+            this.hash = window.location.href.match(/#(.*$)/) ? window.location.href.match(/#(.*$)/)[1] : '';
         },
         setActive() {
-            for(var i = 1; i <= 8 ;i ++) {
-                if(this.hash == i) {
+            for (var i = 1; i <= 8; i++) {
+                if (this.hash == i) {
                     this.isActive = i;
                 }
             }
