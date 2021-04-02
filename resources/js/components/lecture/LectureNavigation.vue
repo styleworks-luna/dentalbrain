@@ -1,7 +1,7 @@
 <template>
     <div class="lecture-menu">
         <ul>
-            <li v-for="menu in menus" :class="{'active-menu': isActive == menu.id}" @click="handleSetLectureMenu(menu.id,menu.id)" v-html="replace(menu.name)"></li>
+            <li v-for="menu in menus" :id="menu.name" :class="{'active-menu': isActive == menu.id}" @click="handleSetLectureMenu(menu.id,menu.id)" v-html="replace(menu.name)"></li>
         </ul>
     </div>
 </template>
