@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class PaymentsController extends Controller
 {
@@ -91,7 +92,6 @@ class PaymentsController extends Controller
      */
     public function deposited(Request $request)
     {
-        Log::error('TEST', [$request->all()]);
         $v = Validator::make($request->all(), [
             'secret' => ['required', 'string'],
             'status' => ['required', Rule::in(['DONE', 'CANCELED'])],
@@ -115,6 +115,12 @@ class PaymentsController extends Controller
                     ->where('orderId', 'LIKE', $body['orderId'])
                     ->first();
             }
+            if ($payment == null) {
+                Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
+
+                DB::rollBack();
+                return response()->json(['code' => 3], ResponseCode::HTTP_BAD_REQUEST);
+            }
 
             $payment->update([
                 'status' => $body['status'],
@@ -130,13 +136,13 @@ class PaymentsController extends Controller
             ]);
 
             DB::commit();
-            return response()->json(['code' => 1], 200);
+            return response()->json(['code' => 1], ResponseCode::HTTP_OK);
 
         } catch (\Exception $e) {
             Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
 
             DB::rollBack();
-            return response()->json(['code' => 2], 500);
+            return response()->json(['code' => 2], ResponseCode::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
