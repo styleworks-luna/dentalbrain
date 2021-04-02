@@ -75,11 +75,6 @@ Route::get('introduce', function () {
 });
 
 //강의 안내
-Route::get('information', function () {
-    return view(viewPrefix() . 'pages.introduce.lecture_information');
-});
-
-//강의 안내
 Route::get('community', 'ArticleController@index')->name('community');
 
 //강사 소개
