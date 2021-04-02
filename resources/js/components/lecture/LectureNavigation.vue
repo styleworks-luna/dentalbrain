@@ -45,6 +45,7 @@ export default {
             for (var i = 1; i <= 8; i++) {
                 if (this.hash == i) {
                     this.isActive = i;
+                    this.handleSetLectureMenu(this.isActive, this.isActive);
                 }
             }
         }
