@@ -29,7 +29,7 @@
             font-size: 15px
 
 .introduce-description
-    +size(626px)
+    +size(1280px)
     +margin(80px auto 100px auto)
 
     h2
@@ -38,8 +38,87 @@
         font-weight: bold
         font-size: 24px
 
-    p
-        +padding(top 20px)
-        display: block
-        font-size: 16px
-        line-height: 1.5
+    .introduce-start
+        +margin(top 20px)
+        overflow: hidden
+
+        img
+            +size(610px, 610px)
+            float: left
+
+        .start-content
+            +size(526px)
+            +margin(left 70px)
+            float: left
+
+            img
+               +size(526px, 278px)
+
+            p
+                +padding(top 70px)
+                font-size: 16px
+                line-height: 1.5
+
+            .sign
+                +padding(top 30px)
+                overflow: hidden
+
+                img
+                    +size(265px, 62px)
+                    +margin(left 10px)
+                    float: right
+
+    .introduce-middle
+        +margin(top 100px)
+
+        .img-wrap img
+            +size(1275px, 345px)
+
+        .description
+            ul
+                overflow: hidden
+
+                li
+                    +margin(left 31px)
+                    +size(280px,282px)
+                    +background('/images/desktop/introduce/introduce_img_3.png',no-repeat, center center)
+                    float: left
+                    text-align: center
+
+                    &:first-child
+                        +margin(left 32px)
+
+                    p
+                        +size(230px, 140px)
+                        +padding(top 126px left 25px)
+                        font-size: 16px
+                        line-height: 1.5
+
+                        em
+                            font-weight: bold
+
+                    .for-padding
+                        +padding(top 150px)
+
+    .introduce-end
+        +margin(top 120px)
+        text-align: center
+
+        h3
+            font-size: 40px
+            font-weight: bold
+
+            em
+                color: #0053a0
+
+        p
+            +padding(top 20px)
+            font-size: 16px
+            line-height: 1.5
+
+        .img-wrap
+            +size(1010px, 690px)
+            +margin(50px auto 0 auto)
+
+            img
+                +size(1010px, 690px)
