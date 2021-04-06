@@ -56,35 +56,35 @@ $(function () {
 
     clickLike.click(function (e) {
         e.preventDefault();
+
+        var like = 'true';
+
         if (!clickLike.hasClass('active')) {
-            $.ajax({
-                url: '/api/lectures/' + lectureIdx + '/like',
-                type: 'post',
-                data: {
-                    'like' : 'true',
-                },
-                success: function(res) {
-                    var cnt = res.cnt;
-
-                    clickLike.toggleClass('active');
-                    $('.like').text(cnt);
-                }
-            });
+            like = 'true';
         } else {
-            $.ajax({
-                url: '/api/lectures/' + lectureIdx + '/like',
-                type: 'post',
-                data: {
-                    'like' : 'false',
-                },
-                success: function(res) {
-                    var cnt = res.cnt;
-
-                    clickLike.toggleClass('active');
-                    $('.like').text(cnt);
-                }
-            });
+            like = 'false';
         }
+        
+        $.ajax({
+            url: '/api/lectures/' + lectureIdx + '/like',
+            type: 'post',
+            data: {
+               'like' : like
+            },
+            success: function(res) {
+                var cnt = res.cnt;
+
+                clickLike.toggleClass('active');
+                $('.like').text(cnt);
+            },
+            error: function (request, status, error) {
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
+            }
+        });
     });
 
     //지도보기 팝업
@@ -169,7 +169,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });
@@ -195,7 +199,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });
@@ -222,7 +230,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });
@@ -263,7 +275,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });
@@ -291,7 +307,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });

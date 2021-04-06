@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    //
     public function store(Request $request, Program $program)
     {
         $v = Validator::make($request->all(), [

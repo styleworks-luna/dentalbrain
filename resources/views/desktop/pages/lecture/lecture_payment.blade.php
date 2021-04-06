@@ -260,7 +260,7 @@
                             <td>
                                 <div class="radio-wrap">
                                     <input type="radio" id="card" name="payment-method"
-                                           class="payment-method" value="카드">
+                                           class="payment-method" value="카드" checked>
                                     <label for="card">신용카드</label>
 
                                     <select name="payment-method" id="credit" class="select-menu">
@@ -291,11 +291,11 @@
                                         <option value="디스커버">디스커버</option>
                                     </select>
                                 </div>
-                                <div class="radio-wrap">
+                                {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
                                            class="payment-method" value="가상계좌">
                                     <label for="deposit">무통장입금(가상계좌)</label>
-                                </div>
+                                </div>--}}
                             </td>
                         </tr>
                     </table>
