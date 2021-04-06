@@ -139,7 +139,11 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                alert(request.responseJSON.msg);
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
             }
         });
     });
