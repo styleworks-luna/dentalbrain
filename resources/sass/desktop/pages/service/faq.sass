@@ -26,19 +26,26 @@
 
         .question
             +size(1047px)
-            +padding(left 20px right 20px)
+            +padding(left 20px)
             +ellipse
             float: left
 
+        em
+            +padding(left 20px)
+            display: block
+            float: left
+            font-size: 16px
+            font-weight: bold
+            color: $page-color
+
         .arrow-down
             +size(13px, 7px)
-            +background('/images/desktop/global/icon_arrow_down.png',no-repeat,center center)
+            +padding()
             float: left
             cursor: pointer
             transform: translateY(3px)
 
-        .arrow-change
-            +background('/images/desktop/global/icon_arrow_up.png')
+
 
     .faq-header
         +padding(top 17px bottom 17px)
@@ -51,26 +58,24 @@
 
     .faq-content
         .question-information
-            +padding(top 26px bottom 26px)
             +border(1px solid $border-color-base, bottom)
             overflow: hidden
 
         .question
+            +padding( right 20px)
             overflow: hidden
             text-align: left
 
-            em
-                display: block
-                float: left
-                font-size: 16px
-                font-weight: bold
-                color: $page-color
-
             .question-content
-                +margin(left 20px)
+                +size(100%)
+                +padding( right 20px)
+                +background('/images/desktop/global/icon_arrow_down.png',no-repeat,1034px center)
                 display: block
                 float: left
                 font-size: 16px
+
+            .arrow-change
+                +background('/images/desktop/global/icon_arrow_up.png')
 
         .answer
             +padding(left 180px top 27px bottom 27px)
@@ -98,6 +103,9 @@
 
         .hide-show
             display: block
+
+        .for-padding
+            +padding(top 26px bottom 26px)
 
     .list-none
         +padding(top 27px bottom 27px)
