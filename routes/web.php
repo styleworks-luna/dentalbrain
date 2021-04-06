@@ -247,7 +247,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');
 
-            Route::group(['prefix' => 'comments', 'as' => 'comments.'], function () {
+            Route::group(['prefix' => 'comments', 'as' => 'comments.', 'middleware' => 'auth'], function () {
                 Route::post('/', 'Lecture\CommentController@store')->name('store');
                 Route::put('{comment}', 'Lecture\CommentController@update')->name('update');
                 Route::delete('{comment}', 'Lecture\CommentController@delete')->name('delete');
