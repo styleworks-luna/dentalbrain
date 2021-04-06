@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Validator;
 
 class CommentController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request, Program $program)
     {
         $v = Validator::make($request->all(), [
