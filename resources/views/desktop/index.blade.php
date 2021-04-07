@@ -3,6 +3,7 @@
 @section('script')
     <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
 @endsection
 
 @section('vue')
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/swiper-bundle.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/index.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -151,5 +153,6 @@
                 </div>
             </div>
         </section>
+        @include('.desktop.component.popup.IE.ie_popup')
     </section>
 @endsection
