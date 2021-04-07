@@ -100,6 +100,7 @@ class OnlineProgramConcrete extends ProgramTemplate
                     'url' => $data['url'],
                     'title' => $data['title'],
                 ]);
+
             } else {
                 // 새 항목 ( 저장과 똑같은 플로우.
                 $lecture = Lecture::create([
@@ -122,6 +123,7 @@ class OnlineProgramConcrete extends ProgramTemplate
             $returnableDataSet[] = $lecture;
         }
 
+        // TODO: 강의 썸네일 삭제.
         $newLectureIds = collect($returnableDataSet)->pluck('id');
         $deletable = $originalLectureIds->diff($newLectureIds);
         Lecture::query()->whereIn('id', $deletable)->delete();
