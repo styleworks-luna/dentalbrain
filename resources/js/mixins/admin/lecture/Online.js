@@ -1,3 +1,4 @@
+
 // component
 import FileUpload from '@/components/admin/form/FileUpload.vue';
 
@@ -28,6 +29,9 @@ export const OnlineMixin = {
                 link: '',
                 thumbnail: '',
             })
+        },
+        removeLecture(index) {
+            this.lectures.splice(index, 1);
         },
         updateLectureFile (file, index) {
             this.lectures[index].thumbnail = file;

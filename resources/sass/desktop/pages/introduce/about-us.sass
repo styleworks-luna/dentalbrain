@@ -42,20 +42,29 @@
         +margin(top 20px)
         overflow: hidden
 
-        img
+        .img-wrap
             +size(610px, 610px)
             float: left
+
+        img
+            +size(610px, 610px)
 
         .start-content
             +size(526px)
             +margin(left 70px)
+            overflow: hidden
             float: left
 
-            img
-               +size(526px, 278px)
+            .content-img-wrap
+                +margin(top 20px)
+
+                img
+                    +size(526px, 278px)
+                    display: block
 
             p
-                +padding(top 70px)
+                +padding(top 20px)
+                display: block
                 font-size: 16px
                 line-height: 1.5
 
@@ -105,6 +114,7 @@
         text-align: center
 
         h3
+            font-family: $font-family-gmarket
             font-size: 40px
             font-weight: bold
 

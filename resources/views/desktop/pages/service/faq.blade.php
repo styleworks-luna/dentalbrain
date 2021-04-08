@@ -24,12 +24,11 @@
                         @forelse($faqs as $key => $value)
                             <li class="faq-content">
                                 <div class="question-information">
-                                    <p class="sort">{{$value->category_name}}</p>
+                                    <p class="sort for-padding">{{$value->category_name}}</p>
+                                    <em class="for-padding">Q</em>
                                     <div class="question">
-                                        <em>Q</em>
-                                        <a href="" class="question-content">{{ $value->question }}</a>
+                                        <a href="" class="question-content for-padding">{{ $value->question }}</a>
                                     </div>
-                                    <span class="arrow-down"></span>
                                 </div>
                                 <div class="answer">
                                     <em>A</em>

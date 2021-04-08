@@ -10,35 +10,72 @@
     position: relative
 
     .confirm-layer
-        +size(750px)
+        +size(600px, 350px)
         +margin(0 auto 0 auto)
-        +padding(20px)
+        +padding(38px)
         +background(null,null,null,$white)
         +border(2px solid $page-color)
+        +box-sizing(border-box)
         position: absolute
-        top: 300px
+        top: 220px
         left: 50%
         transform: translateX(-50%)
 
         h1
-            font-size: 20px
+            font-weight: bold
+            font-size: 18px
             text-align: center
-            line-height: 1.5
+            line-height: 1
+
+        .confirm-text
+            +padding(top 12px left 67px)
+
+            li
+                +margin(top 28px)
+                position: relative
+
+                .text-wrap
+                    overflow: hidden
+
+                .check
+                    +size(20px, 20px)
+                    +background('/images/desktop/lecture/lecture_check_icon.png',no-repeat, center center)
+                    display: block
+                    float: left
+                    content: ''
+
+                .text
+                    +padding(top 2px left 7px)
+                    float: left
+                    font-size: 16px
+
+                .tip
+                    +padding(top 10px left 28px)
+                    font-size: 12px
+                    color: $page-color
+                    line-height: 1.4
+
+                    em
+                        font-weight: bold
+
+                &:first-child
+                    +padding(top 0)
 
         .btn-wrap
-            +size(260px)
-            +margin(25px auto 0 auto)
+            +size(330px)
+            +margin(50px auto 0 auto)
 
             a,
             .btn-confirm
-                +size(120px, 40px)
+                +size(160px, 50px)
                 +btn(purple-fill)
                 float: left
                 font-size: 16px
 
+
             .btn-confirm
-                +margin(right 20px)
+                +margin(right 10px)
 
             a
-                +padding(top 12px)
+                line-height: 50px
                 +background(null,null,null,$gray-900)
