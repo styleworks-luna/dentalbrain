@@ -238,7 +238,7 @@ export default {
     },
     methods: {
         getData(page = this.page) {
-            if (this.page) {
+            if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
 
