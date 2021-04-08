@@ -134,7 +134,7 @@ return [
     'log_channel' => env('MAIL_LOG_CHANNEL'),
 
     'admin_emails' => [
-        env('MAIL_FROM_ADDRESS', 'dentalbrainon@gmail.com'),
+        env('MAIL_FROM_ADDRESS', 'dentalbrainon@gmail.com'), 'galmma@onoffmix.com',
     ]
 
 ];
