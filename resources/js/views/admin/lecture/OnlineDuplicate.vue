@@ -162,7 +162,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button class="btn btn-primary" @click="duplicate">복사</button>
-                <router-link to="/admin/lecture/online"
+                <router-link :to="`/admin/lecture/online/${page}`"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -189,6 +189,7 @@ export default {
         return {
             id: '',
             data: {},
+            page: this.$route.params.page,
         }
     },
     created() {
@@ -261,7 +262,7 @@ export default {
 
             Online.duplicate(this.id,data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
+                this.$router.push(`/admin/lecture/online/1`);
             })
         }
     }

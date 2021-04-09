@@ -7,7 +7,7 @@ import OnlineDuplicate from '@/views/admin/lecture/OnlineDuplicate.vue';
 
 const routes = [
     {
-        path: '/admin/lecture/online',
+        path: '/admin/lecture/online/:page',
         name: 'AdminOnline',
         component: Online
     },
@@ -22,7 +22,7 @@ const routes = [
         component: OnlineStudent
     },
     {
-        path: '/admin/lecture/online/:id',
+        path: '/admin/lecture/online/:id/:page',
         name: 'AdminOnlineEdit',
         component: OnlineEdit
     },
@@ -32,7 +32,7 @@ const routes = [
         component: OnlineAdditional,
     },
     {
-        path: '/admin/lecture/online/:id/duplicate',
+        path: '/admin/lecture/online/:id/duplicate/:page',
         name: 'AdminOnlineDuplicate',
         component: OnlineDuplicate
     },

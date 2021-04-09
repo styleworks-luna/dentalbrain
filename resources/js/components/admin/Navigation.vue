@@ -40,7 +40,7 @@
                 <a href="#" class="c-sidebar-nav-dropdown-toggle">강의관리</a>
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <router-link to="/admin/lecture/online" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/online/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/online') }">
                             온라인 강의
