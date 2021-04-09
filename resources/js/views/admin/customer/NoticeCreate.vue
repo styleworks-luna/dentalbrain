@@ -48,7 +48,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
-                <router-link to="/admin/customer/notice"
+                <router-link to="/admin/customer/notice/1"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -78,7 +78,7 @@ export default {
 
             Notice.create(data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/notice');
+                this.$router.push('/admin/customer/notice/1');
             })
         }
     }

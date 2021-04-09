@@ -7,14 +7,14 @@ import OfflineDuplicate from '@/views/admin/lecture/OfflineDuplicate.vue';
 
 const routes = [
     {
-        path: '/admin/lecture/offline/:page',
-        name: 'AdminOffline',
-        component: Offline
-    },
-    {
         path: '/admin/lecture/offline/create',
         name: 'AdminOfflineCreate',
         component: OfflineCreate
+    },
+    {
+        path: '/admin/lecture/offline/:page',
+        name: 'AdminOffline',
+        component: Offline
     },
     {
         path: '/admin/lecture/offline/:id/student',

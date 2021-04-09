@@ -51,7 +51,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
-                <router-link to="/admin/community"
+                <router-link to="/admin/community/1"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -85,7 +85,7 @@ export default {
 
             Community.create(data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/community');
+                this.$router.push('/admin/community/1');
             })
         },
         handleSetTime(time) {

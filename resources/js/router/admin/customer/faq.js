@@ -4,14 +4,14 @@ import FaqEdit from '@/views/admin/customer/FaqEdit.vue';
 
 const routes = [
     {
-        path: '/admin/customer/faq/:page',
-        name: 'AdminFaq',
-        component: Faq
-    },
-    {
         path: '/admin/customer/faq/create',
         name: 'AdminFaqCreate',
         component: FaqCreate
+    },
+    {
+        path: '/admin/customer/faq/:page',
+        name: 'AdminFaq',
+        component: Faq
     },
     {
         path: '/admin/customer/faq/:id/:page',

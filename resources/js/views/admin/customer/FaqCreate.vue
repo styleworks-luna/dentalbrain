@@ -51,7 +51,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
-                <router-link to="/admin/customer/faq"
+                <router-link to="/admin/customer/faq/1"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -81,7 +81,7 @@
 
                 Faq.create(data).then(res => {
                     alert(res.data.msg);
-                    this.$router.push('/admin/customer/faq');
+                    this.$router.push('/admin/customer/faq/1');
                 })
             }
         }

@@ -4,14 +4,14 @@ import CommunityCreate from '@/views/admin/community/CommunityCreate.vue';
 
 const routes = [
     {
-        path: '/admin/community/:page',
-        name: 'AdminCommunity',
-        component: Community
-    },
-    {
         path: '/admin/community/create',
         name: 'AdminCommunityCreate',
         component: CommunityCreate
+    },
+    {
+        path: '/admin/community/:page',
+        name: 'AdminCommunity',
+        component: Community
     },
     {
         path: '/admin/community/:id/:page',

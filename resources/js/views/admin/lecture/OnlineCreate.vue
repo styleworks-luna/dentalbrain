@@ -162,7 +162,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">등록</button>
-                <router-link to="/admin/lecture/online"
+                <router-link to="/admin/lecture/online/1"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -220,7 +220,7 @@ export default {
 
             Online.create(data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
+                this.$router.push('/admin/lecture/online/1');
             })
         },
     }
