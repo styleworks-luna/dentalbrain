@@ -268,8 +268,6 @@ export default {
                 lectures: lectures,
             };
 
-            console.log(data);
-
             Online.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/lecture/online');
