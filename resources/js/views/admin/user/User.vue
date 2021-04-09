@@ -40,7 +40,7 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.id}`"
+                        <router-link :to="`/admin/user/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left">
                             수정
                         </router-link>
@@ -90,7 +90,7 @@ export default {
             jobOptions: [],
             job_name_id: '',
             keyword: '',
-            page: 1
+            page: this.$route.params.page || 1
         }
     },
     mounted() {
@@ -160,6 +160,7 @@ export default {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
+            this.page = page;
 
             let params = {
                 job_name_id: this.job_name_id,
@@ -170,6 +171,9 @@ export default {
 
             User.getData(params).then(res => {
                 this.users = res.data.user;
+                // 뒤로가기 page에 따라 reload
+                const path = `/admin/user/${page}`
+                if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.users = [];
             });

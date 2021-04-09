@@ -204,6 +204,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     // user
     Route::view('user', 'admin.index');
     Route::view('user/{any}', 'admin.index');
+    Route::view('user/{user}/{any}', 'admin.index');
 
     // banner
     Route::view('banner', 'admin.index');
@@ -219,6 +220,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     Route::view('customer/faq/{any}', 'admin.index');
     Route::view('customer/notice/{any}', 'admin.index');
     Route::view('customer/inquire/{any}', 'admin.index');
+
+    // payment
+    Route::view('payment/{any}', 'admin.index');
+
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
