@@ -20,7 +20,7 @@
 
             <!-- 결제 정보 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/payment" class="c-sidebar-nav-link"
+                <router-link to="/admin/payment/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/payment') }">
                     결제정보
                 </router-link>

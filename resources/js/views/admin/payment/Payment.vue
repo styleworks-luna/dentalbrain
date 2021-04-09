@@ -124,7 +124,7 @@ export default {
             payments: {
                 data: []
             },
-            page: 1,
+            page: this.$route.params.page || 1,
             order: '',
             keyword: '',
             orderStatus: '',
@@ -213,6 +213,7 @@ export default {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
+            this.page = page;
 
             let params = {
                 page: page,
@@ -223,6 +224,9 @@ export default {
 
             getData(params).then(res => {
                 this.payments = res.data.payments;
+                // 뒤로가기 page에 따라 reload
+                const path = `/admin/payment/${page}`
+                if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.payments = [];
             });
