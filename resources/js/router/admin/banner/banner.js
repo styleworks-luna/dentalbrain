@@ -4,7 +4,7 @@ import BannerCreate from '@/views/admin/banner/BannerCreate.vue';
 
 const routes = [
     {
-        path: '/admin/banner',
+        path: '/admin/banner/:page',
         name: 'AdminBanner',
         component: Banner
     },
@@ -14,7 +14,7 @@ const routes = [
         component: BannerCreate
     },
     {
-        path: '/admin/banner/:id',
+        path: '/admin/banner/:id/:page',
         name: 'AdminBannerEdit',
         component: BannerEdit
     },

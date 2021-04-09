@@ -28,7 +28,7 @@
 
             <!-- 배너 관리 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/banner" class="c-sidebar-nav-link"
+                <router-link to="/admin/banner/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/banner') }">
                     배너관리
                 </router-link>

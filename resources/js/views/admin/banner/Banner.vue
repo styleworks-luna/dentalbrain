@@ -45,7 +45,7 @@
                     </td>
                     <td>{{ slotProps.row.views }}</td>
                     <td>
-                        <router-link :to="`/admin/banner/${slotProps.row.id}`"
+                        <router-link :to="`/admin/banner/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left mr-2">
                             수정
                         </router-link>
@@ -100,7 +100,7 @@ export default {
             },
             keyword: '',
             date: '',
-            page: 1,
+            page: this.$route.params.page || 1,
         }
     },
     created() {
@@ -155,6 +155,7 @@ export default {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
+            this.page = page;
 
             let params = {
                 keyword: this.keyword,
@@ -165,6 +166,9 @@ export default {
 
             Banner.getData(params).then(res => {
                 this.banners = res.data.banners;
+                // 뒤로가기 page에 따라 reload
+                const path = `/admin/banner/${page}`
+                if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.banners = [];
             });

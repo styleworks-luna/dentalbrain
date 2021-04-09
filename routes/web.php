@@ -208,6 +208,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     // banner
     Route::view('banner', 'admin.index');
     Route::view('banner/{any}', 'admin.index');
+    Route::view('banner/{user}/{any}', 'admin.index');
 
     // community
     Route::view('community', 'admin.index');
