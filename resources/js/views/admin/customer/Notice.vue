@@ -29,7 +29,7 @@
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
-                        <router-link :to="`/admin/customer/notice/${slotProps.row.id}`">
+                        <router-link :to="`/admin/customer/notice/${slotProps.row.id}/${page}`">
                             {{ slotProps.row.title }}
                         </router-link>
                     </td>
@@ -75,7 +75,7 @@ export default {
                 data: []
             },
             keyword: '',
-            page: 1
+            page: this.$route.params.page || 1
         }
     },
     mounted() {
@@ -126,6 +126,9 @@ export default {
 
             Notice.getData(params).then(res => {
                 this.notices = res.data.notice;
+                // 뒤로가기 page에 따라 reload
+                const path = `/admin/customer/notice/${page}`
+                if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.notices = [];
             });

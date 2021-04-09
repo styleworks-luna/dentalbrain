@@ -51,7 +51,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">저장</button>
-                <router-link to="/admin/community"
+                <router-link :to="`/admin/community/${page}`"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -70,6 +70,11 @@ export default {
     mixins: [
         CommunityMixin
     ],
+    data() {
+      return {
+          page: this.$route.params.page,
+      }
+    },
     created() {
         this.id = this.$route.params.id;
     },
@@ -80,7 +85,6 @@ export default {
         getEditData() {
             Community.getEditData(this.id).then(res => {
                 const result = res.data.article;
-                console.log(res);
 
                 this.title = result.title;
                 this.link = result.link;
@@ -100,11 +104,9 @@ export default {
                 date: this.Helper.dateFormatYDM(this.date),
             };
 
-            console.log(data);
-
             Community.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/community');
+                this.$router.push(`/admin/community/${this.page}`);
             })
         },
         handleSetTime(time) {

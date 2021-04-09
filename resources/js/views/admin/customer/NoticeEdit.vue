@@ -55,7 +55,7 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
                         @click="update">수정</button>
-                <router-link to="/admin/customer/notice"
+                <router-link :to="`/admin/customer/notice/${page}`"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -77,7 +77,8 @@ export default {
     data() {
         return {
             id: '',
-            data: {}
+            data: {},
+            page: this.$route.params.page,
         }
     },
     created() {
@@ -107,13 +108,13 @@ export default {
 
             Notice.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/notice');
+                this.$router.push(`/admin/customer/notice/${this.page}`);
             })
         },
         destroy() {
             Notice.destroy(this.id).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/notice');
+                this.$router.push(`/admin/customer/notice${this.page}`);
             })
         }
     }

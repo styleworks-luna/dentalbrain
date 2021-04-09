@@ -29,7 +29,7 @@
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
-                        <router-link :to="`/admin/customer/faq/${slotProps.row.id}`">
+                        <router-link :to="`/admin/customer/faq/${slotProps.row.id}/${page}`">
                             {{ slotProps.row.question }}
                         </router-link>
                     </td>
@@ -74,7 +74,7 @@
                     data: []
                 },
                 keyword: '',
-                page: 1
+                page: this.$route.params.page || 1
             }
         },
         mounted() {
@@ -120,6 +120,9 @@
 
                 Faq.getData(params).then(res => {
                     this.faqs = res.data.faq;
+                    // 뒤로가기 page에 따라 reload
+                    const path = `/admin/customer/faq/${page}`
+                    if (this.$route.path !== path) this.$router.push(path);
                 }).catch(err => {
                     this.faqs = [];
                 });

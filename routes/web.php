@@ -214,12 +214,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     // community
     Route::view('community', 'admin.index');
     Route::view('community/{any}', 'admin.index');
+    Route::view('community/{user}/{any}', 'admin.index');
 
     // customer
     Route::view('customer/{any}', 'admin.index');
     Route::view('customer/faq/{any}', 'admin.index');
+    Route::view('customer/faq/{user}/{any}', 'admin.index');
     Route::view('customer/notice/{any}', 'admin.index');
+    Route::view('customer/notice/{user}/{any}', 'admin.index');
     Route::view('customer/inquire/{any}', 'admin.index');
+    Route::view('customer/inquire/{user}/{any}', 'admin.index');
 
     // payment
     Route::view('payment/{any}', 'admin.index');
