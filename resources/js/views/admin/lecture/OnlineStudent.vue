@@ -184,7 +184,7 @@ export default {
                     width: '8%'
                 },
                 {
-                    name: 'user_id',
+                    name: 'name',
                     text: '이름',
                     width: '8%'
                 },
