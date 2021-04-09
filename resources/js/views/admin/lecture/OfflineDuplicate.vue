@@ -163,7 +163,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button class="btn btn-primary" @click="duplicate">복사</button>
-                <router-link to="/admin/lecture/offline"
+                <router-link :to="`/admin/lecture/offline/${page}`"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -186,6 +186,11 @@ export default {
         ProgramCategoryMixin,
         OfflineMixin
     ],
+    data() {
+      return {
+          page: this.$route.params.page,
+      }
+    },
     created() {
         this.id = this.$route.params.id;
     },
@@ -256,7 +261,7 @@ export default {
 
             Offline.duplicate(this.id,data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/offline');
+                this.$router.push(`/admin/lecture/offline/${this.page}`);
             })
         },
     }

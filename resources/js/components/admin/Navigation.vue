@@ -46,13 +46,13 @@
                             온라인 강의
                         </a>
                     </router-link>
-                    <router-link to="/admin/lecture/offline" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/offline/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/offline') }">
                             오프라인 강의
                         </a>
                     </router-link>
-                    <router-link to="/admin/lecture/question" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/question/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/question') }">
                             질문내역

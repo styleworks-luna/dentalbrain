@@ -101,7 +101,6 @@ export default {
 
             Community.getData(params).then(res => {
                 this.articles = res.data.articles;
-                console.log(this.articles)
             }).catch(err => {
                 this.articles = [];
             });

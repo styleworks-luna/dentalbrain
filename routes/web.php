@@ -183,18 +183,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
 
     // lecture
     Route::view('lecture/{any}', 'admin.index');
+
     Route::view('lecture/online/{any}', 'admin.index');
     Route::view('lecture/online/{user}/{any}', 'admin.index');
+    Route::view('lecture/online/{user}/duplicate/{any}', 'admin.index');
+    Route::view('lecture/online/{user}/{any}/additional', 'admin.index');
+
     Route::view('lecture/offline/{any}', 'admin.index');
     Route::view('lecture/offline/{user}/{any}', 'admin.index');
-    Route::view('lecture/question/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}/additional', 'admin.index');
+    Route::view('lecture/offline/{user}/duplicate/{any}', 'admin.index');
     Route::view('lecture/offline/{user}/{any}/additional', 'admin.index');
+
+    Route::view('lecture/question/{any}', 'admin.index');
+    Route::view('lecture/question/{user}/{any}', 'admin.index');
 
     //email
     Route::view('{any}/email', 'admin.index');
     Route::view('{any}/sms', 'admin.index');
-
 
     // user
     Route::view('user', 'admin.index');
