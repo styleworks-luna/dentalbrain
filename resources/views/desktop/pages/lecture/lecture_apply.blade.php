@@ -71,7 +71,9 @@
                     </section>
 
                     <section class="applicant-information">
-                        <h3>신청자 정보 입력 <span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span></h3>
+                        <div class="applicant-title">
+                            <h3>신청자 정보 입력</h3><span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span>
+                        </div>
                         <table>
                             <tr>
                                 <th>이름</th>
@@ -279,31 +281,35 @@
                             <label for="agree-all">전체동의</label>
                         </div>
                         <div class="agreement-wrap">
-                            <ul>
-                                <li>
-                                    <div class="checkbox-wrap">
-                                        <input type="checkbox" id="offer-consent" name="offer-consent"
-                                               class="offer-consent"
-                                               data-parsley-required="true"
-                                               data-parsley-errors-container=".offer_error_wrap"
-                                               data-parsley-required-message="동의를 선택해주세요.">
-                                        <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
+                            <ul class="agreement-lists">
+                                <li class="agreement-list">
+                                    <div class="for-overflow">
+                                        <div class="checkbox-wrap">
+                                            <input type="checkbox" id="offer-consent" name="offer-consent"
+                                                   class="offer-consent"
+                                                   data-parsley-required="true"
+                                                   data-parsley-errors-container=".offer_error_wrap"
+                                                   data-parsley-required-message="※ 이용약관을 동의해 주세요.">
+                                            <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
+                                        </div>
+                                        <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
+                                        <a href="" class="trigger-privacy-to-third">내용보기</a>
                                     </div>
-                                    <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
-                                    <a href="" class="trigger-privacy-to-third">내용보기</a>
                                     <div class="offer_error_wrap"></div>
                                 </li>
-                                <li>
-                                    <div class="checkbox-wrap">
-                                        <input type="checkbox" id="refund-consent" name="refund-consent"
-                                               class="refund-consent"
-                                               data-parsley-required="true"
-                                               data-parsley-errors-container=".refund_error_wrap"
-                                               data-parsley-required-message="동의를 선택해주세요.">
-                                        <label for="refund-consent">(필수) 취소/환불약관 동의</label>
+                                <li class="agreement-list">
+                                    <div class="for-overflow">
+                                        <div class="checkbox-wrap">
+                                            <input type="checkbox" id="refund-consent" name="refund-consent"
+                                                   class="refund-consent"
+                                                   data-parsley-required="true"
+                                                   data-parsley-errors-container=".refund_error_wrap"
+                                                   data-parsley-required-message="※ 개인정보 수집 및 이용 동의해 주세요.">
+                                            <label for="refund-consent">(필수) 취소/환불약관 동의</label>
+                                        </div>
+                                        <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
+                                        <a href="" class="trigger-refund">내용보기</a>
                                     </div>
-                                    <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
-                                    <a href="" class="trigger-refund">내용보기</a>
                                     <div class="refund_error_wrap"></div>
                                 </li>
                             </ul>

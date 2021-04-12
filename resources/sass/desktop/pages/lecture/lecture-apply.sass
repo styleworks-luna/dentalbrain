@@ -138,9 +138,18 @@ h3
 .applicant-information
     +padding(top 62px)
 
-    .warning
-        font-size: 14px
-        color: $page-color
+    .applicant-title
+        overflow: hidden
+
+        h3
+            float: left
+
+        .warning
+            +padding(top 5px left 12px)
+            display: block
+            float: left
+            font-size: 14px
+            color: $page-color
 
     table
         +margin(top 19px)
@@ -417,13 +426,12 @@ h3
         +padding(26px 40px 26px 40px)
         +border(2px solid $border-color-base, bottom)
 
-
-        li:last-child
-            +margin(top 40px)
-
-        li
+        .agreement-list
             overflow: hidden
             line-height: 14px
+
+            &:last-child
+                +margin(top 40px)
 
         .checkbox-wrap
             float: left
@@ -441,6 +449,9 @@ h3
             font-size: 13px
             color: $gray-700
             text-decoration: underline
+
+        .for-overflow
+            overflow: hidden
 
 
 .lecture-result
@@ -490,3 +501,8 @@ h3
 
         &:first-child
             +margin(right 360px)
+
+.offer_error_wrap,
+.refund_error_wrap
+    li
+        font-size: 12px

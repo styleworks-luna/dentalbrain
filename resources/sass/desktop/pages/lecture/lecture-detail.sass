@@ -371,18 +371,21 @@
                         color: $gray-700
 
                     .comment-text
-                        +padding(top 20px)
+                        +padding(top 19px)
                         display: block
                         font-size: 14px
                         line-height: 1.4
                         white-space: pre-wrap
 
                     .btn-comment-write
-                        +padding(top 20px)
+                        +padding(top 19px)
                         display: block
                         position: relative
                         font-size: 14px
                         color: $gray-700
+
+                        &:hover
+                            text-decoration: underline
 
                     .btn-comment-write::after
                         +size(13px, 7px)
