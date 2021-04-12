@@ -23,41 +23,52 @@
                 var cardCompany = $('.ui-selectmenu-text').text();
                 var paymentmethod = $('.payment-method:checked').val();
 
+                const amount = {{ $program->repeated() ? $program->ticket->repeat_price : $program->ticket->price }};
+                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                const orderName = '{{$program->title . ', ' . $program->ticket->name}}';
+                const customerName = '{{ auth()->user()->name }}';
+                const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+                const customerEmail = '{{ auth()->user()->email }}';
+                const customerMobilePhone = '{{ auth()->user()->phone }}';
+
                 e.preventDefault();
 
                 if (paymentmethod === '가상계좌') {
                     paymentObj = {
-                        @if ($program->repeated())
-                        amount: {{ $program->ticket->repeat_price }},
-                        @else
-                        amount: {{ $program->ticket->price }},
-                        @endif
-                        orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
-                        orderName: '{{$program->title . ', ' . $program->ticket->name}}',
-                        customerName: '{{ auth()->user()->name }}',
-                        successUrl: '{{ route('lectures.payment.success',$program->id) }}',
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
                         failUrl: window.location.href,
-                        customerEmail: '{{ auth()->user()->email }}',
-                        customerMobilePhone: '{{ auth()->user()->phone }}',
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
                     };
                 } else if (paymentmethod === '카드') {
                     var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
                     paymentObj = {
-                        @if ($program->repeated())
-                        amount: {{ $program->ticket->repeat_price }},
-                        @else
-                        amount: {{ $program->ticket->price }},
-                        @endif
-                        orderId: '{{ \Illuminate\Support\Str::random(3) . time() }}',
-                        orderName: '{{$program->title . ', ' . $program->ticket->name}}',
-                        customerName: '{{ auth()->user()->name }}',
-                        successUrl: '{{ route('lectures.payment.success',$program->id) }}',
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
                         failUrl: window.location.href,
-                        customerEmail: '{{ auth()->user()->email }}',
-                        customerMobilePhone: '{{ auth()->user()->phone }}',
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
                         maxCardInstallmentPlan: maxCardInstallmentPlan,
                         cardCompany: cardCompany,
+                    };
+                } else if (paymentmethod === '계좌이체') {
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: window.location.href,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
                     };
                 }
 
@@ -290,6 +301,11 @@
                                         <option value="다이너스">다이너스</option>
                                         <option value="디스커버">디스커버</option>
                                     </select>
+                                </div>
+                                <div class="radio-wrap">
+                                    <input type="radio" id="transfer" name="payment-method"
+                                           class="payment-method" value="계좌이체">
+                                    <label for="transfer">계좌이체</label>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"

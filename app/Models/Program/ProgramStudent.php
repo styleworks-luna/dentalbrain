@@ -60,7 +60,7 @@ class ProgramStudent extends Model
     {
         $programStudent = ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('ticket_id', '=', $program->ticket->id)->first();
-        if ($response->isCard()) {
+        if ($response->isCard() || $response->isTransfer()) {
             $programStudent->update([
                 'payment_id' => $payment->id,
                 'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
@@ -120,6 +120,19 @@ class ProgramStudent extends Model
         if ($this->attributes['pay_status'] != self::$PAY_PAID) {
             return false;
         }
+
+        /*
+        * if ($program->is_online) {
+        *  # 온라인 강의
+        *      1. 7일 내
+        *      2. 강의 미 시청시. ( is_watched == 0 )
+        * } else {
+        *  # 오프라인 강의
+        *      1. 2일 > 남은 날짜
+         *     2. 남은 날짜 > 1일
+        * }
+        */
+
         if ($this->ticket->program->is_online) {
             if (
                 strtotime($this->attributes['applied_at']) > now()->subDays(7)->unix()
