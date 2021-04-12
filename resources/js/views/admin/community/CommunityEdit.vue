@@ -46,6 +46,13 @@
                 </template>
             </single-group>
 
+            <!-- 상세 정보 입력 -->
+            <single-group name="상세 정보 입력" :isRequired="true" :size="12">
+                <template v-slot:content>
+                    <editor :content="content" @setEditor="handleSetEditor"></editor>
+                </template>
+            </single-group>
+
         </template>
 
         <template v-slot:footer>

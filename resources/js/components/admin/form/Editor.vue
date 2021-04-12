@@ -76,6 +76,7 @@ export default {
                 imageUploadParam: 'image',
                 imageUploadURL: '/api/admin/lecture/upload',
                 fileUploadURL: '/api/admin/lecture/upload',
+                fileUploadParam: 'file',
                 toolbarButtons: [
                     'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
                     '|',
@@ -83,7 +84,7 @@ export default {
                     '|',
                     'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote',
                     '-',
-                    'insertLink', 'insertImage', 'insertTable',
+                    'insertLink','insertFile', 'insertImage', 'insertVideo','insertTable',
                     '|',
                     'emoticons', 'fontAwesome', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting',
                     '|',
