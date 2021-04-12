@@ -74,8 +74,8 @@ Route::get('introduce', function () {
     return view(viewPrefix() . 'pages.introduce.about_us');
 });
 
-// 커뮤니티 ( 추후 추가 예정 )
-//Route::get('community', 'ArticleController@index')->name('community');
+// 커뮤니티
+Route::get('community', 'ArticleController@index')->name('community');
 
 //강사 소개
 Route::get('instructor', function () {
