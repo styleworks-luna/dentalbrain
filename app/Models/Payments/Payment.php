@@ -39,6 +39,7 @@ class Payment extends Model
      */
     private static function getPaymentData(TossPaymentsResponse $response): array
     {
+        logger('???', [$response->getArray()]);
         return array_merge(self::getPaymentBasicData($response), self::getPaymentsAdditionalData($response));
     }
 
