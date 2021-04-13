@@ -134,7 +134,7 @@
 
             <single-group name="상세정보입력" :size="12">
                 <template v-slot:content>
-                    <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 

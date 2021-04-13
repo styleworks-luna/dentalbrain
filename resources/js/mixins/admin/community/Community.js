@@ -28,7 +28,7 @@ export const CommunityMixin = {
             date: '',
             content: '',
             writer: '',
-            is_open: '',
+            is_open: 1,
         }
     },
     mounted() {

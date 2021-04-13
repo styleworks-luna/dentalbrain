@@ -428,21 +428,23 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
 
-        Route::group(['prefix' => 'article', 'as' => 'article'], function () {
+        Route::group(['prefix' => 'article', 'as' => 'article.'], function () {
             // 커뮤니티 (기사) index 페이지 데이터
             Route::get('/', 'Admin\ArticleController@index')->name('index');
             // 커뮤니티 (기사) 생성 함수
             Route::post('/', 'Admin\ArticleController@create')->name('create');
             // 커뮤니티 카테고리
             Route::get('/categories', 'Admin\ArticleController@categories')->name('categories');
+            // 커뮤니티 이미지 파일 업로드
+            Route::post('upload/image', 'Admin\FileController@uploadArticleImage')->name('upload.image');
+            // 커뮤니티 파일 업로드
+            Route::post('upload/file', 'Admin\FileController@uploadArticleFile')->name('upload.file');
             // 커뮤니티 (기사) 수정하기
             Route::get('{article}', 'Admin\ArticleController@edit')->name('edit');
             // 커뮤니티 (기사) 수정 반영
             Route::post('{article}', 'Admin\ArticleController@update')->name('update');
             // 커뮤니티 (기사) 삭제
             Route::delete('{article}', 'Admin\ArticleController@destroy')->name('destroy');
-            // 커뮤니티 이미지 파일 업로드
-            Route::post('upload', 'Admin\FileController@uploadArticleImage')->name('upload');
         });
     });
 });

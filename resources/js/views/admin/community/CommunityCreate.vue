@@ -51,7 +51,10 @@
             <!-- 상세 정보 입력 -->
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
-                    <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content"
+                            :uploadImageUrl="`/api/admin/article/upload/image`"
+                            :uploadFileUrl="`/api/admin/article/upload/file`"
+                            @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -94,7 +97,10 @@ export default {
         create() {
             let data = {
                 title: this.title,
-
+                category_id: this.category_id,
+                content: this.content,
+                writer: this.writer,
+                is_open: this.is_open,
                 date: this.Helper.dateFormatYDM(this.date),
             };
 
