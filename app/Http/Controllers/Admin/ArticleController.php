@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Article;
+use App\Models\Manage\ArticleCategory;
 use App\Services\File\ArticleFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,6 +18,13 @@ class ArticleController extends Controller
 
         return response()->json([
             'articles' => $articles,
+        ]);
+    }
+
+    public function categories()
+    {
+        return response()->json([
+            ArticleCategory::all()
         ]);
     }
 

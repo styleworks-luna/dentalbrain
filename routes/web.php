@@ -478,6 +478,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('/', 'Admin\ArticleController@index')->name('index');
             // 커뮤니티 (기사) 생성 함수
             Route::post('/', 'Admin\ArticleController@create')->name('create');
+            // 커뮤니티 카테고리
+            Route::get('/categories','Admin\ArticleController@categories')->name('categories');
             // 커뮤니티 (기사) 수정하기
             Route::get('{article}', 'Admin\ArticleController@edit')->name('edit');
             // 커뮤니티 (기사) 수정 반영
