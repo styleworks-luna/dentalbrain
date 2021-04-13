@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ArticleLike extends Model
 {
     protected $table = 'article_likes';
-
+    protected $guarded = [];
     public function user()
     {
         $this->belongsTo(User::class, 'user_id', 'id');

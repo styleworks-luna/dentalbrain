@@ -4,6 +4,7 @@ namespace App\Models\Manage;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Article extends Model
 {
@@ -16,7 +17,7 @@ class Article extends Model
     ];
 
     protected $appends = [
-        'likes_count', 'category_name'
+        'likes_count', 'category_name', 'liked'
     ];
 
 
@@ -40,6 +41,15 @@ class Article extends Model
             return $this->category->name;
         } else {
             return null;
+        }
+    }
+
+    public function getLikedAttribute()
+    {
+        if ($this->likes() && Auth::check()) {
+            return $this->likes()->where('user_id', '=', Auth::id())->exists();
+        } else {
+            return false;
         }
     }
 

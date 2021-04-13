@@ -1,26 +1,38 @@
 <template>
     <div class="community-menu">
         <ul>
-            <li :class="{'active-menu': isActive == 1}" @click="handleSetMenu(0,0)">전체</li>
-            <li :class="{'active-menu': isActive == 2}" @click="handleSetMenu(1,1)">컨설턴트컬럼</li>
-            <li :class="{'active-menu': isActive == 3}" @click="handleSetMenu(2,2)">스페셜인터뷰</li>
-            <li :class="{'active-menu': isActive == 4}" @click="handleSetMenu(3,3)">신제품리뷰</li>
+            <li :class="{'active-menu': isActive == ''}" @click="handleSetMenu('')">전체</li>
+            <li :class="{'active-menu': isActive == category.id}" v-for="category in categoryOption"
+                @click="handleSetMenu(category.id)">{{ category.name }}
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
+//api
+import Community from '@/api/community/Community.js'
+
 export default {
     data() {
         return {
-            isActive: 1,
+            isActive: '',
+            categoryOption: [],
         }
     },
+    mounted() {
+        this.getCategory();
+    },
     methods: {
-        handleSetMenu(value, active) {
-            this.isActive = active
-            this.$emit('setMenu', value);
+        handleSetMenu(active) {
+            this.isActive = active;
+            this.$emit('setMenu', active);
         },
+        getCategory() {
+            Community.getCategory().then(res => {
+                this.categoryOption = res.data;
+            });
+        }
     }
 }
 </script>

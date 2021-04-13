@@ -58,6 +58,7 @@ class ArticleController extends Controller
     public function view(Article $article)
     {
         $article->views = $article->views + 1;
+        $article->save();
         return response()->json();
     }
 

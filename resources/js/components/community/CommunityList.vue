@@ -12,24 +12,30 @@
             <li class="community-list-content" v-for="(article,index) in articles" :key="article.id">
                 <div class="community-summary">
                     <span class="sort">{{ article.category_name }}</span>
-                    <a href="" class="title" @click.prevent="showDetail(index)">{{ article.title }}</a>
+                    <a href="" class="title" @click.prevent="showDetail(article.id,index)">{{ article.title }}</a>
                     <span class="writer">{{ article.writer }}</span>
                     <span class="date">{{ Helper.dateFormatYDM(article.date) }}</span>
-                    <div class="like"><span class="icon-like"></span><span>15800</span></div>
+                    <span class="like"><p class="like-icon">{{ article.likes_count }}</p></span>
                     <span class="view">{{ article.views }}</span>
-                    <span class="btn-arrow-down"></span>
+                    <span :id="`arrow${index}`" class="btn-arrow-down"
+                          @click.prevent="showDetail(article.id,index)"></span>
                 </div>
-                <div :id="`detail${index}`" class="community-detail">
+                <div :id="`detail${index}`" class="community-detail hidden">
                     <div class="community-detail-title">
-                        <h2>제목</h2>
-                        <p>{{ article.title }}</p>
+                        <p class="head">제목</p>
+                        <p class="content">{{ article.title }}</p>
                     </div>
                     <div class="community-detail-content">
-                        <h2>내용</h2>
-                        <p v-html="article.content"></p>
+                        <p class="head">내용</p>
+                        <div class="fr-element fr-view">
+                            <p class="content" v-html="article.content"></p>
+                        </div>
                     </div>
                     <div class="btn-wrap">
-                        <button type="button" class="btn-like">15800</button>
+                        <button type="button" :id="`like${index}`" class="btn-like"
+                                :class="article.liked ? 'active' : ''" @click.prevent="likeIt(article.id,index)">
+                            {{ article.likes_count }}
+                        </button>
                     </div>
                 </div>
             </li>
@@ -38,10 +44,13 @@
 </template>
 
 <script>
+// api
+import Community from '@/api/community/Community.js'
+
 export default {
     name: 'CommunityList',
     props: {
-        'list': [Object,Array]
+        'list': [Object, Array]
     },
     data() {
         return {
@@ -54,13 +63,32 @@ export default {
         }
     },
     methods: {
-        showDetail(id) {
-            console.log(id);
-            var show = document.getElementById(`detail${id}`);
-            show.style.display = 'block';
-            console.log(this.list);
+        showDetail(id, index) {
+            var show = document.getElementById(`detail${index}`);
+            var arrow = document.getElementById(`arrow${index}`);
+            show.classList.toggle("hidden");
+            arrow.classList.toggle('up');
+
+            if (!show.classList.contains('hidden')) {
+                Community.getView(id)
+            }
+        },
+        likeIt(id, index) {
+            var likeElement = document.getElementById(`like${index}`);
+            likeElement.classList.toggle("active");
+
+            var like = '';
+
+            if (likeElement.classList.contains("active")) {
+                like = 'true';
+            } else {
+                like = 'false';
+            }
+
+            Community.postLike(id, {'like': like}).then(res => {
+                location.reload();
+            })
         }
     }
 }
-
 </script>
