@@ -96,7 +96,7 @@ class Payment extends Model
         } elseif ($response->isTransfer()) {
             return [
                 // 가상계좌 정보
-                'trans_accountNumber' => $response['transfer']['accountNumber'],
+                'trans_accountNumber' => isset($response['transfer']['accountNumber']) ? $response['transfer']['accountNumber'] : '123456789012',
                 'trans_bank' => $response['transfer']['bank'],
                 'trans_settlementStatus' => $response['transfer']['settlementStatus'],
             ];
