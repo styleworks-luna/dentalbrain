@@ -4,14 +4,18 @@
             <community-navigation @setMenu="handleSetMenu"></community-navigation>
             <community-order @setOrder="handleSetOrder"></community-order>
         </div>
-        <community-list></community-list>
+        <community-list :list="list"></community-list>
     </section>
 </template>
 
 <script>
+// component
 import CommunityNavigation from '@/components/community/CommunityNavigation.vue';
 import CommunityOrder from '@/components/community/CommunityOrder.vue';
 import CommunityList from '@/components/community/CommunityList.vue';
+
+// api
+import Community from '@/api/admin/community/Community.js'
 
 export default {
     name: 'Community',
@@ -22,25 +26,23 @@ export default {
     },
     data() {
         return {
-            category_id: 1,
+            category_id: 0,
             list: {},
             order_by: 'newest',
             page: 1
         }
     },
     mounted() {
-        // this.getData();
+        this.getData();
     },
     methods: {
         handleSetMenu(category_id) {
             this.category_id = category_id;
-            console.log(this.category_id);
-            // this.getData()
+            this.getData()
         },
         handleSetOrder(order_by) {
             this.order_by = order_by;
-            console.log(this.order_by);
-            // this.getData()
+            this.getData()
         },
         getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
@@ -54,8 +56,8 @@ export default {
                 page: page
             };
 
-            Lecture.getData(params).then(res => {
-                this.list = res.data;
+            Community.getData(params).then(res => {
+                this.list = res.data.articles.data;
             }).catch(err => {
                 this.list = [];
             });

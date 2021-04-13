@@ -1,10 +1,10 @@
 <template>
     <div class="community-menu">
         <ul>
-            <li :class="{'active-menu': isActive == 1}" @click="handleSetMenu(1,1)">전체</li>
-            <li :class="{'active-menu': isActive == 2}" @click="handleSetMenu(2,2)">컨설턴트컬럼</li>
-            <li :class="{'active-menu': isActive == 3}" @click="handleSetMenu(3,3)">스페셜인터뷰</li>
-            <li :class="{'active-menu': isActive == 4}" @click="handleSetMenu(4,4)">신제품리뷰</li>
+            <li :class="{'active-menu': isActive == 1}" @click="handleSetMenu(0,0)">전체</li>
+            <li :class="{'active-menu': isActive == 2}" @click="handleSetMenu(1,1)">컨설턴트컬럼</li>
+            <li :class="{'active-menu': isActive == 3}" @click="handleSetMenu(2,2)">스페셜인터뷰</li>
+            <li :class="{'active-menu': isActive == 4}" @click="handleSetMenu(3,3)">신제품리뷰</li>
         </ul>
     </div>
 </template>
@@ -15,9 +15,6 @@ export default {
         return {
             isActive: 1,
         }
-    },
-    created() {
-        this.setActive();
     },
     methods: {
         handleSetMenu(value, active) {
