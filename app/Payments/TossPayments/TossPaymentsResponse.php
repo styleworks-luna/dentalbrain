@@ -47,6 +47,11 @@ class TossPaymentsResponse implements \ArrayAccess
         return $this->data['method'] == '가상계좌';
     }
 
+    public function isTransfer(): bool
+    {
+        return $this->data['method'] == '계좌이체';
+    }
+
     /*
      * ===================== FOR ARRAY ACCESS =======================
      */
