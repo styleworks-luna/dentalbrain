@@ -181,7 +181,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
-    Route::view('/{any?}','admin.index')->where('any', '.*');;
+    Route::view('/{any?}', 'admin.index')->where('any', '.*');;
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -238,6 +238,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
     });
 
+    Route::group(['prefix' => 'articles', 'as' => 'articles'], function () {
+        Route::get('/', 'ArticleController@articles')->name('list');
+        Route::get('categories', 'ArticleController@categories')->name('categories');
+    });
 
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
