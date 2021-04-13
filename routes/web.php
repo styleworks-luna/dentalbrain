@@ -319,7 +319,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', 'Admin\Program\OnlineProgramController@getCategories')->name('categories');
             // 강의 상세 내용 이미지 업로드
-            Route::post('upload', 'Admin\FileController@uploadContent')->name('upload');
+            Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
@@ -479,13 +479,15 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 커뮤니티 (기사) 생성 함수
             Route::post('/', 'Admin\ArticleController@create')->name('create');
             // 커뮤니티 카테고리
-            Route::get('/categories','Admin\ArticleController@categories')->name('categories');
+            Route::get('/categories', 'Admin\ArticleController@categories')->name('categories');
             // 커뮤니티 (기사) 수정하기
             Route::get('{article}', 'Admin\ArticleController@edit')->name('edit');
             // 커뮤니티 (기사) 수정 반영
             Route::post('{article}', 'Admin\ArticleController@update')->name('update');
             // 커뮤니티 (기사) 삭제
             Route::delete('{article}', 'Admin\ArticleController@destroy')->name('destroy');
+            // 커뮤니티 이미지 파일 업로드
+            Route::post('upload', 'Admin\FileController@uploadArticleImage')->name('upload');
         });
     });
 });
