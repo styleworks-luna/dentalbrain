@@ -75,7 +75,10 @@ Route::get('introduce', function () {
 });
 
 // 커뮤니티
-Route::get('community', 'ArticleController@index')->name('community');
+Route::group(['prefix' => 'community', 'as' => 'community.'], function () {
+    Route::get('/', 'ArticleController@index')->name('index');
+});
+
 
 //강사 소개
 Route::get('instructor', function () {
