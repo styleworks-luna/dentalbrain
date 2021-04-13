@@ -241,6 +241,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::group(['prefix' => 'articles', 'as' => 'articles'], function () {
         Route::get('/', 'ArticleController@articles')->name('list');
         Route::get('categories', 'ArticleController@categories')->name('categories');
+        Route::get('{article}', 'ArticleController@view')->name('view');
+        Route::post('{article}', 'ArticleController@like')->name('like');
     });
 
     Route::get('map/geocode', 'MapController@naver_map');
