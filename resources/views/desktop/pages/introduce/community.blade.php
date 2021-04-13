@@ -1,5 +1,9 @@
 @extends('desktop.layouts.frames.basic_frame')
 
+@section('vue')
+    <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
+@endsection
+
 @section('script')
 @endsection
 
@@ -8,7 +12,7 @@
 @endsection
 
 @section('content')
-    <section class="content">
+    <section class="community-wrap">
         <div class="title-wrap">
             <div class="container">
                 <div class="title">
@@ -17,7 +21,7 @@
             </div>
         </div>
         <div class="container">
-
+            <community></community>
         </div>
     </section>
 @endsection
