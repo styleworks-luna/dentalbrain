@@ -181,56 +181,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
-    Route::view('/', 'admin.index');
-    Route::view('{any}', 'admin.index');
-
-    // lecture
-    Route::view('lecture/{any}', 'admin.index');
-
-    Route::view('lecture/online/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/duplicate/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}/additional', 'admin.index');
-
-    Route::view('lecture/offline/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/duplicate/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/{any}/additional', 'admin.index');
-
-    Route::view('lecture/question/{any}', 'admin.index');
-    Route::view('lecture/question/{user}/{any}', 'admin.index');
-
-    //email
-    Route::view('{any}/email', 'admin.index');
-    Route::view('{any}/sms', 'admin.index');
-
-    // user
-    Route::view('user', 'admin.index');
-    Route::view('user/{any}', 'admin.index');
-    Route::view('user/{user}/{any}', 'admin.index');
-
-    // banner
-    Route::view('banner', 'admin.index');
-    Route::view('banner/{any}', 'admin.index');
-    Route::view('banner/{user}/{any}', 'admin.index');
-
-    // community
-    Route::view('community', 'admin.index');
-    Route::view('community/{any}', 'admin.index');
-    Route::view('community/{user}/{any}', 'admin.index');
-
-    // customer
-    Route::view('customer/{any}', 'admin.index');
-    Route::view('customer/faq/{any}', 'admin.index');
-    Route::view('customer/faq/{user}/{any}', 'admin.index');
-    Route::view('customer/notice/{any}', 'admin.index');
-    Route::view('customer/notice/{user}/{any}', 'admin.index');
-    Route::view('customer/inquire/{any}', 'admin.index');
-    Route::view('customer/inquire/{user}/{any}', 'admin.index');
-
-    // payment
-    Route::view('payment/{any}', 'admin.index');
-
+    Route::view('/{any?}','admin.index')->where('any', '.*');;
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
