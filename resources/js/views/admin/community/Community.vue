@@ -102,6 +102,8 @@ export default {
 
             Community.getData(params).then(res => {
                 this.articles = res.data.articles;
+                console.log(res);
+
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/community/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
