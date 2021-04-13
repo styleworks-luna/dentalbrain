@@ -3,64 +3,193 @@
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/_pagination.sass'
 
-.title-wrap
-    +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
-    min-width: 1280px
-    height: 300px
+.community-wrap
+    .title-wrap
+        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
+        min-width: 1280px
+        height: 300px
 
-    h1
-        +size(240px)
-        +margin(0 auto)
-        +padding(125px 0 0 63px)
-        font-weight: bold
-        font-size: 48px
+        h1
+            +size(240px)
+            +margin(0 auto)
+            +padding(125px 0 0 63px)
+            font-weight: bold
+            font-size: 48px
 
-.community-description
+.community
     +margin(top 80px)
 
-    h2
-        font-size: 24px
+    .community-navigation
+        overflow: hidden
 
-    .community-list
-        +margin(top 20px bottom 50px)
-        +border(2px solid $gray-900, top)
+        .community-menu
+            float: left
 
-        li
-            +padding(20px 0)
-            +border(1px solid $border-color-base, bottom)
-            overflow: hidden
+            ul
+                overflow: hidden
 
-            .image-wrap
+            li
+                +padding(right 16px)
                 float: left
-
-                img
-                    +size(160px, 120px)
-                    +border(1px solid rgba(0, 0, 0, 0.1))
-                    +border-radius(8px)
-
-            .community-information
-                +size(900px)
-                +margin(left 38px)
-                +padding(15px 0)
-                float: left
-
-                h3
-                    +ellipse(900,2)
-                    min-height: 58px
-                    font-size: 20px
-                    line-height: 1.45
-
-                .date
-                    +padding(top 20px)
-                    font-size: 16px
-                    color: $gray-700
-
-            .arrow-right
-                +size(12px, 22px)
-                +margin(left 128px top 52px)
-                +background('/images/desktop/global/icon-arrow-right.png',no-repeat,center center)
-                float: left
+                font-size: 24px
                 cursor: pointer
 
-            .none
-                font-size: 20px
+                &:first-child::before
+                    +padding(right 0)
+                    content: ''
+
+                &:last-child
+                    +padding(0)
+
+                &::before
+                    +padding(right 16px)
+                    display: block
+                    float: left
+                    color: $gray-200
+                    content: '|'
+
+            .active-menu
+                font-weight: bold
+
+                &::before
+                    font-weight: normal
+
+        .community-order
+            float: right
+
+            ul
+                overflow: hidden
+
+            li
+                float: left
+                font-size: 14px
+                +padding(right 10px)
+
+                &:first-child::before
+                    +padding(right 0)
+                    content: ''
+
+                &:last-child
+                    +padding(0)
+
+                &::before
+                    +padding(right 10px)
+                    display: block
+                    float: left
+                    color: $border-color-base
+                    content: '|'
+
+            .active
+                font-weight: bold
+                color: $page-color
+
+    .community-list-wrap
+        +margin(top 18px)
+
+        .community-lists
+            +margin(bottom 50px)
+            +border(2px solid $gray-900, top)
+
+            li
+                +box-sizing(border-box)
+                overflow: hidden
+
+            .sort
+                +size(100px)
+                +padding(0 20px)
+
+            .title
+                +size(634px)
+                +padding(left 20px right 8px)
+
+            .writer
+                +size(100px)
+                +padding(right 20px)
+
+            .date
+                +size(84px)
+                +padding(0 20px)
+
+            .like
+                +size(60px)
+                +padding(0 20px)
+
+            .view
+                +size(60px)
+                +padding(left 20px)
+
+            .btn-arrow-down
+                +size(54px, 70px)
+                +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
+                display: block
+                cursor: pointer
+                content: ''
+
+        .community-list-title
+            +border(1px solid $border-color-base, bottom)
+            +background(null, null, null, $background-color-menu)
+            height: 50px
+
+            span
+                display: block
+                float: left
+                text-align: center
+                font-size: 16px
+                line-height: 50px
+
+        .community-summary
+            height: 70px
+            +border(1px solid $border-color-base, bottom)
+
+            span, a, .like
+                display: block
+                float: left
+                text-align: center
+                font-size: 16px
+                line-height: 70px
+
+            a
+                text-align: left
+
+            .like
+                overflow: hidden
+
+                .icon-like
+                    +size(12px,70px)
+                    +padding(right 3px)
+                    +background('/images/desktop/community/icon_like_purple.png',no-repeat, center center)
+
+        .community-detail
+            +padding(27px 40px)
+            +border(1px solid $border-color-base, bottom)
+            +background(null, null, null, $background-color-menu)
+
+            h2
+                font-weight: bold
+                font-size: 14px
+                color: $gray-700
+
+            p
+                +padding(top 16px)
+                font-size: 16px
+                line-height: 1.99
+
+            .community-detail-content
+                +margin(top 31px)
+
+            .btn-wrap
+                +margin(top 40px)
+                text-align: right
+
+                .btn-like
+                    +size(92px, 38px)
+                    +border(1px solid $border-color-light)
+                    +padding(left 20px)
+                    +border-radius(25px)
+                    +background('/images/desktop/community/icon_like_white.png', no-repeat, 15px center, $white)
+                    +box-sizing(border-box)
+                    font-size: 16px
+                    cursor: pointer
+
+    .hidden
+        display: none

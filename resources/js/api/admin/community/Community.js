@@ -34,4 +34,10 @@ export default {
             method: 'delete'
         });
     },
+    getCategory() {
+        return Send({
+            url: `/api/admin/article/categories`,
+            method: 'get',
+        });
+    }
 }

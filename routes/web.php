@@ -74,8 +74,11 @@ Route::get('introduce', function () {
     return view(viewPrefix() . 'pages.introduce.about_us');
 });
 
-// 커뮤니티 ( 추후 추가 예정 )
-//Route::get('community', 'ArticleController@index')->name('community');
+// 커뮤니티
+Route::group(['prefix' => 'community', 'as' => 'community.'], function () {
+    Route::get('/', 'ArticleController@index')->name('index');
+});
+
 
 //강사 소개
 Route::get('instructor', function () {
@@ -178,56 +181,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
 // 관리자
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'admin']], function () {
-    Route::view('/', 'admin.index');
-    Route::view('{any}', 'admin.index');
-
-    // lecture
-    Route::view('lecture/{any}', 'admin.index');
-
-    Route::view('lecture/online/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/duplicate/{any}', 'admin.index');
-    Route::view('lecture/online/{user}/{any}/additional', 'admin.index');
-
-    Route::view('lecture/offline/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/duplicate/{any}', 'admin.index');
-    Route::view('lecture/offline/{user}/{any}/additional', 'admin.index');
-
-    Route::view('lecture/question/{any}', 'admin.index');
-    Route::view('lecture/question/{user}/{any}', 'admin.index');
-
-    //email
-    Route::view('{any}/email', 'admin.index');
-    Route::view('{any}/sms', 'admin.index');
-
-    // user
-    Route::view('user', 'admin.index');
-    Route::view('user/{any}', 'admin.index');
-    Route::view('user/{user}/{any}', 'admin.index');
-
-    // banner
-    Route::view('banner', 'admin.index');
-    Route::view('banner/{any}', 'admin.index');
-    Route::view('banner/{user}/{any}', 'admin.index');
-
-    // community
-    Route::view('community', 'admin.index');
-    Route::view('community/{any}', 'admin.index');
-    Route::view('community/{user}/{any}', 'admin.index');
-
-    // customer
-    Route::view('customer/{any}', 'admin.index');
-    Route::view('customer/faq/{any}', 'admin.index');
-    Route::view('customer/faq/{user}/{any}', 'admin.index');
-    Route::view('customer/notice/{any}', 'admin.index');
-    Route::view('customer/notice/{user}/{any}', 'admin.index');
-    Route::view('customer/inquire/{any}', 'admin.index');
-    Route::view('customer/inquire/{user}/{any}', 'admin.index');
-
-    // payment
-    Route::view('payment/{any}', 'admin.index');
-
+    Route::view('/{any?}', 'admin.index')->where('any', '.*');;
 });
 
 // TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
@@ -284,6 +238,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
     });
 
+    Route::group(['prefix' => 'articles', 'as' => 'articles'], function () {
+        Route::get('/', 'ArticleController@articles')->name('list');
+        Route::get('categories', 'ArticleController@categories')->name('categories');
+        Route::get('{article}', 'ArticleController@view')->name('view');
+        Route::post('{article}', 'ArticleController@like')->name('like');
+    });
 
     Route::get('map/geocode', 'MapController@naver_map');
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
@@ -316,7 +276,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', 'Admin\Program\OnlineProgramController@getCategories')->name('categories');
             // 강의 상세 내용 이미지 업로드
-            Route::post('upload', 'Admin\FileController@uploadContent')->name('upload');
+            Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
@@ -470,11 +430,17 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
         });
 
-        Route::group(['prefix' => 'article', 'as' => 'article'], function () {
+        Route::group(['prefix' => 'article', 'as' => 'article.'], function () {
             // 커뮤니티 (기사) index 페이지 데이터
             Route::get('/', 'Admin\ArticleController@index')->name('index');
             // 커뮤니티 (기사) 생성 함수
             Route::post('/', 'Admin\ArticleController@create')->name('create');
+            // 커뮤니티 카테고리
+            Route::get('/categories', 'Admin\ArticleController@categories')->name('categories');
+            // 커뮤니티 이미지 파일 업로드
+            Route::post('upload/image', 'Admin\FileController@uploadArticleImage')->name('upload.image');
+            // 커뮤니티 파일 업로드
+            Route::post('upload/file', 'Admin\FileController@uploadArticleFile')->name('upload.file');
             // 커뮤니티 (기사) 수정하기
             Route::get('{article}', 'Admin\ArticleController@edit')->name('edit');
             // 커뮤니티 (기사) 수정 반영
