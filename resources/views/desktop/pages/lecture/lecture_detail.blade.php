@@ -8,7 +8,6 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-detail.css') }}">
-
 @endsection
 
 @section('content')

@@ -5,6 +5,7 @@
             <!-- 제목 -->
             <single-group name="제목"
                           :isRow="true"
+                          :isRequired="true"
                           :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control" placeholder="제목을 입력해주세요."
@@ -12,27 +13,28 @@
                 </template>
             </single-group>
 
-            <!-- URL -->
-            <single-group name="연결주소"
-                          :isRow="true"
+            <!-- 분류 -->
+            <single-group name="분류 선택"
+                          class="form-type"
                           :isRequired="true"
+                          :isRow="true"
                           :size="9">
                 <template v-slot:content>
-                    <input type="text" class="form-control" placeholder="URL을 입력해주세요."
-                           v-model="link">
-                    <p class="d-block mt-2">배너 클릭 시 연결 될 URL 주소를 입력해 주세요.</p>
+                    <select-box class="form-control mr-3"
+                                :text="'분류'"
+                                :value="category_id"
+                                :options="categoryOptions"
+                                @setValue="handleSetCategoryId"></select-box>
                 </template>
             </single-group>
 
-            <!-- 이미지 -->
-            <single-group name="이미지"
+            <!-- 작성자 -->
+            <single-group name="작성자"
                           :isRow="true"
-                          :isRequired="true"
                           :size="9">
                 <template v-slot:content>
-                    <image-upload :inputId="'desktop' + thumbnail.id"
-                                  :initFile="thumbnail"
-                                  @setImage="updateThumbnail"></image-upload>
+                    <input type="text" class="form-control" placeholder="작성자을 입력해주세요."
+                           v-model="writer">
                 </template>
             </single-group>
 
@@ -43,6 +45,27 @@
                           :size="9">
                 <template v-slot:content class="overflow-hidden">
                     <date-picker :time="date" @setTime="handleSetTime"></date-picker>
+                </template>
+            </single-group>
+
+            <!-- 상세 정보 입력 -->
+            <single-group name="상세 정보 입력" :isRequired="true" :size="12">
+                <template v-slot:content>
+                    <editor :content="content"
+                            :uploadImageUrl="`/api/admin/article/upload/image`"
+                            :uploadFileUrl="`/api/admin/article/upload/file`"
+                            @setEditor="handleSetEditor"></editor>
+                </template>
+            </single-group>
+
+            <!-- 공개 여부 -->
+            <single-group name="공개여부"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="6">
+                <template v-slot:content>
+                    <button-check :propsCheck="is_open"
+                                  @isChecked="handleSetIsOpen"></button-check>
                 </template>
             </single-group>
 
@@ -87,20 +110,20 @@ export default {
                 const result = res.data.article;
 
                 this.title = result.title;
-                this.link = result.link;
-
-                this.thumbnail = result.thumbnail;
-
-                this.date = this.Helper.dateFormatYDM(result.date);
+                this.category_id = result.category_id;
+                this.writer = result.writer
+                this.content = result.content;
+                this.is_open = result.is_open;
+                this.date = result.date;
             });
         },
         update() {
             let data = {
-                title : this.title,
-                link : this.link,
-
-                thumbnail_id : this.thumbnail.id,
-
+                title: this.title,
+                category_id: this.category_id,
+                content: this.content,
+                writer: this.writer,
+                is_open: this.is_open,
                 date: this.Helper.dateFormatYDM(this.date),
             };
 

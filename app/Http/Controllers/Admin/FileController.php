@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\File;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -70,11 +70,12 @@ class FileController extends Controller
     }
 
     /**
-     * 강의 상세 작성시에 이미지 업로드 컨트롤러
+     *  강의 상세 이미지 업로드
+     *
      * @param Request $request
-     * @return JsonResponse {string link , Model file}
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function uploadContent(Request $request)
+    public function uploadProgramDetailImage(Request $request)
     {
         Validator::make($request->all(), [
             'image' => ['required', 'image']
@@ -82,22 +83,7 @@ class FileController extends Controller
 
         $uploadedFile = $request->file('image');
 
-        $name = $uploadedFile->getClientOriginalName();
-        $extension = $uploadedFile->extension();
-        $size = $uploadedFile->getSize();
-
-        $randomName = Str::random('50') . '.' . $extension;
-
-        $path = Storage::putFileAs('public/program/images', $uploadedFile, $randomName);
-
-        $file = File::create([
-            'path' => $path,
-            'name' => $name,
-            'size' => $size,
-        ]);
-
-        $file->url = '/storage/program/images/' . $randomName;
-        $file->save();
+        $file = $this->uploadToStorage($uploadedFile, 'public/program/images');
 
         return response()->json([
             'link' => $file->url,
@@ -105,5 +91,66 @@ class FileController extends Controller
         ]);
     }
 
+    /**
+     *  공개적인 파일 업로드 처리
+     *
+     * @param UploadedFile $uploadedFile
+     * @param string $path 저장 폴더 (trailing slash X)
+     * @param string|null $url 연결 URL
+     * @return Builder|File
+     */
+    private function uploadToStorage($uploadedFile, string $path, string $url = null)
+    {
+        $name = $uploadedFile->getClientOriginalName();
+        $extension = $uploadedFile->extension();
+        $size = $uploadedFile->getSize();
+
+        $randomName = Str::random('50') . '.' . $extension;
+
+        $path = Storage::putFileAs($path, $uploadedFile, $randomName);
+
+        if ($url == null) {
+            $url = str_replace('public/', '/storage/', $path);
+        }
+
+        return File::query()->create([
+            'path' => $path,
+            'name' => $name,
+            'size' => $size,
+            'url' => $url
+        ]);
+    }
+
+    public function uploadArticleImage(Request $request)
+    {
+        Validator::make($request->all(), [
+            'image' => ['required', 'image']
+        ])->validate();
+
+        $uploadedFile = $request->file('image');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/article/images');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
+
+    public function uploadArticleFile(Request $request)
+    {
+        Validator::make($request->all(), [
+            'file' => ['required', 'file']
+        ])->validate();
+
+        $uploadedFile = $request->file('file');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/article/files');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
 }
 
