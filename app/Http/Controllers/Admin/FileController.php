@@ -83,7 +83,7 @@ class FileController extends Controller
 
         $uploadedFile = $request->file('image');
 
-        $file = $this->uploadContentImage($uploadedFile, 'public/program/images');
+        $file = $this->uploadToStorage($uploadedFile, 'public/program/images');
 
         return response()->json([
             'link' => $file->url,
@@ -99,7 +99,7 @@ class FileController extends Controller
      * @param string|null $url 연결 URL
      * @return Builder|File
      */
-    private function uploadContentImage($uploadedFile, string $path, string $url = null)
+    private function uploadToStorage($uploadedFile, string $path, string $url = null)
     {
         $name = $uploadedFile->getClientOriginalName();
         $extension = $uploadedFile->extension();
@@ -129,7 +129,23 @@ class FileController extends Controller
 
         $uploadedFile = $request->file('image');
 
-        $file = $this->uploadContentImage($uploadedFile, 'public/article/images');
+        $file = $this->uploadToStorage($uploadedFile, 'public/article/images');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
+
+    public function uploadArticleFile(Request $request)
+    {
+        Validator::make($request->all(), [
+            'file' => ['required', 'file']
+        ])->validate();
+
+        $uploadedFile = $request->file('file');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/article/files');
 
         return response()->json([
             'link' => $file->url,
