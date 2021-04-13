@@ -439,33 +439,32 @@ abstract class ProgramTemplate
             $tossPayment = new TossPayments($payment->paymentKey);
 
             switch ($payment->method) {
+                case '계좌이체':
+                    $response = $tossPayment->cancelTransfer($validatedData['reason']);
+                    break;
                 case '카드':
                     $response = $tossPayment->cancelCard($validatedData['reason']);
-                    if ($response === false) {
-                        DB::rollBack();
-                        return false;
-                    }
-                    $payment->updateByToss($response);
-
-                    DB::commit();
-                    return true;
+                    break;
                 case '가상계좌':
                     $response = $tossPayment->cancelVirtualAccount(
                         $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
                     );
-                    if ($response === false) {
-                        DB::rollBack();
-                        return false;
-                    }
-                    $payment->updateByToss($response);
-
-                    DB::commit();
-                    return true;
+                    break;
                 //case '휴대폰':
                 default:
-                    DB::rollBack();
-                    return false;
+                    $response = false;
+                    Log::error('INVALID METHOD', $validatedData);
+                    break;
             }
+
+            if ($response === false) {
+                DB::rollBack();
+                return false;
+            }
+            $payment->updateByToss($response);
+
+            DB::commit();
+            return true;
 
         } catch (Exception $exception) {
             Log::error('CANCEL ERROR', [$exception]);
@@ -498,6 +497,7 @@ abstract class ProgramTemplate
             // 더미 값.
             return ['reason' => '무료 강의 취소'];
         }
+
         $v = Validator::make($request->all(), [
             'reason' => ['required', 'string'],
         ])->sometimes(
@@ -507,10 +507,12 @@ abstract class ProgramTemplate
             function ($input) use ($student) {
                 return $student->payment->method == '가상계좌';
             });
+
         if ($v->fails()) {
             Log::debug('VALIDATE INFO', $v->failed());
             return false;
         }
+
         return $v->validated();
     }
 
@@ -532,18 +534,6 @@ abstract class ProgramTemplate
         }
 
         $student = $base->first();
-
-        /*
-//        if ($program->is_online) {
-//            *  조건
-//            *  # 온라인 강의
-//            *      1. 7일 내
-//            *      2. 강의 미 시청시. ( is_watched == 0)
-//        } else {
-//             *  # 오프라인 강의
-//             *      1. 2일 전, 1일 안됨
-//        }
-        */
 
         if (!$student->cancelAvailable()) {
             return false;

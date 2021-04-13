@@ -79,6 +79,8 @@
                                                 <a href="{{ $payment->receiptUrl }}" target="_blank">취소 영수증</a>
                                             @endif
                                         @endisset
+                                        @isset($payment->cashRe)
+                                        @endisset
 
                                     </td>
                                     <td>
