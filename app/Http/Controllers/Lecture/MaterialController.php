@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function download(Program $program)
     {
         $file = $program->material;
