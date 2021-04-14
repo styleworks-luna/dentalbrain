@@ -46,7 +46,7 @@
     @yield('script', '')
 
     <!-- Favicon -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" href="{{ asset('favicon.png') }}">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
