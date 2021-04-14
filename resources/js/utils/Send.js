@@ -28,6 +28,8 @@ instance.interceptors.response.use(
             var errors = error.response.data.errors;
 
             alert(Object.values(errors).join('\n'));
+        } else if(error.response.status == 401) {
+            alert('로그인 후 이용 가능합니다.');
         } else {
             alert('오류');
         }
