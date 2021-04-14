@@ -303,11 +303,11 @@
                                         <option value="디스커버">디스커버</option>
                                     </select>
                                 </div>
-                                <div class="radio-wrap">
+                                {{--<div class="radio-wrap">
                                     <input type="radio" id="transfer" name="payment-method"
                                            class="payment-method" value="계좌이체">
                                     <label for="transfer">계좌이체</label>
-                                </div>
+                                </div>--}}
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
                                            class="payment-method" value="가상계좌">
