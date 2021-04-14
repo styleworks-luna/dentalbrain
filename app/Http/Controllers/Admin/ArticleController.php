@@ -33,7 +33,7 @@ class ArticleController extends Controller
             'category_id' => ['required', Rule::exists('article_categories', 'id')],
             'title' => ['required', 'string', 'max:200'],
             'content' => ['required', 'string', 'max:60000'],
-            'writer' => ['nullable', 'string'],
+            'writer' => ['required', 'string'],
             'date' => ['required', 'date'],
             'is_open' => ['required', 'boolean'],
         ]);
@@ -60,7 +60,7 @@ class ArticleController extends Controller
             'category_id' => ['required', Rule::exists('article_categories', 'id')],
             'title' => ['required', 'string', 'max:200'],
             'content' => ['required', 'string', 'max:60000'],
-            'writer' => ['nullable', 'string'],
+            'writer' => ['required', 'string'],
             'date' => ['required', 'date'],
             'is_open' => ['required', 'boolean'],
         ]);
