@@ -4,17 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- og tag -->
-    <meta property="og:title" content="덴탈브레인" />
-    <meta property="og:image" content="{{ asset('/images/desktop/global/logo.png') }}" />
-    <meta property="og:description" content="치과 스텝을 위한 다양한 교육 프로그램" />
-    <meta property="og:image:width" content="100" />
-    <meta property="og:image:height" content="70" />
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>덴탈브레인</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script>
@@ -44,9 +37,6 @@
     </script>
     <script type="text/javascript" src="{{ asset('js/common/common.js') }}"></script>
     @yield('script', '')
-
-    <!-- Favicon -->
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
