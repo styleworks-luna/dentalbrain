@@ -17,7 +17,7 @@
                     <span class="date">{{ Helper.dateFormatYDMByComma(article.date) }}</span>
                     <div class="like">
                         <div class="like-wrap">
-                            <span class="like-icon"></span><span id="like-count" class="like-count">{{ article.likes_count }}</span>
+                            <span class="like-icon"></span><span :id="`like-count${index}`" class="like-count">{{ article.likes_count }}</span>
                         </div>
                     </div>
                     <span class="view">{{ article.views }}</span>
@@ -78,7 +78,7 @@ export default {
             }
         },
         likeIt(id, index) {
-            var likeCountElement = document.getElementById('like-count');
+            var likeCountElement = document.getElementById(`like-count${index}`);
             var likeElement = document.getElementById(`like${index}`);
             likeElement.classList.toggle("active");
 
