@@ -96,7 +96,6 @@ export default {
                 this.$emit('close');
                 window.location.reload()
             }).catch(err => {
-                alert(err);
                 comfirm.disabled = true;
             });
         }
