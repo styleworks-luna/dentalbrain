@@ -51,6 +51,9 @@
                     color: $gray-200
                     content: '|'
 
+                &:hover
+                    text-decoration: underline
+
             .active-menu
                 font-weight: bold
 
@@ -58,15 +61,16 @@
                     font-weight: normal
 
         .community-order
+            +margin(top 10px)
             float: right
 
             ul
                 overflow: hidden
 
             li
+                +padding(right 8px)
                 float: left
                 font-size: 14px
-                +padding(right 10px)
 
                 &:first-child::before
                     +padding(right 0)
@@ -116,6 +120,7 @@
             .like
                 +size(60px)
                 +padding(0 20px)
+                overflow: hidden
 
             .view
                 +size(60px)
@@ -157,8 +162,25 @@
             a
                 text-align: left
 
+                &:hover
+                    text-decoration: underline
+
+
+            .like
+                display: flex
+
+            .like-wrap
+                +margin(0 auto)
+
             .like-icon
-                +background('/images/desktop/community/icon_like_purple.png',no-repeat, 0 center)
+                +size(12px, 13px)
+                +margin(top 30px right 4px)
+                +background('/images/desktop/community/icon_like_purple.svg',no-repeat, 0 center)
+                display: inline-block
+                line-height: 70px
+
+            .like-count
+                display: inline-block
 
         .community-detail
             +padding(27px 40px)
@@ -253,13 +275,13 @@
                     +border(1px solid $border-color-light)
                     +padding(left 20px)
                     +border-radius(25px)
-                    +background('/images/desktop/community/icon_like_white.png', no-repeat, 15px center, $white)
+                    +background('/images/desktop/community/icon_like_white.svg', no-repeat, 15px center, $white)
                     +box-sizing(border-box)
                     font-size: 16px
                     cursor: pointer
 
                 .active
-                    +background('/images/desktop/community/icon_like_purple.png', no-repeat, 15px center, $white)
+                    +background('/images/desktop/community/icon_like_purple.svg', no-repeat, 15px center, $white)
 
 
     .hidden
