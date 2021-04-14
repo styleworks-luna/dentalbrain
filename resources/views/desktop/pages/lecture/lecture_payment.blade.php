@@ -56,6 +56,7 @@
                         failUrl: window.location.href,
                         customerEmail: customerEmail,
                         customerMobilePhone: customerMobilePhone,
+
                         maxCardInstallmentPlan: maxCardInstallmentPlan,
                         cardCompany: cardCompany,
                     };

@@ -49,7 +49,7 @@ class CancelController extends Controller
             // 서버 오류 처리
             Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
             return response()->json([
-                'msg' => '오류가 발생했습니다.'
+                'msg' => '환불 실패하였습니다.'
             ], 500);
         }
 
