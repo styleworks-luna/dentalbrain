@@ -38,6 +38,9 @@
     <script type="text/javascript" src="{{ asset('js/common/common.js') }}"></script>
     @yield('script', '')
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('favicon.png') }}">
+    
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @yield('style','')
