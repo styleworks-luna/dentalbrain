@@ -77,6 +77,7 @@
                     , open: function (event, ui) {
                         $(this).autocomplete('widget')
                             .width(o.width ? o.width : domain_input.outerWidth() + domain_handler.outerWidth() - 3);
+                        domain_input.addClass('ui-state-focus');
                     }
                     , focus: function (event, ui) {
                         return false;
@@ -85,6 +86,9 @@
                         // 값이 실제로 바뀌기 전에 select 이벤트가 발생하고 있어서, 값을 직접 바꾸도록 처리함
                         domain_input.val(ui.item.value).trigger('change');
                         return false; // 기본 동작을 중단함
+                    }
+                    , close: function () {
+                        domain_input.removeClass('ui-state-focus');
                     }
                 })
                 .on('keyup change', function (event) {
@@ -97,22 +101,12 @@
                     }
                 })
                 .on('click',function (event){
-                    domain_input.add(domain_handler).addClass('ui-state-focus');
-                    domain_handler.addClass('ui-state-focus');
-
                     // close if already visible
                     if (domain_input.autocomplete('widget').is(':visible')) {
                         domain_input.autocomplete('close');
                         return;
                     }
                     domain_input.autocomplete('search', ''); // input 영역 focus일때 이메일 박스 show
-                })
-                .on('focus', function (event) {
-                    domain_input.add(domain_handler).addClass('ui-state-focus');
-                    domain_handler.addClass('ui-state-focus');
-                })
-                .on('blur', function (event) {
-                    domain_input.add(domain_handler).removeClass('ui-state-focus');
                 })
                 .on('focusout', function (event) {
                     // 값 정리 - 좌우 공란 trim
@@ -151,13 +145,9 @@
                 .removeClass('ui-corner-all')
                 .addClass(this.widgetFullName + '-button ui-button-icon')
                 .bind('mouseleave', function (event) {
-                    if (domain_input.hasClass('ui-state-focus')) {
-                        domain_handler.addClass('ui-state-focus');
-                    }
+
                 })
                 .bind('click', function () {
-                    domain_input.addClass('ui-state-focus');
-
                     // close if already visible
                     if (domain_input.autocomplete('widget').is(':visible')) {
                         domain_input.autocomplete('close');
@@ -195,7 +185,6 @@
                             });
                     }, 100);
                 }
-                domain_input.add(domain_handler).removeClass('ui-state-focus');
             }).on('focusout', function (event) {
                 // 값 정리 - 좌우 공란 trim
                 account_input.val(account_input.val().replace(/(^\s*)|(\s*$)/gi, ""));
@@ -212,7 +201,6 @@
                     return;
                 }
                 domain_input.autocomplete('close')
-                    .add(domain_handler).removeClass('ui-state-focus');
             });
 
             // jQuery Validate 모듈이 있을 경우 자체 검증을 위한 규칙 추가
