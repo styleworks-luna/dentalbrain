@@ -17,7 +17,10 @@
             <form action="{{ route('account.userSecession')}}" id="form-secession" method="POST">
                 @csrf
                 <section class="secession">
-                    <h2>회원탈퇴 <span class="warning"> ※ 가입제한 안내 - 탈퇴 후 15일 이후 재가입 가능합니다.</span></h2>
+                    <div class="head">
+                        <h2>회원탈퇴</h2>
+                        <span class="warning"> ※ 가입제한 안내 - 탈퇴 후 15일 이후 재가입 가능합니다.</span>
+                    </div>
                     <table>
                         <tr>
                             <th>탈퇴사유</th>
@@ -117,7 +120,7 @@
                                 </div>
                                 <div class="password-error-wrap">
                                     @error('password_wrong')
-                                        <p>{{ $message }}</p>
+                                    <p>{{ $message }}</p>
                                     @enderror
                                 </div>
                             </td>
