@@ -148,7 +148,7 @@
                                 <div class="password-error-wrap error-wrap-common">
                                     <div class="error">
                                         @error('password')
-                                        {{$message}}
+                                        <div>{{$message}}</div>
                                         @enderror
                                     </div>
                                 </div>
