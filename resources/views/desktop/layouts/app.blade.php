@@ -6,9 +6,7 @@
 
     <!-- og tag -->
     <meta property="og:title" content="덴탈브레인" />
-    <meta property="og:image" content="{{ asset('/images/desktop/global/logo.png') }}" />
-    <meta property="og:image:width" content="86" />
-    <meta property="og:image:height" content="26" />
+    <meta property="og:image" content="{{ asset('ogtag-image.png') }}" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
