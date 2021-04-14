@@ -14,8 +14,12 @@
                     <span class="sort">{{ article.category_name }}</span>
                     <a href="" class="title" @click.prevent="showDetail(article.id,index)">{{ article.title }}</a>
                     <span class="writer">{{ article.writer }}</span>
-                    <span class="date">{{ Helper.dateFormatYDM(article.date) }}</span>
-                    <span class="like"><p class="like-icon">{{ article.likes_count }}</p></span>
+                    <span class="date">{{ Helper.dateFormatYDMByComma(article.date) }}</span>
+                    <div class="like">
+                        <div class="like-wrap">
+                            <span class="like-icon"></span><span :id="`like-count${index}`" class="like-count">{{ article.likes_count }}</span>
+                        </div>
+                    </div>
                     <span class="view">{{ article.views }}</span>
                     <span :id="`arrow${index}`" class="btn-arrow-down"
                           @click.prevent="showDetail(article.id,index)"></span>
@@ -50,7 +54,7 @@ import Community from '@/api/community/Community.js'
 export default {
     name: 'CommunityList',
     props: {
-        'list': [Object, Array]
+        'list': [Object, Array],
     },
     data() {
         return {
@@ -74,6 +78,7 @@ export default {
             }
         },
         likeIt(id, index) {
+            var likeCountElement = document.getElementById(`like-count${index}`);
             var likeElement = document.getElementById(`like${index}`);
             likeElement.classList.toggle("active");
 
@@ -86,7 +91,8 @@ export default {
             }
 
             Community.postLike(id, {'like': like}).then(res => {
-                location.reload();
+                likeCountElement.innerText = res.data.cnt;
+                likeElement.innerText = res.data.cnt;
             })
         }
     }
