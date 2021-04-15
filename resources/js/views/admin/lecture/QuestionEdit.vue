@@ -70,7 +70,7 @@
                 <button type="submit" class="btn btn-info"
                         @click="update">저장
                 </button>
-                <router-link to="/admin/lecture/question"
+                <router-link :to="`/admin/lecture/question/${page}`"
                              class="btn btn-dark">목록
                 </router-link>
             </div>
@@ -92,7 +92,8 @@ export default {
     data() {
         return {
             id: '',
-            data: {}
+            data: {},
+            page: this.$route.params.page,
         }
     },
     created() {
@@ -114,7 +115,7 @@ export default {
 
             Question.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/question');
+                this.$router.push(`/admin/lecture/question/${this.page}`);
             })
         },
     }

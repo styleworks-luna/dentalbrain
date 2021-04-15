@@ -22,6 +22,8 @@ if(!function_exists('changePaymentMethodName')){
                 return '신용카드';
             case '가상계좌':
                 return '무통장입금(가상계좌)';
+            case '계좌이체' :
+                return '실시간 계좌이체';
             default:
                 return $paymentMethodName;
                 break;

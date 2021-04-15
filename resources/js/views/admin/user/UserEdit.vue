@@ -99,7 +99,7 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
                         @click="update">저장</button>
-                <router-link to="/admin/user"
+                <router-link :to="`/admin/user/${page}`"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -121,7 +121,8 @@ export default {
     data() {
         return {
             id: '',
-            data: {}
+            data: {},
+            page: this.$route.params.page,
         }
     },
     created() {
@@ -159,7 +160,7 @@ export default {
 
             User.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/user');
+                this.$router.push(`/admin/user/${this.page}`);
             })
         },
         findPassword(e) {

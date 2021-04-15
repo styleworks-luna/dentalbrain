@@ -1,0 +1,69 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.ie-popup
+    +size(900px, 608px)
+    +padding(20px)
+    +border(1px solid $border-color-pop)
+    +background(null,null,null, $white)
+    +box-sizing(border-box)
+    display: none
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    z-index: 220
+
+    .btn-wrap
+        text-align: right
+
+        .close
+            +size(24px, 24px)
+            +background('/images/desktop/popup/close_icon.png', no-repeat, center center)
+            display: inline-block
+            content: ''
+
+    h2
+        +padding(top 40px)
+        font-weight: bold
+        font-size: 24px
+        color: #4195f5
+        text-align: center
+
+    .description
+        +padding(top 35px bottom 40px)
+        +border(1px solid $border-color-base, bottom)
+        text-align: center
+
+        p
+            font-size: 16px
+            line-height: 28px
+
+            em
+                font-weight: bold
+
+            .blue
+                color: #4194f5
+
+            &:last-child
+                +padding(top 10px)
+
+    .browser
+        +margin(top 35px)
+
+        h3
+            font-weight: bold
+            font-size: 16px
+            text-align: center
+        ul
+            +size(668px)
+            +margin(25px auto 0 auto)
+            overflow: hidden
+
+            li
+                +margin(right 36px)
+                float: left
+
+                &:last-child
+                    +margin(0)

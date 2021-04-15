@@ -78,7 +78,7 @@
                 <button type="submit" class="btn btn-info"
                         @click="update">저장
                 </button>
-                <router-link to="/admin/customer/inquire"
+                <router-link :to="`/admin/customer/inquire/${page}`"
                              class="btn btn-dark">목록
                 </router-link>
             </div>
@@ -102,7 +102,8 @@ export default {
     data() {
         return {
             id: '',
-            data: []
+            data: [],
+            page: this.$route.params.page
         }
     },
     created() {
@@ -127,13 +128,13 @@ export default {
 
             Inquire.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/inquire');
+                this.$router.push(`/admin/customer/inquire/${this.page}`);
             })
         },
         destroy() {
             Inquire.destroy(this.id).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/customer/inquire');
+                this.$router.push(`/admin/customer/inquire/${this.page}`);
             })
         }
     }

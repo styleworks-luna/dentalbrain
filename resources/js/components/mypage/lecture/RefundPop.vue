@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="btn-wrap">
-            <button @click="destroy">확인</button>
+            <button id="refund_confirm" @click="destroy">확인</button>
             <button @click="$emit('close')">취소</button>
         </div>
     </div>
@@ -88,12 +88,15 @@ export default {
                 };
             }
 
+            var comfirm = document.getElementById('refund_confirm');
+            comfirm.disabled = true;
+
             Mypage.destroy(this.programId, data).then(res => {
                 alert(res.data.msg);
                 this.$emit('close');
                 window.location.reload()
             }).catch(err => {
-                alert(err);
+                comfirm.disabled = true;
             });
         }
     }

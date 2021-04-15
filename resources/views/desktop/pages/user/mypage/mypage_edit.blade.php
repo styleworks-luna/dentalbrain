@@ -102,8 +102,6 @@
                                     <button type="button" id="edit_phone" class="btn-basic btn-edit-phone">변경</button>
 
                                     <p class="timer"></p>
-
-
                                 </div>
                                 <div class="phone-check-error-wrap error-wrap-common"></div>
                                 <div class="phone-wrap">
@@ -150,7 +148,7 @@
                                 <div class="password-error-wrap error-wrap-common">
                                     <div class="error">
                                         @error('password')
-                                        {{$message}}
+                                        <div>{{$message}}</div>
                                         @enderror
                                     </div>
                                 </div>

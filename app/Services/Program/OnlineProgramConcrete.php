@@ -59,6 +59,7 @@ class OnlineProgramConcrete extends ProgramTemplate
             'lectures.*.title' => ['required', 'string'],
             'lectures.*.url' => ['required', 'url'],
             'lectures.*.thumbnail_id' => ['nullable', 'numeric'],
+            'lectures' => ['required', 'array']
         ], $additionalRules));
         $validatedData = $v->validate();
 
@@ -100,6 +101,7 @@ class OnlineProgramConcrete extends ProgramTemplate
                     'url' => $data['url'],
                     'title' => $data['title'],
                 ]);
+
             } else {
                 // 새 항목 ( 저장과 똑같은 플로우.
                 $lecture = Lecture::create([
@@ -122,8 +124,20 @@ class OnlineProgramConcrete extends ProgramTemplate
             $returnableDataSet[] = $lecture;
         }
 
+        // 삭제 할 강의 추려내기.
         $newLectureIds = collect($returnableDataSet)->pluck('id');
         $deletable = $originalLectureIds->diff($newLectureIds);
+
+        // 강의 썸네일 삭제.
+        $deletableThumbnails = Lecture::query()->whereIn('id', $deletable)
+            ->whereNotNull('thumbnail_id')
+            ->get()
+            ->mapInto(LectureThumbnail::class);
+        $deletableThumbnails->each(function (LectureThumbnail $item, $key) {
+            $item->deleteFile();
+        });
+
+        // 강의 DB 삭제.
         Lecture::query()->whereIn('id', $deletable)->delete();
 
         return $returnableDataSet;

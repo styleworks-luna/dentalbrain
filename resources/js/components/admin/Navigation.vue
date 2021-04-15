@@ -12,7 +12,7 @@
 
             <!-- 회원 정보 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/user" class="c-sidebar-nav-link"
+                <router-link to="/admin/user/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/user') }">
                     회원정보
                 </router-link>
@@ -20,7 +20,7 @@
 
             <!-- 결제 정보 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/payment" class="c-sidebar-nav-link"
+                <router-link to="/admin/payment/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/payment') }">
                     결제정보
                 </router-link>
@@ -28,7 +28,7 @@
 
             <!-- 배너 관리 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/banner" class="c-sidebar-nav-link"
+                <router-link to="/admin/banner/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/banner') }">
                     배너관리
                 </router-link>
@@ -40,19 +40,19 @@
                 <a href="#" class="c-sidebar-nav-dropdown-toggle">강의관리</a>
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <router-link to="/admin/lecture/online" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/online/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/online') }">
                             온라인 강의
                         </a>
                     </router-link>
-                    <router-link to="/admin/lecture/offline" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/offline/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/offline') }">
                             오프라인 강의
                         </a>
                     </router-link>
-                    <router-link to="/admin/lecture/question" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/lecture/question/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/lecture/question') }">
                             질문내역
@@ -63,7 +63,7 @@
 
             <!-- 커뮤니티 관리 메뉴 -->
             <li class="c-sidebar-nav-item">
-                <router-link to="/admin/community" class="c-sidebar-nav-link"
+                <router-link to="/admin/community/1" class="c-sidebar-nav-link"
                              :class="{ activeClass: checkUrl('/admin/community') }">
                     커뮤니티
                 </router-link>
@@ -75,19 +75,19 @@
                 <a href="#" class="c-sidebar-nav-dropdown-toggle">고객센터</a>
 
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <router-link to="/admin/customer/faq" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/customer/faq/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/customer/faq') }">
                             FAQ
                         </a>
                     </router-link>
-                    <router-link to="/admin/customer/notice" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/customer/notice/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/customer/notice') }">
                             공지사항
                         </a>
                     </router-link>
-                    <router-link to="/admin/customer/inquire" tag="li" class="c-sidebar-nav-item">
+                    <router-link to="/admin/customer/inquire/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/customer/inquire') }">
                             문의내역

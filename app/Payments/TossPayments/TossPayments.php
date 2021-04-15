@@ -129,7 +129,7 @@ class TossPayments
                 $e,
                 'paymentKey' => $this->paymentKey,
                 'json' => $jsonData,
-                ]);
+            ]);
             return false;
         }
 
@@ -212,5 +212,10 @@ class TossPayments
                                          string $holderName, $cancelAmount = null, $taxAmount = null)
     {
         return $this->cancel($reason, $bank, $accountNumber, $holderName, $cancelAmount, $taxAmount);
+    }
+
+    public function cancelTransfer(string $reason, $cancelAmount = null, $taxAmount = null)
+    {
+        return $this->cancel($reason, null, null, null, $cancelAmount, $taxAmount);
     }
 }

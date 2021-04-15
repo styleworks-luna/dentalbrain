@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\File;
 use App\Models\Manage\Article;
-use App\Services\File\ArticleFile;
+use App\Models\Manage\ArticleCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
 {
@@ -20,21 +20,27 @@ class ArticleController extends Controller
         ]);
     }
 
+    public function categories()
+    {
+        return response()->json([
+            ArticleCategory::all()
+        ]);
+    }
+
     public function create(Request $request)
     {
         $v = Validator::make($request->all(), [
+            'category_id' => ['required', Rule::exists('article_categories', 'id')],
             'title' => ['required', 'string', 'max:200'],
-            'link' => ['required', 'string', 'max:200'],
+            'content' => ['required', 'string', 'max:60000'],
+            'writer' => ['required', 'string'],
             'date' => ['required', 'date'],
-            'thumbnail_id' => ['required', 'numeric'],
+            'is_open' => ['required', 'boolean'],
         ]);
 
         $data = $v->validate();
 
-        $article = Article::create($data);
-
-        $articleFile = new ArticleFile($article);
-        $articleFile->moveTempToPublic(File::find($data['thumbnail_id']));
+        Article::create($data);
 
         return response()->json([
             'msg' => '생성되었습니다.',
@@ -44,30 +50,24 @@ class ArticleController extends Controller
     public function edit(Request $request, Article $article)
     {
         return response()->json([
-            'article' => $article->with('thumbnail')->first(),
+            'article' => $article
         ]);
     }
 
     public function update(Request $request, Article $article)
     {
         $v = Validator::make($request->all(), [
+            'category_id' => ['required', Rule::exists('article_categories', 'id')],
             'title' => ['required', 'string', 'max:200'],
-            'link' => ['required', 'string', 'max:200'],
+            'content' => ['required', 'string', 'max:60000'],
+            'writer' => ['required', 'string'],
             'date' => ['required', 'date'],
-            'thumbnail_id' => ['required', 'numeric'],
+            'is_open' => ['required', 'boolean'],
         ]);
 
         $data = $v->validate();
 
-        if ($article->thumbnail->id != $data['thumbnail_id']) {
-            $articleFile = new ArticleFile($article);
-            $articleFile->deleteFile();
-        }
-
         $article->update($data);
-
-        $articleFile = new ArticleFile($article);
-        $articleFile->moveTempToPublic(File::find($data['thumbnail_id']));
 
         return response()->json([
             'msg' => '수정되었습니다.',
@@ -76,10 +76,6 @@ class ArticleController extends Controller
 
     public function destroy(Request $request, Article $article)
     {
-
-        $articleFile = new ArticleFile($article);
-        $articleFile->deleteFile();
-
         $article->delete();
 
         return response()->json([

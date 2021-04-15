@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="btn-wrap">
-            <button @click="destroy">확인</button>
+            <button id="refund_confirm" @click="destroy">확인</button>
             <button @click="$emit('close')">취소</button>
         </div>
     </div>
@@ -87,6 +87,9 @@ export default {
                 };
             }
 
+            var comfirm = document.getElementById('refund_confirm');
+            comfirm.disabled = true;
+
             Mypage.destroyManual(this.programId, data).then(res => {
                 alert(res.data.msg +
                     '\n관리자가 요청하신 내역 확인 후 처리 예정입니다.\n' +
@@ -95,7 +98,7 @@ export default {
                 this.$emit('close');
                 window.location.reload()
             }).catch(err => {
-                alert(err);
+                comfirm.disabled = true;
             });
         }
     }

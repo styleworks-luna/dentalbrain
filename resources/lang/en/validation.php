@@ -160,6 +160,12 @@ return [
         'content' => [
             'required' => '내용을 입력해 주세요.',
             'max' => ':max 자 이하로 입력해 주세요.'
+        ],
+        'lectures' => [
+            'required' => '강의가 최소 하나 존재해야 합니다.'
+        ],
+        'reason' => [
+            'required' => '취소이유를 작성해 주세요.'
         ]
     ],
 

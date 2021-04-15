@@ -32,6 +32,7 @@
                             {{ slotProps.row.login_id }}
                         </router-link>
                     </td>
+                    <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
                     <td>
@@ -180,7 +181,12 @@ export default {
                 {
                     name: 'user_id',
                     text: '아이디',
-                    width: '12%'
+                    width: '8%'
+                },
+                {
+                    name: 'name',
+                    text: '이름',
+                    width: '8%'
                 },
                 {
                     name: 'email',
@@ -195,7 +201,7 @@ export default {
                 {
                     name: 'payment',
                     text: '결제금액',
-                    width: '12%'
+                    width: '10%'
                 },
                 {
                     name: 'watch',
@@ -210,7 +216,7 @@ export default {
                 {
                     name: 'cancel',
                     text: '취소',
-                    width: '15%'
+                    width: '13%'
                 },
                 {
                     name: 'started_at',
@@ -238,7 +244,7 @@ export default {
     },
     methods: {
         getData(page = this.page) {
-            if (this.page) {
+            if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
 

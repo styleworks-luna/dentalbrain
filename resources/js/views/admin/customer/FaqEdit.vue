@@ -56,7 +56,7 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
                         @click="update">수정</button>
-                <router-link to="/admin/customer/faq"
+                <router-link :to="`/admin/customer/faq/${page}`"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -78,7 +78,8 @@
         data() {
             return {
                 id: '',
-                data: {}
+                data: {},
+                page: this.$route.params.page,
             }
         },
         created() {
@@ -108,13 +109,13 @@
 
                 Faq.update(this.id, data).then(res => {
                     alert(res.data.msg);
-                    this.$router.push('/admin/customer/faq');
+                    this.$router.push(`/admin/customer/faq/${this.page}`);
                 })
             },
             destroy() {
                 Faq.destroy(this.id).then(res => {
                     alert(res.data.msg);
-                    this.$router.push('/admin/customer/faq');
+                    this.$router.push(`/admin/customer/faq/${this.page}`);
                 })
             }
         }

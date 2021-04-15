@@ -34,7 +34,7 @@
                         </a>
                     </td>
                     <td>
-                        <router-link :to="`/admin/lecture/question/${slotProps.row.id}`">
+                        <router-link :to="`/admin/lecture/question/${slotProps.row.id}/${page}`">
                             {{ slotProps.row.question }}
                         </router-link>
                     </td>
@@ -81,7 +81,7 @@ export default {
             questions: {
                 data: []
             },
-            page: 1,
+            page: this.$route.params.page || 1,
             gubun: 'all',
             keyword: '',
         }
@@ -144,6 +144,7 @@ export default {
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
+            this.page=page;
 
             let params = {
                 keyword: this.keyword,
@@ -153,6 +154,9 @@ export default {
 
             Question.getData(params).then(res => {
                 this.questions = res.data.question;
+                // 뒤로가기 page에 따라 reload
+                const path = `/admin/lecture/question/${page}`
+                if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.questions = [];
             });

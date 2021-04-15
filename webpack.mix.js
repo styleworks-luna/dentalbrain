@@ -46,11 +46,13 @@ mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
 // pages TODO: 추후 수정
 mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
 
+// popup
+mix.sass('resources/sass/desktop/pages/popup/ie-popup.sass', 'public/css/desktop/pages/popup');
+
 // 소개 페이지
 mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/desktop/pages/introduce')
     .sass('resources/sass/desktop/pages/introduce/instructor.sass', 'public/css/desktop/pages/introduce')
-    .sass('resources/sass/desktop/pages/introduce/community.sass', 'public/css/desktop/pages/introduce')
-    .sass('resources/sass/desktop/pages/introduce/lecture-information.sass', 'public/css/desktop/pages/introduce');
+    .sass('resources/sass/desktop/pages/introduce/community.sass', 'public/css/desktop/pages/introduce');
 
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')

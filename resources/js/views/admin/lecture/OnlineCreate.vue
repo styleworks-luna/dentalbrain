@@ -62,7 +62,7 @@
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
-                    <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -126,9 +126,12 @@
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
                         </div>
+                        <div class="btn-wrap">
+                            <button class="btn btn-outline-dark" @click.prevent="removeLecture(index)">강의 삭제</button>
+                        </div>
                     </div>
 
-                    <button class="btn btn-outline-dark w-100" @click="addLecture">강의 추가</button>
+                    <button class="btn btn-outline-dark w-100" @click.prevent="addLecture">강의 추가</button>
                 </template>
             </single-group>
 
@@ -159,7 +162,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">등록</button>
-                <router-link to="/admin/lecture/online"
+                <router-link to="/admin/lecture/online/1"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -217,7 +220,7 @@ export default {
 
             Online.create(data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
+                this.$router.push('/admin/lecture/online/1');
             })
         },
     }

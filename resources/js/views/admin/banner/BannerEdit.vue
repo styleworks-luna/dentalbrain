@@ -95,7 +95,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">저장</button>
-                <router-link to="/admin/banner"
+                <router-link :to="`/admin/banner/${page}`"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>
@@ -126,7 +126,8 @@ export default {
         return{
             id: '',
             data: {},
-            ko: ko
+            ko: ko,
+            page: this.$route.params.page,
         };
     },
     created() {
@@ -155,8 +156,6 @@ export default {
                 this.ended_at = result.ended_at;
 
                 this.is_open = result.is_open;
-
-                console.log(result);
             });
         },
         update() {
@@ -180,7 +179,7 @@ export default {
 
                 Banner.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/banner');
+                this.$router.push(`/admin/banner/${this.page}`);
             })
         },
         handleSetStartTime(time) {

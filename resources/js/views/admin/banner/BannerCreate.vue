@@ -95,7 +95,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">저장</button>
-                <router-link to="/admin/banner"
+                <router-link to="/admin/banner/1"
                              class="btn btn-dark">취소
                 </router-link>
             </div>
@@ -136,7 +136,7 @@ export default {
 
             Banner.create(data).then(res => {
                 alert(res.data.msg);
-                this.$router.push('/admin/banner');
+                this.$router.push('/admin/banner/1');
             })
         },
         handleSetStartTime(time) {

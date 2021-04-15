@@ -10,6 +10,11 @@ $(function () {
         } else {
             $('#license_num').css('display',' block').attr('data-parsley-required', true);
         }
+        if( value =='코디네이터') {
+            $('#license_num').attr('placeholder','인증번호를 입력해주세요.');
+        } else {
+            $('#license_num').attr('placeholder','면허번호를 입력해주세요.');
+        }
     }
 
     // select menu

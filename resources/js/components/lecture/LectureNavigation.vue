@@ -1,7 +1,8 @@
 <template>
     <div class="lecture-menu">
         <ul>
-            <li v-for="menu in menus" :class="{'active-menu': isActive == menu.id}" @click="handleSetLectureMenu(menu.id,menu.id)" v-html="replace(menu.name)"></li>
+            <li v-for="menu in menus" :id="menu.name" :class="{'active-menu': isActive == menu.id}"
+                @click="handleSetLectureMenu(menu.id,menu.id)" v-html="replace(menu.name)"></li>
         </ul>
     </div>
 </template>
@@ -14,11 +15,14 @@ export default {
     data() {
         return {
             isActive: 1,
-            menus: []
+            menus: [],
+            hash: '',
         }
     },
-    mounted() {
-      this.getCategory();
+    created() {
+        this.getUrl();
+        this.setActive();
+        this.getCategory();
     },
     methods: {
         handleSetLectureMenu(value, active) {
@@ -33,6 +37,17 @@ export default {
         replace(data) {
             var replaceData = data.replace(' ', '<br>');
             return replaceData;
+        },
+        getUrl() {
+            this.hash = window.location.href.match(/#(.*$)/) ? window.location.href.match(/#(.*$)/)[1] : '';
+        },
+        setActive() {
+            for (var i = 1; i <= 8; i++) {
+                if (this.hash == i) {
+                    this.isActive = i;
+                    this.handleSetLectureMenu(this.isActive, this.isActive);
+                }
+            }
         }
     }
 }

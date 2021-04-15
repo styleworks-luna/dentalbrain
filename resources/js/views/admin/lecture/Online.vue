@@ -55,14 +55,14 @@
                         </router-link>
                     </td>
                     <td>
-                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}`"
+                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/${page}`"
                                      class="btn btn-warning text-white float-left mr-2">
                             수정
                         </router-link>
                         <button-open :isOpen="slotProps.row.is_open"
                                      class="btn-danger text-white border-danger float-left mr-2"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
-                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/duplicate`"
+                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/duplicate/${page}`"
                                      class="btn btn-success text-white float-left">
                             복사
                         </router-link>
@@ -109,7 +109,7 @@
                 lectures: {
                     data: []
                 },
-                page: 1,
+                page: this.$route.params.page || 1,
                 keyword: ''
             }
         },
@@ -157,6 +157,7 @@
                 if (this.Helper.nullCheck(page)) {
                     page = 1;
                 }
+                this.page=page;
 
                 let params = {
                     page: page,
@@ -166,6 +167,9 @@
                 };
                 Online.getData(params).then(res => {
                     this.lectures = res.data.programs;
+                    // 뒤로가기 page에 따라 reload
+                    const path = `/admin/lecture/online/${page}`
+                    if (this.$route.path !== path) this.$router.push(path);
                 }).catch(err => {
                     this.lectures = [];
                 });
