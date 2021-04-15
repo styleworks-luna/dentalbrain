@@ -306,7 +306,7 @@
                                 <div class="radio-wrap">
                                     <input type="radio" id="transfer" name="payment-method"
                                            class="payment-method" value="계좌이체">
-                                    <label for="transfer">계좌이체</label>
+                                    <label for="transfer">{{ changePaymentMethodName("계좌이체") }}</label>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
