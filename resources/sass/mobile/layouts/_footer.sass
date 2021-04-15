@@ -1,0 +1,38 @@
+footer
+    +background(null, null, null, $background-color-menu)
+
+    .footer
+        +padding(20px 16px)
+
+        ul
+            +size(328px)
+            font-size: 11px
+            color: $gray-900
+            overflow: hidden
+            text-align: center
+
+        li
+            +padding(right 5px)
+            display: inline-block
+            line-height: 1.5
+
+            &:before
+                +padding(right 5px)
+                display: inline-block
+                content: '|'
+
+            &:nth-child(2n-1):before
+                content: ''
+
+            &:nth-child(2n)
+                +padding(right 0)
+
+            &:last-child
+                +padding(right 0)
+
+        .office-address
+            font-size: 11px
+            color: $gray-900
+            text-align: center
+            line-height: 1.5
+

@@ -12,7 +12,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/swiper-bundle.css') }}">
     <link rel="stylesheet" href="{{ mix('css/mobile/index.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-all.css') }}">
 @endsection
 
 @section('content')
@@ -42,7 +42,55 @@
                 </div>
             </section>
 
-            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
+            <div class="m-row">
+                <lecture-all :is_pagination="false" :per_page="8"></lecture-all>
+            </div>
+
+            <section class="ad">
+                @if($bar)
+                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
+                        <img src="{{ $bar->desktopFile->url }}" alt="바배너">
+                    </a>
+                @else
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
+                    </a>
+                @endif
+            </section>
+
+            <div class="m-row">
+                <section class="middle-banner">
+                    <h2>추천강의</h2>
+                    <div class="middle-swiper-container">
+                        <div class="swiper-wrapper">
+                            @forelse($recommends as $recommend)
+                                <div class="swiper-slide">
+                                    <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                                        <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
+                                    </a>
+                                </div>
+                            @empty
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                    </a>
+                                </div>
+                                <div class="swiper-slide">
+                                    <a href="">
+                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                    </a>
+                                </div>
+                            @endforelse
+
+                        </div>
+                    </div>
+                </section>
+            </div>
 
         </div>
     </section>

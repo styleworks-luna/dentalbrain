@@ -1,0 +1,141 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_pagination.sass'
+
+//.lecture-title-wrap
+//    +background('/images/desktop/global/lecture-top-image.png', no-repeat, center center)
+//    +size(100%, 300px)
+//    min-width: 1280px
+//    text-align: center
+//
+//    h1
+//        +padding(top 126px)
+//        font-weight: bold
+//        font-size: 48px
+
+//.lecture-order
+//    +margin(top 50px)
+//    overflow: hidden
+//
+//    ul
+//        float: right
+//        overflow: hidden
+//
+//        li
+//            float: left
+//
+//            .active
+//                font-weight: bold
+//                color: $page-color
+//
+//            &:last-child::before
+//                +size(1px, 16px)
+//                +margin(0 10px)
+//                +background(null, null, null, $border-color-base)
+//                display: block
+//                float: left
+//                content: ''
+//
+//            &:hover
+//                text-decoration: underline
+
+.lecture
+    +margin(top 20px bottom 40px)
+
+    .lecture-menu
+        ul
+            +size(328px)
+            +margin(0 auto)
+            +margin(bottom 20px)
+            overflow: hidden
+
+        li
+            +size(104px,46px)
+            +margin(top 10px right 8px)
+            +padding(17px 11px 17px 41px)
+            +border(1px solid $border-color-base)
+            +border-radius(38px)
+            +background(null,null, null, $white-light)
+            +box-sizing(border-box)
+            float: left
+            font-size: 11px
+            color: $gray-700
+
+            &:nth-child(3n)
+                +margin(right 0)
+
+        .active-menu,
+        li:hover
+            +padding(16px 10px 16px 40px)
+            +border(2px solid $page-color)
+            font-weight: bold
+            color: $gray-200
+
+    .lecture-contents
+
+        ul
+            overflow: hidden
+
+        .lecture-card
+            +size(156px)
+            +margin(top 40px)
+            float: left
+            position: relative
+
+            &:nth-child(2n + 1)
+                +margin(right 16px)
+
+            &:first-child,
+            &:nth-child(2)
+                +margin(top 0)
+
+            img
+                +size(156px, 117px)
+                +border(1px solid rgba(0, 0, 0, 0.1))
+                +border-radius(8px)
+
+            .lecture-description
+                +margin(top 12px)
+
+                .lecture-description-sub
+                    overflow: hidden
+
+                    .offline,
+                    .online
+                        +padding(3px 2px)
+                        font-size: 11px
+                        float: left
+                        color: $white
+
+                    .offline
+                        +background(null, null, null, $purply-pink)
+
+                    .online
+                        +background(null, null, null, $page-color)
+
+                    .lecture-type
+                        +padding(top 3px left 5px)
+                        float: left
+                        font-size: 11px
+                        color: $gray-700
+
+                    .lecture-time
+                        position: absolute
+                        bottom: 0
+                        right: 0
+                        font-size: 11px
+                        color: $gray-900
+
+                .lecture-name
+                    +margin(top 8px)
+                    +ellipse(null, 2)
+                    display: block
+                    height: 34px
+                    font-size: 14px
+                    line-height: 1.5
+
+                .lecture-price
+                    font-weight: bold
+                    font-size: 14px
+                    color: $page-color

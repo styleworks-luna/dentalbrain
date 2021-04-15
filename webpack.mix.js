@@ -86,7 +86,10 @@ mix.sass('resources/sass/desktop/pages/term/term-common.sass', 'public/css/deskt
 // mobile
 mix.sass('resources/sass/mobile/app.sass', 'public/css/mobile')
 
-// pages
+// mobile pages
 mix.sass('resources/sass/mobile/index.sass', 'public/css/mobile')
+
+// mobile lecture
+mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
 
 mix.version();
