@@ -41,25 +41,25 @@
 //                text-decoration: underline
 
 .lecture
-    +margin(top 20px bottom 40px)
+    +margin(top 5.55555vw bottom 11.11111vw)
 
     .lecture-menu
         ul
-            +size(328px)
+            +size(91.11111vw)
             +margin(0 auto)
-            +margin(bottom 20px)
+            +margin(bottom 5.555555vw)
             overflow: hidden
 
         li
-            +size(104px,46px)
-            +margin(top 10px right 8px)
-            +padding(17px 11px 17px 41px)
-            +border(1px solid $border-color-base)
-            +border-radius(38px)
+            +size(28.88888vw, 12.77777vw)
+            +margin(top 2.777777vw right 2.222222vw)
+            +padding(4.72222vw 3.0555555vw 4.72222vw 11.38888vw)
+            +border(.2777777vw solid $border-color-base)
+            +border-radius(10.55555vw)
             +background(null,null, null, $white-light)
             +box-sizing(border-box)
             float: left
-            font-size: 11px
+            font-size: 3.0555555vw
             color: $gray-700
 
             &:nth-child(3n)
@@ -67,8 +67,8 @@
 
         .active-menu,
         li:hover
-            +padding(16px 10px 16px 40px)
-            +border(2px solid $page-color)
+            +padding(4.444444vw 2.77777vw 4.444444vw 11.111111vw)
+            +border(.555555vw solid $page-color)
             font-weight: bold
             color: $gray-200
 
@@ -78,33 +78,33 @@
             overflow: hidden
 
         .lecture-card
-            +size(156px)
-            +margin(top 40px)
+            +size(43.333333vw)
+            +margin(top 11.11111vw)
             float: left
             position: relative
 
             &:nth-child(2n + 1)
-                +margin(right 16px)
+                +margin(right 4.444444vw)
 
             &:first-child,
             &:nth-child(2)
                 +margin(top 0)
 
             img
-                +size(156px, 117px)
+                +size(43.333333vw, 32.5vw)
                 +border(1px solid rgba(0, 0, 0, 0.1))
-                +border-radius(8px)
+                +border-radius(2.222222vw)
 
             .lecture-description
-                +margin(top 12px)
+                +margin(top 3.33333vw)
 
                 .lecture-description-sub
                     overflow: hidden
 
                     .offline,
                     .online
-                        +padding(3px 2px)
-                        font-size: 11px
+                        +padding(.833333vw .555555vw)
+                        font-size: 3.0555555vw
                         float: left
                         color: $white
 
@@ -115,27 +115,27 @@
                         +background(null, null, null, $page-color)
 
                     .lecture-type
-                        +padding(top 3px left 5px)
+                        +padding(top .8333333vw left 1.3888888vw)
                         float: left
-                        font-size: 11px
+                        font-size: 3.0555555vw
                         color: $gray-700
 
                     .lecture-time
                         position: absolute
                         bottom: 0
                         right: 0
-                        font-size: 11px
+                        font-size: 3.0555555vw
                         color: $gray-900
 
                 .lecture-name
-                    +margin(top 8px)
+                    +margin(top 2.222222vw)
                     +ellipse(null, 2)
                     display: block
-                    height: 34px
-                    font-size: 14px
+                    height: 9.4444444vw
+                    font-size: 3.888888vw
                     line-height: 1.5
 
                 .lecture-price
                     font-weight: bold
-                    font-size: 14px
+                    font-size: 3.888888vw
                     color: $page-color

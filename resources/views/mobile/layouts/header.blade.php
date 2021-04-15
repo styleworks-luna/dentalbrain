@@ -3,7 +3,7 @@
         <div class="header">
             <div class="logo-wrap">
                 <a href="{{ url('/') }}" class="ir_pm header-logo">
-                    <img src="{{ asset('/images/mobile/global/logo.png') }}" alt="덴탈브레인">
+                    <img src="{{ asset('/images/mobile/global/logo.svg') }}" alt="덴탈브레인">
                 </a>
             </div>
             <div class="menu-btn-wrap">

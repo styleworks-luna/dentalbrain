@@ -1,20 +1,24 @@
 header
-    +border(1px solid $page-color, bottom)
+    +border(.27777777vw solid $page-color, bottom)
 
     .header
-        +padding(8px 16px 15px 16px)
+        +padding(2.222222vw 4.444444vw 4.1666666vw 4.444444vw)
 
     .logo-wrap
-        +size(90px, 25px)
+        +size(25vw, 6.9444444vw)
         +margin(0 auto)
 
+        img
+            +size(25vw, 6.944444vw)
+
     .menu-btn-wrap
-        +size(24px, 24px)
+        +size(6.666666vw, 6.666666vw)
         position: absolute
-        top: 8px
-        right: 16px
+        top: 2.222222vw
+        right: 4.444444vw
 
         .menu-btn
-            +background('/images/mobile/global/icon_nav.png',no-repeat, center center)
-            +size(24px, 24px)
+            +background('/images/mobile/global/icon_nav.svg',no-repeat, center center)
+            background-size: 6.666666vw 6.666666vw
+            +size(6.666666vw, 6.666666vw)
             display: block
