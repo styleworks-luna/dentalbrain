@@ -39,7 +39,7 @@
                         </a>
                     </td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.user_id}`">
+                        <router-link :to="`/admin/user/${slotProps.row.user_id}/1`">
                         {{ slotProps.row.name }}
                         </router-link>
                         <br>
