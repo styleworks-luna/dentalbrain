@@ -1,5 +1,5 @@
 <nav class="aside hide">
-
+    <div class="aside-wrap">
     <div class="top">
         <a href="{{ URL('/') }}">
             <img src="{{ asset('/images/mobile/navigation/icon_nav_home.svg') }}" alt="메인 바로가기">
@@ -9,6 +9,7 @@
         </a>
     </div>
 
+    <div class="aside-main">
     <div class="user-controller">
         @auth()
             <div class="user">
@@ -51,6 +52,7 @@
             <li>문의하기</li>
         </ul>
     </div>
+    </div>
 
     <div class="bottom">
         @auth()
@@ -61,6 +63,6 @@
             <a href="{{ route('register') }}">회원가입</a>
         @endauth
     </div>
-
+    </div>
 </nav>
 <div class="dim hide"></div>

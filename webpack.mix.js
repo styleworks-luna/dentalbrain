@@ -91,6 +91,8 @@ mix.sass('resources/sass/mobile/index.sass', 'public/css/mobile')
 
 // mobile 회원가입, 로그인, 아이디 비밀번호 찾기
 mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages/user')
+    .sass('resources/sass/mobile/pages/user/find-id.sass', 'public/css/mobile/pages/user');
+
 
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')

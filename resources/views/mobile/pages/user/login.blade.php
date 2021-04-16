@@ -28,8 +28,8 @@
                     @endif
                     <div class="login-addition">
                         <div class="login-find">
-                        <a href="{{ url('find') }}" class="find-id">아이디</a>
-                        <a href="{{ url('find') }}" class="find-id">비밀번호 찾기</a>
+                        <a href="{{ url('m-find') }}" class="find-id">아이디</a>
+                        <a href="{{ url('m-find-ps') }}" class="find-id">비밀번호 찾기</a>
                         </div>
                         <div class="login-register">
                         <a href="{{ url('register') }}" class="go-register">회원가입</a>

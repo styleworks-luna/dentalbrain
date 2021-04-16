@@ -1,0 +1,50 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_m-input.sass'
+@import '@sass/components/_button.sass'
+
+.find-id,
+.find-password
+    +size(77.77777777vw)
+    +margin(30.555555vw auto 69.4444444vw auto)
+
+    .find-id-form,
+    .find-password-form
+        p
+            font-size: 3.888888vw
+
+        input[type="text"]
+            +input(white-lignt-fill)
+            +size(77.777777777vw, 13.8888888vw)
+            font-size: 3.88888888vw
+
+        input[type="text"]::placeholder
+            letter-spacing: 0.7px
+            font-size: 3.88888888vw
+
+        .name
+            +margin(top 4.444444vw)
+
+        .phone
+            +margin(top 2.77777777vw)
+
+        .email
+            +margin(top 4.444444vw)
+
+        .btn-find-id,
+        .btn-find-password
+            +btn(purple-fill)
+            +size(77.777777777vw, 13.8888888vw)
+            +margin(top 2.7777777vw)
+            font-weight: bold
+            font-size: 4.4444444vw
+
+    .id-message,
+    .password-message
+        text-align: center
+
+        p
+            +padding(top 5.5555555vw)
+            font-size: 3.3333333vw
+            color: $red
