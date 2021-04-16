@@ -1,0 +1,118 @@
+.dim
+    +background(null,null,null,$white)
+    display: none
+    width: 100%
+    height: 100%
+    position: fixed
+    top: 0
+    left: 0
+    background-color: rgba(0, 0, 0, 0.5)
+    cursor: pointer
+    z-index: 210
+
+.service-layer-wrapper,
+.privacy-layer-wrapper,
+.refund-layer-wrapper,
+.privacy-to-third-layer-wrapper
+    .layer
+        +size(750px, 500px)
+        +padding(22px)
+        +border(2px solid $page-color)
+        +background(null,null,null, $white)
+        +box-sizing(border-box)
+        display: none
+        position: fixed
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        z-index: 220
+
+    .layer-header
+        overflow: hidden
+
+        h3
+            float: left
+            font-weight: bold
+            font-size: 18px
+
+        .btn-close
+            +size(18px, 18px)
+            +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+            float: right
+
+            &:hover
+                +background('/images/desktop/global/icon_layer_close_ov.png')
+
+    .layer-content-wrapper
+        +size(706px, 428px)
+        +margin(top 10px)
+        +padding(20px 10px 0 20px)
+        +border(1px solid $border-color-base)
+        +box-sizing(border-box)
+        overflow: hidden
+
+.layer-content
+    +size(null, 408px)
+    overflow-y: scroll
+
+    .content-css
+        +margin(right 4px)
+        line-height: 1.3
+
+        h4
+            +margin(top 5px)
+            font-weight: bold
+            font-size: 16px
+
+        h5
+            +margin(top 10px)
+            font-size: 15px
+
+        h6
+            +margin(top 10px)
+            font-weight: bold
+
+        p
+            +padding(left 10px top 5px)
+
+        em
+            font-weight: bold
+            color: $red
+
+        ul
+            +margin(top 5px)
+        li
+            +margin(top 5px)
+            +padding(left 10px)
+
+        table
+            +margin(top 5px auto 0 auto)
+            +border(1px solid $border-color-base)
+
+            tr
+                +border(1px solid $border-color-base, bottom)
+
+                th
+                    +padding(0 5px)
+                    +background(null, null, null, $background-color-menu)
+                    vertical-align: middle
+
+                td
+                    +padding(10px 5px 10px 0)
+
+                    li:first-child
+                        +margin(top 0)
+
+                &:first-child
+                    text-align: center
+
+                .table-border
+                    +border(1px solid $border-color-base,right)
+
+
+    &::-webkit-scrollbar
+        +size(6px, 120px)
+
+    &::-webkit-scrollbar-thumb
+        +border-radius(3px)
+        +background(null, null, null, rgba(0, 0, 0, 0.5) )

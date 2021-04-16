@@ -25,6 +25,9 @@
             &:last-child
                 float: right
 
+            img
+                +size(6.6666666vw, 6.6666666vw)
+
     .user-controller
         +padding(8.3333333vw)
         +border(.2777777vw solid $border-color-light, bottom)
@@ -157,7 +160,7 @@
                 float: right
 
 
-.dim
+.aside-dim
     +size(100%, 100%)
     +background(null, null, null, $gray-600)
     position: fixed
@@ -166,5 +169,5 @@
     z-index: 500
 
 .aside.hide,
-.dim.hide
+.aside-dim.hide
     display: none

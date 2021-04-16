@@ -65,4 +65,4 @@
     </div>
     </div>
 </nav>
-<div class="dim hide"></div>
+<div class="aside-dim hide"></div>
