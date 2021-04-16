@@ -14,7 +14,9 @@
 @endsection
 
 @section('content')
+
     <section id="content" class="content">
+        <section class="register">
         @if ($errors->any())
             <ul class="alert-danger">
                 @foreach ($errors->all() as $error)
@@ -23,7 +25,7 @@
             </ul>
         @endif
 
-        <div class="small-container">
+        <div class="m-container">
             <form action="{{ route('register') }}" method="POST" id="register-form">
                 @csrf
 
@@ -256,5 +258,6 @@
                 </div>
             </form>
         </div>
+        </section>
     </section>
 @endsection
