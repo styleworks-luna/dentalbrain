@@ -31,6 +31,7 @@
         });
     </script>
     <script type="text/javascript" src="{{ asset('js/common/common.js') }}"></script>
+    <script  type="text/javascript" src="{{ asset('js/common/m-common.js')}}"></script>
 @yield('script', '')
 
 <!-- Styles -->

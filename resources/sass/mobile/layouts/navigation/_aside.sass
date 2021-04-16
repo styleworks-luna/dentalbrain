@@ -1,0 +1,161 @@
+.aside
+    +size(88.8888888vw, 100%)
+    +background(null, null, null, $white)
+    position: fixed
+    right: 0
+    top: 0
+    z-index: 1000
+
+    .top
+        +padding(3.3333333vw 4.444444vw)
+        +background(null, null, null, $purple-800)
+        overflow: hidden
+
+        a
+            float: left
+
+            &:last-child
+                float: right
+
+    .user-controller
+        +padding(8.3333333vw)
+        +border(.2777777vw solid $border-color-light, bottom)
+
+        .user
+            overflow: hidden
+
+            .name
+                float: left
+                font-size: 4.4444444vw
+
+            .user-edit
+                overflow: hidden
+                float: right
+
+                a
+                    float: left
+                    font-size: 3.3333333vw
+                    color: $gray-900
+
+                    &::before
+                        +size(3.3333333vw, 3.3333333vw)
+                        +padding(left 1.1111111vw)
+                        +background('/images/mobile/navigation/icon_nav_edit.svg', no-repeat, right center)
+                        background-size: 3.3333333vw 3.3333333vw
+                        display: block
+                        float: right
+                        content: ''
+
+        .my-page
+            +margin(top 6.666666vw)
+
+            ul
+                overflow: hidden
+            li
+                +size(16.1111111vw)
+                +margin(right 11.9444444vw)
+                +box-sizing(border-box)
+                float: left
+
+                &:last-child
+                    +margin(right 0)
+
+                a
+                    display: block
+                    font-size: 3.3333333vw
+                    color: $gray-700
+                    text-align: center
+
+                    &::before
+                        +size(8.8888888vw, 8.8888888vw)
+                        +margin(0 auto)
+                        +padding(bottom 2.22222222vw)
+                        display: block
+                        content: ''
+
+                &:first-child
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_lecture.svg', no-repeat, center center)
+
+
+                &:nth-child(2)
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_payment.svg', no-repeat, center center)
+
+                &:last-child
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_inquiry.svg', no-repeat, center center)
+
+        .user-no-login
+            h2
+                font-weight: bold
+                font-size: 4.44444444vw
+
+                em
+                    color: $page-color
+
+            p
+                +padding(top 2.777777vw)
+                font-size: 3.3333333vw
+                color: $gray-900
+
+                strong
+                    font-weight: normal
+                    color: $gray-200
+
+    .menu-controller
+        +padding(5vw 8.3333333vw)
+
+        .main-menu, .CI
+            li
+                +background('/images/mobile/navigation/icon_nav_arrow.svg', no-repeat, right center)
+                background-size: 1.9444444vw 2.7777777vw
+                font-size: 4.4444444vw
+                line-height: 11.6666666vw
+
+        .menu-title
+            +margin(top 4.722222vw bottom 2.5vw)
+            overflow: hidden
+
+            h3
+                font-size: 3.333333vw
+                color: $gray-900
+                float: left
+
+            .line
+                +size(55.5555555vw, 0.2777777vw)
+                +margin(top 1.3888888vw)
+                background-color: $border-color-light
+                display: block
+                float: right
+
+    .bottom
+        +size(100%)
+        +padding(3.8888888vw 15.83333333vw)
+        +background(null, null, null, $background-color-menu)
+        +box-sizing(border-box)
+        overflow: hidden
+        position: absolute
+        bottom: 0
+        right: 0
+
+        a
+            float: left
+            font-size: 3.33333333vw
+            color: $gray-900
+
+            &:last-child
+                float: right
+
+
+.dim
+    +size(100%, 100%)
+    +background(null, null, null, $gray-600)
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 500
+
+.aside.hide,
+.dim.hide
+    display: none
