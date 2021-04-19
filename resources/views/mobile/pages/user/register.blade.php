@@ -167,7 +167,7 @@
                                         </div>
 
                                         <div class="phone-check-error-wrap parsley-error-wrap"></div>
-                                        <div class="input-wrap">
+                                        <div class="input-wrap verification-wrap">
                                             <input type="text"
                                                    id="verification_number"
                                                    name="verification_number"
