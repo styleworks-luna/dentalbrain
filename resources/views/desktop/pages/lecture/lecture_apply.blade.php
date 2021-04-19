@@ -72,7 +72,7 @@
 
                     <section class="applicant-information">
                         <div class="applicant-title">
-                            <h3>신청자 정보 입력</h3><span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span>
+                            <h3>신청자 정보</h3><span class="warning">※ 정보 변경은 마이페이지에서 가능합니다.</span>
                         </div>
                         <table>
                             <tr>

@@ -71,7 +71,7 @@
                     </section>
 
                     <section class="applicant-information">
-                        <h3>신청자 정보 입력</h3>
+                        <h3>신청자 정보</h3>
                         <table>
                             <tr>
                                 <th>이름</th>
