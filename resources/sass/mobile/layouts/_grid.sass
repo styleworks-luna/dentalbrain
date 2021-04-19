@@ -1,14 +1,15 @@
 // common
 .ui-menu
     .ui-menu-item
-        +border(1px solid $border-color-base, bottom)
+        +border(.27777777vw solid $border-color-base, bottom)
 
         &:last-child
             +border(0, bottom)
 
     .ui-menu-item-wrapper
-        +padding(18px 0 18px 19px)
+        +padding(5vw 0 5vw 5.27777777vw)
         +background(null, null, null, $white-light)
+        font-size: 3.888888vw
         display: block
         cursor: pointer
 
@@ -19,9 +20,9 @@
 
 // select menu
 .ui-selectmenu-menu
-    +size(240px, auto 200px)
-    +border(1px solid $border-color-base, right bottom left)
-    +border-radius(25px)
+    +size(36.3888888888vw, auto 55.5555555vw)
+    +border(.27777777vw solid $border-color-base, right bottom left)
+    +border-radius(6.9444444vw)
     +box-sizing(border-box)
     display: none
     overflow: hidden
@@ -36,18 +37,18 @@
         +margin(0)
         display: block
         overflow-y: auto
-        max-height: 200px
+        max-height: 55.5555555vw
 
 // email box menu
 .ui-emailbox-menu
-    +border(1px solid $border-color-base, right bottom left)
-    +border-radius(25px)
+    +border(.27777777vw solid $border-color-base, right bottom left)
+    +border-radius(6.9444444vw)
     +box-sizing(border-box)
     display: none
     overflow-x: hidden
     overflow-y: auto
-    width: 240px !important
-    max-height: 200px
+    width: 42.5vw !important
+    max-height: 55.5555555vw
     background: $white
     border-top-left-radius: 0
     border-top-right-radius: 0
@@ -58,13 +59,13 @@
     clear: both
 
     ul li
-        +padding(10px 0 0 20px)
-        font-size: 12px
-        line-height: 12px
+        +padding(2.777777vw 0 0 0)
+        font-size: 3.3333333vw
+        line-height: 1
         color: $red
 
 .parsley-errors-list li
-    +padding(10px 0 0 20px)
-    font-size: 12px
-    line-height: 12px
+    +padding(2.777777vw 0 0 5.5555555vw)
+    font-size: 3.3333333vw
+    line-height: 1
     color: $red

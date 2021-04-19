@@ -1,0 +1,34 @@
+%checkbox-default
+    +size(3.88888888vw, 3.88888888vw)
+    +margin(0)
+    +padding(0)
+    +border(.2777777vw solid $border-color-base)
+    +prefix(appearance, none, moz webkit)
+    background-color: $white
+    outline: none
+    cursor: pointer
+
+    &:checked
+        +background('/images/desktop/input/check-on.png', no-repeat, center center)
+
+    &.parsley-error
+        +border(.2777777vw solid $red)
+
+%checkbox-wrap-default
+    overflow: hidden
+    line-height: 3.8888888vw
+
+    input[type="checkbox"]
+        @extend %checkbox-default
+        +margin(0.2777777vw 2.2222222vw 0 0)
+        float: left
+
+    label
+        float: left
+        font-size: 3.8888888vw
+
+@mixin checkbox()
+    @extend %checkbox-default
+
+@mixin checkbox-wrap()
+    @extend %checkbox-wrap-default

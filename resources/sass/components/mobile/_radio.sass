@@ -1,0 +1,35 @@
+%radio-default
+    +size(14px, 14px)
+    +margin(0)
+    +padding(0)
+    +border(1px solid $border-color-base)
+    +border-radius(50%)
+    +prefix(appearance, none, moz webkit)
+    background-color: $white
+    outline: none
+    cursor: pointer
+
+    &:checked
+        +background('/images/desktop/input/radio-on.png', no-repeat, center center)
+
+    &.parsley-error
+        +border(1px solid $red)
+
+%radio-wrap-default
+    overflow: hidden
+    line-height: 16px
+
+    input[type="radio"]
+        @extend %radio-default
+        +margin(1px 8px 0 0)
+        float: left
+
+    label
+        float: left
+        font-size: 16px
+
+@mixin radio()
+    @extend %radio-default
+
+@mixin radio-wrap()
+    @extend %radio-wrap-default
