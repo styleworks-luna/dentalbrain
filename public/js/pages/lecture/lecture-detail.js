@@ -13,6 +13,26 @@ $(function () {
         clickTabComment.addClass('active');
         clickTabDetail.removeClass('active');
     });
+
+    //mobile menu tab 클릭 이벤트
+    var clickMTabDetail = $('.m-menu-tab-detail');
+    var clickMTabComment = $('.m-menu-tab-comment');
+
+    clickMTabDetail.click(function (e) {
+        clickMTabDetail.addClass('active');
+        clickMTabComment.removeClass('active');
+        e.preventDefault();
+        $('.lecture-detail-content').css('display', 'block');
+        $('.lecture-comment').css('display', 'none');
+    });
+
+    clickMTabComment.click(function (e) {
+        clickMTabComment.addClass('active');
+        clickMTabDetail.removeClass('active');
+        $('.lecture-detail-content').css('display', 'none');
+        $('.lecture-comment').css('display', 'block');
+    });
+
     //댓글 갯수 이벤트
     var length = $('.comment-list > li').length + $('.child-comment-item').length;
     $('.comment-length').html('(' + length + ')');
@@ -64,7 +84,7 @@ $(function () {
         } else {
             like = 'false';
         }
-        
+
         $.ajax({
             url: '/api/lectures/' + lectureIdx + '/like',
             type: 'post',

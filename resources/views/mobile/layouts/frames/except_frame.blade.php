@@ -7,6 +7,5 @@
         <main class="main">
             @yield('content')
         </main>
-        @include('mobile.layouts.footer')
     </div>
 @endsection
