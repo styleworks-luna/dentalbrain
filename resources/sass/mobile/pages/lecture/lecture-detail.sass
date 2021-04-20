@@ -1,0 +1,429 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_input.sass'
+
+@import '~froala-editor/css/froala_style.min.css'
+@import '~froala-editor/css/froala_editor.pkgd.min.css'
+
+.lecture-information-wrap
+
+    img
+        +size(100%, 75vw)
+        +box-sizing(border-box)
+        border: solid 1px rgba(0, 0, 0, 0.1)
+
+    .lecture-information
+        +margin(top 5.5555555vw)
+
+        .lecture-sort
+            overflow: hidden
+
+            .online,
+            .offline
+                +padding(1.6666666vw 2.222222vw)
+                display: block
+                float: left
+                font-size: 3.3333333vw
+                color: $white
+
+            .online
+                +background(null, null, null, $page-color)
+
+            .offline
+                +background(null, null, null, $purply-pink)
+
+            .lecture-subject
+                +padding(top 1.3888888vw left 2.7777777vw)
+                float: left
+                font-size: 3.88888888vw
+                color: $gray-700
+
+    .lecture-title
+        +margin(top 4.444444vw)
+        +ellipse(null, 2)
+        font-weight: bold
+        font-size: 5.5555555vw
+
+    .lecture-information-text
+        +margin(top 5.555555vw)
+
+        .lecture-length,
+        .lecture-place
+            font-size: 3.8888888vw
+            color: $gray-700
+
+        .lecture-place
+            +margin(top 2.777777vw)
+
+        .lecture-price-wrap
+            +margin(top 8.3333333vw)
+            +border-radius(2.7777777vw)
+            +background(null, null, null, $background-color-price)
+            overflow: hidden
+
+            span
+                +size(38.888888vw)
+                +padding(5.5555555vw)
+                font-size: 3.8888888vw
+                display: block
+                float: left
+                text-align: left
+                color: $gray-700
+
+            p
+                +padding(5.5555555vw)
+                float: right
+                font-size: 5vw
+                font-weight: bold
+                color: $page-color
+
+    .lecture-btn
+        +size(100%)
+        +padding(3.05555555vw 5.55555555vw)
+        +border(.27777777vw solid $border-color-light, top)
+        +background(null, null, null, $white)
+        overflow: hidden
+        position: fixed
+        bottom: 0
+        left: 0
+        z-index: 100
+
+        .btn-wrap
+            +margin(left 5.55555555vw)
+            float: left
+
+            .edit
+                +margin(top 1.3888888vw)
+                display: block
+                text-align: center
+                text-decoration: underline
+                color: $gray-700
+
+        .apply-btn
+            +btn(purple-fill)
+            +size(75vw, 13.888888vw)
+            line-height: 13.8888888vw
+
+        .btn-apply-complete
+            +btn()
+            +size(75vw, 13.888888vw)
+            +background(null, null, null, $border-color-light)
+            line-height: 13.8888888vw
+            color: $gray-900
+
+        .like
+            display: block
+            float: left
+            font-size: 3.333333333vw
+            text-align: center
+
+            &::before
+                +size(8.33333333334vw, 7.777777vw)
+                +margin(3.05555555vw auto  1.1111111vw auto)
+                +background('/images/mobile/lecture/icon_like.svg',no-repeat, center center)
+                content: ''
+                display: block
+
+            &.active::before
+                +background('/images/mobile/lecture/icon_like_fill.svg',no-repeat, center center)
+
+.lecture-detail
+    +margin(top 8.3333333vw)
+
+    .lecture-detail-menu
+        ul
+            +padding(0 2.2222222vw)
+            overflow: hidden
+
+        li
+            +size(36.6666666vw)
+            text-align: center
+            float: left
+
+            &:first-child
+                +margin(right 13.3333333vw)
+
+            a
+                +padding(4.16666666vw)
+                display: block
+                font-size: 4.4444444vw
+                color: $gray-700
+
+            .active
+                +border(.55555555vw solid $page-color, bottom)
+                font-weight: bold
+                color: $page-color
+
+    .lecture-detail-content
+        +margin(top 5.555555vw bottom 4.4444444vw)
+        font-size: 3.8888888vw
+        line-height: 6.3888888vw
+
+        p
+            +size(null, min 6.3888888vw)
+            +margin(bottom 1rem)
+            display: block
+
+            span
+                line-height: 1
+
+        img
+            +size(max 100%)
+
+        ul li::before
+            +size(1.11111111vw, 1.11111111vw)
+            +margin(bottom 1.38888888vw left 2.7777777vw right 2.7777777vw)
+            +border-radius(50%)
+            +background(null, null, null, $black)
+            display: inline-block
+            content: ''
+
+        ol
+            counter-reset: editor-counter
+
+            li::before
+                +size(5.5555555vw)
+                +margin(left .5555555vw right .5555555vw)
+                counter-increment: editor-counter
+                content: counter(editor-counter) "."
+                text-align: center
+                display: inline-block
+
+        h1
+            margin-bottom: 0.5rem
+            font-weight: 500
+            font-size: 6.1111111vw
+            line-height: 1.2
+
+        h2
+            margin-bottom: 0.5rem
+            font-weight: 500
+            font-size: 5.5555555vw
+            line-height: 1.2
+
+        h3
+            margin-bottom: 0.5rem
+            font-weight: 500
+            font-size: 5vw
+            line-height: 1.2
+
+        h4
+            margin-bottom: 0.5rem
+            font-weight: 500
+            font-size: 4.4444444vw
+            line-height: 1.2
+
+        pre
+            display: block
+            margin-bottom: 1rem
+            font-size: 87.5%
+            color: #4f5d73
+
+        sub
+            position: relative
+            bottom: -0.25em
+            font-size: 75%
+            line-height: 0
+            vertical-align: baseline
+
+        sup
+            position: relative
+            top: -0.5em
+            font-size: 75%
+            line-height: 0
+            vertical-align: baseline
+
+.lecture-comment
+    display: none
+
+    textarea
+        +input(white-lignt-fill)
+        +size(91.111111vw, 13.88888888vw)
+        +padding(5vw 19.44444444vw 5vw 5.5555555vw)
+        font-size: 3.8888888vw
+        resize: none
+
+    form
+        position: relative
+
+    .comment-input-btn
+        +btn(null, 1px solid $border-color-base)
+        +size(19.44444444vw, 13.8888888vw)
+        +background(null, null, null, $white)
+        font-weight: bold
+        position: absolute
+        top: 0
+        right: 0
+
+    // 댓글 작성
+    .comment-input-form
+        +margin(top 5.5555555vw)
+        +padding(bottom 5.555555vw)
+        +border(1px solid $border-color-base, bottom)
+
+    // 댓글 리스트 레이아웃
+    .comment-total-area
+        +padding(8.33333333vw 0)
+        +border(1px solid $border-color-base, bottom)
+
+        // 수정 삭제버튼 공통
+        .btn-comment-modified,
+        .btn-comment-delete
+            +border(0)
+            +background(null, null, null, $white)
+            font-size: 3.33333333vw
+            color: $gray-900
+
+        &:last-child
+            +border(0)
+
+        .comment-area
+            overflow: hidden
+
+            .profile-img
+                float: left
+
+                img
+                    +size(12.2222222vw, 12.2222222vw)
+
+            .write-info
+                +margin(left 3.33333333vw)
+                float: left
+
+                .write-name
+                    +margin(top 1.3888888vw)
+                    display: block
+                    font-weight: bold
+                    font-size: 3.8888888vw
+
+                .date
+                    +margin(top 2.222222vw)
+                    display: block
+                    font-size: 3.33333333vw
+                    color: $gray-900
+
+            .modify-input
+                .comment-input-form
+                    +margin(top 0)
+                    +padding(bottom 0)
+                    +border(0)
+
+            .comment-btn-area
+                float: right
+
+        .write-content
+            +margin(top 5.555555vw)
+            position: relative
+            line-height: 1.3
+
+            .btn-comment-write
+                +margin(top 5.5555555vw)
+                +background()
+                display: block
+                font-size: 3.8888888vw
+                color: $gray-700
+
+                &::after
+                    +size(13px, 7px)
+                    +background('/images/mobile/lecture/icon_arrow_down.svg',no-repeat, center center)
+                    display: block
+                    position: absolute
+                    bottom: 3px
+                    left: 60px
+                    content: ''
+
+            .btn-comment-write.active::after
+                +background('/images/mobile/lecture/icon_arrow_up.svg',no-repeat, center center)
+
+        // 대댓글 리스트
+        .child-comment-area
+            .comment-input-form
+                +margin(top 8.33333333vw)
+                +padding(bottom 0)
+                +border(0)
+
+                textarea
+                    +size(82.777777vw, 11.6666666vw)
+                    +padding(3.8888888vw 16.6666666vw 3.8888888vw 5.55555555vw)
+                    +margin(left 8.3333333vw)
+
+                .comment-child-submit
+                    +size(16.6666666vw, 11.6666666vw)
+
+            .child-comment-list
+                +padding(left 8.33333333vw)
+
+            .child-comment-item
+                +margin(top 8.33333333vw)
+
+            .modify-input
+                .comment-modify-form
+                    +margin(0)
+
+                    textarea
+                        +margin(0)
+
+                .comment-child-modify-submit
+                    +size(16.6666666vw, 11.6666666vw)
+
+    // event css
+    .comment-input-form.hide
+        display: none
+
+    .modify-input
+        display: none
+
+.list-none
+    +margin(top 5.5555555vw)
+
+.popup-area
+    .dim
+        +background(null,null,null,$white)
+        display: none
+        width: 100%
+        height: 100%
+        position: fixed
+        top: 0
+        left: 0
+        background-color: rgba(0, 0, 0, 0.5)
+        cursor: pointer
+        z-index: 210
+
+    .popup-wrap
+        +size(100%,80%)
+        +padding(5.5555555vw)
+        +border(.83333333vw solid $page-color)
+        +background(null,null,null, $white)
+        +box-sizing(border-box)
+        display: none
+        position: fixed
+        left: 50%
+        top: 50%
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.4)
+        transform: translate(-50%, -50%)
+        z-index: 220
+
+        .popup-header
+            overflow: hidden
+
+            h3
+                float: left
+                font-weight: bold
+                font-size: 5.555555vw
+
+            .btn-popup-close
+                +size(5vw, 5vw)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                display: block
+                float: right
+
+        .map
+            +size(100%, 80%)
+            +margin(top 20px)
+            +box-sizing(border-box)
+
+        p
+            +margin(top 5.5555555vw)
+            font-size: 4.4444444vw

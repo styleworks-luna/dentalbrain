@@ -1,0 +1,39 @@
+%selectbox-default
+    + .ui-selectmenu-button
+        +padding(left 5.27777777vw)
+        +border(0.277777vw solid $border-color-base)
+        +border-radius(6.94444444vw)
+        +box-sizing(border-box)
+        display: block
+        background-color: $white-light
+        cursor: pointer
+        outline: none
+
+        &.ui-selectmenu-button-open
+            border-bottom-left-radius: 0
+            border-bottom-right-radius: 0
+
+        &.parsley-error
+            +border(.2777777vw solid $red)
+
+        .ui-icon
+            +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center)
+            +size(10.72222222vw, 100%)
+            float: right
+
+        .ui-selectmenu-text
+            +ellipse()
+            display: block
+            font-size: 3.8888888vw
+            color: $gray-200
+
+@mixin selectbox($width: null, $height: null)
+    @extend %selectbox-default
+
+    + .ui-selectmenu-button
+        @if $width != null
+            width: $width
+
+        @if $height != null
+            height: $height
+            line-height: $height - .55555555vw

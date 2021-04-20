@@ -1,0 +1,47 @@
+%emailbox-default
+    +box-sizing()
+    overflow: hidden
+    position: relative
+
+    &.parsley-error
+        .ui-emailbox-account,
+        .ui-emailbox-domain
+            border-color: $red
+
+    input
+        float: left
+        margin: 0 !important
+
+    .at
+        +margin(0 .833333333vw)
+        float: left
+        line-height: 13.88888888vw
+
+    .ui-emailbox-button
+        @extend %reset-outline
+        +size(14.7222222vw, 13.88888888vw)
+        +margin(0)
+        +padding(0)
+        +box-sizing(border-box)
+        position: absolute
+        top: 0
+        right: 0
+        background-color: transparent
+        outline: none
+        cursor: pointer
+
+        .ui-icon
+            +size(3.6111111vw, 1.9444444vw)
+            +margin(5.833333333vw 0 0 5.2777777vw)
+            +background('/images/desktop/global/icon_arrow_down.png', no-repeat, center center)
+            display: block
+
+    .ui-state-focus
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+        .ui-icon
+            +background('/images/desktop/global/icon_arrow_up.png')
+
+@mixin emailbox()
+    @extend %emailbox-default

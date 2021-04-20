@@ -1,0 +1,66 @@
+@import 'resources/sass/helpers/variables'
+@import 'resources/sass/helpers/extends'
+@import 'resources/sass/helpers/mixins'
+
+.swiper-button-prev:after,
+.swiper-button-next:after
+    content: ''
+
+.top-banner
+
+    .swiper-container
+        position: relative
+
+    .swiper-slide
+        img
+            width: 100%
+            height: 55.55555vw
+            +box-sizing(border-box)
+
+    .swiper-controller-wrap
+        +size(16.66666vw, 6.666666vw)
+        +border-radius(4.1666666vw)
+        +background(null,null,null,rgba(0,0,0,0.2))
+        position: absolute
+        bottom: 2.777777vw
+        right: 2.777777vw
+        z-index: 100
+
+        .swiper-pagination-fraction
+            +size(13.333333vw)
+            font-size: 3.333333vw
+            color: $white
+
+            .swiper-pagination-current
+                +padding(right 3.888888vw)
+                font-weight: normal
+
+            .pagination-bar
+                +size(.277777vw, 2.777777vw)
+                +background(null,null,null,rgba(255,255,255,0.5))
+                content: ''
+
+.ad
+    +size(100vw, 22.222222vw)
+
+    img
+        +size(100%, 22.222222vw)
+
+.middle-banner
+    +size(100%)
+    +margin(11.11111vw auto 0 auto)
+    position: relative
+
+    h2
+        font-weight: bold
+        font-size: 4.444444vw
+
+    .middle-swiper-container
+        +margin(top 2.777777vw)
+        overflow: hidden
+
+        .swiper-slide img
+            +size(31.66666vw, 31.66666vw)
+            +border(.277777vw solid rgba(0,0,0,0.1))
+            +border-radius(2.222222vw)
+            +box-sizing(border-box)

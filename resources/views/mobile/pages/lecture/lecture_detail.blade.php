@@ -1,4 +1,4 @@
-@extends('desktop.layouts.frames.basic_frame')
+@extends('mobile.layouts.frames.except_frame')
 
 @section('script')
     <script type="text/javascript"
@@ -7,17 +7,19 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-detail.css') }}">
 @endsection
+
 
 @section('content')
 
     <section id="content" class="content">
-        <div class="container">
-            <div class="row">
-                <section class="lecture-information-wrap">
-                    <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
-                    <div class="lecture-information">
+        <div class="m-container">
+
+            <section class="lecture-information-wrap">
+                <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
+                <div class="lecture-information">
+                    <div class="m-row">
                         <div class="lecture-sort">
                             @if($program->is_online == true)
                                 <span class="online">온라인</span>
@@ -30,62 +32,59 @@
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <div class="lecture-information-text">
-                            <table>
+                            <ul>
                                 @if($program->is_online == true)
-                                    <tr>
-                                        <th>강의시간</th>
-                                        <td><p class="lecture-length">{{ $program->running_time }}</p></td>
-                                    </tr>
+                                    <li>
+                                        <p class="lecture-length">{{ $program->running_time }}</p>
+                                    </li>
                                 @else
-                                    <tr>
-                                        <th>강의일시</th>
-                                        <td>
-                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
-                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>강의장소</th>
-                                        <td>
-                                            <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
-                                            <a href="" class="btn-map">지도보기</a>
-                                        </td>
-                                    </tr>
+                                    <li>
+
+                                        <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+
+                                    </li>
+                                    <li>
+
+                                        <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
+                                        <a href="" class="btn-map">지도보기</a>
+
+                                    </li>
                                 @endif
-                                <tr>
-                                    <th>강의정보</th>
-                                    <td>
-                                        <select name="ticket" id="ticket" class="lecture-select-box">
-                                            @foreach($program->tickets as $ticket)
-                                                @if ($program->canRepeat() || $program->repeated())
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
-                                                @else
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>결제금액</th>
+                                <li>
+                                    <select name="ticket" id="ticket" class="lecture-select-box">
+                                        @foreach($program->tickets as $ticket)
+                                            @if ($program->canRepeat() || $program->repeated())
+                                                <option value="{{$ticket->id}}"
+                                                        data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
+                                            @else
+                                                <option value="{{$ticket->id}}"
+                                                        data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </li>
+                                <li class="lecture-price-wrap">
+                                    <span>결제금액</span>
                                     @foreach($program->tickets as $ticket)
                                         @if ($program->canRepeat() || $program->repeated())
-                                            <td class="lecture-price"
-                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
-                                            </td>
+                                            <p class="lecture-price"
+                                               data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
+                                            </p>
                                         @else
-                                            <td class="lecture-price"
-                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
-                                            </td>
+                                            <p class="lecture-price"
+                                               data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
+                                            </p>
                                         @endif
                                     @endforeach
-                                </tr>
-                            </table>
+                                </li>
+                            </ul>
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
+                            <a href=""
+                               class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
+                            </a>
                             @if($program->waitDeposit())
                                 <div class="btn-wrap">
                                     <span class="btn-apply-complete">
@@ -161,17 +160,18 @@
                                     @endif {{--오프라인 상황 구분--}}
                                 @endif {{--온/오프라인 구분--}}
                             @endif {{--신청자 구분--}}
-                            <a href=""
-                               class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
-                            </a>
-                        </div>
-                </section>
 
-                <section class="lecture-detail">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lecture-detail">
+                <div class="m-row">
                     <div class="lecture-detail-menu">
                         <ul>
-                            <li><a href="#content" class="menu-tab-detail active">상세정보</a></li>
-                            <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
+                            <li><a href="#content" class="m-menu-tab-detail active">상세정보</a></li>
+                            <li><a href="#comment" class="m-menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
                     <div class="lecture-detail-content">
@@ -179,14 +179,12 @@
                             {!! $program->content !!}
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <section id="comment" class="lecture-comment">
+            <section id="comment" class="lecture-comment">
+                <div class="m-row">
                     <input type="hidden" id="program_id" value="{{ $program->id }}">
-                    <div class="comment-title">
-                        <h3>댓글</h3>
-                        <p class="comment-length"></p>
-                    </div>
                     <form action="{{ route('api.lectures.comments.store',$program->id) }}" class="comment-input-form">
                         @csrf
                         <textarea name="content" placeholder="댓글을 입력하세요."
@@ -295,11 +293,11 @@
                                 </div>
                             </li>
                         @empty
-                            <p>댓글이 없습니다.</p>
+                            <p class="list-none">댓글이 없습니다.</p>
                         @endforelse
                     </ul>
-                </section>
-            </div>
+                </div>
+            </section>
 
             @if($program->is_online == false)
                 <section class="popup-area">

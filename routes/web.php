@@ -65,8 +65,18 @@ if (env('APP_ENV') != 'production') {
 Route::get('/', 'Main\MainController@index');
 
 //마이페이지 아이디 비밀번호 찾기 (임시)
+// TODO: route 변경
 Route::get('find', function () {
     return view('desktop.pages.user.find_id');
+});
+
+//모바일  아이디 비밀번호 찾기 (임시)
+// TODO: route 변경
+Route::get('m-find', function () {
+    return view('mobile.pages.user.find_id');
+});
+Route::get('m-find-ps', function () {
+    return view('mobile.pages.user.find_password');
 });
 
 //회사 소개 (임시)

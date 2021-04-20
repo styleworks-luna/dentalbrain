@@ -41,6 +41,8 @@ mix.js('resources/js/app/app.js', 'public/js/app')
 // admin
 mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
 
+// Desktop
+
 // pages TODO: 추후 수정
 mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
 
@@ -80,5 +82,21 @@ mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop
 
 // 이용약관
 mix.sass('resources/sass/desktop/pages/term/term-common.sass', 'public/css/desktop/pages/term');
+
+// mobile
+mix.sass('resources/sass/mobile/app.sass', 'public/css/mobile')
+
+// mobile pages
+mix.sass('resources/sass/mobile/index.sass', 'public/css/mobile')
+
+// mobile 회원가입, 로그인, 아이디 비밀번호 찾기
+mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages/user')
+    .sass('resources/sass/mobile/pages/user/find-id.sass', 'public/css/mobile/pages/user')
+    .sass('resources/sass/mobile/pages/user/register.sass', 'public/css/mobile/pages/user');
+
+// mobile lecture
+mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
+    .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture')
+    .sass('resources/sass/mobile/pages/lecture/lecture-apply.sass', 'public/css/mobile/pages/lecture');
 
 mix.version();

@@ -13,6 +13,26 @@ $(function () {
         clickTabComment.addClass('active');
         clickTabDetail.removeClass('active');
     });
+
+    //mobile menu tab 클릭 이벤트
+    var clickMTabDetail = $('.m-menu-tab-detail');
+    var clickMTabComment = $('.m-menu-tab-comment');
+
+    clickMTabDetail.click(function (e) {
+        clickMTabDetail.addClass('active');
+        clickMTabComment.removeClass('active');
+        e.preventDefault();
+        $('.lecture-detail-content').css('display', 'block');
+        $('.lecture-comment').css('display', 'none');
+    });
+
+    clickMTabComment.click(function (e) {
+        clickMTabComment.addClass('active');
+        clickMTabDetail.removeClass('active');
+        $('.lecture-detail-content').css('display', 'none');
+        $('.lecture-comment').css('display', 'block');
+    });
+
     //댓글 갯수 이벤트
     var length = $('.comment-list > li').length + $('.child-comment-item').length;
     $('.comment-length').html('(' + length + ')');
@@ -23,7 +43,7 @@ $(function () {
     clickCommentWrite.click(function (e) {
         e.preventDefault();
         var target = $(this);
-        var targetForm = target.parent().parent().next().children().eq(0);
+        var targetForm = target.parent().siblings('.child-comment-area').find('.comment-input-form');
         target.toggleClass('active');
         targetForm.toggleClass('hide');
     });
@@ -64,7 +84,7 @@ $(function () {
         } else {
             like = 'false';
         }
-        
+
         $.ajax({
             url: '/api/lectures/' + lectureIdx + '/like',
             type: 'post',
@@ -138,6 +158,7 @@ $(function () {
                 alert(data.msg);
                 location.reload()
             },
+
             error: function (request, status, error) {
                 if(request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
@@ -247,11 +268,13 @@ $(function () {
         var image = target.parents('.comment-area').find('.profile-img');
         var write_info = target.parents('.comment-area').find('.write-info');
         var comment_btn = target.parents('.comment-area').find('.comment-btn-area');
+        var write_content = target.parents().parents().find('.write-content');
 
         modify_input.css('display', 'block');
         image.css('display', 'none');
         write_info.css('display','none');
         comment_btn.css('display','none');
+        write_content.css('display', 'none');
     });
 
     $('.comment-modify-submit').click(function() {

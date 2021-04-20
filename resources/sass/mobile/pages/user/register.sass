@@ -1,0 +1,148 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_selectbox.sass'
+@import '@sass/components/mobile/_emailbox.sass'
+@import '@sass/components/mobile/_checkbox.sass'
+
+@import '@sass/mobile/pages/agreement/agreement.sass'
+
+.register
+    .register-input
+        tr
+            +margin(top 8.3333333vw)
+            display: block
+
+            th
+                display: block
+                text-align: left
+
+            td
+                +margin(top 2.2222222vw)
+                display: block
+
+        // input box email
+        .ui-emailbox-account
+            width: 42.5vw !important
+
+        .ui-emailbox-domain
+            width: 42.5vw !important
+
+        .ui-emailbox
+            +emailbox()
+
+        // input box 공통
+        label
+            font-weight: bold
+            font-size: 4.4444444vw
+            color: $page-color
+
+        input[type="text"],
+        input[type="password"]
+            +input(white-lignt-fill)
+            +size(91.111111vw, 13.8888888vw)
+            font-size: 3.88888888vw
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder
+            letter-spacing: 0.7px
+            font-size: 3.88888888vw
+
+        select
+            +selectbox(36.3888888888vw, 13.8888888vw)
+
+            + .ui-selectmenu-button
+                +margin(right 1.6666666vw)
+                float: left
+
+        // 버튼
+        .btn-basic
+            +btn(null, 1px solid $border-color-base)
+            +size(23.888888vw, 13.8888888vw)
+            font-weight: bold
+            font-size: 3.88888888vw
+
+        .btn-verification
+            +size(28.33333333vw)
+
+        // input box 정렬
+        .input-wrap
+            overflow: hidden
+
+            .login-id
+                +size(65.55555555vw)
+                float: left
+
+            #login_id_confirm
+                float: right
+
+            #license_num
+                +size(53.05555555vw)
+                float: left
+
+            .phone,
+            .verification-number
+                +size(61.11111111vw)
+                +margin(right 1.666666vw)
+                float: left
+
+        .verification-wrap
+            +margin(top 2.77777777vw)
+
+    .agree
+        +margin(top 13.88888888vw)
+
+        h2
+            font-size: 4.4444444vw
+
+        .agree-form
+            +margin(top 2.77777777vw)
+            +border(1px solid $border-color-base, top bottom)
+
+            .checkbox-wrap
+                +checkbox-wrap()
+
+        .agreement-all-wrap
+            +padding(18px 0)
+            +border(1px solid $border-color-base, bottom)
+
+            label
+                font-weight: bold
+
+        .agreement-wrap
+            ul
+                +padding(left 5.55555555vw)
+            li
+                +padding(12px 0)
+
+            .parsley-required
+                +padding(bottom 0)
+
+        .checkbox-form
+            overflow: hidden
+
+            .checkbox-wrap
+                float: left
+
+            a
+                float: right
+                display: block
+                font-size: 3.33333333vw
+                color: $gray-700
+                text-decoration: underline
+
+    .btn-wrap
+        +margin(top 4.4444444vw bottom 5.55555555vw)
+
+        .btn-register
+            +btn(purple-fill)
+            +size(91.1111111vw, 13.8888888vw)
+            font-size: 4.4444444vw
+
+.verification-check-error-wrap,
+.id-error-wrap
+    ul
+        &:last-child
+            display: none

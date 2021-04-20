@@ -370,41 +370,6 @@
                         font-size: 12px
                         color: $gray-700
 
-                    .comment-text
-                        +padding(top 19px)
-                        display: block
-                        font-size: 14px
-                        line-height: 1.4
-                        white-space: pre-wrap
-
-                    .btn-comment-write
-                        +padding(top 19px)
-                        display: block
-                        position: relative
-                        font-size: 14px
-                        color: $gray-700
-
-                        &:hover
-                            text-decoration: underline
-
-                    .btn-comment-write::after
-                        +size(13px, 7px)
-                        +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
-                        display: block
-                        position: absolute
-                        bottom: 3px
-                        left: 60px
-                        content: ''
-
-                    .btn-comment-write:hover::after
-                        +background('/images/desktop/global/icon_arrow_down_ov.png',no-repeat, center center)
-
-                    .btn-comment-write.active::after
-                        +background('/images/desktop/global/icon_arrow_up.png',no-repeat, center center)
-
-                    .btn-comment-write.active:hover::after
-                        +background('/images/desktop/global/icon_arrow_up_ov.png',no-repeat, center center)
-
                 .comment-btn-area
                     +padding(top 2px)
                     float: right
@@ -427,6 +392,44 @@
                     .btn-comment-modified:focus,
                     .btn-comment-delete:focus
                         outline: none
+
+            .write-content
+                +margin(left 64px)
+
+                .comment-text
+                    +padding(top 19px)
+                    display: block
+                    font-size: 14px
+                    line-height: 1.4
+                    white-space: pre-wrap
+
+                .btn-comment-write
+                    +padding(top 19px)
+                    display: block
+                    position: relative
+                    font-size: 14px
+                    color: $gray-700
+
+                    &:hover
+                        text-decoration: underline
+
+                .btn-comment-write::after
+                    +size(13px, 7px)
+                    +background('/images/desktop/global/icon_arrow_down.png',no-repeat, center center)
+                    display: block
+                    position: absolute
+                    bottom: 3px
+                    left: 60px
+                    content: ''
+
+                .btn-comment-write:hover::after
+                    +background('/images/desktop/global/icon_arrow_down_ov.png',no-repeat, center center)
+
+                .btn-comment-write.active::after
+                    +background('/images/desktop/global/icon_arrow_up.png',no-repeat, center center)
+
+                .btn-comment-write.active:hover::after
+                    +background('/images/desktop/global/icon_arrow_up_ov.png',no-repeat, center center)
 
             .child-comment-area
                 display: block

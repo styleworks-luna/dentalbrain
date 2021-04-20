@@ -1,0 +1,82 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_button.sass'
+
+.login
+    +size(77.777777777vw)
+    +margin(28.888888vw auto 50.555555555vw auto)
+
+    h1
+        font-weight: bold
+        font-size: 24px
+        text-align: center
+
+    .login-form
+        +margin(top 3.333333vw)
+        input[type="text"],
+        input[type="password"]
+            +input(white-lignt-fill)
+            +size(77.777777777vw, 13.8888888vw)
+            font-size: 3.88888888vw
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder
+            letter-spacing: 0.7px
+            font-size: 3.88888888vw
+
+        input[type="password"]
+            +margin(top 2.7777777vw)
+
+        .btn-login
+            +btn(purple-fill)
+            +size(77.777777777vw, 13.8888888vw)
+            +margin(top 2.7777777vw)
+            font-weight: bold
+            font-size: 4.4444444vw
+
+    .login-addition
+        +margin(top 5.55555555vw)
+        overflow: hidden
+
+        .login-find
+            overflow: hidden
+            float: left
+
+            a
+                display: block
+                float: left
+                font-size: 3.8888888vw
+                color: $gray-700
+
+                &:first-child
+                    +padding(right 5px)
+
+
+                &:last-child
+                    &::after
+                        +padding(right 5px)
+                        display: block
+                        float: left
+                        content: '|'
+
+        .login-register
+            float: right
+
+            a
+                display: block
+                font-weight: bold
+                font-size: 3.8888888vw
+                color: $gray-700
+
+    .login-form .login-id.input-error,
+    .login-form .password.input-error
+        +border(.27777777vw solid $red)
+
+    .error-wrap
+        .error
+            +padding(top 2.777777vw)
+            font-size: 3.333333vw
+            line-height: 1.5
+            color: $red

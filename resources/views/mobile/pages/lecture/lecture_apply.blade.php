@@ -1,4 +1,4 @@
-@extends('desktop.layouts.frames.basic_frame')
+@extends('mobile.layouts.frames.except_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
@@ -10,25 +10,18 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-apply.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-apply.css') }}">
 @endsection
 
 @section('content')
     <section class="content lecture-apply">
-        <div class="container">
+        <div class="m-container">
             <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
                   enctype="multipart/form-data">
-                <div class="row">
+                <div class="m-short-row">
                     @csrf
-                    <section class="apply-title">
-                        <h1>신청하기</h1>
-                        <p><em>Step 1. 신청하기</em> <em class="for-padding">&gt;</em> Step 2. 신청내역 확인</p>
-                    </section>
 
                     <section class="lecture-information-wrap">
-                        <div class="lecture-image">
-                            <img src="{{ $program->thumbnail->url }}" alt="강의 사진">
-                        </div>
                         <div class="lecture-information">
                             <div class="lecture-sort">
                                 @if($program->is_online == true)
@@ -38,18 +31,17 @@
                                 @endif
 
                                 <p class="lecture-subject">
-                                    {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
+                                    {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset
+                                </p>
+                                @if($program->is_online == true)
+                                    <p class="lecture-length">{{ $program->running_time }}</p>
+                                @endif
                             </div>
                             <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
-                                @if($program->is_online == true)
+
+                                @if($program->is_online == false)
                                     <tr>
-                                        <th>강의시간</th>
-                                        <td><p class="lecture-length">{{ $program->running_time }}</p></td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <th>강의일시</th>
                                         <td>
                                             <p class="lecture-length">
                                                 {{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
@@ -58,7 +50,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>강의장소</th>
                                         <td>
                                             <p class="lecture-length">
                                                 {{ $program->place->address }} @isset($program->place->address_detail){{ ' , '.$program->place->address_detail }}@endisset
@@ -100,7 +91,7 @@
 
                     @if($surveys->isNotEmpty())
                         <section class="additional-information">
-                            <h3>추가 정보 입력</h3>
+                            <h3>추가정보 입력</h3>
                             @foreach($surveys as $idx => $survey)
                                 @switch($survey->type)
                                     @case('singleChoice')
@@ -275,10 +266,12 @@
                         </table>
                     </section>
                     <section class="agree">
-                        <h3>신청자 동의</h3>
-                        <div class="agreement-all-wrap checkbox-wrap">
-                            <input type="checkbox" id="agree-all" name="agree-all" class="agree-all">
-                            <label for="agree-all">전체동의</label>
+                        <div class="agree-title-wrap">
+                            <h3>신청자 동의</h3>
+                            <div class="agreement-all-wrap checkbox-wrap">
+                                <input type="checkbox" id="agree-all" name="agree-all" class="agree-all">
+                                <label for="agree-all">전체동의</label>
+                            </div>
                         </div>
                         <div class="agreement-wrap">
                             <ul class="agreement-lists">
@@ -292,9 +285,9 @@
                                                    data-parsley-required-message="※ 이용약관을 동의해 주세요.">
                                             <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                         </div>
-                                        <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
                                         <a href="" class="trigger-privacy-to-third">내용보기</a>
                                     </div>
+                                    <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
                                     <div class="offer_error_wrap"></div>
                                 </li>
                                 <li class="agreement-list">
@@ -307,9 +300,9 @@
                                                    data-parsley-required-message="※ 개인정보 수집 및 이용 동의해 주세요.">
                                             <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                         </div>
-                                        <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
                                         <a href="" class="trigger-refund">내용보기</a>
                                     </div>
+                                    <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>
                                     <div class="refund_error_wrap"></div>
                                 </li>
                             </ul>
@@ -317,11 +310,11 @@
                     </section>
 
                     <section class="btn-wrap">
+                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}"
+                           class="btn-cancel">취소하기</a>
                         <button type="submit" class="btn-confirm">
                             신청하기
                         </button>
-                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}"
-                           class="btn-cancel">취소하기</a>
                     </section>
 
                 </div>

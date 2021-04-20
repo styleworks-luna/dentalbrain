@@ -1,0 +1,27 @@
+%input-default
+    +padding(left 5.27777777vw)
+    +box-sizing(border-box)
+
+    &::placeholder
+        color: $gray-900
+
+    &.parsley-error
+        +border(0.277777vw solid $red)
+
+%input-white-light
+    +border(0.277777vw solid $border-color-base)
+    background-color: $white-light
+
+@mixin input($type: null, $border: null, $radius: null)
+    @extend %input-default
+
+    @if $type == white-lignt-fill
+        @extend %input-white-light
+
+    @if $border != null
+        @include border($border)
+
+    @if $radius != null
+        @include border-radius($radius)
+    @else
+        @include border-radius(8.333333333vw)

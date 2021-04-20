@@ -1,0 +1,71 @@
+// common
+.ui-menu
+    .ui-menu-item
+        +border(.27777777vw solid $border-color-base, bottom)
+
+        &:last-child
+            +border(0, bottom)
+
+    .ui-menu-item-wrapper
+        +padding(5vw 0 5vw 5.27777777vw)
+        +background(null, null, null, $white-light)
+        font-size: 3.888888vw
+        display: block
+        cursor: pointer
+
+    .ui-state-active
+        +border(none)
+        +background(null, null, null, $page-color)
+        color: $white
+
+// select menu
+.ui-selectmenu-menu
+    +size(36.3888888888vw, auto 55.5555555vw)
+    +border(.27777777vw solid $border-color-base, right bottom left)
+    +border-radius(6.9444444vw)
+    +box-sizing(border-box)
+    display: none
+    overflow: hidden
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    outline: none
+
+    &.ui-selectmenu-open
+        display: block
+
+    .ui-menu
+        +margin(0)
+        display: block
+        overflow-y: auto
+        max-height: 55.5555555vw
+
+// email box menu
+.ui-emailbox-menu
+    +border(.27777777vw solid $border-color-base, right bottom left)
+    +border-radius(6.9444444vw)
+    +box-sizing(border-box)
+    display: none
+    overflow-x: hidden
+    overflow-y: auto
+    width: 42.5vw !important
+    max-height: 55.5555555vw
+    background: $white
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+    outline: none
+
+// parsley error
+.parsley-error-wrap
+    clear: both
+
+    ul li
+        +padding(2.777777vw 0 0 0)
+        font-size: 3.3333333vw
+        line-height: 1
+        color: $red
+
+.parsley-errors-list li
+    +padding(2.777777vw 0 0 5.5555555vw)
+    font-size: 3.3333333vw
+    line-height: 1
+    color: $red
