@@ -222,7 +222,7 @@
                                         <div class="answers">
                                             <div class="file-wrap">
                                                 <input type="file"
-                                                       id="file-upload"
+                                                       id="file-upload{{ $idx }}"
                                                        class="upload-hidden"
                                                        name="surveys[{{ $idx }}][file]"
                                                        accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
@@ -230,7 +230,7 @@
                                                        data-parsley-required="{{$survey->is_required ? 'true' : 'false'}}"
                                                        data-parsley-errors-container=".file_error_wrap{{ $survey->id }}"
                                                        data-parsley-required-message="파일을 업로드해주세요.">
-                                                <label for="file-upload" class="btn-file-upload">파일선택</label>
+                                                <label for="file-upload{{ $idx }}" class="btn-file-upload">파일선택</label>
                                                 <input type="text" id="file-name" name="surveys[{{ $idx }}][fileName]"
                                                        class="file-name"
                                                        value="파일을 업로드해주세요." disabled="disabled">
