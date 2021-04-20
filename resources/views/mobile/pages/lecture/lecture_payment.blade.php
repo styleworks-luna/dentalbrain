@@ -127,26 +127,26 @@
 
                             <p class="lecture-subject">
                                 {{ $program->major_category_name }} &middot; {{ $program->minor_category_name}}</p>
+                            @if($program->is_online == true)
+                                <p class="lecture-length">{{ $program->running_time }}</p>
+                            @endif
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <table>
-                            @if($program->is_online == true)
+                            @if($program->is_online == false)
                                 <tr>
-                                    <th>강의시간</th>
-                                    <td><p class="lecture-length">{{ $program->running_time }}</p></td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <th>강의일시</th>
                                     <td>
-                                        <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
-                                            ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                        <p class="lecture-length">
+                                            {{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>강의장소</th>
                                     <td>
-                                        <p class="lecture-length">{{ $program->place->address.' , '.$program->place->address_detail }}</p>
+                                        <p class="lecture-length">
+                                            {{ $program->place->address }} @isset($program->place->address_detail){{ ' , '.$program->place->address_detail }}@endisset
+                                        </p>
                                     </td>
                                 </tr>
                             @endif
@@ -284,7 +284,8 @@
                             <div class="radio-wrap">
                                 <input type="radio" id="transfer" name="payment-method"
                                        class="payment-method" value="계좌이체">
-                                <label for="transfer" class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
+                                <label for="transfer"
+                                       class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
                             </div>
 
                             {{--<div class="radio-wrap">

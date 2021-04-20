@@ -14,9 +14,13 @@
 body
     +background(null, null, null, $background-color-file)
 
+.wrap main
+    +padding(bottom 0)
+
 // 신청 결제 페이지 공통
 .lecture-apply,
-.lecture-payment
+.lecture-payment,
+.lecture-result
 
     // 공통 레이아웃
     .lecture-information,
@@ -86,6 +90,13 @@ body
             font-weight: bold
             font-size: 5vw
             line-height: 1.5
+
+        table
+            +padding(top 2.7777777vw)
+            color: $gray-700
+
+            .lecture-length
+                +padding(top 2.7777777vw)
 
     // 신청자 정보
     .applicant-information
@@ -245,6 +256,7 @@ body
 
     .btn-wrap
         +margin(top 5.555555vw)
+        +padding(bottom 5.555555vw)
         overflow: hidden
 
         .btn-confirm
@@ -265,7 +277,8 @@ body
             float: left
 
 // 결제 페이지 전용
-.lecture-payment
+.lecture-payment,
+.lecture-result
     select
         +selectbox(83.3333333vw, 12.7777777vw)
 
@@ -327,6 +340,44 @@ body
 
         .ui-selectmenu-button
             display: none
+
+// 결제 완료 페이지
+.lecture-result
+    .payment-information
+        .payment-result
+            overflow: hidden
+
+            span
+                +padding(top 5.5555555vw)
+                float: left
+                color: $gray-700
+
+            .price
+                float: right
+
+                em
+                    font-size: 4.444444vw
+                    font-weight: bold
+                    color: $page-color
+
+        .tip
+            +padding(top 2.777777vw)
+            font-size: 3.0555555vw
+            color: $gray-900
+            line-height: 1.4
+
+    .btn-wrap
+        +margin(top 5.555555vw)
+        +padding(bottom 5.555555vw)
+        overflow: hidden
+
+        .btn-confirm
+            +btn(purple-fill)
+            +size(94.44444444vw, 13.888888vw)
+            color: $white
+            font-size: 4.4444444vw
+            float: left
+            line-height: 13.888888vw
 
 .ui-selectmenu-menu
     +size(83.3333333vw)

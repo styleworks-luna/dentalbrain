@@ -40,40 +40,40 @@
                                 @else
                                     <li>
 
-                                            <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
-                                                ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
+                                        <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
+                                            ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
 
                                     </li>
                                     <li>
 
-                                            <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
-                                            <a href="" class="btn-map">지도보기</a>
+                                        <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
+                                        <a href="" class="btn-map">지도보기</a>
 
                                     </li>
                                 @endif
                                 <li>
-                                        <select name="ticket" id="ticket" class="lecture-select-box">
-                                            @foreach($program->tickets as $ticket)
-                                                @if ($program->canRepeat() || $program->repeated())
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
-                                                @else
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                    <select name="ticket" id="ticket" class="lecture-select-box">
+                                        @foreach($program->tickets as $ticket)
+                                            @if ($program->canRepeat() || $program->repeated())
+                                                <option value="{{$ticket->id}}"
+                                                        data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
+                                            @else
+                                                <option value="{{$ticket->id}}"
+                                                        data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
                                 </li>
                                 <li class="lecture-price-wrap">
                                     <span>결제금액</span>
                                     @foreach($program->tickets as $ticket)
                                         @if ($program->canRepeat() || $program->repeated())
                                             <p class="lecture-price"
-                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
+                                               data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </p>
                                         @else
                                             <p class="lecture-price"
-                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
+                                               data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
                                             </p>
                                         @endif
                                     @endforeach
