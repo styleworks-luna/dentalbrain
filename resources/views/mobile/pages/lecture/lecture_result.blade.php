@@ -162,7 +162,7 @@
                             <span>결제금액</span>
                             <span class="price"><em>무료</em></span>
                         @else
-                            <span class="payment-method">
+                            <span>
                                 {{ changePaymentMethodName($programStudent->payment->method) }}
                             </span>
 
