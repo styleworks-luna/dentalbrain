@@ -14,13 +14,16 @@
 body
     +background(null, null, null, $background-color-file)
 
-.lecture-apply
+// 신청 결제 페이지 공통
+.lecture-apply,
+.lecture-payment
 
     // 공통 레이아웃
     .lecture-information,
     .applicant-information,
     .payment-information,
     .additional-information,
+    .additional-information-list,
     .agree
         +margin(top 2.7777777vw)
         +padding(5.55555555vw)
@@ -36,13 +39,6 @@ body
         input[type="number"]
             +input(white-lignt-fill)
             +size(83.3333333vw, 11.666666666vw)
-
-        select
-            +size(83.3333333vw, 11.666666666vw)
-
-            + .ui-selectmenu-button
-                +margin(right 1.6666666vw)
-                float: left
 
         .ui-emailbox
             +emailbox()
@@ -167,6 +163,7 @@ body
 
         .file-question
             position: relative
+
             +padding(bottom 2.2222222vw)
 
             .upload-hidden
@@ -266,6 +263,73 @@ body
             font-size: 4.4444444vw
             line-height: 13.888888vw
             float: left
+
+// 결제 페이지 전용
+.lecture-payment
+    select
+        +selectbox(83.3333333vw, 12.7777777vw)
+
+        + .ui-selectmenu-button
+            +margin(right 1.6666666vw)
+            float: left
+
+    .additional-information-list
+        h3
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+
+        .information-answers
+            +padding(5.5555555vw 0)
+
+            h4
+                font-weight: bold
+
+            .answer li,p
+                +padding(top 3.333333vw)
+
+    .payment-information
+        .payment-method-wrap
+            +margin(top 5.555555vw)
+
+            span
+                 color: $gray-700
+
+            .payment-form-wrap
+                +margin(top 3.3333333vw)
+                +background(null, null, null,$background-color-menu)
+                +border-radius(6.3888888vw)
+                overflow: hidden
+
+                .radio-wrap
+                    float: left
+
+                label
+                    +size(25vw)
+                    +padding(4.1666666vw 8.333333vw)
+                    +border-radius(6.3888888vw)
+                    font-size: 3.3333333vw
+                    text-align: center
+                    color: $gray-900
+
+                label.active
+                    +border(.55555555vw solid $page-color)
+                    +padding(3.61111111vw 7.7777777vw)
+                    +background(null, null, null, $white)
+                    font-weight: bold
+                    color: $page-color
+
+        .payment-method
+            display: none
+
+        .select-wrap
+            +margin(top 3.3333333vw)
+            overflow: hidden
+
+        .ui-selectmenu-button
+            display: none
+
+.ui-selectmenu-menu
+    +size(83.3333333vw)
 
 .parsley-errors-list
     li
