@@ -1,0 +1,268 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_checkbox.sass'
+@import '@sass/components/mobile/_radio.sass'
+@import '@sass/components/_file.sass'
+@import '@sass/components/mobile/_emailbox.sass'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_selectbox.sass'
+@import '@sass/mobile/pages/agreement/agreement.sass'
+
+body
+    +background(null, null, null, $background-color-file)
+
+.lecture-apply
+
+    // 공통 레이아웃
+    .lecture-information,
+    .applicant-information,
+    .payment-information,
+    .additional-information,
+    .agree
+        +margin(top 2.7777777vw)
+        +padding(5.55555555vw)
+        +background(null, null, null, $white)
+        +border-radius(2.2222222vw)
+
+        h3
+            font-weight: bold
+            font-size: 4.4444444vw
+            color: $page-color
+
+        input[type="text"],
+        input[type="number"]
+            +input(white-lignt-fill)
+            +size(83.3333333vw, 11.666666666vw)
+
+        select
+            +size(83.3333333vw, 11.666666666vw)
+
+            + .ui-selectmenu-button
+                +margin(right 1.6666666vw)
+                float: left
+
+        .ui-emailbox
+            +emailbox()
+
+        .checkbox-wrap
+            +checkbox-wrap()
+
+        .radio-wrap
+            +radio-wrap()
+
+    // 강의 정보
+    .lecture-information
+        .lecture-sort
+            overflow: hidden
+
+            .online,
+            .offline
+                +padding(1.38888888vw 1.66666666vw)
+                display: block
+                float: left
+                font-size: 2.7777777vw
+                color: $white
+
+            .online
+                +background(null, null, null, $page-color)
+
+            .offline
+                +background(null, null, null, $purply-pink)
+
+            .lecture-subject
+                +padding(top .83333333333vw left 2.77777777vw)
+                float: left
+                font-size: 3.3333333vw
+                color: $gray-700
+
+            .lecture-length
+                +padding(top .83333333333vw)
+                float: right
+                font-size: 3.3333333vw
+                color: $gray-700
+
+        .lecture-title
+            +margin(top 4.44444444vw)
+            +ellipse(null, 2)
+            font-weight: bold
+            font-size: 5vw
+            line-height: 1.5
+
+    // 신청자 정보
+    .applicant-information
+        .applicant-title
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+
+        .warning
+            +margin(top 2.7777777vw)
+            display: block
+            font-size: 3.05555555vw
+            color: $gray-900
+
+        th
+            +size(14.4444444vw)
+            +padding(top 5.55555555vw right 3.8888888vw)
+            text-align: left
+            color: $gray-700
+
+        td
+            font-weight: bold
+
+    // 추가정보 입력
+    .additional-information
+        h3
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+
+        // 공통 작업
+        h4
+            font-weight: bold
+            line-height: 1.5
+
+            em
+                font-weight: normal
+                color: $red
+
+        .multiple-single-choice,
+        .multiple-choice,
+        .short-answer,
+        .address-question,
+        .file-question
+            +padding(5.5555555vw 0)
+
+            label
+                font-size: 3.8888888888vw
+
+        .multiple-single-choice, .multiple-choice
+            li
+                +margin(top 3.3333333vw)
+
+        .short-answer
+            .short-answer-response
+                +margin(top 3.33333333vw)
+
+        .address-question
+            position: relative
+
+            .address
+                +margin(top 3.3333333vw)
+                +background(null, null, null, $background-color-file)
+
+            .address-detail
+                +margin(top 2.7777777vw)
+
+            .btn-address
+                +btn(null, 1px solid $border-color-base)
+                +background(null, null, null, $white)
+                +size(22.2222222vw, 11.666666666vw)
+                position: absolute
+                top: 14.7222222vw
+                right: -3.3333333vw
+                font-weight: bold
+                font-size: 3.88888888vw
+
+        .file-question
+            position: relative
+            +padding(bottom 2.2222222vw)
+
+            .upload-hidden
+                display: none
+
+            .file-name
+                +margin(top 3.3333333vw)
+                +background(null, null, null, $background-color-file)
+                color: $gray-900
+
+            .btn-file-upload
+                +btn(null, 1px solid $border-color-base)
+                +background(null, null, null, $white)
+                +size(22.2222222vw, 11.666666666vw)
+                position: absolute
+                top: 14.7222222vw
+                right: -3.3333333vw
+                font-weight: bold
+                font-size: 3.88888888vw
+                line-height: 11.666666666vw
+
+            .tips
+                +margin(top 2.7777777vw)
+                font-size: 3.05555555vw
+                color: $gray-900
+                line-height: 1.5
+
+    .payment-information
+        h3
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+
+        th
+            +padding(top 5.555555vw right 3.8888888vw)
+            color: $gray-700
+
+        td
+            font-weight: bold
+            font-size: 4.444444vw
+            color: $page-color
+
+    .agree
+        .agree-title-wrap
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+            overflow: hidden
+        h3
+            float: left
+
+        .agreement-all-wrap
+            float: right
+
+            label
+                font-weight: bold
+
+        .agreement-list
+            +padding(top 5.555555vw)
+        .for-overflow
+            overflow: hidden
+
+            .checkbox-wrap
+                float: left
+
+                label
+                    font-size: 3.333333vw
+
+            a
+                float: right
+                font-size: 3.055555vw
+                color: $gray-700
+                text-decoration: underline
+
+        p
+            +padding(top 1.666666vw)
+            font-size: 3.055555vw
+            line-height: 1.4
+            color: $gray-900
+
+
+    .btn-wrap
+        +margin(top 5.555555vw)
+        overflow: hidden
+
+        .btn-confirm
+            +btn(purple-fill)
+            +size(45.8333333vw, 13.888888vw)
+            color: $white
+            font-size: 4.4444444vw
+            float: left
+
+        .btn-cancel
+            +btn()
+            +size(45.8333333vw, 13.888888vw)
+            +margin(right 2.777777vw)
+            +background(null, null, null, $gray-500)
+            color: $white
+            font-size: 4.4444444vw
+            line-height: 13.888888vw
+            float: left

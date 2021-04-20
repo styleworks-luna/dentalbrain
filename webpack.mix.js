@@ -96,6 +96,7 @@ mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages
 
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
-    .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture');
+    .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture')
+    .sass('resources/sass/mobile/pages/lecture/lecture-apply.sass', 'public/css/mobile/pages/lecture');
 
 mix.version();
