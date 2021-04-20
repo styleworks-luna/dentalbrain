@@ -212,8 +212,6 @@
                                     <div class="write-info">
                                         <span class="write-name">{{ $comment->user->name }}</span>
                                         <span class="date">{{ $comment->created_at }}</span>
-                                        <p class="comment-text">{{ $comment->content }}</p>
-                                        <a href="#" class="btn-comment-write">댓글달기</a>
                                     </div>
                                     <div class="comment-btn-area">
                                         <form action="">
@@ -229,6 +227,10 @@
                                             @endcan
                                         </form>
                                     </div>
+                                </div>
+                                <div class="write-content">
+                                    <p class="comment-text">{{ $comment->content }}</p>
+                                    <a href="#" class="btn-comment-write">댓글달기</a>
                                 </div>
                                 <div class="child-comment-area">
                                     <form action="{{ route('api.lectures.comments.store',$program->id) }}"
@@ -263,7 +265,6 @@
                                                     <div class="write-info">
                                                         <span class="write-name">{{ $child->user->name }}</span>
                                                         <span class="date">{{ $child->created_at }}</span>
-                                                        <p class="comment-text">{{ $child->content }}</p>
                                                     </div>
                                                     <div class="comment-btn-area">
                                                         <form action="">
@@ -283,6 +284,9 @@
                                                         </form>
                                                     </div>
                                                 </div>
+                                                <div class="write-content">
+                                                    <p class="comment-text">{{ $child->content }}</p>
+                                                </div>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -294,7 +298,6 @@
                     </ul>
                 </div>
             </section>
-
 
             @if($program->is_online == false)
                 <section class="popup-area">

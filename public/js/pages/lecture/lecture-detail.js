@@ -43,7 +43,7 @@ $(function () {
     clickCommentWrite.click(function (e) {
         e.preventDefault();
         var target = $(this);
-        var targetForm = target.parent().parent().next().children().eq(0);
+        var targetForm = target.parent().siblings('.child-comment-area').find('.comment-input-form');
         target.toggleClass('active');
         targetForm.toggleClass('hide');
     });
@@ -158,6 +158,7 @@ $(function () {
                 alert(data.msg);
                 location.reload()
             },
+
             error: function (request, status, error) {
                 if(request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
@@ -267,11 +268,13 @@ $(function () {
         var image = target.parents('.comment-area').find('.profile-img');
         var write_info = target.parents('.comment-area').find('.write-info');
         var comment_btn = target.parents('.comment-area').find('.comment-btn-area');
+        var write_content = target.parents().parents().find('.write-content');
 
         modify_input.css('display', 'block');
         image.css('display', 'none');
         write_info.css('display','none');
         comment_btn.css('display','none');
+        write_content.css('display', 'none');
     });
 
     $('.comment-modify-submit').click(function() {
