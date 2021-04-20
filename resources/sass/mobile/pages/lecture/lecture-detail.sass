@@ -8,10 +8,10 @@
 @import '~froala-editor/css/froala_editor.pkgd.min.css'
 
 .lecture-information-wrap
-    overflow-x: auto
 
     img
         +size(100%, 75vw)
+        +box-sizing(border-box)
         border: solid 1px rgba(0, 0, 0, 0.1)
 
     .lecture-information
@@ -125,6 +125,9 @@
                 +background('/images/mobile/lecture/icon_like.svg',no-repeat, center center)
                 content: ''
                 display: block
+
+            &.active::before
+                +background('/images/mobile/lecture/icon_like_fill.svg',no-repeat, center center)
 
 .lecture-detail
     +margin(top 8.3333333vw)
@@ -372,3 +375,55 @@
     .modify-input
         display: none
 
+.list-none
+    +margin(top 5.5555555vw)
+
+.popup-area
+    .dim
+        +background(null,null,null,$white)
+        display: none
+        width: 100%
+        height: 100%
+        position: fixed
+        top: 0
+        left: 0
+        background-color: rgba(0, 0, 0, 0.5)
+        cursor: pointer
+        z-index: 210
+
+    .popup-wrap
+        +size(100%,80%)
+        +padding(5.5555555vw)
+        +border(.83333333vw solid $page-color)
+        +background(null,null,null, $white)
+        +box-sizing(border-box)
+        display: none
+        position: fixed
+        left: 50%
+        top: 50%
+        box-shadow: 3px 3px 10px rgba(0,0,0,0.4)
+        transform: translate(-50%, -50%)
+        z-index: 220
+
+        .popup-header
+            overflow: hidden
+
+            h3
+                float: left
+                font-weight: bold
+                font-size: 5.555555vw
+
+            .btn-popup-close
+                +size(5vw, 5vw)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                display: block
+                float: right
+
+        .map
+            +size(100%, 80%)
+            +margin(top 20px)
+            +box-sizing(border-box)
+
+        p
+            +margin(top 5.5555555vw)
+            font-size: 4.4444444vw

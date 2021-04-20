@@ -293,7 +293,7 @@
                                 </div>
                             </li>
                         @empty
-                            <p>댓글이 없습니다.</p>
+                            <p class="list-none">댓글이 없습니다.</p>
                         @endforelse
                     </ul>
                 </div>
