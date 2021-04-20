@@ -297,8 +297,30 @@ body
             h4
                 font-weight: bold
 
-            .answer li,p
-                +padding(top 3.333333vw)
+            .answer
+                overflow: hidden
+                ul
+                    overflow: hidden
+                li,p
+                    +padding(top 3.333333vw left 2.7777777vw)
+                    display: block
+                    float: left
+                    line-height: 1.2
+
+                    &:before
+                        +size(0.83333333vw, 0.8333333vw)
+                        +margin(top 1.38888888vw right 1.38888888vw)
+                        +border-radius(50%)
+                        +background(null, null, null, $black)
+                        display: block
+                        content: ''
+                        float: left
+
+                    a
+                        color: $page-color
+                        text-decoration: underline
+
+
 
     .payment-information
         .payment-method-wrap
