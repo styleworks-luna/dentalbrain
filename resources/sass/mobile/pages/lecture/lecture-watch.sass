@@ -1,0 +1,92 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_input.sass'
+
+body
+    +background(null, null, null, $black)
+
+.lecture-watch
+    position: relative
+
+    .video-wrap
+        +size(100%, 202px)
+
+    .lecture-title-wrap
+        +margin(top 5.5555555vw)
+        +padding(bottom 5.5555555vw)
+        +border(.27777777vw solid $gray-200, bottom)
+
+        .lecture-title
+            a
+                font-size: 3.33333333vw
+                color: $white
+            h2
+                +padding(top 2.777777vw)
+                font-weight: bold
+                font-size: 5vw
+                color: $white
+
+        .lecture-file
+            +margin(top 8.3333333vw)
+
+            .btn-download
+                +btn(purple-fill)
+                +size(91.1111111111vw, 13.888888888vw)
+                font-weight: bold
+                font-size: 4.44444444vw
+                line-height: 13.888888888vw
+
+    .play-list
+        +margin(top 5.55555555vw)
+        +padding(left 4.44444444vw)
+
+        h3
+            font-weight: bold
+            color: $white
+
+        .list-swiper-container
+            +margin(top 3.33333333vw)
+            overflow: hidden
+
+            .thumbnail
+                img
+                    +size(41.666666vw, 23.611111111vw)
+
+            .swiper-slide
+                +margin(right 14.3444444vw)
+
+        p
+            +size(150px)
+            +margin(top 2.5vw)
+            display: block
+            color: $white
+            line-height: 1.5
+
+    .lecture-question
+        +size(100%)
+        +padding(3.055555555vw 4.44444444vw)
+        +border(.2777777vw solid $gray-200, top)
+        +background(null, null, null, $black)
+        position: fixed
+        bottom: 0
+        left: 0
+        z-index: 300
+
+        input[type="text"]
+            +input()
+            +size(88.88888888vw, 13.88888888vw)
+            +background(null, null, null, $gray-200)
+            +border(0)
+
+        input[type="text"]::placeholder
+            color: $gray-700
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(19.4444444vw ,13.88888888vw)
+            font-size: 4.44444444vw
+            position: absolute
+            top: 3.055555555vw
+            right: 15.55555555vw

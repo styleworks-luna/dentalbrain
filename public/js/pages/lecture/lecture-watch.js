@@ -8,8 +8,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        width: '880',
-        height: '495',
+        width: '100%',
+        height: '100%',
         videoId: document.getElementById('youtube_id').value,
         events: {
             'onReady': onPlayerReady,
@@ -55,5 +55,10 @@ $(function () {
             }
         });
     });
+
+    var mySwiper = new Swiper('.list-swiper-container', {
+        slidesPerView: 3,
+    });
+
     form_submit_check();
 });
