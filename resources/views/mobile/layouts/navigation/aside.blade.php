@@ -22,9 +22,9 @@
             </div>
             <div class="my-page">
                 <ul>
-                    <li><a href="">신청한 강의</a></li>
+                    <li><a href="{{ route('account.lectures') }}">신청한 강의</a></li>
                     <li><a href="{{ route('account.payments') }}">결제내역</a></li>
-                    <li><a href="">질문내역</a></li>
+                    <li><a href="{{ route('account.questions.index') }}">질문내역</a></li>
                 </ul>
             </div>
         @else

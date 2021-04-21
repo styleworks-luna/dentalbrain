@@ -1,0 +1,67 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.question-history
+    .question-information
+        +padding(6.66666666vw 11.666666666vw 6.66666666vw 4.44444444vw)
+        +border(.2777777vw solid $border-color-light, bottom)
+        position: relative
+
+        .lecture-name
+            font-size: 3.3333333vw
+            color: $gray-900
+
+        .question-content
+            +padding(top 2.2222222vw)
+            +ellipse(null, 2)
+
+        .question-status
+            +padding(top 3.3333333vw)
+            overflow: hidden
+
+            .inquiry-date
+                float: left
+                font-size: 3.3333333vw
+                color: $gray-700
+
+            .response-status
+                float: right
+                font-size: 3.3333333vw
+
+            .response-status-complete
+                color: $page-color
+
+    .arrow-down
+        +size(10px, 7px)
+        +background('/images/mobile/mypage/icon_arrow_purple_down.svg', no-repeat, center center)
+        content: ''
+        display: block
+        position: absolute
+        top: 50%
+        right: 16px
+        transform: translateY(-50%)
+
+    .arrow-change
+        +background('/images/mobile/mypage/icon_arrow_purple_up.svg', no-repeat, center center)
+
+    .question-detail
+        +background(null, null, null, $background-color-menu)
+        +padding(6.66666666vw 4.44444444vw)
+        +border(.2777777vw solid $border-color-light, bottom)
+        display: none
+
+        h3
+            font-weight: bold
+            font-size: 3.3333333vw
+            color: $gray-700
+
+        .head
+            +padding(top 8.33333333333vw)
+
+        p
+            +padding(top 2.7777777vw)
+
+
+        &.hide-show
+            display: block
