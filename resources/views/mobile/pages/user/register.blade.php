@@ -146,12 +146,12 @@
                                 <tr>
                                     <th><label for="phone">휴대전화</label></th>
                                     <td>
-                                        <div class="input-wrap">
+                                        <div class="input-wrap phone-wrap">
                                             <input type="text"
                                                    id="phone"
                                                    name="phone"
                                                    class="phone"
-                                                   placeholder="'-' 없이 입력해주세요."
+                                                   placeholder="'-' 없이 입력"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="※ 휴대전화 번호를 입력해주세요."
                                                    data-parsley-errors-container=".phone-check-error-wrap"
@@ -162,8 +162,6 @@
                                             </button>
                                             <button type="button" id="edit_phone" class="btn-basic btn-edit-phone">변경
                                             </button>
-
-                                            <p class="timer"></p>
                                         </div>
 
                                         <div class="phone-check-error-wrap parsley-error-wrap"></div>
@@ -172,7 +170,7 @@
                                                    id="verification_number"
                                                    name="verification_number"
                                                    class="verification-number"
-                                                   placeholder="인증번호 6자리를 입력"
+                                                   placeholder="인증번호 6자리"
                                                    readonly="readonly"
                                                    data-parsley-required="true"
                                                    data-parsley-errors-container=".verification-check-error-wrap"
@@ -180,6 +178,7 @@
                                             <button type="button" id="confirm_authentication"
                                                     class="btn-basic btn-verification">인증번호확인
                                             </button>
+                                            <p class="timer"></p>
                                         </div>
                                         <input type="hidden"
                                                name="phone-check"
