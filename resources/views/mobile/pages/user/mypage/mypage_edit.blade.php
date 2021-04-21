@@ -52,6 +52,7 @@
                             <li>
                                 <div class="input-head"><label for="job">직업군</label></div>
                                 <div class="input-wrap">
+                                    <div class="job-wrap">
                                     <select name="job" id="job" class="select-menu">
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}"
@@ -68,6 +69,7 @@
                                            data-parsley-required-message="※ 면허번호를 입력해주세요."
                                            data-parsley-errors-container=".license-error-wrap"
                                            value="{{ auth()->user()->job->license_num }}">
+                                    </div>
                                     <div class="license-error-wrap error-wrap-common">
                                         <div class="error">
                                             @error('license_num')
