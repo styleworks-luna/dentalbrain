@@ -17,7 +17,7 @@
                     <strong>{{ auth()->user()->name }}</strong> 님
                 </div>
                 <div class="user-edit">
-                    <a href="">회원정보 수정</a>
+                    <a href="{{ route('account.modify') }}">회원정보 수정</a>
                 </div>
             </div>
             <div class="my-page">

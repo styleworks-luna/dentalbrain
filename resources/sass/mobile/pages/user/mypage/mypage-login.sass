@@ -1,0 +1,32 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_button.sass'
+
+.identification-form
+    +margin(top 30.5555555vw)
+
+    p
+        display: block
+        text-align: center
+
+        em
+            font-weight: bold
+            color: $page-color
+
+    .input-wrap
+        +margin(4.44444444vw auto 0 auto)
+        +size(77.7777777vw)
+
+        input[type="password"]
+            +input(white-lignt-fill)
+            +size(77.7777777vw, 13.8888888vw)
+
+    .btn-wrap
+        +margin(2.7777777vw auto 0 auto)
+        +size(77.7777777vw)
+
+        .btn-basic
+            +btn(purple-fill)
+            +size(77.7777777vw, 13.8888888vw)

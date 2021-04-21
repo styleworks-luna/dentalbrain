@@ -1,0 +1,128 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_emailbox.sass'
+@import '@sass/components/mobile/_selectbox.sass'
+
+.wrap main
+    +padding(bottom 0)
+
+.edit
+    li
+        +margin(top 8.3333333vw)
+
+        .input-head
+            font-weight: bold
+            font-size: 4.4444444vw
+            color: $page-color
+
+        .name, .login-id
+            +padding(top 3.33333333vw)
+            font-weight: bold
+            font-size: 4.4444444vw
+
+        .input-wrap
+            +margin(top 2.222222vw)
+            overflow: hidden
+
+            input[type="text"],
+            input[type="password"],
+            input[type="email"]
+                +input(white-lignt-fill)
+
+            input:read-only
+                +background(null,null,null, $background-color-readonly)
+                color: $gray-900
+
+            .email_box
+                +size(91.1111111vw ,13.8888888vw)
+
+            select
+                +selectbox(36.3888888888vw, 13.8888888vw)
+
+            .ui-selectmenu-button
+                +margin(right 1.6666666vw)
+                float: left
+
+            #license_num
+                +size(53.0555555vw, 13.8888888vw)
+                float: left
+
+            .phone,
+            .verification-number
+                +size(61.1111111vw, 13.8888888vw)
+
+            #password
+                +size(91.1111111vw, 13.8888888vw)
+
+            .password_confirmation
+                +size(70vw, 13.8888888vw)
+                float: left
+
+            .btn-basic
+                +btn(null, 1px solid $border-color-base)
+                +size(19.4444444vw, 13.8888888vw)
+                font-weight: bold
+
+            .btn-verification
+                +size(28.333333vw)
+
+            .password-confirm
+                +margin(top 2.777777vw)
+                overflow: hidden
+
+                .btn-edit-password
+                    +margin(left 1.666666vw)
+                    float: left
+
+            .phone-wrap,
+            .verification-wrap
+                overflow: hidden
+                position: relative
+
+                .phone
+                    float: left
+
+                .btn-verification
+                    +background(null, null, null, $white)
+                    position: absolute
+                    top: 0
+                    left: 40.5555555vw
+
+                .btn-edit-phone
+                    +margin(left 10.555555vw)
+                    float: left
+
+                .verification-number
+                    float: left
+
+                .timer
+                    +margin(left 13.3333333vw top 5vw)
+                    float: left
+                    font-size: 3.33333333vw
+
+            .verification-wrap
+                +margin(top 2.777777vw)
+
+    .btn-wrap
+        +margin(top 8.333333333vw)
+        +padding(bottom 5.5555555vw)
+        overflow: hidden
+
+        .btn-common
+            +size(44.1666666vw, 13.8888888vw)
+            color: $white
+            float: left
+            font-size: 4.444444vw
+
+        .btn-cancel
+            +btn()
+            +margin(right 2.7777777vw)
+            +background(null, null, null, $gray-900)
+            line-height: 13.8888888vw
+
+        .btn-edit
+            +btn(purple-fill)
+
