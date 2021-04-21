@@ -1,0 +1,81 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/account.sass'
+@import '@sass/components/mobile/_button.sass'
+
+body
+    +background(null, null, null, $background-color-file)
+
+.wrap main
+    +padding(bottom 0)
+
+.payment-history
+    +padding(bottom 2.777777vw)
+    li
+        +margin(top 2.7777777vw)
+        +padding(3.3333333vw 4.44444444vw 4.444444444vw 4.444444444vw)
+        +background(null, null, null, $white)
+
+        .payment-status
+            +padding(bottom 3.3333333vw)
+            +border(.27777777vw solid $border-color-light, bottom)
+            overflow: hidden
+
+            .date
+                float: left
+                font-size: 3.3333333vw
+                color: $gray-700
+
+            .status
+                float: right
+                font-weight: bold
+                font-size: 3.3333333vw
+
+                .cancel
+                    color: $page-color
+
+
+        .information-wrap
+            +margin(top 4.4444444vw)
+            +padding(bottom 4.444444vw)
+            +border(.27777777vw solid $border-color-light, bottom)
+            overflow: hidden
+
+            .lecture-image
+                float: left
+
+                img
+                    +size(31.1111111vw, 23.3333333vw)
+                    +border-radius(1.666666vw)
+                    +border(.2777777vw solid rgba(0, 0, 0, 0.1))
+                    +box-sizing(border-box)
+
+        .lecture-information
+            +margin(left 3.611111111vw)
+            +size(56.38888888vw)
+            float: left
+
+            .lecture-name
+                +ellipse(null, 3)
+                +size(null, 11.66666666vw)
+                +padding(top 2.777777vw)
+                font-weight: bold
+
+            .payment-information
+                +padding(top 5vw)
+
+        .receipt
+            +margin(top 4.4444444vw)
+
+            a
+                +size(null, 11.6666666vw)
+                +btn(null, 1px solid $border-color-base)
+                font-weight: bold
+                line-height: 11.6666666vw
+
+            .deposit-detail
+                display: none
+
+                p
+                    +padding(top 2.777777vw)

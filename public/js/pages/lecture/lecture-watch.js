@@ -57,8 +57,9 @@ $(function () {
     });
 
     var mySwiper = new Swiper('.list-swiper-container', {
-        slidesPerView: 3,
-    });
+        slidesPerView: 2.29334,
+        updateOnWindowResize: false,
+    })
 
     form_submit_check();
 });
