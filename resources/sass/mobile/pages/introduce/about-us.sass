@@ -1,0 +1,124 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.title-image
+    +size(100%,41.666666vw)
+    +background('/images/mobile/introduce/office_top_image.png', no-repeat, center center)
+
+.title
+    +margin(top 11.1111111vw)
+    +padding(bottom 8.33333vw)
+    +border(.2777777vw solid $border-color-super-light, bottom)
+
+    em
+        font-weight: bold
+        font-size: 4.444444vw
+
+    h1
+        +padding(top 3.333333vw)
+        font-weight: bold
+        font-size: 6.666666vw
+        color: $page-color
+        line-height: 1.25
+
+    strong
+        +padding(top 4.444444vw)
+        display: block
+        font-weight: normal
+        font-size: 3.6111111vw
+        color: $gray-700
+        line-height: 1.45
+
+.introduce-description
+    +margin(top 8.3333333vw)
+
+    img
+        +size(91.1111111vw, 91.1111111vw)
+
+    .start-content
+        +margin(top 8.3333333vw)
+
+        .text-wrap
+            font-size: 4.444444vw
+            line-height: 1.5
+
+        .sign
+            +margin(top 2.777777vw)
+
+            img
+                +padding(left 17.5vw)
+                +size(73.6111111vw, 17.2222222vw)
+
+
+    .introduce-middle
+        +margin(top 13.8888888vw)
+
+        .description
+            ul
+                overflow: hidden
+            li
+                +size(41.666666vw, 68.3333333vw)
+                +margin(right 1.666666vw left 3.0555555vw)
+                +padding(5.555555vw 4.1666666vw)
+                +background(null, null, null, $background-color-menu)
+                +border(.277777vw solid $border-color-pop)
+                +box-sizing(border-box)
+                float: left
+                position: relative
+
+                p
+                    +size(33.3333333vw)
+                    display: block
+                    text-align: center
+                    vertical-align: middle
+                    line-height: 1.71
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%, -50%)
+
+                    em
+                        font-weight: bold
+
+                &:nth-child(2n)
+                    +margin(right 0 left 0)
+
+    .introduce-end
+        +margin(top 13.88888vw bottom 11.111111vw)
+
+        h3
+            font-family: $font-family-gmarket
+            font-weight: bold
+            font-size: 8.333333vw
+            text-align: center
+            line-height: 1.2
+
+            em
+                color: #0053a0
+
+        p
+            +size(76.5666666vw)
+            +margin(2.77777vw auto 0 auto)
+            font-size: 4.44444444vw
+            text-align: center
+            line-height: 1.5
+
+        .introduce-construction
+            table
+                +margin(top 8.3333333vw)
+
+                tr
+                    +border(.2777777vw solid $border-color-pop, bottom top left)
+
+                td
+                    +padding(2.777777vw)
+                    +size(17.22222222vw, 12.22222222vw)
+                    +border(.2777777vw solid $border-color-pop, right)
+                    text-align: center
+                    vertical-align: middle
+                    line-height: 1.57
+
+                &:last-child
+                    td
+                        height: 19.4444444vw

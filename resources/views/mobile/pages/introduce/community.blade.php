@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="m-container">
             <community></community>
         </div>
     </section>
