@@ -3,8 +3,9 @@
 @import '@sass/helpers/_mixins.scss'
 
 .title-image
-    +size(100%,41.666666vw)
-    +background('/images/mobile/introduce/office_top_image.png', no-repeat, center center)
+    +size(100%,calc(100vw/2.4))
+    +background('/images/mobile/introduce/office_top_image.jpg', no-repeat, center center)
+    background-size: 100% calc(100vw/2.4)
 
 .title
     +margin(top 11.1111111vw)
