@@ -57,7 +57,7 @@
     <div class="bottom">
         @auth()
             <a href="{{ route('logout') }}">로그아웃</a>
-            <a href="">회원탈퇴</a>
+            <a href="{{ route('account.secession') }}">회원탈퇴</a>
         @else
             <a href="{{ route('login') }}">로그인</a>
             <a href="{{ route('register') }}">회원가입</a>

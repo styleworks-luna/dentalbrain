@@ -1,0 +1,81 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_radio.sass'
+
+.wrap body
+    +padding(bottom 0)
+
+.secession
+
+    //공통 레리아웃
+    input[type="text"],
+    input[type="password"]
+        +input(white-lignt-fill)
+        +size(91.1111111vw, 13.8888888vw)
+
+    .radio-wrap
+        +radio-wrap()
+
+    input:read-only
+        +background(null,null,null, $background-color-readonly)
+        color: $gray-900
+
+    th
+        +margin(top 8.33333333vw)
+        display: block
+        font-weight: bold
+        font-size: 4.44444vw
+        text-align: left
+        color: $page-color
+
+    td
+        +margin(top 3.3333333vw)
+        display: block
+
+        &:last-child
+            +margin(top 2.2222222vw)
+
+        .radio-wrap
+            +margin(top 5.555555vw)
+
+            &:first-child
+                +margin(top 0)
+
+            label
+                font-size: 4.444444vw
+
+        .input-wrap
+            +margin(top 2.7777777vw)
+
+        .tips
+            +margin(top 2.7777777vw)
+
+            p
+                font-size: 3.3333333vw
+                color: $gray-700
+
+                &:last-child
+                    +padding(top 2.222222222vw)
+
+    .btn-wrap
+        +margin(top 8.3333333vw)
+        +padding(bottom 5.55555555vw)
+        overflow: hidden
+
+        .btn-secession
+            +btn()
+            +size(44.1666666vw, 13.8888888vw)
+            +margin(right 2.7777777vw)
+            +background(null, null, null, $gray-700)
+            float: left
+            color: $white
+
+        .btn-cancel
+            +btn(purple-fill)
+            +size(44.1666666vw, 13.8888888vw)
+            float: left
+            line-height: 13.8888888vw
+
