@@ -14,13 +14,27 @@ export default {
     data() {
       return {
           is_active: 1,
+          orderOptions:[
+              {
+                  id: 'newest',
+                  name: '최신순'
+              },
+              {
+                  id: 'online',
+                  name: '온라인'
+              },
+              {
+                  id: 'offline',
+                  name: '오프라인'
+              },
+          ]
       }
     },
     methods: {
         handleSetOrder(order,active) {
             this.is_active = active;
             this.$emit('setOrder',order);
-        },
+        }
     }
 }
 </script>

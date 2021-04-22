@@ -103,6 +103,7 @@ mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mob
 // mobile mypage
 mix.sass('resources/sass/mobile/pages/user/mypage/mypage-payment.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-question.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-lecture.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-login.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-edit.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-secession.sass', 'public/css/mobile/pages/user/mypage');

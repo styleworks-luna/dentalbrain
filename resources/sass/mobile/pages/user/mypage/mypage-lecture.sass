@@ -1,0 +1,164 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_selectbox.sass'
+@import '@sass/components/mobile/_input.sass'
+
+body
+    +background(null, null, null, $background-color-file)
+
+.mypage-content-wrap
+    .content-title
+        text-align: right
+
+        h2
+            display: none
+
+        ul
+            +padding(top 5.555555vw bottom 3.3333333vw)
+            +background(null, null, null, $white)
+            overflow: hidden
+
+        li
+            +margin(right 2.777777vw)
+            float: left
+
+            &:last-child
+                +margin(right 0)
+
+        .active a
+            font-weight: bold
+            color: $page-color
+
+    .mypage-content
+
+        li
+            +margin(top 2.7777777vw)
+            +padding(10vw 4.4444444vw 4.4444444vw 4.4444444vw)
+            +background(null, null, null, $white)
+            position: relative
+
+            .content-information-wrap
+                +padding(top 4.4444444vw bottom 4.444444vw)
+                +border(.277777vw solid $border-color-light, top)
+                overflow: hidden
+
+            .content-image
+                float: left
+
+                img
+                    +size(31.1111111vw, 23.3333333vw)
+                    +border-radius(1.666666vw)
+                    +border(0.2777777vw solid rgba(0, 0, 0, 0.1))
+                    +box-sizing(border-box)
+
+            .content-information
+                +size(55.5555555vw)
+                +margin(left 4.444444vw)
+                float: left
+
+                .lecture-sort
+                    overflow: hidden
+                    position: absolute
+                    top: 8px
+                    left: 16px
+
+                    .online,
+                    .offline
+                        +padding(1.3888888vw 1.666666vw)
+                        display: block
+                        float: left
+                        font-size: 2.77777vw
+                        color: $white
+
+                    .online
+                        +background(null, null, null, $page-color)
+
+                    .offline
+                        +background(null, null, null, $purply-pink)
+
+                    .lecture-subject
+                        +padding(top 1.1111111vw left 1.666666vw)
+                        float: left
+                        font-size: 3.3333333vw
+                        color: $gray-700
+
+                .lecture-title
+                    +ellipse(null, 2)
+                    min-height: 9.4444444vw
+                    line-height: 1.45
+                    font-weight: bold
+
+                th
+                    display: none
+
+                .lecture-length
+                    +ellipse(null, 1)
+                    +padding(top 5vw)
+                    font-size: 3.33333333vw
+                    color: $gray-700
+
+                .lecture-pay
+                    +ellipse(null, 1)
+                    +padding(top 2.222222vw)
+                    font-size: 3.33333333vw
+                    color: $page-color
+
+                .lecture-place
+                    +padding(top 2.222222vw)
+
+            .offline-lecture-pay
+                display: none
+
+    .lecture-under
+        +padding(top 4.44444vw)
+        +border(.2777777vw solid $border-color-light, top)
+        overflow: hidden
+
+        .lecture-sub-information
+            float: left
+
+            .content-time
+                +margin(top 1.3888888vw)
+                p
+                    display: none
+
+            .d-day
+                font-weight: bold
+                font-size: 4.444444vw
+
+                em
+                    color: $page-color
+
+            .dedicate
+                +padding(top 1.38888888vw)
+                font-size: 3.05555555vw
+                color: $gray-700
+
+        .btn-zone
+            float: right
+
+            a
+                +btn(null, 1px solid $border-color-base)
+                +size(33.3333333vw, 11.6666666vw)
+                font-weight: bold
+                line-height: 11.6666666vw
+
+        .content-button-offline
+            overflow: hidden
+
+            a
+                float: left
+
+                &:first-child
+                    +margin(right 1.388888vw)
+
+            .btn-wrap
+
+                a
+                    +size(44.1666666vw)
+
+                    &:first-child
+                        +margin(right 2.777777vw)
