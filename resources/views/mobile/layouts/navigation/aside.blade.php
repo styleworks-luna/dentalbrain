@@ -37,19 +37,19 @@
 
     <div class="menu-controller">
         <ul class="main-menu">
-            <li>회사소개</li>
-            <li>강의안내</li>
-            <li>강사소개</li>
-            <li>전체강의</li>
+            <li><a href="{{ url('introduce') }}">회사소개</a></li>
+            <li><a href="{{ url('instructor') }}">강사소개</a></li>
+            <li><a href="{{ url('community') }}">커뮤니티</a></li>
+            <li><a href="{{ url('lectures') }}">전체강의</a></li>
         </ul>
         <div class="menu-title">
             <h3>고객센터</h3>
             <span class="line"></span>
         </div>
         <ul class="CI">
-            <li>공지사항</li>
-            <li>FAQ</li>
-            <li>문의하기</li>
+            <li><a href="{{ route('customer.notices.index') }}">공지사항</a></li>
+            <li><a href="{{ route('customer.faqs.index') }}">FAQ</a></li>
+            <li><a href="{{ route('customer.inquiries.index') }}">문의하기</a></li>
         </ul>
     </div>
     </div>

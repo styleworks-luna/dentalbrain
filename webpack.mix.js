@@ -108,4 +108,9 @@ mix.sass('resources/sass/mobile/pages/user/mypage/mypage-payment.sass', 'public/
     .sass('resources/sass/mobile/pages/user/mypage/mypage-edit.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-secession.sass', 'public/css/mobile/pages/user/mypage');
 
+// mobile service
+mix.sass('resources/sass/mobile/pages/service/notice.sass', 'public/css/mobile/pages/service')
+    .sass('resources/sass/mobile/pages/service/notice-detail.sass', 'public/css/mobile/pages/service');
+
+
 mix.version();

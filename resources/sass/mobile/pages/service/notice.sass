@@ -1,0 +1,28 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.notice-content
+    +padding(6.6666666vw 4.444444vw)
+    +border(1px solid $border-color-light, bottom)
+    position: relative
+
+    .title
+        +ellipse(null, 2)
+        +size(86.3888888vw)
+        line-height: 1.45
+
+    .date
+        +padding(top 3.333333vw)
+        font-size: 3.3333333vw
+        color: $gray-700
+
+    .icon-arrow
+        +size(2.77777vw, 1.9444444vw)
+        +background('/images/mobile/global/icon_arrow_purple_right.svg', no-repeat, center center)
+        content: ''
+        display: block
+        position: absolute
+        top: 50%
+        right: 4.4444444vw
+        transform: translateY(-50%)

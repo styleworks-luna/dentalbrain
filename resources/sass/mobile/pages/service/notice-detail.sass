@@ -1,0 +1,34 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.notice-detail
+    +margin(top 6.666666vw)
+
+    .notice-detail-title
+        +padding(bottom 6.66666666vw)
+        +border(.27777vw solid $border-color-light, bottom)
+        h3
+            font-weight: bold
+
+    .notice-info
+        +margin(top 3.33333333vw)
+        overflow: hidden
+
+        .writer
+            float: right
+            font-size: 3.3333333vw
+            color: $gray-700
+
+        .date
+            float: left
+            font-size: 3.3333333vw
+            color: $gray-700
+
+    .notice-detail-content
+        +padding(top 5.5555555vw)
+
+        p
+            display: block
+            line-height: 1.45
+            white-space: pre-wrap
