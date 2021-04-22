@@ -94,6 +94,10 @@ mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages
     .sass('resources/sass/mobile/pages/user/find-id.sass', 'public/css/mobile/pages/user')
     .sass('resources/sass/mobile/pages/user/register.sass', 'public/css/mobile/pages/user');
 
+mix.sass('resources/sass/mobile/pages/introduce/instructor.sass', 'public/css/mobile/pages/introduce')
+    .sass('resources/sass/mobile/pages/introduce/about-us.sass', 'public/css/mobile/pages/introduce')
+    .sass('resources/sass/mobile/pages/introduce/community.sass', 'public/css/mobile/pages/introduce');
+
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
     .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture')

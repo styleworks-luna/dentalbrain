@@ -92,6 +92,19 @@
                 </section>
             </div>
 
+            <section class="bottom-banner">
+                <div class="banner-wrap">
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
+                    </a>
+                </div>
+                <div class="banner-wrap">
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
+                    </a>
+                </div>
+            </section>
+
         </div>
     </section>
 @endsection

@@ -3,11 +3,11 @@
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/_pagination.sass'
 
-//.lecture-title-wrap
-//    +background('/images/desktop/global/lecture-top-image.png', no-repeat, center center)
-//    +size(100%, 300px)
-//    min-width: 1280px
-//    text-align: center
+.lecture-title-wrap
+    +background('/images/mobile/global/lecture_top.png', no-repeat, center center)
+    +size(100%, 41.66666vw)
+    min-width: 100%
+    text-align: center
 //
 //    h1
 //        +padding(top 126px)
@@ -93,6 +93,7 @@
 
         .active-menu
             +padding(4.444444vw 1.9444444vw 4.444444vw 7.222222vw)
+            +background(null, null, null, $white)
             +border(.5555555555vw solid $page-color)
             font-weight: bold
             color: $gray-200
