@@ -8,4 +8,11 @@ $(function () {
         $(this).parent().parent().parent().find('.answer').toggleClass('hide-show');
     });
 
+    var arrow = $('.arrow-down');
+
+    arrow.click(function(e) {
+        $(this).toggleClass('change');
+        $(this).parent().next().toggleClass('hide');
+    })
+
 });

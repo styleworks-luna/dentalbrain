@@ -1,0 +1,68 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.wrap main
+    +padding(bottom 0)
+
+.faq
+    .question-information
+        +padding(6.666666vw 10.55555555vw 6.666666vw 4.4444444vw)
+        +border(.2777777vw solid $border-color-light, bottom)
+        position: relative
+
+        .title-wrap
+            overflow: hidden
+
+            em
+                +padding(right 1.666666vw)
+                height: inherit
+                font-weight: bold
+                color: $page-color
+                float: left
+                vertical-align: middle
+
+            .question
+                +size(80vw)
+                float: left
+
+        .sort
+            +padding(top 2.7777777vw left 5vw)
+            font-size: 3.3333333vw
+            color: $gray-700
+
+        .arrow-down
+            +size(2.77777vw, 1.9444444vw)
+            +background('/images/mobile/global/icon_arrow_purple_down.svg', no-repeat, center center)
+            content: ''
+            display: block
+            position: absolute
+            top: 50%
+            right: 4.4444444vw
+            transform: translateY(-50%)
+
+            &.change
+                +background('/images/mobile/global/icon_arrow_purple_up.svg', no-repeat, center center)
+
+    .answer
+        +padding(6.666666vw 4.4444444vw)
+        +border(.2777777vw solid $border-color-light, bottom)
+        +background(null, null, null, $background-color-menu)
+        overflow: hidden
+
+        em
+            +padding(right 1.666666vw top 0.83333333vw)
+            font-weight: bold
+            color: $page-color
+            float: left
+
+        p
+            +size(86.111111vw)
+            display: inline-block
+            float: left
+            vertical-align: top
+            line-height: 1.45
+            white-space: pre-wrap
+
+        &.hide
+            display: none
