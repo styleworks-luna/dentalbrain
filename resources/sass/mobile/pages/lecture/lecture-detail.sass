@@ -387,13 +387,13 @@
         position: fixed
         top: 0
         left: 0
-        background-color: rgba(0, 0, 0, 0.5)
+        background-color: $gray-600
         cursor: pointer
         z-index: 210
 
     .popup-wrap
-        +size(100%,80%)
-        +padding(5.5555555vw)
+        +size(91.1%, 56.9%)
+        +padding(4.444444vw)
         +border(.83333333vw solid $page-color)
         +background(null,null,null, $white)
         +box-sizing(border-box)
@@ -409,21 +409,24 @@
             overflow: hidden
 
             h3
+                +padding(left 30.2777777vw)
                 float: left
                 font-weight: bold
-                font-size: 5.555555vw
+                font-size: 5vw
+                text-align: center
 
             .btn-popup-close
-                +size(5vw, 5vw)
-                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                +size(6.666666vw, 6.666666vw)
+                +background('/images/mobile/global/icon_nav_close_grey.svg', no-repeat, center center)
                 display: block
                 float: right
 
         .map
-            +size(100%, 80%)
+            +size(100%, 72.2%)
             +margin(top 20px)
+            +border(.277777vw solid $border-color-base)
             +box-sizing(border-box)
 
         p
-            +margin(top 5.5555555vw)
+            +margin(top 4.444444vw)
             font-size: 4.4444444vw

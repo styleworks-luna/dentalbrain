@@ -51,9 +51,9 @@
             overflow: hidden
 
         li
-            +size(28.88888vw, 12.77777vw)
-            +margin(top 2.777777vw right 2.222222vw)
-            +padding(4.72222vw 3.0555555vw 4.72222vw 11.38888vw)
+            +size(21.666666vw, 12.77777vw)
+            +margin(top 2.777777vw right 1.388888vw)
+            +padding(4.7222222222vw 2.222222222vw 4.722222222vw 7.5vw)
             +border(.2777777vw solid $border-color-base)
             +border-radius(10.55555vw)
             +background(null,null, null, $white-light)
@@ -61,16 +61,66 @@
             float: left
             font-size: 3.0555555vw
             color: $gray-700
+            text-align: center
+            background-size: 5.555555vw 5.555555vw
 
-            &:nth-child(3n)
+            &:nth-child(4n)
                 +margin(right 0)
 
-        .active-menu,
-        li:hover
-            +padding(4.444444vw 2.77777vw 4.444444vw 11.111111vw)
-            +border(.555555vw solid $page-color)
+            &:first-child
+                +background('/images/mobile/lecture/icon_lecture_menu_01.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(2)
+                +background('/images/mobile/lecture/icon_lecture_menu_02.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(3)
+                +background('/images/mobile/lecture/icon_lecture_menu_03.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(4)
+                +background('/images/mobile/lecture/icon_lecture_menu_04.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(5)
+                +background('/images/mobile/lecture/icon_lecture_menu_05.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(6)
+                +background('/images/mobile/lecture/icon_lecture_menu_06.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(7)
+                +background('/images/mobile/lecture/icon_lecture_menu_07.svg', no-repeat, 1.944444vw center)
+
+            &:nth-child(8)
+                +background('/images/mobile/lecture/icon_lecture_menu_08.svg', no-repeat, 1.944444vw center)
+
+        .active-menu
+            +padding(4.444444vw 1.9444444vw 4.444444vw 7.222222vw)
+            +border(.5555555555vw solid $page-color)
             font-weight: bold
             color: $gray-200
+
+            &:first-child
+                +background('/images/mobile/lecture/icon_lecture_menu_on_01.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(2)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_02.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(3)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_03.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(4)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_04.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(5)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_05.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(6)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_06.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(7)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_07.svg', no-repeat, 1.666666vw center)
+
+            &:nth-child(8)
+                +background('/images/mobile/lecture/icon_lecture_menu_on_08.svg', no-repeat, 1.666666vw center)
+
 
     .lecture-contents
 
