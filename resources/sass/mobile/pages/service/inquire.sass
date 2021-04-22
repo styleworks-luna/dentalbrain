@@ -5,3 +5,81 @@
 @import '@sass/components/mobile/_input.sass'
 @import '@sass/components/mobile/_emailbox.sass'
 @import '@sass/components/mobile/_selectbox.sass'
+@import '@sass/components/mobile/_textarea.sass'
+
+.wrap main
+    +padding(bottom 0)
+
+.inquire
+    //공통 레이아웃
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-lignt-fill)
+        +size(91.1111111vw, 13.888888vw)
+        +margin(right 5px)
+
+    input:read-only
+        +background(null,null,null, $background-color-readonly)
+        color: $gray-900
+
+    textarea
+        +textarea()
+        +size(91.1111111vw, 30.5555555vw)
+        +padding(top 3.61111111vw)
+
+    .ui-emailbox
+        +emailbox()
+
+    select
+        +selectbox(36.3888888888vw, 13.8888888vw)
+
+        + .ui-selectmenu-button
+            +margin(right 1.6666666vw)
+            float: left
+
+    th
+        +padding(top 8.3333333vw)
+        display: block
+        text-align: left
+        font-weight: bold
+        font-size: 4.4444444vw
+        color: $page-color
+
+    td
+        +margin(top 2.222222vw)
+        display: block
+
+    .email-wrap
+        position: relative
+
+        input[type="text"]
+            +size(42.5vw)
+
+        p
+            position: absolute
+            right: 0
+            top: -6.111111vw
+            font-size: 3.3333333vw
+            color: $gray-700
+
+    .title-wrap
+        overflow: hidden
+
+        input[type="text"]
+            +size(51.9444444vw)
+
+    .btn-wrap
+        +margin(top 5.555555vw )
+        +padding(bottom 5.83333333vw)
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(91.1111111vw, 13.888888vw)
+            font-weight: bold
+            font-size: 4.444444vw
+
+    .parsley-errors-list
+        li
+            +padding(left 0)

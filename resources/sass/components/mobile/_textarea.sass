@@ -1,0 +1,19 @@
+%textarea-default
+    +box-sizing(border-box)
+    +padding(left 5.5555555vw top 5vw)
+    +border(.2777777vw solid $border-color-base)
+    +border-radius(6.9444444vw)
+    +background(null, null, null, $white-light)
+    display: block
+    font-size: 3.8888888vw
+    resize: none
+    outline: none
+
+    &::placeholder
+        color: $gray-900
+
+    &.parsley-error
+        +border(.2777777vw solid $red)
+
+@mixin textarea()
+    @extend %textarea-default
