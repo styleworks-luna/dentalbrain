@@ -15,12 +15,14 @@
                     <a href="" class="title" @click.prevent="showDetail(article.id,index)">{{ article.title }}</a>
                     <span class="writer">{{ article.writer }}</span>
                     <span class="date">{{ Helper.dateFormatYDMByComma(article.date) }}</span>
+                    <div class="view-wrap">
                     <div class="like">
                         <div class="like-wrap">
                             <span class="like-icon"></span><span :id="`like-count${index}`" class="like-count">{{ article.likes_count }}</span>
                         </div>
                     </div>
-                    <span class="view">{{ article.views }}</span>
+                    <span class="view"><span class="view-title">조회</span> {{ article.views }}</span>
+                    </div>
                     <span :id="`arrow${index}`" class="btn-arrow-down"
                           @click.prevent="showDetail(article.id,index)"></span>
                 </div>
@@ -38,7 +40,7 @@
                     <div class="btn-wrap">
                         <button type="button" :id="`like${index}`" class="btn-like"
                                 :class="article.liked ? 'active' : ''" @click.prevent="likeIt(article.id,index)">
-                            {{ article.likes_count }}
+                            <span class="like-icon"></span> <span>{{ article.likes_count }}</span>
                         </button>
                     </div>
                 </div>

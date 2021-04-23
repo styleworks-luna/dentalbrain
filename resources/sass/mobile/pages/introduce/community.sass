@@ -1,0 +1,123 @@
+@import '~froala-editor/css/froala_editor.pkgd.min.css'
+@import '~froala-editor/css/froala_style.min.css'
+
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_button.sass'
+
+.community-wrap
+    .title-wrap
+        +size(100%, 41.666666vw )
+        +background('/images/mobile/introduce/community_top_image.png', no-repeat, center center)
+        background-size: 100%, 41.666666vw
+
+    .community-list-title
+        display: none
+
+    .community-lists
+        +border(.2777777vw solid $border-color-light, top)
+
+    .community-summary
+        +padding(6.6666666vw 4.4444444vw)
+        +border(.277777vw solid $border-color-light, bottom)
+        position: relative
+
+        .date, .writer
+            display: none
+
+        .sort
+            display: block
+            font-size: 3.333333vw
+            color: $gray-900
+
+        .title
+            +padding(top 2.2222222vw)
+            display: block
+            line-height: 1.45
+
+        .view-wrap
+            +margin(top 3.333333vw)
+            overflow: hidden
+            display: flex
+            font-size: 3.3333333vw
+            color: $gray-700
+
+            .view
+                +margin(right 2.7777777vw)
+                order: 1
+
+            .like
+                order: 2
+
+            .like-wrap
+                overflow: hidden
+
+                .like-icon
+                    +size(3.3333333vw, 3.3333333vw)
+                    +margin(right .8333333vw)
+                    +background('/images/desktop/community/icon_like_white.svg', no-repeat, center center)
+                    display: block
+                    float: left
+
+                .like-count
+                    float: left
+
+        .btn-arrow-down
+            +size(2.777777vw, 1.9444444vw)
+            +background('/images/mobile/global/icon_arrow_purple_down.svg', no-repeat, center center)
+            display: block
+            position: absolute
+            top: 50%
+            right: 4.4444444vw
+            transform: translateY(-50%)
+
+            &.up
+                +background('/images/mobile/global/icon_arrow_purple_up.svg', no-repeat, center center)
+
+    .community-detail
+        +padding(6.6666666vw 4.4444444vw)
+        +background(null, null, null, $background-color-menu)
+        +border(.277777vw solid $border-color-light, bottom)
+
+        .head
+            font-size: 3.33333333vw
+            color: $gray-700
+
+        .content
+            +margin(top 2.777777vw)
+
+        .community-detail-content
+            .head
+                +margin(top 8.3333333vw)
+
+        .btn-wrap
+            +margin(top 5.555555vw)
+            overflow: hidden
+
+            .btn-like
+                +btn(null, 1px solid $border-color-base)
+                +size(25.555555vw, 11.666666vw)
+                +padding(top 2.97777777vw)
+                +background(null, null, null, $white)
+                +box-sizing(border-box)
+                display: flex
+                justify-content: center
+                float: right
+                color: $gray-700
+                cursor: pointer
+
+                .like-icon
+                    +size(3.3333333vw, 3.3333333vw)
+                    +margin(top 0.83333333vw right .83333333vw)
+                    +background('/images/desktop/community/icon_like_white.svg', no-repeat, center center)
+                    display: block
+                    content: ''
+
+                span
+                    float: left
+
+                &.active
+                    .like-icon
+                        +background('/images/desktop/community/icon_like_purple.svg', no-repeat, center center)
+

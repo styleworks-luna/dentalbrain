@@ -13,13 +13,7 @@
 
 @section('content')
     <section class="community-wrap">
-        <div class="title-wrap">
-            <div class="m-container">
-                <div class="title">
-                    <h1>커뮤니티</h1>
-                </div>
-            </div>
-        </div>
+        <div class="title-wrap"></div>
         <div class="m-container">
             <community></community>
         </div>
