@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <lecture-order @setOrder="handleSetOrder"></lecture-order>
+            <lecture-order @setOrder="handleSetOrder" :mobile="mobile"></lecture-order>
             <lecture-list :list="mobile ? mobileList : list.data"></lecture-list>
         </div>
 
