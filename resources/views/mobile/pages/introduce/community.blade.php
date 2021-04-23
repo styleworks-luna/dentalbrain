@@ -2,7 +2,6 @@
 
 @section('vue')
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
-    </script>
 @endsection
 
 @section('style')
