@@ -15,6 +15,14 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-all.css') }}">
 @endsection
 
+@section('title')
+    <div class="logo-wrap">
+        <a href="{{ url('/') }}" class="ir_pm header-logo">
+            <img src="{{ asset('/images/mobile/global/logo.svg') }}" alt="덴탈브레인">
+        </a>
+    </div>
+@endsection
+
 @section('content')
     <section class="content">
         <div class="m-container">

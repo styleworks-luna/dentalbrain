@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-watch.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <div class="logo-wrap">
+        <a href="{{ url('/') }}" class="ir_pm header-logo">
+            <img src="{{ asset('/images/mobile/global/logo.svg') }}" alt="덴탈브레인">
+        </a>
+    </div>
+@endsection
+
 @section('content')
     <section id="content">
         <section class="lecture-watch">

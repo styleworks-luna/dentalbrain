@@ -20,6 +20,11 @@
     </script>
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>공지사항</h1>
+@endsection
+
 @section('content')
     <section id="content">
         <div class="notice">

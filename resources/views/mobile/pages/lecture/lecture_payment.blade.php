@@ -111,6 +111,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-apply.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>강의결제</h1>
+@endsection
+
 @section('content')
     <section class="content lecture-payment">
         <div class="m-container">

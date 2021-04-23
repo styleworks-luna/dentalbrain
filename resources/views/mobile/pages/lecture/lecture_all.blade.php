@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-all.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>전체강의</h1>
+@endsection
+
 @section('content')
     <div id="content">
 
@@ -17,8 +22,8 @@
         <section class="lecture-wrap">
             <div class="m-container">
                 <div class="m-row">
-                <lecture-all :is_pagination="true" :per_page="12" :mobile="true">
-                </lecture-all>
+                    <lecture-all :is_pagination="true" :per_page="12" :mobile="true">
+                    </lecture-all>
                 </div>
             </div>
         </section>

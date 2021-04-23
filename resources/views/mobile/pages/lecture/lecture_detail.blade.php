@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-detail.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>강의상세</h1>
+@endsection
 
 @section('content')
 

@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/mypage/mypage-payment.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>결제내역</h1>
+@endsection
+
 @section('content')
     <section class="content">
         <div class="m-container">

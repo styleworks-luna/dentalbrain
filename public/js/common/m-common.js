@@ -1,4 +1,8 @@
 $(function () {
+    $('.btn-back').click(function (e) {
+        e.preventDefault();
+        history.back();
+    })
    $('.menu-btn').click(function(e) {
        e.preventDefault();
        $('.aside').removeClass('hide');

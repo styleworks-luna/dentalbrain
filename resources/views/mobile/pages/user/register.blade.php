@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/register.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>회원가입</h1>
+@endsection
+
 @section('content')
 
     <section id="content" class="content">

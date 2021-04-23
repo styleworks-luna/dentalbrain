@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/introduce/community.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>커뮤니티</h1>
+@endsection
+
 @section('content')
     <section class="community-wrap">
         <div class="title-wrap"></div>

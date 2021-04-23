@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-apply.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>신청내역 확인</h1>
+@endsection
+
 @section('content')
     <section class="content lecture-result">
         <div class="m-container">

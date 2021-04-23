@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/find-id.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>아이디 찾기</h1>
+@endsection
+
 @section('content')
     <section id="content">
         <div class="m-container">
@@ -19,8 +24,8 @@
                     <input type="text" id="phone" name="phone" class="phone" placeholder="휴대전화 번호를 입력하세요.(숫자만 입력)">
                     <input type="button" class="btn-find-id" value="확인">
 
-                    <div class="message-wrap id-message"></div>
                 </div>
+                    <div class="message-wrap id-message"></div>
             </article>
         </div>
     </section>

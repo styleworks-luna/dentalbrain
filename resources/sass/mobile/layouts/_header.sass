@@ -3,11 +3,11 @@ header
     +background(null, null, null, $white)
 
     .header
-        +padding(2.222222vw 4.444444vw 4.1666666vw 4.444444vw)
+        +padding(2.222222vw 4.444444vw 3.888888vw 4.444444vw)
 
     .logo-wrap
         +size(25vw, 6.9444444vw)
-        +margin(0 auto)
+        +margin(0 auto .2777777vw auto)
 
         img
             +size(25vw, 6.944444vw)
@@ -15,7 +15,7 @@ header
     .menu-btn-wrap
         +size(6.666666vw, 6.666666vw)
         position: absolute
-        top: 2.222222vw
+        top: 3.122222vw
         right: 4.444444vw
 
         .menu-btn
@@ -23,3 +23,18 @@ header
             background-size: 6.666666vw 6.666666vw
             +size(6.666666vw, 6.666666vw)
             display: block
+
+    h1
+        +padding(top 1.666666vw)
+        font-weight: bold
+        font-size: 5vw
+        text-align: center
+
+    .btn-back
+        +size(6.6666666vw, 6.6666666vw)
+        +background('/images/mobile/global/icon_nav_back.svg',no-repeat, center center)
+        display: block
+        position: absolute
+        top: 2.777777vw
+        left: 4.4444444vw
+        content: ''

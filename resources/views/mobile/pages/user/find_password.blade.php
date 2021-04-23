@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/find-id.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>비밀번호 찾기</h1>
+@endsection
+
 @section('content')
     <section id="content">
         <div class="m-container">

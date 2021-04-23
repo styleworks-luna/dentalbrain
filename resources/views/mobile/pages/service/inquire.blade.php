@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/service/inquire.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>문의하기</h1>
+@endsection
+
 @section('content')
     <section id="content">
         <section class="inquire-wrap">

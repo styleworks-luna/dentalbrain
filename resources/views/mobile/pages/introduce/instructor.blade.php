@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/introduce/instructor.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>강사소개</h1>
+@endsection
+
 @section('content')
     <section class="content">
         <div class="instructor-title-wrap">

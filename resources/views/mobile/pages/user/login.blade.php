@@ -4,6 +4,15 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/login.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <div class="logo-wrap">
+        <a href="{{ url('/') }}" class="ir_pm header-logo">
+            <img src="{{ asset('/images/mobile/global/logo.svg') }}" alt="덴탈브레인">
+        </a>
+    </div>
+@endsection
+
 @section('content')
     <section id="content">
         <div class="m-container">

@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/service/faq.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>FAQ</h1>
+@endsection
+
 @section('content')
     <section id="content">
         <section class="faq">

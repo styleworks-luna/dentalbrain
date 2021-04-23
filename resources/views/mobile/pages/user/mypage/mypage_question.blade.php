@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/mypage/mypage-question.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>질문내역</h1>
+@endsection
+
 @section('content')
     <section class="content">
         <div class="m-container">

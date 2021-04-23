@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/lecture/lecture-apply.css') }}">
 @endsection
 
+@section('title')
+    <a href="" class="btn-back"></a>
+    <h1>신청하기</h1>
+@endsection
+
 @section('content')
     <section class="content lecture-apply">
         <div class="m-container">
