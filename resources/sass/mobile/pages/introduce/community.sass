@@ -57,6 +57,7 @@
                     +size(3.3333333vw, 3.3333333vw)
                     +margin(right .8333333vw)
                     +background('/images/desktop/community/icon_like_white.svg', no-repeat, center center)
+                    background-size: contain
                     display: block
                     float: left
 
@@ -70,6 +71,7 @@
             position: absolute
             top: 50%
             right: 4.4444444vw
+            background-size: contain
             transform: translateY(-50%)
 
             &.up
@@ -109,13 +111,15 @@
 
                 .like-icon
                     +size(3.3333333vw, 3.3333333vw)
-                    +margin(top 0.83333333vw right .83333333vw)
+                    +margin(top 1.33333333vw right .83333333vw)
                     +background('/images/desktop/community/icon_like_white.svg', no-repeat, center center)
                     display: block
+                    background-size: contain
                     content: ''
 
                 span
                     float: left
+                    font-size: 3.8888888vw
 
                 &.active
                     .like-icon
