@@ -5,12 +5,30 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_selectbox.sass'
 
 .community-wrap
     .title-wrap
         +size(100%, 41.666666vw )
         +background('/images/mobile/introduce/community_top_image.png', no-repeat, center center)
         background-size: 100%, 41.666666vw
+
+    .community-navigation
+        +padding(4.444444vw)
+        overflow: hidden
+
+        .community-menu
+            float: left
+
+            select
+                +selectbox(66.666666vw, 11.1111111vw)
+
+        .community-order
+            float: left
+
+            .community-order-select
+                +background(null, null, null, $white)
+                +border(0)
 
     .community-list-title
         display: none

@@ -1,8 +1,8 @@
 <template>
     <section class="community">
         <div class="community-navigation">
-            <community-navigation @setMenu="handleSetMenu"></community-navigation>
-            <community-order @setOrder="handleSetOrder"></community-order>
+            <community-navigation @setMenu="handleSetMenu" :mobile="mobile"></community-navigation>
+            <community-order @setOrder="handleSetOrder" :mobile="mobile"></community-order>
         </div>
 
         <community-list :list="mobile ? mobileList : list.data"></community-list>
