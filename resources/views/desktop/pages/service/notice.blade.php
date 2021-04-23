@@ -2,6 +2,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/service/notice.css') }}">
+
 @endsection
 
 @section('content')

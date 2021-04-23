@@ -13,7 +13,8 @@
         <div class="m-container">
 
             <section class="question-history">
-                <ul>
+                <ul >
+
                     @forelse($question as $key => $value)
                         <li class="history-content">
                             <div class="question-information">
@@ -27,7 +28,8 @@
                                     <span class="inquiry-date content-common">
                                         {{ date('Y.m.d H:m:s',strtotime($value['created_at'])) }}
                                     </span>
-                                    <span class="response-status content-common {{ !empty($value['is_answer']) ? 'response-status-complete' : '' }}">
+                                    <span
+                                        class="response-status content-common {{ !empty($value['is_answer']) ? 'response-status-complete' : '' }}">
                                         {{ !empty($value['is_answer']) ? '메일 답변완료' : '답변대기' }}
                                     </span>
                                 </div>
@@ -43,6 +45,8 @@
                                 </div>
                             </div>
                         </li>
+
+
                     @empty
                         <li class="history-content-none">질문내역이 없습니다.</li>
                     @endforelse

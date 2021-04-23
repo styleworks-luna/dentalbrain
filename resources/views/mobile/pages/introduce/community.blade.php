@@ -15,7 +15,7 @@
     <section class="community-wrap">
         <div class="title-wrap"></div>
         <div class="m-container">
-            <community></community>
+            <community :mobile="true"></community>
         </div>
     </section>
 @endsection
