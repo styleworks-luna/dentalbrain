@@ -6,6 +6,7 @@
 .lecture-title-wrap
     +background('/images/mobile/global/lecture_top.png', no-repeat, center center)
     +size(100%, 41.66666vw)
+    background-size : cover
     min-width: 100%
     text-align: center
 //
@@ -39,6 +40,9 @@
 //
 //            &:hover
 //                text-decoration: underline
+
+.lecture-order
+    display: none
 
 .lecture
     +margin(top 5.55555vw bottom 11.11111vw)
@@ -183,11 +187,12 @@
                     +margin(top 2.222222vw)
                     +ellipse(null, 2)
                     display: block
-                    height: 9.4444444vw
+                    height: 10.3444444vw
                     font-size: 3.888888vw
                     line-height: 1.5
 
                 .lecture-price
+                    +padding(top 3.3333333vw)
                     font-weight: bold
                     font-size: 3.888888vw
                     color: $page-color

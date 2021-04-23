@@ -1,8 +1,8 @@
 %radio-default
-    +size(14px, 14px)
+    +size(3.8888888vw, 3.888888vw )
     +margin(0)
     +padding(0)
-    +border(1px solid $border-color-base)
+    +border(.2777777vw solid $border-color-base)
     +border-radius(50%)
     +prefix(appearance, none, moz webkit)
     background-color: $white
@@ -10,18 +10,19 @@
     cursor: pointer
 
     &:checked
-        +background('/images/desktop/input/radio-on.png', no-repeat, center center)
+        +background('/images/mobile/global/radio_on.svg', no-repeat, center center)
+        background-size: 3.8888888vw, 3.888888vw
 
     &.parsley-error
-        +border(1px solid $red)
+        +border(.2777777vw solid $red)
 
 %radio-wrap-default
     overflow: hidden
-    line-height: 16px
+    line-height: 4.4444444vw
 
     input[type="radio"]
         @extend %radio-default
-        +margin(1px 8px 0 0)
+        +margin(.2777777vw 2.222222vw 0 0)
         float: left
 
     label
