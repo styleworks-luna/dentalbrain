@@ -2,8 +2,9 @@
     <section class="lecture">
         <lecture-navigation @setMenu="handleSetMenu"></lecture-navigation>
         <lecture-order v-if="is_pagination" @setOrder="handleSetOrder"></lecture-order>
-        <lecture-list :list="list.data"></lecture-list>
+        <lecture-list :list="mobile ? mobileList : list.data"></lecture-list>
 
+        <template v-if="!mobile">
         <div class="paging-wrap" v-if="is_pagination">
             <nav>
                 <pagination :data="list" :limit=3 @pagination-change-page="getData">
@@ -12,6 +13,12 @@
                 </pagination>
             </nav>
         </div>
+        </template>
+        <template v-else>
+            <div class="infinite-wrapper">
+                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
+            </div>
+        </template>
     </section>
 </template>
 
@@ -19,6 +26,7 @@
 import LectureNavigation from '@/components/lecture/LectureNavigation.vue';
 import LectureList from '@/components/lecture/LectureList.vue';
 import LectureOrder from '@/components/lecture/LectureOrder.vue';
+import InfiniteLoading from 'vue-infinite-loading';
 
 // api
 import Lecture from '@/api/lecture/Lecture.js'
@@ -29,17 +37,21 @@ export default {
         'lecture-navigation': LectureNavigation,
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
+        InfiniteLoading,
     },
     props: {
         'is_pagination': Boolean,
         'per_page': Number,
+        'mobile': Boolean,
     },
     data() {
         return {
             category_id: 1,
             list: {},
             order_by: 'newest',
-            page: 1
+            page: 1,
+            mobileList: [],
+            infiniteId: +new Date(),
         }
     },
     mounted() {
@@ -49,6 +61,7 @@ export default {
         handleSetMenu(category_id) {
             this.category_id = category_id;
             this.getData()
+            this.changeType()
         },
         handleSetOrder(order_by) {
             this.order_by = order_by;
@@ -71,6 +84,37 @@ export default {
             }).catch(err => {
                 this.list = [];
             });
+        },
+        infiniteHandler($state, page = this.page) {
+            let vm = this;
+
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                category_id: this.category_id,
+                per_page: this.per_page,
+                order_by: this.order_by,
+                page: page
+            };
+            Lecture.getData(params).then(res => {
+                if(res.data.data.length) {
+                    $.each(res.data.data, function (key, value) {
+                        vm.mobileList.push(value);
+                    });
+                    $state.loaded();
+                } else {
+                    $state.complete();
+                }
+            });
+
+            this.page = this.page + 1;
+        },
+        changeType() {
+            this.page = 1;
+            this.mobileList = [];
+            this.infiniteId += 1;
         },
     }
 }
