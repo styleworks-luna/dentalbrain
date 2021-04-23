@@ -40,7 +40,7 @@
                     <div class="btn-wrap">
                         <button type="button" :id="`like${index}`" class="btn-like"
                                 :class="article.liked ? 'active' : ''" @click.prevent="likeIt(article.id,index)">
-                            <span class="like-icon"></span> <span>{{ article.likes_count }}</span>
+                            <span class="like-icon"></span> <span class="like-count">{{ article.likes_count }}</span>
                         </button>
                     </div>
                 </div>
@@ -82,6 +82,8 @@ export default {
         likeIt(id, index) {
             var likeCountElement = document.getElementById(`like-count${index}`);
             var likeElement = document.getElementById(`like${index}`);
+            var likeElementCnt = likeElement.lastChild;
+
             likeElement.classList.toggle("active");
 
             var like = '';
@@ -94,7 +96,7 @@ export default {
 
             Community.postLike(id, {'like': like}).then(res => {
                 likeCountElement.innerText = res.data.cnt;
-                likeElement.innerText = res.data.cnt;
+                likeElementCnt.innerText = res.data.cnt;
             })
         }
     }
