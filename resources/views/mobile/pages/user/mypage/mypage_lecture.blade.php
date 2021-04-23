@@ -12,7 +12,7 @@
     <section class="content">
         <div class="m-container">
             <div class="mypage-content-wrap">
-                <lecture></lecture>
+                <lecture :mobile="true"></lecture>
             </div>
         </div>
     </section>

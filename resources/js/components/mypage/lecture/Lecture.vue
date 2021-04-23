@@ -2,9 +2,10 @@
     <div>
         <div>
             <lecture-order @setOrder="handleSetOrder"></lecture-order>
-            <lecture-list :list="list.data"></lecture-list>
+            <lecture-list :list="mobile ? mobileList : list.data"></lecture-list>
         </div>
 
+        <template v-if="!mobile">
         <div class="paging-wrap">
             <nav>
                 <pagination :data="list" :limit=3 @pagination-change-page="getData">
@@ -13,12 +14,20 @@
                 </pagination>
             </nav>
         </div>
+        </template>
+
+        <template v-else>
+        <div class="infinite-wrapper">
+            <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
+        </div>
+        </template>
     </div>
 </template>
 
 <script>
 import LectureList from '@/components/mypage/lecture/LectureList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
+import InfiniteLoading from 'vue-infinite-loading';
 
 // api
 import Mypage from '@/api/mypage/Mypage.js';
@@ -28,12 +37,18 @@ export default {
     components: {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
+        InfiniteLoading,
+    },
+    props: {
+      'mobile': Boolean,
     },
     data() {
         return {
             list: {},
             order: 'newest',
-            page: 1
+            page: 1,
+            mobileList: [],
+            infiniteId: +new Date(),
         }
     },
     mounted() {
@@ -43,6 +58,7 @@ export default {
         handleSetOrder(order) {
             this.order = order;
             this.getData()
+            this.changeType()
         },
         getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
@@ -61,6 +77,36 @@ export default {
                 this.list = [];
             });
         },
-    }
+        infiniteHandler($state, page = this.page) {
+            let vm = this;
+
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                per_page: this.per_page,
+                order: this.order,
+                page: page
+            };
+            Mypage.getData(params).then(res => {
+                if(res.data.data.data.length) {
+                    $.each(res.data.data.data, function (key, value) {
+                        vm.mobileList.push(value);
+                    });
+                    $state.loaded();
+                } else {
+                    $state.complete();
+                }
+            });
+
+            this.page = this.page + 1;
+        },
+        changeType() {
+            this.page = 1;
+            this.mobileList = [];
+            this.infiniteId += 1;
+        },
+    },
 }
 </script>
