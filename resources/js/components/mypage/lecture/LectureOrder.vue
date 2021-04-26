@@ -9,11 +9,14 @@
         </ul>
         </template>
         <template v-else>
+            <div class="lecture-menu">
+            <span class="icon-arrow"></span>
             <select name="mypage-menu" id="mypage-menu" class="mypage-menu-select" v-model="order" @change="handleSetOrderSelect">
-                <option value="newest">최신순</option>
+                <option value="newest" selected>최신순</option>
                 <option value="online">온라인</option>
                 <option value="offline">오프라인</option>
             </select>
+            </div>
         </template>
     </div>
 </template>
@@ -40,7 +43,7 @@ export default {
                   name: '오프라인'
               },
           ],
-          order: '',
+          order: 'newest',
       }
     },
     methods: {

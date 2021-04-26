@@ -13,6 +13,8 @@ body
 
 .mypage-content-wrap
     .content-title
+        +padding(5.55555555vw 4.444444vw 3.888888vw 0 )
+        +background(null, null, null, $white)
         text-align: right
 
         h2
@@ -33,6 +35,16 @@ body
         .active a
             font-weight: bold
             color: $page-color
+
+        .lecture-menu
+            .mypage-menu-select
+                +border(0)
+                +padding(right 4.6vw)
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center)
+                text-align-last: right
+                text-align: right
+                -ms-text-align-last: right
+                -moz-text-align-last: right
 
     .mypage-content
 
