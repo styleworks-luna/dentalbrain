@@ -10,9 +10,9 @@
                 <span class="view">조회수</span>
             </li>
             <li class="community-list-content" v-for="(article,index) in articles" :key="article.id">
-                <div class="community-summary">
+                <div class="community-summary" @click.prevent="showDetail(article.id,index)">
                     <span class="sort">{{ article.category_name }}</span>
-                    <a href="" class="title" @click.prevent="showDetail(article.id,index)">{{ article.title }}</a>
+                    <a class="title">{{ article.title }}</a>
                     <span class="writer">{{ article.writer }}</span>
                     <span class="date">{{ Helper.dateFormatYDMByComma(article.date) }}</span>
                     <div class="view-wrap">

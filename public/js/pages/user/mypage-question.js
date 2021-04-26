@@ -1,10 +1,9 @@
 $(function () {
-    //강의 상세보기
-    var arrowDown = $('.arrow-down');
+    var question = $('.question-information');
 
-    arrowDown.click(function () {
-        $(this).toggleClass('arrow-change');
-        $(this).parent().parent().find('.question-detail').toggleClass('hide-show');
-    })
+    question.click(function () {
+        $(this).next().toggleClass('hide-show');
+        $(this).find('.arrow-down').toggleClass('arrow-change');
+    });
 
 });

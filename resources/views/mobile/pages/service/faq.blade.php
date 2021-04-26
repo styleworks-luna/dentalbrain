@@ -38,7 +38,7 @@
                     <ul class="infinite-scroll">
                         @forelse($faqs as $key => $value)
                             <li class="faq-content">
-                                <div class="question-information">
+                                <div class="question-information m-question">
                                     <div class="title-wrap">
                                         <em>Q</em>
                                         <div class="question">

@@ -1,18 +1,17 @@
 $(function () {
     //강의 상세보기
-    var question =  $('.question-content');
+    var question =  $('.question');
 
     question.click(function(e) {
         e.preventDefault();
         $(this).toggleClass('arrow-change');
-        $(this).parent().parent().parent().find('.answer').toggleClass('hide-show');
-    });
-
-    var arrow = $('.arrow-down');
-
-    arrow.click(function(e) {
-        $(this).toggleClass('change');
-        $(this).parent().next().toggleClass('hide');
+        $(this).parent().parent().find('.answer').toggleClass('hide-show');
     })
 
+    var mQuestion = $('.m-question');
+
+    mQuestion.click(function(e) {
+        $(this).next().toggleClass('hide')
+        $(this).find('.arrow-down').toggleClass('change');
+    })
 });
