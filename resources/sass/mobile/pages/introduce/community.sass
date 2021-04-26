@@ -15,20 +15,72 @@
 
     .community-navigation
         +padding(4.444444vw)
-        overflow: hidden
+
+        &::after
+            content: ''
+            display: table
+            clear: both
 
         .community-menu
             float: left
 
-            select
-                +selectbox(66.666666vw, 11.1111111vw)
+            .community-menu-select
+                position: relative
+
+                input[type=text]
+                    +size(66.6666666vw, 11.1111111vw)
+                    +padding(3.611111vw 5.5555555vw)
+                    +border(.277777vw solid $border-color-base)
+                    +border-radius(6.9444444vw)
+                    +background('/images/mobile/global/icon_arrow_down.svg', no-repeat, 90% center, $background-color-menu)
+                    +box-sizing(border-box)
+                    background-size: 3.611111vw 1.944444vw
+                    font-size: 3.8888888vw
+
+                    &.select-focus
+                        +background('/images/mobile/global/icon_arrow_up.svg', no-repeat, 90% center, $background-color-menu)
+                        background-size: 3.611111vw 1.944444vw
+                        border-bottom-left-radius: 0
+                        border-bottom-right-radius: 0
+
+                .select-box
+                    display: none
+                    position: absolute
+                    z-index: 100
+
+                    li
+                        +size(66.6666666vw, 11.1111111vw)
+                        +padding(3.611111vw 5.5555555vw)
+                        +border(.277777vw solid $border-color-base, bottom right left)
+                        +background(null, null, null, $background-color-menu)
+                        +box-sizing(border-box)
+
+                        &:last-child
+                            border-bottom-left-radius: 6.9444444vw
+                            border-bottom-right-radius: 6.9444444vw
+
+                        &.active-menu
+                            +background(null, null, null, $page-color)
+                            color: $white
+
+                .show
+                    display: block
 
         .community-order
-            float: left
+            +margin(top 3.8888888vw)
+            float: right
 
             .community-order-select
-                +background(null, null, null, $white)
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
+                +padding(right 5vw)
                 +border(0)
+                float: right
+                background-size: 3.611111vw 1.944444vw
+                font-size: 3.8888888vw
+                text-align-last: right
+                text-align: right
+                -ms-text-align-last: right
+                -moz-text-align-last: right
 
     .community-list-title
         display: none

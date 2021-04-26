@@ -2,10 +2,14 @@
     <div class="community-menu">
 
         <template v-if="mobile">
-            <select id="community-menu-select" class="community-menu-select" v-model="isActive" @change="handleSetMenuSelect">
-                <option value="">전체</option>
-                <option v-for="category in categoryOption" :value="category.id">{{ category.name}}</option>
-            </select>
+
+            <div class="community-menu-select">
+                <input type="text" id="selected-category" readonly value="전체" @click="handleOption" @blur="handleOptionBlur">
+                <ul id="custom-select" class="select-box">
+                    <li :class="{'active-menu': isActive == ''}" @click="handleSetMenuSelect('', '전체')"> 전체</li>
+                    <li :class="{'active-menu': isActive == category.id}" v-for="category in categoryOption" @click.self="handleSetMenuSelect(category.id, category.name)">{{ category.name }}</li>
+                </ul>
+            </div>
         </template>
 
         <template v-else>
@@ -46,9 +50,22 @@ export default {
                 this.categoryOption = res.data;
             });
         },
-        handleSetMenuSelect() {
-            console.log(this.isActive);
+        handleSetMenuSelect(id, name) {
+            document.getElementById('selected-category').value = name;
+            this.isActive = id;
             this.$emit('setMenu', this.isActive);
+            document.getElementById('custom-select').classList.remove('show');
+            document.getElementById('selected-category').classList.remove('select-focus');
+        },
+        handleOption() {
+            document.getElementById('custom-select').classList.toggle('show');
+            document.getElementById('selected-category').classList.toggle('select-focus');
+        },
+        handleOptionBlur() {
+            setTimeout(function() {
+                document.getElementById('custom-select').classList.remove('show');
+                document.getElementById('selected-category').classList.remove('select-focus');
+                }, 1);
         }
     }
 }
