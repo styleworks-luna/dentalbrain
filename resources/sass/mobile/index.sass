@@ -52,21 +52,26 @@
 .middle-banner
     +size(100%)
     +margin(11.11111vw auto 0 auto)
+    +padding(left 4.44444vw)
     position: relative
 
     h2
         font-weight: bold
         font-size: 4.444444vw
 
-    .middle-swiper-container
+    .m-middle-swiper-container
         +margin(top 2.777777vw)
         overflow: hidden
 
-        .swiper-slide img
-            +size(31.66666vw, 31.66666vw)
-            +border(.277777vw solid rgba(0,0,0,0.1))
-            +border-radius(2.222222vw)
-            +box-sizing(border-box)
+        .swiper-slide
+            +margin(right 3.333333vw)
+            width: 31.66666vw !important
+
+            img
+                +size(31.66666vw, 31.66666vw)
+                +border(.277777vw solid rgba(0,0,0,0.1))
+                +border-radius(2.222222vw)
+                +box-sizing(border-box)
 
 .bottom-banner
     +margin(top 8.3333333vw bottom 5.5555555vw)

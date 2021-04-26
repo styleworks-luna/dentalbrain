@@ -47,6 +47,10 @@ $(function () {
         },
     });
 
+    var mySwiper = new Swiper('.m-middle-swiper-container', {
+        slidesPerView: 2.6,
+    });
+
     var mySwiper = new Swiper('.bottom-swiper-container', {
         slidesPerView: 2,
         spaceBetween: 20,

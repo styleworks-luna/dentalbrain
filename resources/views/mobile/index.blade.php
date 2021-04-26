@@ -66,10 +66,10 @@
                 @endif
             </section>
 
-            <div class="m-row">
+
                 <section class="middle-banner">
                     <h2>추천강의</h2>
-                    <div class="middle-swiper-container">
+                    <div class="m-middle-swiper-container">
                         <div class="swiper-wrapper">
                             @forelse($recommends as $recommend)
                                 <div class="swiper-slide">
@@ -98,7 +98,6 @@
                         </div>
                     </div>
                 </section>
-            </div>
 
             <section class="bottom-banner">
                 <div class="banner-wrap">

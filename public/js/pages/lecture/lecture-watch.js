@@ -58,7 +58,7 @@ $(function () {
     });
 
     var mySwiper = new Swiper('.list-swiper-container', {
-        slidesPerView: 2,
+        slidesPerView: 2.05,
     });
 
     form_submit_check();
