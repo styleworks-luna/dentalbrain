@@ -48,7 +48,7 @@
                                             ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
 
                                     </li>
-                                    <li>
+                                    <li class="lecture-place-wrap">
 
                                         <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
                                         <a href="" class="btn-map">지도보기</a>

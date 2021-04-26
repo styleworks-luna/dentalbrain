@@ -54,8 +54,28 @@
             font-size: 3.8888888vw
             color: $gray-700
 
-        .lecture-place
-            +margin(top 2.777777vw)
+        .lecture-place-wrap
+            overflow: hidden
+
+            .lecture-place
+                +size(75.833333vw)
+                +margin(top 2.777777vw)
+                +ellipse()
+                float: left
+
+            .btn-map
+                +margin(top 1.577777vw)
+                +padding(1.1111111vw)
+                +border(.277777vw solid $border-color-base)
+                float: right
+                font-size: 2.777777vw
+                color: $gray-700
+
+        .lecture-select-box
+            +margin(top 3.3333333vw)
+            +border(0)
+            font-size: 3.8888888vw
+            color: $gray-700
 
         .lecture-price-wrap
             +margin(top 8.3333333vw)
