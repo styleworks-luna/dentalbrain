@@ -67,48 +67,63 @@
             </section>
 
 
-                <section class="middle-banner">
-                    <h2>추천강의</h2>
-                    <div class="m-middle-swiper-container">
-                        <div class="swiper-wrapper">
-                            @forelse($recommends as $recommend)
-                                <div class="swiper-slide">
-                                    <a href="{{ route('api.banners.redirect',$recommend->id) }}">
-                                        <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
-                                    </a>
-                                </div>
-                            @empty
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                    </a>
-                                </div>
-                                <div class="swiper-slide">
-                                    <a href="">
-                                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                    </a>
-                                </div>
-                            @endforelse
+            <section class="middle-banner">
+                <h2>추천강의</h2>
+                <div class="m-middle-swiper-container">
+                    <div class="swiper-wrapper">
+                        @forelse($recommends as $recommend)
+                            <div class="swiper-slide">
+                                <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                                    <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
+                                </a>
+                            </div>
+                        @empty
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                        @endforelse
 
-                        </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
             <section class="bottom-banner">
                 <div class="banner-wrap">
-                    <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
-                    </a>
+                    @isset($bar)
+                        <a href="{{ route('api.banners.redirect',$bar->id)}}">
+                            <img src="{{ $bar->mobileFile->url }}" alt="바배너">
+                        </a>
+                    @else
+                        <a href="">
+                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
+                        </a>
+                    @endisset
                 </div>
                 <div class="banner-wrap">
-                    <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
-                    </a>
+                    @forelse($bottomSlides as $bottom)
+                        <a href="{{ route('api.banners.redirect',$bottom->id)}}">
+                            <img src="{{ $bottom->mobileFile->url }}" alt="하단배너">
+                        </a>
+                        @break($loop->iteration == 2)
+                    @empty
+                        @for($i = 0; $i < 2; $i++)
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
+                            </a>
+                        @endfor
+                    @endforelse
                 </div>
             </section>
 
