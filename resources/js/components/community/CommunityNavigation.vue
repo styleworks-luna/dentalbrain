@@ -2,7 +2,6 @@
     <div class="community-menu">
 
         <template v-if="mobile">
-
             <div class="community-menu-select">
                 <input type="text" id="selected-category" readonly value="전체" @click="handleOption" @blur="handleOptionBlur">
                 <ul id="custom-select" class="select-box">
@@ -50,6 +49,7 @@ export default {
                 this.categoryOption = res.data;
             });
         },
+        // mobile select box
         handleSetMenuSelect(id, name) {
             document.getElementById('selected-category').value = name;
             this.isActive = id;

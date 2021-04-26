@@ -10,8 +10,7 @@
         </template>
         <template v-else>
             <div class="lecture-menu">
-            <span class="icon-arrow"></span>
-            <select name="mypage-menu" id="mypage-menu" class="mypage-menu-select" v-model="order" @change="handleSetOrderSelect">
+            <select name="mypage-menu" id="mypage-menu" class="mypage-menu-select" v-model="order" @change="handleSetOrderSelect" @click="handleClass" @blur="handleClassOut">
                 <option value="newest" selected>최신순</option>
                 <option value="online">온라인</option>
                 <option value="offline">오프라인</option>
@@ -53,6 +52,12 @@ export default {
         },
         handleSetOrderSelect() {
             this.$emit('setOrder',this.order)
+        },
+        handleClass() {
+            document.getElementById('mypage-menu').classList.toggle('select-focus-in');
+        },
+        handleClassOut() {
+            document.getElementById('mypage-menu').classList.remove('select-focus-in');
         }
     }
 }

@@ -2,7 +2,7 @@
     <div class="community-order">
 
         <template v-if="mobile">
-            <select class="community-order-select" v-model="order_id" @change="handleSetOrderSelect">
+            <select id="community-order-select" class="community-order-select" v-model="order_id" @change="handleSetOrderSelect" @click="handleClass" @blur="handleClassOut">
                 <option value="newest" selected>최신순</option>
                 <option value="newest">인기순</option>
             </select>
@@ -36,6 +36,12 @@ export default {
         },
         handleSetOrderSelect() {
             this.$emit('setOrder', this.order_id);
+        },
+        handleClass() {
+            document.getElementById('community-order-select').classList.toggle('select-focus-in');
+        },
+        handleClassOut() {
+            document.getElementById('community-order-select').classList.remove('select-focus-in');
         }
     }
 }
