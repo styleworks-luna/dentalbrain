@@ -101,17 +101,6 @@
 
             <section class="bottom-banner">
                 <div class="banner-wrap">
-                    @isset($bar)
-                        <a href="{{ route('api.banners.redirect',$bar->id)}}">
-                            <img src="{{ $bar->mobileFile->url }}" alt="바배너">
-                        </a>
-                    @else
-                        <a href="">
-                            <img src="{{ asset('images/dummy/test2.jpg') }}" alt="하단배너">
-                        </a>
-                    @endisset
-                </div>
-                <div class="banner-wrap">
                     @forelse($bottomSlides as $bottom)
                         <a href="{{ route('api.banners.redirect',$bottom->id)}}">
                             <img src="{{ $bottom->mobileFile->url }}" alt="하단배너">
