@@ -14,7 +14,9 @@
 
 @section('content')
     <section class="content">
-        <div class="title-image"></div>
+        <div class="title-image">
+            <img src="{{ asset("images/mobile/introduce/office_top_image.png") }}" alt="">
+        </div>
         <div class="m-container">
             <div class="m-row">
                 <div class="title">
