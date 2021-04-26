@@ -21,6 +21,7 @@ function onYouTubeIframeAPIReady() {
         },
     });
 }
+
 function onPlayerReady(event) {
     event.target.playVideo();//자동재생
     //로딩할때 실행될 동작을 작성한다.
@@ -57,9 +58,8 @@ $(function () {
     });
 
     var mySwiper = new Swiper('.list-swiper-container', {
-        slidesPerView: 2.29334,
-        updateOnWindowResize: false,
-    })
+        slidesPerView: 2,
+    });
 
     form_submit_check();
 });
