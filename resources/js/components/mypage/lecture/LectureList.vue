@@ -80,7 +80,8 @@
                                     <em>{{ Helper.getTimeFormat(lecture.expired_at) }}</em> 종료
                                 </div>
                                 <div class="d-day" v-else><em>만료</em></div>
-                                <div class="dedicate">{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
+                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용됩니다.</p></div>
+                                <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
                             </div>
                             <div class="offline-lecture-pay" v-else>
                                 <p>결제금액</p>
@@ -120,7 +121,7 @@
                                 <div class="content-button-offline"
                                      v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
                                     <a :href="'/lectures/' + lecture.ticket.program.id" class="apply-btn">강의신청</a>
-                                    <p>재수강시<br>30% 할인 적용됩니다.</p>
+                                    <p v-if="!mobile">재수강시<br>30% 할인 적용됩니다.</p>
                                 </div>
                             </template>
                             <div class="content-button-offline"
@@ -196,7 +197,8 @@ export default {
         RefundManualPop,
     },
     props: {
-        'list': Array
+        'list': Array,
+        'mobile': Boolean,
     },
     computed: {},
     data() {

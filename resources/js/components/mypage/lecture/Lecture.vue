@@ -2,7 +2,7 @@
     <div>
         <div>
             <lecture-order @setOrder="handleSetOrder" :mobile="mobile"></lecture-order>
-            <lecture-list :list="mobile ? mobileList : list.data"></lecture-list>
+            <lecture-list :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
         </div>
 
         <template v-if="!mobile">
