@@ -15,7 +15,7 @@
 @section('content')
     <section class="content">
         <div class="instructor-title-wrap">
-
+            <img src="{{ asset("images/mobile/introduce/instructor_top_image.png") }}" alt="상단이미지">
         </div>
         <section class="instructor-content-wrap">
             <div class="m-container">
