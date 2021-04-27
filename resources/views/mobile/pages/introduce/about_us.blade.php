@@ -15,7 +15,7 @@
 @section('content')
     <section class="content">
         <div class="title-image">
-            <img src="{{ asset("images/mobile/introduce/office_top_image.png") }}" alt="">
+            <img src="{{ asset("images/mobile/introduce/office_top_image.png") }}" alt="상단이미지">
         </div>
         <div class="m-container">
             <div class="m-row">
@@ -27,11 +27,11 @@
                 <div class="introduce-description">
                     <div class="introduce-start">
                         <div class="img-wrap">
-                            <img src="{{ asset("images/mobile/introduce/introduce_img.png") }}" alt="회사소개 이미지">
+                            <img src="{{ asset("images/desktop/introduce/introduce_img.png") }}" alt="회사소개 이미지">
                         </div>
                         <div class="start-content">
                             <div class="content-wrap">
-
+                                <img src="{{ asset("images/mobile/introduce/introduce_header.svg") }}" alt="title">
                             </div>
                             <div class="text-wrap">
                                 <p>
@@ -52,10 +52,10 @@
                         </div>
                     </div>
                     <div class="introduce-middle">
-                        <div class="img-wrap">
-
-                        </div>
                         <div class="description">
+                            <div class="image-wrap">
+                                <img src="{{ asset("images/mobile/introduce/creative.svg") }}" alt="">
+                            </div>
                             <ul>
                                 <li>
                                     <p>도태되지 않고 <em>세상변화에
@@ -68,6 +68,11 @@
                                         오프라인 채널로 <em>공부하고자 하는
                                             치과인들의 파트너</em>가 되겠습니다.</p>
                                 </li>
+                            </ul>
+                            <div class="image-second-wrap">
+                                <img src="{{ asset("images/mobile/introduce/history.svg") }}" alt="">
+                            </div>
+                            <ul>
                                 <li>
                                     <p>2006년 설립, 30년 이상 치과계에 종사, 현업에 필요한 실질적인
                                         교육 프로그램과 더욱 도전적이고

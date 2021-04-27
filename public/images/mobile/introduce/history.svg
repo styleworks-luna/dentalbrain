@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="328" height="217" viewBox="0 0 328 217">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <text fill="#222" font-family="SourceHanSansK-Bold, Source Han Sans K" font-size="16" font-weight="bold" transform="translate(-16 -1892) translate(16 1892)">
+                    <tspan x="51.048" y="91">HISTORY</tspan>
+                </text>
+                <path fill="#8816B5" fill-opacity=".45" d="M86 0c47.496 0 86 38.504 86 86s-38.504 86-86 86S0 133.496 0 86 38.504 0 86 0zm0 17.45c-37.86 0-68.55 30.69-68.55 68.55S48.14 154.55 86 154.55s68.55-30.69 68.55-68.55S123.86 17.45 86 17.45z" transform="translate(-16 -1892) translate(16 1892)"/>
+                <text fill="#222" font-family="SourceHanSansK-Bold, Source Han Sans K" font-size="16" font-weight="bold" transform="translate(-16 -1892) translate(16 1892)">
+                    <tspan x="180.928" y="91">PROFESSIONAL</tspan>
+                </text>
+                <path fill="#8816B5" fill-opacity=".2" d="M242 0c47.496 0 86 38.504 86 86s-38.504 86-86 86-86-38.504-86-86 38.504-86 86-86zm0 17.45c-37.86 0-68.55 30.69-68.55 68.55s30.69 68.55 68.55 68.55 68.55-30.69 68.55-68.55S279.86 17.45 242 17.45z" transform="translate(-16 -1892) translate(16 1892)"/>
+                <path fill="#C8C8C8" d="M241.616 172H242.616V217H241.616zM85.248 172H86.248V217H85.248z" transform="translate(-16 -1892) translate(16 1892)"/>
+            </g>
+        </g>
+    </g>
+</svg>
