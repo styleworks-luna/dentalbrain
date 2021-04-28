@@ -23,7 +23,7 @@
                 <div class="confirm-layer">
                     <div class="layer-title">
                         <h1>강의 시청 안내</h1>
-                        <a href="" class="close"></a>
+                        <a href="#" class="close" onClick="history.back()"></a>
                     </div>
                     <div class="confirm-text">
                         <div class="img-wrap">
