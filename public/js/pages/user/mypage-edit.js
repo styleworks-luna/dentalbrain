@@ -53,7 +53,7 @@ $(function () {
         timer = setInterval(function () {
             m = Math.floor(SetTime / 60) + "분 " + (SetTime % 60) + "초";
 
-            var msg = "시간: " + m;
+            var msg = m;
             $('.timer').text(msg);
 
             SetTime--;
