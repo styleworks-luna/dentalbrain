@@ -1,0 +1,20 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+body
+    +background(null, null, null, $black)
+
+.confirm-layer
+    +size(100%)
+    +margin(top 27.777777vw)
+    +border(.555555vw solid $page-color)
+    +background(null, null, null, $white)
+    +box-sizing(border-box)
+    position: absolute
+
+    h1
+        +margin(top 8.333333vw)
+        font-weight: bold
+        font-size: 4.444444vw
+        text-align: center
