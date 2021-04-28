@@ -23,8 +23,7 @@
                     </div>
                     <span class="view"><span class="view-title">조회</span> {{ article.views }}</span>
                     </div>
-                    <span :id="`arrow${index}`" class="btn-arrow-down"
-                          @click.prevent="showDetail(article.id,index)"></span>
+                    <span :id="`arrow${index}`" class="btn-arrow-down"></span>
                 </div>
                 <div :id="`detail${index}`" class="community-detail hidden">
                     <div class="community-detail-title">
