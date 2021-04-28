@@ -2,19 +2,82 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 
+@import '@sass/components/mobile/_button.sass'
+
 body
     +background(null, null, null, $black)
 
 .confirm-layer
-    +size(100%)
+    +size(92.5%)
     +margin(top 27.777777vw)
-    +border(.555555vw solid $page-color)
+    +padding(0 4.444444vw)
+    +border(.655555vw solid $page-color)
     +background(null, null, null, $white)
     +box-sizing(border-box)
     position: absolute
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
 
-    h1
-        +margin(top 8.333333vw)
-        font-weight: bold
-        font-size: 4.444444vw
-        text-align: center
+    .layer-title
+        +margin(top 3.8888888vw)
+
+        h1
+            font-weight: bold
+            font-size: 5vw
+            text-align: center
+
+        .close
+            +size(6.66666vw, 6.666666vw)
+            +background('/images/mobile/global/icon_nav_close_grey.svg', no-repeat, center center)
+            background-size: 6.66666vw, 6.666666vw
+            display: block
+            position: absolute
+            top: 3.333333vw
+            right: 4.4444444vw
+
+    .confirm-text
+        +margin(top 14.444444vw)
+
+        .img-wrap
+            +size(27.777777vw, 27.777777vw)
+            +margin(0 auto)
+
+            img
+                +size(27.777777vw, 27.777777vw)
+
+        .text-wrap
+            +margin(top 8.3333333vw)
+            text-align: center
+
+            .tip
+                +padding(top 2.777777vw)
+                font-size: 3.3333333vw
+                color: $page-color
+                line-height: 1.45
+
+                em
+                    font-weight: bold
+
+            .text-last
+                +margin(top 5.55555vw)
+
+    .btn-wrap
+        +margin(top 13.8888888vw bottom 4.4444444vw)
+        overflow: hidden
+
+        a
+            +btn()
+            +size(39.7222222vw, 13.8888888vw)
+            +background(null, null, null, $gray-700)
+            float: left
+            font-size: 4.444444vw
+            color: $white
+            line-height: 13.8888888vw
+
+        button
+            +btn(purple-fill)
+            +size(39.7222222vw, 13.8888888vw)
+            +margin(left 2.777777vw)
+            font-size: 4.444444vw
+            float: left
