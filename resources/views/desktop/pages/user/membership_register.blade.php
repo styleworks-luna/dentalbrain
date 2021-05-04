@@ -21,11 +21,11 @@
                 var cardCompany = $('.ui-selectmenu-text').text();
                 var paymentMethod = $('.payment-method:checked').val();
 
-                const amount = '';
+                const amount = '5000';
                 const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                const orderName = '';
+                const orderName = 'name';
                 const customerName = '{{ auth()->user()->name }}';
-                const successUrl = '';
+                const successUrl = '{{ url('membership') }}';
                 const customerEmail = '{{ auth()->user()->email }}';
                 const customerMobilePhone = '{{ auth()->user()->phone }}';
 
