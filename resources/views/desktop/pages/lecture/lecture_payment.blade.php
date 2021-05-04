@@ -21,7 +21,6 @@
 
             $('.payment-method').change(function () {
                 paymentmethod = $('.payment-method:checked').val();
-                console.log(paymentmethod);
             });
 
             $('.btn-submit').click(function (e) {
