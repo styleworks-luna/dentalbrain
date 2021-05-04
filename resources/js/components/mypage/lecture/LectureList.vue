@@ -126,7 +126,7 @@
                         <template v-if="lecture.pay_status == 1">
                             <div class="content-button">
                                 <div class="btn-wrap">
-                                    <a href="" @click.prevent class="btn-none-active">입금대기중</a>
+                                    <a href="" class="btn-none-active" @click.prevent>입금대기중</a>
                                 </div>
                             </div>
                         </template>
@@ -135,7 +135,7 @@
                         <template v-else-if="lecture.pay_status == 5">
                             <div class="content-button-full">
                                 <div class="btn-wrap">
-                                    <a href="" class="btn-none-active">입금대기중</a>
+                                    <a href="" class="btn-none-active" @click.prevent>입금대기중</a>
                                     <a href="">신청취소</a>
                                 </div>
                             </div>
