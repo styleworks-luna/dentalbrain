@@ -220,10 +220,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
         Route::group(['prefix' => '{program}'], function () {
 
-            // 유저 자동환불 신청
-            Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel')->middleware('auth');
-            // 유저 수동환불 신청
-            Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request')->middleware('auth');
+            Route::group(['middleware' => 'auth'], function () {
+                // 유저 자동환불 신청
+                Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel');
+                // 유저 수동환불 신청
+                Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request');
+                // 유저 별도결제 취소 신청
+                Route::delete('cancel-another', 'Lecture\CancelController@cancelAnother')->name('cancel-another');
+            });
 
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');

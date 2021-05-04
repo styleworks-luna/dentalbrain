@@ -398,7 +398,7 @@ abstract class ProgramTemplate
      * @param array $validatedData
      * @return boolean
      */
-    public function cancel(Program $program, ProgramStudent $student, array $validatedData)
+    public function cancel(Program $program, ProgramStudent $student, array $validatedData = [])
     {
         try {
             DB::beginTransaction();
@@ -435,33 +435,36 @@ abstract class ProgramTemplate
             $student->save();
 
             // 결제 취소 진행.
-            $payment = $student->payment;
-            $tossPayment = new TossPayments($payment->paymentKey);
+            if ($student->payment()->exists()) {
+                // 결제 정보 존재하는지 판단 ( 별도결제 때문 )
+                $payment = $student->payment;
+                $tossPayment = new TossPayments($payment->paymentKey);
+ㅈㄷㄱ
+                switch ($payment->method) {
+                    case '계좌이체':
+                        $response = $tossPayment->cancelTransfer($validatedData['reason']);
+                        break;
+                    case '카드':
+                        $response = $tossPayment->cancelCard($validatedData['reason']);
+                        break;
+                    case '가상계좌':
+                        $response = $tossPayment->cancelVirtualAccount(
+                            $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
+                        );
+                        break;
+                    //case '휴대폰':
+                    default:
+                        $response = false;
+                        Log::error('INVALID METHOD', $validatedData);
+                        break;
+                }
 
-            switch ($payment->method) {
-                case '계좌이체':
-                    $response = $tossPayment->cancelTransfer($validatedData['reason']);
-                    break;
-                case '카드':
-                    $response = $tossPayment->cancelCard($validatedData['reason']);
-                    break;
-                case '가상계좌':
-                    $response = $tossPayment->cancelVirtualAccount(
-                        $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
-                    );
-                    break;
-                //case '휴대폰':
-                default:
-                    $response = false;
-                    Log::error('INVALID METHOD', $validatedData);
-                    break;
+                if ($response === false) {
+                    DB::rollBack();
+                    return false;
+                }
+                $payment->updateByToss($response);
             }
-
-            if ($response === false) {
-                DB::rollBack();
-                return false;
-            }
-            $payment->updateByToss($response);
 
             DB::commit();
             return true;

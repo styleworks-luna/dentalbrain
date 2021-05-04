@@ -105,4 +105,17 @@ class CancelController extends Controller
             'msg' => '요청되었습니다.'
         ]);
     }
+
+    public function cancelAnother(Request $request, Program $program)
+    {
+        // TODO : 임시 플로우 작동 확인 안됨.
+        $student = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+            ->where('user_id', '=', Auth::id())->first();
+        $programConcrete = new OnlineProgramConcrete();
+        $programConcrete->cancel($program, $student);
+
+        return response()->json([
+            'msg' => '완료되었습니다.'
+        ]);
+    }
 }
