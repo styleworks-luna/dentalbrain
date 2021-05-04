@@ -24,15 +24,18 @@ class ApplyController extends Controller
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
+        $appliedBefore = ProgramStudent::query()->where('user_id', '=', Auth::id())
+            ->where('ticket_id', '=', $program->ticket->id)
+            ->whereIn('pay_status', [ProgramStudent::$PAY_BEFORE, ProgramStudent::$PAY_REFUNDED])
+            ->exists();
 
-        if ($program->answers()->where('user_id', '=', Auth::id())->exists()) {
-            // Survey 이미 완료하였을 경우.
-            $student = ProgramStudent::query()->where('ticket_id', $program->ticket()->first()->id)
-                ->where('user_id', '=', Auth::id())->first();
-            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
-            return redirect()->route('lectures.payment.form', $program->id)->with(['fromApply' => true]);
+        if ($appliedBefore) {
+            // 이전에 신청 폼을 완료하였을 경우.
+            return redirect()->route('lectures.payment.form', $program->id)->with([
+                'fromApply' => true,
+                'alert' => "신청정보가 존재하여 결제 페이지로 이동합니다."
+            ]);
         }
-
 
         if ($program->is_online == 1) {
             // 온라인 강의
@@ -82,7 +85,7 @@ class ApplyController extends Controller
                     DB::rollback();
                     return redirect()->back(302)->with(['alert' => '필수 입력란을 작성해주세요.']);
                 }
-
+                $surveyAnswerService->deleteSurveyAnswersOfUser($program, Auth::user());
                 $surveyAnswerService->storeSurveyAnswers($surveyDataSet);
             }
 

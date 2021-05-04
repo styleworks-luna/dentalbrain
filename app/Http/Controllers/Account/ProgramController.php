@@ -23,8 +23,10 @@ class ProgramController extends Controller
         ]);
 
         //TODO: 사용자에 따른 강의 구분 정보 넣기.
-        $queryBuilder = ProgramStudent::query()->select('id', 'user_id', 'payment_id', 'ticket_id', 'expired_at', 'is_watched','is_repeated', 'pay_status','applied_at')
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID,ProgramStudent::$PAY_IN_PROCESS,ProgramStudent::$PAY_IN_REFUND_PROCESS])
+        $queryBuilder = ProgramStudent::query()->select('id', 'user_id', 'payment_id', 'ticket_id', 'expired_at', 'is_watched', 'is_repeated', 'pay_status', 'applied_at')
+            ->whereIn('pay_status', [
+                ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS,
+                ProgramStudent::$PAY_IN_REFUND_PROCESS, ProgramStudent::$PAY_ANOTHER])
             ->with([
                 'payment:id,totalAmount,receiptUrl,method,status',
                 'ticket.program' => function ($query) {

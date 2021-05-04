@@ -40,6 +40,12 @@ class ProgramStudent extends Model
      */
     static $PAY_IN_REFUND_PROCESS = 4;
 
+    /**
+     * 별도 결제
+     * @var int
+     */
+    static $PAY_ANOTHER = 5;
+
     protected $appends = ['left_days'];
     protected $guarded = [];
     protected $casts = [

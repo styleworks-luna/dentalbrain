@@ -320,7 +320,7 @@
 
                 <section class="btn-wrap">
                     <button type="button" class="btn-confirm btn-submit">결제하기</button>
-                    <a href="{{ route('lectures.apply',$program->id) }}" class="btn-confirm btn-cancel">취소하기</a>
+                    <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
                 </section>
             </div>
         </div>
