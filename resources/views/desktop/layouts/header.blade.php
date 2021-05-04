@@ -10,6 +10,7 @@
                 @if(auth()->user()->isAdmin())
                     <p class="admin"><a href="{{ url('admin') }}">관리자</a></p>
                 @endif
+                <a href="{{ url('membership') }}" class="login-btn">유료회원가입</a>
                 <p class="user-name"><a href="{{ route('account.index') }}">{{ auth()->user()->name }}</a> 님</p>
                 <a href="{{ route('logout') }}" class="login-btn">로그아웃</a>
             @else

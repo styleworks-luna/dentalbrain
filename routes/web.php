@@ -79,6 +79,11 @@ Route::get('m-find-ps', function () {
     return view('mobile.pages.user.find_password');
 });
 
+// 유료 회원가입 (임시)
+Route::get('membership', function () {
+    return view('desktop.pages.user.membership_register');
+});
+
 //회사 소개 (임시)
 Route::get('introduce', function () {
     return view(viewPrefix() . 'pages.introduce.about_us');
