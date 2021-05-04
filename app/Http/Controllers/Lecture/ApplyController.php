@@ -112,6 +112,16 @@ class ApplyController extends Controller
         }
     }
 
+    public function anotherPay(Program $program)
+    {
+        $programStudent = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+            ->where('user_id', '=', Auth::id())->first();
+        $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER;
+        $programStudent->save();
+
+        return $this->result($program);
+    }
+
     public function result(Program $program)
     {
         $surveys = Survey::result($program->id)

@@ -145,6 +145,8 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
             // 강의 신청
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+            // 강의 별도결제
+            Route::post('another', [\App\Http\Controllers\Lecture\ApplyController::class, 'anotherPay'])->name('anotherPay');
             // 강의 결제 폼
             Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
             // 강의 결제 성공

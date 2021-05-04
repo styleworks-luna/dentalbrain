@@ -23,7 +23,7 @@
                 paymentmethod = $('.payment-method:checked').val();
                 console.log(paymentmethod);
             });
-            
+
             $('.btn-submit').click(function (e) {
                 if (paymentmethod == "별도결제") {
                     alert('강의 신청이 완료되었습니다. 아래 계좌로 입금 요청 드리며 000-000-0000—00000 기업은행 예금주 ooo 관리자가 입금 내역을 확인하면 강의를 시청할 수 있습니다');
@@ -342,7 +342,9 @@
                     <button type="button" class="btn-confirm btn-submit">결제하기</button>
                     <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
                 </section>
-                <form action="" id="separate-form"></form>
+                <form action="{{ route('lectures.anotherPay',[$program]) }}" method="POST" id="separate_form">
+                    @csrf
+                </form>
             </div>
         </div>
     </section>
