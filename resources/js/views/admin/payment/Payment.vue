@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.user_id}/1`">
-                        {{ slotProps.row.name }}
+                            {{ slotProps.row.name }}
                         </router-link>
                         <br>
                         {{ slotProps.row.email }}
@@ -64,6 +64,9 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 5">
+                            별도결제 확인 대기
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
@@ -104,10 +107,10 @@ import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
-import { getData } from '@/api/admin/payment/Payment.js'
+import {getData} from '@/api/admin/payment/Payment.js'
 
 // mixins
-import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
+import {PaymentCancelMixin} from '@/mixins/admin/payment/Cancel.js';
 
 export default {
     name: 'AdminPayment',
@@ -253,10 +256,13 @@ export default {
 
                 case 'PARTIAL_CANCELED':
                     return '부분 취소';
+
+                case 'ANOTHER_PROGRESS' :
+                    return '별도 결제 대기 중';
             }
         },
         getProgramId(data) {
-          this.id = data;
+            this.id = data;
         },
         handleSetOrder(order) {
             this.order = order;

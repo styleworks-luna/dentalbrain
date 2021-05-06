@@ -116,7 +116,7 @@ class Payment extends Model
             'orderId' => '별도결제',
             'totalAmount' => $student->getPrice(),
             'method' => '별도결제',
-            'status' => 'DONE',
+            'status' => 'ANOTHER_PROGRESS',
             'useDiscount' => 0,
             'full_response' => '{별도결제}',
             'requestedAt' => now(),

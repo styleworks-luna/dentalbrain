@@ -79,7 +79,6 @@ class PaymentController extends Controller
 
         $response = $concrete->cancel($program, $student, $validatedData);
 
-
         if ($response === false) {
             return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
         }
