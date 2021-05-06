@@ -2,6 +2,7 @@
 
 namespace App\Models\Payments;
 
+use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Builder;
@@ -39,7 +40,6 @@ class Payment extends Model
      */
     private static function getPaymentData(TossPaymentsResponse $response): array
     {
-        logger('???', [$response->getArray()]);
         return array_merge(self::getPaymentBasicData($response), self::getPaymentsAdditionalData($response));
     }
 
@@ -100,6 +100,27 @@ class Payment extends Model
                 'trans_settlementStatus' => $response['transfer']['settlementStatus'],
             ];
         }
+    }
+
+    /**
+     *  별도결제로 Payment 생성
+     *
+     * @param Program $program
+     * @param ProgramStudent $student
+     * @return Builder|Model
+     */
+    public static function createByAnotherPay(Program $program, ProgramStudent $student)
+    {
+        return Payment::query()->create([
+            'paymentKey' => '별도결제',
+            'orderId' => '별도결제',
+            'totalAmount' => $student->getPrice(),
+            'method' => '별도결제',
+            'status' => 'DONE',
+            'useDiscount' => 0,
+            'full_response' => '{별도결제}',
+            'requestedAt' => now(),
+        ]);
     }
 
     /**

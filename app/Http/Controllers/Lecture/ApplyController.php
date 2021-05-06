@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApplyLecture;
+use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -108,16 +109,13 @@ class ApplyController extends Controller
             Log::error('STORE SURVEY ANSWER ERROR', [$exception]);
 
             DB::rollback();
-            return redirect()->back(302)->with(['alert' => '오류가 발생했습니다']);
+            return redirect()->back()->with(['alert' => '오류가 발생했습니다']);
         }
     }
 
     public function anotherPay(Program $program)
     {
-        $programStudent = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
-            ->where('user_id', '=', Auth::id())->first();
-        $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER;
-        $programStudent->save();
+        ProgramStudent::createByAnotherPayProcess($program);
 
         return $this->result($program);
     }

@@ -398,7 +398,7 @@ abstract class ProgramTemplate
      * @param array $validatedData
      * @return boolean
      */
-    public function cancel(Program $program, ProgramStudent $student, array $validatedData = [])
+    public function cancel(Program $program, ProgramStudent $student, array $validatedData = []): bool
     {
         try {
             DB::beginTransaction();
@@ -435,7 +435,7 @@ abstract class ProgramTemplate
             $student->save();
 
             // 결제 취소 진행.
-            if ($student->payment()->exists()) {
+            if ($student->payment()->exists() && $student->pay_status == ProgramStudent::$PAY_PAID) {
                 // 결제 정보 존재하는지 판단 ( 별도결제 때문 )
                 $payment = $student->payment;
                 $tossPayment = new TossPayments($payment->paymentKey);

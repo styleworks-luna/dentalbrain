@@ -181,21 +181,15 @@
                             <tr>
                                 <th>결제방식</th>
                                 <td>
-                                    @if($programStudent->payment == null)
-                                        <p class="payment-method">별도 결제</p>
+                                    @if ($programStudent->payment->method == '가상계좌')
+                                        <p class="payment-method-virtual">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
+                                        <p class="tip">
+                                            ※ 계좌입금 후 신청이 완료됩니다.<br>
+                                            ※ 마이페이지 – 결제내역에서 계좌 확인이 가능합니다.
+                                        </p>
                                     @else
-                                        @dd($programStudent)
-                                        @if ($programStudent->payment->method == '가상계좌')
-                                            <p class="payment-method-virtual">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
-                                            <p class="tip">
-                                                ※ 계좌입금 후 신청이 완료됩니다.<br>
-                                                ※ 마이페이지 – 결제내역에서 계좌 확인이 가능합니다.
-                                            </p>
-                                        @else
-                                            <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
-                                        @endif
-                                    @endisset
-
+                                        <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
+                                    @endif
                                 </td>
                             </tr>
                         @endif

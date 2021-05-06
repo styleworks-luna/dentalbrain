@@ -24,7 +24,7 @@ class CancelController extends Controller
      * @param Program $program
      * @return JsonResponse
      */
-    public function cancel(Request $request, Program $program)
+    public function cancel(Request $request, Program $program): JsonResponse
     {
         if ($program->is_online) {
             $concrete = new OnlineProgramConcrete();
@@ -34,12 +34,15 @@ class CancelController extends Controller
 
         $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
 
-        $data = $concrete->validateUserCancel($request, $program);
-        if ($data == false) {
-            // validation 실패 처리
-            return response()->json([
-                'msg' => '유효하지 않은 요청입니다.'
-            ], 422);
+        if ($student->pay_status == ProgramStudent::$PAY_PAID) {
+            // PG사 통한 결제일 경우.
+            $data = $concrete->validateUserCancel($request, $program);
+            if ($data == false) {
+                // validation 실패 처리
+                return response()->json([
+                    'msg' => '유효하지 않은 요청입니다.'
+                ], 422);
+            }
         }
 
         $success = $concrete->cancel($program, $student, $data);
@@ -65,7 +68,7 @@ class CancelController extends Controller
      * @param Program $program
      * @return JsonResponse
      */
-    public function cancelRequest(Request $request, Program $program)
+    public function cancelRequest(Request $request, Program $program): JsonResponse
     {
         if ($program->is_online) {
             // 현재 오프라인에만 환불 요청 받고 있음.
@@ -103,19 +106,6 @@ class CancelController extends Controller
 
         return response()->json([
             'msg' => '요청되었습니다.'
-        ]);
-    }
-
-    public function cancelAnother(Request $request, Program $program)
-    {
-        // TODO : 임시 플로우 작동 확인 안됨.
-        $student = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
-            ->where('user_id', '=', Auth::id())->first();
-        $programConcrete = new OnlineProgramConcrete();
-        $programConcrete->cancel($program, $student);
-
-        return response()->json([
-            'msg' => '완료되었습니다.'
         ]);
     }
 }

@@ -225,8 +225,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel');
                 // 유저 수동환불 신청
                 Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request');
-                // 유저 별도결제 취소 신청
-                Route::delete('cancel-another', 'Lecture\CancelController@cancelAnother')->name('cancel-another');
             });
 
             Route::post('like', 'Lecture\DetailController@like');
