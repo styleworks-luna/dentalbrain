@@ -136,7 +136,7 @@
                             <div class="content-button-full">
                                 <div class="btn-wrap">
                                     <a href="" class="btn-none-active" @click.prevent>입금대기중</a>
-                                    <a href="">신청취소</a>
+                                    <a href="" @click.prevent="destroy(lecture.ticket.program_id)">신청취소</a>
                                 </div>
                             </div>
                         </template>
@@ -237,6 +237,8 @@ import RefundPop from '@/components/mypage/lecture/RefundPop.vue'
 import RefundFreePop from '@/components/mypage/lecture/RefundFreePop.vue'
 import RefundManualPop from '@/components/mypage/lecture/RefundManualPop.vue'
 
+import Mypage from "@/api/mypage/Mypage.js"
+
 export default {
     name: 'MypageLectureList',
     components: {
@@ -284,6 +286,12 @@ export default {
         },
         toggleManualModal() {
             this.showManualModal = !this.showManualModal;
+        },
+        destroy(programId) {
+            Mypage.destroy(programId).then(res => {
+                alert(res.data.msg);
+                window.location.reload()
+            });
         }
     }
 }

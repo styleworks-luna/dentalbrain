@@ -45,7 +45,12 @@ class CancelController extends Controller
             }
         }
 
-        $success = $concrete->cancel($program, $student, $data);
+        if ($student->pay_status == ProgramStudent::$PAY_PAID) {
+            // PG사 통한 결제일 경우.
+            $success = $concrete->cancel($program, $student, $data);
+        } else {
+            $success = $concrete->cancel($program, $student);
+        }
 
         if (!$success) {
             // 실패

@@ -24,7 +24,7 @@ class PaymentController extends Controller
                 'programs.is_online', 'programs.title',
                 'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
                 'program_tickets.program_id',
-                'users.name','users.email','users.phone'
+                'users.name', 'users.email', 'users.phone'
             )
             ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->join('program_tickets', 'program_students.ticket_id', '=', 'program_tickets.id')
@@ -75,12 +75,20 @@ class PaymentController extends Controller
             $concrete = new OfflineProgramConcrete();
         }
 
-        $validatedData = $concrete->validateAdminCancel($request, $program, User::find($student->user_id));
-        if ($validatedData) {
-            $response = $concrete->cancel($program, $student, $validatedData);
+        if ($student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
+            // 별도결제 일 경우.
+            $response = $concrete->cancel($program, $student);
         } else {
-            return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
+            // 별도결제가 아닌 프로세스일 경우.
+            $validatedData = $concrete->validateAdminCancel($request, $program, User::find($student->user_id));
+            if ($validatedData) {
+                $response = $concrete->cancel($program, $student, $validatedData);
+            } else {
+                return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
+            }
         }
+
 
         if ($response === false) {
             return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
