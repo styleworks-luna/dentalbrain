@@ -134,6 +134,19 @@ class Payment extends Model
         return $this->update(self::getPaymentData($response));
     }
 
+    /**
+     *  별도 결제 확인시에 Payment 업데이트
+     *
+     * @return bool
+     */
+    public function updateWhenConfirmAnotherPay()
+    {
+        return $this->update([
+            'approved_at' => now(),
+            'status' => 'DONE',
+        ]);
+    }
+
     public function student()
     {
         return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');

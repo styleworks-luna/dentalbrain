@@ -5,6 +5,7 @@ namespace App\Services\Program;
 
 
 use App\Models\File;
+use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
@@ -12,15 +13,12 @@ use App\Models\Program\ProgramStudent;
 use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
-use App\Models\User;
-use App\Payments\TossPayments\TossPayments;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
-use App\Services\File\SurveyFile;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -35,12 +33,21 @@ abstract class ProgramTemplate
      * ProgramTemplate constructor.
      * @param bool|int $is_online
      */
-    public function __construct($is_online /*TODO Program 요구하도록 수정하기*/)
+    public function __construct($is_online)
     {
         $this->is_online = $is_online;
     }
 
-    function getProgramDetail(Program $program)
+    public static function getProgramConcrete(Program $program)
+    {
+        if ($program->is_online) {
+            return new OnlineProgramConcrete();
+        } else {
+            return new OfflineProgramConcrete();
+        }
+    }
+
+    function getProgramDetail(Program $program): array
     {
         return [
             'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
@@ -55,7 +62,8 @@ abstract class ProgramTemplate
      * 강의 수강현황
      *
      * @param Program $program
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @param $order
+     * @return HasManyThrough
      */
     function getStudents(Program $program, $order)
     {
@@ -87,7 +95,7 @@ abstract class ProgramTemplate
     /**
      * @return JsonResponse
      */
-    function getCategories()
+    function getCategories(): JsonResponse
     {
         $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
         $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
@@ -155,7 +163,6 @@ abstract class ProgramTemplate
 
     function validateTickets(Request $request, array $additionalRules = [])
     {
-        // TODO: 가격 변경시에 신청자 있는지 체크하기.(필수)
         $v = Validator::make($request->all(), array_merge([
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
@@ -386,212 +393,32 @@ abstract class ProgramTemplate
         return $returnableDataSet;
     }
 
-    /*
-     *  ========================= DELETE =========================
-     */
-
     /**
-     *  어드민 삭제 플로우
+     *  별도 결제 확인시에 호출하는 함수
      *
      * @param Program $program
      * @param ProgramStudent $student
-     * @param array $validatedData
-     * @return boolean
+     * @param $expired_at 마감 기한
+     * @return bool
      */
-    public function cancel(Program $program, ProgramStudent $student, array $validatedData = []): bool
+    public function confirmAnotherPay(Program $program, ProgramStudent $student, $expired_at): bool
     {
         try {
             DB::beginTransaction();
+            // student 업데이트
+            $student->updateWhenConfirmAnotherPay($program, $expired_at);
 
-            // 질문 답변 삭제 진행
-            $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $student->user_id);
-
-            //질문 답변 - 파일 삭제
-            $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
-                ->get()->mapInto(SurveyFile::class);
-
-            $surveyFiles->map(function ($item, $key) {
-                return $item->deleteFile();
-            });
-
-            $program->answers()->where('user_id', '=', $student->user_id)->delete();
-
-            if ($program->ticket->is_free) {
-                // 무료일 경우, 처리 끝.
-                $student->pay_status = ProgramStudent::$PAY_BEFORE;
-                $student->is_watched = 0;
-                $student->expired_at = null;
-                $student->save();
-
-                DB::commit();
-                return true;
-            }
-            // 유료일 경우,
-
-            // 환불 상태 기록
-            $student->pay_status = ProgramStudent::$PAY_REFUNDED;
-            $student->is_watched = 0;
-            $student->expired_at = null;
-            $student->save();
-
-            // 결제 취소 진행.
-            if ($student->payment()->exists() && $student->pay_status == ProgramStudent::$PAY_PAID) {
-                // 결제 정보 존재하는지 판단 ( 별도결제 때문 )
-                $payment = $student->payment;
-                $tossPayment = new TossPayments($payment->paymentKey);
-                switch ($payment->method) {
-                    case '계좌이체':
-                        $response = $tossPayment->cancelTransfer($validatedData['reason']);
-                        break;
-                    case '카드':
-                        $response = $tossPayment->cancelCard($validatedData['reason']);
-                        break;
-                    case '가상계좌':
-                        $response = $tossPayment->cancelVirtualAccount(
-                            $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
-                        );
-                        break;
-                    //case '휴대폰':
-                    default:
-                        $response = false;
-                        Log::error('INVALID METHOD', $validatedData);
-                        break;
-                }
-
-                if ($response === false) {
-                    DB::rollBack();
-                    return false;
-                }
-                $payment->updateByToss($response);
-            }
-
-            DB::commit();
-            return true;
-
+            // payment 업데이트
+            /** @var Payment $payment */
+            $payment = $student->payment()->first();
+            $payment->updateWhenConfirmAnotherPay();
         } catch (Exception $exception) {
-            Log::error('CANCEL ERROR', [$exception]);
             DB::rollBack();
+            Log::error('CONFIRM ANOTHER PAY ERROR', [$program, $student, $expired_at]);
             return false;
         }
 
-    }
-
-    /**
-     * @param Request $request
-     * @param Program $program
-     * @param User $user
-     * @return array|false validated data
-     */
-    public function validateAdminCancel(Request $request, Program $program, User $user)
-    {
-        $base = $program->students()
-            ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS]);
-        if ($base->count() > 1) {
-            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
-            return false;
-        }
-
-        $student = $base->first();
-
-        if ($program->ticket->is_free) {
-            // 무료의 경우 reason 및 다른 params 필요없음
-            // 더미 값.
-            return ['reason' => '무료 강의 취소'];
-        }
-
-        $v = Validator::make($request->all(), [
-            'reason' => ['required', 'string'],
-        ])->sometimes(
-        // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
-            ['bank', 'accountNumber', 'holderName'],
-            ['required', 'string'],
-            function ($input) use ($student) {
-                return $student->payment->method == '가상계좌';
-            });
-
-        if ($v->fails()) {
-            Log::debug('VALIDATE INFO', $v->failed());
-            return false;
-        }
-
-        return $v->validated();
-    }
-
-    /**
-     *  유저의 자동환불 요청 validation 하는 함수.
-     *
-     * @param Request $request
-     * @param Program $program
-     * @return array|false validated data, 실패시 false 리턴함.
-     */
-    public function validateUserCancel(Request $request, Program $program)
-    {
-        $base = $program->students()
-            ->where('user_id', '=', Auth::id())
-            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
-        if ($base->count() > 1) {
-            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
-            return false;
-        }
-
-        $student = $base->first();
-
-        if (!$student->cancelAvailable()) {
-            return false;
-        }
-
-        if ($program->ticket->is_free) {
-            return ['reason' => '무료 강의 취소 신청'];
-        } else {
-            $v = Validator::make($request->all(), [
-                'reason' => ['required', 'string'],
-            ])->sometimes(
-            // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
-                ['bank', 'accountNumber', 'holderName'],
-                ['required', 'string'],
-                function ($input) use ($student) {
-                    return $student->payment->method == '가상계좌';
-                });
-
-            return $v->validated();
-        }
-    }
-
-    public function validateUserRequestCancel(Request $request, Program $program)
-    {
-        if ($program->is_online == 1) {
-            return false;
-        }
-
-        $base = $program->students()
-            ->where('user_id', '=', Auth::id())
-            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
-        if ($base->count() > 1) {
-            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
-            return false;
-        }
-
-        $student = $base->first();
-
-        if (!$program->canRequestRefund()) {
-            return false;
-        }
-
-        if ($program->ticket->is_free) {
-            return ['reason' => '무료 강의 취소 신청'];
-        } else {
-            $v = Validator::make($request->all(), [
-                'reason' => ['required', 'string'],
-            ])->sometimes(
-            // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
-                ['bank', 'accountNumber', 'holderName'],
-                ['required', 'string'],
-                function ($input) use ($student) {
-                    return $student->payment->method == '가상계좌';
-                });
-
-            return $v->validated();
-        }
+        DB::commit();
+        return true;
     }
 }

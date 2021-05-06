@@ -8,10 +8,11 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
-use App\Services\Program\OfflineProgramConcrete;
-use App\Services\Program\OnlineProgramConcrete;
+use App\Services\Program\ProgramCancelTemplate;
+use App\Services\Program\ProgramTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PaymentController extends Controller
@@ -24,7 +25,7 @@ class PaymentController extends Controller
                 'programs.is_online', 'programs.title',
                 'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
                 'program_tickets.program_id',
-                'users.name','users.email','users.phone'
+                'users.name', 'users.email', 'users.phone'
             )
             ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->join('program_tickets', 'program_students.ticket_id', '=', 'program_tickets.id')
@@ -67,24 +68,48 @@ class PaymentController extends Controller
      * @return JsonResponse
      * @see OfflineStudentController @cancel
      */
-    public function cancel(Request $request, Program $program, ProgramStudent $student)
+    public function cancel(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
-        if ($program->is_online) {
-            $concrete = new OnlineProgramConcrete();
-        } else {
-            $concrete = new OfflineProgramConcrete();
-        }
+        $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
         $validatedData = $concrete->validateAdminCancel($request, $program, User::find($student->user_id));
-        if ($validatedData) {
-            $response = $concrete->cancel($program, $student, $validatedData);
-        } else {
+        if ($validatedData === false) {
             return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
         }
+
+        $response = $concrete->cancel($program, $student, $validatedData);
+
 
         if ($response === false) {
             return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
         }
         return response()->json(['message' => '취소되었습니다.']);
+    }
+
+    /**
+     *  별도결제 확인 시에 호출하는 함수.
+     *
+     * @param Request $request
+     * @param Program $program
+     * @param ProgramStudent $student
+     * @return JsonResponse
+     */
+    public function confirmAnotherPay(Request $request, Program $program, ProgramStudent $student): JsonResponse
+    {
+        $concrete = ProgramTemplate::getProgramConcrete($program);
+
+        try {
+            $expired_at = $request['expired_at'];
+            $concrete->confirmAnotherPay($program, $student, $expired_at);
+        } catch (\Exception $exception) {
+            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER');
+            return response()->json([
+                'msg' => '오류가 발생하였습니다.'
+            ], 500);
+        }
+
+        return response()->json([
+            'msg' => '확인 처리되었습니다.'
+        ]);
     }
 }

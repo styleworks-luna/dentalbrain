@@ -142,6 +142,32 @@ class ProgramStudent extends Model
     }
 
     /**
+     *  별도 결제 어드민 확인시.
+     *
+     * @param Program $program
+     * @param $expired_at
+     * @return bool
+     */
+    public function updateWhenConfirmAnotherPay(Program $program, $expired_at): bool
+    {
+        return $this->update([
+            'pay_status' => self::$PAY_ANOTHER_PAID,
+            'expired_at' => $expired_at,
+            'is_watched' => 0,
+            'is_repeated' => $program->canRepeat(),
+        ]);
+    }
+
+    public function updateWhenCancel($is_free): bool
+    {
+        return $this->update([
+            'pay_status' => $is_free ? ProgramStudent::$PAY_BEFORE : ProgramStudent::$PAY_REFUNDED,
+            'is_watched' => 0,
+            'expired_at' => null,
+        ]);
+    }
+
+    /**
      *  환불 가능 상태인지 체크.
      *
      * @return bool

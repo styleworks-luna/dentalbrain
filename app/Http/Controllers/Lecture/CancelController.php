@@ -7,8 +7,8 @@ use App\Mail\RequestProgramCancel;
 use App\Mail\RequestProgramCancelAdmin;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
-use App\Services\Program\OfflineProgramConcrete;
-use App\Services\Program\OnlineProgramConcrete;
+use App\Services\Program\OfflineProgramCancelConcrete;
+use App\Services\Program\ProgramCancelTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,11 +26,7 @@ class CancelController extends Controller
      */
     public function cancel(Request $request, Program $program): JsonResponse
     {
-        if ($program->is_online) {
-            $concrete = new OnlineProgramConcrete();
-        } else {
-            $concrete = new OfflineProgramConcrete();
-        }
+        $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
         $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
 
@@ -76,7 +72,7 @@ class CancelController extends Controller
                 'msg' => '유효하지 않은 요청입니다.'
             ], 422);
         }
-        $concrete = new OfflineProgramConcrete();
+        $concrete = new OfflineProgramCancelConcrete();
         $data = $concrete->validateUserRequestCancel($request, $program);
         if ($data == false) {
             // validation failed
