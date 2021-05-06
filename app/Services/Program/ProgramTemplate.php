@@ -439,7 +439,6 @@ abstract class ProgramTemplate
                 // 결제 정보 존재하는지 판단 ( 별도결제 때문 )
                 $payment = $student->payment;
                 $tossPayment = new TossPayments($payment->paymentKey);
-ㅈㄷㄱ
                 switch ($payment->method) {
                     case '계좌이체':
                         $response = $tossPayment->cancelTransfer($validatedData['reason']);
