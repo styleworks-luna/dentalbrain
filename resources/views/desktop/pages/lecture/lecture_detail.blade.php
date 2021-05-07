@@ -57,7 +57,7 @@
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
                                             @foreach($program->tickets as $ticket)
-                                                @if ($program->canRepeat() || $program->repeated())
+                                                @if ($program->canRepeat($student) || $program->repeated($student))
                                                     <option value="{{$ticket->id}}"
                                                             data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
                                                 @else
@@ -71,7 +71,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     @foreach($program->tickets as $ticket)
-                                        @if ($program->canRepeat() || $program->repeated())
+                                        @if ($program->canRepeat($student) || $program->repeated($student))
                                             <td class="lecture-price"
                                                 data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
                                             </td>
@@ -86,16 +86,17 @@
                         </div>
                         <div class="lecture-btn">
                             <input type="hidden" name="lecture-idx" class="lecture-idx" value="{{ $program->id }}">
-                            @if($program->waitDeposit())
+                            @if($program->waitDeposit($student) || $program->waitConfirmAnotherPay($student))
+                                {{--특수상황--}}
                                 <div class="btn-wrap">
                                     <span class="btn-apply-complete">
                                         입금 대기중
                                     </span>
                                 </div>
-                            @elseif ($program->alreadyApplied())
+                            @elseif ($program->alreadyApplied($student))
                                 {{--이미 신청한 경우--}}
                                 <div class="btn-wrap">
-                                    @if($program->is_online && $program->alreadyPaid())
+                                    @if($program->is_online && $program->alreadyPaid($student))
                                         {{--온라인 && 결제 완료됨 (= 시청 가능 상태)--}}
                                         <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
                                             강의 시청하기
@@ -113,7 +114,7 @@
                             @else
                                 @if($program->is_online)
                                     {{--온라인일 경우--}}
-                                    @if ($program->canRepeat())
+                                    @if ($program->canRepeat($student))
                                         {{--재수강 가능할 경우 (Paid, expired_at > now)--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
@@ -165,6 +166,7 @@
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
                             </a>
                         </div>
+                    </div>
                 </section>
 
                 <section class="lecture-detail">

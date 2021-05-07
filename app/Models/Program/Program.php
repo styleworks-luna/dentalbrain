@@ -50,19 +50,27 @@ class Program extends Model
     /**
      * 이미 유저가 강의를 지불했는지 확인.
      * alreadyApplied > alreadyPaid
+     * @param null $student
      * @return bool
      */
-    public function alreadyPaid()
+    public function alreadyPaid($student = null): bool
     {
-        $user = Auth::user();
-        if ($user != null) {
+        if (Auth::guest()) {
+            return false;
+        }
+
+        if ($student != null) {
+            return $student->expired_at > now()
+                && ($student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+                );
+        } else {
+            $user = Auth::user();
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->where('expired_at', '>', now())
                 ->exists();
-        } else {
-            return false;
         }
     }
 
@@ -71,60 +79,105 @@ class Program extends Model
      * alreadyApplied > alreadyPaid
      * @return bool
      */
-    public function alreadyApplied()
+    public function alreadyApplied($student = null): bool
     {
-        $user = Auth::user();
-        if ($user != null) {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->expired_at > now()
+                && (
+                    $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
+                    || $student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+                );
+        } else {
+            $user = Auth::user();
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
+                ->whereIn('pay_status', [
+                    ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS,
+                    ProgramStudent::$PAY_ANOTHER_PAID, ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                ])
                 ->where('expired_at', '>', now())
                 ->exists();
-        } else {
-            return false;
         }
     }
 
-    public function waitDeposit()
+    /**
+     *  입금 대기중인지 확인.
+     *
+     * @param null|ProgramStudent $student programStudent 정보가 존재 할 시에.
+     * @return bool
+     */
+    public function waitDeposit($student = null): bool
     {
-        $user = Auth::user();
-        if ($user != null) {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->pay_status == ProgramStudent::$PAY_IN_PROCESS;
+        } else {
+            $user = Auth::user();
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_IN_PROCESS])
                 ->exists();
-        } else {
+        }
+
+    }
+
+    public function waitConfirmAnotherPay($student = null): bool
+    {
+        if (Auth::guest()) {
             return false;
+        }
+        if ($student != null) {
+            return $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS;
+        } else {
+            $user = Auth::user();
+            return $user->students()
+                ->where('ticket_id', '=', $this->ticket->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_ANOTHER_IN_PROCESS])
+                ->exists();
         }
     }
 
-    public function canRepeat()
+    public function canRepeat($student = null): bool
     {
         if ($this->is_online == false) {
             return false;
         }
-        $user = Auth::user();
-        if ($user != null) {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->pay_status == ProgramStudent::$PAY_PAID
+                && $student->expired_at < now();
+        } else {
+            $user = Auth::user();
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
                 ->where('expired_at', '<', now())
                 ->exists();
-        } else {
-            return false;
         }
     }
 
-    public function repeated()
+    public function repeated($student = null): bool
     {
-        $user = Auth::user();
-        if ($user != null) {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->is_repeated == true;
+        } else {
+            $user = Auth::user();
             return $user->students()
                 ->where('ticket_id', '=', $this->ticket->id)
                 ->where('is_repeated', '=', true)
                 ->exists();
-        } else {
-            return false;
         }
     }
 
