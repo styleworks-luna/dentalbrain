@@ -115,7 +115,10 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
     {
         $base = $program->students()
             ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS]);
+            ->whereIn('pay_status', [
+                ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS,
+                ProgramStudent::$PAY_ANOTHER_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID
+            ]);
         if ($base->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return false;

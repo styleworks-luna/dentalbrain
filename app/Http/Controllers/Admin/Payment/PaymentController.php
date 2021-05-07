@@ -10,6 +10,7 @@ use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Services\Program\ProgramCancelTemplate;
 use App\Services\Program\ProgramTemplate;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -98,10 +99,10 @@ class PaymentController extends Controller
         $concrete = ProgramTemplate::getProgramConcrete($program);
 
         try {
-            $expired_at = $request['expired_at'];
+            $expired_at = $request['date'];
             $concrete->confirmAnotherPay($program, $student, $expired_at);
         } catch (\Exception $exception) {
-            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER');
+            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER',[$exception]);
             return response()->json([
                 'msg' => '오류가 발생하였습니다.'
             ], 500);

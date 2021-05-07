@@ -142,7 +142,7 @@ class Payment extends Model
     public function updateWhenConfirmAnotherPay()
     {
         return $this->update([
-            'approved_at' => now(),
+            'approvedAt' => now(),
             'status' => 'DONE',
         ]);
     }

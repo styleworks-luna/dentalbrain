@@ -17,8 +17,8 @@
                 <article class="btn-area">
                     <button class="btn btn-dark text-white"
                             @click="handleSetConfirmLayer">닫기</button>
-                    <button class="btn btn-danger text-white"
-                            @click="handleConfirmPayment">결제 취소</button>
+                    <button class="btn btn-success text-white"
+                            @click="handleConfirmPayment">결제 확인</button>
                 </article>
             </section>
         </article>
@@ -45,7 +45,7 @@ export default {
         },
         handleConfirmPayment() {
             const params = {
-                date: this.date
+                date: this.Helper.dateFormatYMD(this.date),
             };
 
             this.$emit('confirmPayment', params);

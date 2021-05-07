@@ -398,7 +398,7 @@ abstract class ProgramTemplate
      *
      * @param Program $program
      * @param ProgramStudent $student
-     * @param $expired_at 마감 기한
+     * @param $expired_at // 마감 기한
      * @return bool
      */
     public function confirmAnotherPay(Program $program, ProgramStudent $student, $expired_at): bool
@@ -414,7 +414,7 @@ abstract class ProgramTemplate
             $payment->updateWhenConfirmAnotherPay();
         } catch (Exception $exception) {
             DB::rollBack();
-            Log::error('CONFIRM ANOTHER PAY ERROR', [$program, $student, $expired_at]);
+            Log::error('CONFIRM ANOTHER PAY ERROR', [$exception, $program->id, $student, $expired_at]);
             return false;
         }
 

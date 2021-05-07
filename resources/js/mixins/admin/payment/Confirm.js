@@ -1,5 +1,5 @@
 import PaymentConfirmLayer from '@/components/admin/form/PaymentConfirmLayer.vue';
-import { cancelPayment } from '@/api/admin/payment/Payment.js';
+import { confirmPayment } from '@/api/admin/payment/Payment.js';
 
 export const PaymentConfirmMixin = {
     components: {
@@ -17,9 +17,9 @@ export const PaymentConfirmMixin = {
             this.confirmStudentId = studentId || '';
         },
         confirmPayment(params) {
-            cancelPayment(this.id, this.confirmStudentId, params).then(res => {
-                this.handleSetCancelLayer();
-                alert(res.data.message);
+            confirmPayment(this.id, this.confirmStudentId, params).then(res => {
+                this.handleSetConfirmLayer();
+                alert('확인이 완료되었습니다.');
                 this.getData();
             });
         },

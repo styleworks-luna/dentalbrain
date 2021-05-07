@@ -16,7 +16,16 @@ const cancelPayment = (id, studentId, params) => {
     });
 };
 
+const confirmPayment = (id, studentId, params) => {
+    return Send({
+        url: `/api/admin/lecture/online/${id}/students/${studentId}`,
+        method: 'patch',
+        params: params
+    });
+};
+
 export {
     getData,
-    cancelPayment
+    cancelPayment,
+    confirmPayment
 }
