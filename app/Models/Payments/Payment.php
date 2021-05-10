@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -109,16 +110,25 @@ class Payment extends Model
      * @param ProgramStudent $student
      * @return Builder|Model
      */
-    public static function createByAnotherPay(Program $program, ProgramStudent $student)
+    public static function createWhenAnotherPayProcess(Program $program, ProgramStudent $student)
     {
+        $paymentKey = 'another_' . Str::random('5');
+        $orderId = 'another_' . Str::random('5');
         return Payment::query()->create([
-            'paymentKey' => '별도결제',
-            'orderId' => '별도결제',
+            'paymentKey' => $paymentKey,
+            'orderId' => $orderId,
             'totalAmount' => $student->getPrice(),
             'method' => '별도결제',
             'status' => 'ANOTHER_PROGRESS',
             'useDiscount' => 0,
-            'full_response' => '{별도결제}',
+            'full_response' => json_encode([
+                'mId' => 'si_dentalbrain',
+                'paymentKey' => $paymentKey,
+                'orderId' => $orderId,
+                'method' => '별도결제',
+                'totalAmount' => $student->getPrice(),
+                'cancels' => null,
+            ], JSON_UNESCAPED_UNICODE),
             'requestedAt' => now(),
         ]);
     }
@@ -143,7 +153,26 @@ class Payment extends Model
     {
         return $this->update([
             'approvedAt' => now(),
-            'status' => 'DONE',
+            'status' => 'ANOTHER_DONE',
+        ]);
+    }
+
+    public function cancelAnotherPay()
+    {
+        return $this->update([
+            'status' => 'ANOTHER_REJECTED',
+            'full_response' => json_encode(
+                array_merge(
+                    json_decode($this->attributes['full_response'], true),
+                    [
+                        'cancels' => [
+                            [
+                                'cancelAmount' => $this->attributes['totalAmount'],
+                                'canceledAt' => now()->toIso8601String(),
+                            ],
+                        ]
+                    ]
+                ), JSON_UNESCAPED_UNICODE),
         ]);
     }
 

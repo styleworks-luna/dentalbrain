@@ -11,7 +11,6 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        DB::connection()->enableQueryLog();
         $payments = Payment::query()
             //->select('id', DB::raw("JSON_UNQUOTE(JSON_EXTRACT(full_response, '$.cancels[0]')) as cancel"), DB::raw("JSON_UNQUOTE(JSON_EXTRACT(full_response, '$.cancels[0].canceledAt')) as canceledAt"),'totalAmount', 'status', 'method', 'receiptUrl', 'requestedAt', 'va_accountNumber', 'va_bank', 'va_customerName', 'va_dueDate')
             ->select('id', 'full_response' ,'totalAmount', 'status', 'method', 'receiptUrl', 'requestedAt', 'va_accountNumber', 'va_bank', 'va_customerName', 'va_dueDate')
@@ -29,7 +28,6 @@ class PaymentController extends Controller
                 $query->where('user_id', Auth::id());
             })->orderBy('id','desc')->get();
 
-        logger(DB::getQueryLog());
         foreach($payments as $payment){
             $payment->full_response = json_decode($payment->full_response);
         }

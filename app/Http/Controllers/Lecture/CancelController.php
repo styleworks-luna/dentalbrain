@@ -39,10 +39,6 @@ class CancelController extends Controller
                     'msg' => '유효하지 않은 요청입니다.'
                 ], 422);
             }
-        }
-
-        if ($student->pay_status == ProgramStudent::$PAY_PAID) {
-            // PG사 통한 결제일 경우.
             $success = $concrete->cancel($program, $student, $data);
         } else {
             $success = $concrete->cancel($program, $student);

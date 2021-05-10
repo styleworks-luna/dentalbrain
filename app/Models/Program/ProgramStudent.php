@@ -61,19 +61,13 @@ class ProgramStudent extends Model
         'expired_at' => 'datetime',
     ];
 
-    public static function createByAnotherPayProcess(Program $program)
+    public static function updateWhenAnotherPayProcess(Program $program)
     {
         $programStudent = ProgramStudent::query()
             ->where('ticket_id', '=', $program->ticket->id)
             ->where('user_id', '=', Auth::id())
             ->first();
         $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER_IN_PROCESS;
-        $programStudent->applied_at = now();
-
-        $payment = Payment::createByAnotherPay($program, $programStudent);
-
-        $programStudent->payment_id = $payment->id;
-
         $programStudent->save();
 
         return $programStudent;
@@ -153,8 +147,7 @@ class ProgramStudent extends Model
         return $this->update([
             'pay_status' => self::$PAY_ANOTHER_PAID,
             'expired_at' => $expired_at,
-            'is_watched' => 0,
-            'is_repeated' => $program->canRepeat(),
+            'is_watched' => 1,
         ]);
     }
 

@@ -47,6 +47,7 @@
                                         @break
 
                                         @case('DONE')
+                                        @case('ANOTHER_DONE')
                                         <td>결제 완료</td>
                                         @break
 
@@ -57,6 +58,14 @@
                                         @case('CANCELED')
                                         @case('PARTIAL_CANCELED')
                                         <td class="cancel">결제 취소</td>
+                                        @break
+
+                                        @case('ANOTHER_PROGRESS')
+                                        <td>확인 중</td>
+                                        @break
+
+                                        @case('ANOTHER_REJECTED')
+                                        <td>신청 취소</td>
                                         @break
 
                                         @default
@@ -79,14 +88,16 @@
                                                 <a href="{{ $payment->receiptUrl }}" target="_blank">취소 영수증</a>
                                             @endif
                                         @endisset
-                                        @isset($payment->cashRe)
-                                        @endisset
 
                                     </td>
                                     <td>
-                                        <div class="@if($payment->full_response->cancels != null) payment-cancel @endif">{{ date_format($payment->requestedAt ,'Y.m.d')}} </div>
+                                        <div class="@isset($payment->full_response->cancels) payment-cancel @endisset">
+                                            {{ date_format($payment->requestedAt ,'Y.m.d')}}
+                                        </div>
 
-                                        {{ $payment->full_response->cancels != null  ? '/ ' . date('Y.m.d',strtotime($payment->full_response->cancels[0]->canceledAt)) : ''   }}
+                                        @isset($payment->full_response->cancels)
+                                            {{'/ ' . date('Y.m.d',strtotime($payment->full_response->cancels[0]->canceledAt))}}
+                                        @endisset
                                     </td>
                                 </tr>
                             </table>

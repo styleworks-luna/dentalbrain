@@ -4,6 +4,7 @@
 namespace App\Services\Program;
 
 
+use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyCategory;
@@ -59,38 +60,45 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
 
             $program->answers()->where('user_id', '=', $student->user_id)->delete();
 
-            $student->updateWhenCancel($program->ticket->is_free);
-
             // 결제 취소 진행.
-            if ($student->payment()->exists() && $student->pay_status == ProgramStudent::$PAY_PAID) {
-                // PG 사 통한 결제인지 판단.
-                $payment = $student->payment;
-                $tossPayment = new TossPayments($payment->paymentKey);
-                switch ($payment->method) {
-                    case '계좌이체':
-                        $response = $tossPayment->cancelTransfer($validatedData['reason']);
-                        break;
-                    case '카드':
-                        $response = $tossPayment->cancelCard($validatedData['reason']);
-                        break;
-                    case '가상계좌':
-                        $response = $tossPayment->cancelVirtualAccount(
-                            $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
-                        );
-                        break;
-                    //case '휴대폰':
-                    default:
-                        $response = false;
-                        Log::error('INVALID METHOD', $validatedData);
-                        break;
-                }
+            if ($student->payment()->exists()) {
+                if ($student->pay_status == ProgramStudent::$PAY_PAID) {
+                    // PG 사 통한 결제
+                    $payment = $student->payment;
+                    $tossPayment = new TossPayments($payment->paymentKey);
+                    switch ($payment->method) {
+                        case '계좌이체':
+                            $response = $tossPayment->cancelTransfer($validatedData['reason']);
+                            break;
+                        case '카드':
+                            $response = $tossPayment->cancelCard($validatedData['reason']);
+                            break;
+                        case '가상계좌':
+                            $response = $tossPayment->cancelVirtualAccount(
+                                $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
+                            );
+                            break;
+                        //case '휴대폰':
+                        default:
+                            $response = false;
+                            Log::error('INVALID METHOD', $validatedData);
+                            break;
+                    }
+                    if ($response === false) {
+                        DB::rollBack();
+                        return false;
+                    }
 
-                if ($response === false) {
-                    DB::rollBack();
-                    return false;
+                    $payment->updateByToss($response);
+
+                } elseif ($student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
+                    /** @var Payment $payment */
+                    $payment = $student->payment;
+                    $payment->cancelAnotherPay();
                 }
-                $payment->updateByToss($response);
             }
+
+            $student->updateWhenCancel($program->ticket->is_free);
 
             DB::commit();
             return true;

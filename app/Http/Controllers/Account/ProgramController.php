@@ -26,7 +26,8 @@ class ProgramController extends Controller
         $queryBuilder = ProgramStudent::query()->select('id', 'user_id', 'payment_id', 'ticket_id', 'expired_at', 'is_watched', 'is_repeated', 'pay_status', 'applied_at')
             ->whereIn('pay_status', [
                 ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS,
-                ProgramStudent::$PAY_IN_REFUND_PROCESS, ProgramStudent::$PAY_ANOTHER_IN_PROCESS])
+                ProgramStudent::$PAY_IN_REFUND_PROCESS,
+                ProgramStudent::$PAY_ANOTHER_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
             ->with([
                 'payment:id,totalAmount,receiptUrl,method,status',
                 'ticket.program' => function ($query) {

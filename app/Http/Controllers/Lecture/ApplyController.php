@@ -115,7 +115,14 @@ class ApplyController extends Controller
 
     public function anotherPay(Program $program)
     {
-        ProgramStudent::createByAnotherPayProcess($program);
+        $programStudent = ProgramStudent::updateWhenAnotherPayProcess($program);
+
+        /** @var ProgramStudent $programStudent */
+        $payment = Payment::createWhenAnotherPayProcess($program, $programStudent);
+
+        $programStudent->payment_id = $payment->id;
+
+        $programStudent->save();
 
         return $this->result($program);
     }
