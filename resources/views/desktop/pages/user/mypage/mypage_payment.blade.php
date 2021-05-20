@@ -80,6 +80,12 @@
                                                 <p>예금주 : {{ $payment->va_customerName }}</p>
                                                 <p>납입기한 : {{ date_format($payment->va_dueDate,'Y.m.d G:i:s') }}</p>
                                             </div>
+                                        @elseif($payment->method == '별도결제' && $payment->status == 'ANOTHER_PROGRESS')
+                                            <a href="" class="waiting-deposit">자세히 보기</a>
+                                            <div class="deposit-detail">
+                                                <p>입금 계좌 : 140-010-094358 </p>
+                                                <p>예금주 : (주)브레인스펙병원교육개발원</p>
+                                            </div>
                                         @endif
                                         @isset($payment->receiptUrl)
                                             @if ($payment->status == 'DONE')
