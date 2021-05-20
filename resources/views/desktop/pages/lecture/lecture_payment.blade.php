@@ -332,7 +332,7 @@
                                     <input type="radio" id="separate" name="payment-method"
                                            class="payment-method" value="별도결제">
                                     <label for="separate"
-                                           class="transfer-label">별도결제</label>
+                                           class="transfer-label">계좌입금</label>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"

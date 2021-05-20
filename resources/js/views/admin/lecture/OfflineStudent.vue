@@ -67,7 +67,7 @@
                             취소 완료
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
-                            별도결제 확인 대기
+                            계좌입금 확인 대기
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"

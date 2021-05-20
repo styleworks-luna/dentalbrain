@@ -4,7 +4,7 @@
 
         <article class="popup-wrap">
             <header class="popup-header">
-                <h2 class="popup-title">별도결제 확인</h2>
+                <h2 class="popup-title">계좌입금 확인</h2>
             </header>
 
             <section class="popup-content">
