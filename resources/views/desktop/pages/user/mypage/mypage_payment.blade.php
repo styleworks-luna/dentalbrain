@@ -61,7 +61,7 @@
                                         @break
 
                                         @case('ANOTHER_PROGRESS')
-                                        <td>확인 중</td>
+                                        <td>입금 대기</td>
                                         @break
 
                                         @case('ANOTHER_REJECTED')
@@ -83,9 +83,11 @@
                                         @elseif($payment->method == '별도결제' && $payment->status == 'ANOTHER_PROGRESS')
                                             <a href="" class="waiting-deposit">자세히 보기</a>
                                             <div class="deposit-detail">
-                                                <p>입금 계좌 : 140-010-094358 </p>
+                                                <p>입금 계좌 : 신한은행 140-010-094358 </p>
                                                 <p>예금주 : (주)브레인스펙병원교육개발원</p>
                                             </div>
+                                        @elseif($payment->method == '별도결제' && $payment->status == 'DONE')
+                                            <span class="tip">(영수증 관리자 문의)</span>
                                         @endif
                                         @isset($payment->receiptUrl)
                                             @if ($payment->status == 'DONE')
@@ -94,7 +96,6 @@
                                                 <a href="{{ $payment->receiptUrl }}" target="_blank">취소 영수증</a>
                                             @endif
                                         @endisset
-
                                     </td>
                                     <td>
                                         <div class="@isset($payment->full_response->cancels) payment-cancel @endisset">
