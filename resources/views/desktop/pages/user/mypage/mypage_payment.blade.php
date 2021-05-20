@@ -86,7 +86,7 @@
                                                 <p>입금 계좌 : 신한은행 140-010-094358 </p>
                                                 <p>예금주 : (주)브레인스펙병원교육개발원</p>
                                             </div>
-                                        @elseif($payment->method == '별도결제' && $payment->status == 'DONE')
+                                        @elseif($payment->method == '별도결제' && ($payment->status == 'DONE' || $payment->status == 'ANOTHER_DONE'))
                                             <span class="tip">(영수증 관리자 문의)</span>
                                         @endif
                                         @isset($payment->receiptUrl)
