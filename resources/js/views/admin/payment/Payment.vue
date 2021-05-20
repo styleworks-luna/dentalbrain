@@ -259,6 +259,9 @@ export default {
 
                 case 'ANOTHER_PROGRESS' :
                     return '별도 결제 대기 중';
+
+                case 'ANOTHER_DONE' :
+                    return '결제 완료';
             }
         },
         getProgramId(data) {
