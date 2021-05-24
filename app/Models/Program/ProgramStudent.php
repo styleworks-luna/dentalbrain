@@ -160,6 +160,14 @@ class ProgramStudent extends Model
         ]);
     }
 
+    public function revert() {
+        return $this->update([
+            'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
+            'is_watched' => 0,
+            'expired_at' => null,
+        ]);
+    }
+
     /**
      *  환불 가능 상태인지 체크.
      *

@@ -17,6 +17,9 @@ use Illuminate\Validation\Rule;
 class OfflineProgramController extends Controller
 {
     protected $offlineConcrete;
+    /**
+     * @var SearchService|null
+     */
     private $search;
 
     public function __construct()

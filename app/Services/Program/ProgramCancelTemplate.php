@@ -91,7 +91,8 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
 
                     $payment->updateByToss($response);
 
-                } elseif ($student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
+                } elseif ($student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID) {
                     /** @var Payment $payment */
                     $payment = $student->payment;
                     $payment->cancelAnotherPay();
@@ -255,5 +256,13 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
 
             return $v->validated();
         }
+    }
+
+    public function revert(Program $program, ProgramStudent $student): bool
+    {
+        $student->revert();
+        $student->payment->revert();
+
+        return true;
     }
 }

@@ -61,32 +61,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * 어드민 환불 처리
-     *
-     * @param Request $request
-     * @param Program $program
-     * @param ProgramStudent $student
-     * @return JsonResponse
-     * @see OfflineStudentController @cancel
-     */
-    public function cancel(Request $request, Program $program, ProgramStudent $student): JsonResponse
-    {
-        $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
-
-        $validatedData = $concrete->validateAdminCancel($request, $program, User::find($student->user_id));
-        if ($validatedData === false) {
-            return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
-        }
-
-        $response = $concrete->cancel($program, $student, $validatedData);
-
-        if ($response === false) {
-            return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
-        }
-        return response()->json(['message' => '취소되었습니다.']);
-    }
-
-    /**
      *  별도결제 확인 시에 호출하는 함수.
      *
      * @param Request $request

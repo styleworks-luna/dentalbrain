@@ -176,6 +176,13 @@ class Payment extends Model
         ]);
     }
 
+    public function revert() {
+        return $this->update([
+            'approvedAt' => null,
+            'status' => 'ANOTHER_PROGRESS'
+        ]);
+    }
+
     public function student()
     {
         return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
