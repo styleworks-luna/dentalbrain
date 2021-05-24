@@ -163,7 +163,7 @@ class Payment extends Model
             'status' => 'ANOTHER_REJECTED',
             'full_response' => json_encode(
                 array_merge(
-                    json_decode($this->attributes['full_response'], true),
+                    json_decode($this->attributes['full_response'], true) ?: [],
                     [
                         'cancels' => [
                             [

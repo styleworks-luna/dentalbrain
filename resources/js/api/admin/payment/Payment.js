@@ -24,8 +24,34 @@ const confirmPayment = (id, studentId, params) => {
     });
 };
 
+const cancelOfflinePayment = (id, studentId, params) => {
+    return Send({
+        url: `/api/admin/lecture/offline/${id}/students/${studentId}`,
+        method: 'delete',
+        params: params
+    });
+};
+
+const confirmOfflinePayment = (id, studentId, params) => {
+    return Send({
+        url: `/api/admin/lecture/offline/${id}/students/${studentId}`,
+        method: 'patch',
+        params: params
+    });
+};
+
+const revertConfirm = (id, studentId) => {
+    return Send({
+        url: `/api/admin/payment/${id}/${studentId}/revert`,
+        method: 'post',
+    });
+};
+
 export {
     getData,
     cancelPayment,
-    confirmPayment
+    confirmPayment,
+    cancelOfflinePayment,
+    confirmOfflinePayment,
+    revertConfirm,
 }

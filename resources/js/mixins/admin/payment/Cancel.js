@@ -1,5 +1,7 @@
 import PaymentCancelLayer from '@/components/admin/form/PaymentCancelLayer.vue';
 import { cancelPayment } from '@/api/admin/payment/Payment.js';
+import { revertConfirm } from '@/api/admin/payment/Payment.js';
+import { cancelOfflinePayment } from '@/api/admin/payment/Payment.js';
 
 export const PaymentCancelMixin = {
     components: {
@@ -25,11 +27,23 @@ export const PaymentCancelMixin = {
                 this.getData();
             });
         },
-        cancelLecture(studentId) {
-            cancelPayment(this.id, studentId, {}).then(res => {
+        cancelLecture(studentId, program_id) {
+            cancelPayment(program_id ? program_id : this.id, studentId, {}).then(res => {
                 alert(res.data.message);
                 this.getData();
             });
+        },
+        cancelOfflinePayment(studentId) {
+            cancelOfflinePayment(this.id, studentId, {}).then(res => {
+                alert(res.data.message);
+                this.getData();
+            });
+        },
+        revertConfirm(studentId, program_id) {
+            revertConfirm(program_id ? program_id : this.id, studentId).then(res => {
+                alert(res.data.message);
+                this.getData();
+            })
         }
     }
 };
