@@ -47,7 +47,6 @@ import Community from '@/api/admin/community/Community.js';
 
 export default {
     name: 'AdminCommunity',
-
     components: {
         'table-grid': Table,
         'button-open': ButtonOpen,
