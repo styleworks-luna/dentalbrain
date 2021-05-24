@@ -42,6 +42,8 @@ class CancelController extends Controller
     {
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
+        $concrete->revert($program,$student);
 
+        return response()->json(['message' => '미 결제 상태로 전환되었습니다.']);
     }
 }
