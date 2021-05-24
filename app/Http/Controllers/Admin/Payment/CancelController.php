@@ -40,9 +40,13 @@ class CancelController extends Controller
 
     public function revert(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
+        if ($student->pay_status != ProgramStudent::$PAY_PAID) {
+            return response()->json(['message' => '계좌 입금 확인되지 않았습니다.'],400);
+        }
+
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
-        $concrete->revert($program,$student);
+        $concrete->revert($program, $student);
 
         return response()->json(['message' => '미 결제 상태로 전환되었습니다.']);
     }
