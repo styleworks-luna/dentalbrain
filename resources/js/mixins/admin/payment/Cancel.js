@@ -33,8 +33,8 @@ export const PaymentCancelMixin = {
                 this.getData();
             });
         },
-        cancelOfflinePayment(studentId) {
-            cancelOfflinePayment(this.id, studentId, {}).then(res => {
+        cancelOfflinePayment(studentId, program_id) {
+            cancelOfflinePayment(program_id ? program_id : this.id, studentId, {}).then(res => {
                 alert(res.data.message);
                 this.getData();
             });

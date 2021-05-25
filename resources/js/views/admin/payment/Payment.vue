@@ -78,18 +78,38 @@
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
-                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)">결제 확인</a>
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
-                                신청 취소
-                            </a>
+                            <a href="#" class="btn btn-success"
+                               @click.prevent="handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)">결제
+                                확인</a>
+                            <template v-if="slotProps.row.is_online == true">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                    신청 취소
+                                </a>
+                            </template>
+                            <template v-else>
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
+                                    신청 취소
+                                </a>
+                            </template>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제 대기</a>
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
-                                결제 취소
-                            </a>
+                            <a href="#" class="btn btn-secondary"
+                               @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제
+                                대기</a>
+                            <template v-if="slotProps.row.is_online == true">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                    신청 취소
+                                </a>
+                            </template>
+                            <template v-else>
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
+                                    신청 취소
+                                </a>
+                            </template>
                         </template>
                     </td>
                 </template>
