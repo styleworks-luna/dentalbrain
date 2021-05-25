@@ -64,7 +64,7 @@ class ProgramStudent extends Model
     public static function updateWhenAnotherPayProcess(Program $program)
     {
         $programStudent = ProgramStudent::query()
-            ->where('ticket_id', '=', $program->ticket->id)
+            ->where('program_id', '=', $program->id)
             ->where('user_id', '=', Auth::id())
             ->first();
         $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER_IN_PROCESS;
@@ -84,11 +84,11 @@ class ProgramStudent extends Model
     public static function updateWhenTossSuccess(TossPaymentsResponse $response, Program $program, Payment $payment)
     {
         $programStudent = ProgramStudent::query()->where('user_id', '=', Auth::id())
-            ->where('ticket_id', '=', $program->ticket->id)->first();
+            ->where('program_id', '=', $program->id)->first();
         if ($response->isCard() || $response->isTransfer()) {
             $programStudent->update([
                 'payment_id' => $payment->id,
-                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
+                'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
         } elseif ($response->isVirtualAccount()) {
@@ -110,24 +110,24 @@ class ProgramStudent extends Model
      */
     public static function updateOrCreateWhenApplySuccess(Program $program)
     {
-        if ($program->ticket->is_free) {
+        if ($program->is_free) {
             return ProgramStudent::updateOrCreate([
-                'ticket_id' => $program->ticket->id,
+                'program_id' => $program->id,
                 'user_id' => Auth::id(),
             ], [
-                'ticket_id' => $program->ticket->id,
+                'program_id' => $program->id,
                 'user_id' => Auth::id(),
                 'applied_at' => now(),
-                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
+                'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
                 'is_repeated' => $program->canRepeat(),
             ]);
         } else {
             return ProgramStudent::updateOrCreate([
-                'ticket_id' => $program->ticket->id,
+                'program_id' => $program->id,
                 'user_id' => Auth::id(),
             ], [
-                'ticket_id' => $program->ticket->id,
+                'program_id' => $program->id,
                 'user_id' => Auth::id(),
                 'applied_at' => now(),
                 'is_repeated' => $program->canRepeat(),
@@ -192,7 +192,7 @@ class ProgramStudent extends Model
         * }
         */
 
-        if ($this->ticket->program->is_online) {
+        if ($this->program->is_online) {
             if (
                 strtotime($this->attributes['applied_at']) > now()->subDays(7)->unix()
                 && $this->attributes['is_watched'] == 0
@@ -215,11 +215,6 @@ class ProgramStudent extends Model
     /*
      * ====================================== Relations ===============================
      */
-
-    public function ticket()
-    {
-        return $this->belongsTo(ProgramTicket::class, 'ticket_id', 'id');
-    }
 
     public function user()
     {
@@ -251,8 +246,8 @@ class ProgramStudent extends Model
             ($this->attributes['expired_at'] < now() && $this->attributes['pay_status'] == self::$PAY_PAID)
             || $this->attributes['is_repeated'] == true
         ) {
-            return $this->ticket->repeat_price;
+            return $this->program->repeat_price;
         }
-        return $this->ticket->price;
+        return $this->program->price;
     }
 }

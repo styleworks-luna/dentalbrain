@@ -20,7 +20,13 @@ class Program extends Model
 
     protected $table = 'programs';
 
-    protected $appends = ['major_category_name', 'minor_category_name', 'user_like_cnt', 'auth_like'];
+    protected $appends = [
+        'major_category_name',
+        'minor_category_name',
+        'user_like_cnt',
+        'auth_like',
+        'repeat_price',
+    ];
 
     protected $guarded = [];
 
@@ -38,7 +44,7 @@ class Program extends Model
         $user = Auth::user();
         if ($this->alreadyPaid()) {
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->where('applied_at', '>', now()->subDays(7))
                 ->where('is_watched', '=', 0)
                 ->exists();
@@ -67,7 +73,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->where('expired_at', '>', now())
                 ->exists();
@@ -95,7 +101,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [
                     ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS,
                     ProgramStudent::$PAY_ANOTHER_PAID, ProgramStudent::$PAY_ANOTHER_IN_PROCESS
@@ -121,7 +127,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_IN_PROCESS])
                 ->exists();
         }
@@ -138,7 +144,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_ANOTHER_IN_PROCESS])
                 ->exists();
         }
@@ -158,7 +164,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
                 ->where('expired_at', '<', now())
                 ->exists();
@@ -175,7 +181,7 @@ class Program extends Model
         } else {
             $user = Auth::user();
             return $user->students()
-                ->where('ticket_id', '=', $this->ticket->id)
+                ->where('program_id', '=', $this->id)
                 ->where('is_repeated', '=', true)
                 ->exists();
         }
@@ -194,9 +200,7 @@ class Program extends Model
 
     public function students()
     {
-        return $this->hasManyThrough(ProgramStudent::class, ProgramTicket::class,
-            'program_id', 'ticket_id',
-            'id', 'id');
+        return $this->hasMany(ProgramStudent::class, 'program_id', 'id');
     }
 
     /**
@@ -223,16 +227,6 @@ class Program extends Model
     public function minorCategory()
     {
         return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
-    }
-
-    public function tickets()
-    {
-        return $this->hasMany(ProgramTicket::class, 'program_id', 'id');
-    }
-
-    public function ticket()
-    {
-        return $this->hasOne(ProgramTicket::class, 'program_id', 'id');
     }
 
     public function comments()
@@ -311,6 +305,11 @@ class Program extends Model
 
     }
 
+    public function getRepeatPriceAttribute()
+    {
+        return $this->attributes['price'] * 7 / 10;
+    }
+
     /*
      * ============== Scope ==============
      */
@@ -325,7 +324,7 @@ class Program extends Model
     {
         $programs = $query->select(['id', 'thumbnail_id', 'is_online', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
             ->where('is_open', '=', 1)
-            ->with(['thumbnail:id,url', 'ticket:id,price,program_id,is_free', 'place:id,program_id,started_at,ended_at'])
+            ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])
             ->withCount('students');
 
         if ($category !== null) {
