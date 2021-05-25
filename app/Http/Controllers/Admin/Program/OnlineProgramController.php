@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
-class OnlineProgramController extends Controller
+class OnlineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
     protected $onlineConcrete;
     private $search;
@@ -26,19 +26,7 @@ class OnlineProgramController extends Controller
         $this->onlineConcrete = new OnlineProgramConcrete();
     }
 
-    public function getCategories()
-    {
-        return $this->onlineConcrete->getCategories();
-    }
-
-    public function index(Request $request)
-    {
-        return response()->json([
-            'programs' => $this->search($request),
-        ]);
-    }
-
-    private function search(Request $request)
+    public function search(Request $request)
     {
         $this->search = new SearchService(Program::query());
 
@@ -52,29 +40,6 @@ class OnlineProgramController extends Controller
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
             }])->orderByDesc('id')->paginate('10');
         return $search;
-    }
-
-    private function addMajorCategoryId(Request $request)
-    {
-        if (isset($request->major_category_id) && is_numeric($request->major_category_id)) {
-            $this->search->addCategory('major_category_id', '=', $request->major_category_id);
-        }
-    }
-
-    private function addMinorCategoryId(Request $request)
-    {
-        if (isset($request->minor_category_id) && is_numeric($request->minor_category_id)) {
-            $this->search->addCategory('minor_category_id', '=', $request->minor_category_id);
-        }
-    }
-
-    public function changeOpen(Request $request, Program $program)
-    {
-        $this->onlineConcrete->changeOpenStatus($program);
-        return response()->json([
-            'is_open' => $program->is_open,
-            'msg' => '변경되었습니다.'
-        ]);
     }
 
     public function update(Request $request, Program $program)

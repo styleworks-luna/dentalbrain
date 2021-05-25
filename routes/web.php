@@ -288,13 +288,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
             // 강의 카테고리 리소스
-            Route::get('categories', 'Admin\Program\OnlineProgramController@getCategories')->name('categories');
+            Route::get('categories', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'getCategories'])->name('categories');
             // 강의 상세 내용 이미지 업로드
             Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
-                Route::get('/', 'Admin\Program\OnlineProgramController@index')->name('index');
+                Route::get('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'index'])->name('index');
                 // 온라인 강의 저장
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
@@ -309,7 +309,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 온라인 강의 업데이트
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
-                    Route::patch('/', 'Admin\Program\OnlineProgramController@changeOpen')->name('changeOpen');
+                    Route::patch('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'changeOpen'])->name('changeOpen');
                     // 온라인 강의 복사 리소스
                     Route::get('/duplicate', 'Admin\Program\OnlineProgramController@duplicateEdit')->name('duplicate-edit');
                     // 온라인 강의 복사
@@ -319,7 +319,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트
-                Route::get('/', 'Admin\Program\OfflineProgramController@index')->name('index');
+                Route::get('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'index'])->name('index');
                 // 오프라인 강의 저장
                 Route::post('/', 'Admin\Program\OfflineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
@@ -334,7 +334,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 오프라인 강의 업데이트
                     Route::put('/', 'Admin\Program\OfflineProgramController@update')->name('update');
                     // 오프라인 강의 비공개/공개 전환
-                    Route::patch('/', 'Admin\Program\OfflineProgramController@changeOpen')->name('changeOpen');
+                    Route::patch('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'changeOpen'])->name('changeOpen');
                     // 오프라인 강의 복사 리소스
                     Route::get('/duplicate', 'Admin\Program\OfflineProgramController@duplicateEdit')->name('duplicate-edit');
                     // 오프라인 강의 복사
