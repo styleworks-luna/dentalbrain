@@ -136,7 +136,7 @@
                             <div class="content-button-full">
                                 <div class="btn-wrap">
                                     <a href="" class="btn-none-active" @click.prevent>입금대기중</a>
-                                    <a href="" @click.prevent="destroy(lecture.ticket.program_id)">신청취소</a>
+                                    <a href="" @click.prevent="popUpAccountStatus(lecture.id)">신청취소</a>
                                 </div>
                             </div>
                         </template>
@@ -222,6 +222,11 @@
                          @close="toggleModal">
         </refund-free-pop>
 
+        <refund-account-pop v-if="showAccountModal"
+                         :programIdTo="modalData.ticket.program.id"
+                         @close="toggleAccountModal">
+        </refund-account-pop>
+
         <refund-manual-pop v-if="modalData.ticket.is_free == 0 && showManualModal"
                            :methodTo="modalData.payment.method"
                            :programIdTo="modalData.ticket.program.id"
@@ -235,6 +240,7 @@
 <script>
 import RefundPop from '@/components/mypage/lecture/RefundPop.vue'
 import RefundFreePop from '@/components/mypage/lecture/RefundFreePop.vue'
+import RefundAccountPop from '@/components/mypage/lecture/RefundAccountPop.vue'
 import RefundManualPop from '@/components/mypage/lecture/RefundManualPop.vue'
 
 import Mypage from "@/api/mypage/Mypage.js"
@@ -245,6 +251,7 @@ export default {
         RefundPop,
         RefundFreePop,
         RefundManualPop,
+        RefundAccountPop,
     },
     props: {
         'list': Array,
@@ -257,6 +264,7 @@ export default {
             milliSecondsDay: 86400000,
             showModal: false,
             showManualModal: false,
+            showAccountModal: false,
             modalData: {
                 ticket: {},
                 payment: {}
@@ -281,11 +289,21 @@ export default {
             }
             this.showManualModal = true;
         },
+        popUpAccountStatus(id) {
+            console.log(1);
+            if (id) {
+                this.modalData = this.list.find(data => data.id === id);
+            }
+            this.showAccountModal = true;
+        },
         toggleModal() {
             this.showModal = !this.showModal;
         },
         toggleManualModal() {
             this.showManualModal = !this.showManualModal;
+        },
+        toggleAccountModal() {
+            this.showAccountModal = !this.showAccountModal;
         },
         destroy(programId) {
             Mypage.destroy(programId).then(res => {
