@@ -16,6 +16,7 @@ class OnlineStudentController extends OnlineProgramController
     /**
      *  강의 수강 현황
      *
+     * @param Request $request
      * @param Program $program
      * @return JsonResponse
      */

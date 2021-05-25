@@ -320,7 +320,7 @@
                         <button type="submit" class="btn-confirm">
                             신청하기
                         </button>
-                        <a href="{{ route('lectures.detail', ['program' => $program->id]) }}"
+                        <a href="{{ url()->previous() }}"
                            class="btn-cancel">취소하기</a>
                     </section>
 

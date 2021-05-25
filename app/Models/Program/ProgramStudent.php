@@ -40,6 +40,19 @@ class ProgramStudent extends Model
      */
     static $PAY_IN_REFUND_PROCESS = 4;
 
+    /**
+     * 별도 결제
+     * @var int
+     */
+    static $PAY_ANOTHER_IN_PROCESS = 5;
+
+    /**
+     * 별도 결제
+     * @var int
+     */
+    static $PAY_ANOTHER_PAID = 6;
+
+
     protected $appends = ['left_days'];
     protected $guarded = [];
     protected $casts = [
@@ -47,6 +60,18 @@ class ProgramStudent extends Model
         'applied_at' => 'datetime',
         'expired_at' => 'datetime',
     ];
+
+    public static function updateWhenAnotherPayProcess(Program $program)
+    {
+        $programStudent = ProgramStudent::query()
+            ->where('ticket_id', '=', $program->ticket->id)
+            ->where('user_id', '=', Auth::id())
+            ->first();
+        $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER_IN_PROCESS;
+        $programStudent->save();
+
+        return $programStudent;
+    }
 
     /**
      *  토스 결제 승인 시에 업데이트 하는 쿼리
@@ -56,7 +81,7 @@ class ProgramStudent extends Model
      * @param Payment $payment
      * @return ProgramStudent|Model
      */
-    static function updateWhenTossSuccess(TossPaymentsResponse $response, Program $program, Payment $payment)
+    public static function updateWhenTossSuccess(TossPaymentsResponse $response, Program $program, Payment $payment)
     {
         $programStudent = ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('ticket_id', '=', $program->ticket->id)->first();
@@ -83,7 +108,7 @@ class ProgramStudent extends Model
      * @param Program $program
      * @return ProgramStudent
      */
-    static function updateOrCreateWhenApplySuccess(Program $program)
+    public static function updateOrCreateWhenApplySuccess(Program $program)
     {
         if ($program->ticket->is_free) {
             return ProgramStudent::updateOrCreate([
@@ -111,13 +136,47 @@ class ProgramStudent extends Model
     }
 
     /**
+     *  별도 결제 어드민 확인시.
+     *
+     * @param Program $program
+     * @param $expired_at
+     * @return bool
+     */
+    public function updateWhenConfirmAnotherPay(Program $program, $expired_at): bool
+    {
+        return $this->update([
+            'pay_status' => self::$PAY_ANOTHER_PAID,
+            'expired_at' => $expired_at,
+            'is_watched' => 1,
+        ]);
+    }
+
+    public function updateWhenCancel($is_free): bool
+    {
+        return $this->update([
+            'pay_status' => $is_free ? ProgramStudent::$PAY_BEFORE : ProgramStudent::$PAY_REFUNDED,
+            'is_watched' => 0,
+            'expired_at' => null,
+        ]);
+    }
+
+    public function revert() {
+        return $this->update([
+            'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
+            'is_watched' => 0,
+            'expired_at' => null,
+        ]);
+    }
+
+    /**
      *  환불 가능 상태인지 체크.
      *
      * @return bool
      */
     public function cancelAvailable()
     {
-        if ($this->attributes['pay_status'] != self::$PAY_PAID) {
+        if ($this->attributes['pay_status'] != self::$PAY_PAID
+            && $this->attributes['pay_status'] != self::$PAY_ANOTHER_PAID) {
             return false;
         }
 
@@ -179,5 +238,21 @@ class ProgramStudent extends Model
         } else {
             return null;
         }
+    }
+
+    /**
+     * 결제해야하는 금액 받음.
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        if (
+            ($this->attributes['expired_at'] < now() && $this->attributes['pay_status'] == self::$PAY_PAID)
+            || $this->attributes['is_repeated'] == true
+        ) {
+            return $this->ticket->repeat_price;
+        }
+        return $this->ticket->price;
     }
 }

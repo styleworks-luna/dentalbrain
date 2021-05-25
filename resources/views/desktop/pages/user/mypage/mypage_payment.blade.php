@@ -47,6 +47,7 @@
                                         @break
 
                                         @case('DONE')
+                                        @case('ANOTHER_DONE')
                                         <td>결제 완료</td>
                                         @break
 
@@ -57,6 +58,14 @@
                                         @case('CANCELED')
                                         @case('PARTIAL_CANCELED')
                                         <td class="cancel">결제 취소</td>
+                                        @break
+
+                                        @case('ANOTHER_PROGRESS')
+                                        <td>입금 대기</td>
+                                        @break
+
+                                        @case('ANOTHER_REJECTED')
+                                        <td>신청 취소</td>
                                         @break
 
                                         @default
@@ -71,6 +80,14 @@
                                                 <p>예금주 : {{ $payment->va_customerName }}</p>
                                                 <p>납입기한 : {{ date_format($payment->va_dueDate,'Y.m.d G:i:s') }}</p>
                                             </div>
+                                        @elseif($payment->method == '별도결제' && $payment->status == 'ANOTHER_PROGRESS')
+                                            <a href="" class="waiting-deposit">자세히 보기</a>
+                                            <div class="deposit-detail">
+                                                <p>입금 계좌 : 신한은행 140-010-094358 </p>
+                                                <p>예금주 : (주)브레인스펙병원교육개발원</p>
+                                            </div>
+                                        @elseif($payment->method == '별도결제' && ($payment->status == 'DONE' || $payment->status == 'ANOTHER_DONE'))
+                                            <span class="tip">(영수증 관리자 문의)</span>
                                         @endif
                                         @isset($payment->receiptUrl)
                                             @if ($payment->status == 'DONE')
@@ -79,14 +96,15 @@
                                                 <a href="{{ $payment->receiptUrl }}" target="_blank">취소 영수증</a>
                                             @endif
                                         @endisset
-                                        @isset($payment->cashRe)
-                                        @endisset
-
                                     </td>
                                     <td>
-                                        <div class="@if($payment->full_response->cancels != null) payment-cancel @endif">{{ date_format($payment->requestedAt ,'Y.m.d')}} </div>
+                                        <div class="@isset($payment->full_response->cancels) payment-cancel @endisset">
+                                            {{ date_format($payment->requestedAt ,'Y.m.d')}}
+                                        </div>
 
-                                        {{ $payment->full_response->cancels != null  ? '/ ' . date('Y.m.d',strtotime($payment->full_response->cancels[0]->canceledAt)) : ''   }}
+                                        @isset($payment->full_response->cancels)
+                                            {{'/ ' . date('Y.m.d',strtotime($payment->full_response->cancels[0]->canceledAt))}}
+                                        @endisset
                                     </td>
                                 </tr>
                             </table>

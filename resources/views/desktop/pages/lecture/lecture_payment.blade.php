@@ -10,6 +10,7 @@
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
+            var paymentmethod = $('.payment-method:checked').val();
 
             // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
@@ -18,65 +19,84 @@
                 select_menu.selectmenu();
             }
 
-            $('.btn-submit').click(function (e) {
-                var paymentObj;
-                var cardCompany = $('.ui-selectmenu-text').text();
-                var paymentmethod = $('.payment-method:checked').val();
-
-                const amount = {{ $program->repeated() ? $program->ticket->repeat_price : $program->ticket->price }};
-                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                const orderName = '{{$program->title . ', ' . $program->ticket->name}}';
-                const customerName = '{{ auth()->user()->name }}';
-                const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
-                const customerEmail = '{{ auth()->user()->email }}';
-                const customerMobilePhone = '{{ auth()->user()->phone }}';
-
-                e.preventDefault();
-
-                if (paymentmethod === '가상계좌') {
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
-                    };
-                } else if (paymentmethod === '카드') {
-                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
-
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
-
-                        maxCardInstallmentPlan: maxCardInstallmentPlan,
-                        cardCompany: cardCompany,
-                    };
-                } else if (paymentmethod === '계좌이체') {
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
-                    };
-                }
-
-                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                    alert('취소');
-                });
+            $('.payment-method').change(function () {
+                paymentmethod = $('.payment-method:checked').val();
             });
+
+            $('.btn-submit').click(function (e) {
+                if (paymentmethod == "별도결제") {
+                    alert('신한은행\n' +
+                        '140-010-094358\n' +
+                        '(주)브레인스펙병원교육개발원\n\n' +
+                        '관리자가 입금내역을\n' +
+                        '확인하면 강의를 시청하실 수 있습니다.\n\n' +
+                        '입금후 관리자에게 확인요청을 부탁드립니다.\n' +
+                        '사업자지출증빙, 세금계산서발행을 원하시는\n' +
+                        '경우에 관리자에게 문의하시기 바랍니다.');
+                    $('#separate_form').submit();
+                } else {
+                    $('.btn-submit').click(function (e) {
+                        var paymentObj;
+                        var cardCompany = $('.ui-selectmenu-text').text();
+
+                        const amount = {{ $program->repeated() ? $program->ticket->repeat_price : $program->ticket->price }};
+                        const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                        const orderName = '{{$program->title . ', ' . $program->ticket->name}}';
+                        const customerName = '{{ auth()->user()->name }}';
+                        const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+                        const customerEmail = '{{ auth()->user()->email }}';
+                        const customerMobilePhone = '{{ auth()->user()->phone }}';
+
+                        e.preventDefault();
+
+                        if (paymentmethod === '가상계좌') {
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+                            };
+                        } else if (paymentmethod === '카드') {
+                            var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+
+                                maxCardInstallmentPlan: maxCardInstallmentPlan,
+                                cardCompany: cardCompany,
+                            };
+                        } else if (paymentmethod === '계좌이체') {
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+                            };
+                        }
+
+                        tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                            alert('취소');
+                        });
+                    });
+                }
+            });
+
+
         });
 
         function getParameter(param) {
@@ -308,6 +328,12 @@
                                            class="payment-method" value="계좌이체">
                                     <label for="transfer">{{ changePaymentMethodName("계좌이체") }}</label>
                                 </div>
+                                <div class="radio-wrap">
+                                    <input type="radio" id="separate" name="payment-method"
+                                           class="payment-method" value="별도결제">
+                                    <label for="separate"
+                                           class="transfer-label">계좌입금</label>
+                                </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
                                            class="payment-method" value="가상계좌">
@@ -320,8 +346,11 @@
 
                 <section class="btn-wrap">
                     <button type="button" class="btn-confirm btn-submit">결제하기</button>
-                    <a href="{{ route('lectures.apply',$program->id) }}" class="btn-confirm btn-cancel">취소하기</a>
+                    <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
                 </section>
+                <form action="{{ route('lectures.anotherPay',[$program]) }}" method="POST" id="separate_form">
+                    @csrf
+                </form>
             </div>
         </div>
     </section>

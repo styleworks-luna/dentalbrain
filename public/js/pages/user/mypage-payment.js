@@ -4,6 +4,6 @@ $(function () {
 
     deposit.click(function (e) {
         e.preventDefault();
-        $('.deposit-detail').slideToggle();
+        $(this).next().slideToggle();
     });
 });

@@ -2,12 +2,14 @@
 
 namespace App\Models\Payments;
 
+use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -39,7 +41,6 @@ class Payment extends Model
      */
     private static function getPaymentData(TossPaymentsResponse $response): array
     {
-        logger('???', [$response->getArray()]);
         return array_merge(self::getPaymentBasicData($response), self::getPaymentsAdditionalData($response));
     }
 
@@ -103,6 +104,36 @@ class Payment extends Model
     }
 
     /**
+     *  별도결제로 Payment 생성
+     *
+     * @param Program $program
+     * @param ProgramStudent $student
+     * @return Builder|Model
+     */
+    public static function createWhenAnotherPayProcess(Program $program, ProgramStudent $student)
+    {
+        $paymentKey = 'another_' . Str::random('5');
+        $orderId = 'another_' . Str::random('5');
+        return Payment::query()->create([
+            'paymentKey' => $paymentKey,
+            'orderId' => $orderId,
+            'totalAmount' => $student->getPrice(),
+            'method' => '별도결제',
+            'status' => 'ANOTHER_PROGRESS',
+            'useDiscount' => 0,
+            'full_response' => json_encode([
+                'mId' => 'si_dentalbrain',
+                'paymentKey' => $paymentKey,
+                'orderId' => $orderId,
+                'method' => '별도결제',
+                'totalAmount' => $student->getPrice(),
+                'cancels' => null,
+            ], JSON_UNESCAPED_UNICODE),
+            'requestedAt' => now(),
+        ]);
+    }
+
+    /**
      * 토스 DTO를 통해 업데이트
      *
      * @param TossPaymentsResponse $response
@@ -111,6 +142,45 @@ class Payment extends Model
     public function updateByToss(TossPaymentsResponse $response)
     {
         return $this->update(self::getPaymentData($response));
+    }
+
+    /**
+     *  별도 결제 확인시에 Payment 업데이트
+     *
+     * @return bool
+     */
+    public function updateWhenConfirmAnotherPay()
+    {
+        return $this->update([
+            'approvedAt' => now(),
+            'status' => 'ANOTHER_DONE',
+        ]);
+    }
+
+    public function cancelAnotherPay()
+    {
+        return $this->update([
+            'status' => 'ANOTHER_REJECTED',
+            'full_response' => json_encode(
+                array_merge(
+                    json_decode($this->attributes['full_response'], true) ?: [],
+                    [
+                        'cancels' => [
+                            [
+                                'cancelAmount' => $this->attributes['totalAmount'],
+                                'canceledAt' => now()->toIso8601String(),
+                            ],
+                        ]
+                    ]
+                ), JSON_UNESCAPED_UNICODE),
+        ]);
+    }
+
+    public function revert() {
+        return $this->update([
+            'approvedAt' => null,
+            'status' => 'ANOTHER_PROGRESS'
+        ]);
     }
 
     public function student()

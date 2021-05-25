@@ -85,7 +85,6 @@
 <script>
 // api
 import Community from '@/api/admin/community/Community.js';
-
 import {CommunityMixin} from '@/mixins/admin/community/Community.js';
 
 export default {

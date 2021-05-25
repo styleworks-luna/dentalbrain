@@ -104,6 +104,20 @@
                                 결제 취소
                             </a>
                         </template>
+                        <template v-else-if="slotProps.row.pay_status === 5">
+                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.id)">결제 확인</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                신청 취소
+                            </a>
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 6">
+                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.id)">결제 대기</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.id)">
+                                결제 취소
+                            </a>
+                        </template>
                     </td>
                     <td>{{ slotProps.row.applied_at }}</td>
                 </template>
@@ -122,6 +136,11 @@
                                   :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
+
+            <payment-confirm-layer v-if="confirmLayer"
+                                   @setConfirmLayer="handleSetConfirmLayer"
+                                    @confirmPayment="confirmPayment"></payment-confirm-layer>
+
         </template>
     </layout>
 </template>
@@ -137,11 +156,13 @@ import {Student} from '@/api/admin/lecture/Online.js';
 
 // mixins
 import {PaymentCancelMixin} from '@/mixins/admin/payment/Cancel.js';
+import {PaymentConfirmMixin} from '@/mixins/admin/payment/Confirm.js';
 
 export default {
     name: 'AdminOnlineStudent',
     mixins: [
-        PaymentCancelMixin
+        PaymentCancelMixin,
+        PaymentConfirmMixin,
     ],
     components: {
         'table-grid': Table,

@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.user_id}/1`">
-                        {{ slotProps.row.name }}
+                            {{ slotProps.row.name }}
                         </router-link>
                         <br>
                         {{ slotProps.row.email }}
@@ -77,6 +77,20 @@
                                 결제 취소
                             </a>
                         </template>
+                        <template v-else-if="slotProps.row.pay_status === 5">
+                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)">결제 확인</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                신청 취소
+                            </a>
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 6">
+                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제 대기</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                결제 취소
+                            </a>
+                        </template>
                     </td>
                 </template>
             </table-grid>
@@ -94,6 +108,10 @@
                                   :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
+
+            <payment-confirm-layer v-if="confirmLayer"
+                                   @setConfirmLayer="handleSetConfirmLayer"
+                                   @confirmPayment="confirmPayment"></payment-confirm-layer>
         </template>
     </layout>
 </template>
@@ -104,15 +122,17 @@ import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 
 //api
-import { getData } from '@/api/admin/payment/Payment.js'
+import {getData} from '@/api/admin/payment/Payment.js'
 
 // mixins
-import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
+import {PaymentCancelMixin} from '@/mixins/admin/payment/Cancel.js';
+import {PaymentConfirmMixin} from '@/mixins/admin/payment/Confirm.js';
 
 export default {
     name: 'AdminPayment',
     mixins: [
-        PaymentCancelMixin
+        PaymentCancelMixin,
+        PaymentConfirmMixin
     ],
     components: {
         'table-grid': Table,
@@ -149,7 +169,7 @@ export default {
                 {
                     name: 'title',
                     text: '제목',
-                    width: '30%'
+                    width: '25%'
                 },
                 {
                     name: 'user',
@@ -179,7 +199,7 @@ export default {
                 {
                     name: 'is_change',
                     text: '변경',
-                    width: '17%'
+                    width: '22%'
                 }
             ]
         },
@@ -204,7 +224,7 @@ export default {
                 {
                     id: 'CANCELED',
                     name: '결제취소'
-                }
+                },
             ]
         }
     },
@@ -253,10 +273,19 @@ export default {
 
                 case 'PARTIAL_CANCELED':
                     return '부분 취소';
+
+                case 'ANOTHER_PROGRESS' :
+                    return '별도 결제 대기 중';
+
+                case 'ANOTHER_REJECTED' :
+                    return '별도 결제 취소';
+
+                case 'ANOTHER_DONE' :
+                    return '결제 완료';
             }
         },
         getProgramId(data) {
-          this.id = data;
+            this.id = data;
         },
         handleSetOrder(order) {
             this.order = order;

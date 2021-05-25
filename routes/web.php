@@ -145,6 +145,8 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
             // 강의 신청
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+            // 강의 별도결제
+            Route::post('another', [\App\Http\Controllers\Lecture\ApplyController::class, 'anotherPay'])->name('anotherPay');
             // 강의 결제 폼
             Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
             // 강의 결제 성공
@@ -218,10 +220,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
         Route::group(['prefix' => '{program}'], function () {
 
-            // 유저 자동환불 신청
-            Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel')->middleware('auth');
-            // 유저 수동환불 신청
-            Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request')->middleware('auth');
+            Route::group(['middleware' => 'auth'], function () {
+                // 유저 자동환불 신청
+                Route::delete('cancel', 'Lecture\CancelController@cancel')->name('cancel');
+                // 유저 수동환불 신청
+                Route::delete('cancel-request', 'Lecture\CancelController@cancelRequest')->name('cancel-request');
+            });
 
             Route::post('like', 'Lecture\DetailController@like');
             Route::get('download', 'Lecture\MaterialController@download')->name('download');
@@ -297,7 +301,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 온라인 강의 수강생 목록
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
                     // 온라인 강의 수강 취소
-                    Route::delete('students/{student}', 'Admin\Payment\PaymentController@cancel')->name('students.cancel');
+                    Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
+                    // 온라인 강의 별도결제 확인
+                    Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
                     // 온라인 강의 업데이트
@@ -320,7 +326,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 오프라인 강의 수강생 리스트
                     Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
                     // 오프라인 강의 수강 취소
-                    Route::delete('students/{student}', 'Admin\Payment\PaymentController@cancel')->name('students.cancel');
+                    Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
+                    // 오프라인 강의 별도결제 확인
+                    Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 오프라인 강의 수정
                     Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');
                     // 오프라인 강의 업데이트
@@ -364,6 +372,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
 
             Route::get('export', 'Admin\Payment\PaymentController@paymentExport')->name('export');
+
+            Route::post('/{program}/{student}/revert', [\App\Http\Controllers\Admin\Payment\CancelController::class, 'revert'])->name('revert');
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
