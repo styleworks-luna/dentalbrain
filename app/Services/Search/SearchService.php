@@ -27,19 +27,22 @@ use Illuminate\Database\Eloquent\Builder;
          $this->joinOptions = [];
      }
 
-     public function addCategory(string $column, string $operator, $value){
+     public function addCategory(string $column, string $operator, $value): SearchService
+     {
          $this->categories[] = [$column,$operator,$value];
          return $this;
      }
 
-     public function addKeyword(string $column, $value){
+     public function addKeyword(string $column, $value): SearchService
+     {
          if(isset($value)){
              $this->searchKeywords[] = [$column,'LIKE','%'.$value.'%','or'];
          }
          return $this;
      }
 
-     public function join() {
+     public function join(): SearchService
+     {
          $this->query = $this->query->whereHas($this->joinModel,function(Builder $query){
              $query->where($this->joinOptions);
          });
@@ -47,18 +50,21 @@ use Illuminate\Database\Eloquent\Builder;
          $this->joinOptions = [];
          return $this;
      }
-     
-     public function setJoinModel($modelName){
+
+     public function setJoinModel($modelName): SearchService
+     {
          $this->joinModel = $modelName;
          return $this;
      }
 
-     public function addJoinOption(string $column, string $operator, $value){
+     public function addJoinOption(string $column, string $operator, $value): SearchService
+     {
         $this->joinOptions[] = [$column,$operator,$value];
         return $this;
      }
 
-     public function search(){
+     public function search(): Builder
+     {
          return $this->query->where(function (Builder $query){
              $query->where($this->searchKeywords);
          })->where($this->categories);

@@ -38,6 +38,12 @@ abstract class ProgramTemplate
         $this->is_online = $is_online;
     }
 
+    /**
+     *  프로그램에 맞는 프로그램 구현체 반환
+     *
+     * @param Program|null $program
+     * @return OfflineProgramConcrete|OnlineProgramConcrete
+     */
     public static function getProgramConcrete(Program $program)
     {
         if ($program->is_online) {
@@ -95,7 +101,7 @@ abstract class ProgramTemplate
     /**
      * @return JsonResponse
      */
-    function getCategories(): JsonResponse
+    static function getCategories(): JsonResponse
     {
         $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
         $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
@@ -109,7 +115,7 @@ abstract class ProgramTemplate
      * @param Program $program
      * @return Program
      */
-    function changeOpenStatus(Program $program)
+    static function changeOpenStatus(Program $program)
     {
         $program->is_open = !$program->is_open;
         $program->save();
