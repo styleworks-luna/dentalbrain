@@ -293,5 +293,40 @@
                 +margin(left 10px)
                 +background(null, null, null, $gray-900)
 
+
+.account-pop-up
+    +size(600px)
+    +padding(40px)
+    +background(null, null, null, $white)
+    +border(2px solid $page-color)
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    text-align: center
+    z-index: 220
+
+    h3
+        font-size: 18px
+        font-weight: bold
+
+    p
+        +margin(top 40px)
+        font-size: 16px
+
+    .btn-wrap
+        +size(330px)
+        +margin(50px auto 0 auto)
+
+        button
+            +btn(purple-fill)
+            +size(160px, 50px)
+            float: left
+            font-size: 16px
+
+            &:last-child
+                +margin(left 10px)
+                +background(null, null, null, $gray-900)
+
 .ui-selectmenu-open
     z-index: 250

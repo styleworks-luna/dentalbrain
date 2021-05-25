@@ -25,15 +25,8 @@
 
             $('.btn-submit').click(function (e) {
                 if (paymentmethod == "별도결제") {
-                    alert('신한은행\n' +
-                        '140-010-094358\n' +
-                        '(주)브레인스펙병원교육개발원\n\n' +
-                        '관리자가 입금내역을\n' +
-                        '확인하면 강의를 시청하실 수 있습니다.\n\n' +
-                        '입금후 관리자에게 확인요청을 부탁드립니다.\n' +
-                        '사업자지출증빙, 세금계산서발행을 원하시는\n' +
-                        '경우에 관리자에게 문의하시기 바랍니다.');
-                    $('#separate_form').submit();
+                    $('.dim').css('display', 'block');
+                    $('.payment-layer-wrapper .layer').css('display', 'block');
                 } else {
                     $('.btn-submit').click(function (e) {
                         var paymentObj;
@@ -96,6 +89,15 @@
                 }
             });
 
+            // 별도결제 pop-up
+            $('.payment-layer-wrapper .btn-confirm').click(function (e) {
+                $('#separate_form').submit();
+            });
+
+            $('.payment-layer-wrapper .btn-cancel').click(function (e) {
+                $('.dim').css('display', 'none');
+                $('.payment-layer-wrapper .layer').css('display', 'none');
+            })
 
         });
 
@@ -352,6 +354,7 @@
                     @csrf
                 </form>
             </div>
+            @include('desktop.component.popup.payment.payment_pop')
         </div>
     </section>
 @endsection
