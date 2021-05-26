@@ -127,11 +127,11 @@ class PaymentsController extends Controller
                 'approvedAt' => now(),
             ]);
 
-            $program = $payment->student->ticket->program;
+            $program = $payment->student->program;
 
             $payment->student()->update([
                 'payment_id' => $payment->id,
-                'expired_at' => $program->is_online ? now()->addDays($program->ticket->term) : $program->place->ended_at,
+                'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
             ]);
 

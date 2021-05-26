@@ -214,7 +214,7 @@
 
         <refund-pop v-if="modalData.is_free == 0 && showModal"
                     :methodTo="modalData.payment.method"
-                    :programIdTo="modalData.ticket.program.id"
+                    :programIdTo="modalData.program.id"
                     @close="toggleModal"></refund-pop>
 
         <refund-free-pop v-if="modalData.is_free != 0 && showModal"
@@ -266,7 +266,7 @@ export default {
             showManualModal: false,
             showAccountModal: false,
             modalData: {
-                ticket: {},
+                program: {},
                 payment: {}
             }
         }

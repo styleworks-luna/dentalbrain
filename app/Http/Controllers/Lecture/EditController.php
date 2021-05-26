@@ -19,7 +19,7 @@ class EditController extends Controller
         $surveys = Survey::edit($program->id)
             ->get();
 
-        $programStudent = ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+        $programStudent = ProgramStudent::query()->where('program_id', '=', $program->id)
             ->where('user_id', '=', Auth::id())
             ->first();
 

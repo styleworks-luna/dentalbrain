@@ -48,7 +48,6 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
     public function update(Request $request, Program $program)
     {
         $programData = $this->offlineConcrete->validateProgram($request);
-        $ticketData = $this->offlineConcrete->validateTickets($request);
         $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [
             '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
             '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
@@ -61,13 +60,12 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
         try {
             DB::beginTransaction();
             $program = $this->offlineConcrete->updateProgram($program, $programData);
-            $this->offlineConcrete->updateTickets($program, $ticketData);
             $this->offlineConcrete->updateSurveys($program, $surveyDataSet);
             $this->offlineConcrete->updatePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDataSet]);
+                [$exception, $programData, $surveyDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);
@@ -104,20 +102,18 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
     public function store(Request $request)
     {
         $programData = $this->offlineConcrete->validateProgram($request);
-        $ticketData = $this->offlineConcrete->validateTickets($request);
         $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
         $placeData = $this->offlineConcrete->validatePlace($request);
 
         try {
             DB::beginTransaction();
             $program = $this->offlineConcrete->storeProgram($programData);
-            $this->offlineConcrete->storeTickets($program, $ticketData);
             $this->offlineConcrete->storeSurveys($program, $surveyDataSet);
             $this->offlineConcrete->storePlace($program, $placeData);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDataSet]);
+                [$exception, $programData, $surveyDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);

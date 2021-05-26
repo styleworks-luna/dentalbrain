@@ -69,9 +69,17 @@ class PaymentController extends Controller
 
         try {
             $expired_at = $request['date'];
-            $concrete->confirmAnotherPay($program, $student, $expired_at);
+
+            if ($concrete->confirmAnotherPay($program, $student, $expired_at) == false) {
+                Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$program, $student, $expired_at]);
+                return response()->json([
+                    'msg' => '오류가 발생하였습니다.'
+                ], 500);
+            }
+
         } catch (\Exception $exception) {
             Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$exception]);
+
             return response()->json([
                 'msg' => '오류가 발생하였습니다.'
             ], 500);

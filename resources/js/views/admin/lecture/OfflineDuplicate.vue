@@ -201,7 +201,6 @@ export default {
         getEditData() {
             Offline.getEditData(this.id).then(res => {
                 const program = res.data.program;
-                const ticket = res.data.ticket;
 
                 this.thumbnail = program.thumbnail;
 
@@ -209,9 +208,9 @@ export default {
                 this.minor_category_id = program.minor_category_id;
                 this.title = program.title;
 
-                this.lecture_info = ticket.name;
-                this.is_free = ticket.is_free;
-                this.price = ticket.price;
+                this.lecture_info = program.description;
+                this.is_free = program.is_free;
+                this.price = program.price;
 
                 this.content = program.content;
 

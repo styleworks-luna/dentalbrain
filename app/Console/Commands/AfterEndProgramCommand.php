@@ -43,7 +43,7 @@ class AfterEndProgramCommand extends Command
     public function handle()
     {
         $data = ProgramStudent::query()
-            ->select('id', 'user_id', 'ticket_id', 'expired_at', 'email')
+            ->select('id', 'user_id', 'program_id', 'expired_at', 'email')
             ->with('user:id,login_id', 'program:id,title')
             ->has('user')
             ->has('program')

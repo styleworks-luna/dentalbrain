@@ -17,17 +17,17 @@ class PaymentExport implements FromView
 
     /**
      * StudentExport constructor.
-     * @param Program $program
+     * @return View
      */
 
     public function view(): View
     {
         $payments = Payment::query()
             ->orderByDesc('id')
-            ->with(['student.ticket.program' => function ($query) {
+            ->with(['student.program' => function ($query) {
                 $query->select('id', 'is_online', 'title');
             },'student.user'])
-            ->has('student.ticket.program')
+            ->has('student.program')
             ->select('id', 'totalAmount', 'receiptUrl', 'method', 'status', 'requestedAt', 'approvedAt')
             ->get();
 

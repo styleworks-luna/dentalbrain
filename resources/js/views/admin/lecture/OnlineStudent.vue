@@ -25,7 +25,7 @@
             <table-grid :tableCol="tableCol"
                         :data="students.data">
                 <template v-slot:list="slotProps">
-                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.student_id }}</td>
                     <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
                     <td>
                         <router-link :to="`/admin/user/${slotProps.row.user_id}`">
@@ -94,27 +94,27 @@
                         <template v-else-if="slotProps.row.pay_status === 2">
                             <a href="#" class="btn btn-danger text-white"
                                v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.id)">
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 신청 취소
                             </a>
 
                             <a href="#" class="btn btn-danger text-white"
                                v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.id, slotProps.row.method)">
+                               @click.prevent="handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method)">
                                 결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
-                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.id)">결제 확인</a>
+                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.id)">
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 신청 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.id)">결제 대기</a>
+                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.student_id)">결제 대기</a>
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.id)">
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 결제 취소
                             </a>
                         </template>

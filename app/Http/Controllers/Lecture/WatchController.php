@@ -19,7 +19,7 @@ class WatchController extends Controller
         }
 
         if (Auth::user()->is_admin == true) {
-            ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+            ProgramStudent::query()->where('program_id', '=', $program->id)
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
         } else {
@@ -50,7 +50,7 @@ class WatchController extends Controller
     public function watched(Program $program, Lecture $lecture = null)
     {
         if ($program->canOnlineRefund()) {
-            ProgramStudent::query()->where('ticket_id', '=', $program->ticket->id)
+            ProgramStudent::query()->where('program_id', '=', $program->id)
                 ->where('user_id', '=', Auth::id())
                 ->update(['is_watched' => 1]);
         }

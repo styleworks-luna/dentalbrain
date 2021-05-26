@@ -99,7 +99,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
                 }
             }
 
-            $student->updateWhenCancel($program->ticket->is_free);
+            $student->updateWhenCancel($program->is_free);
 
             DB::commit();
             return true;
@@ -135,7 +135,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
 
         $student = $base->first();
 
-        if ($program->ticket->is_free) {
+        if ($program->is_free) {
             // 무료의 경우 reason 및 다른 params 필요없음
             // 더미 값.
             return ['reason' => '무료 강의 취소'];
@@ -189,7 +189,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
             return false;
         }
 
-        if ($program->ticket->is_free) {
+        if ($program->is_free) {
             return ['reason' => '무료 강의 취소 신청'];
         }
 
@@ -241,7 +241,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
             return false;
         }
 
-        if ($program->ticket->is_free) {
+        if ($program->is_free) {
             return ['reason' => '무료 강의 취소 신청'];
         } else {
             $v = Validator::make($request->all(), [

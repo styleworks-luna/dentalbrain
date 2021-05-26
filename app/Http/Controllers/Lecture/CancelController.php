@@ -28,7 +28,7 @@ class CancelController extends Controller
     {
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
-        $student = Auth::user()->students()->where('ticket_id', '=', $program->ticket->id)->first();
+        $student = Auth::user()->students()->where('program_id', '=', $program->id)->first();
 
         if ($student->pay_status == ProgramStudent::$PAY_PAID) {
             // PG사 통한 결제일 경우.
