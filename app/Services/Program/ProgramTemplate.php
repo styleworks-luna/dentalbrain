@@ -56,7 +56,6 @@ abstract class ProgramTemplate
     {
         return [
             'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
-            'ticket' => $program->tickets()->select(['id', 'name', 'price', 'is_free'])->get()->first(),
             'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
                 ->with('choices:id,question,parent_id')->get()
                 ->whereNull('parent_id')->values()
@@ -74,12 +73,13 @@ abstract class ProgramTemplate
     {
         $query = $program->students()
             ->select([
-                'program_tickets.program_id', 'program_tickets.is_free',
+                'programs.program_id', 'programs.is_free',
                 'program_students.id', 'program_students.pay_status', 'program_students.applied_at', 'program_students.payment_id', 'program_students.is_repeated',
                 'payments.id', 'payments.totalAmount', 'payments.status', 'payments.method',
                 'users.id', 'users.login_id', 'users.name', 'users.is_paid', 'users.email', 'users.phone'
             ])
             ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
+            ->leftJoin('programs','program_id','=','program_students.program_id')
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
         if ($order == 'latest') {

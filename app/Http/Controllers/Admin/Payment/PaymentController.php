@@ -7,10 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
-use App\Models\User;
-use App\Services\Program\ProgramCancelTemplate;
 use App\Services\Program\ProgramTemplate;
-use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -23,14 +20,12 @@ class PaymentController extends Controller
         $payments = Payment::query()
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
-                'programs.is_online', 'programs.title',
+                'programs.is_online', 'programs.title', 'programs.id as program_id',
                 'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
-                'program_tickets.program_id',
                 'users.name', 'users.email', 'users.phone'
             )
             ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
-            ->join('program_tickets', 'program_students.ticket_id', '=', 'program_tickets.id')
-            ->join('programs', 'programs.id', '=', 'program_tickets.program_id')
+            ->join('programs', 'programs.id', '=', 'program_students.program_id')
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
         if (isset($request->is_online)) {
@@ -76,7 +71,7 @@ class PaymentController extends Controller
             $expired_at = $request['date'];
             $concrete->confirmAnotherPay($program, $student, $expired_at);
         } catch (\Exception $exception) {
-            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER',[$exception]);
+            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$exception]);
             return response()->json([
                 'msg' => '오류가 발생하였습니다.'
             ], 500);

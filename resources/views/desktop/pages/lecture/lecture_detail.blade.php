@@ -56,31 +56,27 @@
                                     <th>강의정보</th>
                                     <td>
                                         <select name="ticket" id="ticket" class="lecture-select-box">
-                                            @foreach($program->tickets as $ticket)
-                                                @if ($program->canRepeat($student) || $program->repeated($student))
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
-                                                @else
-                                                    <option value="{{$ticket->id}}"
-                                                            data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
-                                                @endif
-                                            @endforeach
+                                            @if ($program->canRepeat($student) || $program->repeated($student))
+                                                <option value="{{$program->id}}"
+                                                        data-price="{{ $program->repeat_price }}">{{ $program->description }}</option>
+                                            @else
+                                                <option value="{{$program->id}}"
+                                                        data-price="{{ $program->price }}">{{ $program->description }}</option>
+                                            @endif
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>결제금액</th>
-                                    @foreach($program->tickets as $ticket)
-                                        @if ($program->canRepeat($student) || $program->repeated($student))
-                                            <td class="lecture-price"
-                                                data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
-                                            </td>
-                                        @else
-                                            <td class="lecture-price"
-                                                data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
-                                            </td>
-                                        @endif
-                                    @endforeach
+                                    @if ($program->canRepeat($student) || $program->repeated($student))
+                                        <td class="lecture-price"
+                                            data-price="{{ $program->repeat_price }}">{{ $program->is_free ? '무료' : '재수강 할인가: ' . number_format($program->repeat_price).'원'}}
+                                        </td>
+                                    @else
+                                        <td class="lecture-price"
+                                            data-price="{{ $program->price }}">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                        </td>
+                                    @endif
                                 </tr>
                             </table>
                         </div>

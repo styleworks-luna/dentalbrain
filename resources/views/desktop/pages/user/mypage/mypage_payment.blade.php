@@ -19,13 +19,13 @@
                     @forelse($payments as $payment)
                         <li>
                             <div class="lecture-information">
-                                @if ($payment->student->ticket->program->is_online)
+                                @if ($payment->student->program->is_online)
                                     <span class="online">온라인</span>
                                 @else
                                     <span class="offline">오프라인</span>
                                 @endif
 
-                                <h3 class="lecture-name">{{ $payment->student->ticket->program->title }}</h3>
+                                <h3 class="lecture-name">{{ $payment->student->program->title }}</h3>
                             </div>
                             <table class="payment-information">
                                 <tr>

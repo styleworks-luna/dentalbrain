@@ -307,7 +307,8 @@ class Program extends Model
 
     public function getRepeatPriceAttribute()
     {
-        return $this->attributes['price'] * 7 / 10;
+        $price = $this->attributes['price'] ?? 0;
+        return  $price * 7 / 10;
     }
 
     /*
@@ -322,7 +323,11 @@ class Program extends Model
 
     public function scopePublic(Builder $query, $category, $orderBy)
     {
-        $programs = $query->select(['id', 'thumbnail_id', 'is_online', 'major_category_id', 'minor_category_id', 'title', 'running_time'])
+        $programs = $query->select([
+            'id', 'thumbnail_id', 'is_online', 'major_category_id',
+            'minor_category_id', 'title', 'running_time',
+            'is_free','price'
+        ])
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])
             ->withCount('students');

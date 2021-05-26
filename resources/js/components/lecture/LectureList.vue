@@ -26,8 +26,8 @@
                             </p>
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
-                        <p class="lecture-price" v-if="lecture.ticket.is_free == 0">
-                            {{ Helper.numberWithCommas(lecture.ticket.price) }}원</p>
+                        <p class="lecture-price" v-if="lecture.is_free == 0">
+                            {{ Helper.numberWithCommas(lecture.price) }}원</p>
                         <p class="lecture-price" v-else>무료</p>
                     </div>
                 </a>
