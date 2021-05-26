@@ -104,7 +104,7 @@ class Payment extends Model
     }
 
     /**
-     *  별도결제로 Payment 생성
+     *  계좌입금 Payment 생성
      *
      * @param Program $program
      * @param ProgramStudent $student
@@ -118,14 +118,14 @@ class Payment extends Model
             'paymentKey' => $paymentKey,
             'orderId' => $orderId,
             'totalAmount' => $student->getPrice(),
-            'method' => '별도결제',
+            'method' => '계좌입금',
             'status' => 'ANOTHER_PROGRESS',
             'useDiscount' => 0,
             'full_response' => json_encode([
                 'mId' => 'si_dentalbrain',
                 'paymentKey' => $paymentKey,
                 'orderId' => $orderId,
-                'method' => '별도결제',
+                'method' => '계좌입금',
                 'totalAmount' => $student->getPrice(),
                 'cancels' => null,
             ], JSON_UNESCAPED_UNICODE),

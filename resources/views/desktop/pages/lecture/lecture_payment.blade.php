@@ -24,7 +24,7 @@
             });
 
             $('.btn-submit').click(function (e) {
-                if (paymentmethod == "별도결제") {
+                if (paymentmethod == "계좌입금") {
                     $('.dim').css('display', 'block');
                     $('.payment-layer-wrapper .layer').css('display', 'block');
                 } else {
@@ -89,7 +89,7 @@
                 }
             });
 
-            // 별도결제 pop-up
+            // 계좌입금 pop-up
             $('.payment-layer-wrapper .btn-confirm').click(function (e) {
                 $('#separate_form').submit();
             });
@@ -332,7 +332,7 @@
                                 </div>
                                 <div class="radio-wrap">
                                     <input type="radio" id="separate" name="payment-method"
-                                           class="payment-method" value="별도결제">
+                                           class="payment-method" value="계좌입금">
                                     <label for="separate"
                                            class="transfer-label">계좌입금</label>
                                 </div>
