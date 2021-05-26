@@ -26,7 +26,7 @@ class ApplyController extends Controller
             return redirect()->route('lectures.result', $program->id);
         }
         $appliedBefore = ProgramStudent::query()->where('user_id', '=', Auth::id())
-            ->where('ticket_id', '=', $program->ticket->id)
+            ->where('program_id', '=', $program->id)
             ->whereIn('pay_status', [ProgramStudent::$PAY_BEFORE, ProgramStudent::$PAY_REFUNDED])
             ->exists();
 
@@ -92,7 +92,7 @@ class ApplyController extends Controller
 
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
 
-            if ($program->ticket->is_free) {
+            if ($program->is_free) {
                 // 무료 행사인 경우.
                 DB::commit();
 

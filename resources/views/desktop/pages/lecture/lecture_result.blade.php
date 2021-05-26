@@ -163,7 +163,7 @@
                 <section class="payment-information">
                     <h3>결제정보</h3>
                     <table>
-                        @if($program->ticket->is_free)
+                        @if($program->is_free)
                             <tr>
                                 <th>결제금액</th>
                                 <td><em>무료</em></td>
@@ -172,9 +172,9 @@
                             <tr>
                                 <th>결제금액</th>
                                 @if($program->repeated())
-                                    <td><em>{{ number_format($program->ticket->repeat_price) }}원</em></td>
+                                    <td><em>{{ number_format($program->repeat_price) }}원</em></td>
                                 @else
-                                    <td><em>{{ number_format($program->ticket->price) }}원</em></td>
+                                    <td><em>{{ number_format($program->price) }}원</em></td>
                                 @endif
 
                             </tr>

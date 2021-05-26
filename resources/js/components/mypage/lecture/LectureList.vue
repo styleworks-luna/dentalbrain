@@ -147,13 +147,13 @@
                             <template v-if="lecture.program.is_online">
                                 <!-- 기간 종료 전 -->
                                 <div
-                                    :class="lecture.is_watched == 0 && lecture.left_days > lecture.term - 8 ? 'content-button-full' : 'content-button'"
+                                    :class="lecture.is_watched == 0 && lecture.left_days > lecture.program.term - 8 ? 'content-button-full' : 'content-button'"
                                     v-if="lecture.left_days > 0 || lecture.left_days === '0'">
                                     <a :href="`/lectures/${lecture.program.id}/watch/${lecture.program.lectures[0].id}`">
                                         강의 시청하기
                                     </a>
                                     <a href=""
-                                       v-if="lecture.left_days > lecture.term - 8 && lecture.is_watched == 0"
+                                       v-if="lecture.left_days > lecture.program.term - 8 && lecture.is_watched == 0"
                                        @click.prevent="popUpStatus(lecture.id)">
                                         환불요청
                                     </a>

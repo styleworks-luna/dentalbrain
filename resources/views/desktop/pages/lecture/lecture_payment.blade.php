@@ -32,9 +32,9 @@
                         var paymentObj;
                         var cardCompany = $('.ui-selectmenu-text').text();
 
-                        const amount = {{ $program->repeated() ? $program->ticket->repeat_price : $program->ticket->price }};
+                        const amount = {{ $program->repeated() ? $program->repeat_price : $program->price }};
                         const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                        const orderName = '{{$program->title . ', ' . $program->ticket->name}}';
+                        const orderName = '{{$program->title . ', ' . $program->name}}';
                         const customerName = '{{ auth()->user()->name }}';
                         const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
                         const customerEmail = '{{ auth()->user()->email }}';
@@ -283,9 +283,9 @@
                             <th>결제금액</th>
                             @if($program->repeated())
                                 {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
-                                <td><em>재수강 할인가 :{{ number_format($program->ticket->repeat_price) }}원</em></td>
+                                <td><em>재수강 할인가 :{{ number_format($program->repeat_price) }}원</em></td>
                             @else
-                                <td><em>{{ number_format($program->ticket->price) }}원</em></td>
+                                <td><em>{{ number_format($program->price) }}원</em></td>
                             @endif
 
                         </tr>

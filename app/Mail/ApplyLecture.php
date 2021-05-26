@@ -28,7 +28,7 @@ class ApplyLecture extends Mailable
     {
         $this->user = $user;
         $this->programStudent = $programStudent;
-        $this->program = $programStudent->ticket->program()->get()->first();
+        $this->program = $programStudent->program()->get()->first();
     }
 
     /**

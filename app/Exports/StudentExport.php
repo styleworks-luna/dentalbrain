@@ -33,7 +33,7 @@ class StudentExport implements FromView
             ->orderBy('id')
             ->withCount('choices')
             ->get();
-        $students = ProgramStudent::query()->where('ticket_id', '=', $this->program->ticket->id)->get();
+        $students = ProgramStudent::query()->where('program_id', '=', $this->program->id)->get();
         $surveyAnswers = SurveyAnswer::query()->whereIn('survey_id', $surveys->pluck('id'))->get();
         return view('excels.students', [
             'surveys' => $surveys,
