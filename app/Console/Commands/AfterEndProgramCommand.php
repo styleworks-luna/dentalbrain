@@ -43,21 +43,22 @@ class AfterEndProgramCommand extends Command
     public function handle()
     {
         $data = ProgramStudent::query()
-            ->select('id','user_id','ticket_id','expired_at','email')
-            ->with('user:id,login_id','ticket.program:id,title')
+            ->select('id', 'user_id', 'ticket_id', 'expired_at', 'email')
+            ->with('user:id,login_id', 'program:id,title')
             ->has('user')
-            ->has('ticket.program')
-            ->whereDate('expired_at','=',date("Y-m-d",strtotime("-1days")))
+            ->has('program')
+            ->whereDate('expired_at', '=', date("Y-m-d", strtotime("-1days")))
             ->get()->toArray();
 
-        try{
-            array_map(function($value){
-                Mail::to($value['email'])->send(new AfterEndProgram(User::query()->find($value['user']['id']),$value['ticket']['program']));
-            },$data);
+        try {
+            array_map(function ($value) {
+                Mail::to($value['email'])->send(new AfterEndProgram(User::query()->find($value['user']['id']), $value['program']));
+            }, $data);
 
             $this->info('강의 마감 안내 email sent successfully!');
-        }catch(\Exception $exception){
-            Log::error('SEND EMAIL AFTER END',[$exception]);
+            Log::info('강의 마감 안내 email sent successfully!');
+        } catch (\Exception $exception) {
+            Log::error('SEND EMAIL AFTER END', [$exception]);
             $this->info('강의 마감 안내 email NOT SENT');
         }
     }
