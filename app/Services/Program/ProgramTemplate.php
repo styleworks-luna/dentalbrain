@@ -10,7 +10,6 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramStudent;
-use App\Models\Program\ProgramTicket;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyCategory;
 use App\Services\File\ProgramMaterial;
@@ -141,6 +140,10 @@ abstract class ProgramTemplate
             'content' => ['required', 'string'],
             'is_open' => ['required', 'boolean'],
             'material_id' => ['sometimes', 'nullable', 'numeric'],
+
+            'lecture_info' => ['required', 'string'],
+            'is_free' => ['required', 'boolean'],
+            'price' => ['nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -167,18 +170,6 @@ abstract class ProgramTemplate
         return $validatedData;
     }
 
-    function validateTickets(Request $request, array $additionalRules = [])
-    {
-        $v = Validator::make($request->all(), array_merge([
-            'lecture_info' => ['required', 'string'],
-            'is_free' => ['required', 'boolean'],
-            'price' => ['nullable', 'numeric'],
-        ], $additionalRules));
-        $validatedData = $v->validate();
-
-        return $validatedData;
-    }
-
     /*
      * ========================= STORE =========================
      */
@@ -201,7 +192,12 @@ abstract class ProgramTemplate
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'] ?? null,
-            'is_open' => $data['is_open']
+
+            'is_open' => $data['is_open'],
+            'price' => $data['price'] ?? 0,
+            'is_free' => $data['is_free'],
+            'description' => $data['lecture_info'],
+            //'term' => 100 days default.
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
@@ -217,22 +213,6 @@ abstract class ProgramTemplate
         }
 
         return $this->program;
-    }
-
-    /**
-     * @param Program $program
-     * @param $data
-     * @return mixed
-     */
-    function storeTickets(Program $program, $data)
-    {
-        return ProgramTicket::create([
-            'price' => $data['price'] ?? 0,
-            'is_free' => $data['is_free'],
-            'name' => $data['lecture_info'],
-            'program_id' => $program->id,
-            //'term' => 100 days default.
-        ]);
     }
 
     /**
@@ -309,6 +289,10 @@ abstract class ProgramTemplate
             }
         }
 
+        if ($data['is_free'] == true) {
+            $data['price'] = 0;
+        }
+
         $program->update([
             'title' => $data['title'],
             'content' => $data['content'],
@@ -319,23 +303,14 @@ abstract class ProgramTemplate
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'],
             'is_open' => $data['is_open'],
-        ]);
 
-        return $this->program;
-    }
-
-    public function updateTickets(Program $program, array $data)
-    {
-        if ($data['is_free'] == true) {
-            $data['price'] = 0;
-        }
-
-        $program->tickets()->first()->update([
             'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
             'name' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
+
+        return $this->program;
     }
 
     public function updateSurveys(Program $program, array $dataSet)

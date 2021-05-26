@@ -48,8 +48,6 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
             'running_time' => ['required', 'string']
         ]);
 
-        $ticketData = $this->onlineConcrete->validateTickets($request);
-
         $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
             '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
             '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
@@ -64,7 +62,6 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
             DB::beginTransaction();
 
             $this->onlineConcrete->updateProgram($program, $programData);
-            $this->onlineConcrete->updateTickets($program, $ticketData);
             $this->onlineConcrete->updateSurveys($program, $surveyDataSet);
             $this->onlineConcrete->updateLectures($program, $lectureDataSet);
 
@@ -72,6 +69,7 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
                 [$exception]);
+
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);
@@ -125,8 +123,6 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
                 'running_time' => ['required', 'string']
             ]);
 
-        $ticketData = $this->onlineConcrete->validateTickets($request);
-
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
 
         $lectureDataSet = $this->onlineConcrete->validateLectures($request);
@@ -135,14 +131,13 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
             DB::beginTransaction();
 
             $program = $this->onlineConcrete->storeProgram($programData);
-            $ticket = $this->onlineConcrete->storeTickets($program, $ticketData);
             $surveys = $this->onlineConcrete->storeSurveys($program, $surveyDateSet);
             $lectures = $this->onlineConcrete->storeLectures($program, $lectureDataSet);
 
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('ONLINE PROGRAM STORE ERROR',
-                [$exception, $programData, $ticketData, $surveyDateSet, $lectureDataSet]);
+                [$exception, $programData, $surveyDateSet, $lectureDataSet]);
             return response()->json([
                 'msg' => '오류가 발생했습니다.',
             ], 500);

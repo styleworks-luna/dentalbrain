@@ -160,7 +160,8 @@ class ProgramStudent extends Model
         ]);
     }
 
-    public function revert() {
+    public function revert()
+    {
         return $this->update([
             'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
             'is_watched' => 0,
@@ -224,6 +225,11 @@ class ProgramStudent extends Model
     public function payment()
     {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     public function getLeftDaysAttribute()
