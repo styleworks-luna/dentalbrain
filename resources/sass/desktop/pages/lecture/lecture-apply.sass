@@ -322,6 +322,7 @@ h3
                 +padding(left 23px)
                 font-size: 16px
                 vertical-align: middle
+                position: relative
 
                 em
                     font-weight: bold
@@ -352,6 +353,17 @@ h3
                     font-size: 12px
                     color: $page-color
                     line-height: 1.5
+
+                .separate-tip
+                    position: absolute
+                    bottom: -5px
+                    right: 50px
+                    font-size: 12px
+
+                .account
+                    +padding(top 1px left 9px)
+                    float: left
+                    font-size: 12px
 
         tr:last-child
             +border(2px solid $border-color-base,bottom)

@@ -331,10 +331,13 @@
                                     <label for="transfer">{{ changePaymentMethodName("계좌이체") }}</label>
                                 </div>
                                 <div class="radio-wrap">
+                                    <div style="overflow: hidden">
                                     <input type="radio" id="separate" name="payment-method"
                                            class="payment-method" value="계좌입금">
                                     <label for="separate"
                                            class="transfer-label">계좌입금</label>
+                                    </div>
+                                    <p class="separate-tip">신한은행 140-010-094358   예금주 : ㈜브레인스펙병원교육개발원</p>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
