@@ -145,7 +145,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
             Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
             // 강의 신청
             Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
-            // 강의 별도결제
+            // 강의 계좌입금
             Route::post('another', [\App\Http\Controllers\Lecture\ApplyController::class, 'anotherPay'])->name('anotherPay');
             // 강의 결제 폼
             Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
@@ -302,7 +302,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
                     // 온라인 강의 수강 취소
                     Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
-                    // 온라인 강의 별도결제 확인
+                    // 온라인 강의 계좌입금 확인
                     Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
@@ -327,7 +327,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::get('/students', 'Admin\Program\OfflineStudentController@students')->name('students');
                     // 오프라인 강의 수강 취소
                     Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
-                    // 오프라인 강의 별도결제 확인
+                    // 오프라인 강의 계좌입금 확인
                     Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 오프라인 강의 수정
                     Route::get('/', 'Admin\Program\OfflineProgramController@edit')->name('edit');

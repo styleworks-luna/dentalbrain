@@ -61,7 +61,7 @@ class PaymentController extends Controller
     }
 
     /**
-     *  별도결제 확인 시에 호출하는 함수.
+     *  계좌입금 확인 시에 호출하는 함수.
      *
      * @param Request $request
      * @param Program $program
