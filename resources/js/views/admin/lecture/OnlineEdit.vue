@@ -208,7 +208,7 @@ export default {
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
-                const ticket = res.data.ticket;
+                console.log(res);
                 const program = res.data.program;
 
                 this.major_category_id = program.major_category_id;
@@ -225,9 +225,9 @@ export default {
 
                 this.is_open = program.is_open;
 
-                this.lecture_info = ticket.name;
-                this.is_free = ticket.is_free;
-                this.price = ticket.price;
+                this.lecture_info = program.description;
+                this.is_free = program.is_free;
+                this.price = program.price;
 
                 this.surveys = res.data.surveys;
 
