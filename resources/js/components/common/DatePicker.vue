@@ -7,7 +7,7 @@
                 input-class="datepicker form-control"
                 @input="handleSetDate"
                 v-model="date"
-                placeholder="날짜를 입력해주세요."></datepicker>
+                :placeholder="placeholder ? placeholder : '날짜를 입력해주세요.'"></datepicker>
 </template>
 
 <script>
@@ -22,6 +22,7 @@ export default {
     },
     props: {
         'time': [String, Date],
+        'placeholder' : String,
     },
     data() {
         return {
