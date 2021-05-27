@@ -88,6 +88,9 @@
                                     <span class="btn-apply-complete">
                                         입금 대기중
                                     </span>
+                                    <a href="{{ route('account.lectures.edit',$program->id) }}" class="edit">
+                                        신청내역 수정
+                                    </a>
                                 </div>
                             @elseif ($program->alreadyApplied($student))
                                 {{--이미 신청한 경우--}}

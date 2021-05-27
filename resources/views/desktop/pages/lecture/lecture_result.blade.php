@@ -187,6 +187,9 @@
                                             ※ 계좌입금 후 신청이 완료됩니다.<br>
                                             ※ 마이페이지 – 결제내역에서 계좌 확인이 가능합니다.
                                         </p>
+                                    @elseif($programStudent->payment->method == '계좌입금')
+                                        <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
+                                        <p class="account">신한은행 140-010-094358   예금주 : ㈜브레인스펙병원교육개발원</p>
                                     @else
                                         <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
                                     @endif
