@@ -11,7 +11,7 @@
                 <article class="date-wrap">
                     <date-picker class="mr-3 w-100"
                                  :time="date"
-                                 :placeholder="'시정마감일자를 입력해주세요.'"
+                                 :placeholder="'시청마감일자를 입력해주세요.'"
                                  @setTime="handleSetDate"></date-picker>
                 </article>
 
