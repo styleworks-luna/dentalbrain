@@ -308,7 +308,7 @@ abstract class ProgramTemplate
 
             'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
-            'name' => $data['lecture_info'],
+            'description' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
 
