@@ -144,9 +144,11 @@ class ProgramStudent extends Model
      */
     public function updateWhenConfirmAnotherPay(Program $program, $expired_at): bool
     {
+        $expiredDateTime = Carbon::parse($expired_at)->addDay()->subSecond();
+
         return $this->update([
             'pay_status' => self::$PAY_ANOTHER_PAID,
-            'expired_at' => $expired_at,
+            'expired_at' => $expiredDateTime,
             'is_watched' => 1,
         ]);
     }
