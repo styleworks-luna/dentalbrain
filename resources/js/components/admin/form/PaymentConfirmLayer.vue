@@ -45,7 +45,7 @@ export default {
         },
         handleConfirmPayment() {
             const params = {
-                date: this.Helper.dateFormatYMD(this.date),
+                date: this.Helper.dateFormatYDM(this.date),
             };
 
             this.$emit('confirmPayment', params);
