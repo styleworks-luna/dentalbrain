@@ -67,10 +67,12 @@ class ProgramStudent extends Model
             ->where('program_id', '=', $program->id)
             ->where('user_id', '=', Auth::id())
             ->first();
-        $programStudent->pay_status = ProgramStudent::$PAY_ANOTHER_IN_PROCESS;
-        $programStudent->save();
+        $programStudent->update([
+            'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
+            'is_repeated' => $program->canRepeat(),
+        ]);
 
-        return $programStudent;
+        return $programStudent->fresh();
     }
 
     /**
@@ -243,17 +245,25 @@ class ProgramStudent extends Model
 
     /**
      * 결제해야하는 금액 받음.
+     * param에 모델 인스턴스를 넣거나, attribute에 program_id 가 있어야 함.
      *
      * @return string
      */
-    public function getPrice()
+    public function getPrice(Program $program = null)
     {
-        if (
-            ($this->attributes['expired_at'] < now() && $this->attributes['pay_status'] == self::$PAY_PAID)
-            || $this->attributes['is_repeated'] == true
-        ) {
-            return $this->program->repeat_price;
+        if ($program != null) {
+            // param 존재
+            if ($program->canRepeat($this) || $program->repeated($this)) {
+                return $this->program->repeat_price;
+            } else {
+                return $this->program->price;
+            }
+        } else {
+            if ($this->program->canRepeat($this) || $this->program->repeated($this)) {
+                return $this->program->repeat_price;
+            } else {
+                return $this->program->price;
+            }
         }
-        return $this->program->price;
     }
 }

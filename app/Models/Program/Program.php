@@ -159,13 +159,14 @@ class Program extends Model
             return false;
         }
         if ($student != null) {
-            return $student->pay_status == ProgramStudent::$PAY_PAID
+            return ($student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
                 && $student->expired_at < now();
         } else {
             $user = Auth::user();
             return $user->students()
                 ->where('program_id', '=', $this->id)
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID])
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->where('expired_at', '<', now())
                 ->exists();
         }
@@ -190,7 +191,7 @@ class Program extends Model
     public function exceedCapacity()
     {
         return $this->place->capacity <= $this->students()
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS])
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->count();
     }
 
@@ -308,7 +309,7 @@ class Program extends Model
     public function getRepeatPriceAttribute()
     {
         $price = $this->attributes['price'] ?? 0;
-        return  $price * 7 / 10;
+        return $price * 7 / 10;
     }
 
     /*
@@ -326,7 +327,7 @@ class Program extends Model
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
             'minor_category_id', 'title', 'running_time',
-            'is_free','price'
+            'is_free', 'price'
         ])
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])

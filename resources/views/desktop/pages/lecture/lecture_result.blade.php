@@ -171,12 +171,7 @@
                         @else
                             <tr>
                                 <th>결제금액</th>
-                                @if($program->repeated())
-                                    <td><em>{{ number_format($program->repeat_price) }}원</em></td>
-                                @else
-                                    <td><em>{{ number_format($program->price) }}원</em></td>
-                                @endif
-
+                                <td><em>{{ number_format($programStudent->payment->totalAmount) }}원</em></td>
                             </tr>
                             <tr>
                                 <th>결제방식</th>
@@ -189,7 +184,7 @@
                                         </p>
                                     @elseif($programStudent->payment->method == '계좌입금')
                                         <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
-                                        <p class="account">신한은행 140-010-094358   예금주 : ㈜브레인스펙병원교육개발원</p>
+                                        <p class="account">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                                     @else
                                         <p class="payment-method">{{ changePaymentMethodName($programStudent->payment->method) }}</p>
                                     @endif
