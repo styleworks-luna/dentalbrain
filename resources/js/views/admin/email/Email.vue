@@ -18,9 +18,9 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" @click="(event) => checkStudent(event, student.email)">
+                                    <input type="checkbox" @click="(event) => checkStudent(event, student.user.email)">
                                     <span class="name">{{ student.user.name }},</span>
-                                    <span class="email">{{ student.email }}</span>
+                                    <span class="email">{{ student.user.email }}</span>
                                 </label>
                             </li>
                         </ul>
@@ -100,6 +100,7 @@ export default {
     methods: {
         getData() {
             Email.getData(this.id).then(res => {
+                console.log(res)
                 this.students = res.data.students;
             })
         },

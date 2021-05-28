@@ -18,9 +18,9 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" @click="(event) => checkStudent(event, student.phone)">
+                                    <input type="checkbox" @click="(event) => checkStudent(event, student.user.phone)">
                                     <span class="name">{{ student.user.name }},</span>
-                                    <span class="phone">{{ student.phone }}</span>
+                                    <span class="phone">{{ student.user.phone }}</span>
                                 </label>
                             </li>
                         </ul>

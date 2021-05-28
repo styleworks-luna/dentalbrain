@@ -23,7 +23,7 @@ class NotificationController extends Controller
     {
         $result = $program->students()
             ->orderByDesc('id')
-            ->with(['user:id,name,login_id,allow_email'])
+            ->with(['user:id,name,login_id,allow_email,email,phone'])
             ->whereHas('user', function ($query) {
                 $query->where('allow_email', true);
             })
@@ -36,7 +36,7 @@ class NotificationController extends Controller
         $result = $program->students()
             ->orderByDesc('id')
             ->with(['user' => function ($query) {
-                $query->select('id', 'name', 'login_id', 'allow_email');
+                $query->select('id', 'name', 'login_id', 'allow_email', 'email', 'phone');
             }])->get();
         return response()->json(['students' => $result]);
     }
@@ -77,7 +77,7 @@ class NotificationController extends Controller
             return response()->json(['success' => true, 'msg' => 'SMS 발신되었습니다.']);
         } catch (\Exception $exception) {
             Log::error('SEND LECTURE SMS ERROR', [$exception]);
-            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.'],500);
+            return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.'], 500);
         }
     }
 
