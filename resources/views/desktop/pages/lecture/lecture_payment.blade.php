@@ -34,7 +34,7 @@
 
                         const amount = {{ $program->repeated() ? $program->repeat_price : $program->price }};
                         const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                        const orderName = '{{$program->title . ', ' . $program->name}}';
+                        const orderName = '{{$program->title . ', ' . $program->description}}';
                         const customerName = '{{ auth()->user()->name }}';
                         const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
                         const customerEmail = '{{ auth()->user()->email }}';
