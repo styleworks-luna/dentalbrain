@@ -83,6 +83,7 @@ class Program extends Model
     /**
      * 이미 유저가 강의를 신청했는지 확인.
      * alreadyApplied > alreadyPaid
+     * @param null $student
      * @return bool
      */
     public function alreadyApplied($student = null): bool
@@ -339,7 +340,6 @@ class Program extends Model
 
         if ($orderBy == 'popular') {
             $programs = $programs->orderByDesc('students_count');
-
         } else {
             $programs = $programs->orderByDesc('created_at');
         }

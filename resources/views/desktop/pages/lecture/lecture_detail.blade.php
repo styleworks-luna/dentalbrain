@@ -144,6 +144,13 @@
                                                 신청기간이 지난 강의 입니다
                                             </span>
                                         </div>
+                                    @elseif($program->place->receipt_started_at > now())
+                                        {{--오프라인 강의 신청 마감--}}
+                                        <div class="btn-wrap">
+                                            <span class="btn-apply-complete">
+                                                신청기간이 아닌 강의 입니다
+                                            </span>
+                                        </div>
                                     @elseif ($program->exceedCapacity())
                                         {{--강의 정원을 넘길 경우--}}
                                         <div class="btn-wrap">
