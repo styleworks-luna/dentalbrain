@@ -8,7 +8,7 @@
             </header>
 
             <section class="popup-content">
-                <article class="date-wrap">
+                <article class="date-wrap" v-if="is_online">
                     <date-picker class="mr-3 w-100"
                                  :time="date"
                                  :placeholder="'시청마감일자를 입력해주세요.'"
@@ -33,6 +33,9 @@ export default {
     name: 'PaymentConfirmLayer',
     components: {
         DatePicker,
+    },
+    props: {
+      "is_online": Boolean,
     },
     data() {
         return {

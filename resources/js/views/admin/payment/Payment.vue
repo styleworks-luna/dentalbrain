@@ -77,9 +77,10 @@
                                 결제 취소
                             </a>
                         </template>
+                        <!-- 별도 결제 입금 전 -->
                         <template v-else-if="slotProps.row.pay_status === 5">
                             <a href="#" class="btn btn-success"
-                               @click.prevent="handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)">결제
+                               @click.prevent="[handleSetIsOnline(slotProps.row.is_online),handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)]">결제
                                 확인</a>
                             <template v-if="slotProps.row.is_online == true">
                                 <a href="#" class="btn btn-danger text-white"
@@ -94,6 +95,7 @@
                                 </a>
                             </template>
                         </template>
+                        <!-- 별도 결제 입금 후 -->
                         <template v-else-if="slotProps.row.pay_status === 6">
                             <a href="#" class="btn btn-secondary"
                                @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제 완료</a>
@@ -129,6 +131,7 @@
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
 
             <payment-confirm-layer v-if="confirmLayer"
+                                   :is_online="is_onlineTo"
                                    @setConfirmLayer="handleSetConfirmLayer"
                                    @confirmPayment="confirmPayment"></payment-confirm-layer>
         </template>
