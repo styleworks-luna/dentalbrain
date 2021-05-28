@@ -113,6 +113,7 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
                             <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.student_id)">결제 대기</a>
+
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 결제 취소
@@ -217,27 +218,27 @@ export default {
                 {
                     name: 'phone',
                     text: '연락처',
-                    width: '10%'
+                    width: '9%'
                 },
                 {
                     name: 'payment',
                     text: '결제금액',
-                    width: '10%'
+                    width: '9%'
                 },
                 {
                     name: 'watch',
                     text: '시청기간',
-                    width: '10%'
+                    width: '9%'
                 },
                 {
                     name: 'additional',
                     text: '추가정보',
-                    width: '8%'
+                    width: '7%'
                 },
                 {
                     name: 'cancel',
                     text: '취소',
-                    width: '13%'
+                    width: '17%'
                 },
                 {
                     name: 'started_at',

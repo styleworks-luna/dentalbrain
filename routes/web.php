@@ -294,7 +294,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
-                Route::get('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'index'])->name('index');
+                Route::get('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'index'])->name('index');
                 // 온라인 강의 저장
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {
@@ -319,7 +319,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트
-                Route::get('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'index'])->name('index');
+                Route::get('/', [\App\Http\Controllers\Admin\Program\OfflineProgramController::class, 'index'])->name('index');
                 // 오프라인 강의 저장
                 Route::post('/', 'Admin\Program\OfflineProgramController@store')->name('store');
                 Route::group(['prefix' => '{program}'], function () {

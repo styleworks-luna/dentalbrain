@@ -100,7 +100,7 @@
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.id)">결제 대기</a>
+                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.id)">결제 완료</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.id)">
                                 결제 취소

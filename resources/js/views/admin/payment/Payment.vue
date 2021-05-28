@@ -96,8 +96,7 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
                             <a href="#" class="btn btn-secondary"
-                               @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제
-                                대기</a>
+                               @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제 완료</a>
                             <template v-if="slotProps.row.is_online == true">
                                 <a href="#" class="btn btn-danger text-white"
                                    @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
@@ -179,17 +178,17 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
+                    width: '5%'
                 },
                 {
                     name: 'category',
                     text: '구분',
-                    width: '9%'
+                    width: '8%'
                 },
                 {
                     name: 'title',
                     text: '제목',
-                    width: '25%'
+                    width: '24%'
                 },
                 {
                     name: 'user',
@@ -219,7 +218,7 @@ export default {
                 {
                     name: 'is_change',
                     text: '변경',
-                    width: '22%'
+                    width: '25%'
                 }
             ]
         },
