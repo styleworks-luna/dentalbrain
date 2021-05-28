@@ -43,7 +43,7 @@
                                         </template>
                                         <template v-else>
                                             {{
-                                                '재수강 할인가: ' + Helper.numberWithCommas(lecture.repeat_price) + '원'
+                                                '재수강 할인가: ' + Helper.numberWithCommas(lecture.program.repeat_price) + '원'
                                             }}
                                         </template>
                                     </p>
@@ -77,7 +77,7 @@
                                 <div class="d-day"><em>
                                     <!-- 재결제 금액 -->
                                     <template v-if="lecture.is_repeated">
-                                        {{ Helper.numberWithCommas(lecture.repeat_price) + '원' }}
+                                        {{ Helper.numberWithCommas(lecture.program.repeat_price) + '원' }}
                                     </template>
                                     <!-- 결제 금액 -->
                                     <template v-else>
