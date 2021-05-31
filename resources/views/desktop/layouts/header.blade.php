@@ -36,7 +36,7 @@
                 <li><a href="{{ url('community') }}">커뮤니티</a></li>
                 <li><a href="{{ url('lectures') }}">전체강의</a></li>
             </ul>
-            <form action="{{ route('lectures.index') }}" method="GET">
+            <form action="{{ route('lectures.search') }}" method="GET">
             <div class="input-wrap">
                 <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요."/>
                 <button class="btn-search">검색</button>
