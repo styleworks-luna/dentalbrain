@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static Builder main ()
- * @method static Builder public (string|int|null $category = null, string|null $orderBy = 'newest')
+ * @method static Builder Public (string|int|null $category = null, $orderBy = 'newest', $keyword = null)
  */
 class Program extends Model
 {
@@ -323,7 +323,7 @@ class Program extends Model
             ->with('thumbnail:id,url')->orderByDesc('created_at');
     }
 
-    public function scopePublic(Builder $query, $category, $orderBy)
+    public function scopePublic(Builder $query, $category = null, $orderBy = 'newest', $keyword = null)
     {
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
@@ -333,6 +333,15 @@ class Program extends Model
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])
             ->withCount('students');
+
+        if ($keyword != null) {
+            $programs->where(/**
+             * @param Builder $query
+             */ function ($query) use ($keyword) {
+                $query->where('title', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+            });
+        }
 
         if ($category !== null) {
             $programs = $programs->where('major_category_id', '=', $category);

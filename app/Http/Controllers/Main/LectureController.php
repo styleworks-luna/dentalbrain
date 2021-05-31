@@ -16,14 +16,17 @@ class LectureController extends Controller
         $v = Validator::make($request->all(), [
             'category_id' => ['required', Rule::exists('program_major_categories', 'id')],
             'per_page' => ['required', 'numeric'],
-            'order_by' => ['sometimes', 'required', Rule::in(['popular', 'newest'])]
+            'order_by' => ['sometimes', 'required', Rule::in(['popular', 'newest'])],
+            'keyword' => ['sometimes', 'required', 'string', 'min:2', 'max:200'],
         ]);
 
         $data = $v->validate();
 
-        $orderBy = $data['order_by'] ?? 'popular';
+        $keyword = $data['keyword'] ?? null;
 
-        $programs = Program::public($data['category_id'], $orderBy)->paginate($data['per_page']);
+        $orderBy = $data['order_by'] ?? 'newest';
+
+        $programs = Program::public($data['category_id'], $orderBy, $keyword)->paginate($data['per_page']);
 
         return response()->json(
             $programs
