@@ -11,7 +11,7 @@
 @section('content')
     <div id="content">
         <section class="lecture-title-wrap">
-            <h1>전체 강의</h1>
+            <h1>검색 결과</h1>
         </section>
 
         <section class="lecture-wrap">

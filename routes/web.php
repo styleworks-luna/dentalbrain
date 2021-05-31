@@ -135,7 +135,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
     Route::get('/', function () {
         return view(viewPrefix() . 'pages.lecture.lecture_all');
-    });
+    })->name("index");
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');

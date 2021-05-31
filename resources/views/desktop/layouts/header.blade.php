@@ -17,14 +17,6 @@
                 <a href="{{ route('login') }}" class="login-btn">로그인</a>
             @endauth
         </div>
-        <div class="header-left">
-            <ul>
-                <li><a href="{{ url('introduce') }}">회사소개</a></li>
-                <li><a href="{{ url('instructor') }}">강사소개</a></li>
-                <li><a href="{{ url('community') }}">커뮤니티</a></li>
-                <li><a href="{{ url('lectures') }}">전체강의</a></li>
-            </ul>
-        </div>
         <div class="header-right">
             <ul>
                 <li>
@@ -34,6 +26,22 @@
                     <a href="{{ route('customer.index') }}" class="header-cs">고객센터</a>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="service-menu-wrap">
+        <div class="service-menu">
+            <ul>
+                <li><a href="{{ url('introduce') }}">회사소개</a></li>
+                <li><a href="{{ url('instructor') }}">강사소개</a></li>
+                <li><a href="{{ url('community') }}">커뮤니티</a></li>
+                <li><a href="{{ url('lectures') }}">전체강의</a></li>
+            </ul>
+            <form action="{{ route('lectures.index') }}" method="GET">
+            <div class="input-wrap">
+                <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요."/>
+                <button class="btn-search">검색</button>
+            </div>
+            </form>
         </div>
     </div>
 </header>

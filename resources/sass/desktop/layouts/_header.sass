@@ -1,3 +1,5 @@
+@import '@sass/components/_input.sass'
+
 //header
 .header
     +border(1px solid $border-color-light, bottom)
@@ -40,27 +42,6 @@
                     font-weight: bold
                     color: $gray-700
 
-        .header-left
-            position: absolute
-            bottom: 21px
-            left: 10px
-
-            li
-                +padding(right 37px)
-                display: inline-block
-
-                a
-                    font-size: 16px
-                    color: $font-color-base
-
-                    &:hover
-                        font-weight: bold
-                        text-decoration: underline
-                        color: $page-color
-
-            li:last-child
-                +padding(right 0)
-
         .header-right
             position: absolute
             bottom: 30px
@@ -101,6 +82,42 @@
 
             li:last-child
                 +margin(right 0)
+
+    .service-menu-wrap
+        +border(1px solid $border-color-light, top)
+
+        .service-menu
+            +size(1280px)
+            +margin(0 auto)
+            +padding(10px 0)
+            overflow: hidden
+
+        .input-wrap
+            float: right
+
+            input[type="text"]
+                +input(white-light-fill)
+                +size(260px, 38px)
+
+        ul
+            +margin(top 10px)
+            float: left
+
+        li
+            +padding(right 37px)
+            display: inline-block
+
+            a
+                font-size: 16px
+                color: $font-color-base
+
+                &:hover
+                    font-weight: bold
+                    text-decoration: underline
+                    color: $page-color
+
+        li:last-child
+            +padding(right 0)
 
 .simple-header
     +size(100%, 50px)

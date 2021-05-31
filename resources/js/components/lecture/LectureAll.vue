@@ -72,10 +72,14 @@ export default {
                 page = 1;
             }
 
+            var keyword = document.location.search.replace("?keyword=", "");
+            keyword = decodeURIComponent(keyword);
+
             let params = {
                 category_id: this.category_id,
                 per_page: this.per_page,
                 order_by: this.order_by,
+                keyword: keyword ? keyword : null,
                 page: page
             };
 
