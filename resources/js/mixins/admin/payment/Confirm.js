@@ -11,6 +11,7 @@ export const PaymentConfirmMixin = {
             confirmLayer: false,
             confirmStudentId: '',
             confirmProgramId: '',
+            is_onlineTo: '',
         }
     },
     methods: {
@@ -32,6 +33,9 @@ export const PaymentConfirmMixin = {
                 alert('확인이 완료되었습니다.');
                 this.getData();
             });
+        },
+        handleSetIsOnline(data) {
+            this.is_onlineTo = data;
         },
     }
 };
