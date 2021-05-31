@@ -39,7 +39,10 @@
             <form action="{{ route('lectures.search') }}" method="GET">
             <div class="input-wrap">
                 <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요."/>
-                <button class="btn-search">검색</button>
+                <button class="btn-search ir_pm">
+                    검색
+                    <span class="search-icon"></span>
+                </button>
             </div>
             </form>
         </div>

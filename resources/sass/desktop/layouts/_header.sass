@@ -94,10 +94,25 @@
 
         .input-wrap
             float: right
+            position: relative
 
             input[type="text"]
                 +input(white-light-fill)
                 +size(260px, 38px)
+
+            .btn-search
+                +size(30px, 30px)
+                +border(0)
+                position: absolute
+                top: 4px
+                right: 16px
+                background-color: inherit
+                cursor: pointer
+
+                .search-icon
+                    +size(20px, 20px)
+                    +background('/images/desktop/global/icon_search.png',no-repeat, center center)
+                    display: block
 
         ul
             +margin(top 10px)
