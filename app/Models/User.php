@@ -46,7 +46,7 @@ class User extends Authenticatable
         'is_paid' => 'boolean',
     ];
     protected $appends = [
-        'need_license', 'job_name_id', 'job_name', 'license_num',
+        'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
 
     public function job()
@@ -59,12 +59,14 @@ class User extends Authenticatable
         return $this->attributes['is_admin'] ? true : false;
     }
 
-    public function likes(){
-        return $this->hasMany(UserLike::class, 'user_id','id');
+    public function likes()
+    {
+        return $this->hasMany(UserLike::class, 'user_id', 'id');
     }
 
-    public function comments(){
-        return $this->hasMany(Comment::class,'user_id','id');
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
     public function students()
@@ -129,5 +131,19 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
+    }
+
+    protected function getHasMembership()
+    {
+        if ($this->membership()->doesntExist()) {
+            return false;
+        } else {
+            $this->membership->expired_at > now();
+        }
+    }
+
+    public function membership()
+    {
+        return $this->hasOne(Membership::class, 'user_id', 'id');
     }
 }

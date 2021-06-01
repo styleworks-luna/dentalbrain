@@ -32,11 +32,11 @@
                     var paymentObj;
                     var cardCompany = $('.ui-selectmenu-text').text();
 
-                    const amount = 10000;
+                    const amount = {{ \App\Models\Membership::$PriceMap[$days] }};
                     const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                    const orderName = '유료회원';
+                    const orderName = '유료회원 {{ $days }}일권';
                     const customerName = '{{ auth()->user()->name }}';
-                    const successUrl = '';
+                    const successUrl = '{{ route('membership.paymentSuccess',['days' => $days]) }}';
                     const customerEmail = '{{ auth()->user()->email }}';
                     const customerMobilePhone = '{{ auth()->user()->phone }}';
 

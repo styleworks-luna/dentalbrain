@@ -10,7 +10,11 @@
 @section('content')
     <section class="content">
         <div class="membership">
-            <a href="{{  }}">구매하기</a>
+            <br><br><br><br><br><br><br><br>
+            <a href="{{ route('membership.paymentForm',['days' => 30]) }}"> 30일권 구매하기</a>
+            <br><br><br><br><br><br><br><br>
+            <a href="{{ route('membership.paymentForm',['days' => 100]) }}"> 100일권 구매하기</a>
+            <br><br><br><br><br><br><br><br>
         </div>
     </section>
 @endsection
