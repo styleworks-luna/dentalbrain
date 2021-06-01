@@ -28,66 +28,63 @@
                     $('.dim').css('display', 'block');
                     $('.payment-layer-wrapper .layer').css('display', 'block');
                 } else {
-                    $('.btn-submit').click(function (e) {
-                        var paymentObj;
-                        var cardCompany = $('.ui-selectmenu-text').text();
+                    var paymentObj;
+                    var cardCompany = $('.ui-selectmenu-text').text();
 
-                        const amount = {{ $program->repeated() ? $program->repeat_price : $program->price }};
-                        const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                        const orderName = '{{$program->title . ', ' . $program->description}}';
-                        const customerName = '{{ auth()->user()->name }}';
-                        const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
-                        const customerEmail = '{{ auth()->user()->email }}';
-                        const customerMobilePhone = '{{ auth()->user()->phone }}';
+                    const amount = {{ $program->repeated() ? $program->repeat_price : $program->price }};
+                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                    const orderName = '{{$program->title . ', ' . $program->description}}';
+                    const customerName = '{{ auth()->user()->name }}';
+                    const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+                    const customerEmail = '{{ auth()->user()->email }}';
+                    const customerMobilePhone = '{{ auth()->user()->phone }}';
 
-                        e.preventDefault();
+                    if (paymentmethod === '가상계좌') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    } else if (paymentmethod === '카드') {
+                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-                        if (paymentmethod === '가상계좌') {
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
-                            };
-                        } else if (paymentmethod === '카드') {
-                            var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
 
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
+                            maxCardInstallmentPlan: maxCardInstallmentPlan,
+                            cardCompany: cardCompany,
+                        };
+                    } else if (paymentmethod === '계좌이체') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    }
 
-                                maxCardInstallmentPlan: maxCardInstallmentPlan,
-                                cardCompany: cardCompany,
-                            };
-                        } else if (paymentmethod === '계좌이체') {
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
-                            };
-                        }
-
-                        tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                            alert('취소');
-                        });
+                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                        alert('취소');
                     });
                 }
-            });
+            })
+            ;
 
             // 계좌입금 pop-up
             $('.payment-layer-wrapper .btn-confirm').click(function (e) {
@@ -99,7 +96,8 @@
                 $('.payment-layer-wrapper .layer').css('display', 'none');
             })
 
-        });
+        })
+        ;
 
         function getParameter(param) {
             var paramData = window.location.search.substr(1).split('&').filter(function (i) {
@@ -332,12 +330,12 @@
                                 </div>
                                 <div class="radio-wrap">
                                     <div style="overflow: hidden">
-                                    <input type="radio" id="separate" name="payment-method"
-                                           class="payment-method" value="계좌입금">
-                                    <label for="separate"
-                                           class="transfer-label">계좌입금</label>
+                                        <input type="radio" id="separate" name="payment-method"
+                                               class="payment-method" value="계좌입금">
+                                        <label for="separate"
+                                               class="transfer-label">계좌입금</label>
                                     </div>
-                                    <p class="separate-tip">신한은행 140-010-094358   예금주 : ㈜브레인스펙병원교육개발원</p>
+                                    <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"
