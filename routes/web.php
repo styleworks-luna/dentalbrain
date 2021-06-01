@@ -213,6 +213,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     // 회원 아이디 중복체크
     Route::post('check-id', 'Account\FindIdController@checkIdDuplication')->name('check-id');
 
+    Route::get('like-lectures', [\App\Http\Controllers\Account\LikeController::class, 'likeLectures'])->name('likes');
+
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
         Route::post('id', 'Account\FindIdController@findIdWithNameAndPhone')->name('id');
