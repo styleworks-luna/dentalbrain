@@ -75,6 +75,11 @@ Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
 });
 
+// 유료회원 (임시)
+Route::get('membership', function () {
+    return view(viewPrefix() . 'pages.membership.membership');
+});
+
 // 이용 약관
 Route::get('service', function () {
     return view(viewPrefix() . 'pages.term.service');

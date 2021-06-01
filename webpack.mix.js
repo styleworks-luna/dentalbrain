@@ -54,6 +54,9 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
     .sass('resources/sass/desktop/pages/introduce/instructor.sass', 'public/css/desktop/pages/introduce')
     .sass('resources/sass/desktop/pages/introduce/community.sass', 'public/css/desktop/pages/introduce');
 
+// 유료회원
+mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/desktop/pages/membership');
+
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
     .sass('resources/sass/desktop/pages/lecture/lecture-apply.sass', 'public/css/desktop/pages/lecture')

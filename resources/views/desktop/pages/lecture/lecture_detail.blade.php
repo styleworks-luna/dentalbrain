@@ -67,17 +67,29 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>결제금액</th>
+                                    <th class="exclude-price">결제금액</th>
                                     @if ($program->canRepeat($student) || $program->repeated($student))
-                                        <td class="lecture-price"
+                                        <td class="lecture-price lecture-close-price"
                                             data-price="{{ $program->repeat_price }}">{{ $program->is_free ? '무료' : '재수강 할인가: ' . number_format($program->repeat_price).'원'}}
                                         </td>
                                     @else
-                                        <td class="lecture-price"
+                                        <td class="lecture-price lecture-exclude-price"
                                             data-price="{{ $program->price }}">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}
                                         </td>
                                     @endif
                                 </tr>
+                                    <tr>
+                                        <th>유료회원가</th>
+                                        @if ($program->canRepeat($student) || $program->repeated($student))
+                                            <td class="lecture-price"
+                                                data-price="{{ $program->repeat_price }}">{{ $program->is_free ? '무료' : '재수강 할인가: ' . number_format($program->repeat_price).'원'}}
+                                            </td>
+                                        @else
+                                            <td class="lecture-price"
+                                                data-price="{{ $program->price }}">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                            </td>
+                                        @endif
+                                    </tr>
                             </table>
                         </div>
                         <div class="lecture-btn">
