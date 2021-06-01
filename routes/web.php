@@ -28,34 +28,14 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
-        //FAQ, 공지사항, 문의하기 생성 페이지
-        Route::get('/', 'Test\TestController@index')->name('index');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
-
-        //문의하기 업데이트 확인 페이지
-        Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
-
-        //업로드 파일 확인 페이지
-        Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
-        //배너 업데이트 확인 페이지
-        Route::get('banner/{banner}', 'Test\TestController@bannerEdit')->name('bannerEdit');
-        //유저 관리자 업로드 확인 페이지
-        Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
-
-        Route::get('search', 'Test\TestController@search')->name('search');
-
-        Route::get('cancel', 'Test\TestController@cancelTest');
-
-        Route::get('mail', 'Test\TestController@mailView');
-        Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
-
         // 테스팅 계정 생성
         Route::get('register', 'Test\TestController@showRegistrationForm');
+
+
+        Route::get('membership', [\App\Http\Controllers\Test\TestController::class, 'showMembershipJoinForm'])->name('showMembershipForm');
+
+        Route::post('membership', [\App\Http\Controllers\Test\TestController::class, 'joinMembership'])->name('JoinMembership');
+
     });
 }
 
