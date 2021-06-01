@@ -72,7 +72,7 @@ export default {
                 page = 1;
             }
 
-            var keyword = document.location.search.replace("?keyword=", "");
+            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
             keyword = decodeURIComponent(keyword);
 
             let params = {
