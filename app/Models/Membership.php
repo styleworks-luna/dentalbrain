@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Models\Payments\Payment;
+use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class Membership extends Model
 {
+    use HasPayStatus;
+
     protected $table = 'memberships';
     protected $guarded = [];
 
