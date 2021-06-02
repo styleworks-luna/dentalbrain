@@ -100,7 +100,6 @@ export default {
     methods: {
         getData() {
             Email.getData(this.id).then(res => {
-                console.log(res)
                 this.students = res.data.students;
             })
         },

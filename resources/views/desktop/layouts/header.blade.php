@@ -28,8 +28,8 @@
             </ul>
         </div>
     </div>
-    <div class="service-menu-wrap">
-        <div class="service-menu">
+    <div class="header-menu-wrap">
+        <div class="header-menu">
             <ul>
                 <li><a href="{{ url('introduce') }}">회사소개</a></li>
                 <li><a href="{{ url('instructor') }}">강사소개</a></li>
