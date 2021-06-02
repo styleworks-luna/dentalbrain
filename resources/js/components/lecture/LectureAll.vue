@@ -74,6 +74,7 @@ export default {
 
             var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
             keyword = decodeURIComponent(keyword);
+            document.querySelector('.search-text').innerText = '‘' + keyword + '’';
 
             let params = {
                 category_id: this.category_id,

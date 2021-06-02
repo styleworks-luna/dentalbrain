@@ -21,6 +21,7 @@ function email_box(email){
         $('.ui-emailbox-menu').css('display', 'none');
     }, 100);
 }
+
 function form_submit_check(element){
     if(element == '' || element == null || element == 'undefined'){
         element = 'form';
