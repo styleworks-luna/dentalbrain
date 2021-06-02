@@ -18,7 +18,7 @@
                 <article class="search-text-wrap">
 
                     <span class="search-text"></span>
-                    <span> 검색결과</span>
+                    <span>&nbsp;검색결과</span>
                 </article>
 
                 <article class="lecture-wrap">
