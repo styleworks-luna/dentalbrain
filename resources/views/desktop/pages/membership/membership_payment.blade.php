@@ -180,7 +180,7 @@
                 <button type="button" class="btn-confirm btn-submit">결제하기</button>
                 <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
             </section>
-            <form action="" method="POST" id="separate_form">
+            <form action="{{ route('membership.paymentAnother',['days' => $days]) }}" method="POST" id="separate_form">
                 @csrf
             </form>
         </div>

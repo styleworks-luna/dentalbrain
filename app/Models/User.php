@@ -133,13 +133,13 @@ class User extends Authenticatable
         return null;
     }
 
-    protected function getHasMembership()
+    protected function getHasMembership(): bool
     {
         if ($this->membership()->doesntExist()) {
             return false;
-        } else {
-            $this->membership->expired_at > now();
         }
+
+        return $this->membership->isAvailable();
     }
 
     public function membership()

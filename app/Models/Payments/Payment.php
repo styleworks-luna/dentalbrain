@@ -2,6 +2,7 @@
 
 namespace App\Models\Payments;
 
+use App\Models\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
@@ -112,12 +113,18 @@ class Payment extends Model
      */
     public static function createWhenAnotherPayProcess(Program $program, ProgramStudent $student)
     {
+        return self::CreateAnotherPayment($student->getPrice());
+    }
+
+    protected static function CreateAnotherPayment($price)
+    {
         $paymentKey = 'another_' . Str::random('5');
         $orderId = 'another_' . Str::random('5');
+
         return Payment::query()->create([
             'paymentKey' => $paymentKey,
             'orderId' => $orderId,
-            'totalAmount' => $student->getPrice(),
+            'totalAmount' => $price,
             'method' => '계좌입금',
             'status' => 'ANOTHER_PROGRESS',
             'useDiscount' => 0,
@@ -126,11 +133,23 @@ class Payment extends Model
                 'paymentKey' => $paymentKey,
                 'orderId' => $orderId,
                 'method' => '계좌입금',
-                'totalAmount' => $student->getPrice(),
+                'totalAmount' => $price,
                 'cancels' => null,
             ], JSON_UNESCAPED_UNICODE),
             'requestedAt' => now(),
         ]);
+    }
+
+    /**
+     *  계좌입금 Payment 생성
+     *
+     * @param Program $program
+     * @param ProgramStudent $student
+     * @return Builder|Model
+     */
+    public static function createWhenMembershipAnotherPay($days)
+    {
+        return self::CreateAnotherPayment(Membership::$PriceMap[$days]);
     }
 
     /**
@@ -176,7 +195,8 @@ class Payment extends Model
         ]);
     }
 
-    public function revert() {
+    public function revert()
+    {
         return $this->update([
             'approvedAt' => null,
             'status' => 'ANOTHER_PROGRESS'

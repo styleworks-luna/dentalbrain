@@ -18,8 +18,8 @@ class CreateMembershipsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('payment_id')->nullable();
 
-            $table->dateTime('expired_at');
-            $table->integer('pay_status');
+            $table->dateTime('expired_at')->comment('유료회원 종료 일자');
+            $table->integer('pay_status')->comment('student.pay_status와 같음.');
 
             $table->timestamps();
             $table->softDeletes();

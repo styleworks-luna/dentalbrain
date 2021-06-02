@@ -7,6 +7,7 @@ use App\Models\Membership;
 use App\Models\Payments\Payment;
 use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -42,6 +43,7 @@ class MembershipController extends Controller
         ]);
 
         if ($v->fails()) {
+            Log::error("MEMBERSHIP SUCCESS validation failed", [$request->all()]);
             return redirect()->back()->with('alert', $v->errors()->first());
         }
 
@@ -59,6 +61,26 @@ class MembershipController extends Controller
         $membership = Membership::createOrUpdateByTossSuccess($response, $payment, $days);
 
         // 메일
+
+        // 결과쪽으로 리다이렉트.
+        return redirect()->route('membership.paymentResult');
+    }
+
+    public function anotherPay(Request $request)
+    {
+        $v = Validator::make($request->all(), [
+            'days' => Rule::in(array_keys(Membership::$PriceMap))
+        ], [
+            'in' => '잘못된 값입니다.'
+        ]);
+
+        if ($v->fails()) {
+            return redirect()->back()->with('alert', $v->errors()->first());
+        }
+
+        // 멤버십 & 결제정보 생성
+        $payment = Payment::createWhenMembershipAnotherPay($request->get('days'));
+        $membership = Membership::createOrUpdateByAnotherPay($payment, $request->get('days'));
 
         // 결과쪽으로 리다이렉트.
         return redirect()->route('membership.paymentResult');
