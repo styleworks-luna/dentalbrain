@@ -138,9 +138,10 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     })->name("index");
 
     // 강의 검색
-    Route::get('/', function () {
+    Route::get('/search', function () {
         return view(viewPrefix() . 'pages.lecture.lecture_search');
     })->name("search");
+
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
         Route::get('/', 'Lecture\DetailController@detail')->name('detail');
