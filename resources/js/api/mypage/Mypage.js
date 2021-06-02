@@ -21,5 +21,13 @@ export default {
             method: 'delete',
             params: data,
         });
+    },
+    getLikeData(params) {
+        return Send({
+           url: `/api/like-lectures`,
+            method: 'get',
+            params: params,
+        });
+
     }
 }

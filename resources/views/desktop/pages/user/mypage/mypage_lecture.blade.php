@@ -13,7 +13,7 @@
         <div class="container">
             @include('desktop.layouts.navigation.account')
             <div class="mypage-content-wrap">
-                    <lecture></lecture>
+                <lecture></lecture>
             </div>
         </div>
     </section>

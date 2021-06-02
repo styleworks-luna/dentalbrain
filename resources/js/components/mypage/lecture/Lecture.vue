@@ -1,8 +1,11 @@
 <template>
     <div>
         <div>
-            <lecture-order @setOrder="handleSetOrder" :mobile="mobile"></lecture-order>
-            <lecture-list :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
+            <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
+            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile" ></lecture-list>
+            <template v-else>
+                <lecture-like-list :listData="likeList.programs"></lecture-like-list>
+            </template>
         </div>
 
         <template v-if="!mobile">
@@ -26,6 +29,7 @@
 
 <script>
 import LectureList from '@/components/mypage/lecture/LectureList.vue';
+import LectureLikeList from '@/components/mypage/lecture/LectureLikeList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
 import InfiniteLoading from 'vue-infinite-loading';
 
@@ -37,14 +41,17 @@ export default {
     components: {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
+        LectureLikeList,
         InfiniteLoading,
     },
     props: {
-      'mobile': Boolean,
+        'mobile': Boolean,
+        'like': Boolean,
     },
     data() {
         return {
             list: {},
+            likeList: {},
             order: 'newest',
             page: 1,
             mobileList: [],
@@ -53,13 +60,14 @@ export default {
     },
     mounted() {
         this.getData();
+        this.getLikeData();
     },
     methods: {
         handleSetOrder(order) {
             this.order = order;
-            console.log(this.order);
-            this.getData()
-            this.changeType()
+            this.getData();
+            this.getLikeData();
+            this.changeType();
         },
         getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
@@ -76,6 +84,22 @@ export default {
                 this.list = res.data.data;
             }).catch(err => {
                 this.list = [];
+            });
+        },
+        getLikeData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                order: this.order,
+                page: page
+            };
+
+            Mypage.getLikeData(params).then(res => {
+                this.likeList = res.data;
+            }).catch(err => {
+                this.likeList = [];
             });
         },
         infiniteHandler($state, page = this.page) {

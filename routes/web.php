@@ -175,6 +175,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::get('/', 'Lecture\EditController@showEditForm')->name('edit');
         Route::post('/', 'Lecture\EditController@update')->name('update');
     });
+    // 찜 강의 내역
+    Route::get('like', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_like');
+    })->name('like');
+
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역
