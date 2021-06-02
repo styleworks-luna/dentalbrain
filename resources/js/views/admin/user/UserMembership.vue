@@ -1,5 +1,5 @@
 <template>
-    <layout title="회원정보 목록">
+    <layout title="유료 회원정보 목록">
         <template v-slot:search>
             <div class="float-right">
                 <form @submit.prevent="getData">
@@ -40,7 +40,7 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.id}/${page}`"
+                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left">
                             수정
                         </router-link>
@@ -59,6 +59,7 @@
         </template>
     </layout>
 </template>
+
 
 <script>
 // component
@@ -100,7 +101,7 @@ export default {
                 },
                 {
                     name: 'is_paid',
-                    text: '유료회원',
+                    text: '회원구분',
                     width: '6%'
                 },
                 {
@@ -111,27 +112,42 @@ export default {
                 {
                     name: 'name',
                     text: '이름',
-                    width: '12%'
+                    width: '10%'
                 },
                 {
                     name: 'email',
                     text: '이메일',
-                    width: '25%'
+                    width: '12%'
                 },
                 {
                     name: 'phone',
                     text: '전화번호',
-                    width: '15%'
+                    width: '10%'
                 },
                 {
                     name: 'job_id',
                     text: '직업군',
-                    width: '15%'
+                    width: '12%'
+                },
+                {
+                    name: 'started_at',
+                    text: '시작일',
+                    width: '9%',
+                },
+                {
+                    name: 'ended_at',
+                    text: '종료일',
+                    width: '9%',
+                },
+                {
+                    name: 'method',
+                    text: '결제수단',
+                    width: '8%',
                 },
                 {
                     name: 'edit',
                     text: '정보수정',
-                    width: '10%'
+                    width: '7%'
                 }
             ]
         },
@@ -182,6 +198,12 @@ export default {
         handleSetJobyId(value) {
             this.job_name_id = value;
         },
+        handleSetStatus(id) {
+            User.setStatus(id).then(res => {
+                this.getData();
+                alert(res.data.msg);
+            })
+        }
     }
 }
 </script>

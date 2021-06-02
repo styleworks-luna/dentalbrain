@@ -3,12 +3,12 @@ import UserEdit from '@/views/admin/user/UserEdit.vue';
 
 const routes = [
     {
-        path: '/admin/user/:page',
+        path: '/admin/user/user/:page',
         name: 'AdminUser',
         component: User
     },
     {
-        path: '/admin/user/:id/:page',
+        path: '/admin/user/user/:id/:page',
         name: 'AdminUserEdit',
         component: UserEdit
     },

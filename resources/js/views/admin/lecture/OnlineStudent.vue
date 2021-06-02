@@ -28,7 +28,7 @@
                     <td>{{ slotProps.row.student_id }}</td>
                     <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.user_id}`">
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}`">
                             {{ slotProps.row.login_id }}
                         </router-link>
                     </td>
