@@ -208,7 +208,6 @@ export default {
     methods: {
         getEditData() {
             Online.getEditData(this.id).then(res => {
-                console.log(res);
                 const program = res.data.program;
 
                 this.major_category_id = program.major_category_id;

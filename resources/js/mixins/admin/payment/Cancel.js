@@ -28,7 +28,6 @@ export const PaymentCancelMixin = {
             });
         },
         cancelLecture(studentId, program_id) {
-            console.log('studentId:' + studentId);
             cancelPayment(program_id ? program_id : this.id, studentId, {}).then(res => {
                 alert(res.data.message);
                 this.getData();
