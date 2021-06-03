@@ -40,7 +40,7 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.id}/${page}`"
+                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left">
                             수정
                         </router-link>
@@ -166,7 +166,7 @@ export default {
                 console.log(res);
                 this.users = res.data.user;
                 // 뒤로가기 page에 따라 reload
-                const path = `/admin/user/${page}`
+                const path = `/admin/user/user/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.users = [];

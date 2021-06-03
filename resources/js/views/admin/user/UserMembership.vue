@@ -32,19 +32,23 @@
             <table-grid :tableCol="tableCol"
                         :data="users.data">
                 <template v-slot:list="slotProps">
-                    <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
-                    <td>{{ slotProps.row.login_id }}</td>
-                    <td>{{ slotProps.row.name }}</td>
-                    <td>{{ slotProps.row.email }}</td>
-                    <td>{{ slotProps.row.phone }}</td>
-                    <td>{{ slotProps.row.job_name }}</td>
-                    <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
-                                     class="btn btn-info float-left">
-                            수정
-                        </router-link>
-                    </td>
+                    <template v-if="slotProps.row.has_membership">
+                        <td>{{ slotProps.row.id }}</td>
+                        <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
+                        <td>{{ slotProps.row.login_id }}</td>
+                        <td>{{ slotProps.row.name }}</td>
+                        <td>{{ slotProps.row.email }}</td>
+                        <td>{{ slotProps.row.phone }}</td>
+                        <td>{{ slotProps.row.job_name }}</td>
+                        <td>{{ slotProps.row.membership.created_at }}</td>
+                        <td>{{ slotProps.row.membership.expired_at }}</td>
+                        <td>
+                            <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
+                                         class="btn btn-info float-left">
+                                수정
+                            </router-link>
+                        </td>
+                    </template>
                 </template>
             </table-grid>
 
@@ -180,8 +184,9 @@ export default {
 
             User.getData(params).then(res => {
                 this.users = res.data.user;
+                console.log(this.users);
                 // 뒤로가기 page에 따라 reload
-                const path = `/admin/user/${page}`
+                const path = `/admin/user/membership/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.users = [];
