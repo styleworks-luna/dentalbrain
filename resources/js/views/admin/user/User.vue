@@ -1,6 +1,9 @@
 <template>
     <layout title="회원정보 목록">
         <template v-slot:search>
+            <div class="float-left">
+                <p style="font-size: 18px;">총 회원수: {{ users.data.length }}명 ( 일반회원: {{ basicUserNumber }}명 / 유료회원: {{ membershipUserNumber }}명 )</p>
+            </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
@@ -146,6 +149,18 @@ export default {
                     name: '유료회원',
                 }
             ]
+        },
+        basicUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => !res.has_membership);
+            count = result.length;
+            return count;
+        },
+        membershipUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => res.has_membership);
+            count = result.length;
+            return count;
         }
     },
     methods: {

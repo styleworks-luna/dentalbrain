@@ -1,6 +1,9 @@
 <template>
     <layout title="유료 회원정보 목록">
         <template v-slot:search>
+            <div class="float-left">
+                <p style="font-size: 18px;">유료회원: {{ membershipUserNumber }}명 (종료된 회원: {{ membershipExpiredUserNumber }}명)</p>
+            </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
@@ -166,6 +169,19 @@ export default {
                     name: '유료회원',
                 }
             ]
+        },
+        membershipUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => res.has_membership);
+            count = result.length;
+            return count;
+        },
+        membershipExpiredUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => res.has_membership);
+            result = result.filter(res => this.Helper.dateCompareWithNow(res.membership.expired_at) < 0)
+            count = result.length;
+            return count;
         }
     },
     methods: {
