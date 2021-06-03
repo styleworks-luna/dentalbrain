@@ -133,7 +133,7 @@ class User extends Authenticatable
         return null;
     }
 
-    protected function getHasMembership(): bool
+    protected function getHasMembershipAttribute(): bool
     {
         if ($this->membership()->doesntExist()) {
             return false;
