@@ -8,6 +8,8 @@ use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -115,15 +117,6 @@ class User extends Authenticatable
         return $this->hasMany(Membership::class, 'user_id', 'id');
     }
 
-    /**
-     * @return Membership|null
-     */
-    public function availableMembership()
-    {
-        return $this->memberships()->where('expired_at', '>', now())
-            ->orderByDesc('expired_at')->first();
-    }
-
     protected function getNeedLicenseAttribute()
     {
         $jobNameId = $this->getJobNameIdAttribute();
@@ -163,6 +156,23 @@ class User extends Authenticatable
             return false;
         }
 
-        return $this->membership->isAvailable();
+        return $this->availableLastestMembership()->exists;
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableLastestMembership()
+    {
+        return $this->availableMemberships()->first();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function availableMemberships()
+    {
+        return $this->memberships()
+            ->where('expired_at', '>', now())->orderByDesc('expired_at')->get();
     }
 }

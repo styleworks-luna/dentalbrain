@@ -63,7 +63,7 @@ class MembershipController extends Controller
         // 메일
 
         // 결과쪽으로 리다이렉트.
-        return $this->result();
+        return redirect()->route('membership.paymentResult');
     }
 
     public function anotherPay(Request $request)
@@ -83,7 +83,7 @@ class MembershipController extends Controller
         $membership = Membership::createWhenAnotherPay($payment, $request->get('days'));
 
         // 결과쪽으로 리다이렉트.
-        return $this->result();
+        return redirect()->route('membership.paymentResult');
     }
 
     public function result()

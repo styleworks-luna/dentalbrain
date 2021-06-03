@@ -62,8 +62,8 @@ class Membership extends Model
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->availableMembership()) {
-            return $user->availableMembership()->expired_at;
+        if ($user->availableLastestMembership()) {
+            return $user->availableLastestMembership()->expired_at;
         } else {
             return now();
         }
@@ -74,8 +74,8 @@ class Membership extends Model
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->availableMembership()) {
-            return Carbon::parse($user->availableMembership()->expired_at)->addDays($days);
+        if ($user->availableLastestMembership()) {
+            return Carbon::parse($user->availableLastestMembership()->expired_at)->addDays($days);
         } else {
             return now()->addDays($days);
         }
