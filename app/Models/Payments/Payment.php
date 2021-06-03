@@ -2,7 +2,7 @@
 
 namespace App\Models\Payments;
 
-use App\Models\Membership;
+use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;

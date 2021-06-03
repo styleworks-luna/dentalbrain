@@ -36,6 +36,10 @@ if (env('APP_ENV') != 'production') {
 
         Route::post('membership', [\App\Http\Controllers\Test\TestController::class, 'joinMembership'])->name('JoinMembership');
 
+        Route::get('mem', function () {
+            ddd(\Illuminate\Support\Facades\Auth::user()->recentMembership());
+        });
+
     });
 }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Membership;
 
 use App\Http\Controllers\Controller;
-use App\Models\Membership;
+use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
 use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
@@ -58,12 +58,12 @@ class MembershipController extends Controller
 
         // 멤버십 & 결제정보 생성
         $payment = Payment::createByTossSuccess($response);
-        $membership = Membership::createOrUpdateByTossSuccess($response, $payment, $days);
+        $membership = Membership::createWhenTossSuccess($response, $payment, $days);
 
         // 메일
 
         // 결과쪽으로 리다이렉트.
-        return redirect()->route('membership.paymentResult');
+        return $this->result();
     }
 
     public function anotherPay(Request $request)
@@ -80,10 +80,10 @@ class MembershipController extends Controller
 
         // 멤버십 & 결제정보 생성
         $payment = Payment::createWhenMembershipAnotherPay($request->get('days'));
-        $membership = Membership::createOrUpdateByAnotherPay($payment, $request->get('days'));
+        $membership = Membership::createWhenAnotherPay($payment, $request->get('days'));
 
         // 결과쪽으로 리다이렉트.
-        return redirect()->route('membership.paymentResult');
+        return $this->result();
     }
 
     public function result()

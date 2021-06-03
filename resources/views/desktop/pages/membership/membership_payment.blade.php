@@ -32,7 +32,7 @@
                     var paymentObj;
                     var cardCompany = $('.ui-selectmenu-text').text();
 
-                    const amount = {{ \App\Models\Membership::$PriceMap[$days] }};
+                    const amount = {{ \App\Models\Membership\Membership::$PriceMap[$days] }};
                     const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                     const orderName = '유료회원 {{ $days }}일권';
                     const customerName = '{{ auth()->user()->name }}';

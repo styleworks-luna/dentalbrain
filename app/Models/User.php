@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Membership\Membership;
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
 use App\Models\Program\ProgramStudent;
@@ -100,6 +101,29 @@ class User extends Authenticatable
         ])->first();
     }
 
+    /**
+     * @return Membership|null
+     */
+    public function recentMembership()
+    {
+        return $this->memberships()->whereNotNull('expired_at')
+            ->orderByDesc('expired_at')->first();
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableMembership()
+    {
+        return $this->memberships()->where('expired_at', '>', now())
+            ->orderByDesc('expired_at')->first();
+    }
+
     protected function getNeedLicenseAttribute()
     {
         $jobNameId = $this->getJobNameIdAttribute();
@@ -135,15 +159,10 @@ class User extends Authenticatable
 
     protected function getHasMembershipAttribute(): bool
     {
-        if ($this->membership()->doesntExist()) {
+        if ($this->memberships()->doesntExist()) {
             return false;
         }
 
         return $this->membership->isAvailable();
-    }
-
-    public function membership()
-    {
-        return $this->hasOne(Membership::class, 'user_id', 'id');
     }
 }
