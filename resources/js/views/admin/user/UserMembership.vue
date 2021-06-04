@@ -2,16 +2,10 @@
     <layout title="유료 회원정보 목록">
         <template v-slot:search>
             <div class="float-left">
-                <p style="font-size: 18px;">유료회원: {{ membershipUserNumber }}명 (종료된 회원: {{ membershipExpiredUserNumber }}명)</p>
+                <p style="font-size: 18px;">유료회원: 명 (종료된 회원: 명)</p>
             </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
-                    <select-box class="form-control"
-                                text="회원"
-                                :value="member"
-                                :options="userOption"
-                                @setValue="handleSetMember"></select-box>
-
                     <select-box class="form-control"
                                 text="분류"
                                 :value="job_name_id"
@@ -35,23 +29,72 @@
             <table-grid :tableCol="tableCol"
                         :data="users.data">
                 <template v-slot:list="slotProps">
-                    <template v-if="slotProps.row.has_membership">
-                        <td>{{ slotProps.row.id }}</td>
-                        <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
-                        <td>{{ slotProps.row.login_id }}</td>
-                        <td>{{ slotProps.row.name }}</td>
-                        <td>{{ slotProps.row.email }}</td>
-                        <td>{{ slotProps.row.phone }}</td>
-                        <td>{{ slotProps.row.job_name }}</td>
-                        <td>{{ slotProps.row.membership.created_at }}</td>
-                        <td>{{ slotProps.row.membership.expired_at }}</td>
-                        <td>
-                            <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
-                                         class="btn btn-info float-left">
-                                수정
-                            </router-link>
-                        </td>
+                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.user.login_id }}</td>
+                    <td>{{ slotProps.row.user.name }}</td>
+                    <td>{{ slotProps.row.user.email }}</td>
+                    <td>{{ slotProps.row.user.phone }}</td>
+                    <td>{{ slotProps.row.user.job_name }}</td>
+                    <td>{{ slotProps.row.started_at }}</td>
+                    <td>{{ slotProps.row.expired_at }}</td>
+                    <td>{{ slotProps.row.payment.method }}</td>
+                    <td> <template v-if="slotProps.row.pay_status === 0">
+                        결제 전
                     </template>
+                        <template v-else-if="slotProps.row.pay_status === 1">
+                            입금 대기
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 3">
+                            취소 완료
+                        </template>
+
+                        <template v-else-if="slotProps.row.pay_status === 4">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
+                                신청 취소
+                            </a>
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method)">
+                                결제 취소
+                            </a>
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 2">
+                            <a href="#" class="btn btn-danger text-white"
+                               v-if="slotProps.row.is_free"
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
+                                신청 취소
+                            </a>
+
+                            <a href="#" class="btn btn-danger text-white"
+                               v-else
+                               @click.prevent="handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method)">
+                                결제 취소
+                            </a>
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 5">
+                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
+                                신청 취소
+                            </a>
+                        </template>
+                        <template v-else-if="slotProps.row.pay_status === 6">
+                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.student_id)">결제 완료</a>
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="cancelLecture(slotProps.row.student_id)">
+                                결제 취소
+                            </a>
+                        </template></td>
+                    <td>{{ Helper.dateCompareWithNow(slotProps.row.started_at) > 0 ? '사용 전'
+                         : Helper.dateCompareWithNow(slotProps.row.expired_at) < 0 ? '사용 후' : '사용 중' }}</td>
+                    <td>
+                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
+                                     class="btn btn-info float-left">
+                            수정
+                        </router-link>
+                    </td>
                 </template>
             </table-grid>
 
@@ -63,6 +106,16 @@
                     </pagination>
                 </nav>
             </div>
+
+            <payment-cancel-layer v-if="cancelLayer"
+                                  :paymentMethod="paymentMethod"
+                                  @setCancelLayer="handleSetCancelLayer"
+                                  @cancelPayment="cancelPayment"></payment-cancel-layer>
+
+            <payment-confirm-layer v-if="confirmLayer"
+                                   @setConfirmLayer="handleSetConfirmLayer"
+                                   @confirmPayment="confirmOfflinePayment"></payment-confirm-layer>
+
         </template>
     </layout>
 </template>
@@ -76,12 +129,21 @@ import SelectBox from '@/components/common/SelectBox.vue';
 // api
 import User from '@/api/admin/user/User.js';
 
+// mixins
+import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
+import {PaymentConfirmMixin} from '@/mixins/admin/payment/Confirm.js';
+
+
 export default {
     name: 'AdminUser',
     components: {
         'table-grid': Table,
         'select-box': SelectBox,
     },
+    mixins: [
+        PaymentCancelMixin,
+        PaymentConfirmMixin,
+    ],
     data() {
         return {
             users: {
@@ -104,22 +166,17 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
-                },
-                {
-                    name: 'is_paid',
-                    text: '회원구분',
-                    width: '6%'
+                    width: '4%'
                 },
                 {
                     name: 'login_id',
                     text: '아이디',
-                    width: '11%'
+                    width: '9%'
                 },
                 {
                     name: 'name',
                     text: '이름',
-                    width: '10%'
+                    width: '7%'
                 },
                 {
                     name: 'email',
@@ -134,22 +191,32 @@ export default {
                 {
                     name: 'job_id',
                     text: '직업군',
-                    width: '12%'
+                    width: '10%'
                 },
                 {
                     name: 'started_at',
                     text: '시작일',
-                    width: '9%',
+                    width: '11%',
                 },
                 {
                     name: 'ended_at',
                     text: '종료일',
-                    width: '9%',
+                    width: '11%',
                 },
                 {
                     name: 'method',
                     text: '결제수단',
-                    width: '8%',
+                    width: '6%',
+                },
+                {
+                    name: 'status',
+                    text: '결제상태',
+                    width: '6%',
+                },
+                {
+                    name: 'membership_status',
+                    text: '상태',
+                    width: '7%',
                 },
                 {
                     name: 'edit',
@@ -170,19 +237,6 @@ export default {
                 }
             ]
         },
-        membershipUserNumber() {
-            var result, count = 0 ;
-            result = this.users.data.filter(res => res.has_membership);
-            count = result.length;
-            return count;
-        },
-        membershipExpiredUserNumber() {
-            var result, count = 0 ;
-            result = this.users.data.filter(res => res.has_membership);
-            result = result.filter(res => this.Helper.dateCompareWithNow(res.membership.expired_at) < 0)
-            count = result.length;
-            return count;
-        }
     },
     methods: {
         getData(page = this.page) {
@@ -198,8 +252,8 @@ export default {
                 page: page
             };
 
-            User.getData(params).then(res => {
-                this.users = res.data.user;
+            User.getMembership(params).then(res => {
+                this.users = res.data[0];
                 console.log(this.users);
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/membership/${page}`

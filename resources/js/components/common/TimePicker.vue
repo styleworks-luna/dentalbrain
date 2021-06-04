@@ -3,6 +3,7 @@
                 valueType="format"
                 format="HH:mm"
                 :required="true"
+                :disabled="disabled"
                 input-class="timepicker form-control"
                 @input="handleSetTime"
                 v-model="date"></vue-timepicker>
@@ -20,6 +21,7 @@ export default {
     },
     props: {
         'time': [String, Date],
+        'disabled': Boolean,
     },
     data() {
         return {
