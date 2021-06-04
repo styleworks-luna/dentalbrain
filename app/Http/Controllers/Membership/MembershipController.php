@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Membership;
 
+use App\Exceptions\TossPaymentsException;
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
 use App\Payments\TossPayments\TossPayments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -47,20 +49,34 @@ class MembershipController extends Controller
             return redirect()->back()->with('alert', $v->errors()->first());
         }
 
-        $days = $v->validated()['days'];
+        try {
+            DB::beginTransaction();
 
-        $toss = new TossPayments($request->get('paymentKey'));
-        $response = $toss->success($request->get('orderId'), $request->get('amount'));
+            $days = $v->validated()['days'];
 
-        if ($response === false) {
-            return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
+            $toss = new TossPayments($request->get('paymentKey'));
+            $response = $toss->success($request->get('orderId'), $request->get('amount'));
+
+            if ($response === false) {
+                // general error
+                return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
+            }
+
+            // 멤버십 & 결제정보 생성
+            $payment = Payment::createByTossSuccess($response);
+            $membership = Membership::createWhenTossSuccess($response, $payment, $days);
+
+            // 메일
+
+            DB::commit();
+        } catch (TossPaymentsException $exception) {
+            DB::rollBack();
+            return $exception->render($request);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('MEMBERSHIP TOSS SUCCESS ERROR', [$exception]);
+            return redirect()->back()->with('alert');
         }
-
-        // 멤버십 & 결제정보 생성
-        $payment = Payment::createByTossSuccess($response);
-        $membership = Membership::createWhenTossSuccess($response, $payment, $days);
-
-        // 메일
 
         // 결과쪽으로 리다이렉트.
         return redirect()->route('membership.paymentResult');
@@ -77,10 +93,19 @@ class MembershipController extends Controller
         if ($v->fails()) {
             return redirect()->back()->with('alert', $v->errors()->first());
         }
+        try {
+            DB::beginTransaction();
 
-        // 멤버십 & 결제정보 생성
-        $payment = Payment::createWhenMembershipAnotherPay($request->get('days'));
-        $membership = Membership::createWhenAnotherPay($payment, $request->get('days'));
+            // 멤버십 & 결제정보 생성
+            $payment = Payment::createWhenMembershipAnotherPay($request->get('days'));
+            $membership = Membership::createWhenAnotherPay($payment, $request->get('days'));
+
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('MEMBERSHIP ANOTHER PAY ERROR', [$exception]);
+            return redirect()->back()->with('alert', '결제 도중 오류가 발생했습니다.');
+        }
 
         // 결과쪽으로 리다이렉트.
         return redirect()->route('membership.paymentResult');
