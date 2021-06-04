@@ -4,6 +4,7 @@
                 :format="'yyyy-MM-dd'"
                 :language="ko"
                 :typeable="true"
+                :disabled="disabled"
                 input-class="datepicker form-control"
                 @input="handleSetDate"
                 v-model="date"
@@ -23,6 +24,7 @@ export default {
     props: {
         'time': [String, Date],
         'placeholder' : String,
+        'disabled': Boolean,
     },
     data() {
         return {

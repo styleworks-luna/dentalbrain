@@ -178,7 +178,6 @@ export default {
             };
 
             User.getData(params).then(res => {
-                console.log(res);
                 this.users = res.data.user;
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/user/${page}`

@@ -89,23 +89,27 @@
                           :size="2.5">
                 <template v-slot:content>
                     <div class="input-wrap">
-                        <input type="checkbox" name="paid-check" id="paid-check" v-model="is_paid">
+                        <input type="checkbox" name="paid-check" id="paid-check" v-model="has_membership" @change="handleCheckbox">
                         <label for="paid-check">유료회원 선택</label>
                     </div>
                     <div class="date-wrap">
                         <date-picker class="mr-3"
                                      :time="membership_started_date"
+                                     :disabled="disabled"
                                      @setTime="handleSetStartDate"></date-picker>
                         <time-picker class="mr-3"
                                      :time="membership_started_time"
+                                     :disabled="disabled"
                                      @setTime="handleSetStartTime"></time-picker>
 
                         <p class="float-left mr-3 mt-2">부터</p>
 
                         <date-picker class="mr-3"
                                      :time="membership_ended_date"
+                                     :disabled="disabled"
                                      @setTime="handleSetEndDate"></date-picker>
                         <time-picker :time="membership_ended_time"
+                                     :disabled="disabled"
                                      @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
@@ -143,6 +147,7 @@ export default {
             id: '',
             data: {},
             page: this.$route.params.page,
+            disabled: true,
         }
     },
     created() {
@@ -154,7 +159,7 @@ export default {
     methods: {
         getEditData() {
             User.getEditData(this.id).then(res => {
-                const result = res.data.user;
+                const result = res.data[0].user;
 
                 this.login_id = result.login_id;
                 this.name = result.name;
@@ -164,9 +169,22 @@ export default {
                 this.license_num = result.license_num;
                 this.allow_email = result.allow_email;
                 this.is_paid = result.is_paid;
+
+                this.has_membership = result.has_membership;
+
+                if(result.has_membership) {
+                    this.membership_started_date = this.Helper.dateFullFormat(res.data[0].membership_expired_at);
+                    this.membership_started_time = this.Helper.timeFormat(this.membership_started_date);
+                    this.membership_ended_date = this.Helper.dateFullFormat(res.data[0].membership_started_at);
+                    this.membership_ended_time = this.Helper.timeFormat(this.membership_ended_date);
+                    this.disabled = false;
+                }
             });
         },
         update() {
+            const membership_started_at = `${this.Helper.dateFormatYDM(this.membership_started_date)} ${this.membership_started_time}`;
+            const membership_expired_at = `${this.Helper.dateFormatYDM(this.membership_ended_date)} ${this.membership_ended_time}`;
+
             let data = {
                 login_id: this.login_id,
                 name: this.name,
@@ -176,6 +194,9 @@ export default {
                 license_num: this.license_num,
                 allow_email: this.allow_email,
                 is_paid: this.is_paid,
+                has_membership: this.has_membership,
+                membership_started_at: membership_started_at,
+                membership_expired_at: membership_expired_at,
             };
 
             User.update(this.id, data).then(res => {
@@ -190,7 +211,16 @@ export default {
                 e.target.disabled = false;
                 alert(res.data.message);
             })
-        }
+        },
+        handleCheckbox() {
+            var check = document.getElementById('paid-check').checked;
+
+            if(!check) {
+                this.disabled = true;
+            } else {
+                this.disabled = false;
+            }
+        },
     }
 }
 </script>

@@ -8,6 +8,13 @@ export default {
             params: params
         });
     },
+    getMembership(params) {
+        return Send({
+            url: '/api/admin/membership',
+            method: 'get',
+            params: params
+        });
+    },
     getEditData(id) {
         return Send({
             url: `/api/admin/user/${id}/edit`,

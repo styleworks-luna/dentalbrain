@@ -27,6 +27,7 @@ export const UserMixin = {
             membership_started_time: '',
             membership_ended_date: '',
             membership_ended_time: '',
+            has_membership: false,
             job_name_id: 1,
             license_num: '',
             allow_email: false,
@@ -47,6 +48,18 @@ export const UserMixin = {
         },
         handleSetJobyId(value) {
             this.job_name_id = value;
+        },
+        handleSetStartDate(time) {
+            this.membership_started_date =  time;
+        },
+        handleSetStartTime(time) {
+            this.membership_started_time = time;
+        },
+        handleSetEndDate(time) {
+            this.membership_ended_date = time;
+        },
+        handleSetEndTime(time) {
+            this.membership_ended_time = time;
         },
     }
 };
