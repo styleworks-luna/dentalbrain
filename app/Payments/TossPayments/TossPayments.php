@@ -29,8 +29,7 @@ class TossPayments
             $client = new Client();
             $response = $client->post($this->getAcceptUrl(), [
                 'auth' => [
-                    '123asdfg',
-//                    env('TOSS_PAYMENTS_SECRET'),
+                    env('TOSS_PAYMENTS_SECRET'),
                     '',
                 ],
                 'headers' => [

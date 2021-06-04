@@ -38,7 +38,6 @@ class TossPaymentsException extends Exception
      */
     public function render($request)
     {
-        logger('123');
         if ($request->expectsJson()) {
             return response()->json([
                 'message' => $this->getMessage()
