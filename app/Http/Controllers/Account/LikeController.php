@@ -20,13 +20,20 @@ class LikeController extends Controller
         $user = User::query()->find(Auth::id());
 
         return response()->json([
-            'programs' => $user->likePrograms()->with('thumbnail:id,url,name')
-                ->where('is_open', '=', 1)->get([
-                    'programs.id', 'programs.description', 'programs.major_category_id', 'programs.minor_category_id',
-                    'programs.title',
-                    'programs.price', 'programs.running_time', 'programs.thumbnail_id', 'programs.is_online', 'programs.is_free'
-                ]),
-            'likes' => $user->likes()->get(),
+            'programs' => $user->likePrograms()
+                ->with([
+                    'thumbnail' => function ($query) {
+                        $query->select(['id', 'url', 'name']);
+                    }, 'place' => function ($query) {
+                        $query->select(['id', 'program_id', 'address', 'address_detail',
+                            'started_at', 'ended_at']);
+                    }])
+                ->where('is_open', '=', 1)
+                ->get([
+                    'programs.id', 'programs.description', 'programs.major_category_id',
+                    'programs.minor_category_id', 'programs.title',
+                    'programs.price', 'programs.running_time', 'programs.thumbnail_id',
+                    'programs.is_online', 'programs.is_free']),
         ]);
 
     }

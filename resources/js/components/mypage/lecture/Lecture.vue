@@ -2,27 +2,28 @@
     <div>
         <div>
             <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
-            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile" ></lecture-list>
+            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
             <template v-else>
                 <lecture-like-list :listData="likeList.programs"></lecture-like-list>
             </template>
         </div>
 
         <template v-if="!mobile">
-        <div class="paging-wrap">
-            <nav>
-                <pagination :data="list" :limit=3 @pagination-change-page="getData">
-                    <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
-                    <span slot="next-nav" class="next-nav ir_pm">next</span>
-                </pagination>
-            </nav>
-        </div>
+            <div class="paging-wrap">
+                <nav>
+                    <pagination :data="list" :limit=3 @pagination-change-page="getData">
+                        <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                        <span slot="next-nav" class="next-nav ir_pm">next</span>
+                    </pagination>
+                </nav>
+            </div>
         </template>
 
         <template v-else>
-        <div class="infinite-wrapper">
-            <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
-        </div>
+            <div class="infinite-wrapper">
+                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
+                                  force-use-infinite-wrapper></infinite-loading>
+            </div>
         </template>
     </div>
 </template>
@@ -65,8 +66,12 @@ export default {
     methods: {
         handleSetOrder(order) {
             this.order = order;
-            this.getData();
-            this.getLikeData();
+
+            if (this.like) {
+                this.getLikeData();
+            } else {
+                this.getData();
+            }
             this.changeType();
         },
         getData(page = this.page) {
@@ -115,7 +120,7 @@ export default {
                 page: page
             };
             Mypage.getData(params).then(res => {
-                if(res.data.data.data.length) {
+                if (res.data.data.data.length) {
                     $.each(res.data.data.data, function (key, value) {
                         vm.mobileList.push(value);
                     });
