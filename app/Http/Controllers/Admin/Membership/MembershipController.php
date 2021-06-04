@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Membership;
 
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
+use App\Models\User;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,17 @@ class MembershipController extends Controller
 {
     public function index(Request $request)
     {
+        $able = User::query()->whereHas('memberships', function (Builder $query) {
+            $query->where('expired_at', '>', now());
+        })->count();
+
+        $disable = User::query()->whereHas('memberships')->count() - $able;
+
 
         return response()->json([
-            $this->search($request)
+            $this->search($request),
+            'able' => $able,
+            'disable' => $disable,
         ]);
     }
 
