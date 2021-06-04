@@ -164,7 +164,23 @@ class User extends Authenticatable
      */
     public function availableLastestMembership()
     {
-        return $this->availableMemberships()->first();
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->first();
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableEarliestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->last();
     }
 
     /**

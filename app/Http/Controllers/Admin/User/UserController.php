@@ -62,13 +62,19 @@ class UserController
     public function edit(User $user)
     {
         $user->addHidden(['memberships']);
-        $membership_started_at = $user->availableMemberships()->last()->started_at;
-        $membership_expired_at = $user->availableMemberships()->first()->expired_at;
+        if ($user->availableMemberships()->isNotEmpty()) {
+            $membership_started_at = $user->availableEarliestMembership()->started_at;
+            $membership_expired_at = $user->availableLastestMembership()->expired_at;
+        } else {
+            $membership_started_at = null;
+            $membership_expired_at = null;
+        }
 
         $data = collect([
             'user' => $user,
-            'membership_started_at' => $membership_started_at
-            , 'membership_expired_at' => $membership_expired_at]);
+            'membership_started_at' => $membership_started_at,
+            'membership_expired_at' => $membership_expired_at
+        ]);
         return response()->json([$data]);
     }
 
