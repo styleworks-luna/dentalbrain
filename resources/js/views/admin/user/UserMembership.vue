@@ -254,7 +254,6 @@ export default {
 
             User.getMembership(params).then(res => {
                 this.users = res.data[0];
-                console.log(this.users);
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/membership/${page}`
                 if (this.$route.path !== path) this.$router.push(path);

@@ -57,7 +57,7 @@ export default {
     methods: {
         handleSetOrder(order) {
             this.order = order;
-            console.log(this.order);
+
             this.getData()
             this.changeType()
         },
