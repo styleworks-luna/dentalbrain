@@ -291,6 +291,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::patch('{user}/paid', 'Admin\User\UserController@updatePaid')->name('change.paid');
         });
 
+        Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
+        });
+
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'getCategories'])->name('categories');
