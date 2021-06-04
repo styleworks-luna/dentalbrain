@@ -4,7 +4,6 @@
 namespace App\Payments\TossPayments;
 
 
-use App\Exceptions\TossPaymentsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;

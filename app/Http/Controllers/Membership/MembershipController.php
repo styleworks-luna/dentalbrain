@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Membership;
 
-use App\Exceptions\TossPaymentsException;
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
 use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
