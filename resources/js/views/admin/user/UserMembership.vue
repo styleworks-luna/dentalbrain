@@ -2,7 +2,7 @@
     <layout title="유료 회원정보 목록">
         <template v-slot:search>
             <div class="float-left">
-                <p style="font-size: 18px;">유료회원: 명 (종료된 회원: 명)</p>
+                <p style="font-size: 18px;">유료회원: {{ memberNum }} 명 (종료된 회원: {{ memberExpiredNum }} 명)</p>
             </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
@@ -153,7 +153,9 @@ export default {
             jobOptions: [],
             job_name_id: '',
             keyword: '',
-            page: this.$route.params.page || 1
+            page: this.$route.params.page || 1,
+            memberNum: 0,
+            memberExpiredNum: 0,
         }
     },
     mounted() {
@@ -254,6 +256,10 @@ export default {
 
             User.getMembership(params).then(res => {
                 this.users = res.data[0];
+
+                this.memberNum = res.data.able;
+                this.memberExpiredNum = res.data.disable;
+
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/membership/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
