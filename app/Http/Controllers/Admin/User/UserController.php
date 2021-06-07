@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
+use App\Services\Membership\MembershipService;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -92,7 +93,16 @@ class UserController
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;
-        });
+        })->sometimes(['membership_started_at'], ['required', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
+            function ($input) use ($user) {
+                return $user->availableMembershipsBuilder()->exists();
+            }
+        )->sometimes(['membership_expired_at'], ['required', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
+            function ($input) use ($user) {
+                return $user->availableMembershipsBuilder()->exists();
+            }
+        );
+
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
 
@@ -105,12 +115,18 @@ class UserController
                 $userJob->save();
             }
 
-            $user->name = $data['name'];
-            $user->email = $data['email'];
-            $user->phone = $data['phone'];
-            $user->allow_email = $data['allow_email'];
-            $user->is_paid = $data['is_paid'];
-            $user->save();
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'allow_email' => $data['allow_email'],
+                'is_paid' => $data['is_paid']
+            ]);
+
+            if (isset($data['started_at']) && isset($data['expired_at'])) {
+                MembershipService::EditUsersMembership($data['started_at'], $data['expired_at'], $user);
+            }
+
             DB::commit();
         } catch (\Exception $exception) {
             Log::error('ACCOUNT UPDATE ERROR', [$exception]);
