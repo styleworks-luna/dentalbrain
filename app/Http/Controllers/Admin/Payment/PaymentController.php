@@ -20,13 +20,18 @@ class PaymentController extends Controller
         $payments = Payment::query()
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
+
                 'programs.is_online', 'programs.title', 'programs.id as program_id',
-                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
+                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
+
+                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status',
+
                 'users.name', 'users.email', 'users.phone'
             )
-            ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
-            ->join('programs', 'programs.id', '=', 'program_students.program_id')
-            ->join('users', 'users.id', '=', 'program_students.user_id');
+            ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
+            ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
+            ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
+            ->leftJoin('users', 'users.id', '=', 'program_students.user_id');
 
         if (isset($request->is_online)) {
             $payments->where('programs.is_online', '=', $request->is_online);
