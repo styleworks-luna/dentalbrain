@@ -232,7 +232,7 @@ export default {
                 this.title = program.title;
 
                 this.lecture_info = program.description;
-                this.is_free = program.is_free;
+                this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
 
                 this.content = program.content;
