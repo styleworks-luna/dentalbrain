@@ -110,27 +110,49 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="radio-wrap">
-                        <input type="radio" id="pay" :value="false"
-                               v-model="is_free">
-                        <label for="pay">유료</label>
-                        <input type="text"
-                               class="form-control ml-3"
-                               placeholder="신청 금액 입력"
-                               :disabled="is_free == true"
-                               v-model="price">
+                    <div class="price overflow-hidden">
+                        <label class="col-form-label d-block float-left mr-3">일반회원가</label>
+                        <div class="radio-wrap">
+                            <input type="radio" id="pay" :value="false"
+                                   v-model="is_free">
+                            <label for="pay">유료</label>
+                            <input type="text"
+                                   class="form-control ml-3"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_free == true"
+                                   v-model="price">
+                        </div>
+                        <div class="radio-wrap mt-1">
+                            <input type="radio" id="free" :value="true"
+                                   v-model="is_free">
+                            <label for="free">무료</label>
+                        </div>
                     </div>
-                    <div class="radio-wrap mt-1">
-                        <input type="radio" id="free" :value="true"
-                               v-model="is_free">
-                        <label for="free">무료</label>
+                    <div class="membership-price overflow-hidden mt-3">
+                        <label class="col-form-label d-block float-left mr-3">유료회원가</label>
+                        <div class="radio-wrap">
+                            <input type="radio" id="membership_pay" :value="false"
+                                   v-model="membership_is_free">
+                            <label for="membership_pay">유료</label>
+                            <input type="text"
+                                   class="form-control ml-3"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="membership_is_free == true"
+                                   v-model="membership_price">
+                        </div>
+                        <div class="radio-wrap mt-1">
+                            <input type="radio" id="membership_free" :value="true"
+                                   v-model="membership_is_free">
+                            <label for="membership_free">무료</label>
+                        </div>
                     </div>
                 </template>
             </single-group>
 
             <single-group name="상세정보입력" :size="12">
                 <template v-slot:content>
-                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`"
+                            @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -169,7 +191,7 @@ import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/For
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 //api
-import { Offline } from '@/api/admin/lecture/Offline.js';
+import {Offline} from '@/api/admin/lecture/Offline.js';
 
 export default {
     name: 'AdminOfflineCreate',
@@ -208,10 +230,10 @@ export default {
                 program_place: this.program_place
             };
 
-             Offline.create(data).then(res => {
-                 alert(res.data.msg);
-                 this.$router.push('/admin/lecture/offline/1');
-             })
+            Offline.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/lecture/offline/1');
+            })
         },
     }
 }
