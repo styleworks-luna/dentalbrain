@@ -64,7 +64,7 @@ class UserController
         $user->addHidden(['memberships']);
         if ($user->availableMemberships()->isNotEmpty()) {
             $membership_started_at = $user->availableEarliestMembership()->started_at;
-            $membership_expired_at = $user->availableLastestMembership()->expired_at;
+            $membership_expired_at = $user->availableLatestMembership()->expired_at;
         } else {
             $membership_started_at = null;
             $membership_expired_at = null;

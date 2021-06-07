@@ -8,12 +8,13 @@ use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class Membership extends Model
 {
-    use HasPayStatus;
+    use HasPayStatus, SoftDeletes;
 
     static $PriceMap = [
         30 => 30000,
@@ -62,8 +63,8 @@ class Membership extends Model
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->availableLastestMembership()) {
-            return $user->availableLastestMembership()->expired_at;
+        if ($user->availableLatestMembership()) {
+            return $user->availableLatestMembership()->expired_at;
         } else {
             return now();
         }
@@ -74,8 +75,8 @@ class Membership extends Model
         /** @var User $user */
         $user = Auth::user();
 
-        if ($user->availableLastestMembership()) {
-            return Carbon::parse($user->availableLastestMembership()->expired_at)->addDays($days);
+        if ($user->availableLatestMembership()) {
+            return Carbon::parse($user->availableLatestMembership()->expired_at)->addDays($days);
         } else {
             return now()->addDays($days);
         }

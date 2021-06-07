@@ -98,9 +98,9 @@ Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
         // 결제 폼
         Route::get('/payment', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('paymentForm');
         // 결제 성공 연결
-        Route::get('/payment/success', [\App\Http\Controllers\Membership\MembershipController::class, 'success'])->name('paymentSuccess');
+        Route::get('/payment/success', [\App\Http\Controllers\Membership\PaymentController::class, 'success'])->name('paymentSuccess');
         // 결제 성공 연결
-        Route::post('/payment/another', [\App\Http\Controllers\Membership\MembershipController::class, 'anotherPay'])->name('paymentAnother');
+        Route::post('/payment/another', [\App\Http\Controllers\Membership\PaymentController::class, 'anotherPay'])->name('paymentAnother');
         // 결제 결과
         Route::get('/payment/result', [\App\Http\Controllers\Membership\MembershipController::class, 'result'])->name('paymentResult');
     });

@@ -9,7 +9,6 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -90,7 +89,7 @@ class User extends Authenticatable
 
     public function likePrograms()
     {
-        return $this->belongsToMany(Program::class,'user_likes')
+        return $this->belongsToMany(Program::class, 'user_likes')
             ->using(UserLike::class);
     }
 
@@ -122,6 +121,33 @@ class User extends Authenticatable
     public function memberships()
     {
         return $this->hasMany(Membership::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableLatestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->first();
+    }
+
+    /**
+     * Order By 'expired_at' DESC
+     * @return Collection
+     */
+    public function availableMemberships()
+    {
+        return $this->availableMembershipsBuilder()->get();
+    }
+
+    public function availableMembershipsBuilder()
+    {
+        return $this->memberships()
+            ->where('expired_at', '>', now())->orderByDesc('expired_at');
     }
 
     protected function getNeedLicenseAttribute()
@@ -159,23 +185,13 @@ class User extends Authenticatable
 
     protected function getHasMembershipAttribute(): bool
     {
-        if ($this->memberships()->doesntExist()) {
+        $membership = $this->availableEarliestMembership();
+
+        if ($membership == null) {
             return false;
         }
 
-        return $this->availableLastestMembership()->exists;
-    }
-
-    /**
-     * @return Membership|null
-     */
-    public function availableLastestMembership()
-    {
-        $memberships = $this->availableMemberships();
-        if (!$memberships) {
-            return null;
-        }
-        return $memberships->first();
+        return $membership->started_at < now();
     }
 
     /**
@@ -188,14 +204,5 @@ class User extends Authenticatable
             return null;
         }
         return $memberships->last();
-    }
-
-    /**
-     * @return Collection
-     */
-    public function availableMemberships()
-    {
-        return $this->memberships()
-            ->where('expired_at', '>', now())->orderByDesc('expired_at')->get();
     }
 }
