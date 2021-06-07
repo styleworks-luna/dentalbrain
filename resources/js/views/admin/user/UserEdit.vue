@@ -173,9 +173,9 @@ export default {
                 this.has_membership = result.has_membership;
 
                 if(result.has_membership) {
-                    this.membership_started_date = this.Helper.dateFullFormat(res.data[0].membership_expired_at);
+                    this.membership_started_date = this.Helper.dateFullFormat(res.data[0].membership_started_at);
                     this.membership_started_time = this.Helper.timeFormat(this.membership_started_date);
-                    this.membership_ended_date = this.Helper.dateFullFormat(res.data[0].membership_started_at);
+                    this.membership_ended_date = this.Helper.dateFullFormat(res.data[0].membership_expired_at);
                     this.membership_ended_time = this.Helper.timeFormat(this.membership_ended_date);
                     this.disabled = false;
                 }
