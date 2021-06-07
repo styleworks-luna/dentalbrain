@@ -19,7 +19,6 @@ use Illuminate\Validation\Rule;
 class OnlineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
     protected $onlineConcrete;
-    private $search;
 
     public function __construct()
     {

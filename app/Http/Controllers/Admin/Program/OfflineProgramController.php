@@ -20,8 +20,7 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
     /**
      * @var SearchService|null
      */
-    private $search;
-
+    
     public function __construct()
     {
         $this->offlineConcrete = new OfflineProgramConcrete();
