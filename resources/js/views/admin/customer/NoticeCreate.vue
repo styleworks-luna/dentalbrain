@@ -28,8 +28,7 @@
                                :isRequired="true"
                                :size="9">
                 <template v-slot:content>
-                    <textarea class="form-control" rows="9" placeholder="내용을 입력해 주세요."
-                              v-model="content"></textarea>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -80,7 +79,7 @@ export default {
                 alert(res.data.msg);
                 this.$router.push('/admin/customer/notice/1');
             })
-        }
+        },
     }
 }
 </script>
