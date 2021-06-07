@@ -35,7 +35,7 @@ export default {
         DatePicker,
     },
     props: {
-      "is_online": Boolean,
+      "is_online": Number,
     },
     data() {
         return {

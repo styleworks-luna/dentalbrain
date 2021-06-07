@@ -4,12 +4,15 @@ namespace App\Models\Program;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class UserLike extends Model
+class UserLike extends Pivot
 {
     protected $table = 'user_likes';
 
     protected $guarded = [];
+
+    public $incrementing = true;
 
     public function program()
     {
