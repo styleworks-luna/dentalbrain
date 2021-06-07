@@ -146,8 +146,7 @@ class User extends Authenticatable
 
     public function availableMembershipsBuilder()
     {
-        return $this->memberships()
-            ->where('expired_at', '>', now())->orderByDesc('expired_at');
+        return $this->memberships()->available()->orderByDesc('expired_at');
     }
 
     protected function getNeedLicenseAttribute()

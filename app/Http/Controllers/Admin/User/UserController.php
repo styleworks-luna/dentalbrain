@@ -49,7 +49,10 @@ class UserController
             $this->search->addCategory('is_paid', '=', $request->is_paid);
         }
 
-        $result = $this->search->search()->orderBy('id', 'desc')->paginate('20');
+        $result = $this->search->search()
+            ->whereHas('memberships', function ($query) {
+                $query->where('expired_at', '>', now());
+            })->orderBy('id', 'desc')->paginate('20');
         return $result;
     }
 
@@ -89,7 +92,6 @@ class UserController
                 Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore($user->id)],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
-            'is_paid' => ['nullable', 'boolean'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;
@@ -120,11 +122,11 @@ class UserController
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'allow_email' => $data['allow_email'],
-                'is_paid' => $data['is_paid']
             ]);
 
-            if (isset($data['started_at']) && isset($data['expired_at'])) {
-                MembershipService::EditUsersMembership($data['started_at'], $data['expired_at'], $user);
+            if (isset($data['membership_started_at']) && isset($data['membership_expired_at'])) {
+                MembershipService::EditUsersMembership(
+                    $data['membership_started_at'], $data['membership_expired_at'], $user);
             }
 
             DB::commit();
