@@ -71,8 +71,26 @@
                     <td>{{ slotProps.row.approvedAt || '결제 대기중' }}</td>
                     <template v-if="slotProps.row.membership_pay_status">
                         <td>
-                            <template v-if="slotProps.row.membership_pay_status == 2">
+                            <template v-if="slotProps.row.membership_pay_status == 0">
+                                결제 전
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 2">
                                 결제 완료
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 4">
+                                결제 완료_2
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 5">
+                                별도 결제 입금 전
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 6">
+                                별도 결제 결제 완료
                             </template>
                         </td>
                     </template>
