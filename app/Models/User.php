@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
+use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
@@ -59,12 +60,14 @@ class User extends Authenticatable
         return $this->attributes['is_admin'] ? true : false;
     }
 
-    public function likes(){
-        return $this->hasMany(UserLike::class, 'user_id','id');
+    public function likes()
+    {
+        return $this->hasMany(UserLike::class, 'user_id', 'id');
     }
 
-    public function comments(){
-        return $this->hasMany(Comment::class,'user_id','id');
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
     public function students()
@@ -80,6 +83,12 @@ class User extends Authenticatable
     public function surveyAnswers()
     {
         return $this->hasMany(SurveyAnswer::class, 'user_id', 'id');
+    }
+
+    public function likePrograms()
+    {
+        return $this->belongsToMany(Program::class,'user_likes')
+            ->using(UserLike::class);
     }
 
     public function scopeFindIdWithNameAndEmail($query, $name, $email)

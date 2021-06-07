@@ -1,31 +1,36 @@
 <template>
     <div>
         <div>
-            <lecture-order @setOrder="handleSetOrder" :mobile="mobile"></lecture-order>
-            <lecture-list :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
+            <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
+            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
+            <template v-else>
+                <lecture-like-list :listData="likeList.programs"></lecture-like-list>
+            </template>
         </div>
 
         <template v-if="!mobile">
-        <div class="paging-wrap">
-            <nav>
-                <pagination :data="list" :limit=3 @pagination-change-page="getData">
-                    <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
-                    <span slot="next-nav" class="next-nav ir_pm">next</span>
-                </pagination>
-            </nav>
-        </div>
+            <div class="paging-wrap">
+                <nav>
+                    <pagination :data="list" :limit=3 @pagination-change-page="getData">
+                        <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                        <span slot="next-nav" class="next-nav ir_pm">next</span>
+                    </pagination>
+                </nav>
+            </div>
         </template>
 
         <template v-else>
-        <div class="infinite-wrapper">
-            <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
-        </div>
+            <div class="infinite-wrapper">
+                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
+                                  force-use-infinite-wrapper></infinite-loading>
+            </div>
         </template>
     </div>
 </template>
 
 <script>
 import LectureList from '@/components/mypage/lecture/LectureList.vue';
+import LectureLikeList from '@/components/mypage/lecture/LectureLikeList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
 import InfiniteLoading from 'vue-infinite-loading';
 
@@ -37,14 +42,17 @@ export default {
     components: {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
+        LectureLikeList,
         InfiniteLoading,
     },
     props: {
-      'mobile': Boolean,
+        'mobile': Boolean,
+        'like': Boolean,
     },
     data() {
         return {
             list: {},
+            likeList: {},
             order: 'newest',
             page: 1,
             mobileList: [],
@@ -53,13 +61,18 @@ export default {
     },
     mounted() {
         this.getData();
+        this.getLikeData();
     },
     methods: {
         handleSetOrder(order) {
             this.order = order;
-            console.log(this.order);
-            this.getData()
-            this.changeType()
+
+            if (this.like) {
+                this.getLikeData();
+            } else {
+                this.getData();
+            }
+            this.changeType();
         },
         getData(page = this.page) {
             if (this.Helper.nullCheck(page)) {
@@ -78,6 +91,22 @@ export default {
                 this.list = [];
             });
         },
+        getLikeData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                order: this.order,
+                page: page
+            };
+
+            Mypage.getLikeData(params).then(res => {
+                this.likeList = res.data;
+            }).catch(err => {
+                this.likeList = [];
+            });
+        },
         infiniteHandler($state, page = this.page) {
             let vm = this;
 
@@ -91,7 +120,7 @@ export default {
                 page: page
             };
             Mypage.getData(params).then(res => {
-                if(res.data.data.data.length) {
+                if (res.data.data.data.length) {
                     $.each(res.data.data.data, function (key, value) {
                         vm.mobileList.push(value);
                     });
