@@ -277,10 +277,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
-            Route::post('file', 'Admin\FileController@uploadFile')->name('file');
-            Route::post('image', 'Admin\FileController@uploadImage')->name('image');
+            Route::post('file', [\App\Http\Controllers\Admin\FileController::class, 'uploadFile'])->name('file');
+            Route::post('image', [\App\Http\Controllers\Admin\FileController::class, 'uploadImage'])->name('image');
         });
-        Route::get('download/{file}', 'Admin\FileController@download')->name('download');
+        Route::get('download/{file}', [\App\Http\Controllers\Admin\FileController::class, 'download'])->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             //user index 페이지 데이터
@@ -303,7 +303,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'getCategories'])->name('categories');
             // 강의 상세 내용 이미지 업로드
-            Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
+            Route::post('upload', [\App\Http\Controllers\Admin\FileController::class, 'uploadProgramDetailImage'])->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
@@ -443,8 +443,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
-
+                // 검색
                 Route::post('search', 'Admin\NoticeController@search')->name('search');
+                // 공지사항 이미지 파일 업로드
+                Route::post('upload/image', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeImage'])->name('upload.image');
+                // 공지사항 파일 업로드
+                Route::post('upload/file', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeFile'])->name('upload.file');
             });
 
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {

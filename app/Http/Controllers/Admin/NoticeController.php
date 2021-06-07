@@ -32,7 +32,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'nullable',
-            'is_open' => ['required','boolean']
+            'is_open' => ['required', 'boolean']
         ]);
 
         $validatedData['user_id'] = Auth()->id();
@@ -57,7 +57,7 @@ class NoticeController extends Controller
             'title' => 'required',
             'content' => 'required',
             'display_name' => 'nullable',
-            'is_open' => ['required','boolean']
+            'is_open' => ['required', 'boolean']
         ]);
 
         $validatedData = $v->validate();
@@ -86,12 +86,13 @@ class NoticeController extends Controller
         return $statusChangeImpl->statusChange($notice, 'is_open');
     }
 
-    private function search(Request $request){
+    private function search(Request $request)
+    {
         $this->search
-            ->addKeyword('title',$request->keyword)
-            ->addKeyword('content',$request->keyword);
+            ->addKeyword('title', $request->keyword)
+            ->addKeyword('content', $request->keyword);
 
-        $result = $this->search->search()->orderBy('id','desc')->paginate('10');
+        $result = $this->search->search()->orderBy('id', 'desc')->paginate('10');
         return $result;
     }
 }
