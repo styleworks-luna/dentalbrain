@@ -60,8 +60,7 @@ class PaymentController extends Controller
         ]);
     }
 
-    public
-    function paymentExport()
+    public function paymentExport()
     {
         return Excel::download(new PaymentExport(), '결제 정보 엑셀.xlsx');
     }
@@ -74,8 +73,7 @@ class PaymentController extends Controller
      * @param ProgramStudent $student
      * @return JsonResponse
      */
-    public
-    function confirmAnotherPay(Request $request, Program $program, ProgramStudent $student): JsonResponse
+    public function confirmAnotherPay(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
         $concrete = ProgramTemplate::getProgramConcrete($program);
 
