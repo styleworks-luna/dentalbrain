@@ -34,9 +34,9 @@ class MembershipService
             self::editUserMembershipExpiredAt($expiredAt, $user);
             DB::commit();
         } catch (\Exception $exception) {
+            DB::rollBack();
             Log::error('User Membership Edit Error In Service', [$exception]);
-
-            return false;
+            throw $exception;
         }
 
         return true;
@@ -50,7 +50,7 @@ class MembershipService
     {
         $earliest = $user->availableEarliestMembership();
 
-        if ($earliest->started_at != $startedAt) {
+        if ($earliest->started_at == $startedAt) {
             return;
         }
 
@@ -77,7 +77,7 @@ class MembershipService
             $latest->expired_at = $expiredAt;
             $latest->save();
         } else {
-            $user->memberships()->where('stated_at', '>', $expiredAt)->delete();
+            $user->memberships()->where('started_at', '>', $expiredAt)->delete();
             $user->memberships()->where('expired_at', '>', $expiredAt)->update([
                 'expired_at' => $expiredAt
             ]);

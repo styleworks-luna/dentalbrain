@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -104,6 +103,11 @@ class Membership extends Model
         }
 
         return $this->started_at < now() && now() < $this->expired_at;
+    }
+
+    public function scopeAvailable($query)
+    {
+        return $query->where('expired_at', '>', now());
     }
 
     public function user()
