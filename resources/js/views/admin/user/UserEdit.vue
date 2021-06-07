@@ -95,21 +95,17 @@
                     <div class="date-wrap">
                         <date-picker class="mr-3"
                                      :time="membership_started_date"
-                                     :disabled="disabled"
                                      @setTime="handleSetStartDate"></date-picker>
                         <time-picker class="mr-3"
                                      :time="membership_started_time"
-                                     :disabled="disabled"
                                      @setTime="handleSetStartTime"></time-picker>
 
                         <p class="float-left mr-3 mt-2">부터</p>
 
                         <date-picker class="mr-3"
                                      :time="membership_ended_date"
-                                     :disabled="disabled"
                                      @setTime="handleSetEndDate"></date-picker>
                         <time-picker :time="membership_ended_time"
-                                     :disabled="disabled"
                                      @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
@@ -147,7 +143,7 @@ export default {
             id: '',
             data: {},
             page: this.$route.params.page,
-            disabled: true,
+            // disabled: true,
         }
     },
     created() {
@@ -172,12 +168,12 @@ export default {
 
                 this.has_membership = result.has_membership;
 
-                if(result.has_membership) {
+                if(res.data[0].membership_started_at != null && res.data[0].membership_expired_at != null) {
                     this.membership_started_date = this.Helper.dateFullFormat(res.data[0].membership_started_at);
                     this.membership_started_time = this.Helper.timeFormat(this.membership_started_date);
                     this.membership_ended_date = this.Helper.dateFullFormat(res.data[0].membership_expired_at);
                     this.membership_ended_time = this.Helper.timeFormat(this.membership_ended_date);
-                    this.disabled = false;
+                    // this.disabled = false;
                 }
             });
         },
@@ -212,15 +208,15 @@ export default {
                 alert(res.data.message);
             })
         },
-        handleCheckbox() {
-            var check = document.getElementById('paid-check').checked;
-
-            if(!check) {
-                this.disabled = true;
-            } else {
-                this.disabled = false;
-            }
-        },
+        // handleCheckbox() {
+        //     var check = document.getElementById('paid-check').checked;
+        //
+        //     if(!check) {
+        //         this.disabled = true;
+        //     } else {
+        //         this.disabled = false;
+        //     }
+        // },
     }
 }
 </script>
