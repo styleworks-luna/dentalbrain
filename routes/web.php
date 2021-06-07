@@ -431,6 +431,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
+                // 검색
+                Route::post('search', 'Admin\NoticeController@search')->name('search');
+                // 공지사항 이미지 파일 업로드
+                Route::post('upload/image', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeImage'])->name('upload.image');
+                // 공지사항 파일 업로드
+                Route::post('upload/file', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeFile'])->name('upload.file');
                 //공지사항 index 페이지 데이터
                 Route::get('/', 'Admin\NoticeController@index')->name('index');
                 // 공지사항 생성 함수
@@ -443,12 +449,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
-                // 검색
-                Route::post('search', 'Admin\NoticeController@search')->name('search');
-                // 공지사항 이미지 파일 업로드
-                Route::post('upload/image', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeImage'])->name('upload.image');
-                // 공지사항 파일 업로드
-                Route::post('upload/file', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeFile'])->name('upload.file');
             });
 
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {

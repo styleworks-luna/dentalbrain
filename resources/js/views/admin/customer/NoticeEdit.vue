@@ -29,7 +29,10 @@
                                :isRequired="true"
                                :size="9">
                 <template v-slot:content>
-                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content"
+                            :uploadImageUrl="`/api/admin/customer/notice/upload/image`"
+                            :uploadFileUrl="`/api/admin/customer/notice/upload/file`"
+                            @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
