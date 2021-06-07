@@ -8,6 +8,7 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -31,7 +32,11 @@ class PaymentController extends Controller
             ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
             ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
-            ->leftJoin('users', 'users.id', '=', 'program_students.user_id');
+            ->leftJoin('users', function (JoinClause $join) {
+                $join->on('users.id', '=', 'program_students.user_id')
+                    ->orOn('users.id', '=', 'memberships.user_id');
+            });
+
 
         if (isset($request->is_online)) {
             $payments->where('programs.is_online', '=', $request->is_online);
@@ -55,7 +60,8 @@ class PaymentController extends Controller
         ]);
     }
 
-    public function paymentExport()
+    public
+    function paymentExport()
     {
         return Excel::download(new PaymentExport(), '결제 정보 엑셀.xlsx');
     }
@@ -68,7 +74,8 @@ class PaymentController extends Controller
      * @param ProgramStudent $student
      * @return JsonResponse
      */
-    public function confirmAnotherPay(Request $request, Program $program, ProgramStudent $student): JsonResponse
+    public
+    function confirmAnotherPay(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
         $concrete = ProgramTemplate::getProgramConcrete($program);
 
