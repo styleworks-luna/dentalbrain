@@ -88,10 +88,10 @@
                           :isRow="true"
                           :size="2.5">
                 <template v-slot:content>
-                    <div class="input-wrap">
+                    <!-- <div class="input-wrap">
                         <input type="checkbox" name="paid-check" id="paid-check" v-model="has_membership" @change="handleCheckbox">
                         <label for="paid-check">유료회원 선택</label>
-                    </div>
+                    </div> -->
                     <div class="date-wrap">
                         <date-picker class="mr-3"
                                      :time="membership_started_date"
@@ -194,7 +194,7 @@ export default {
                 license_num: this.license_num,
                 allow_email: this.allow_email,
                 is_paid: this.is_paid,
-                has_membership: this.has_membership,
+                // has_membership: this.has_membership,
                 membership_started_at: membership_started_at,
                 membership_expired_at: membership_expired_at,
             };
