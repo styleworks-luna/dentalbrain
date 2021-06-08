@@ -21,7 +21,7 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if ($program->alreadyApplied() || $program->waitDeposit()) {
+        if ($program->alreadyApplied() || $program->waitDeposit() || $program->waitConfirmAnotherPay()) {
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
