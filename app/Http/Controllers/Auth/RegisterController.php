@@ -180,7 +180,7 @@ class RegisterController extends Controller
             'api_token' => Str::random(80),
             'job_id' => $userJob->id,
             'allow_email' => isset($data['email-consent']),
-            'allow_sms' => isset($data['email-sms']),
+            'allow_sms' => isset($data['sms-consent']),
         ]);
     }
 
