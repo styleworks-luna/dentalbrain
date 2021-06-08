@@ -215,19 +215,20 @@ class ProgramStudent extends Model
      */
     public function getPrice(Program $program = null)
     {
-        if ($program != null) {
-            // param 존재
-            if ($program->canRepeat($this) || $program->repeated($this)) {
-                return $this->program->repeat_price;
-            } else {
-                return $this->program->price;
-            }
+        if ($program == null) {
+            $program = $this->program;
+        }
+
+        if ($this->user->hasMembership) {
+            $price = $program->membership_price;
         } else {
-            if ($this->program->canRepeat($this) || $this->program->repeated($this)) {
-                return $this->program->repeat_price;
-            } else {
-                return $this->program->price;
-            }
+            $price = $program->price;
+        }
+
+        if ($program->repeatable($this)) {
+            return Program::discountPrice($price);
+        } else {
+            return Program::discountPrice($price);
         }
     }
 }

@@ -318,6 +318,11 @@ class Program extends Model
     public function getRepeatPriceAttribute()
     {
         $price = $this->attributes['price'] ?? 0;
+        return self::discountPrice($price);
+    }
+
+    public static function discountPrice($price)
+    {
         return $price * 7 / 10;
     }
 
