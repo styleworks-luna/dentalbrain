@@ -15,8 +15,6 @@ use App\Models\Program\Survey\SurveyCategory;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +51,30 @@ abstract class ProgramTemplate
         }
     }
 
+    /**
+     * @return JsonResponse
+     */
+    static function getCategories(): JsonResponse
+    {
+        $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
+        $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
+        return response()->json([
+            'major' => $major,
+            'minor' => $minor,
+        ]);
+    }
+
+    /**
+     * @param Program $program
+     * @return Program
+     */
+    static function changeOpenStatus(Program $program)
+    {
+        $program->is_open = !$program->is_open;
+        $program->save();
+        return $program;
+    }
+
     function getProgramDetail(Program $program): array
     {
         return [
@@ -76,12 +98,12 @@ abstract class ProgramTemplate
             ->select([
                 'program_students.program_id', 'programs.is_free',
                 'program_students.id as student_id', 'program_students.pay_status', 'program_students.applied_at',
-                'program_students.payment_id', 'program_students.is_repeated','program_students.expired_at',
+                'program_students.payment_id', 'program_students.is_repeated', 'program_students.expired_at',
                 'payments.totalAmount', 'payments.status', 'payments.method',
-                'users.id as user_id', 'users.login_id', 'users.name', 'users.is_paid', 'users.email', 'users.phone'
+                'users.id as user_id', 'users.login_id', 'users.name', 'users.email', 'users.phone'
             ])
             ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
-            ->leftJoin('programs','programs.id','=','program_students.program_id')
+            ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
         if ($order == 'latest') {
@@ -96,31 +118,6 @@ abstract class ProgramTemplate
         }
 
         return $query;
-    }
-
-
-    /**
-     * @return JsonResponse
-     */
-    static function getCategories(): JsonResponse
-    {
-        $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
-        $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
-        return response()->json([
-            'major' => $major,
-            'minor' => $minor,
-        ]);
-    }
-
-    /**
-     * @param Program $program
-     * @return Program
-     */
-    static function changeOpenStatus(Program $program)
-    {
-        $program->is_open = !$program->is_open;
-        $program->save();
-        return $program;
     }
 
     /*

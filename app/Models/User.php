@@ -46,7 +46,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'allow_email' => 'boolean',
-        'is_paid' => 'boolean',
     ];
     protected $appends = [
         'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'

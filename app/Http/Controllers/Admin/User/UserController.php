@@ -45,10 +45,6 @@ class UserController
             ->addKeyword('phone', $request->keyword)
             ->addKeyword('email', $request->keyword);
 
-        if (isset($request->is_paid)) {
-            $this->search->addCategory('is_paid', '=', $request->is_paid);
-        }
-
         $result = $this->search->search()
             ->whereHas('memberships', function ($query) {
                 $query->where('expired_at', '>', now());
@@ -143,17 +139,6 @@ class UserController
         return response()->json([
             'success' => true,
             'msg' => '성공하였습니다.'
-        ]);
-    }
-
-    public function updatePaid(User $user)
-    {
-        $user->is_paid = !$user->is_paid;
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'msg' => '변경되었습니다.'
         ]);
     }
 
