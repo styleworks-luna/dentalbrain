@@ -30,7 +30,7 @@ class MembershipController extends Controller
 
     private function search(Request $request)
     {
-        $search = new SearchService(Membership::query()->with([
+        $search = new SearchService(Membership::withTrashed()->with([
             'user' => /* @param BelongsTo $query */ function ($query) {
                 $query->select(['id', 'login_id', 'name', 'email', 'phone', 'job_id']);
             },
@@ -39,6 +39,8 @@ class MembershipController extends Controller
             }
         ]));
 
-        return $search->setJoinModel('user')->join()->search()->paginate(10);
+        $result = $search->setJoinModel('user')->join()->search();
+
+        return $result->orderByDesc('id')->paginate(10);
     }
 }
