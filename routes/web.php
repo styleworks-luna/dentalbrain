@@ -144,7 +144,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
-        Route::get('/', 'Lecture\DetailController@detail')->name('detail');
+        Route::get('/', [\App\Http\Controllers\Lecture\DetailController::class, 'detail'])->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼
