@@ -149,9 +149,9 @@ export default {
 
             this.students.push({
                 user: {
-                    name: inputName
+                    name: inputName,
+                    phone: inputPhone
                 },
-                phone: inputPhone
             });
 
             document.getElementById('name').value = '';
