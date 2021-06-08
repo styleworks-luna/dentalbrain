@@ -142,7 +142,10 @@ abstract class ProgramTemplate
 
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
+            'membership_is_free' => ['required', 'boolean'],
+
             'price' => ['nullable', 'numeric'],
+            'membership_price' => ['nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -193,8 +196,12 @@ abstract class ProgramTemplate
             'material_id' => $data['material_id'] ?? null,
 
             'is_open' => $data['is_open'],
-            'price' => $data['price'] ?? 0,
+            'price' => $data['is_free'] ? 0 : ($data['price'] ?? 0),
+            'membership_price' => $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0),
+
             'is_free' => $data['is_free'],
+            'membership_is_free' => $data['membership_is_free'],
+
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
@@ -292,6 +299,10 @@ abstract class ProgramTemplate
             $data['price'] = 0;
         }
 
+        if ($data['membership_is_free'] == true) {
+            $data['membership_price'] = 0;
+        }
+
         $program->update([
             'title' => $data['title'],
             'content' => $data['content'],
@@ -303,8 +314,12 @@ abstract class ProgramTemplate
             'material_id' => $data['material_id'],
             'is_open' => $data['is_open'],
 
-            'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
+            'membership_is_free' => $data['membership_is_free'],
+
+            'price' => $data['price'] ?? 0,
+            'membership_price' => $data['membership_price'] ?? 0,
+
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
