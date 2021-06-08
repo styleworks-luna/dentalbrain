@@ -227,9 +227,14 @@ export default {
                 running_time: this.running_time,
 
                 lecture_info: this.lecture_info,
+
                 price: this.price,
                 is_free: this.is_free,
+                membership_is_free: this.membership_is_free,
+                membership_price: this.membership_price,
+
                 is_open: this.is_open,
+
 
                 content: this.content,
 

@@ -273,6 +273,9 @@ export default {
                 is_free: this.is_free,
                 is_open: this.is_open,
 
+                membership_is_free: this.membership_is_free,
+                membership_price: this.membership_price,
+
                 content: this.content,
 
                 material_id: this.material ? this.material.id : null,

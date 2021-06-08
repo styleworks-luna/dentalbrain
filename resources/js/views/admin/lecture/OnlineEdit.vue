@@ -251,6 +251,9 @@ export default {
                 this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
 
+                this.membership_is_free = program.membership_is_free == 1 ? true : false;
+                this.membership_price = program.membership_price;
+
                 this.surveys = res.data.surveys;
 
                 this.lectures = res.data.lectures;
@@ -282,6 +285,9 @@ export default {
                 price: this.price,
                 is_free: this.is_free,
                 is_open: this.is_open,
+
+                membership_is_free: this.membership_is_free,
+                membership_price: this.membership_price,
 
                 content: this.content,
 

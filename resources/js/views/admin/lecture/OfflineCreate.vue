@@ -222,6 +222,9 @@ export default {
                 is_free: this.is_free,
                 price: this.price,
 
+                membership_is_free: this.membership_is_free,
+                membership_price: this.membership_price,
+
                 content: this.content,
 
                 surveys: this.surveys,
