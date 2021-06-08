@@ -22,7 +22,7 @@ class PaymentController extends Controller
             }])
             ->whereHas('student', function ($query) {
                 $query->where('user_id', Auth::id());
-            })->orderBy('id', 'desc')->get();
+            })->orderBy('id', 'desc')->paginate(10);
 
         foreach ($payments as $payment) {
             $payment->full_response = json_decode($payment->full_response);
