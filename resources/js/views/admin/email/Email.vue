@@ -153,9 +153,9 @@ export default {
 
             this.students.push({
                 user: {
-                    name: inputName
+                    name: inputName,
+                    email: inputEmail
                 },
-                email: inputEmail
             });
 
             document.getElementById('name').value = '';
@@ -179,7 +179,7 @@ export default {
             Email.update(data).then(res => {
                 this.showModal = false;
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
+                window.location.reload();
             }).catch(err => {
                 this.showModal = false;
                 document.getElementById('btn-send').style.pointerEvents = 'auto';
