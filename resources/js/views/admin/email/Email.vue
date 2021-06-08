@@ -170,6 +170,7 @@ export default {
             document.getElementById('btn-send').style.pointerEvents = 'none';
 
             let data = {
+                program_id: this.id,
                 email: this.email,
                 message: this.content,
                 title: this.title,
