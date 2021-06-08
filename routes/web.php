@@ -56,6 +56,11 @@ if (env('APP_ENV') != 'production') {
 
         // 테스팅 계정 생성
         Route::get('register', 'Test\TestController@showRegistrationForm');
+
+        Route::view('email', 'emails.content', [
+            'program' => \App\Models\Program\Program::query()->find(14),
+            'content' => '컨텐츠',
+        ]);
     });
 }
 
@@ -144,7 +149,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
-        Route::get('/', 'Lecture\DetailController@detail')->name('detail');
+        Route::get('/', [\App\Http\Controllers\Lecture\DetailController::class, 'detail'])->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼

@@ -23,18 +23,18 @@
             </p>
         </td>
     </tr>
-        <tr>
-            <td>
-                <div
-                    style="width:400px; margin: 0 auto; padding: 10px; border: 1px solid #d8d8d8; text-align: center; box-sizing: border-box">
-                    <a href="{{ url(`lectures/{{ $program->id }}`) }}"
-                       style="display: block; width: 100px; margin: 0 auto; padding: 8px 12px 8px 12px; background-color: #9b00d8; color: #fff; text-decoration: none"
-                       >
-                        강의 바로가기
-                    </a>
-                </div>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            <div
+                style="width:400px; margin: 0 auto; padding: 10px; border: 1px solid #d8d8d8; text-align: center; box-sizing: border-box">
+                <a href="{{ route('lectures.detail',$program->id) }}"
+                   style="display: block; width: 100px; margin: 0 auto; padding: 8px 12px 8px 12px; background-color: #9b00d8; color: #fff; text-decoration: none"
+                >
+                    강의 바로가기
+                </a>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td height="70"></td>
     </tr>

@@ -2,8 +2,8 @@
 
 namespace App\Mail;
 
+use App\Models\Program\Program;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -13,14 +13,25 @@ class Lecture extends Mailable
 
     private $title;
     private $content;
+    private $program;
+
 
     /**
-     * Create a new message instance.
+     *  Create a new message instance.
      *
-     * @return void
+     * @param $title
+     * @param $content
+     * @param Program|int $program
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __construct($title, $content)
+    public function __construct($title, $content, $program)
     {
+        if ($program instanceof Program) {
+            $this->program = $program;
+        } else {
+            $this->program = Program::query()->find($program);
+        }
+
         $this->title = $title;
         $this->content = $content;
     }
@@ -36,7 +47,8 @@ class Lecture extends Mailable
             ->subject($this->title)
             ->view('emails.content')
             ->with([
-                'content' => $this->content
+                'content' => $this->content,
+                'program' => $this->program,
             ]);
     }
 }

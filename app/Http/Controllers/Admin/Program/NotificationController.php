@@ -46,13 +46,14 @@ class NotificationController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string',
             'message' => 'required|string',
-            'email' => 'required|array'
+            'email' => 'required|array',
+            'program_id' => 'required|numeric'
         ]);
 
 
         try {
             Mail::to('do-not-reply@dentalbrain.co.kr')
-                ->bcc($validatedData['email'])->send(new Lecture($validatedData['title'], $validatedData['message']));
+                ->bcc($validatedData['email'])->send(new Lecture($validatedData['title'], $validatedData['message'], $validatedData['program_id']));
 
             return response()->json(['success' => true, 'msg' => '이메일 발신되었습니다.'], 200);
         } catch (\Exception $exception) {
