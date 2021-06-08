@@ -151,6 +151,31 @@ class Program extends Model
         }
     }
 
+    /**
+     * @param ProgramStudent|null $student
+     * @return bool
+     */
+    public function repeatable($student = null)
+    {
+        return $this->repeated($student) || $this->canRepeat($student);
+    }
+
+    public function repeated($student = null): bool
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->is_repeated == true;
+        } else {
+            $user = Auth::user();
+            return $user->students()
+                ->where('program_id', '=', $this->id)
+                ->where('is_repeated', '=', true)
+                ->exists();
+        }
+    }
+
     public function canRepeat($student = null): bool
     {
         if ($this->is_online == false) {
@@ -169,22 +194,6 @@ class Program extends Model
                 ->where('program_id', '=', $this->id)
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->where('expired_at', '<', now())
-                ->exists();
-        }
-    }
-
-    public function repeated($student = null): bool
-    {
-        if (Auth::guest()) {
-            return false;
-        }
-        if ($student != null) {
-            return $student->is_repeated == true;
-        } else {
-            $user = Auth::user();
-            return $user->students()
-                ->where('program_id', '=', $this->id)
-                ->where('is_repeated', '=', true)
                 ->exists();
         }
     }
@@ -304,7 +313,6 @@ class Program extends Model
                 ->where('program_id', '=', $this->attributes['id'])
                 ->where('user_id', '=', Auth::id())->exists();
         }
-
     }
 
     public function getRepeatPriceAttribute()
