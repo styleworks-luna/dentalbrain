@@ -247,7 +247,8 @@ export default {
 
                 this.is_open = program.is_open;
 
-                this.lecture_info = program.description;
+                this.lecture_info = program.description
+
                 this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
 
