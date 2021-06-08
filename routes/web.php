@@ -56,11 +56,6 @@ if (env('APP_ENV') != 'production') {
 
         // 테스팅 계정 생성
         Route::get('register', 'Test\TestController@showRegistrationForm');
-
-        Route::view('email', 'emails.content', [
-            'program' => \App\Models\Program\Program::query()->find(14),
-            'content' => '컨텐츠',
-        ]);
     });
 }
 
