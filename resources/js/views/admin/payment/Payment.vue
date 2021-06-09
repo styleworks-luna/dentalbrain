@@ -3,6 +3,11 @@
         <template v-slot:search>
             <div class="float-right">
                 <form @submit.prevent="getData">
+                    <label class="col-form-label d-block float-left mr-1">시작일</label>
+                    <date-picker class="mr-3" @setTime="handleSetStartDate"></date-picker>
+                    <p class="float-left mr-2 mt-2">~</p>
+                    <label class="col-form-label d-block float-left mr-1">종료일</label>
+                    <date-picker class="mr-3" @setTime="handleSetEndDate"></date-picker>
                     <select-box class="form-control"
                                 text="구분 선택"
                                 :value="order"
@@ -185,6 +190,7 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+import DatePicker from '@/components/common/DatePicker.vue'
 
 //api
 import {getData} from '@/api/admin/payment/Payment.js'
@@ -202,6 +208,7 @@ export default {
     components: {
         'table-grid': Table,
         SelectBox,
+        DatePicker,
     },
     data() {
         return {
@@ -213,6 +220,8 @@ export default {
             order: '',
             keyword: '',
             orderStatus: '',
+            startDate: '',
+            endDate: '',
         }
     },
     mounted() {
@@ -357,6 +366,12 @@ export default {
         },
         handleSetStatusOrder(order) {
             this.orderStatus = order;
+        },
+        handleSetStartDate(date) {
+            this.startDate = date;
+        },
+        handleSetEndDate(date) {
+            this.endDate = date;
         },
     }
 }
