@@ -8,7 +8,6 @@ use App\Models\Program\Survey\SurveyAnswer;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromView;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
 class StudentExport implements FromView
 {
@@ -33,7 +32,8 @@ class StudentExport implements FromView
             ->orderBy('id')
             ->withCount('choices')
             ->get();
-        $students = ProgramStudent::query()->where('program_id', '=', $this->program->id)->get();
+        $students = ProgramStudent::query()->where('program_id', '=', $this->program->id)
+            ->with('user')->get();
         $surveyAnswers = SurveyAnswer::query()->whereIn('survey_id', $surveys->pluck('id'))->get();
         return view('excels.students', [
             'surveys' => $surveys,
