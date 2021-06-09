@@ -16,6 +16,10 @@ class Payment extends Model
 {
     use SoftDeletes;
 
+    static $ANOTHER_DONE = 'ANOTHER_DONE';
+    static $ANOTHER_REJECTED = 'ANOTHER_REJECTED';
+    static $ANOTHER_PROGRESS = 'ANOTHER_PROGRESS';
+
     protected $table = 'payments';
     protected $casts = [
         'requestedAt' => 'datetime',
@@ -126,7 +130,7 @@ class Payment extends Model
             'orderId' => $orderId,
             'totalAmount' => $price,
             'method' => '계좌입금',
-            'status' => 'ANOTHER_PROGRESS',
+            'status' => self::$ANOTHER_PROGRESS,
             'useDiscount' => 0,
             'full_response' => json_encode([
                 'mId' => 'si_dentalbrain',
@@ -172,14 +176,14 @@ class Payment extends Model
     {
         return $this->update([
             'approvedAt' => now(),
-            'status' => 'ANOTHER_DONE',
+            'status' => self::$ANOTHER_DONE,
         ]);
     }
 
     public function cancelAnotherPay()
     {
         return $this->update([
-            'status' => 'ANOTHER_REJECTED',
+            'status' => self::$ANOTHER_REJECTED,
             'full_response' => json_encode(
                 array_merge(
                     json_decode($this->attributes['full_response'], true) ?: [],
@@ -199,7 +203,7 @@ class Payment extends Model
     {
         return $this->update([
             'approvedAt' => null,
-            'status' => 'ANOTHER_PROGRESS'
+            'status' => self::$ANOTHER_PROGRESS
         ]);
     }
 
@@ -221,5 +225,10 @@ class Payment extends Model
     public function isTransfer()
     {
         return $this->attributes['method'] == '계좌이체';
+    }
+
+    public function membership()
+    {
+        return $this->hasOne(Membership::class, 'payment_id', 'id');
     }
 }

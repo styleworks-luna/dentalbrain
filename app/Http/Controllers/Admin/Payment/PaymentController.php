@@ -38,12 +38,24 @@ class PaymentController extends Controller
             });
 
 
-        if (isset($request->is_online)) {
-            $payments->where('programs.is_online', '=', $request->is_online);
+        if (isset($request->category)) {
+            if ($request->category == '온라인') {
+                $payments->where('programs.is_online', '=', 1);
+            } elseif ($request->category == '오프라인') {
+                $payments->where('programs.is_online', '=', 0);
+            } elseif ($request->category == '유료회원') {
+                $payments->whereHas('membership');
+            }
         }
 
         if (isset($request->status)) {
-            $payments->where('payments.status', '=', $request->status);
+            if ($request->status == 'DONE') {
+                $payments->where('payments.status', '=', $request->status)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+            } elseif ($request->status == 'CANCELED') {
+                $payments->where('payments.status', '=', $request->status)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+            }
         }
 
         if (isset($request->keyword)) {
@@ -53,6 +65,14 @@ class PaymentController extends Controller
                     ->orWhere('users.email', 'like', '%' . $request->keyword . '%')
                     ->orWhere('payments.totalAmount', '=', $request->keyword);
             });
+        }
+
+        if (isset($request->start_date)) {
+            $payments->where('payments.requestedAt', '>', $request->start_date);
+        }
+
+        if (isset($request->end_date)) {
+            $payments->where('payments.requestedAt', '<', $request->end_date);
         }
 
         return response()->json([

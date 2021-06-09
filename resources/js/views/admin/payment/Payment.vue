@@ -280,13 +280,17 @@ export default {
         orderOptions() {
             return [
                 {
-                    id: '1',
+                    id: '오프라인',
+                    name: '오프라인'
+                },
+                {
+                    id: '온라인',
                     name: '온라인'
                 },
                 {
-                    id: '0',
-                    name: '오프라인'
-                },
+                    id: '유료회원',
+                    name: '유료회원'
+                }
             ]
         },
         orderStatusOptions() {
@@ -311,10 +315,13 @@ export default {
 
             let params = {
                 page: page,
-                is_online: this.order,
+                category: this.order,
                 keyword: this.keyword,
+                start_date: this.startDate ? this.Helper.dateFormatYDM(this.startDate) + ' 00:00:00' : '',
+                end_date: this.endDate ? this.Helper.dateFormatYDM(this.endDate) + ' 23:59:59' : '',
                 status: this.orderStatus,
             };
+            console.log(params);
 
             getData(params).then(res => {
                 this.payments = res.data.payments;
