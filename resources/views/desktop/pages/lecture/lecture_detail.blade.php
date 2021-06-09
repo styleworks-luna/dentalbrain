@@ -77,8 +77,8 @@
                                     </tr>
                                     <tr>
                                         <th>유료회원가</th>
-                                        <td class="lecture-price" data-price="{{ 987654321 }}">
-                                            {{ number_format($program->membership_price).'원' }}
+                                        <td class="lecture-price" data-price="{{ $program->membership_price }}">
+                                            {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
                                         </td>
                                     </tr>
                                 @else
@@ -96,8 +96,9 @@
                                             {{-- 유료회원 + 재수강 --}}
                                             <tr>
                                                 <th>유료회원가</th>
-                                                <td class="lecture-price" data-price="{{ $student->getPrice($program) }}">
-                                                    {{ '재수강 할인가 ' . number_format($student->getPrice($program)) }}
+                                                <td class="lecture-price"
+                                                    data-price="{{ $student->getPrice() }}">
+                                                    {{ $program->membership_is_free ? '무료' : '재수강 할인가 ' . number_format($student->getPrice()) }}
                                                 </td>
                                             </tr>
                                         @else
@@ -105,7 +106,7 @@
                                             <tr>
                                                 <th>유료회원가</th>
                                                 <td class="lecture-price" data-price="{{ $program->membership_price }}">
-                                                    {{ number_format($program->membership_price).'원' }}
+                                                    {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
                                                 </td>
                                             </tr>
                                         @endif
@@ -116,14 +117,14 @@
                                             <tr>
                                                 <th class="exclude-price">결제금액</th>
                                                 <td class="lecture-price lecture-exclude-price"
-                                                    data-price="{{ $program->price }}">
+                                                    data-price="{{ $program->repeat_price }}">
                                                     {{ $program->is_free ? '무료' : '재수강 할인가 ' . number_format($program->repeat_price).'원'}}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>유료회원가</th>
-                                                <td class="lecture-price" data-price="{{ 123456789 }}">
-                                                    {{ '재수강 할인가 ' . number_format($student->getPrice($program)).'원' }}
+                                                <td class="lecture-price" data-price="{{ $student->getPrice() }}">
+                                                    {{ $program->membership_is_free ? '무료' :'재수강 할인가 ' . number_format($student->getPrice()).'원' }}
                                                 </td>
                                             </tr>
                                         @else
@@ -137,8 +138,8 @@
                                             </tr>
                                             <tr>
                                                 <th>유료회원가</th>
-                                                <td class="lecture-price" data-price="{{ 987654321 }}">
-                                                    {{ $program->membership_price }}
+                                                <td class="lecture-price" data-price="{{ $program->membership_price }}">
+                                                    {{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원' }}
                                                 </td>
                                             </tr>
                                         @endif

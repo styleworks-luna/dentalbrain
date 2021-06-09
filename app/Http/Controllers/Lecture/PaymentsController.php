@@ -92,12 +92,15 @@ class PaymentsController extends Controller
 
         $surveys = Survey::result($program->id)->get();
 
+        $price = $program->getUserSpecificPrice();
+
         // 새로고침 가능 하게끔.
         session()->flash('fromApply', true);
 
         return view(viewPrefix() . 'pages.lecture.lecture_payment', [
             'program' => $program,
             'surveys' => $surveys,
+            'price' => $price,
         ]);
     }
 

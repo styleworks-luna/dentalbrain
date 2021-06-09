@@ -74,7 +74,7 @@ class ProgramStudent extends Model
      */
     public static function updateOrCreateWhenApplySuccess(Program $program)
     {
-        if ($program->is_free) {
+        if ($program->getUserSpecificFree()) {
             return ProgramStudent::updateOrCreate([
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),
@@ -213,22 +213,8 @@ class ProgramStudent extends Model
      *
      * @return string
      */
-    public function getPrice(Program $program = null)
+    public function getPrice()
     {
-        if ($program == null) {
-            $program = $this->program;
-        }
-
-        if ($this->user->hasMembership) {
-            $price = $program->membership_price;
-        } else {
-            $price = $program->price;
-        }
-
-        if ($program->repeatable($this)) {
-            return Program::discountPrice($price);
-        } else {
-            return Program::discountPrice($price);
-        }
+        $this->program->getUserSpecificPrice(Auth::user());
     }
 }

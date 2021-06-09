@@ -80,9 +80,11 @@ class Survey extends Model
     {
         return $query->with(['choices',
             'answers' => function ($query) {
-                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at')
+                    ->with('file');
             }, 'answer' => function ($query) {
-                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at');
+                $query->where('user_id', '=', Auth::id())->whereNull('deleted_at')
+                ->with('file');
             }])
             ->where('program_id', '=', $programId)
             ->whereNull('parent_id')

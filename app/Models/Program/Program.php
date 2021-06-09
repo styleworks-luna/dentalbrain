@@ -5,6 +5,8 @@ namespace App\Models\Program;
 use App\Models\File;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -35,9 +37,6 @@ class Program extends Model
         'is_open' => 'boolean',
     ];
 
-    /*
-     * ======= Custom Functions =========
-     */
 
     public function canOnlineRefund()
     {
@@ -151,6 +150,75 @@ class Program extends Model
         }
     }
 
+    public function exceedCapacity()
+    {
+        return $this->place->capacity <= $this->students()
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
+                ->count();
+    }
+
+    public function students()
+    {
+        return $this->hasMany(ProgramStudent::class, 'program_id', 'id');
+    }
+
+    /**
+     * 오프라인 전용. 환불 요청 할 수 있는지 확인함.
+     * @return bool
+     */
+    public function canRequestRefund()
+    {
+        return $this->place()->where('started_at', '>', now()->addDay())
+            ->where('started_at', '<', now()->addDays(2))
+            ->exists();
+    }
+
+    public function place()
+    {
+        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
+    }
+
+    /**
+     *  유저가 지불해야할 금액 가져옴.
+     *
+     * @param User|Authenticatable|null $user
+     * @return float|int
+     */
+    public function getUserSpecificPrice($user = null)
+    {
+        if ($user == null) {
+            $user = Auth::user();
+        }
+
+        // 유료회원 가격 적용.
+        if ($user->hasMembership) {
+            if ($this->membership_is_free) {
+                return 0;
+            }
+            $price = $this->membership_price;
+        } else {
+            if ($this->is_free) {
+                return 0;
+            }
+            $price = $this->price;
+        }
+
+        /** @var ProgramStudent $student */
+        $student = $this->students()->where('user_id', '=', $user->id)->first();
+        if ($student) {
+            // 신청한 적이 있는 경우
+            if ($this->repeatable($student)) {
+                // 재수강일 경우.
+                return self::discountPrice($price);
+            } else {
+                return $price;
+            }
+        } else {
+            // 신청한 적이 없는 경우
+            return $price;
+        }
+    }
+
     /**
      * @param ProgramStudent|null $student
      * @return bool
@@ -198,46 +266,38 @@ class Program extends Model
         }
     }
 
-    public function exceedCapacity()
-    {
-        return $this->place->capacity <= $this->students()
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
-                ->count();
-    }
-
-    /*
-     * ======= Define Relationships =========
-     */
-
-    public function students()
-    {
-        return $this->hasMany(ProgramStudent::class, 'program_id', 'id');
-    }
-
     /**
-     * 오프라인 전용. 환불 요청 할 수 있는지 확인함.
-     * @return bool
+     * 재수강 가격 할인율 적용
+     *
+     * @param $price
+     * @return int
      */
-    public function canRequestRefund()
+    public static function discountPrice($price): int
     {
-        return $this->place()->where('started_at', '>', now()->addDay())
-            ->where('started_at', '<', now()->addDays(2))
-            ->exists();
+        return (int)($price * 7 / 10);
     }
 
-    public function place()
+    public function getUserSpecificFree(): bool
     {
-        return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
+        $user = Auth::user();
+
+        // 유료회원 가격 적용.
+        if ($user->hasMembership) {
+            if ($this->membership_is_free) {
+                return true;
+            }
+            return false;
+        } else {
+            if ($this->is_free) {
+                return true;
+            }
+            return false;
+        }
     }
 
     public function majorCategory()
     {
         return $this->belongsTo(ProgramMajorCategory::class, 'major_category_id');
-    }
-
-    public function minorCategory()
-    {
-        return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
     public function comments()
@@ -278,17 +338,19 @@ class Program extends Model
             'id', 'id');
     }
 
-
-    /*
-     * ======= Define Appended Attributes =========
-     */
-
     public function getMajorCategoryNameAttribute()
     {
-        if (isset($this->attributes['major_category_id']))
+        if ($this->minorCategory) {
+            return $this->minorCategory->name;
+        } elseif (isset($this->attributes['major_category_id']))
             return ProgramMajorCategory::find($this->attributes['major_category_id'])->name;
         else
             return null;
+    }
+
+    public function minorCategory()
+    {
+        return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
     public function getMinorCategoryNameAttribute()
@@ -321,14 +383,6 @@ class Program extends Model
         return self::discountPrice($price);
     }
 
-    public static function discountPrice($price)
-    {
-        return $price * 7 / 10;
-    }
-
-    /*
-     * ============== Scope ==============
-     */
     public function scopeMain(Builder $query)
     {
         return $query->select(['id', 'thumbnail_id'])

@@ -77,22 +77,22 @@
                         <table>
                             <tr>
                                 <th>이름</th>
-                                <td><em>{{ auth()->user()->name }}</em></td>
+                                <td><em>{{ $user->name }}</em></td>
                             </tr>
                             <tr>
                                 <th>아이디</th>
-                                <td><em>{{ auth()->user()->login_id }}</em></td>
+                                <td><em>{{ $user->login_id }}</em></td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
                                 <td>
-                                    <em>{{ auth()->user()->email }}</em>
+                                    <em>{{ $user->email }}</em>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대전화</th>
                                 <td>
-                                    <em>{{ auth()->user()->phone }}</em>
+                                    <em>{{ $user->phone }}</em>
                                 </td>
                             </tr>
                         </table>
@@ -261,16 +261,15 @@
                         <table>
                             <tr>
                                 <th>결제금액</th>
-                                @if ($program->canRepeat())
+                                @if ($program->repeatable())
                                     <td>
-                                        <em>{{ $program->is_free ? '무료' : '재수강 할인가:' . number_format($program->repeat_price).'원' }}</em>
+                                        <em>{{ $price == 0 ? '무료' : '재수강 할인가:' . number_format($price).'원' }}</em>
                                     </td>
                                 @else
                                     <td>
-                                        <em>{{ $program->is_free ? '무료' : number_format($program->price).'원' }}</em>
+                                        <em>{{ $price == 0? '무료' : number_format($price).'원' }}</em>
                                     </td>
                                 @endif
-
                             </tr>
                         </table>
                     </section>
