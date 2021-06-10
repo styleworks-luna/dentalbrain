@@ -1,7 +1,7 @@
 <template>
     <layout title="유료 회원정보 목록">
         <template v-slot:button>
-            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDate}&end_date=${endDate}&status=${orderStatus}&category=${order}`"
+            <a :href="`/api/admin/payment/export?keyword=${keyword}&is_paid=${member}&job_name_id=${job_name_id}&page=${page}`"
                class="btn btn-info" download>엑셀 다운로드</a>
         </template>
         <template v-slot:search>
