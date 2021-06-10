@@ -13,6 +13,7 @@ use App\Models\UserJob;
 use App\Models\UserJobName;
 use App\Services\Membership\MembershipService;
 use App\Services\Search\SearchService;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -168,6 +169,11 @@ class UserController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param User|Authenticatable $user
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     private function getUpdateValidator(Request $request, $user): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($request->all(), [

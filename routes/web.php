@@ -289,7 +289,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //user 업데이트 함수
             Route::put('{user}', 'Admin\User\UserController@update')->name('update');
             //user 직업 모두 가져오는 데이터
-            Route::get('category', 'Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
+            Route::get('category', [\App\Http\Controllers\Admin\User\UserController::class, 'getUserJobNameCategory'])->name('getUserJobNameCategory');
             // user 검색 데이터
             Route::post('search', 'Admin\User\UserController@search')->name('search');
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
