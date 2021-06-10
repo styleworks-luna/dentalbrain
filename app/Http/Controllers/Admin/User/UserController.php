@@ -33,20 +33,20 @@ class UserController
     {
         $queryBase = User::query();
 
-        $active = (clone $queryBase)->with('memberships')
+        $paid = (clone $queryBase)->with('memberships')
             ->whereHas('memberships', function ($query) {
                 $query->active();
             })->count();
 
-        $inactive = (clone $queryBase)->with('memberships')
+        $normal = (clone $queryBase)->with('memberships')
             ->whereDoesntHave('memberships', function ($query) {
                 $query->active();
             })->count();
 
         return response()->json([
             'user' => $this->search($request)->paginate(20),
-            'paid' => $active,
-            'normal' => $inactive,
+            'paid' => $paid,
+            'normal' => $normal,
             'total' => $queryBase->count(),
         ]);
     }
