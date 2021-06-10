@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Membership;
 
+use App\Exports\MembershipExport;
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\User;
@@ -9,6 +10,7 @@ use App\Services\Search\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MembershipController extends Controller
 {
@@ -59,5 +61,11 @@ class MembershipController extends Controller
         }
 
         return $result->orderByDesc('id');
+    }
+
+    public function membershipExport(Request $request)
+    {
+        $memberships = $this->search($request)->get();
+        return Excel::download(new MembershipExport($memberships), '결제 정보 엑셀.xlsx');
     }
 }

@@ -8,7 +8,6 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -97,7 +96,7 @@ class PaymentController extends Controller
     {
         $payments = $this->search($request)->get();
 
-        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀.xlsx');
+        return Excel::download(new PaymentExport($payments), '유료 회원 엑셀'.now()->toDateString().'.xlsx');
     }
 
     /**

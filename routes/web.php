@@ -291,6 +291,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
             Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
+
+            Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
