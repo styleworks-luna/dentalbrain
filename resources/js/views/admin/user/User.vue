@@ -184,7 +184,6 @@ export default {
                 this.normal = res.data.normal;
                 this.paid = res.data.paid;
 
-                console.log(res);
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/user/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
