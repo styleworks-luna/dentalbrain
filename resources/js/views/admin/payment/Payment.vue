@@ -324,7 +324,6 @@ export default {
                 end_date: this.endDate ? this.Helper.dateFormatYDM(this.endDate) + ' 23:59:59' : '',
                 status: this.orderStatus,
             };
-            console.log(params);
 
             getData(params).then(res => {
                 this.payments = res.data.payments;
