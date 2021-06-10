@@ -92,10 +92,16 @@ class UserController
         }
     }
 
-    public function notificationList(Request $request)
+    public function emailList(Request $request)
     {
-        return response()->json(
-            $this->search($request)->select('id', 'name', 'phone', 'email')->get());
+        $result = $this->search($request)->get();
+        return response()->json($result);
+    }
+
+    public function smsList(Request $request)
+    {
+        $result = $this->search($request)->get();
+        return response()->json($result);
     }
 
     public function edit(User $user)

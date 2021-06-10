@@ -295,7 +295,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
 
-            Route::get('notification', [\App\Http\Controllers\Admin\User\UserController::class, 'notificationList'])->name('notification.list');
+            Route::get('notification/email', [\App\Http\Controllers\Admin\User\UserController::class, 'emailList'])->name('notification.email');
+            Route::get('notification/sms', [\App\Http\Controllers\Admin\User\UserController::class, 'smsList'])->name('notification.sms');
         });
 
         Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
