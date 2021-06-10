@@ -12,7 +12,7 @@
         </template>
         <template v-slot:search>
             <div class="float-left">
-                <p style="font-size: 18px;">총 회원수: {{ users.data.length }}명 ( 일반회원: {{ basicUserNumber }}명 / 유료회원: {{ membershipUserNumber }}명 )</p>
+                <p style="font-size: 18px;">총 회원수: {{ total }}명 ( 일반회원: {{ normal }}명 / 유료회원: {{ paid }}명 )</p>
             </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
@@ -96,7 +96,10 @@ export default {
             jobOptions: [],
             job_name_id: '',
             keyword: '',
-            page: this.$route.params.page || 1
+            page: this.$route.params.page || 1,
+            total: 0,
+            normal: 0,
+            paid: 0,
         }
     },
     mounted() {
@@ -160,18 +163,6 @@ export default {
                 }
             ]
         },
-        basicUserNumber() {
-            var result, count = 0 ;
-            result = this.users.data.filter(res => !res.has_membership);
-            count = result.length;
-            return count;
-        },
-        membershipUserNumber() {
-            var result, count = 0 ;
-            result = this.users.data.filter(res => res.has_membership);
-            count = result.length;
-            return count;
-        }
     },
     methods: {
         getData(page = this.page) {
@@ -189,6 +180,11 @@ export default {
 
             User.getData(params).then(res => {
                 this.users = res.data.user;
+                this.total = res.data.total;
+                this.normal = res.data.normal;
+                this.paid = res.data.paid;
+
+                console.log(res);
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/user/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
