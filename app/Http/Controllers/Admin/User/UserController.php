@@ -25,7 +25,7 @@ class UserController
 
     public function __construct()
     {
-        $this->searchService = new SearchService(User::query()->with('memberships', 'job'));
+        $this->searchService = new SearchService(User::query());
     }
 
     public function index(Request $request)
@@ -56,8 +56,6 @@ class UserController
         $keyword = $request->input('keyword', null);
         $hasMembership = $request->input('is_paid', null);
         $job = $request->input('job_name_id', null);
-
-        logger([$keyword, $hasMembership, $job]);
 
         $this->setJoin($job);
 
@@ -92,6 +90,12 @@ class UserController
         if (isset($jobNameId) && is_numeric($jobNameId)) {
             $this->searchService->setJoinModel('job')->addJoinOption('job_name_id', '=', $jobNameId)->join();
         }
+    }
+
+    public function notificationList(Request $request)
+    {
+        return response()->json(
+            $this->search($request)->select('id', 'name', 'phone', 'email')->get());
     }
 
     public function edit(User $user)
