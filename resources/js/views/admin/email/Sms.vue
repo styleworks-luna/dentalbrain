@@ -18,9 +18,9 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" @click="(event) => checkStudent(event, student.user.phone)">
-                                    <span class="name">{{ student.user.name }},</span>
-                                    <span class="phone">{{ student.user.phone }}</span>
+                                    <input type="checkbox" @click="(event) => checkStudent(event, student.phone)">
+                                    <span class="name">{{ student.name }},</span>
+                                    <span class="phone">{{ student.phone }}</span>
                                 </label>
                             </li>
                         </ul>
@@ -111,6 +111,18 @@ export default {
                 SMS.getData(this.id).then(res => {
                     this.students = res.data.students;
                 })
+            } else if (this.sort == 'user') {
+                let params = {
+                    page: this.page,
+                    keyword: this.keyword,
+                    job_name_id: this.job_name_id,
+                    member: this.member,
+                };
+                SMS.getUserData(params).then(res => {
+                    this.students = res.data;
+                }).catch(err => {
+                    this.students = [];
+                });
             }
         },
         checkStudent(event, data) {
@@ -162,10 +174,8 @@ export default {
             }
 
             this.students.push({
-                user: {
-                    name: inputName,
-                    phone: inputPhone
-                },
+                name: inputName,
+                phone: inputPhone
             });
 
             document.getElementById('name').value = '';

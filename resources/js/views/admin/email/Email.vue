@@ -18,7 +18,7 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" @click="(event) => checkStudent(event, student.user.email)">
+                                    <input type="checkbox" @click="(event) => checkStudent(event, student.email)">
                                     <span class="name">{{ student.name }},</span>
                                     <span class="email">{{ student.email }}</span>
                                 </label>
@@ -179,10 +179,8 @@ export default {
             }
 
             this.students.push({
-                user: {
-                    name: inputName,
-                    email: inputEmail
-                },
+                name: inputName,
+                email: inputEmail
             });
 
             document.getElementById('name').value = '';

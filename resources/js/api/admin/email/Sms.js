@@ -8,6 +8,13 @@ export default {
             params: value
         });
     },
+    getUserData(params) {
+        return Send({
+            url: `/api/admin/user/notification/sms`,
+            method: 'get',
+            params: params,
+        });
+    },
     update(data) {
         return Send({
             url: '/api/admin/lecture/notification/sms',
