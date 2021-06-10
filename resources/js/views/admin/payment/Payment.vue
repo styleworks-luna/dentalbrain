@@ -5,6 +5,9 @@
                class="btn btn-info" download>엑셀 다운로드</a>
         </template>
         <template v-slot:search>
+            <div class="float-left">
+                <p style="font-size: 18px;">총 결제건수: {{ count }}건, 총 결제금액: {{ sum }}원 </p>
+            </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <label class="col-form-label d-block float-left mr-1">시작일</label>
@@ -226,6 +229,8 @@ export default {
             orderStatus: '',
             startDate: '',
             endDate: '',
+            count: 0,
+            sum: '',
         }
     },
     mounted() {
@@ -328,6 +333,10 @@ export default {
 
             getData(params).then(res => {
                 this.payments = res.data.payments;
+
+                this.count = res.data.count;
+                this.sum = res.data.sum;
+
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/payment/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
