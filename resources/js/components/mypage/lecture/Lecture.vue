@@ -4,19 +4,32 @@
             <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
             <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
             <template v-else>
-                <lecture-like-list :listData="likeList.programs"></lecture-like-list>
+                <lecture-like-list :listData="likeList.data"></lecture-like-list>
             </template>
         </div>
 
         <template v-if="!mobile">
-            <div class="paging-wrap">
-                <nav>
-                    <pagination :data="list" :limit=3 @pagination-change-page="getData">
-                        <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
-                        <span slot="next-nav" class="next-nav ir_pm">next</span>
-                    </pagination>
-                </nav>
-            </div>
+            <template v-if="!like">
+                <div class="paging-wrap">
+                    <nav>
+                        <pagination :data="list" :limit=3 @pagination-change-page="getData">
+                            <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                            <span slot="next-nav" class="next-nav ir_pm">next</span>
+                        </pagination>
+                    </nav>
+                </div>
+            </template>
+            <template v-else>
+                <div class="paging-wrap">
+                    <nav>
+                        <pagination :data="likeList" :limit=3 @pagination-change-page="getLikeData">
+                            <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                            <span slot="next-nav" class="next-nav ir_pm">next</span>
+                        </pagination>
+                    </nav>
+                </div>
+            </template>
+
         </template>
 
         <template v-else>

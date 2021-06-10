@@ -113,6 +113,9 @@
                         <li class="payment-none">결제내역이 없습니다.</li>
                     @endforelse
                 </ul>
+                <div class="paging-wrap">
+                    {{ $payments->links() }}
+                </div>
             </section>
         </div>
     </section>

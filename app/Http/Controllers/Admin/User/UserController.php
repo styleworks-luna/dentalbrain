@@ -13,6 +13,7 @@ use App\Models\UserJob;
 use App\Models\UserJobName;
 use App\Services\Membership\MembershipService;
 use App\Services\Search\SearchService;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -21,21 +22,32 @@ use Illuminate\Validation\Rule;
 
 class UserController
 {
-    private $search;
+    private $searchService;
 
     public function __construct()
     {
-        $this->search = new SearchService(User::query());
+        $this->searchService = new SearchService(User::query());
     }
 
     public function index(Request $request)
     {
-        $users = User::query()->get()->where('hasMembership', true)->count();
+        $queryBase = User::query();
+
+        $active = (clone $queryBase)->with('memberships')
+            ->whereHas('memberships', function ($query) {
+                $query->active();
+            })->count();
+
+        $inactive = (clone $queryBase)->with('memberships')
+            ->whereDoesntHave('memberships', function ($query) {
+                $query->active();
+            })->count();
 
         return response()->json([
-            'user' => $this->search($request)->paginate('20'),
-            'paid' => $users,
-            'normal' => User::query()->count() - $users,
+            'user' => $this->search($request)->paginate(20),
+            'paid' => $active,
+            'normal' => $inactive,
+            'total' => $queryBase->count(),
         ]);
     }
 
@@ -45,26 +57,55 @@ class UserController
      */
     private function search(Request $request)
     {
-        $this->setJoin($request->input('job_name_id'));
+        $keyword = $request->input('keyword', null);
+        $hasMembership = $request->input('is_paid', null);
+        $job = $request->input('job_name_id', null);
 
-        $this->search
-            ->addKeyword('login_id', $request->keyword)
-            ->addKeyword('name', $request->keyword)
-            ->addKeyword('phone', $request->keyword)
-            ->addKeyword('email', $request->keyword);
+        $this->setJoin($job);
 
-        $result = $this->search->search()
-            ->whereHas('memberships', function ($query) {
-                $query->where('expired_at', '>', now());
-            })->orderBy('id', 'desc');
-        return $result;
+        $this->searchService
+            ->addKeyword('login_id', $keyword)
+            ->addKeyword('name', $keyword)
+            ->addKeyword('phone', $keyword)
+            ->addKeyword('email', $keyword);
+
+        $result = $this->searchService->search();
+
+        if ($hasMembership !== null) {
+            // (null == 0) 이 true이므로 한번 걸러냄.
+            if ($hasMembership == 1) {
+                //유료 회원
+                $result = $result->whereHas('memberships', function ($query) {
+                    $query->active();
+                });
+            } elseif ($hasMembership == 0) {
+                //일반 회원
+                $result = $result->whereDoesntHave('memberships', function ($query) {
+                    $query->active();
+                });
+            }
+        }
+
+        return $result->orderBy('id', 'desc');
     }
 
     private function setJoin($jobNameId)
     {
         if (isset($jobNameId) && is_numeric($jobNameId)) {
-            $this->search->setJoinModel('job')->addJoinOption('job_name_id', '=', $jobNameId)->join();
+            $this->searchService->setJoinModel('job')->addJoinOption('job_name_id', '=', $jobNameId)->join();
         }
+    }
+
+    public function emailList(Request $request)
+    {
+        $result = $this->search($request)->get();
+        return response()->json($result);
+    }
+
+    public function smsList(Request $request)
+    {
+        $result = $this->search($request)->get();
+        return response()->json($result);
     }
 
     public function edit(User $user)
@@ -88,26 +129,7 @@ class UserController
 
     public function update(Request $request, User $user)
     {
-        $v = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => ['required', 'string', 'email', 'max:255',
-                Rule::unique('users', 'email')->whereNull('deleted_at')->ignore($user->id)],
-            'phone' => ['required',
-                Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore($user->id)],
-            'job_name_id' => ['required', 'min:1', 'max:6'],
-            'allow_email' => ['nullable', 'boolean'],
-        ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
-            // 직업군에 따라 면허번호 필요 여부 다르므로.
-            return UserJobName::find($input->job_name_id)->need_license == true;
-        })->sometimes(['membership_started_at'], ['required', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
-            function ($input) use ($user) {
-                return $user->availableMembershipsBuilder()->exists();
-            }
-        )->sometimes(['membership_expired_at'], ['required', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
-            function ($input) use ($user) {
-                return $user->availableMembershipsBuilder()->exists();
-            }
-        );
+        $v = $this->getUpdateValidator($request, $user);
 
         $data = $v->validate();
         $license_num = $data['license_num'] ?? null;
@@ -148,6 +170,35 @@ class UserController
             'success' => true,
             'msg' => '성공하였습니다.'
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param User|Authenticatable $user
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    private function getUpdateValidator(Request $request, $user): \Illuminate\Contracts\Validation\Validator
+    {
+        return Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255',
+                Rule::unique('users', 'email')->whereNull('deleted_at')->ignore($user->id)],
+            'phone' => ['required',
+                Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore($user->id)],
+            'job_name_id' => ['required', 'min:1', 'max:6'],
+            'allow_email' => ['nullable', 'boolean'],
+        ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
+            // 직업군에 따라 면허번호 필요 여부 다르므로.
+            return UserJobName::find($input->job_name_id)->need_license == true;
+        })->sometimes(['membership_started_at'], ['required', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
+            function ($input) use ($user) {
+                return $user->availableMembershipsBuilder()->exists();
+            }
+        )->sometimes(['membership_expired_at'], ['required', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
+            function ($input) use ($user) {
+                return $user->availableMembershipsBuilder()->exists();
+            }
+        );
     }
 
     public function getUserJobNameCategory()

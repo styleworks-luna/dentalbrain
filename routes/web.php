@@ -133,7 +133,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
-        Route::get('/', 'Lecture\DetailController@detail')->name('detail');
+        Route::get('/', [\App\Http\Controllers\Lecture\DetailController::class, 'detail'])->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼
@@ -266,10 +266,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
-            Route::post('file', 'Admin\FileController@uploadFile')->name('file');
-            Route::post('image', 'Admin\FileController@uploadImage')->name('image');
+            Route::post('file', [\App\Http\Controllers\Admin\FileController::class, 'uploadFile'])->name('file');
+            Route::post('image', [\App\Http\Controllers\Admin\FileController::class, 'uploadImage'])->name('image');
         });
-        Route::get('download/{file}', 'Admin\FileController@download')->name('download');
+        Route::get('download/{file}', [\App\Http\Controllers\Admin\FileController::class, 'download'])->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             //user index 페이지 데이터
@@ -279,11 +279,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //user 업데이트 함수
             Route::put('{user}', 'Admin\User\UserController@update')->name('update');
             //user 직업 모두 가져오는 데이터
-            Route::get('category', 'Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
+            Route::get('category', [\App\Http\Controllers\Admin\User\UserController::class, 'getUserJobNameCategory'])->name('getUserJobNameCategory');
             // user 검색 데이터
             Route::post('search', 'Admin\User\UserController@search')->name('search');
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
+
+            Route::get('notification/email', [\App\Http\Controllers\Admin\User\UserController::class, 'emailList'])->name('notification.email');
+            Route::get('notification/sms', [\App\Http\Controllers\Admin\User\UserController::class, 'smsList'])->name('notification.sms');
         });
 
         Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
@@ -294,7 +297,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'getCategories'])->name('categories');
             // 강의 상세 내용 이미지 업로드
-            Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
+            Route::post('upload', [\App\Http\Controllers\Admin\FileController::class, 'uploadProgramDetailImage'])->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
@@ -422,6 +425,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
+                // 검색
+                Route::post('search', 'Admin\NoticeController@search')->name('search');
+                // 공지사항 이미지 파일 업로드
+                Route::post('upload/image', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeImage'])->name('upload.image');
+                // 공지사항 파일 업로드
+                Route::post('upload/file', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeFile'])->name('upload.file');
                 //공지사항 index 페이지 데이터
                 Route::get('/', 'Admin\NoticeController@index')->name('index');
                 // 공지사항 생성 함수
@@ -434,8 +443,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
-
-                Route::post('search', 'Admin\NoticeController@search')->name('search');
             });
 
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {

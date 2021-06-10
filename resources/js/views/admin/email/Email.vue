@@ -18,9 +18,9 @@
                         <ul class="user-list">
                             <li v-for="student in students">
                                 <label>
-                                    <input type="checkbox" @click="(event) => checkStudent(event, student.user.email)">
-                                    <span class="name">{{ student.user.name }},</span>
-                                    <span class="email">{{ student.user.email }}</span>
+                                    <input type="checkbox" @click="(event) => checkStudent(event, student.email)">
+                                    <span class="name">{{ student.name }},</span>
+                                    <span class="email">{{ student.email }}</span>
                                 </label>
                             </li>
                         </ul>
@@ -44,7 +44,8 @@
 
                 <div class="input-wrap overflow-hidden">
                     <label for="title" class="float-left">제목 :</label>
-                    <input type="text" id="title" class="form-control w-75 float-left" placeholder="제목 입력" v-model="title">
+                    <input type="text" id="title" class="form-control w-75 float-left" placeholder="제목 입력"
+                           v-model="title">
                 </div>
 
                 <div class="editor-wrap">
@@ -89,19 +90,45 @@ export default {
             title: '',
             email: [],
             showModal: false,
+            sort: '',
+            keyword: '',
+            job_name_id: '',
+            member: '',
+            page: '',
         }
     },
     created() {
         this.id = this.$route.params.id;
+        this.sort = this.$route.params.sort;
+        if (this.sort == 'user') {
+            this.keyword = this.$route.query.keyword;
+            this.job_name_id = this.$route.query.job_name_id;
+            this.member = this.$route.query.member;
+            this.page = this.$route.query.page;
+        }
     },
     mounted() {
         this.getData();
     },
     methods: {
         getData() {
-            Email.getData(this.id).then(res => {
-                this.students = res.data.students;
-            })
+            if (this.sort == 'program') {
+                Email.getData(this.id).then(res => {
+                    this.students = res.data;
+                })
+            } else if (this.sort == 'user') {
+                let params = {
+                    page: this.page,
+                    keyword: this.keyword,
+                    job_name_id: this.job_name_id,
+                    member: this.member,
+                };
+                Email.getUserData(params).then(res => {
+                    this.students = res.data;
+                }).catch(err => {
+                    this.students = [];
+                });
+            }
         },
         checkStudent(event, data) {
             if (event.target.checked == true) {
@@ -152,9 +179,7 @@ export default {
             }
 
             this.students.push({
-                user: {
-                    name: inputName
-                },
+                name: inputName,
                 email: inputEmail
             });
 
@@ -170,6 +195,7 @@ export default {
             document.getElementById('btn-send').style.pointerEvents = 'none';
 
             let data = {
+                program_id: this.id,
                 email: this.email,
                 message: this.content,
                 title: this.title,
@@ -178,7 +204,7 @@ export default {
             Email.update(data).then(res => {
                 this.showModal = false;
                 alert(res.data.msg);
-                this.$router.push('/admin/lecture/online');
+                window.location.reload();
             }).catch(err => {
                 this.showModal = false;
                 document.getElementById('btn-send').style.pointerEvents = 'auto';

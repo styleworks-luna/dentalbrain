@@ -105,9 +105,26 @@ class Membership extends Model
         return $this->started_at < now() && now() < $this->expired_at;
     }
 
+    /**
+     *  사용 중 + 사용 전인 유료 회원
+     *
+     * @param $query
+     * @return mixed
+     */
     public function scopeAvailable($query)
     {
         return $query->where('expired_at', '>', now());
+    }
+
+    /**
+     *  사용 중인 유료 회원
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('expired_at', '>', now())->where('started_at', '<', now());
     }
 
     public function user()

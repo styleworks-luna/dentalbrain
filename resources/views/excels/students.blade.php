@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th>번호</th>
+        <th>이름</th>
         <th>아이디</th>
         <th>이메일</th>
         <th>연락처</th>
@@ -24,6 +25,7 @@
     @foreach($students as $student)
         <tr>
             <td>{{ $student->id }}</td>
+            <td>{{ $student->user->name }}</td>
             <td>{{ $student->user->login_id }}</td>
             <td>{{ $student->user->email }}</td>
             <td>{{ $student->user->phone }}</td>

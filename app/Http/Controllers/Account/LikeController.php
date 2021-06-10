@@ -37,15 +37,13 @@ class LikeController extends Controller
             $programs = $programs->where('is_online', '=', 0);
         }
 
-        $programs = $programs->get([
+        $programs = $programs->paginate(10, [
             'programs.id', 'programs.description', 'programs.major_category_id',
             'programs.minor_category_id', 'programs.title',
             'programs.price', 'programs.running_time', 'programs.thumbnail_id',
             'programs.is_online', 'programs.is_free']);
 
 
-        return response()->json([
-            'programs' => $programs
-        ]);
+        return response()->json($programs);
     }
 }
