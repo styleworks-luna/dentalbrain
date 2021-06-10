@@ -1,5 +1,8 @@
 <template>
     <layout title="결제정보">
+        <template v-slot:button>
+            <a :href="`/api/admin/payment/export`" class="btn btn-info" download>엑셀 다운로드</a>
+        </template>
         <template v-slot:search>
             <div class="float-right">
                 <form @submit.prevent="getData">
