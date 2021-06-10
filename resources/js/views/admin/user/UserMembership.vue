@@ -1,5 +1,9 @@
 <template>
     <layout title="유료 회원정보 목록">
+        <template v-slot:button>
+            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDate}&end_date=${endDate}&status=${orderStatus}&category=${order}`"
+               class="btn btn-info" download>엑셀 다운로드</a>
+        </template>
         <template v-slot:search>
             <div class="float-left">
                 <p style="font-size: 18px;">유료회원: {{ memberNum }} 명 (종료된 회원: {{ memberExpiredNum }} 명)</p>
@@ -38,9 +42,10 @@
                     <td>{{ slotProps.row.started_at }}</td>
                     <td>{{ slotProps.row.expired_at }}</td>
                     <td>{{ slotProps.row.payment.method }}</td>
-                    <td> <template v-if="slotProps.row.pay_status === 0">
-                        결제 전
-                    </template>
+                    <td>
+                        <template v-if="slotProps.row.pay_status === 0">
+                            결제 전
+                        </template>
                         <template v-else-if="slotProps.row.pay_status === 1">
                             입금 대기
                         </template>
@@ -74,21 +79,31 @@
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
-                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
+                            <a href="#" class="btn btn-success"
+                               @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 신청 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.student_id)">결제 완료</a>
+                            <a href="#" class="btn btn-secondary"
+                               @click.prevent="revertConfirm(slotProps.row.student_id)">결제 완료</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 결제 취소
                             </a>
-                        </template></td>
-                    <td>{{ Helper.dateCompareWithNow(slotProps.row.started_at) > 0 ? '사용 전'
-                         : Helper.dateCompareWithNow(slotProps.row.expired_at) < 0 ? '사용 후' : '사용 중' }}</td>
+                        </template>
+                    </td>
+                    <td>
+                        <template v-if="slotProps.row.started_at == null || slotProps.row.expired_at == null">
+                            결제전
+                        </template>
+                        <template v-else>
+                            {{ Helper.dateCompareWithNow(slotProps.row.started_at) > 0 ? '사용 전'
+                            : Helper.dateCompareWithNow(slotProps.row.expired_at) < 0 ? '사용 후' : '사용 중' }}
+                        </template>
+                    </td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left">
@@ -130,7 +145,7 @@ import SelectBox from '@/components/common/SelectBox.vue';
 import User from '@/api/admin/user/User.js';
 
 // mixins
-import { PaymentCancelMixin } from '@/mixins/admin/payment/Cancel.js';
+import {PaymentCancelMixin} from '@/mixins/admin/payment/Cancel.js';
 import {PaymentConfirmMixin} from '@/mixins/admin/payment/Confirm.js';
 
 
@@ -257,8 +272,8 @@ export default {
             User.getMembership(params).then(res => {
                 this.users = res.data[0];
 
-                this.memberNum = res.data.able;
-                this.memberExpiredNum = res.data.disable;
+                this.memberNum = res.data.active;
+                this.memberExpiredNum = res.data.inactive;
 
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/user/membership/${page}`

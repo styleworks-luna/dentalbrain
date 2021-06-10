@@ -1,12 +1,16 @@
 <template>
     <layout title="회원정보 목록">
         <template v-slot:button>
-            <router-link :to="`/admin/user/email/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
-                         class="btn btn-primary text-white">
+            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDate}&end_date=${endDate}&status=${orderStatus}&category=${order}`"
+               class="btn btn-info" download>엑셀 다운로드</a>
+            <router-link
+                :to="`/admin/user/email/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
+                class="btn btn-primary text-white">
                 이메일 보내기
             </router-link>
-            <router-link :to="`/admin/user/sms/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
-                         class="btn btn-primary text-white">
+            <router-link
+                :to="`/admin/user/sms/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
+                class="btn btn-primary text-white">
                 sms 보내기
             </router-link>
         </template>
