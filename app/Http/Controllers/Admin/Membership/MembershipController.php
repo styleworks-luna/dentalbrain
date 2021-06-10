@@ -14,22 +14,24 @@ class MembershipController extends Controller
 {
     public function index(Request $request)
     {
-        $able = User::query()->whereHas('memberships', function (Builder $query) {
-            $query->where('expired_at', '>', now());
+        $active = User::query()->whereHas('memberships', function (Builder $query) {
+            $query->active();
         })->count();
 
-        $disable = User::query()->whereHas('memberships')->count() - $able;
-
+        $inactive = User::query()->whereHas('memberships')->count() - $active;
 
         return response()->json([
-            $this->search($request),
-            'able' => $able,
-            'disable' => $disable,
+            $this->search($request)->paginate(10),
+            'active' => $active,
+            'inactive' => $inactive,
         ]);
     }
 
     private function search(Request $request)
     {
+        $job_name_id = $request->get('job_name_id');
+        $keyword = $request->get('keyword');
+
         $search = new SearchService(Membership::withTrashed()->with([
             'user' => /* @param BelongsTo $query */ function ($query) {
                 $query->select(['id', 'login_id', 'name', 'email', 'phone', 'job_id']);
@@ -39,8 +41,23 @@ class MembershipController extends Controller
             }
         ]));
 
-        $result = $search->setJoinModel('user')->join()->search();
+        if ($keyword !== null) {
+            $search->setJoinModel('user')
+                ->addJoinOption('login_id', 'like', '%' . $keyword . '%', 'or')
+                ->addJoinOption('name', 'like', '%' . $keyword . '%', 'or')
+                ->addJoinOption('phone', 'like', '%' . $keyword . '%', 'or')
+                ->addJoinOption('email', 'like', '%' . $keyword . '%', 'or')
+                ->join();
+        }
 
-        return $result->orderByDesc('id')->paginate(10);
+        if ($job_name_id !== null) {
+            $result = $search->setJoinModel('user.job')
+                ->addJoinOption('job_name_id', '=', $job_name_id)
+                ->join()->search();
+        } else {
+            $result = $search->search();
+        }
+
+        return $result->orderByDesc('id');
     }
 }

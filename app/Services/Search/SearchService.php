@@ -62,9 +62,9 @@ class SearchService
         return $this;
     }
 
-    public function addJoinOption(string $column, string $operator, $value): SearchService
+    public function addJoinOption(string $column, string $operator, $value, $boolean = 'and'): SearchService
     {
-        $this->joinOptions[] = [$column, $operator, $value];
+        $this->joinOptions[] = [$column, $operator, $value, $boolean];
         return $this;
     }
 
