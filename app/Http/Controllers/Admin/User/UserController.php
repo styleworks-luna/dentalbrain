@@ -30,11 +30,19 @@ class UserController
 
     public function index(Request $request)
     {
+        $users = User::query()->get()->where('hasMembership', true)->count();
+
         return response()->json([
-            'user' => $this->search($request)
+            'user' => $this->search($request)->paginate('20'),
+            'paid' => $users,
+            'normal' => User::query()->count() - $users,
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     private function search(Request $request)
     {
         $this->setJoin($request->input('job_name_id'));
@@ -48,7 +56,7 @@ class UserController
         $result = $this->search->search()
             ->whereHas('memberships', function ($query) {
                 $query->where('expired_at', '>', now());
-            })->orderBy('id', 'desc')->paginate('20');
+            })->orderBy('id', 'desc');
         return $result;
     }
 
