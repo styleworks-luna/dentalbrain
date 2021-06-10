@@ -19,6 +19,7 @@ class Payment extends Model
     static $ANOTHER_DONE = 'ANOTHER_DONE';
     static $ANOTHER_REJECTED = 'ANOTHER_REJECTED';
     static $ANOTHER_PROGRESS = 'ANOTHER_PROGRESS';
+    static $DONE = 'DONE';
 
     protected $table = 'payments';
     protected $casts = [
@@ -230,5 +231,14 @@ class Payment extends Model
     public function membership()
     {
         return $this->hasOne(Membership::class, 'payment_id', 'id');
+    }
+
+    /**
+     * @param Builder $query
+     * @return mixed
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereIn('status', [self::$ANOTHER_DONE, self::$DONE]);
     }
 }

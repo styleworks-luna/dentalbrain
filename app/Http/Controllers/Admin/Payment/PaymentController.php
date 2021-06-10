@@ -8,6 +8,7 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,8 +19,13 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
+        $sum = Payment::query()->paid()->sum('totalAmount');
+        $count = Payment::query()->paid()->count();
+
         return response()->json([
-            'payments' => $this->search($request)->paginate(10)
+            'payments' => $this->search($request)->paginate(10),
+            'sum' => number_format($sum),
+            'count' => $count,
         ]);
     }
 
