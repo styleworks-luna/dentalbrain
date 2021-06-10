@@ -76,14 +76,18 @@
             display: block
 
             th
-                +size(52px 52px 52px)
+                +size(65px 65px 65px)
                 vertical-align: middle
+                text-align: left
                 font-size: 14px
                 color: $gray-700
 
+            .exclude-price
+                color: $gray-c
+
             td
                 +size(417px)
-                +padding(left 20px)
+                +padding(left 7px)
                 clear: both
                 font-size: 16px
 
@@ -119,6 +123,10 @@
                 font-weight: bold
                 font-size: 20px
                 color: $page-color
+
+            .lecture-exclude-price
+                color: $gray-c
+                text-decoration: line-through
 
             .price-hidden
                 display: none

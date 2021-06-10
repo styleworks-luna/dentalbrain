@@ -1,6 +1,9 @@
 <template>
     <layout title="회원정보 목록">
         <template v-slot:search>
+            <div class="float-left">
+                <p style="font-size: 18px;">총 회원수: {{ users.data.length }}명 ( 일반회원: {{ basicUserNumber }}명 / 유료회원: {{ membershipUserNumber }}명 )</p>
+            </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
@@ -40,15 +43,10 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.id}/${page}`"
+                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left">
                             수정
                         </router-link>
-                        <button-open :isOpen="slotProps.row.is_paid"
-                                     :anotherText="'paid'"
-                                     class="btn-outline-dark"
-                                     @setStatus="handleSetStatus(slotProps.row.id)">
-                        </button-open>
                     </td>
                 </template>
             </table-grid>
@@ -69,7 +67,6 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
-import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 
 // api
 import User from '@/api/admin/user/User.js';
@@ -79,7 +76,6 @@ export default {
     components: {
         'table-grid': Table,
         'select-box': SelectBox,
-        ButtonOpen,
     },
     data() {
         return {
@@ -107,7 +103,7 @@ export default {
                 },
                 {
                     name: 'is_paid',
-                    text: '유료회원',
+                    text: '회원구분',
                     width: '6%'
                 },
                 {
@@ -153,6 +149,18 @@ export default {
                     name: '유료회원',
                 }
             ]
+        },
+        basicUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => !res.has_membership);
+            count = result.length;
+            return count;
+        },
+        membershipUserNumber() {
+            var result, count = 0 ;
+            result = this.users.data.filter(res => res.has_membership);
+            count = result.length;
+            return count;
         }
     },
     methods: {
@@ -172,7 +180,7 @@ export default {
             User.getData(params).then(res => {
                 this.users = res.data.user;
                 // 뒤로가기 page에 따라 reload
-                const path = `/admin/user/${page}`
+                const path = `/admin/user/user/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.users = [];
@@ -189,12 +197,6 @@ export default {
         handleSetJobyId(value) {
             this.job_name_id = value;
         },
-        handleSetStatus(id) {
-            User.setStatus(id).then(res => {
-                this.getData();
-                alert(res.data.msg);
-            })
-        }
     }
 }
 </script>

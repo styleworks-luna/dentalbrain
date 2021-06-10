@@ -62,22 +62,22 @@
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td><em>{{ auth()->user()->name }}</em></td>
+                            <td><em>{{ $user->name }}</em></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td><em>{{ auth()->user()->login_id }}</em></td>
+                            <td><em>{{ $user->login_id }}</em></td>
                         </tr>
                         <tr>
                             <th>이메일</th>
                             <td>
-                                <em>{{ auth()->user()->email }}</em>
+                                <em>{{ $user->email }}</em>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <em>{{ auth()->user()->phone }}</em>
+                                <em>{{ $user->phone }}</em>
                             </td>
                         </tr>
                     </table>
@@ -163,7 +163,7 @@
                 <section class="payment-information">
                     <h3>결제정보</h3>
                     <table>
-                        @if($program->is_free)
+                        @if($program->getUserSpecificFree())
                             <tr>
                                 <th>결제금액</th>
                                 <td><em>무료</em></td>

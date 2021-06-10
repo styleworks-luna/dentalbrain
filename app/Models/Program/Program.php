@@ -5,6 +5,8 @@ namespace App\Models\Program;
 use App\Models\File;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
+use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -35,9 +37,6 @@ class Program extends Model
         'is_open' => 'boolean',
     ];
 
-    /*
-     * ======= Custom Functions =========
-     */
 
     public function canOnlineRefund()
     {
@@ -151,54 +150,12 @@ class Program extends Model
         }
     }
 
-    public function canRepeat($student = null): bool
-    {
-        if ($this->is_online == false) {
-            return false;
-        }
-        if (Auth::guest()) {
-            return false;
-        }
-        if ($student != null) {
-            return ($student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
-                && $student->expired_at < now();
-        } else {
-            $user = Auth::user();
-            return $user->students()
-                ->where('program_id', '=', $this->id)
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
-                ->where('expired_at', '<', now())
-                ->exists();
-        }
-    }
-
-    public function repeated($student = null): bool
-    {
-        if (Auth::guest()) {
-            return false;
-        }
-        if ($student != null) {
-            return $student->is_repeated == true;
-        } else {
-            $user = Auth::user();
-            return $user->students()
-                ->where('program_id', '=', $this->id)
-                ->where('is_repeated', '=', true)
-                ->exists();
-        }
-    }
-
     public function exceedCapacity()
     {
         return $this->place->capacity <= $this->students()
                 ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
                 ->count();
     }
-
-    /*
-     * ======= Define Relationships =========
-     */
 
     public function students()
     {
@@ -221,14 +178,126 @@ class Program extends Model
         return $this->hasOne(ProgramPlace::class, 'program_id', 'id');
     }
 
+    /**
+     *  유저가 지불해야할 금액 가져옴.
+     *
+     * @param User|Authenticatable|null $user
+     * @return float|int
+     */
+    public function getUserSpecificPrice($user = null)
+    {
+        if ($user == null) {
+            $user = Auth::user();
+        }
+
+        // 유료회원 가격 적용.
+        if ($user->hasMembership) {
+            if ($this->membership_is_free) {
+                return 0;
+            }
+            $price = $this->membership_price;
+        } else {
+            if ($this->is_free) {
+                return 0;
+            }
+            $price = $this->price;
+        }
+
+        /** @var ProgramStudent $student */
+        $student = $this->students()->where('user_id', '=', $user->id)->first();
+        if ($student) {
+            // 신청한 적이 있는 경우
+            if ($this->repeatable($student)) {
+                // 재수강일 경우.
+                return self::discountPrice($price);
+            } else {
+                return $price;
+            }
+        } else {
+            // 신청한 적이 없는 경우
+            return $price;
+        }
+    }
+
+    /**
+     * @param ProgramStudent|null $student
+     * @return bool
+     */
+    public function repeatable($student = null)
+    {
+        return $this->repeated($student) || $this->canRepeat($student);
+    }
+
+    public function repeated($student = null): bool
+    {
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return $student->is_repeated == true;
+        } else {
+            $user = Auth::user();
+            return $user->students()
+                ->where('program_id', '=', $this->id)
+                ->where('is_repeated', '=', true)
+                ->exists();
+        }
+    }
+
+    public function canRepeat($student = null): bool
+    {
+        if ($this->is_online == false) {
+            return false;
+        }
+        if (Auth::guest()) {
+            return false;
+        }
+        if ($student != null) {
+            return ($student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
+                && $student->expired_at < now();
+        } else {
+            $user = Auth::user();
+            return $user->students()
+                ->where('program_id', '=', $this->id)
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_ANOTHER_PAID])
+                ->where('expired_at', '<', now())
+                ->exists();
+        }
+    }
+
+    /**
+     * 재수강 가격 할인율 적용
+     *
+     * @param $price
+     * @return int
+     */
+    public static function discountPrice($price): int
+    {
+        return (int)($price * 7 / 10);
+    }
+
+    public function getUserSpecificFree(): bool
+    {
+        $user = Auth::user();
+
+        // 유료회원 가격 적용.
+        if ($user->hasMembership) {
+            if ($this->membership_is_free) {
+                return true;
+            }
+            return false;
+        } else {
+            if ($this->is_free) {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public function majorCategory()
     {
         return $this->belongsTo(ProgramMajorCategory::class, 'major_category_id');
-    }
-
-    public function minorCategory()
-    {
-        return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
     public function comments()
@@ -269,17 +338,19 @@ class Program extends Model
             'id', 'id');
     }
 
-
-    /*
-     * ======= Define Appended Attributes =========
-     */
-
     public function getMajorCategoryNameAttribute()
     {
-        if (isset($this->attributes['major_category_id']))
+        if ($this->minorCategory) {
+            return $this->minorCategory->name;
+        } elseif (isset($this->attributes['major_category_id']))
             return ProgramMajorCategory::find($this->attributes['major_category_id'])->name;
         else
             return null;
+    }
+
+    public function minorCategory()
+    {
+        return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
     }
 
     public function getMinorCategoryNameAttribute()
@@ -304,18 +375,14 @@ class Program extends Model
                 ->where('program_id', '=', $this->attributes['id'])
                 ->where('user_id', '=', Auth::id())->exists();
         }
-
     }
 
     public function getRepeatPriceAttribute()
     {
         $price = $this->attributes['price'] ?? 0;
-        return $price * 7 / 10;
+        return self::discountPrice($price);
     }
 
-    /*
-     * ============== Scope ==============
-     */
     public function scopeMain(Builder $query)
     {
         return $query->select(['id', 'thumbnail_id'])

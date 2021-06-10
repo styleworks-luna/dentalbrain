@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Membership\Membership;
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,10 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'allow_email' => 'boolean',
-        'is_paid' => 'boolean',
     ];
     protected $appends = [
-        'need_license', 'job_name_id', 'job_name', 'license_num',
+        'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
 
     public function job()
@@ -87,7 +88,7 @@ class User extends Authenticatable
 
     public function likePrograms()
     {
-        return $this->belongsToMany(Program::class,'user_likes')
+        return $this->belongsToMany(Program::class, 'user_likes')
             ->using(UserLike::class);
     }
 
@@ -105,6 +106,46 @@ class User extends Authenticatable
             'name' => $name,
             'phone' => $phone
         ])->first();
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function recentMembership()
+    {
+        return $this->memberships()->whereNotNull('expired_at')
+            ->orderByDesc('expired_at')->first();
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableLatestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->first();
+    }
+
+    /**
+     * Order By 'expired_at' DESC
+     * @return Collection
+     */
+    public function availableMemberships()
+    {
+        return $this->availableMembershipsBuilder()->get();
+    }
+
+    public function availableMembershipsBuilder()
+    {
+        return $this->memberships()->available()->orderByDesc('expired_at');
     }
 
     protected function getNeedLicenseAttribute()
@@ -138,5 +179,28 @@ class User extends Authenticatable
             return UserJob::find($this->attributes['job_id'])->license_num;
         }
         return null;
+    }
+
+    protected function getHasMembershipAttribute(): bool
+    {
+        $membership = $this->availableEarliestMembership();
+
+        if ($membership == null) {
+            return false;
+        }
+
+        return $membership->started_at < now();
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableEarliestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->last();
     }
 }

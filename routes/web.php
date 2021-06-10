@@ -28,34 +28,18 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
-        //FAQ, 공지사항, 문의하기 생성 페이지
-        Route::get('/', 'Test\TestController@index')->name('index');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
-
-        //문의하기 업데이트 확인 페이지
-        Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
-
-        //업로드 파일 확인 페이지
-        Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
-        //배너 업데이트 확인 페이지
-        Route::get('banner/{banner}', 'Test\TestController@bannerEdit')->name('bannerEdit');
-        //유저 관리자 업로드 확인 페이지
-        Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
-
-        Route::get('search', 'Test\TestController@search')->name('search');
-
-        Route::get('cancel', 'Test\TestController@cancelTest');
-
-        Route::get('mail', 'Test\TestController@mailView');
-        Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
-
         // 테스팅 계정 생성
         Route::get('register', 'Test\TestController@showRegistrationForm');
+
+
+        Route::get('membership', [\App\Http\Controllers\Test\TestController::class, 'showMembershipJoinForm'])->name('showMembershipForm');
+
+        Route::post('membership', [\App\Http\Controllers\Test\TestController::class, 'joinMembership'])->name('JoinMembership');
+
+        Route::get('mem', function () {
+            ddd(\Illuminate\Support\Facades\Auth::user()->recentMembership());
+        });
+
     });
 }
 
@@ -107,6 +91,21 @@ Route::get('privacy', function () {
 Route::get('refund', function () {
     return view(viewPrefix() . 'pages.term.refund');
 })->name('refund');
+
+Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
+    Route::get('/', [\App\Http\Controllers\Membership\MembershipController::class, 'showMembershipDescForm'])->name('showForm');
+    Route::group(['middleware' => 'auth'], function () {
+        // 결제 폼
+        Route::get('/payment', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('paymentForm');
+        // 결제 성공 연결
+        Route::get('/payment/success', [\App\Http\Controllers\Membership\PaymentController::class, 'success'])->name('paymentSuccess');
+        // 결제 성공 연결
+        Route::post('/payment/another', [\App\Http\Controllers\Membership\PaymentController::class, 'anotherPay'])->name('paymentAnother');
+        // 결제 결과
+        Route::get('/payment/result', [\App\Http\Controllers\Membership\MembershipController::class, 'result'])->name('paymentResult');
+    });
+
+});
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
@@ -295,8 +294,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::post('search', 'Admin\User\UserController@search')->name('search');
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
-            // user 유료회원 <-> 무료회원 전환
-            Route::patch('{user}/paid', 'Admin\User\UserController@updatePaid')->name('change.paid');
+        });
+
+        Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
