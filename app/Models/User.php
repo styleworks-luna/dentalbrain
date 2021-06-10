@@ -145,6 +145,7 @@ class User extends Authenticatable
 
     public function availableMembershipsBuilder()
     {
+        // Membership@scopeAvailable()
         return $this->memberships()->available()->orderByDesc('expired_at');
     }
 
