@@ -18,6 +18,19 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
+        return response()->json([
+            'payments' => $this->search($request)->paginate(10)
+        ]);
+    }
+
+    private function search(Request $request)
+    {
+        $category = $request->get('category');
+        $status = $request->get('status');
+        $keyword = $request->get('keyword');
+        $start_date = $request->get('start_date');
+        $end_date = $request->get('end_date');
+
         $payments = Payment::query()
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
@@ -38,51 +51,47 @@ class PaymentController extends Controller
             });
 
 
-        if (isset($request->category)) {
-            if ($request->category == '온라인') {
-                $payments->where('programs.is_online', '=', 1);
-            } elseif ($request->category == '오프라인') {
-                $payments->where('programs.is_online', '=', 0);
-            } elseif ($request->category == '유료회원') {
-                $payments->whereHas('membership');
-            }
+        if ($category == '온라인') {
+            $payments->where('programs.is_online', '=', 1);
+        } elseif ($category == '오프라인') {
+            $payments->where('programs.is_online', '=', 0);
+        } elseif ($category == '유료회원') {
+            $payments->whereHas('membership');
         }
 
-        if (isset($request->status)) {
-            if ($request->status == 'DONE') {
-                $payments->where('payments.status', '=', $request->status)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
-            } elseif ($request->status == 'CANCELED') {
-                $payments->where('payments.status', '=', $request->status)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
-            }
+        if ($status == 'DONE') {
+            $payments->where('payments.status', '=', $status)
+                ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+        } elseif ($status == 'CANCELED') {
+            $payments->where('payments.status', '=', $status)
+                ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
         }
 
-        if (isset($request->keyword)) {
-            $payments->where(function ($query) use ($request) {
-                $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('users.email', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('payments.totalAmount', '=', $request->keyword);
+        if ($keyword !== null) {
+            $payments->where(function ($query) use ($keyword) {
+                $query->orWhere('programs.title', 'like', '%' . $keyword . '%')
+                    ->orWhere('users.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('users.email', 'like', '%' . $keyword . '%')
+                    ->orWhere('payments.totalAmount', '=', $keyword);
             });
         }
 
-        if (isset($request->start_date)) {
-            $payments->where('payments.requestedAt', '>', $request->start_date);
+        if ($start_date !== null) {
+            $payments->where('payments.requestedAt', '>', $start_date);
         }
 
-        if (isset($request->end_date)) {
-            $payments->where('payments.requestedAt', '<', $request->end_date);
+        if ($end_date !== null) {
+            $payments->where('payments.requestedAt', '<', $end_date);
         }
 
-        return response()->json([
-            'payments' => $payments->orderBy('payments.id', 'desc')->paginate(10)
-        ]);
+        return $payments->orderBy('payments.id', 'desc');
     }
 
-    public function paymentExport()
+    public function paymentExport(Request $request)
     {
-        return Excel::download(new PaymentExport(), '결제 정보 엑셀.xlsx');
+        $payments = $this->search($request)->get();
+
+        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀.xlsx');
     }
 
     /**

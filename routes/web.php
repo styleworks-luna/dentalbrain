@@ -28,18 +28,8 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
-        // 테스팅 계정 생성
+        // 테스팅 계정 생성 // !! 삭제하지 말것 !!
         Route::get('register', 'Test\TestController@showRegistrationForm');
-
-
-        Route::get('membership', [\App\Http\Controllers\Test\TestController::class, 'showMembershipJoinForm'])->name('showMembershipForm');
-
-        Route::post('membership', [\App\Http\Controllers\Test\TestController::class, 'joinMembership'])->name('JoinMembership');
-
-        Route::get('mem', function () {
-            ddd(\Illuminate\Support\Facades\Auth::user()->recentMembership());
-        });
-
     });
 }
 
@@ -384,8 +374,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
-
-            Route::get('export', 'Admin\Payment\PaymentController@paymentExport')->name('export');
+            // 엑셀 출력
+            Route::get('export', [\App\Http\Controllers\Admin\Payment\PaymentController::class, 'paymentExport'])->name('export');
 
             Route::post('/{program}/{student}/revert', [\App\Http\Controllers\Admin\Payment\CancelController::class, 'revert'])->name('revert');
         });
