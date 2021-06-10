@@ -1,5 +1,15 @@
 <template>
     <layout title="회원정보 목록">
+        <template v-slot:button>
+            <router-link :to="`/admin/user/email/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
+                         class="btn btn-primary text-white">
+                이메일 보내기
+            </router-link>
+            <router-link :to="`/admin/user/sms/1?keyword=${keyword}&job_name_id=${job_name_id}&member=${member}&page=${page}`"
+                         class="btn btn-primary text-white">
+                sms 보내기
+            </router-link>
+        </template>
         <template v-slot:search>
             <div class="float-left">
                 <p style="font-size: 18px;">총 회원수: {{ users.data.length }}명 ( 일반회원: {{ basicUserNumber }}명 / 유료회원: {{ membershipUserNumber }}명 )</p>
