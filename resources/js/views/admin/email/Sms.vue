@@ -85,19 +85,33 @@ export default {
             content: '',
             phone: [],
             showModal: false,
+            sort: '',
+            keyword: '',
+            job_name_id: '',
+            member: '',
+            page: '',
         }
     },
     created() {
         this.id = this.$route.params.id;
+        this.sort = this.$route.params.sort;
+        if (this.sort == 'user') {
+            this.keyword = this.$route.query.keyword;
+            this.job_name_id = this.$route.query.job_name_id;
+            this.member = this.$route.query.member;
+            this.page = this.$route.query.page;
+        }
     },
     mounted() {
         this.getData();
     },
     methods: {
         getData() {
-            SMS.getData(this.id).then(res => {
-                this.students = res.data.students;
-            })
+            if (this.sort == 'program') {
+                SMS.getData(this.id).then(res => {
+                    this.students = res.data.students;
+                })
+            }
         },
         checkStudent(event, data) {
             if (event.target.checked == true) {
