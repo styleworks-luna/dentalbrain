@@ -98,13 +98,13 @@ class UserController
 
     public function emailList(Request $request)
     {
-        $result = $this->search($request)->get();
+        $result = $this->search($request)->where('allow_email',true)->get();
         return response()->json($result);
     }
 
     public function smsList(Request $request)
     {
-        $result = $this->search($request)->get();
+        $result = $this->search($request)->where('allow_sms',true)->get();
         return response()->json($result);
     }
 
