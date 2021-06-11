@@ -122,16 +122,25 @@ class User extends Authenticatable
         return $this->hasMany(Membership::class, 'user_id', 'id');
     }
 
+    public function getMembershipStartedAt()
+    {
+        $membership = $this->availableEarliestMembership();
+        if ($membership) {
+            return $membership->started_at;
+        }
+        return null;
+    }
+
     /**
      * @return Membership|null
      */
-    public function availableLatestMembership()
+    public function availableEarliestMembership()
     {
         $memberships = $this->availableMemberships();
         if (!$memberships) {
             return null;
         }
-        return $memberships->first();
+        return $memberships->last();
     }
 
     /**
@@ -147,6 +156,27 @@ class User extends Authenticatable
     {
         // Membership@scopeAvailable()
         return $this->memberships()->available()->orderByDesc('expired_at');
+    }
+
+    public function getMembershipExpiredAt()
+    {
+        $membership = $this->availableLatestMembership();
+        if ($membership) {
+            return $membership->expired_at;
+        }
+        return null;
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableLatestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->first();
     }
 
     protected function getNeedLicenseAttribute()
@@ -191,17 +221,5 @@ class User extends Authenticatable
         }
 
         return $membership->started_at < now();
-    }
-
-    /**
-     * @return Membership|null
-     */
-    public function availableEarliestMembership()
-    {
-        $memberships = $this->availableMemberships();
-        if (!$memberships) {
-            return null;
-        }
-        return $memberships->last();
     }
 }

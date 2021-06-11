@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Exports\UserExport;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController
 {
@@ -98,26 +100,21 @@ class UserController
 
     public function emailList(Request $request)
     {
-        $result = $this->search($request)->where('allow_email',true)->get();
+        $result = $this->search($request)->where('allow_email', true)->get();
         return response()->json($result);
     }
 
     public function smsList(Request $request)
     {
-        $result = $this->search($request)->where('allow_sms',true)->get();
+        $result = $this->search($request)->where('allow_sms', true)->get();
         return response()->json($result);
     }
 
     public function edit(User $user)
     {
         $user->addHidden(['memberships']);
-        if ($user->availableMemberships()->isNotEmpty()) {
-            $membership_started_at = $user->availableEarliestMembership()->started_at;
-            $membership_expired_at = $user->availableLatestMembership()->expired_at;
-        } else {
-            $membership_started_at = null;
-            $membership_expired_at = null;
-        }
+        $membership_started_at = $user->getMembershipStartedAt();
+        $membership_expired_at = $user->getMembershipExpiredAt();
 
         $data = collect([
             'user' => $user,
@@ -204,5 +201,11 @@ class UserController
     public function getUserJobNameCategory()
     {
         return response()->json(['userJob' => UserJobName::all()]);
+    }
+
+    public function userExport(Request $request)
+    {
+        $users = $this->search($request)->get();
+        return Excel::download(new UserExport($users), '회원 정보 ' . now()->toDateString(). '.xlsx');
     }
 }

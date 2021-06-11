@@ -2,12 +2,12 @@
     <thead>
     <tr>
         <th>번호</th>
+        <th>회원구분</th>
         <th>아이디</th>
         <th>이름</th>
-        <th>이메일 주소</th>
+        <th>이메일</th>
         <th>전화번호</th>
         <th>직업군</th>
-        <th>시작일</th>
         <th>종료일</th>
         <th>결제수단</th>
         <th>상태</th>

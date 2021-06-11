@@ -96,7 +96,7 @@ class PaymentController extends Controller
     {
         $payments = $this->search($request)->get();
 
-        return Excel::download(new PaymentExport($payments), '유료 회원 엑셀'.now()->toDateString().'.xlsx');
+        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀'.now()->toDateString().'.xlsx');
     }
 
     /**
