@@ -215,6 +215,6 @@ class ProgramStudent extends Model
      */
     public function getPrice()
     {
-        $this->program->getUserSpecificPrice(Auth::user());
+        return $this->program->getUserSpecificPrice(Auth::user());
     }
 }
