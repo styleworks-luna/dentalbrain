@@ -317,10 +317,10 @@ export default {
             ]
         },
         startDateForm() {
-            return this.startDate ? this.Helper.dateFormatYDM(this.startDate) + ' 00:00:00' : '';
+            return this.startDate ? `${this.Helper.dateFormatYDM(this.startDate)} 00:00:00` : '';
         },
         endDateForm() {
-            return this.endDate ? this.Helper.dateFormatYDM(this.endDate) + ' 23:59:59' : '';
+            return this.endDate ? `${this.Helper.dateFormatYDM(this.endDate)} 23:59:59` : '';
         }
     },
     methods: {
@@ -334,8 +334,8 @@ export default {
                 page: page,
                 category: this.order,
                 keyword: this.keyword,
-                start_date: this.startDate ? this.Helper.dateFormatYDM(this.startDate) + ' 00:00:00' : '',
-                end_date: this.endDate ? this.Helper.dateFormatYDM(this.endDate) + ' 23:59:59' : '',
+                start_date: this.startDateForm,
+                end_date: this.endDateForm,
                 status: this.orderStatus,
             };
 
