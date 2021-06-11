@@ -99,7 +99,9 @@
                                 결제 완료_2
                             </template>
                             <template v-else-if="slotProps.row.membership_pay_status === 5">
-                                별도 결제 입금 전
+                                <a href="#" class="btn btn-success"
+                                   @click.prevent="confirmMembershipPayment(slotProps.row.membership_id)">
+                                    결제 확인</a>
                             </template>
                             <template v-else-if="slotProps.row.membership_pay_status === 6">
                                 별도 결제 결제 완료
