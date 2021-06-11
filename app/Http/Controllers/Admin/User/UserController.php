@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Exports\UserExport;
+use App\Models\Membership\Membership;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
@@ -147,12 +148,15 @@ class UserController
                 'allow_email' => $data['allow_email'],
                 'allow_sms' => $data['allow_sms'],
             ]);
-
             if (isset($data['membership_started_at']) && isset($data['membership_expired_at'])) {
-                MembershipService::EditUsersMembership(
-                    $data['membership_started_at'], $data['membership_expired_at'], $user);
+                if ($user->availableMembershipsBuilder()->doesntExist()) {
+                    Membership::createWhenUserEdit(
+                        $data['membership_started_at'], $data['membership_expired_at'], $user);
+                } else {
+                    MembershipService::EditUsersMembership(
+                        $data['membership_started_at'], $data['membership_expired_at'], $user);
+                }
             }
-
             DB::commit();
         } catch (\Exception $exception) {
             Log::error('ACCOUNT UPDATE ERROR', [$exception]);
@@ -186,18 +190,12 @@ class UserController
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
             'allow_sms' => ['nullable', 'boolean'],
+            'membership_started_at' => ['required_with:membership_expired_at', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
+            'membership_expired_at' => ['required_with:membership_started_at', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;
-        })->sometimes(['membership_started_at'], ['required', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
-            function ($input) use ($user) {
-                return $user->availableMembershipsBuilder()->exists();
-            }
-        )->sometimes(['membership_expired_at'], ['required', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
-            function ($input) use ($user) {
-                return $user->availableMembershipsBuilder()->exists();
-            }
-        );
+        });
     }
 
     public function getUserJobNameCategory()

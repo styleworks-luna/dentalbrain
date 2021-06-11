@@ -9,6 +9,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -152,6 +153,9 @@ class User extends Authenticatable
         return $this->availableMembershipsBuilder()->get();
     }
 
+    /**
+     * @return Builder
+     */
     public function availableMembershipsBuilder()
     {
         // Membership@scopeAvailable()

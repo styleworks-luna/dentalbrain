@@ -96,6 +96,19 @@ class Membership extends Model
         return $membership;
     }
 
+    static function createWhenUserEdit($startedAt, $expiredAt, $user) {
+
+        $membership = Membership::query()->create([
+            'user_id' => Auth::id(),
+            'pay_status' => Membership::$PAY_PAID,
+            'last_applied_at' => now(),
+            'started_at' => $startedAt,
+            'expired_at' => $expiredAt,
+        ]);
+
+        return $membership;
+    }
+
     public function isAvailable(): bool
     {
         if (!isset($this->attributes['expired_at']) && !isset($this->attributes['started_at'])) {
