@@ -31,6 +31,7 @@ export const UserMixin = {
             job_name_id: 1,
             license_num: '',
             allow_email: false,
+            allow_sms: false,
             jobOptions: [],
             is_paid: false,
         }

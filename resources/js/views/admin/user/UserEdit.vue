@@ -83,6 +83,16 @@
                 </template>
             </single-group>
 
+            <!-- 이메일 수신 -->
+            <single-group name="SMS 수신"
+                          :isRow="true"
+                          :size="2.5">
+                <template v-slot:content>
+                    <input type="checkbox" name="sms-check" id="sms-check" v-model="allow_sms">
+                    <label for="sms-check">수신동의 선택</label>
+                </template>
+            </single-group>
+
             <!-- 유료회원 여부 -->
             <single-group name="유료회원 여부"
                           :isRow="true"
@@ -164,6 +174,7 @@ export default {
                 this.job_name_id = result.job_name_id;
                 this.license_num = result.license_num;
                 this.allow_email = result.allow_email;
+                this.allow_sms = result.allow_sms;
                 this.is_paid = result.is_paid;
 
                 this.has_membership = result.has_membership;
@@ -189,6 +200,7 @@ export default {
                 job_name_id: this.job_name_id,
                 license_num: this.license_num,
                 allow_email: this.allow_email,
+                allow_sms: this.allow_sms,
                 is_paid: this.is_paid,
                 // has_membership: this.has_membership,
                 membership_started_at: membership_started_at,
