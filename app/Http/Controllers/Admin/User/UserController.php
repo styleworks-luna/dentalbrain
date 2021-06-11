@@ -145,6 +145,7 @@ class UserController
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'allow_email' => $data['allow_email'],
+                'allow_sms' => $data['allow_sms'],
             ]);
 
             if (isset($data['membership_started_at']) && isset($data['membership_expired_at'])) {
@@ -184,6 +185,7 @@ class UserController
                 Rule::unique('users', 'phone')->whereNull('deleted_at')->ignore($user->id)],
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
+            'allow_sms' => ['nullable', 'boolean'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;
@@ -206,6 +208,6 @@ class UserController
     public function userExport(Request $request)
     {
         $users = $this->search($request)->get();
-        return Excel::download(new UserExport($users), '회원 정보 ' . now()->toDateString(). '.xlsx');
+        return Excel::download(new UserExport($users), '회원 정보 ' . now()->toDateString() . '.xlsx');
     }
 }
