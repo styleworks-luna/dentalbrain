@@ -5,6 +5,7 @@ namespace App\Payments\TossPayments;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 
@@ -18,6 +19,9 @@ class TossPayments
         $this->paymentKey = $paymentKey;
     }
 
+    /**
+     * @throws TossPaymentsException
+     */
     public function success($orderId, $amount)
     {
         try {
@@ -35,25 +39,18 @@ class TossPayments
                     "amount" => $amount,
                 ],
             ]);
+        } catch (ClientException $e) {
+            // 404, 400, 500 같은 에러
+            $exception = new TossPaymentsException($e->getResponse(), $e);
+            report($exception);
+            throw $exception;
         } catch (GuzzleException $e) {
-            // TODO : https://docs.tosspayments.com/api#%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80-%EC%97%90%EB%9F%AC-%EC%BD%94%EB%93%9C
-            // TossException 생성해서 exception 처리하기.
+            // general error
             Log::error('TOSS API CALL ERROR', [
                 $e,
                 'paymentKey' => $this->paymentKey,
                 'orderId' => $orderId,
                 'amount' => $amount]);
-            return false;
-        }
-
-        if ($response->getStatusCode() !== 200) {
-            Log::error('TOSS API SUCCESS CALL ERROR', [
-                'code' => $response->getStatusCode(),
-                'body' => $response->getBody(),
-                'paymentKey' => $this->paymentKey,
-                'orderId' => $orderId,
-                'amount' => $amount
-            ]);
             return false;
         }
 

@@ -23,10 +23,14 @@ class DetailController extends Controller
             ->exists();
 
         $parents = Comment::ofProgram($program->id)
-            ->whereNull('parent_id')->with('children')->orderBy('id')->get();
+            ->whereNull('parent_id')->with(['children' => function ($query) {
+                $query->with('user');
+            }, 'user'])->orderBy('id')->get();
 
         $children = Comment::ofProgram($program->id)
             ->whereNotNull('parent_id')->orderBy('id')->get();
+
+        $program->with('place', 'minor_category');
 
         if (Auth::check()) {
             $student = $program->students()->where('user_id', '=', Auth::id())

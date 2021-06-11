@@ -22,7 +22,7 @@ return [
     'alpha_num' => 'The :attribute may only contain letters and numbers.',
     'array' => 'The :attribute must be an array.',
     'before' => 'The :attribute must be a date before :date.',
-    'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
+    'before_or_equal' => ':attribute 은 :date 보다 이르거나 같아야 합니다.',
     'between' => [
         'numeric' => 'The :attribute must be between :min and :max.',
         'file' => 'The :attribute must be between :min and :max kilobytes.',
@@ -199,6 +199,8 @@ return [
         'started_at' => '시작',
         'ended_at' => '종료',
         'address' => '주소',
+        'membership_started_at' => '유료회원 시작일',
+        'membership_expired_at' => '유료회원 종료일',
     ],
 
 ];

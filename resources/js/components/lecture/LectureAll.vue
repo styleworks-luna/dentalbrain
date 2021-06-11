@@ -74,7 +74,7 @@ export default {
 
             var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
             keyword = decodeURIComponent(keyword);
-            console.log(keyword);
+
             if(keyword.length > 0) {
                 document.querySelector('.search-text').innerText = '‘' + keyword + '’';
             }

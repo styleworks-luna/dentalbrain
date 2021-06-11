@@ -2,8 +2,8 @@
     <layout title="오프라인 강의 수강 신청 현황">
         <template v-slot:button>
             <a :href="`/lectures/${id}/excel`" class="btn btn-info" download>엑셀 다운로드</a>
-            <router-link :to="`/admin/${id}/email`" class="btn btn-primary text-white">이메일 보내기</router-link>
-            <router-link :to="`/admin/${id}/sms`" class="btn btn-primary text-white">sms 보내기</router-link>
+            <router-link :to="`/admin/program/email/${id}`" class="btn btn-primary text-white">이메일 보내기</router-link>
+            <router-link :to="`/admin/program/sms/${id}`" class="btn btn-primary text-white">sms 보내기</router-link>
         </template>
 
         <template v-slot:search>
@@ -28,7 +28,7 @@
                     <td>{{ slotProps.row.student_id }}</td>
                     <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
                     <td>
-                        <router-link :to="`/admin/user/${slotProps.row.user_id}`">
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}`">
                             {{ slotProps.row.login_id }}
                         </router-link>
                     </td>

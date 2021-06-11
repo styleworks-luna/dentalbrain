@@ -3,7 +3,14 @@ import Send from '@/utils/Send.js';
 export default {
     getData(params) {
         return Send({
-            url: '/api/admin/user/',
+            url: '/api/admin/user',
+            method: 'get',
+            params: params
+        });
+    },
+    getMembership(params) {
+        return Send({
+            url: '/api/admin/membership',
             method: 'get',
             params: params
         });

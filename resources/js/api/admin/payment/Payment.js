@@ -23,6 +23,12 @@ const confirmPayment = (id, studentId, params) => {
         params: params
     });
 };
+const confirmMembershipPayment = (id) => {
+    return Send({
+        url: `/api/admin/membership/${id}/confirm`,
+        method: 'post',
+    });
+};
 
 const cancelOfflinePayment = (id, studentId, params) => {
     return Send({
@@ -51,6 +57,7 @@ export {
     getData,
     cancelPayment,
     confirmPayment,
+    confirmMembershipPayment,
     cancelOfflinePayment,
     confirmOfflinePayment,
     revertConfirm,

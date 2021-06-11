@@ -21,7 +21,7 @@ class ApplyController extends Controller
 {
     public function showApplyForm(Program $program)
     {
-        if ($program->alreadyApplied() || $program->waitDeposit()) {
+        if ($program->alreadyApplied() || $program->waitDeposit() || $program->waitConfirmAnotherPay()) {
             // 이미 신청 완료하여 결제프로세스까지 마친 경우
             return redirect()->route('lectures.result', $program->id);
         }
@@ -51,7 +51,12 @@ class ApplyController extends Controller
             $programService = new OfflineProgramConcrete();
         }
 
+        /** @var ProgramStudent $student */
         $student = $program->students()->where('user_id', '=', Auth::id())->first();
+        $user = Auth::user();
+
+        // 가격 산출
+        $price = $program->getUserSpecificPrice($user);
 
         $programDetail = $programService->getProgramDetail($program);
 
@@ -59,6 +64,8 @@ class ApplyController extends Controller
             'program' => $programDetail['program'],
             'surveys' => $programDetail['surveys'],
             'student' => $student,
+            'user' => $user,
+            'price' => $price,
         ]);
     }
 
@@ -93,7 +100,7 @@ class ApplyController extends Controller
 
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
 
-            if ($program->is_free) {
+            if ($program->getUserSpecificPrice() == 0) {
                 // 무료 행사인 경우.
                 DB::commit();
 
@@ -133,14 +140,17 @@ class ApplyController extends Controller
         $surveys = Survey::result($program->id)
             ->get();
 
+        /** @var ProgramStudent $programStudent */
         $programStudent = ProgramStudent::query()->where('program_id', '=', $program->id)
             ->where('user_id', '=', Auth::id())
             ->first();
+        $programStudent->with('payment');
 
         return view(viewPrefix() . 'pages.lecture.lecture_result', [
             'program' => $program,
             'surveys' => $surveys,
             'programStudent' => $programStudent,
+            'user' => Auth::user(),
         ]);
     }
 }

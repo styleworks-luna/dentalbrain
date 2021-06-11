@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
-use App\Mail\PaymentLecture;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -43,19 +43,36 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
         }
 
-        $toss = new TossPayments($request->get('paymentKey'));
-        $response = $toss->success($request->get('orderId'), $request->get('amount'));
+        try {
+            DB::beginTransaction();
 
-        if ($response === false) {
+            $toss = new TossPayments($request->get('paymentKey'));
+            $response = $toss->success($request->get('orderId'), $request->get('amount'));
+
+            if ($response === false) {
+                return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
+            }
+
+            $payment = Payment::createByTossSuccess($response);
+
+            $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
+
+            Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
+            Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
+
+            DB::commit();
+        } catch (TossPaymentsException $exception) {
+            DB::rollBack();
+            session()->flash('fromApply', true);
+
+            return $exception->render($request);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            Log::error('PROGRAM TOSS SUCCESS ERROR', [$exception]);
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
         }
 
-        $payment = Payment::createByTossSuccess($response);
-
-        $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
-
-        Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
-        Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
         return redirect()->route('lectures.result', $program->id);
     }
@@ -75,12 +92,15 @@ class PaymentsController extends Controller
 
         $surveys = Survey::result($program->id)->get();
 
+        $price = $program->getUserSpecificPrice();
+
         // 새로고침 가능 하게끔.
         session()->flash('fromApply', true);
 
         return view(viewPrefix() . 'pages.lecture.lecture_payment', [
             'program' => $program,
             'surveys' => $surveys,
+            'price' => $price,
         ]);
     }
 

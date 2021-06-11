@@ -21,24 +21,20 @@ class NotificationController extends Controller
 {
     public function email(Program $program)
     {
-        $result = $program->students()
-            ->orderByDesc('id')
-            ->with(['user:id,name,login_id,allow_email,email,phone'])
-            ->whereHas('user', function ($query) {
-                $query->where('allow_email', true);
-            })
-            ->get();
-        return response()->json(['students' => $result]);
+        $result = User::query()->whereHas('students', function ($query) use ($program) {
+            $query->where('program_id', '=', $program->id);
+        })->where('allow_email', true)->get();
+
+        return response()->json($result);
     }
 
     public function sms(Program $program)
     {
-        $result = $program->students()
-            ->orderByDesc('id')
-            ->with(['user' => function ($query) {
-                $query->select('id', 'name', 'login_id', 'allow_email', 'email', 'phone');
-            }])->get();
-        return response()->json(['students' => $result]);
+        $result = User::query()->whereHas('students', function ($query) use ($program) {
+            $query->where('program_id', '=', $program->id);
+        })->where('allow_sms', true)->get();
+
+        return response()->json($result);
     }
 
     public function sendEmail(Request $request)

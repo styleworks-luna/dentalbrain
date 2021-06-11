@@ -11,11 +11,23 @@
             <li class="c-sidebar-nav-title">Resources</li>
 
             <!-- 회원 정보 메뉴 -->
-            <li class="c-sidebar-nav-item">
-                <router-link to="/admin/user/1" class="c-sidebar-nav-link"
-                             :class="{ activeClass: checkUrl('/admin/user') }">
-                    회원정보
-                </router-link>
+            <li class="c-sidebar-nav-dropdown"
+                :class="{ showClass: checkUrl('/admin/user') }">
+                <a href="#" class="c-sidebar-nav-dropdown-toggle">회원관리</a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <router-link to="/admin/user/user/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/user/user/1') }">
+                            회원 정보
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/user/membership/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/user/membership') }">
+                            유료 회원
+                        </a>
+                    </router-link>
+                </ul>
             </li>
 
             <!-- 결제 정보 메뉴 -->
