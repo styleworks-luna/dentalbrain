@@ -9,6 +9,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -51,6 +52,31 @@ class User extends Authenticatable
     protected $appends = [
         'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
+
+    public function updateWhenMembershipPaid($days)
+    {
+        if ($this->isPaid()) {
+            return $this->update([
+                'membership_expired_at' => Carbon::parse($this->membership_expired_at)->addDays($days),
+            ]);
+        } else {
+            return $this->update([
+                'membership_started_at' => now(),
+                'membership_expired_at' => now()->addDays($days),
+            ]);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        if ($this->membership_expired_at == null || $this->membership_started_at == null) {
+            return false;
+        }
+        return $this->membership_expired_at > now() && $this->membership_started_at < now();
+    }
 
     public function job()
     {
@@ -183,6 +209,25 @@ class User extends Authenticatable
         return $memberships->first();
     }
 
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopePaid($query)
+    {
+        return $query->where('membership_started_at', '<', now())->where('membership_expired_at', '>', now());
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeDoesntPaid($query)
+    {
+        return $query->whereNull('membership_started_at')->orWhereNull('membership_expired_at')
+            ->orWhere('membership_expired_at', '<', now());
+    }
+
     protected function getNeedLicenseAttribute()
     {
         $jobNameId = $this->getJobNameIdAttribute();
@@ -218,12 +263,6 @@ class User extends Authenticatable
 
     protected function getHasMembershipAttribute(): bool
     {
-        $membership = $this->availableEarliestMembership();
-
-        if ($membership == null) {
-            return false;
-        }
-
-        return $membership->started_at < now();
+        return $this->isPaid();
     }
 }

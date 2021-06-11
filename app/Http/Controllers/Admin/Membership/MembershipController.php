@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\User;
 use App\Services\Search\SearchService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,11 +16,9 @@ class MembershipController extends Controller
 {
     public function index(Request $request)
     {
-        $active = User::query()->whereHas('memberships', function (Builder $query) {
-            $query->active();
-        })->count();
+        $active = User::query()->paid()->count();
 
-        $inactive = User::query()->whereHas('memberships')->count() - $active;
+        $inactive = User::query()->doesntPaid()->count();
 
         return response()->json([
             $this->search($request)->paginate(10),
@@ -35,7 +32,7 @@ class MembershipController extends Controller
         $job_name_id = $request->get('job_name_id');
         $keyword = $request->get('keyword');
 
-        $search = new SearchService(Membership::withTrashed()->with([
+        $search = new SearchService(Membership::query()->with([
             'user' => /* @param BelongsTo $query */ function ($query) {
                 $query->select(['id', 'login_id', 'name', 'email', 'phone', 'job_id']);
             },
@@ -73,8 +70,11 @@ class MembershipController extends Controller
     public function confirmAnotherPay(Request $request, Membership $membership)
     {
         try {
-            $membership->updateWhenConfirmAnotherPay();
+            $membership->updateWhenConfirmAnotherPay($membership->user);
             $membership->payment->updateWhenConfirmAnotherPay();
+            /** @var User $user */
+            $user = $membership->user;
+            $user->updateWhenMembershipPaid($membership->applied_days);
 
         } catch (\Exception $exception) {
             Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$exception]);

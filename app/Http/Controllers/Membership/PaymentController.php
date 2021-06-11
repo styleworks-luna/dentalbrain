@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Membership;
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
+use App\Models\User;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -42,9 +45,15 @@ class PaymentController extends Controller
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
             }
 
+            /** @var User $user */
+            $user = Auth::user();
+
             // 멤버십 & 결제정보 생성
             $payment = Payment::createByTossSuccess($response);
             $membership = Membership::createWhenTossSuccess($response, $payment, $days);
+            if ($response->isCard() || $response->isTransfer()) {
+                $user->updateWhenMembershipPaid($days);
+            }
 
             // 메일
 

@@ -36,15 +36,9 @@ class UserController
     {
         $queryBase = User::query();
 
-        $paid = (clone $queryBase)->with('memberships')
-            ->whereHas('memberships', function ($query) {
-                $query->active();
-            })->count();
+        $paid = (clone $queryBase)->paid()->count();
 
-        $normal = (clone $queryBase)->with('memberships')
-            ->whereDoesntHave('memberships', function ($query) {
-                $query->active();
-            })->count();
+        $normal = (clone $queryBase)->doesntPaid()->count();
 
         return response()->json([
             'user' => $this->search($request)->paginate(20),
@@ -78,14 +72,10 @@ class UserController
             // (null == 0) 이 true이므로 한번 걸러냄.
             if ($hasMembership == 1) {
                 //유료 회원
-                $result = $result->whereHas('memberships', function ($query) {
-                    $query->active();
-                });
+                $result = $result->Paid();
             } elseif ($hasMembership == 0) {
                 //일반 회원
-                $result = $result->whereDoesntHave('memberships', function ($query) {
-                    $query->active();
-                });
+                $result = $result->doesntPaid();
             }
         }
 
@@ -114,13 +104,11 @@ class UserController
     public function edit(User $user)
     {
         $user->addHidden(['memberships']);
-        $membership_started_at = $user->getMembershipStartedAt();
-        $membership_expired_at = $user->getMembershipExpiredAt();
 
         $data = collect([
             'user' => $user,
-            'membership_started_at' => $membership_started_at,
-            'membership_expired_at' => $membership_expired_at
+            'membership_started_at' => $user->membership_started_at,
+            'membership_expired_at' => $user->membership_expired_at,
         ]);
         return response()->json([$data]);
     }
@@ -147,16 +135,10 @@ class UserController
                 'phone' => $data['phone'],
                 'allow_email' => $data['allow_email'],
                 'allow_sms' => $data['allow_sms'],
+                'membership_started_at' => $data['membership_started_at'],
+                'membership_expired_at' => $data['membership_expired_at'],
             ]);
-            if (isset($data['membership_started_at']) && isset($data['membership_expired_at'])) {
-                if ($user->availableMembershipsBuilder()->doesntExist()) {
-                    Membership::createWhenUserEdit(
-                        $data['membership_started_at'], $data['membership_expired_at'], $user);
-                } else {
-                    MembershipService::EditUsersMembership(
-                        $data['membership_started_at'], $data['membership_expired_at'], $user);
-                }
-            }
+
             DB::commit();
         } catch (\Exception $exception) {
             Log::error('ACCOUNT UPDATE ERROR', [$exception]);

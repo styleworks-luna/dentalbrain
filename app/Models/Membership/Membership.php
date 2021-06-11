@@ -57,25 +57,29 @@ class Membership extends Model
         return $membership;
     }
 
-    private static function getStartedAtWhenPaid()
+    private static function getStartedAtWhenPaid($user = null)
     {
-        /** @var User $user */
-        $user = Auth::user();
+        if ($user == null) {
+            /** @var User $user */
+            $user = Auth::user();
+        }
 
-        if ($user->availableLatestMembership()) {
-            return $user->availableLatestMembership()->expired_at;
+        if ($user->isPaid()) {
+            return $user->membership_started_at;
         } else {
             return now();
         }
     }
 
-    private static function getExpiredAtWhenPaid($days): Carbon
+    private static function getExpiredAtWhenPaid($days, $user = null): Carbon
     {
-        /** @var User $user */
-        $user = Auth::user();
+        if ($user == null) {
+            /** @var User $user */
+            $user = Auth::user();
+        }
 
-        if ($user->availableLatestMembership()) {
-            return Carbon::parse($user->availableLatestMembership()->expired_at)->addDays($days);
+        if ($user->isPaid()) {
+            return Carbon::parse($user->membership_expired_at)->addDays($days);
         } else {
             return now()->addDays($days);
         }
@@ -91,19 +95,6 @@ class Membership extends Model
             'applied_days' => $days,
             'started_at' => null,
             'expired_at' => null,
-        ]);
-
-        return $membership;
-    }
-
-    static function createWhenUserEdit($startedAt, $expiredAt, $user) {
-
-        $membership = Membership::query()->create([
-            'user_id' => Auth::id(),
-            'pay_status' => Membership::$PAY_PAID,
-            'last_applied_at' => now(),
-            'started_at' => $startedAt,
-            'expired_at' => $expiredAt,
         ]);
 
         return $membership;
@@ -129,17 +120,6 @@ class Membership extends Model
         return $query->where('expired_at', '>', now());
     }
 
-    /**
-     *  사용 중인 유료 회원
-     *
-     * @param $query
-     * @return mixed
-     */
-    public function scopeActive($query)
-    {
-        return $query->where('expired_at', '>', now())->where('started_at', '<', now());
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -150,12 +130,12 @@ class Membership extends Model
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
     }
 
-    public function updateWhenConfirmAnotherPay()
+    public function updateWhenConfirmAnotherPay($user)
     {
         return $this->update([
             'pay_status' => Membership::$PAY_ANOTHER_PAID,
-            'started_at' => self::getStartedAtWhenPaid(),
-            'expired_at' => self::getExpiredAtWhenPaid($this->days),
+            'started_at' => self::getStartedAtWhenPaid($user),
+            'expired_at' => self::getExpiredAtWhenPaid($this->days, $user),
         ]);
     }
 }
