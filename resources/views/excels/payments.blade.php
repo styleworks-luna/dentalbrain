@@ -30,7 +30,9 @@
                 @isset ($payment->title)
                     {{ $payment->title }}
                 @else
-                    유료회원 결제
+                    @if ($payment->applied_days)
+                        {{ $payment->applied_days .'일권' }}
+                    @endif
                 @endisset
             </td>
             <td>{{ $payment->name }}</td>

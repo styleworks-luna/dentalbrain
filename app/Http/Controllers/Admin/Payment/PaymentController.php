@@ -43,7 +43,7 @@ class PaymentController extends Controller
                 'programs.is_online', 'programs.title', 'programs.id as program_id',
                 'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
 
-                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status',
+                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status','memberships.applied_days',
 
                 'users.name', 'users.email', 'users.phone'
             )
