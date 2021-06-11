@@ -136,4 +136,13 @@ class Membership extends Model
     {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
     }
+
+    public function updateWhenConfirmAnotherPay()
+    {
+        return $this->update([
+            'pay_status' => Membership::$PAY_ANOTHER_PAID,
+            'started_at' => self::getStartedAtWhenPaid(),
+            'expired_at' => self::getExpiredAtWhenPaid($this->days),
+        ]);
+    }
 }

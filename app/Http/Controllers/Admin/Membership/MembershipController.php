@@ -10,6 +10,7 @@ use App\Services\Search\SearchService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MembershipController extends Controller
@@ -67,5 +68,24 @@ class MembershipController extends Controller
     {
         $memberships = $this->search($request)->get();
         return Excel::download(new MembershipExport($memberships), '유료 회원 정보 엑셀.xlsx');
+    }
+
+    public function confirmAnotherPay(Request $request, Membership $membership)
+    {
+        try {
+            $membership->updateWhenConfirmAnotherPay();
+            $membership->payment->updateWhenConfirmAnotherPay();
+
+        } catch (\Exception $exception) {
+            Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$exception]);
+
+            return response()->json([
+                'msg' => '오류가 발생하였습니다.'
+            ], 500);
+        }
+
+        return response()->json([
+            'msg' => '확인 처리되었습니다.'
+        ]);
     }
 }

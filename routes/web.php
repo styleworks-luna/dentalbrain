@@ -295,6 +295,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
 
             Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
+
+            Route::post('{membership}/confirm', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'confirmAnotherPay'])->name('confirm.anotherPay');
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
