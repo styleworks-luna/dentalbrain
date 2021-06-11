@@ -1,7 +1,7 @@
 <template>
     <layout title="결제정보">
         <template v-slot:button>
-            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDate}&end_date=${endDate}&status=${orderStatus}&category=${order}`"
+            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDateForm}&end_date=${endDateForm}&status=${orderStatus}&category=${order}`"
                class="btn btn-info" download>엑셀 다운로드</a>
         </template>
         <template v-slot:search>
@@ -315,6 +315,12 @@ export default {
                     name: '결제취소'
                 },
             ]
+        },
+        startDateForm() {
+            return this.startDate ? this.Helper.dateFormatYDM(this.startDate) + ' 00:00:00' : '';
+        },
+        endDateForm() {
+            return this.endDate ? this.Helper.dateFormatYDM(this.endDate) + ' 23:59:59' : '';
         }
     },
     methods: {
