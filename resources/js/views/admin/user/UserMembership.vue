@@ -208,7 +208,7 @@ export default {
                 {
                     name: 'job_id',
                     text: '직업군',
-                    width: '10%'
+                    width: '8%'
                 },
                 {
                     name: 'started_at',
@@ -228,7 +228,7 @@ export default {
                 {
                     name: 'status',
                     text: '결제상태',
-                    width: '6%',
+                    width: '8%',
                 },
                 {
                     name: 'membership_status',
