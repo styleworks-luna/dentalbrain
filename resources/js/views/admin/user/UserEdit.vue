@@ -83,7 +83,7 @@
                 </template>
             </single-group>
 
-            <!-- 이메일 수신 -->
+            <!-- SMS 수신 -->
             <single-group name="SMS 수신"
                           :isRow="true"
                           :size="2.5">
