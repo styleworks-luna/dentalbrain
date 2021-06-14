@@ -61,22 +61,22 @@
                     <table>
                         <tr>
                             <th>이름</th>
-                            <td><em>{{ auth()->user()->name }}</em></td>
+                            <td><em>{{ $user->name }}</em></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td><em>{{ auth()->user()->login_id }}</em></td>
+                            <td><em>{{ $user->login_id }}</em></td>
                         </tr>
                         <tr>
                             <th>이메일</th>
                             <td>
-                                <em>{{ auth()->user()->email }}</em>
+                                <em>{{ $user->email }}</em>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                <em>{{ auth()->user()->phone }}</em>
+                                <em>{{ $user->phone }}</em>
                             </td>
                         </tr>
                     </table>
@@ -161,33 +161,32 @@
 
                 <section class="payment-information">
                     <h3>결제정보</h3>
-
-                    <div class="payment-result">
-                        @if($program->ticket->is_free)
+                    <div class="payment-result-wrap">
+                        @if($program->getUserSpecificFree())
                             <span>결제금액</span>
                             <span class="price"><em>무료</em></span>
                         @else
-                            <span>
-                                {{ changePaymentMethodName($programStudent->payment->method) }}
-                            </span>
-
-                            @if($program->repeated())
-                                <span class="price"><em>{{ number_format($program->ticket->repeat_price) }}원</em></span>
+                            @if ($programStudent->payment->method == '가상계좌')
+                                <div class="payment-result">
+                                    <span>{{ changePaymentMethodName($programStudent->payment->method) }}</span>
+                                    <span class="price"><em>{{ number_format($programStudent->payment->totalAmount) }}원</em></span>
+                                </div>
+                                <p class="tip">
+                                    ※ 계좌입금 후 신청이 완료됩니다.<br>
+                                    ※ 마이페이지 – 결제내역에서 계좌 확인이 가능합니다.
+                                </p>
+                            @elseif($programStudent->payment->method == '계좌입금')
+                                <div class="payment-result">
+                                    <span>{{ changePaymentMethodName($programStudent->payment->method) }}</span>
+                                    <span class="price"><em>{{ number_format($programStudent->payment->totalAmount) }}원</em></span>
+                                </div>
+                                <p class="account">신한은행 140-010-094358<br>예금주 : ㈜브레인스펙병원교육개발원</p>
                             @else
-                                <span class="price"><em>{{ number_format($program->ticket->price) }}원</em></span>
+                                <span>{{ changePaymentMethodName($programStudent->payment->method) }}</span>
+                                <span class="price"><em>{{ number_format($programStudent->payment->totalAmount) }}원</em></span>
                             @endif
-
                         @endif
                     </div>
-                    @isset($programStudent->payment)
-                        @if ($programStudent->payment->method == '가상계좌')
-                            <div class="tip">
-                                ※ 계좌입금 후 신청이 완료됩니다.<br>
-                                ※ 마이페이지 – 결제내역에서 계좌 확인이 가능합니다.
-                            </div>
-                        @endif
-                    @endisset
-
                 </section>
 
                 <section class="btn-wrap">

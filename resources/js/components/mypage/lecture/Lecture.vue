@@ -4,7 +4,7 @@
             <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
             <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
             <template v-else>
-                <lecture-like-list :listData="likeList.data"></lecture-like-list>
+                <lecture-like-list :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
             </template>
         </div>
 
@@ -29,14 +29,21 @@
                     </nav>
                 </div>
             </template>
-
         </template>
 
         <template v-else>
-            <div class="infinite-wrapper">
-                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
-                                  force-use-infinite-wrapper></infinite-loading>
-            </div>
+            <template v-if="!like">
+                <div class="infinite-wrapper">
+                    <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
+                                      force-use-infinite-wrapper></infinite-loading>
+                </div>
+            </template>
+            <template v-else>
+                <div class="infinite-wrapper">
+                    <infinite-loading @distance="1" :identifier="infiniteLikeId" @infinite="infiniteLikeHandler"
+                                      force-use-infinite-wrapper></infinite-loading>
+                </div>
+            </template>
         </template>
     </div>
 </template>
@@ -69,7 +76,9 @@ export default {
             order: 'newest',
             page: 1,
             mobileList: [],
+            mobileLikeList: [],
             infiniteId: +new Date(),
+            infiniteLikeId: +new Date(),
         }
     },
     mounted() {
@@ -79,7 +88,6 @@ export default {
     methods: {
         handleSetOrder(order) {
             this.order = order;
-
             if (this.like) {
                 this.getLikeData();
             } else {
@@ -132,6 +140,7 @@ export default {
                 order: this.order,
                 page: page
             };
+
             Mypage.getData(params).then(res => {
                 if (res.data.data.data.length) {
                     $.each(res.data.data.data, function (key, value) {
@@ -145,10 +154,36 @@ export default {
 
             this.page = this.page + 1;
         },
+        infiniteLikeHandler($state, page = this.page) {
+            let vm = this;
+
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                order: this.order,
+                page: page
+            };
+
+            Mypage.getLikeData(params).then(res => {
+                if (res.data.data.length) {
+                    $.each(res.data.data, function (key, value) {
+                        vm.mobileLikeList.push(value);
+                    });
+                    $state.loaded();
+                } else {
+                    $state.complete();
+                }
+            });
+            this.page = this.page + 1;
+        },
         changeType() {
             this.page = 1;
             this.mobileList = [];
+            this.mobileLikeList = [];
             this.infiniteId += 1;
+            this.infiniteLikeId += 1;
         },
     },
 }

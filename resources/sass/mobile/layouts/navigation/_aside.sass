@@ -1,3 +1,5 @@
+@import '@sass/components/_input.sass'
+
 .aside
     +size(88.8888888vw, 100%)
     +background(null, null, null, $white)
@@ -116,7 +118,6 @@
                     color: $gray-200
 
     .menu-controller
-        +margin(bottom 45.888889vw)
         +padding(5vw 8.3333333vw)
 
         .main-menu, .CI
@@ -163,6 +164,27 @@
             &:last-child
                 float: right
 
+    .search-controller
+        +padding(5vw 8.3333333vw)
+        position: relative
+
+        input[type="text"]
+            +input(white-light-fill)
+            +size(72.22222222vw, 10.555555vw)
+
+        .btn-search
+            +size(8.3333333vw, 8.3333333vw)
+            +border(0)
+            position: absolute
+            top: 5.8333333vw
+            right: 11.388888vw
+            background-color: inherit
+            cursor: pointer
+
+            .search-icon
+                +size(5.555555vw, 5.555555vw)
+                +background('/images/desktop/global/icon_search.png',no-repeat, center center)
+                display: block
 
 .aside-dim
     +size(100%, 100%)
