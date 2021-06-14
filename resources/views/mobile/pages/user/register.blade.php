@@ -17,7 +17,7 @@
     <a href="" class="btn-back"></a>
     <h1>회원가입</h1>
 @endsection
-re
+
 @section('content')
 
     <section id="content" class="content">
