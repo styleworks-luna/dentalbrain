@@ -1,4 +1,4 @@
-@extends('mobile.layouts.frames.basic_frame')
+@extends('mobile.layouts.frames.except_frame')
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
@@ -17,7 +17,7 @@
     <a href="" class="btn-back"></a>
     <h1>회원가입</h1>
 @endsection
-
+re
 @section('content')
 
     <section id="content" class="content">
@@ -254,6 +254,16 @@
                                                            class="email-consent"
                                                            @if(old('email-consent')) checked @endif>
                                                     <label for="email-consent"> (선택) 이메일 수신</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="checkbox-from">
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox" name="sms-consent"
+                                                           id="sms-consent"
+                                                           @if(old('sms-consent')) checked @endif>
+                                                    <label for="sms-consent"> (선택) 문자 수신</label>
                                                 </div>
                                             </div>
                                         </li>
