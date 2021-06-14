@@ -185,7 +185,6 @@
                                 <span>{{ changePaymentMethodName($programStudent->payment->method) }}</span>
                                 <span class="price"><em>{{ number_format($programStudent->payment->totalAmount) }}원</em></span>
                             @endif
-
                         @endif
                     </div>
                 </section>
