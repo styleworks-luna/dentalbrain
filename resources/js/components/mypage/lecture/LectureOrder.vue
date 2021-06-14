@@ -3,11 +3,17 @@
         <h2 v-if="!like">신청한 강의</h2>
         <h2 v-else>찜 강의내역</h2>
         <template v-if="!mobile">
-        <ul>
-            <li :class="{'active': is_active == 1}" @click.prevent="handleSetOrder('newest',1)"><a href="">최신순</a></li>
-            <li :class="{'active': is_active == 2}" @click.prevent="handleSetOrder('online',2)"><a href="">온라인</a></li>
-            <li :class="{'active': is_active == 3}" @click.prevent="handleSetOrder('offline',3)"><a href="">오프라인</a></li>
-        </ul>
+            <ul>
+                <li :class="{'active': is_active == 1}" @click.prevent="handleSetOrder('newest',1)">
+                    <a href="">최신순</a>
+                </li>
+                <li :class="{'active': is_active == 2}" @click.prevent="handleSetOrder('online',2)">
+                    <a href="">온라인</a>
+                </li>
+                <li :class="{'active': is_active == 3}" @click.prevent="handleSetOrder('offline',3)">
+                    <a href="">오프라인</a>
+                </li>
+            </ul>
         </template>
         <template v-else>
             <div class="lecture-menu">
@@ -24,7 +30,7 @@
 <script>
 export default {
     props: {
-      'mobile': Boolean,
+        'mobile': Boolean,
         'like': Boolean,
     },
     data() {
