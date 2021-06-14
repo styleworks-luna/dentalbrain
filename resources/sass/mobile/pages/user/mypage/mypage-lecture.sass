@@ -162,13 +162,19 @@ body
                     color: $page-color
 
         .btn-zone
-            float: right
-
             a
                 +btn(null, 1px solid $border-color-base)
                 +size(33.3333333vw, 11.6666666vw)
                 font-weight: bold
+                float: right
                 line-height: 11.6666666vw
+
+            .btn-none-active
+                +border(0)
+                +background(null, null, null, $border-color-light)
+                color: $gray-900
+                float: left
+                cursor: auto
 
         .content-button-offline
             overflow: hidden
