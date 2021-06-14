@@ -34,43 +34,57 @@
                                     @switch($payment->status)
                                         @case('READY')
                                         @case('IN_PROGRESS')
-                                        <span>진행 중</span>
+                                        <td>진행 중</td>
                                         @break
 
                                         @case('WAITING_FOR_DEPOSIT')
-                                        <span>입금 대기중</span>
+                                        <td>입금 대기중</td>
                                         @break
 
                                         @case('DONE')
-                                        <span>결제 완료</span>
+                                        @case('ANOTHER_DONE')
+                                        <td>결제 완료</td>
                                         @break
 
                                         @case('ABORTED')
-                                        <span>결제 오류</span>
+                                        <td>결제 오류</td>
                                         @break
 
                                         @case('CANCELED')
                                         @case('PARTIAL_CANCELED')
-                                        <span class="cancel">결제 취소</span>
+                                        <td class="cancel">결제 취소</td>
+                                        @break
+
+                                        @case('ANOTHER_PROGRESS')
+                                        <td>입금 대기</td>
+                                        @break
+
+                                        @case('ANOTHER_REJECTED')
+                                        <td>신청 취소</td>
                                         @break
 
                                         @default
-                                        <span>확인 중</span>
+                                        <td>확인 중</td>
                                     @endswitch
                                 </div>
                             </div>
 
                             <div class="information-wrap">
                                 <div class="lecture-image">
-                                    <img src="{{ $payment->student->ticket->program->thumbnail->url }}" alt="">
+                                    @isset($payment->student)
+                                        <img src="{{ $payment->student->program->thumbnail->url }}" alt="">
+                                    @else
+                                        <img src="" alt="">
+                                    @endisset
+
                                 </div>
                                 <div class="lecture-information">
-                                    <h3 class="lecture-name">{{ $payment->student->ticket->program->title }}</h3>
+                                    <h3 class="lecture-name">{{ $payment->student->program->title }}</h3>
                                     <div class="payment-information">
-                                        <span>
+                                        <span class="payment-method">
                                             {{ changePaymentMethodName($payment->method) }}
                                         </span>
-                                        <span>{{ number_format($payment->totalAmount) }}원</span>
+                                        <span class="payment-price">{{ number_format($payment->totalAmount) }}원</span>
                                     </div>
                                 </div>
                             </div>
@@ -90,6 +104,8 @@
                                         <p>예금주 : {{ $payment->va_customerName }}</p>
                                         <p>납입기한 : {{ date_format($payment->va_dueDate,'Y.m.d G:i:s') }}</p>
                                     </div>
+                                @elseif($payment->method == '계좌입금' && $payment->status =='ANOTHER_PROGRESS')
+                                        <a href="#" onclick="event.preventDefault()" class="btn-none-active">입금대기</a>
                                 @endif
                                 @isset($payment->cashRe)
                                 @endisset

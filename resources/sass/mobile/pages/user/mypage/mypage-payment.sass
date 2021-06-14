@@ -8,6 +8,7 @@ body
 
 .payment-history
     +padding(bottom 2.777777vw)
+
     li
         +margin(top 2.7777777vw)
         +padding(3.3333333vw 4.44444444vw 4.444444444vw 4.444444444vw)
@@ -60,6 +61,16 @@ body
 
             .payment-information
                 +padding(top 5vw)
+                overflow: hidden
+
+                .payment-method
+                    float: left
+                    font-size: 3.333333vw
+                    color: $gray-700
+
+                .payment-price
+                    float: right
+                    color: $page-color
 
         .receipt
             +margin(top 4.4444444vw)
@@ -69,6 +80,10 @@ body
                 +btn(null, 1px solid $border-color-base)
                 font-weight: bold
                 line-height: 11.6666666vw
+
+            .btn-none-active
+                +background(null, null, null, $border-color-light)
+                color: $gray-900
 
             .deposit-detail
                 display: none
