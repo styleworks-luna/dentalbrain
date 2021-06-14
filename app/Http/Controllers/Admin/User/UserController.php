@@ -9,11 +9,9 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Exports\UserExport;
-use App\Models\Membership\Membership;
 use App\Models\User;
 use App\Models\UserJob;
 use App\Models\UserJobName;
-use App\Services\Membership\MembershipService;
 use App\Services\Search\SearchService;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
@@ -172,8 +170,8 @@ class UserController
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
             'allow_sms' => ['nullable', 'boolean'],
-            'membership_started_at' => ['required_with:membership_expired_at', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
-            'membership_expired_at' => ['required_with:membership_started_at', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
+            'membership_started_at' => ['required_with:membership_expired_at', 'nullable', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
+            'membership_expired_at' => ['required_with:membership_started_at', 'nullable', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;

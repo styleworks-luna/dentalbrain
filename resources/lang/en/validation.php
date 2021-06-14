@@ -166,7 +166,15 @@ return [
         ],
         'reason' => [
             'required' => '취소이유를 작성해 주세요.'
-        ]
+        ],
+        'membership_started_at' => [
+            'required_with' => '유료회원 종료일도 작성해 주세요.',
+            'date_format' => '시작일의 날짜가 형식에 맞지 않습니다.',
+        ],
+        'membership_expired_at' => [
+            'required_with' => '유료회원 시작일도 작성해 주세요.',
+            'date_format' => '종료일의 날짜가 형식에 맞지 않습니다.',
+        ],
     ],
 
     /*
@@ -201,6 +209,8 @@ return [
         'address' => '주소',
         'membership_started_at' => '유료회원 시작일',
         'membership_expired_at' => '유료회원 종료일',
+        'license_num' => '면허번호',
+        'name' => '이름',
     ],
 
 ];
