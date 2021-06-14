@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Payment;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
-use App\Models\User;
 use App\Services\Program\ProgramCancelTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,7 +25,7 @@ class CancelController extends Controller
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
         $cancelDto = $concrete->validateAdminCancel($request, $program, $student->user);
-        if ($cancelDto === false) {
+        if ($cancelDto === null) {
             return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
         }
 
@@ -41,7 +40,7 @@ class CancelController extends Controller
     public function revert(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
         if ($student->pay_status != ProgramStudent::$PAY_ANOTHER_PAID) {
-            return response()->json(['message' => '계좌 입금 확인되지 않았습니다.'],400);
+            return response()->json(['message' => '계좌 입금 확인되지 않았습니다.'], 400);
         }
 
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);

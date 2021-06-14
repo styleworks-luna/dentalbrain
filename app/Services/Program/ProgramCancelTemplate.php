@@ -73,15 +73,11 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      * @param Request $request
      * @param Program $program
      * @param User $user
-     * @return CancelPaymentDto|false validated data
+     * @return CancelPaymentDto|null validated data
      */
-    public function validateAdminCancel(Request $request, Program $program, User $user)
+    public function validateAdminCancel(Request $request, Program $program, User $user): ?CancelPaymentDto
     {
-        $dto = CancelPaymentDto::createWhenProgramCancelAdmin($request, $program, $user);
-        if ($dto == null) {
-            return false;
-        }
-        return $dto;
+        return CancelPaymentDto::createWhenProgramCancelAdmin($request, $program, $user);
     }
 
     /**
