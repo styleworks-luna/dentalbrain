@@ -142,8 +142,7 @@ class ProgramStudent extends Model
      */
     public function cancelAvailable()
     {
-        if ($this->attributes['pay_status'] != self::$PAY_PAID
-            && $this->attributes['pay_status'] != self::$PAY_ANOTHER_PAID) {
+        if (!in_array($this->pay_status, self::$USER_CANCEL_AVAILABLE_STATUSES)) {
             return false;
         }
 

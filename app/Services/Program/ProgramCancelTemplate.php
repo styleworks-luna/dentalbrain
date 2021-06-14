@@ -85,15 +85,11 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      *
      * @param Request $request
      * @param Program $program
-     * @return CancelPaymentDto|false validated data, 실패시 false 리턴함.
+     * @return CancelPaymentDto|null validated data, 실패시 false 리턴함.
      */
-    public function validateUserCancel(Request $request, Program $program)
+    public function validateUserCancel(Request $request, Program $program): ?CancelPaymentDto
     {
-        $dto = CancelPaymentDto::cancelWhenProgramCancelUser($request, $program);
-        if ($dto == null) {
-            return false;
-        }
-        return $dto;
+        return CancelPaymentDto::cancelWhenProgramCancelUser($request, $program);
     }
 
     /**

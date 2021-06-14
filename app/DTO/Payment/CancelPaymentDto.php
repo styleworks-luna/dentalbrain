@@ -29,7 +29,16 @@ class CancelPaymentDto
         $this->bank = $bank;
         $this->accountNumber = $accountNumber;
         $this->holderName = $holderName;
-        $this->data = $request->all();
+        if ($request != null) {
+            $this->data = $request->all();
+        } else {
+            $this->data = [
+                'reason' => $this->reason,
+                'bank' => $this->bank,
+                'accountNumber' => $this->accountNumber,
+                'holderName' => $this->holderName,
+            ];
+        }
     }
 
     /**
@@ -51,22 +60,20 @@ class CancelPaymentDto
     /**
      * @param $program
      * @param Authenticatable| User $user
-     * @return mixed|null
+     * @return ProgramStudent|null
      */
-    private static function validateAndGetStudent($program, $user)
+    private static function validateAndGetStudent($program, $user): ?ProgramStudent
     {
         $student = $program->students()
             ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [
-                ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS,
-                ProgramStudent::$PAY_ANOTHER_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID
-            ]);
+            ->whereIn('pay_status', ProgramStudent::$USER_CANCEL_AVAILABLE_STATUSES);
 
         if ($student->count() > 1) {
             Log::error('CANCEL ERROR, 한 개보다 많습니다.');
             return null;
         }
-        return $student;
+
+        return $student->first();
     }
 
     /**
@@ -106,7 +113,11 @@ class CancelPaymentDto
 
         $data = $v->validated();
 
-        return new CancelPaymentDto($data['reason'], $data['bank'], $data['accountNumber'], $data['holderName']);
+        return new CancelPaymentDto(
+            $data['reason'],
+            $data['bank'] ?? null,
+            $data['accountNumber'] ?? null,
+            $data['holderName'] ?? null);
     }
 
     /**
@@ -122,6 +133,7 @@ class CancelPaymentDto
         }
 
         if (!$student->cancelAvailable()) {
+            Log::error('STUDENT CANNOT CANCEL PROGRAM', [$program]);
             return null;
         }
 

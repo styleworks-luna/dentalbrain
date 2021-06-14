@@ -31,7 +31,7 @@ class CancelController extends Controller
         $student = Auth::user()->students()->where('program_id', '=', $program->id)->first();
 
         $dto = $concrete->validateUserCancel($request, $program);
-        if ($dto == false) {
+        if ($dto == null) {
             // validation 실패 처리
             return response()->json([
                 'msg' => '유효하지 않은 요청입니다.'
