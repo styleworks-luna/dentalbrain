@@ -4,7 +4,7 @@
             <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
             <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
             <template v-else>
-                <lecture-like-list :listData="likeList.data"></lecture-like-list>
+                <lecture-like-list :listData="likeList.data" :mobile="mobile"></lecture-like-list>
             </template>
         </div>
 
