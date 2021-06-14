@@ -78,7 +78,7 @@ export default {
             mobileList: [],
             mobileLikeList: [],
             infiniteId: +new Date(),
-            infiniteLikeId: 'like' + new Date(),
+            infiniteLikeId: +new Date(),
         }
     },
     mounted() {
