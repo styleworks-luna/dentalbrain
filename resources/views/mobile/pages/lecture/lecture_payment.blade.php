@@ -116,6 +116,17 @@
 
                 $('.ui-selectmenu-button').css('display', 'none');
             })
+
+            // 계좌입금 pop-up
+            $('.payment-layer-wrapper .btn-confirm').click(function (e) {
+                $('#separate_form').submit();
+            });
+
+            $('.payment-layer-wrapper .btn-cancel').click(function (e) {
+                $('.dim').css('display', 'none');
+                $('.payment-layer-wrapper .layer').css('display', 'none');
+            })
+
         });
 
         function getParameter(param) {
@@ -374,6 +385,7 @@
                     @csrf
                 </form>
             </div>
+            @include('desktop.component.popup.payment.payment_pop')
         </div>
     </section>
 @endsection
