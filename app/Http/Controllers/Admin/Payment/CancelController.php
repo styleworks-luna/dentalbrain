@@ -25,16 +25,16 @@ class CancelController extends Controller
     {
         $concrete = ProgramCancelTemplate::getProgramCancelConcrete($program);
 
-        $validatedData = $concrete->validateAdminCancel($request, $program, User::find($student->user_id));
-        if ($validatedData === false) {
+        $cancelDto = $concrete->validateAdminCancel($request, $program, $student->user);
+        if ($cancelDto === false) {
             return response()->json(['message' => '유효하지 않은 요청입니다.'], 422);
         }
 
-        $response = $concrete->cancel($program, $student, $validatedData);
-
+        $response = $concrete->cancel($program, $student, $cancelDto);
         if ($response === false) {
             return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
         }
+
         return response()->json(['message' => '취소되었습니다.']);
     }
 

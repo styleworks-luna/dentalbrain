@@ -4,13 +4,12 @@
 namespace App\Services\Program;
 
 
-use App\Models\Payments\Payment;
+use App\DTO\Payment\CancelPaymentDto;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
-use App\Models\Program\Survey\SurveyCategory;
 use App\Models\User;
-use App\Payments\TossPayments\TossPayments;
-use App\Services\File\SurveyFile;
+use App\Services\Payment\PaymentService;
+use App\Services\Survey\SurveyAnswerService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,67 +38,23 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      *
      * @param Program $program
      * @param ProgramStudent $student
-     * @param array $validatedData
+     * @param CancelPaymentDto $dto
      * @return boolean
      */
-    public function cancel(Program $program, ProgramStudent $student, array $validatedData = []): bool
+    public function cancel(Program $program, ProgramStudent $student, CancelPaymentDto $dto): bool
     {
         try {
             DB::beginTransaction();
 
             // 질문 답변 삭제 진행
-            $builderOfSurveyAnswers = $program->answers()->where('user_id', '=', $student->user_id);
-
-            //질문 답변 - 파일 삭제
-            $surveyFiles = $builderOfSurveyAnswers->where('category_id', '=', SurveyCategory::$FILE)
-                ->get()->mapInto(SurveyFile::class);
-
-            $surveyFiles->map(function ($item, $key) {
-                return $item->deleteFile();
-            });
-
-            $program->answers()->where('user_id', '=', $student->user_id)->delete();
+            SurveyAnswerService::deleteSurveyAnswersOfUser($program, $student->user);
 
             // 결제 취소 진행.
             if ($student->payment()->exists()) {
-                if ($student->pay_status == ProgramStudent::$PAY_PAID) {
-                    // PG 사 통한 결제
-                    $payment = $student->payment;
-                    $tossPayment = new TossPayments($payment->paymentKey);
-                    switch ($payment->method) {
-                        case '계좌이체':
-                            $response = $tossPayment->cancelTransfer($validatedData['reason']);
-                            break;
-                        case '카드':
-                            $response = $tossPayment->cancelCard($validatedData['reason']);
-                            break;
-                        case '가상계좌':
-                            $response = $tossPayment->cancelVirtualAccount(
-                                $validatedData['reason'], $validatedData['bank'], $validatedData['accountNumber'], $validatedData['holderName']
-                            );
-                            break;
-                        //case '휴대폰':
-                        default:
-                            $response = false;
-                            Log::error('INVALID METHOD', $validatedData);
-                            break;
-                    }
-                    if ($response === false) {
-                        DB::rollBack();
-                        return false;
-                    }
-
-                    $payment->updateByToss($response);
-
-                } elseif ($student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID) {
-                    /** @var Payment $payment */
-                    $payment = $student->payment;
-                    $payment->cancelAnotherPay();
-                }
+                PaymentService::cancelPaid($student->payment, $student->pay_status, $dto);
             }
 
-            $student->updateWhenCancel($program->is_free);
+            $student->updateWhenCancel($program->getUserSpecificFree($student->user));
 
             DB::commit();
             return true;
@@ -118,52 +73,15 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      * @param Request $request
      * @param Program $program
      * @param User $user
-     * @return array|false validated data
+     * @return CancelPaymentDto|false validated data
      */
     public function validateAdminCancel(Request $request, Program $program, User $user)
     {
-        $base = $program->students()
-            ->where('user_id', '=', $user->id)
-            ->whereIn('pay_status', [
-                ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_REFUND_PROCESS,
-                ProgramStudent::$PAY_ANOTHER_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID
-            ]);
-        if ($base->count() > 1) {
-            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+        $dto = CancelPaymentDto::createWhenProgramCancelAdmin($request, $program, $user);
+        if ($dto == null) {
             return false;
         }
-
-        $student = $base->first();
-
-        if ($program->is_free) {
-            // 무료의 경우 reason 및 다른 params 필요없음
-            // 더미 값.
-            return ['reason' => '무료 강의 취소'];
-        }
-
-        if ($student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-            || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
-            // 별도 결제의 경우 reason 및 다른 params 필요없음
-            // 더미 값
-            return ['reason' => '별도 결제 취소'];
-        }
-
-        $v = Validator::make($request->all(), [
-            'reason' => ['required', 'string'],
-        ])->sometimes(
-        // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
-            ['bank', 'accountNumber', 'holderName'],
-            ['required', 'string'],
-            function ($input) use ($student) {
-                return $student->payment->method == '가상계좌';
-            });
-
-        if ($v->fails()) {
-            Log::debug('VALIDATE INFO', $v->failed());
-            return false;
-        }
-
-        return $v->validated();
+        return $dto;
     }
 
     /**
@@ -171,47 +89,15 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      *
      * @param Request $request
      * @param Program $program
-     * @return array|false validated data, 실패시 false 리턴함.
+     * @return CancelPaymentDto|false validated data, 실패시 false 리턴함.
      */
     public function validateUserCancel(Request $request, Program $program)
     {
-        $base = $program->students()
-            ->where('user_id', '=', Auth::id())
-            ->where('pay_status', '=', ProgramStudent::$PAY_PAID);
-        if ($base->count() > 1) {
-            Log::error('CANCEL ERROR, 한 개보다 많습니다.');
+        $dto = CancelPaymentDto::cancelWhenProgramCancelUser($request, $program);
+        if ($dto == null) {
             return false;
         }
-
-        $student = $base->first();
-
-        if (!$student->cancelAvailable()) {
-            return false;
-        }
-
-        if ($program->is_free) {
-            return ['reason' => '무료 강의 취소 신청'];
-        }
-
-        if ($student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-            || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
-            // 별도 결제의 경우 reason 및 다른 params 필요없음
-            // 더미 값
-            return ['reason' => '별도 결제 취소'];
-        }
-
-        $v = Validator::make($request->all(), [
-            'reason' => ['required', 'string'],
-        ])->sometimes(
-        // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
-            ['bank', 'accountNumber', 'holderName'],
-            ['required', 'string'],
-            function ($input) use ($student) {
-                return $student->payment->method == '가상계좌';
-            });
-
-        return $v->validated();
-
+        return $dto;
     }
 
     /**

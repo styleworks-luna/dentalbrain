@@ -277,9 +277,11 @@ class Program extends Model
         return (int)($price * 7 / 10);
     }
 
-    public function getUserSpecificFree(): bool
+    public function getUserSpecificFree($user = null): bool
     {
-        $user = Auth::user();
+        if ($user == null) {
+            $user = Auth::user();
+        }
 
         // 유료회원 가격 적용.
         if ($user->hasMembership) {
