@@ -183,14 +183,12 @@
                         <tr>
                             <th>이메일</th>
                             <td>
-                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
                                 <em>{{ auth()->user()->email }}</em>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
                                 <em>{{ auth()->user()->phone }}</em>
                             </td>
                         </tr>
@@ -279,6 +277,7 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
+                            {{--무료는 존재할 수 없음--}}
                             @if ($program->repeatable())
                                 <td>
                                     <em>{{ '재수강 할인가:' . number_format($price).'원' }}</em>
