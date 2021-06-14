@@ -365,8 +365,11 @@ body
 // 결제 완료 페이지
 .lecture-result
     .payment-information
-        .payment-result
+        .payment-result-wrap
             overflow: hidden
+
+            .payment-result
+                overflow: hidden
 
             span
                 +padding(top 5.5555555vw)
@@ -381,7 +384,7 @@ body
                     font-weight: bold
                     color: $page-color
 
-        .tip
+        .tip, .account
             +padding(top 2.777777vw)
             font-size: 3.0555555vw
             color: $gray-900
