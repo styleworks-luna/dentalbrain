@@ -104,8 +104,14 @@
                                         <p>예금주 : {{ $payment->va_customerName }}</p>
                                         <p>납입기한 : {{ date_format($payment->va_dueDate,'Y.m.d G:i:s') }}</p>
                                     </div>
-                                @elseif($payment->method == '계좌입금' && $payment->status =='ANOTHER_PROGRESS')
-                                        <a href="#" onclick="event.preventDefault()" class="btn-none-active">입금대기</a>
+                                @elseif($payment->method == '계좌입금' && $payment->status == 'ANOTHER_PROGRESS')
+                                    <a href="" class="waiting-deposit">자세히 보기</a>
+                                    <div class="deposit-detail">
+                                        <p>입금 계좌 : 신한은행 140-010-094358 </p>
+                                        <p>예금주 : (주)브레인스펙병원교육개발원</p>
+                                    </div>
+                                @elseif($payment->method == '계좌입금' && ($payment->status == 'DONE' || $payment->status == 'ANOTHER_DONE'))
+                                    <span class="tip">(영수증 관리자 문의)</span>
                                 @endif
                                 @isset($payment->cashRe)
                                 @endisset
