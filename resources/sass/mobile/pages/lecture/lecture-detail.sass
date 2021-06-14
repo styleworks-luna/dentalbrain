@@ -84,23 +84,35 @@
             +margin(top 8.3333333vw)
             +border-radius(2.7777777vw)
             +background(null, null, null, $background-color-price)
-            overflow: hidden
 
-            span
-                +size(38.888888vw)
-                +padding(5.5555555vw)
-                font-size: 3.8888888vw
-                display: block
-                float: left
-                text-align: left
-                color: $gray-700
+            .price-individual
+                overflow: hidden
 
-            p
-                +padding(5.5555555vw)
-                float: right
-                font-size: 5vw
-                font-weight: bold
-                color: $page-color
+                .lecture-exclude-price
+                    color: $gray-c
+                    text-decoration: line-through
+
+                .exclude-price
+                    color: $gray-c
+
+                .price-hidden
+                    display: none
+
+                span
+                    +size(38.888888vw)
+                    +padding(5.5555555vw)
+                    font-size: 3.8888888vw
+                    display: block
+                    float: left
+                    text-align: left
+                    color: $gray-700
+
+                p
+                    +padding(5.5555555vw)
+                    float: right
+                    font-size: 5vw
+                    font-weight: bold
+                    color: $page-color
 
     .lecture-btn
         +size(100%)
