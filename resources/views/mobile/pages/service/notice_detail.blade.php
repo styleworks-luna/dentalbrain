@@ -25,7 +25,9 @@
                                 </div>
                             </div>
                             <div class="notice-detail-content">
-                                <p>{{ $notice -> content }}</p>
+                                <div class="fr-element fr-view">
+                                    <p>{!! $notice -> content !!}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
