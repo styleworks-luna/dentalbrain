@@ -96,6 +96,13 @@ export default {
         infiniteHandler($state, page = this.page) {
             let vm = this;
 
+            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            keyword = decodeURIComponent(keyword);
+
+            if(keyword.length > 0) {
+                document.querySelector('.search-text').innerText = '‘' + keyword + '’';
+            }
+
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
@@ -104,6 +111,7 @@ export default {
                 category_id: this.category_id,
                 per_page: this.per_page,
                 order_by: this.order_by,
+                keyword: keyword ? keyword : null,
                 page: page
             };
             Lecture.getData(params).then(res => {

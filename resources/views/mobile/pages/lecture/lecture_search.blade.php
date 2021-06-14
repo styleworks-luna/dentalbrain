@@ -26,7 +26,7 @@
                 </article>
 
                 <article class="lecture-wrap">
-                    <lecture-all :is_pagination="true" :per_page="12"></lecture-all>
+                    <lecture-all :is_pagination="true" :per_page="12" :mobile="true"></lecture-all>
                 </article>
                 </div>
             </div>
