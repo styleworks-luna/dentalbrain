@@ -10,6 +10,7 @@
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
+            var paymentmethod = $('.payment-method:checked').val();
 
             // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
@@ -18,77 +19,103 @@
                 select_menu.selectmenu();
             }
 
+            $('.payment-method').change(function () {
+                paymentmethod = $('.payment-method:checked').val();
+            });
+
             $('.btn-submit').click(function (e) {
-                var paymentObj;
-                var cardCompany = $('.ui-selectmenu-text').text();
-                var paymentmethod = $('.payment-method:checked').val();
+                if (paymentmethod == "계좌입금") {
+                    $('.dim').css('display', 'block');
+                    $('.payment-layer-wrapper .layer').css('display', 'block');
+                } else {
+                    var paymentObj;
+                    var cardCompany = $('.ui-selectmenu-text').text();
 
-                const amount = {{ $program->repeated() ? $program->ticket->repeat_price : $program->ticket->price }};
-                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                const orderName = '{{$program->title . ', ' . $program->ticket->name}}';
-                const customerName = '{{ auth()->user()->name }}';
-                const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
-                const customerEmail = '{{ auth()->user()->email }}';
-                const customerMobilePhone = '{{ auth()->user()->phone }}';
+                    const amount = {{ $price }};
+                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                    const orderName = '{{$program->title . ', ' . $program->description}}';
+                    const customerName = '{{ auth()->user()->name }}';
+                    const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+                    const customerEmail = '{{ auth()->user()->email }}';
+                    const customerMobilePhone = '{{ auth()->user()->phone }}';
 
-                e.preventDefault();
+                    if (paymentmethod === '가상계좌') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    } else if (paymentmethod === '카드') {
+                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-                if (paymentmethod === '가상계좌') {
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
-                    };
-                } else if (paymentmethod === '카드') {
-                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
 
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
+                            maxCardInstallmentPlan: maxCardInstallmentPlan,
+                            cardCompany: cardCompany,
+                        };
+                    } else if (paymentmethod === '계좌이체') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    }
 
-                        maxCardInstallmentPlan: maxCardInstallmentPlan,
-                        cardCompany: cardCompany,
-                    };
-                } else if (paymentmethod === '계좌이체') {
-                    paymentObj = {
-                        amount: amount,
-                        orderId: orderId,
-                        orderName: orderName,
-                        customerName: customerName,
-                        successUrl: successUrl,
-                        failUrl: window.location.href,
-                        customerEmail: customerEmail,
-                        customerMobilePhone: customerMobilePhone,
-                    };
+                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                        alert('취소');
+                    });
                 }
-
-                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                    alert('취소');
-                });
             });
 
             // mobile 결제수단 click event
             $('.card-label').click(function () {
-                $('.card-label').addClass('active');
                 $('.transfer-label').removeClass('active');
+                $('.separate-label').removeClass('active');
+
+                $('.card-label').addClass('active');
+
+                $('.separate-tip').css('display','none');
+
                 $('.ui-selectmenu-button').css('display', 'block');
             });
             $('.transfer-label').click(function () {
                 $('.card-label').removeClass('active');
+                $('.separate-label').removeClass('active');
+
                 $('.transfer-label').addClass('active');
+
+                $('.separate-tip').css('display','none');
+
                 $('.ui-selectmenu-button').css('display', 'none');
             });
+            $('.separate-label').click(function () {
+                $('.card-label').removeClass('active');
+                $('.transfer-label').removeClass('active');
+
+                $('.separate-label').addClass('active');
+
+                $('.separate-tip').css('display','block');
+
+                $('.ui-selectmenu-button').css('display', 'none');
+            })
         });
 
         function getParameter(param) {
@@ -269,11 +296,11 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            @if($program->repeated())
+                            @if($program->repeatable())
                                 {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
-                                <td><em>재수강 할인가 :{{ number_format($program->ticket->repeat_price) }}원</em></td>
+                                <td><em>{{ '재수강 할인가:' . number_format($price).'원' }}</em></td>
                             @else
-                                <td><em>{{ number_format($program->ticket->price) }}원</em></td>
+                                <td><em>{{ number_format($price).'원' }}</em></td>
                             @endif
 
                         </tr>
@@ -284,15 +311,22 @@
                             <div class="radio-wrap">
                                 <input type="radio" id="card" name="payment-method"
                                        class="payment-method" value="카드" checked>
-                                <label for="card" class="card-label">신용카드</label>
+                                <label for="card" class="card-label active">신용카드</label>
                             </div>
                             <div class="radio-wrap">
                                 <input type="radio" id="transfer" name="payment-method"
                                        class="payment-method" value="계좌이체">
-                                <label for="transfer"
-                                       class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
+                                <label for="transfer" class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
                             </div>
+                            <div class="radio-wrap">
+                                <div style="overflow: hidden">
+                                    <input type="radio" id="separate" name="payment-method"
+                                           class="payment-method" value="계좌입금">
+                                    <label for="separate"
+                                           class="separate-label">계좌입금</label>
+                                </div>
 
+                            </div>
                             {{--<div class="radio-wrap">
                                 <input type="radio" id="deposit" name="payment-method"
                                        class="payment-method" value="가상계좌">
@@ -300,7 +334,7 @@
                             </div>--}}
                         </div>
                     </div>
-                    <div class="select-wrap">
+                    <div class="payment-sub-wrap">
                         <select name="payment-method" id="credit" class="select-menu">
                             <option value="신한">신한</option>
                             <option value="현대">현대</option>
@@ -328,13 +362,17 @@
                             <option value="다이너스">다이너스</option>
                             <option value="디스커버">디스커버</option>
                         </select>
+                        <p class="separate-tip">신한은행 140-010-094358 <br>예금주 : ㈜브레인스펙병원교육개발원</p>
                     </div>
                 </section>
 
                 <section class="btn-wrap">
-                    <a href="{{ route('lectures.apply',$program->id) }}" class="btn-confirm btn-cancel">취소하기</a>
+                    <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
                     <button type="button" class="btn-confirm btn-submit">결제하기</button>
                 </section>
+                <form action="{{ route('lectures.anotherPay',[$program]) }}" method="POST" id="separate_form">
+                    @csrf
+                </form>
             </div>
         </div>
     </section>

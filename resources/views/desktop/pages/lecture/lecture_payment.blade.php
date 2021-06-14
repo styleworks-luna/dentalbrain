@@ -83,8 +83,7 @@
                         alert('취소');
                     });
                 }
-            })
-            ;
+            });
 
             // 계좌입금 pop-up
             $('.payment-layer-wrapper .btn-confirm').click(function (e) {
