@@ -80,15 +80,13 @@
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
                             <a href="#" class="btn btn-success"
-                               @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
+                               @click.prevent="confirmMembershipPayment(slotProps.row.id)">결제 확인</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 신청 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary"
-                               @click.prevent="revertConfirm(slotProps.row.student_id)">결제 완료</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 결제 취소
@@ -126,10 +124,6 @@
                                   :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
-
-            <payment-confirm-layer v-if="confirmLayer"
-                                   @setConfirmLayer="handleSetConfirmLayer"
-                                   @confirmPayment="confirmOfflinePayment"></payment-confirm-layer>
 
         </template>
     </layout>

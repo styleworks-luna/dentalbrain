@@ -11,6 +11,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @property mixed|null started_at
+ * @property mixed|null expired_at
+ * @property int|null applied_days
+ * @property int pay_status
+ */
 class Membership extends Model
 {
     use HasPayStatus, SoftDeletes;
@@ -21,6 +27,9 @@ class Membership extends Model
     ];
     protected $table = 'memberships';
     protected $guarded = [];
+    protected $dates = [
+        'started_at', 'expired_at'
+    ];
 
     /**
      * @param TossPaymentsResponse $response
@@ -65,7 +74,7 @@ class Membership extends Model
         }
 
         if ($user->isPaid()) {
-            return $user->membership_started_at;
+            return $user->membership_expired_at;
         } else {
             return now();
         }
@@ -135,7 +144,7 @@ class Membership extends Model
         return $this->update([
             'pay_status' => Membership::$PAY_ANOTHER_PAID,
             'started_at' => self::getStartedAtWhenPaid($user),
-            'expired_at' => self::getExpiredAtWhenPaid($this->days, $user),
+            'expired_at' => self::getExpiredAtWhenPaid($this->applied_days, $user),
         ]);
     }
 }

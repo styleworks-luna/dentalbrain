@@ -16,6 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property mixed membership_started_at
+ * @property mixed membership_expired_at
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -104,7 +108,23 @@ class User extends Authenticatable
      *  ==============================================================================
      */
 
-    public function updateWhenMembershipPaid($days)
+    public function updateWhenMembershipCancel(Membership $membership): bool
+    {
+        $newMembershipExpiredAt = Carbon::parse($this->membership_expired_at)->subDays($membership->applied_days);
+
+        if ($this->membership_started_at > $newMembershipExpiredAt) {
+            return $this->update([
+                'membership_started_at' => $newMembershipExpiredAt,
+                'membership_expired_at' => $newMembershipExpiredAt,
+            ]);
+        } else {
+            return $this->update([
+                'membership_expired_at' => $newMembershipExpiredAt,
+            ]);
+        }
+    }
+
+    public function updateWhenMembershipPaid($days): bool
     {
         if ($this->isPaid()) {
             return $this->update([
@@ -117,8 +137,6 @@ class User extends Authenticatable
             ]);
         }
     }
-
-
 
     /*  ==============================================================================
      *  Functions
@@ -138,7 +156,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->attributes['is_admin'] ? true : false;
+        return (bool)$this->is_admin;
     }
 
     /**

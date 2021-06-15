@@ -89,7 +89,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
      */
     public function validateUserCancel(Request $request, Program $program): ?CancelPaymentDto
     {
-        return CancelPaymentDto::cancelWhenProgramCancelUser($request, $program);
+        return CancelPaymentDto::createWhenProgramCancelUser($request, $program);
     }
 
     /**

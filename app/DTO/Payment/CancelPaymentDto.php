@@ -4,6 +4,7 @@
 namespace App\DTO\Payment;
 
 
+use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
@@ -54,7 +55,7 @@ class CancelPaymentDto
             return null;
         }
 
-        return self::createInstance($request, $program, $student);
+        return self::getProgramCancelInstance($request, $program, $student);
     }
 
     /**
@@ -82,7 +83,7 @@ class CancelPaymentDto
      * @param ProgramStudent $student
      * @return CancelPaymentDto|null
      */
-    private static function createInstance(Request $request, Program $program, ProgramStudent $student): ?CancelPaymentDto
+    private static function getProgramCancelInstance(Request $request, Program $program, ProgramStudent $student): ?CancelPaymentDto
     {
         if ($program->getUserSpecificFree(Auth::user())) {
             return new CancelPaymentDto('무료 강의 취소 신청');
@@ -96,14 +97,19 @@ class CancelPaymentDto
 
         }
 
+        return self::validateAndGetInstancePaidByToss($request, $student->payment);
+    }
+
+    private static function validateAndGetInstancePaidByToss(Request $request, $payment): ?CancelPaymentDto
+    {
         $v = Validator::make($request->all(), [
             'reason' => ['required', 'string'],
         ])->sometimes(
         // 가상계좌의 경우, 은행, 예금주, 계좌번호가 필요함.
             ['bank', 'accountNumber', 'holderName'],
             ['required', 'string'],
-            function ($input) use ($student) {
-                return $student->payment->method == '가상계좌';
+            function ($input) use ($payment) {
+                return $payment->method == '가상계좌';
             });
 
         if ($v->fails()) {
@@ -117,7 +123,8 @@ class CancelPaymentDto
             $data['reason'],
             $data['bank'] ?? null,
             $data['accountNumber'] ?? null,
-            $data['holderName'] ?? null);
+            $data['holderName'] ?? null
+        );
     }
 
     /**
@@ -125,7 +132,7 @@ class CancelPaymentDto
      * @param Program $program
      * @return CancelPaymentDto|null
      */
-    public static function cancelWhenProgramCancelUser(Request $request, Program $program): ?CancelPaymentDto
+    public static function createWhenProgramCancelUser(Request $request, Program $program): ?CancelPaymentDto
     {
         $student = self::validateAndGetStudent($program, Auth::user());
         if ($student == null) {
@@ -137,7 +144,39 @@ class CancelPaymentDto
             return null;
         }
 
-        return self::createInstance($request, $program, $student);
+        return self::getProgramCancelInstance($request, $program, $student);
+    }
+
+    /**
+     * @param Request $request
+     * @param Membership $membership
+     * @return CancelPaymentDto|null
+     */
+    public static function createWhenMembershipCancelAdmin(Request $request, Membership $membership): ?CancelPaymentDto
+    {
+        if (!in_array($membership->pay_status, Membership::$USER_CANCEL_AVAILABLE_STATUSES)) {
+            Log::error('취소할수 있는 결제상태가 아닙니다.');
+            return null;
+        }
+
+        if ($membership->expired_at < now()) {
+            Log::error('유료회원 잔여일이 없습니다.');
+            return null;
+        }
+
+        return self::getMembershipCancelInstance($request, $membership);
+    }
+
+    private static function getMembershipCancelInstance(Request $request, Membership $membership): ?CancelPaymentDto
+    {
+        if ($membership->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            || $membership->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
+            // 별도 결제의 경우 reason 및 다른 params 필요없음
+            // 더미 값
+            return new CancelPaymentDto('별도 결제 취소 신청');
+        }
+
+        return self::validateAndGetInstancePaidByToss($request, $membership);
     }
 
     /**
