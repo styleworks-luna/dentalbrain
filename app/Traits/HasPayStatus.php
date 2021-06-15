@@ -41,4 +41,10 @@ trait HasPayStatus
      * @var int
      */
     static $PAY_ANOTHER_PAID = 6;
+
+    /**
+     * $PAY_PAID, $PAY_IN_REFUND_PROCESS, $PAY_ANOTHER_IN_PROCESS, $PAY_ANOTHER_PAID
+     * @var int[]
+     */
+    static $USER_CANCEL_AVAILABLE_STATUSES = [2, 4, 5, 6,];
 }
