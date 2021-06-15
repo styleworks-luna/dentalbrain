@@ -21,6 +21,11 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
 
+    /*  ==============================================================================
+     *  Attributes
+     *  ==============================================================================
+     */
+
     /**
      * // 6글자 이상, 대문자 혹은 소문자 | 숫자 포함된 패스워드여야 함.
      * @var string
@@ -53,39 +58,14 @@ class User extends Authenticatable
         'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
 
-    public function updateWhenMembershipPaid($days)
-    {
-        if ($this->isPaid()) {
-            return $this->update([
-                'membership_expired_at' => Carbon::parse($this->membership_expired_at)->addDays($days),
-            ]);
-        } else {
-            return $this->update([
-                'membership_started_at' => now(),
-                'membership_expired_at' => now()->addDays($days),
-            ]);
-        }
-    }
-
-    /**
-     * @return bool
+    /*  ==============================================================================
+     *  Relations
+     *  ==============================================================================
      */
-    public function isPaid(): bool
-    {
-        if ($this->membership_expired_at == null || $this->membership_started_at == null) {
-            return false;
-        }
-        return $this->membership_expired_at > now() && $this->membership_started_at < now();
-    }
 
     public function job()
     {
         return $this->belongsTo(UserJob::class, 'job_id', 'id');
-    }
-
-    public function isAdmin()
-    {
-        return $this->attributes['is_admin'] ? true : false;
     }
 
     public function likes()
@@ -119,20 +99,46 @@ class User extends Authenticatable
             ->using(UserLike::class);
     }
 
-    public function scopeFindIdWithNameAndEmail($query, $name, $email)
+    /*  ==============================================================================
+     *  Repositories
+     *  ==============================================================================
+     */
+
+    public function updateWhenMembershipPaid($days)
     {
-        return $query->where([
-            'name' => $name,
-            'email' => $email
-        ])->first();
+        if ($this->isPaid()) {
+            return $this->update([
+                'membership_expired_at' => Carbon::parse($this->membership_expired_at)->addDays($days),
+            ]);
+        } else {
+            return $this->update([
+                'membership_started_at' => now(),
+                'membership_expired_at' => now()->addDays($days),
+            ]);
+        }
     }
 
-    public function scopeFindIdWithNameAndPhone($query, $name, $phone)
+
+
+    /*  ==============================================================================
+     *  Functions
+     *  ==============================================================================
+     */
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
     {
-        return $query->where([
-            'name' => $name,
-            'phone' => $phone
-        ])->first();
+        if ($this->membership_expired_at == null || $this->membership_started_at == null) {
+            return false;
+        }
+        return $this->membership_expired_at > now() && $this->membership_started_at < now();
+    }
+
+    public function isAdmin()
+    {
+        return $this->attributes['is_admin'] ? true : false;
     }
 
     /**
@@ -209,6 +215,27 @@ class User extends Authenticatable
         return $memberships->first();
     }
 
+    /*  ==============================================================================
+     *  Scopes
+     *  ==============================================================================
+     */
+
+    public function scopeFindIdWithNameAndEmail($query, $name, $email)
+    {
+        return $query->where([
+            'name' => $name,
+            'email' => $email
+        ])->first();
+    }
+
+    public function scopeFindIdWithNameAndPhone($query, $name, $phone)
+    {
+        return $query->where([
+            'name' => $name,
+            'phone' => $phone
+        ])->first();
+    }
+
     /**
      * @param Builder $query
      * @return Builder
@@ -227,6 +254,11 @@ class User extends Authenticatable
         return $query->whereNull('membership_started_at')->orWhereNull('membership_expired_at')
             ->orWhere('membership_expired_at', '<', now());
     }
+
+    /*  ==============================================================================
+     *  Append & Casting
+     *  ==============================================================================
+     */
 
     protected function getNeedLicenseAttribute()
     {
@@ -265,4 +297,6 @@ class User extends Authenticatable
     {
         return $this->isPaid();
     }
+
+
 }
