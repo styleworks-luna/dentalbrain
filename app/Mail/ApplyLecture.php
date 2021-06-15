@@ -39,7 +39,7 @@ class ApplyLecture extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 강의 신청 완료')
+            ->subject('[덴탈브레인] 강의 신청 완료')
             ->view('emails.lecture.lecture_apply')
             ->with([
                 'user' => $this->user,

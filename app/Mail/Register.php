@@ -31,7 +31,7 @@ class Register extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 회원가입 완료')
+            ->subject('[덴탈브레인] 회원가입 완료')
             ->view('emails.user.register_complete')
             ->with([
                 'user' => $this->user
