@@ -139,6 +139,7 @@
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
 
             <payment-confirm-layer v-if="confirmLayer"
+                                   :is_online="1"
                                    @setConfirmLayer="handleSetConfirmLayer"
                                     @confirmPayment="confirmPayment"></payment-confirm-layer>
 
