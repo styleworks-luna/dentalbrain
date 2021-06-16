@@ -46,7 +46,6 @@ abstract class PaymentService
                     break;
             }
             if ($response === false) {
-                DB::rollBack();
                 return false;
             }
 

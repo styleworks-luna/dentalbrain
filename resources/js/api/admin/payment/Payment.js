@@ -8,6 +8,7 @@ const getData = (params) => {
     });
 };
 
+// 온라인 프로그램 취소
 const cancelPayment = (id, studentId, params) => {
     return Send({
         url: `/api/admin/lecture/online/${id}/students/${studentId}`,
@@ -16,6 +17,7 @@ const cancelPayment = (id, studentId, params) => {
     });
 };
 
+// 온라인 별도결제 확인
 const confirmPayment = (id, studentId, params) => {
     return Send({
         url: `/api/admin/lecture/online/${id}/students/${studentId}`,
@@ -23,6 +25,8 @@ const confirmPayment = (id, studentId, params) => {
         params: params
     });
 };
+
+// 유료회원 별도결제 확인
 const confirmMembershipPayment = (id) => {
     return Send({
         url: `/api/admin/membership/${id}/confirm`,
@@ -30,6 +34,16 @@ const confirmMembershipPayment = (id) => {
     });
 };
 
+//유료회원 취소
+const cancelMembershipPayment = (id,params) => {
+    return Send({
+        url: `/api/admin/membership/${id}/cancel`,
+        method: 'post',
+        params: params,
+    });
+};
+
+// 오프라인 프로그램 취소
 const cancelOfflinePayment = (id, studentId, params) => {
     return Send({
         url: `/api/admin/lecture/offline/${id}/students/${studentId}`,
@@ -38,6 +52,7 @@ const cancelOfflinePayment = (id, studentId, params) => {
     });
 };
 
+// 오프라인 프로그램 별도결제 확인
 const confirmOfflinePayment = (id, studentId, params) => {
     return Send({
         url: `/api/admin/lecture/offline/${id}/students/${studentId}`,
@@ -46,6 +61,7 @@ const confirmOfflinePayment = (id, studentId, params) => {
     });
 };
 
+// 프로그램 별도결제 REVERT
 const revertConfirm = (id, studentId) => {
     return Send({
         url: `/api/admin/payment/${id}/${studentId}/revert`,
@@ -61,4 +77,5 @@ export {
     cancelOfflinePayment,
     confirmOfflinePayment,
     revertConfirm,
+    cancelMembershipPayment,
 }

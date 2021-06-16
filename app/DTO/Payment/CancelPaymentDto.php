@@ -159,11 +159,6 @@ class CancelPaymentDto
             return null;
         }
 
-        if ($membership->expired_at < now()) {
-            Log::error('유료회원 잔여일이 없습니다.');
-            return null;
-        }
-
         return self::getMembershipCancelInstance($request, $membership);
     }
 

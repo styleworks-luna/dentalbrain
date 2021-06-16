@@ -43,52 +43,40 @@
                     <td>{{ slotProps.row.expired_at }}</td>
                     <td>{{ slotProps.row.payment.method }}</td>
                     <td>
-                        <template v-if="slotProps.row.pay_status === 0">
+                        <template v-if="slotProps.row.pay_status == 0">
                             결제 전
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 1">
                             입금 대기
                         </template>
+                        <template v-else-if="slotProps.row.pay_status === 2">
+                            <a href="#" class="btn btn-danger text-white"
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.id,true)]">
+                                결제 취소
+                            </a>
+                        </template>
                         <template v-else-if="slotProps.row.pay_status === 3">
                             취소 완료
                         </template>
-
                         <template v-else-if="slotProps.row.pay_status === 4">
                             <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.student_id)">
-                                신청 취소
-                            </a>
-                            <a href="#" class="btn btn-danger text-white"
-                               v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method)">
+                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.id,true)]">
                                 결제 취소
                             </a>
                         </template>
-                        <template v-else-if="slotProps.row.pay_status === 2">
-                            <a href="#" class="btn btn-danger text-white"
-                               v-if="slotProps.row.is_free"
-                               @click.prevent="cancelLecture(slotProps.row.student_id)">
-                                신청 취소
-                            </a>
-
-                            <a href="#" class="btn btn-danger text-white"
-                               v-else
-                               @click.prevent="handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method)">
-                                결제 취소
-                            </a>
-                        </template>
+                        <!-- 별도결제 확인 -->
                         <template v-else-if="slotProps.row.pay_status === 5">
                             <a href="#" class="btn btn-success"
-                               @click.prevent="confirmMembershipPayment(slotProps.row.id)">결제 확인</a>
+                               @click.prevent="confirmMembershipPayment(slotProps.row.id)">
+                                결제 확인</a>
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.student_id)">
-                                신청 취소
+                               @click.prevent="[getCancelId(slotProps.row.id,true),cancelMembershipAnotherPayment()]">
+                                결제 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
                             <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="cancelLecture(slotProps.row.student_id)">
+                               @click.prevent="[getCancelId(slotProps.row.id,true),cancelMembershipAnotherPayment()]">
                                 결제 취소
                             </a>
                         </template>
@@ -123,7 +111,7 @@
             <payment-cancel-layer v-if="cancelLayer"
                                   :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
-                                  @cancelPayment="cancelPayment"></payment-cancel-layer>
+                                  @cancelPayment="cancelMembershipPayment"></payment-cancel-layer>
 
         </template>
     </layout>
@@ -280,6 +268,10 @@ export default {
             User.getCategory().then(res => {
                 this.jobOptions = res.data.userJob;
             });
+        },
+        getCancelId(data, boolean) {
+            this.is_membership = boolean
+            this.id = data;
         },
         handleSetMember(value) {
             this.member = value;

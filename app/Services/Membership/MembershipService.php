@@ -34,11 +34,13 @@ class MembershipService
             $user = $membership->user;
             $user->updateWhenMembershipCancel($membership);
 
-            $membership->delete();
-
             PaymentService::cancelPaid($membership->payment, $membership->pay_status, $dto);
 
+            $membership->updateWhenMembershipCancel();
+
             DB::commit();
+            return true;
+
         } catch (Exception $exception) {
             Log::error('CANCEL ERROR', [$exception]);
             DB::rollBack();

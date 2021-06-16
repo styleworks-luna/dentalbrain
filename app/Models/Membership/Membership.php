@@ -66,6 +66,13 @@ class Membership extends Model
         return $membership;
     }
 
+    public function updateWhenMembershipCancel(): bool
+    {
+        return $this->update([
+            'pay_status' => Membership::$PAY_REFUNDED
+        ]);
+    }
+
     private static function getStartedAtWhenPaid($user = null)
     {
         if ($user == null) {
