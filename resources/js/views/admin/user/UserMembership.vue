@@ -94,7 +94,7 @@
                         </template>
                     </td>
                     <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
+                        <router-link :to="`/admin/user/user/${slotProps.row.user.id}/${page}`"
                                      class="btn btn-info float-left">
                             수정
                         </router-link>
