@@ -82,12 +82,15 @@
                         </template>
                     </td>
                     <td>
-                        <template v-if="slotProps.row.started_at == null || slotProps.row.expired_at == null">
-                            결제전
-                        </template>
+                        <template v-if="slotProps.row.pay_status == 3">취소</template>
                         <template v-else>
-                            {{ Helper.dateCompareWithNow(slotProps.row.started_at) > 0 ? '사용 전'
-                            : Helper.dateCompareWithNow(slotProps.row.expired_at) < 0 ? '사용 후' : '사용 중' }}
+                            <template v-if="slotProps.row.started_at == null || slotProps.row.expired_at == null">
+                                결제전
+                            </template>
+                            <template v-else>
+                                {{ Helper.dateCompareWithNow(slotProps.row.started_at) > 0 ? '사용 전'
+                                : Helper.dateCompareWithNow(slotProps.row.expired_at) < 0 ? '사용 후' : '사용 중' }}
+                            </template>
                         </template>
                     </td>
                     <td>
