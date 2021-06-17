@@ -412,7 +412,8 @@ class Program extends Model
             });
         }
 
-        if ($category !== null) {
+        if ((int)$category !== 0) {
+            // NULL 과 0 일때는 검색 안함.
             $programs = $programs->where('major_category_id', '=', $category);
         }
 

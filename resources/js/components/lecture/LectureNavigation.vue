@@ -14,7 +14,7 @@ import Lecture from '@/api/lecture/Lecture.js'
 export default {
     data() {
         return {
-            isActive: 1,
+            isActive: 0,
             menus: [],
             hash: '',
         }
@@ -42,7 +42,7 @@ export default {
             this.hash = window.location.href.match(/#(.*$)/) ? window.location.href.match(/#(.*$)/)[1] : '';
         },
         setActive() {
-            for (var i = 1; i <= 8; i++) {
+            for (var i = 0; i <= 7; i++) {
                 if (this.hash == i) {
                     this.isActive = i;
                     this.handleSetLectureMenu(this.isActive, this.isActive);
