@@ -129,7 +129,10 @@ class Membership extends Model
      */
     public function scopeAvailable($query)
     {
-        return $query->where('expired_at', '>', now())->where('started_at', '<', now())->orderBy('expired_at');
+        return $query->where('expired_at', '>', now())
+            ->where('started_at', '<', now())
+            ->whereIn('pay_status',Membership::$USER_PAID_STATUS)
+            ->orderBy('expired_at');
     }
 
     public function user()
