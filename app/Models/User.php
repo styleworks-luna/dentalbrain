@@ -228,7 +228,7 @@ class User extends Authenticatable
      */
     public function scopeDoesntPaid($query)
     {
-        return $query->whereDoesntHave('membership', function ($query) {
+        return $query->whereDoesntHave('memberships', function ($query) {
             $query->available();
         });
     }
