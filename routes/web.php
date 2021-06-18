@@ -295,10 +295,16 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
             // 유료 회원 엑셀 출력
             Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
-            // 유료 회원 결제 확인 ( 별도결제 )
-            Route::post('{membership}/confirm', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'confirmAnotherPay'])->name('confirm.anotherPay');
-            // 유료 회원 결제 취소
-            Route::post('{membership}/cancel', [\App\Http\Controllers\Admin\Payment\MembershipCancelController::class, 'cancel'])->name('cancel');
+
+            Route::group(['prefix' => '{membership}'], function () {
+
+                Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'detail'])->name('edit');
+                // 유료 회원 결제 확인 ( 별도결제 )
+                Route::post('confirm', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'confirmAnotherPay'])->name('confirm.anotherPay');
+                // 유료 회원 결제 취소
+                Route::post('cancel', [\App\Http\Controllers\Admin\Payment\MembershipCancelController::class, 'cancel'])->name('cancel');
+            });
+
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
