@@ -30,12 +30,7 @@ class MembershipService
         try {
             DB::beginTransaction();
 
-            /** @var User $user */
-            $user = $membership->user;
-            $user->updateWhenMembershipCancel($membership);
-
             PaymentService::cancelPaid($membership->payment, $membership->pay_status, $dto);
-
             $membership->updateWhenMembershipCancel();
 
             DB::commit();

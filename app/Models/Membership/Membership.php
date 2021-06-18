@@ -28,7 +28,7 @@ class Membership extends Model
     protected $table = 'memberships';
     protected $guarded = [];
     protected $dates = [
-        'started_at', 'expired_at'
+        'started_at', 'expired_at', 'last_applied_at',
     ];
 
     /**
@@ -66,13 +66,6 @@ class Membership extends Model
         return $membership;
     }
 
-    public function updateWhenMembershipCancel(): bool
-    {
-        return $this->update([
-            'pay_status' => Membership::$PAY_REFUNDED
-        ]);
-    }
-
     private static function getStartedAtWhenPaid($user = null)
     {
         if ($user == null) {
@@ -81,7 +74,7 @@ class Membership extends Model
         }
 
         if ($user->isPaid()) {
-            return $user->membership_expired_at;
+            return $user->availableLatestMembership()->expired_at;
         } else {
             return now();
         }
@@ -94,11 +87,7 @@ class Membership extends Model
             $user = Auth::user();
         }
 
-        if ($user->isPaid()) {
-            return Carbon::parse($user->membership_expired_at)->addDays($days);
-        } else {
-            return now()->addDays($days);
-        }
+        return self::getStartedAtWhenPaid($user)->addDays($days);
     }
 
     static function createWhenAnotherPay(Payment $payment, $days)
@@ -114,6 +103,13 @@ class Membership extends Model
         ]);
 
         return $membership;
+    }
+
+    public function updateWhenMembershipCancel(): bool
+    {
+        return $this->update([
+            'pay_status' => Membership::$PAY_REFUNDED
+        ]);
     }
 
     public function isAvailable(): bool
@@ -133,7 +129,7 @@ class Membership extends Model
      */
     public function scopeAvailable($query)
     {
-        return $query->where('expired_at', '>', now());
+        return $query->where('expired_at', '>', now())->where('started_at', '<', now());
     }
 
     public function user()

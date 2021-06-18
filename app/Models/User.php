@@ -9,17 +9,13 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-/**
- * @property mixed membership_started_at
- * @property mixed membership_expired_at
- */
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -61,6 +57,8 @@ class User extends Authenticatable
     protected $appends = [
         'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
+
+    protected $dates = ['last_login_at'];
 
     /*  ==============================================================================
      *  Relations
@@ -108,51 +106,10 @@ class User extends Authenticatable
      *  ==============================================================================
      */
 
-    public function updateWhenMembershipCancel(Membership $membership): bool
-    {
-        $newMembershipExpiredAt = Carbon::parse($this->membership_expired_at)->subDays($membership->applied_days);
-
-        if ($this->membership_started_at > $newMembershipExpiredAt) {
-            return $this->update([
-                'membership_started_at' => $newMembershipExpiredAt,
-                'membership_expired_at' => $newMembershipExpiredAt,
-            ]);
-        } else {
-            return $this->update([
-                'membership_expired_at' => $newMembershipExpiredAt,
-            ]);
-        }
-    }
-
-    public function updateWhenMembershipPaid($days): bool
-    {
-        if ($this->isPaid()) {
-            return $this->update([
-                'membership_expired_at' => Carbon::parse($this->membership_expired_at)->addDays($days),
-            ]);
-        } else {
-            return $this->update([
-                'membership_started_at' => now(),
-                'membership_expired_at' => now()->addDays($days),
-            ]);
-        }
-    }
-
     /*  ==============================================================================
      *  Functions
      *  ==============================================================================
      */
-
-    /**
-     * @return bool
-     */
-    public function isPaid(): bool
-    {
-        if ($this->membership_expired_at == null || $this->membership_started_at == null) {
-            return false;
-        }
-        return $this->membership_expired_at > now() && $this->membership_started_at < now();
-    }
 
     public function isAdmin()
     {
@@ -233,11 +190,6 @@ class User extends Authenticatable
         return $memberships->first();
     }
 
-    /*  ==============================================================================
-     *  Scopes
-     *  ==============================================================================
-     */
-
     public function scopeFindIdWithNameAndEmail($query, $name, $email)
     {
         return $query->where([
@@ -245,6 +197,11 @@ class User extends Authenticatable
             'email' => $email
         ])->first();
     }
+
+    /*  ==============================================================================
+     *  Scopes
+     *  ==============================================================================
+     */
 
     public function scopeFindIdWithNameAndPhone($query, $name, $phone)
     {
@@ -260,7 +217,9 @@ class User extends Authenticatable
      */
     public function scopePaid($query)
     {
-        return $query->where('membership_started_at', '<', now())->where('membership_expired_at', '>', now());
+        return $query->whereHas('memberships', function ($query) {
+            $query->available();
+        });
     }
 
     /**
@@ -269,14 +228,10 @@ class User extends Authenticatable
      */
     public function scopeDoesntPaid($query)
     {
-        return $query->whereNull('membership_started_at')->orWhereNull('membership_expired_at')
-            ->orWhere('membership_expired_at', '<', now());
+        return $query->whereDoesntHave('membership', function ($query) {
+            $query->available();
+        });
     }
-
-    /*  ==============================================================================
-     *  Append & Casting
-     *  ==============================================================================
-     */
 
     protected function getNeedLicenseAttribute()
     {
@@ -286,6 +241,11 @@ class User extends Authenticatable
         }
         return null;
     }
+
+    /*  ==============================================================================
+     *  Append & Casting
+     *  ==============================================================================
+     */
 
     protected function getJobNameIdAttribute()
     {
@@ -314,6 +274,14 @@ class User extends Authenticatable
     protected function getHasMembershipAttribute(): bool
     {
         return $this->isPaid();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->availableMembershipsBuilder()->exists();
     }
 
 

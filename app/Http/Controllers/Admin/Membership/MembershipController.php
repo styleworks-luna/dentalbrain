@@ -70,11 +70,9 @@ class MembershipController extends Controller
     public function confirmAnotherPay(Request $request, Membership $membership)
     {
         try {
+
             $membership->updateWhenConfirmAnotherPay($membership->user);
             $membership->payment->updateWhenConfirmAnotherPay();
-            /** @var User $user */
-            $user = $membership->user;
-            $user->updateWhenMembershipPaid($membership->applied_days);
 
         } catch (\Exception $exception) {
             Log::error('CONFIRM ANOTHER PAY ERROR IN CONTROLLER', [$exception]);
