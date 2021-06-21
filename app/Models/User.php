@@ -166,7 +166,7 @@ class User extends Authenticatable
     public function availableMembershipsBuilder()
     {
         // Membership@scopeAvailable()
-        return $this->memberships()->available()->orderByDesc('expired_at');
+        return $this->memberships()->inUse()->orderByDesc('expired_at');
     }
 
     public function getMembershipExpiredAt()
@@ -218,7 +218,7 @@ class User extends Authenticatable
     public function scopePaid($query)
     {
         return $query->whereHas('memberships', function ($query) {
-            $query->available();
+            $query->inUse();
         });
     }
 
@@ -229,7 +229,7 @@ class User extends Authenticatable
     public function scopeDoesntPaid($query)
     {
         return $query->whereDoesntHave('memberships', function ($query) {
-            $query->available();
+            $query->inUse();
         });
     }
 

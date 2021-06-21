@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -140,17 +141,17 @@ class Membership extends Model
     }
 
     /**
-     *  사용 중 + 사용 전인 유료 회원
+     *  사용 중인 유료 회원
      *
-     * @param $query
+     * @param Builder $query
      * @return mixed
      */
-    public function scopeAvailable($query)
+    public function scopeInUse($query)
     {
         return $query->where('expired_at', '>', now())
             ->where('started_at', '<', now())
             ->whereIn('pay_status', Membership::$USER_PAID_STATUS)
-            ->orderBy('expired_at');
+            ->orderByDesc('expired_at');
     }
 
     public function user()
