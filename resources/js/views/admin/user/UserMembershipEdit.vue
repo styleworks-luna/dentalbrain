@@ -153,9 +153,9 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="button" class="btn btn-info" @click="update">수정</button>
-                <router-link :to="`/admin/user/membership/${page}`"
-                             class="btn btn-dark">취소
-                </router-link>
+                <a @click="$router.go(-1)"
+                             class="btn btn-dark text-white">취소
+                </a>
             </div>
         </template>
     </layout>
@@ -318,7 +318,7 @@ export default {
 
             User.updateMembership(this.user_id, data).then(res => {
                 alert(res.data.res);
-                this.$router.push(`/admin/user/membership/${this.page}`);
+                this.$router.go(-1);
             })
         },
         getCancelId(data, boolean) {

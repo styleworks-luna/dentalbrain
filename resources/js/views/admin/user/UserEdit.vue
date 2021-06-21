@@ -128,9 +128,9 @@
                 <button type="submit" class="btn btn-info"
                         @click="update">저장
                 </button>
-                <router-link :to="`/admin/user/${page}`"
-                             class="btn btn-dark">취소
-                </router-link>
+                <a @click="$router.go(-1)"
+                   class="btn btn-dark text-white">취소
+                </a>
             </div>
         </template>
     </layout>
