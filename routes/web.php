@@ -296,9 +296,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 유료 회원 엑셀 출력
             Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
 
+            Route::group(['prefix' => 'user/{user}'], function () {
+                // 유료회원 상세 페이지
+                Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'edit'])->name('edit');
+                // 유료회원 상세 페이지 수정 완료
+                Route::post('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'update'])->name('update');
+            });
             Route::group(['prefix' => '{membership}'], function () {
-
-                Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'detail'])->name('edit');
                 // 유료 회원 결제 확인 ( 별도결제 )
                 Route::post('confirm', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'confirmAnotherPay'])->name('confirm.anotherPay');
                 // 유료 회원 결제 취소

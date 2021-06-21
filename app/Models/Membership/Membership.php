@@ -6,6 +6,7 @@ use App\Models\Payments\Payment;
 use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -105,6 +106,22 @@ class Membership extends Model
         return $membership;
     }
 
+    /**
+     * @param Authenticatable|User $user
+     * @param $started_at
+     * @param $expired_at
+     * @return \Illuminate\Database\Eloquent\Builder|Model
+     */
+    static function createByAdmin($user, $started_at, $expired_at)
+    {
+        return Membership::query()->create([
+            'user_id' => $user->id,
+            'pay_status' => Membership::$PAY_PAID,
+            'started_at' => $started_at,
+            'expired_at' => $expired_at,
+        ]);
+    }
+
     public function updateWhenMembershipCancel(): bool
     {
         return $this->update([
@@ -131,7 +148,7 @@ class Membership extends Model
     {
         return $query->where('expired_at', '>', now())
             ->where('started_at', '<', now())
-            ->whereIn('pay_status',Membership::$USER_PAID_STATUS)
+            ->whereIn('pay_status', Membership::$USER_PAID_STATUS)
             ->orderBy('expired_at');
     }
 
