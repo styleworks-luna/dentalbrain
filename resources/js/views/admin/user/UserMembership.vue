@@ -40,7 +40,7 @@
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
-                    <template v-if="slotProps.row.membership">
+                    <template v-if="slotProps.row.memberships.length != 0">
 
 
                     <template v-for="membership in slotProps.row.memberships">
