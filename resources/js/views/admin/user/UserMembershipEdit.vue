@@ -48,18 +48,15 @@
                 </template>
             </single-group>
 
-            <div class="membership-content">
-                <div class="btn-zone">
-                    <button class="btn btn-dark d-block" @click="addMembership">추가</button>
-                    <button @click="check">click</button>
-                </div>
+            <div class="membership-content mt-5">
+                <h2>유료회원 결제 내역</h2>
                 <table class="w-100">
                     <colgroup>
-                        <col style="width: 60%">
+                        <col style="width: 55%">
                         <col style="width: 10%">
                         <col style="width: 10%">
                         <col style="width: 10%">
-                        <col style="width: 10%">
+                        <col style="width: 15%">
                     </colgroup>
                     <thead>
                     <tr>
@@ -71,9 +68,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(membership, idx) in memberships" :key="membership.id">
-                        <td>
-                            <div class="date-wrap overflow:hidden">
+                    <template v-for="(membership, idx) in memberships">
+                    <tr>
+                        <td :style="membership.pay_status == 3 || membership.pay_status == 5 ? 'background-color: #9999': ''">
+                            <div class="date-wrap overflow:hidden"  >
                                 <date-picker class=" float-left mr-3"
                                              :time="memberships_dates[idx].start_date"
                                              :index="idx"
@@ -138,8 +136,12 @@
                             </template>
                         </td>
                     </tr>
+                    </template>
                     </tbody>
                 </table>
+                <div class="btn-zone mt-5">
+                    <button class="btn btn-outline-dark d-block w-100" @click="addMembership">추가</button>
+                </div>
             </div>
             <payment-cancel-layer v-if="cancelLayer"
                                   :paymentMethod="paymentMethod"
