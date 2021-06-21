@@ -317,7 +317,7 @@ export default {
             };
 
             User.updateMembership(this.user_id, data).then(res => {
-                alert(res.data.msg);
+                alert(res.data.res);
                 this.$router.push(`/admin/user/membership/${this.page}`);
             })
         },

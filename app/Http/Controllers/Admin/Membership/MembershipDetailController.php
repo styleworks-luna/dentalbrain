@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class MembershipDetailController extends Controller
 {
@@ -24,7 +25,7 @@ class MembershipDetailController extends Controller
         ]);
     }
 
-    public function update(Request $request,User $user): JsonResponse
+    public function update(Request $request, User $user): JsonResponse
     {
         $data = Validator::make($request->all(), [
             'memberships' => ['present', 'array']
@@ -34,10 +35,14 @@ class MembershipDetailController extends Controller
             DB::beginTransaction();
             MembershipService::validateAndUpdateAtAdmin($request, $user);
             DB::commit();
+        } catch (ValidationException $exception) {
+            DB::rollBack();
+            Log::error('UPDATE Failed at membership update', [$exception]);
+            return response()->json(['errors' => $exception->errors(),], 422);
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error('UPDATE Failed at membership update', [$exception]);
-            return response()->json(['msg' => '오류가 발생하였습니다.'],500);
+            return response()->json(['msg' => '오류가 발생하였습니다.', 'exception' => $exception->getMessage()], 500);
         }
         return response()->json(['msg' => '수정되었습니다.']);
     }
