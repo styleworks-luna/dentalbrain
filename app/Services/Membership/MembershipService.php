@@ -95,7 +95,9 @@ class MembershipService
         try {
             DB::beginTransaction();
 
-            PaymentService::cancelPaid($membership->payment, $membership->pay_status, $dto);
+            if ($membership->payment != null) {
+                PaymentService::cancelPaid($membership->payment, $membership->pay_status, $dto);
+            }
             $membership->updateWhenMembershipCancel();
 
             DB::commit();
