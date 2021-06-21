@@ -33,75 +33,88 @@
             <table-grid :tableCol="tableCol"
                         :data="users.data">
                 <template v-slot:list="slotProps">
-                    <template v-for="membership in slotProps.row.memberships">
+
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.login_id }}</td>
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
-                    <td>{{ membership.started_at }}</td>
-                    <td>{{ membership.expired_at }}</td>
-                    <td>{{ membership.payment? membership.payment.method : ''}}</td>
-                    <td>
-                        <template v-if="membership.pay_status == 0">
-                            결제 전
-                        </template>
-                        <template v-else-if="membership.pay_status === 1">
-                            입금 대기
-                        </template>
-                        <template v-else-if="membership.pay_status === 2">
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.id, slotProps.payment.method), getCancelId(membership.id,true)]">
-                                결제 취소
-                            </a>
-                        </template>
-                        <template v-else-if="membership.pay_status === 3">
-                            취소 완료
-                        </template>
-                        <template v-else-if="membership.pay_status === 4">
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.id, membership.payment.method), getCancelId(membership.id,true)]">
-                                결제 취소
-                            </a>
-                        </template>
-                        <!-- 별도결제 확인 -->
-                        <template v-else-if="membership.pay_status === 5">
-                            <a href="#" class="btn btn-success"
-                               @click.prevent="confirmMembershipPayment(membership.id)">
-                                결제 확인</a>
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
-                                결제 취소
-                            </a>
-                        </template>
-                        <template v-else-if="membership.pay_status === 6">
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
-                                결제 취소
-                            </a>
-                        </template>
-                    </td>
-                    <td>
-                        <template v-if="membership.pay_status == 3">취소</template>
-                        <template v-else>
-                            <template v-if="membership.started_at == null || membership.expired_at == null">
-                                결제전
+                    <template v-if="slotProps.row.membership">
+
+
+                    <template v-for="membership in slotProps.row.memberships">
+                        <td>{{ membership.started_at }}</td>
+                        <td>{{ membership.expired_at }}</td>
+                        <td>{{ membership.payment? membership.payment.method : ''}}</td>
+                        <td>
+                            <template v-if="membership.pay_status == 0">
+                                결제 전
                             </template>
+                            <template v-else-if="membership.pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="membership.pay_status === 2">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.id, slotProps.payment.method), getCancelId(membership.id,true)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="membership.pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="membership.pay_status === 4">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.id, membership.payment.method), getCancelId(membership.id,true)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <!-- 별도결제 확인 -->
+                            <template v-else-if="membership.pay_status === 5">
+                                <a href="#" class="btn btn-success"
+                                   @click.prevent="confirmMembershipPayment(membership.id)">
+                                    결제 확인</a>
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="membership.pay_status === 6">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
+                                </a>
+                            </template>
+                        </td>
+                        <td>
+                            <template v-if="membership.pay_status == 3">취소</template>
                             <template v-else>
-                                {{ Helper.dateCompareWithNow(membership.started_at) > 0 ? '사용 전'
-                                : Helper.dateCompareWithNow(membership.expired_at) < 0 ? '사용 후' : '사용 중' }}
+                                <template v-if="membership.started_at == null || membership.expired_at == null">
+                                    결제전
+                                </template>
+                                <template v-else>
+                                    {{ Helper.dateCompareWithNow(membership.started_at) > 0 ? '사용 전'
+                                    : Helper.dateCompareWithNow(membership.expired_at) < 0 ? '사용 후' : '사용 중' }}
+                                </template>
                             </template>
-                        </template>
-                    </td>
+                        </td>
+                    </template>
+                    </template>
+                    <template v-else>
+                        <td colspan="5">
+                            종료됨
+                        </td>
+                    </template>
+
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
-                                     class="btn btn-info float-left">
+                                     class="btn btn-info float-left mr-3">
                             수정
                         </router-link>
-                        <router-link :to="`/admin/user/membership/${slotProps.row.id}/${page}`" class="btn btn-info float-left">상세</router-link>
+                        <router-link :to="`/admin/user/membership/${slotProps.row.id}/${page}`"
+                                     class="btn btn-info float-left">상세
+                        </router-link>
                     </td>
-                </template>
                 </template>
             </table-grid>
 
@@ -176,7 +189,7 @@ export default {
                 {
                     name: 'login_id',
                     text: '아이디',
-                    width: '9%'
+                    width: '7%'
                 },
                 {
                     name: 'name',
@@ -191,7 +204,7 @@ export default {
                 {
                     name: 'phone',
                     text: '전화번호',
-                    width: '10%'
+                    width: '9%'
                 },
                 {
                     name: 'job_id',
@@ -226,7 +239,7 @@ export default {
                 {
                     name: 'edit',
                     text: '정보수정',
-                    width: '7%'
+                    width: '10%'
                 }
             ]
         },
