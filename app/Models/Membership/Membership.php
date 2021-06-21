@@ -13,7 +13,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * @property mixed|null started_at
+ * @property Carbon|null started_at
  * @property mixed|null expired_at
  * @property int|null applied_days
  * @property int pay_status

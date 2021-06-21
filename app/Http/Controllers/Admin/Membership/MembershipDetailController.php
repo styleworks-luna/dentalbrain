@@ -36,7 +36,7 @@ class MembershipDetailController extends Controller
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            Log::error('UPDATE Faild at membership update', [$exception]);
+            Log::error('UPDATE Failed at membership update', [$exception]);
             return response()->json(['msg' => '오류가 발생하였습니다.'],500);
         }
         return response()->json(['msg' => '수정되었습니다.']);
