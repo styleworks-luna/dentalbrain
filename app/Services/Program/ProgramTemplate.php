@@ -11,9 +11,11 @@ use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\Survey\SurveyCategory;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
+use App\Services\File\SurveyFile;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -383,7 +385,16 @@ abstract class ProgramTemplate
         // 삭제 된 설문조사들 삭제.
         $newSurveyIds = collect($returnableDataSet)->pluck('id');
         $deletable = $originalSurveyIds->diff($newSurveyIds);
-        Survey::query()->whereIn('id', $deletable)->delete();
+
+        $surveyFiles = SurveyAnswer::query()->whereIn('survey_id', $deletable)
+            ->whereNotNull('file_id')->get()
+            ->mapInto(SurveyFile::class);
+        $surveyFiles->each(/* @param SurveyFile $surveyFile */ function ($surveyFile) {
+            $surveyFile->deleteFile();
+        });
+
+        SurveyAnswer::query()->whereIn('survey_id', $deletable)->orWhereIn('choice_id', $deletable)->delete();
+        Survey::query()->whereIn('id', $deletable)->whereIn('parent_id', $deletable)->delete();
 
         return $returnableDataSet;
     }
