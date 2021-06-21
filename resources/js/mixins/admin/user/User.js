@@ -23,10 +23,8 @@ export const UserMixin = {
             name: '',
             email: '',
             phone: '',
-            membership_started_date: '',
-            membership_started_time: '',
-            membership_ended_date: '',
-            membership_ended_time: '',
+            memberships: [],
+            memberships_dates: [],
             has_membership: false,
             job_name_id: 1,
             license_num: '',
@@ -34,6 +32,7 @@ export const UserMixin = {
             allow_sms: false,
             jobOptions: [],
             is_paid: false,
+            index: 0,
         }
     },
     mounted() {
@@ -50,17 +49,17 @@ export const UserMixin = {
         handleSetJobyId(value) {
             this.job_name_id = value;
         },
-        handleSetStartDate(time) {
-            this.membership_started_date =  time;
+        handleSetStartDate(time, idx) {
+            this.memberships_dates[idx].start_date = time;
         },
-        handleSetStartTime(time) {
-            this.membership_started_time = time;
+        handleSetStartTime(time, idx) {
+            this.memberships_dates[idx].start_time = time;
         },
-        handleSetEndDate(time) {
-            this.membership_ended_date = time;
+        handleSetEndDate(time,idx) {
+            this.memberships_dates[idx].end_date = time;
         },
-        handleSetEndTime(time) {
-            this.membership_ended_time = time;
+        handleSetEndTime(time,idx) {
+            this.memberships_dates[idx].end_time = time;
         },
     }
 };

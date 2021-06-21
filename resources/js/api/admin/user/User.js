@@ -21,6 +21,19 @@ export default {
             method: 'get'
         })
     },
+    getEditMembershipData(id) {
+      return Send({
+          url: `/api/admin/membership/user/${id}`,
+          method: 'get',
+      })
+    },
+    updateMembership(id,data) {
+        return Send({
+            url: `/api/admin/membership/user/${id}`,
+            method: 'post',
+            data: data,
+        })
+    },
     update(id, data) {
         return Send({
             url: `/api/admin/user/${id}`,

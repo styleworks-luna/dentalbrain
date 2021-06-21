@@ -20,6 +20,9 @@ class MembershipService
 {
     public static function validateAndUpdateAtAdmin(Request $request, User $user, array $additionalRules = []): Collection
     {
+        logger('=============================================================');
+        logger($request->all());
+        logger('=============================================================');
         $membershipData = self::validateAtAdmin($request, $additionalRules);
         self::updateOrCreateAtAdmin($user, $membershipData);
     }
@@ -31,14 +34,15 @@ class MembershipService
      */
     private static function validateAtAdmin(Request $request, array $additionalRules = []): Collection
     {
-        $v = Validator::make($request->all(), [
-            array_merge([
-                'memberships.*.started_at' => ['required', 'before_or_equal:expired_at',],
-                'memberships.*.expired_at' => ['required', 'after_or_equal:started_at',],
+        $v = Validator::make($request->all(), array_merge([
+                'memberships.*.started_at' => ['required_with:memberships.*.expired_at', 'nullable', 'before_or_equal:memberships.*.expired_at',],
+                'memberships.*.expired_at' => ['required_with:memberships.*.started_at', 'nullable', 'after_or_equal:memberships.*.started_at',],
             ], $additionalRules)
-        ]);
+        );
+        logger($v->errors()->toArray());
 
         $validatedData = $v->validate();
+
 
         return collect($validatedData['memberships']);
     }
@@ -48,6 +52,10 @@ class MembershipService
         $originalMemberships = $user->memberships()->get();
 
         foreach ($membershipsData as $datum) {
+            if (!isset($datum['started_at']) && !isset($datum['expired_at'])) {
+                continue;
+            }
+            //'Y-m-d H:i'
             $started_at = Carbon::parse($datum['started_at']);
             $expired_at = Carbon::parse($datum['expired_at']);
             if (isset($datum['id'])) {
