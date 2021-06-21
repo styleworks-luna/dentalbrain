@@ -119,6 +119,7 @@ class Membership extends Model
             'pay_status' => Membership::$PAY_PAID,
             'started_at' => $started_at,
             'expired_at' => $expired_at,
+            'last_applied_at' => now(),
         ]);
     }
 

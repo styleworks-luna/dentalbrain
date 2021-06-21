@@ -56,15 +56,17 @@
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 60%">
-                        <col style="width: 15%">
-                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
                         <col style="width: 10%">
                     </colgroup>
                     <thead>
                     <tr>
                         <th>날짜</th>
+                        <th>결제일수</th>
                         <th>결제상태</th>
-                        <th>결재방식</th>
+                        <th>결제방식</th>
                         <th>상태</th>
                     </tr>
                     </thead>
@@ -93,12 +95,56 @@
                                              @setTime="handleSetEndTime"></time-picker>
                             </div>
                         </td>
-                        <td>{{ paymentStatus(membership.payment.status) }}</td>
-                        <td>{{ membership.payment.method }}</td>
+                        <td>{{ membership.applied_days ? membership.applied_days + '일' : '' }}</td>
+                        <td>{{ membership.payment ? paymentStatus(membership.payment.status) : '' }}</td>
+                        <td>{{ membership.payment ? membership.payment.method : '관리자 등록' }}</td>
+                        <td>
+                            <template v-if="membership.pay_status == 0">
+                                결제 전
+                            </template>
+                            <template v-else-if="membership.pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="membership.pay_status === 2">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="membership.pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="membership.pay_status === 4">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <!-- 별도결제 확인 -->
+                            <template v-else-if="membership.pay_status === 5">
+                                <a href="#" class="btn btn-success"
+                                   @click.prevent="confirmMembershipPayment(membership.id)">
+                                    결제 확인</a>
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="membership.pay_status === 6">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
+                                </a>
+                            </template>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            <payment-cancel-layer v-if="cancelLayer"
+                                  :paymentMethod="paymentMethod"
+                                  @setCancelLayer="handleSetCancelLayer"
+                                  @cancelPayment="cancelMembershipPayment"></payment-cancel-layer>
         </template>
 
         <template v-slot:footer>
@@ -109,7 +155,6 @@
                 </router-link>
             </div>
         </template>
-
     </layout>
 </template>
 
@@ -120,14 +165,21 @@ import User from '@/api/admin/user/User.js';
 //Mixin
 import {UserMixin} from '@/mixins/admin/user/User.js'
 
+// mixins
+import {PaymentCancelMixin} from '@/mixins/admin/payment/Cancel.js';
+import {PaymentConfirmMixin} from '@/mixins/admin/payment/Confirm.js';
+
 export default {
     name: "UserMembershipEdit",
     mixins: [
         UserMixin,
+        PaymentCancelMixin,
+        PaymentConfirmMixin
     ],
     data() {
         return {
             id: '',
+            user_id: '',
             membership_id: '',
             data: {},
             page: this.$route.params.page,
@@ -135,10 +187,10 @@ export default {
         }
     },
     created() {
-        this.id = this.$route.params.id;
+        this.user_id = this.$route.params.id;
     },
     mounted() {
-        this.getEditData();
+        this.getData();
     },
     computed: {
         jobName() {
@@ -159,8 +211,8 @@ export default {
         },
     },
     methods: {
-        getEditData() {
-            User.getEditMembershipData(this.id).then(res => {
+        getData() {
+            User.getEditMembershipData(this.user_id).then(res => {
                 const userResult = res.data.user;
                 const membershipResult = res.data.memberships;
 
@@ -261,10 +313,14 @@ export default {
                 memberships: this.memberships,
             };
 
-            User.updateMembership(this.id, data).then(res => {
+            User.updateMembership(this.user_id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push(`/admin/user/membership/${this.page}`);
             })
+        },
+        getCancelId(data, boolean) {
+            this.is_membership = boolean
+            this.id = data;
         },
     }
 }

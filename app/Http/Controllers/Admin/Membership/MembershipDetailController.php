@@ -17,7 +17,7 @@ class MembershipDetailController extends Controller
 {
     public function edit(User $user): JsonResponse
     {
-        $memberships = $user->memberships()->with('payment:id,method,status')->get();
+        $memberships = $user->memberships()->with('payment:id,method,status')->orderByDesc('last_applied_at')->get();
         return response()->json([
             'user' => $user,
             'memberships' => $memberships,

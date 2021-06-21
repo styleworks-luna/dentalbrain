@@ -42,7 +42,7 @@
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>{{ membership.started_at }}</td>
                     <td>{{ membership.expired_at }}</td>
-                    <td>{{ membership.payment.method }}</td>
+                    <td>{{ membership.payment? membership.payment.method : ''}}</td>
                     <td>
                         <template v-if="membership.pay_status == 0">
                             결제 전
@@ -258,7 +258,6 @@ export default {
             };
 
             User.getMembership(params).then(res => {
-                console.log(res);
                 this.users = res.data[0];
 
                 this.memberNum = res.data.active;
