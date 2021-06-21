@@ -55,7 +55,7 @@
                     </template>
                     <template v-if="slotProps.row.membership_id">
                         <td>
-                            유료회원 결제
+                            {{slotProps.row.applied_days}}일 유료회원 결제
                         </td>
                     </template>
                     <template v-else>
