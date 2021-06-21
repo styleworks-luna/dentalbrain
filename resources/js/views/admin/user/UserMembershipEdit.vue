@@ -299,13 +299,6 @@ export default {
                 end_time: "",
             });
         },
-        check() {
-            this.memberships.forEach((x, index) => {
-                x.started_at = this.memberships_dates[index].start_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].start_date)} ${this.memberships_dates[index].start_time}` : null;
-                x.expired_at = this.memberships_dates[index].end_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].end_date)} ${this.memberships_dates[index].end_time}`: null;
-            });
-            console.log(this.memberships);
-        },
         update() {
             this.memberships.forEach((x, index) => {
                 x.started_at = this.memberships_dates[index].start_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].start_date)} ${this.memberships_dates[index].start_time}` : null;
@@ -317,7 +310,7 @@ export default {
             };
 
             User.updateMembership(this.user_id, data).then(res => {
-                alert(res.data.res);
+                alert(res.data.msg);
                 this.$router.go(-1);
             })
         },
