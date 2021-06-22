@@ -8,13 +8,13 @@
                     @click="addChoice('multipleChoice')">객관식 (다중선택)
             </button>
             <button class="btn btn-ghost-dark d-block"
-                    @click="addquestion('shortAnswer')">주관식
+                    @click="addQuestion('shortAnswer')">주관식
             </button>
             <button class="btn btn-ghost-dark d-block"
-                    @click="addquestion('address')">주소검색
+                    @click="addQuestion('address')">주소검색
             </button>
             <button class="btn btn-ghost-dark d-block"
-                    @click="addquestion('file')">파일첨부
+                    @click="addQuestion('file')">파일첨부
             </button>
         </div>
         <div class="survey-wrap">
@@ -27,12 +27,11 @@
                             <input type="text"
                                    class="form-control"
                                    v-model="survey.question"
-                                   :disabled="haveStudent == true"
                                    placeholder="객관식 (단일선택) 질문을 입력해주세요.">
 
                         </div>
                         <div class="checkbox-wrap">
-                            <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"
+                            <input type="checkbox" :id="'required' + index"
                                    v-model="survey.is_required">
                             <label :for="'required'+ index">필수입력</label>
                         </div>
@@ -46,7 +45,6 @@
                         <input type="text"
                                class="form-control choices"
                                v-model="surveys[index].choices[idx].question"
-                               :disabled="haveStudent == true"
                                placeholder="항목을 입력해주세요.">
                         <button class="btn btn-outline-dark btn-item-delete"
                                 @click="popItem(survey.choices,idx)">항목삭제
@@ -61,12 +59,11 @@
                             <input type="text"
                                    class="form-control"
                                    v-model="survey.question"
-                                   :disabled="haveStudent == true"
                                    placeholder="객관식 (다중선택) 질문을 입력해주세요.">
 
                         </div>
                         <div class="checkbox-wrap">
-                            <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"
+                            <input type="checkbox" :id="'required' + index"
                                    v-model="survey.is_required">
                             <label :for="'required'+ index">필수입력</label>
                         </div>
@@ -79,7 +76,6 @@
                         <span class="square"></span>
                         <input type="text"
                                class="form-control choices"
-                               :disabled="haveStudent == true"
                                v-model="surveys[index].choices[idx].question"
                                placeholder="항목을 입력해주세요.">
                         <button class="btn btn-outline-dark btn-item-delete"
@@ -95,11 +91,10 @@
                             <input type="text"
                                    class="form-control"
                                    v-model="survey.question"
-                                   :disabled="haveStudent == true"
                                    placeholder="주관식 질문을 입력해주세요.">
                         </div>
                         <div class="checkbox-wrap">
-                            <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"
+                            <input type="checkbox" :id="'required' + index"
                                    v-model="survey.is_required">
                             <label :for="'required'+ index">필수입력</label>
                         </div>
@@ -116,11 +111,10 @@
                             <input type="text"
                                    class="form-control"
                                    v-model="survey.question"
-                                   :disabled="haveStudent == true"
                                    placeholder="주소 질문을 입력해주세요.">
                         </div>
                         <div class="checkbox-wrap">
-                            <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"
+                            <input type="checkbox" :id="'required' + index"
                                    v-model="survey.is_required">
                             <label :for="'required'+ index">필수입력</label>
                         </div>
@@ -137,11 +131,10 @@
                             <input type="text"
                                    class="form-control"
                                    v-model="survey.question"
-                                   :disabled="haveStudent == true"
                                    placeholder="파일첨부 질문을 입력해주세요.">
                         </div>
                         <div class="checkbox-wrap">
-                            <input type="checkbox" :id="'required' + index" :disabled="haveStudent == true"
+                            <input type="checkbox" :id="'required' + index"
                                    v-model="survey.is_required">
                             <label :for="'required'+ index">필수입력</label>
                         </div>
@@ -163,67 +156,51 @@ export default {
     data() {
         return {
             surveys: [],
-            haveStudent: '',
         }
     },
     props: {
         'data': [Array],
-        'haveStudentValue': Boolean,
     },
     watch: {
         data() {
             this.surveys = this.data;
         },
-        haveStudentValue() {
-            this.haveStudent = this.haveStudentValue;
-        }
     },
     mounted() {
         this.surveys = this.data;
-        this.haveStudent = this.haveStudentValue;
     },
     methods: {
         addChoice(type) {
-            if (!this.haveStudent) {
-                this.surveys.push(
-                    {
-                        type: type,
-                        question: '',
-                        is_required: 0,
-                        choices: [{
-                            question: ''
-                        }],
-                    }
-                )
-            }
+            this.surveys.push(
+                {
+                    type: type,
+                    question: '',
+                    is_required: 0,
+                    choices: [{
+                        question: ''
+                    }],
+                }
+            )
         },
-        addquestion(type) {
-            if (!this.haveStudent) {
-                this.surveys.push(
-                    {
-                        type: type,
-                        question: '',
-                        is_required: 0,
-                    }
-                )
-            }
+        addQuestion(type) {
+            this.surveys.push(
+                {
+                    type: type,
+                    question: '',
+                    is_required: 0,
+                }
+            )
         },
         addItem(index) {
-            if (!this.haveStudent) {
-                this.surveys[index].choices.push({
-                    question: '',
-                });
-            }
+            this.surveys[index].choices.push({
+                question: '',
+            });
         },
         pop(data, index) {
-            if (!this.haveStudent) {
-                data.splice(index, 1)
-            }
+            data.splice(index, 1);
         },
         popItem(data, index) {
-            if (!this.haveStudent) {
-                data.splice(index, 1)
-            }
+            data.splice(index, 1);
         }
     },
 }
