@@ -342,11 +342,9 @@ class Program extends Model
 
     public function getMajorCategoryNameAttribute()
     {
-        if ($this->minorCategory) {
-            return $this->minorCategory->name;
-        } elseif (isset($this->attributes['major_category_id']))
-            return ProgramMajorCategory::find($this->attributes['major_category_id'])->name;
-        else
+        if ($this->majorCategory) {
+            return $this->majorCategory->name;
+        } else
             return null;
     }
 
@@ -357,8 +355,8 @@ class Program extends Model
 
     public function getMinorCategoryNameAttribute()
     {
-        if (isset($this->attributes['minor_category_id']))
-            return ProgramMinorCategory::find($this->attributes['minor_category_id'])->name;
+        if ($this->minorCategory)
+            return $this->minorCategory->name;
         else
             return null;
     }
