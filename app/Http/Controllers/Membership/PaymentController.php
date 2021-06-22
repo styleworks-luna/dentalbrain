@@ -45,15 +45,9 @@ class PaymentController extends Controller
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
             }
 
-            /** @var User $user */
-            $user = Auth::user();
-
             // 멤버십 & 결제정보 생성
             $payment = Payment::createByTossSuccess($response);
             $membership = Membership::createWhenTossSuccess($response, $payment, $days);
-            if ($response->isCard() || $response->isTransfer()) {
-                $user->updateWhenMembershipPaid($days);
-            }
 
             // 메일
 

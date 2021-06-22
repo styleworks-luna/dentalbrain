@@ -22,11 +22,15 @@ export default {
     props: {
         'time': [String, Date],
         'disabled': Boolean,
+        'index': Number,
     },
     data() {
         return {
             date: ''
         };
+    },
+    mounted() {
+      this.date = this.time;
     },
     watch: {
         time() {
@@ -35,7 +39,7 @@ export default {
     },
     methods: {
         handleSetTime() {
-            this.$emit('setTime', this.date);
+            this.$emit('setTime', this.date, this.index);
         }
     }
 }

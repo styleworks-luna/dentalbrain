@@ -99,7 +99,7 @@ return [
     'required' => ':attribute 를 작성해야 합니다.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
-    'required_with' => 'The :attribute field is required when :values is present.',
+    'required_with' => ':attribute 는 :values 와 함께 있어야 합니다.',
     'required_with_all' => 'The :attribute field is required when :values are present.',
     'required_without' => 'The :attribute field is required when :values is not present.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
@@ -167,14 +167,6 @@ return [
         'reason' => [
             'required' => '취소이유를 작성해 주세요.'
         ],
-        'membership_started_at' => [
-            'required_with' => '유료회원 종료일도 작성해 주세요.',
-            'date_format' => '시작일의 날짜가 형식에 맞지 않습니다.',
-        ],
-        'membership_expired_at' => [
-            'required_with' => '유료회원 시작일도 작성해 주세요.',
-            'date_format' => '종료일의 날짜가 형식에 맞지 않습니다.',
-        ],
     ],
 
     /*
@@ -207,8 +199,6 @@ return [
         'started_at' => '시작',
         'ended_at' => '종료',
         'address' => '주소',
-        'membership_started_at' => '유료회원 시작일',
-        'membership_expired_at' => '유료회원 종료일',
         'license_num' => '면허번호',
         'name' => '이름',
     ],

@@ -93,15 +93,15 @@
                 </template>
             </single-group>
 
-            <!-- 유료회원 여부 -->
+            <!-- 유료회원 여부
             <single-group name="유료회원 여부"
                           :isRow="true"
                           :size="2.5">
                 <template v-slot:content>
-                    <!-- <div class="input-wrap">
+                    <div class="input-wrap">
                         <input type="checkbox" name="paid-check" id="paid-check" v-model="has_membership" @change="handleCheckbox">
                         <label for="paid-check">유료회원 선택</label>
-                    </div> -->
+                    </div>
                     <div class="date-wrap">
                         <date-picker class="mr-3"
                                      :time="membership_started_date"
@@ -119,7 +119,7 @@
                                      @setTime="handleSetEndTime"></time-picker>
                     </div>
                 </template>
-            </single-group>
+            </single-group>-->
 
         </template>
 
@@ -128,9 +128,9 @@
                 <button type="submit" class="btn btn-info"
                         @click="update">저장
                 </button>
-                <router-link :to="`/admin/user/${page}`"
-                             class="btn btn-dark">취소
-                </router-link>
+                <a @click="$router.go(-1)"
+                   class="btn btn-dark text-white">취소
+                </a>
             </div>
         </template>
     </layout>
@@ -176,22 +176,9 @@ export default {
                 this.allow_email = result.allow_email;
                 this.allow_sms = result.allow_sms;
                 this.is_paid = result.is_paid;
-
-                this.has_membership = result.has_membership;
-
-                if(res.data[0].membership_started_at != null && res.data[0].membership_expired_at != null) {
-                    this.membership_started_date = this.Helper.dateFullFormat(res.data[0].membership_started_at);
-                    this.membership_started_time = this.Helper.timeFormat(this.membership_started_date);
-                    this.membership_ended_date = this.Helper.dateFullFormat(res.data[0].membership_expired_at);
-                    this.membership_ended_time = this.Helper.timeFormat(this.membership_ended_date);
-                    // this.disabled = false;
-                }
             });
         },
         update() {
-            const membership_started_at = `${this.Helper.dateFormatYDM(this.membership_started_date)} ${this.membership_started_time}`;
-            const membership_expired_at = `${this.Helper.dateFormatYDM(this.membership_ended_date)} ${this.membership_ended_time}`;
-
             let data = {
                 login_id: this.login_id,
                 name: this.name,
@@ -202,9 +189,6 @@ export default {
                 allow_email: this.allow_email,
                 allow_sms: this.allow_sms,
                 is_paid: this.is_paid,
-                // has_membership: this.has_membership,
-                membership_started_at: membership_started_at,
-                membership_expired_at: membership_expired_at,
             };
 
             User.update(this.id, data).then(res => {

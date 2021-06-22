@@ -70,7 +70,7 @@ class UserController
             // (null == 0) 이 true이므로 한번 걸러냄.
             if ($hasMembership == 1) {
                 //유료 회원
-                $result = $result->Paid();
+                $result = $result->paid();
             } elseif ($hasMembership == 0) {
                 //일반 회원
                 $result = $result->doesntPaid();
@@ -101,12 +101,10 @@ class UserController
 
     public function edit(User $user)
     {
-        $user->addHidden(['memberships']);
+        $user->with('memberships');
 
         $data = collect([
             'user' => $user,
-            'membership_started_at' => $user->membership_started_at,
-            'membership_expired_at' => $user->membership_expired_at,
         ]);
         return response()->json([$data]);
     }
@@ -133,8 +131,6 @@ class UserController
                 'phone' => $data['phone'],
                 'allow_email' => $data['allow_email'],
                 'allow_sms' => $data['allow_sms'],
-                'membership_started_at' => $data['membership_started_at'],
-                'membership_expired_at' => $data['membership_expired_at'],
             ]);
 
             DB::commit();
@@ -170,8 +166,6 @@ class UserController
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
             'allow_sms' => ['nullable', 'boolean'],
-            'membership_started_at' => ['required_with:membership_expired_at', 'nullable', 'date_format:Y-m-d H:i', 'before_or_equal:membership_expired_at'],
-            'membership_expired_at' => ['required_with:membership_started_at', 'nullable', 'date_format:Y-m-d H:i', 'after_or_equal:membership_started_at'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;

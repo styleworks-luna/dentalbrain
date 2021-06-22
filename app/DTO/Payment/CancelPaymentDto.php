@@ -164,11 +164,15 @@ class CancelPaymentDto
 
     private static function getMembershipCancelInstance(Request $request, Membership $membership): ?CancelPaymentDto
     {
-        if ($membership->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-            || $membership->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS) {
+        if ($membership->pay_status == Membership::$PAY_ANOTHER_PAID
+            || $membership->pay_status == Membership::$PAY_ANOTHER_IN_PROCESS) {
             // 별도 결제의 경우 reason 및 다른 params 필요없음
             // 더미 값
             return new CancelPaymentDto('별도 결제 취소 신청');
+        }
+
+        if ($membership->pay_status == Membership::$PAY_PAID && $membership->payment == null) {
+            return new CancelPaymentDto('관리자가 생성한 유료회원 취소 신청');
         }
 
         return self::validateAndGetInstancePaidByToss($request, $membership);
