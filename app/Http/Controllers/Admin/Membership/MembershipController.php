@@ -17,7 +17,7 @@ class MembershipController extends Controller
     {
         $active = User::query()->useMembership()->count();
 
-        $inactive = User::query()->doesntUseMembership()->count();
+        $inactive = User::query()->haveExpiredMembership()->count();
 
         return response()->json([
             $this->search($request)->paginate(10),

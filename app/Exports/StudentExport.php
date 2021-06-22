@@ -19,7 +19,9 @@ class StudentExport implements FromView
 
     /**
      * StudentExport constructor.
-     * @param Program $program
+     * @param $surveys
+     * @param $students
+     * @param $surveyAnswers
      */
     public function __construct($surveys, $students, $surveyAnswers)
     {

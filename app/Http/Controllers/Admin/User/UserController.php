@@ -32,17 +32,15 @@ class UserController
 
     public function index(Request $request)
     {
-        $queryBase = User::query();
-
-        $paid = (clone $queryBase)->useMembership()->count();
-
-        $normal = (clone $queryBase)->doesntUseMembership()->count();
+        $total = User::query()->count();
+        $paid = User::query()->useMembership()->count();
+        $normal = $total - $paid;
 
         return response()->json([
             'user' => $this->search($request)->paginate(20),
             'paid' => $paid,
             'normal' => $normal,
-            'total' => $queryBase->count(),
+            'total' => $total,
         ]);
     }
 
@@ -73,7 +71,7 @@ class UserController
                 $result = $result->useMembership();
             } elseif ($hasMembership == 0) {
                 //일반 회원
-                $result = $result->doesntUseMembership();
+                $result = $result->dontUseMembership();
             }
         }
 

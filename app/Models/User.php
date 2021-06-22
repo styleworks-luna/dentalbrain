@@ -249,11 +249,22 @@ class User extends Authenticatable
      * @param Builder $query
      * @return Builder
      */
-    public function scopeDoesntUseMembership($query)
+    public function scopeDontUseMembership($query)
     {
         return $query->whereDoesntHave('memberships', function ($query) {
             $query->inUse();
         });
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeHaveExpiredMembership($query)
+    {
+        return $query->whereDoesntHave('memberships', function ($query) {
+            $query->inUse();
+        })->whereHas('memberships');
     }
 
     /*  ==============================================================================
