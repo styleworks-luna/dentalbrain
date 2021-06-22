@@ -58,8 +58,11 @@
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
-                                     class="btn btn-info float-left">
+                                     class="btn btn-info float-left mr-3">
                             수정
+                        </router-link>
+                        <router-link :to="`/admin/user/membership/${slotProps.row.id}/${page}`"
+                                     class="btn btn-info float-left">상세
                         </router-link>
                     </td>
                 </template>
