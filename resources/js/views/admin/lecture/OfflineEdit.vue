@@ -164,7 +164,7 @@
             <div :class="haveStudents ? 'bg-light text-dark':''">
             <single-group name="추가정보" :size="12">
                 <template v-slot:content>
-                    <additional-information :data="surveys" :haveStudentValue="haveStudents"></additional-information>
+                    <additional-information :data="surveys"></additional-information>
                 </template>
             </single-group>
             </div>
