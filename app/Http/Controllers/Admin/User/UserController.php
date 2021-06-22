@@ -34,9 +34,9 @@ class UserController
     {
         $queryBase = User::query();
 
-        $paid = (clone $queryBase)->paid()->count();
+        $paid = (clone $queryBase)->useMembership()->count();
 
-        $normal = (clone $queryBase)->doesntPaid()->count();
+        $normal = (clone $queryBase)->doesntUseMembership()->count();
 
         return response()->json([
             'user' => $this->search($request)->paginate(20),
@@ -70,10 +70,10 @@ class UserController
             // (null == 0) 이 true이므로 한번 걸러냄.
             if ($hasMembership == 1) {
                 //유료 회원
-                $result = $result->paid();
+                $result = $result->useMembership();
             } elseif ($hasMembership == 0) {
                 //일반 회원
-                $result = $result->doesntPaid();
+                $result = $result->doesntUseMembership();
             }
         }
 

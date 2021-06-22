@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 
 class User extends Authenticatable
@@ -166,7 +167,7 @@ class User extends Authenticatable
     public function availableMembershipsBuilder()
     {
         // Membership@scopeAvailable()
-        return $this->memberships()->inUse()->orderByDesc('expired_at');
+        return $this->memberships()->available()->orderByDesc('expired_at');
     }
 
     public function getMembershipExpiredAt()
@@ -198,10 +199,32 @@ class User extends Authenticatable
         ])->first();
     }
 
+    public function getExpiredAtWhenPaid($days): Carbon
+    {
+        return $this->getStartedAtWhenPaid()->addDays($days);
+    }
+
+    public function getStartedAtWhenPaid()
+    {
+        if ($this->isPaid()) {
+            return $this->availableLatestMembership()->expired_at;
+        } else {
+            return now();
+        }
+    }
+
     /*  ==============================================================================
      *  Scopes
      *  ==============================================================================
      */
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->availableMembershipsBuilder()->exists();
+    }
 
     public function scopeFindIdWithNameAndPhone($query, $name, $phone)
     {
@@ -215,7 +238,7 @@ class User extends Authenticatable
      * @param Builder $query
      * @return Builder
      */
-    public function scopePaid($query)
+    public function scopeUseMembership($query)
     {
         return $query->whereHas('memberships', function ($query) {
             $query->inUse();
@@ -226,12 +249,17 @@ class User extends Authenticatable
      * @param Builder $query
      * @return Builder
      */
-    public function scopeDoesntPaid($query)
+    public function scopeDoesntUseMembership($query)
     {
         return $query->whereDoesntHave('memberships', function ($query) {
             $query->inUse();
         });
     }
+
+    /*  ==============================================================================
+     *  Append & Casting
+     *  ==============================================================================
+     */
 
     protected function getNeedLicenseAttribute()
     {
@@ -241,11 +269,6 @@ class User extends Authenticatable
         }
         return null;
     }
-
-    /*  ==============================================================================
-     *  Append & Casting
-     *  ==============================================================================
-     */
 
     protected function getJobNameIdAttribute()
     {
@@ -274,14 +297,6 @@ class User extends Authenticatable
     protected function getHasMembershipAttribute(): bool
     {
         return $this->isPaid();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPaid(): bool
-    {
-        return $this->availableMembershipsBuilder()->exists();
     }
 
 

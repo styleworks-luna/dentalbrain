@@ -15,9 +15,9 @@ class MembershipController extends Controller
 {
     public function index(Request $request)
     {
-        $active = User::query()->paid()->count();
+        $active = User::query()->useMembership()->count();
 
-        $inactive = User::query()->doesntPaid()->count();
+        $inactive = User::query()->doesntUseMembership()->count();
 
         return response()->json([
             $this->search($request)->paginate(10),
