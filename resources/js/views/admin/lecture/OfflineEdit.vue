@@ -161,13 +161,11 @@
                 </template>
             </single-group>
 
-            <div :class="haveStudents ? 'bg-light text-dark':''">
             <single-group name="추가정보" :size="12">
                 <template v-slot:content>
                     <additional-information :data="surveys"></additional-information>
                 </template>
             </single-group>
-            </div>
 
             <!-- 공개 여부 -->
             <single-group name="공개여부"
