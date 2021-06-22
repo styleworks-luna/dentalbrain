@@ -235,9 +235,8 @@ class User extends Authenticatable
 
     protected function getNeedLicenseAttribute()
     {
-        $jobNameId = $this->getJobNameIdAttribute();
-        if ($jobNameId !== null) {
-            return UserJobName::find($jobNameId)->need_license;
+        if (isset($this->job->jobName)) {
+            return $this->job->jobName->need_license;
         }
         return null;
     }
@@ -249,24 +248,24 @@ class User extends Authenticatable
 
     protected function getJobNameIdAttribute()
     {
-        if (isset($this->attributes['job_id'])) {
-            return UserJob::find($this->attributes['job_id'])->job_name_id;
+        if ($this->job) {
+            return $this->job->job_name_id;
         }
         return null;
     }
 
     protected function getJobNameAttribute()
     {
-        if ($this->getJobNameIdAttribute()) {
-            return UserJobName::find($this->getJobNameIdAttribute())->name;
+        if (isset($this->job->jobName)) {
+            return $this->job->jobName->name;
         }
         return null;
     }
 
     protected function getLicenseNumAttribute()
     {
-        if (isset($this->attributes['job_id'])) {
-            return UserJob::find($this->attributes['job_id'])->license_num;
+        if (isset($this->job)) {
+            return $this->job->license_num;
         }
         return null;
     }

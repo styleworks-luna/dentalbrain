@@ -333,6 +333,8 @@ abstract class ProgramTemplate
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');
+        logger($program->surveys);
+        logger(json_encode($dataSet));
 
         foreach ($dataSet as $data) {
             if (isset($data['id'])) {
@@ -384,17 +386,18 @@ abstract class ProgramTemplate
         }
         // 삭제 된 설문조사들 삭제.
         $newSurveyIds = collect($returnableDataSet)->pluck('id');
-        $deletable = $originalSurveyIds->diff($newSurveyIds);
+        // 키 - 값 쌍으로 diff 되는 문제 있음.
+        $deletableIds = $originalSurveyIds->diff($newSurveyIds)->values();
 
-        $surveyFiles = SurveyAnswer::query()->whereIn('survey_id', $deletable)
+        $surveyFiles = SurveyAnswer::query()->whereIn('survey_id', $deletableIds)
             ->whereNotNull('file_id')->get()
             ->mapInto(SurveyFile::class);
         $surveyFiles->each(/* @param SurveyFile $surveyFile */ function ($surveyFile) {
             $surveyFile->deleteFile();
         });
 
-        SurveyAnswer::query()->whereIn('survey_id', $deletable)->orWhereIn('choice_id', $deletable)->delete();
-        Survey::query()->whereIn('id', $deletable)->whereIn('parent_id', $deletable)->delete();
+        SurveyAnswer::query()->whereIn('survey_id', $deletableIds)->orWhereIn('choice_id', $deletableIds)->delete();
+        Survey::query()->whereIn('id', $deletableIds)->orWhereIn('parent_id', $deletableIds)->delete();
 
         return $returnableDataSet;
     }
