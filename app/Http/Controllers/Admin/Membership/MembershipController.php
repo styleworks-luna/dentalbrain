@@ -33,7 +33,7 @@ class MembershipController extends Controller
 
         $search = new SearchService(User::query()
             ->with(['memberships' => function ($query) {
-                $query->inUse()->limit(1)->with('payment:id,method');
+                $query->inUse()->first()->with('payment:id,method');
             }])
             ->whereHas('memberships', function ($query) {
                 $query->with('payment:id,method');
