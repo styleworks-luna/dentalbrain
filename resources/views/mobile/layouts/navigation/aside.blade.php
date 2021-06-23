@@ -23,6 +23,7 @@
                     <div class="my-page">
                         <ul>
                             <li><a href="{{ route('account.lectures') }}">신청한 강의</a></li>
+                            <li><a href="{{ route('account.like') }}">찜 내역</a></li>
                             <li><a href="{{ route('account.payments') }}">결제내역</a></li>
                             <li><a href="{{ route('account.questions.index') }}">질문내역</a></li>
                         </ul>
@@ -42,7 +43,6 @@
                     <li><a href="{{ url('community') }}">커뮤니티</a></li>
                     <li><a href="{{ url('lectures') }}">전체강의</a></li>
                     <li><a href="{{ url('membership') }}">유료회원</a></li>
-                    <li><a href="{{ route('account.like') }}">찜 강의내역</a></li>
                 </ul>
                 <div class="menu-title">
                     <h3>고객센터</h3>
@@ -55,7 +55,6 @@
                 </ul>
             </div>
         </div>
-
 
         <div class="bottom">
             @auth()
