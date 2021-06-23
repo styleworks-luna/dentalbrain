@@ -103,9 +103,11 @@
                                 </div>
 
                                 <!-- 기간 종료 -->
-                                <div class="d-day" v-else><em>만료</em></div>
-                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용됩니다.</p></div>
-                                <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지</div>
+                                <div class="d-day" v-else><em>기간 만료</em></div>
+                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용</p>
+                                </div>
+                                <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지
+                                </div>
                             </div>
 
                             <!-- 오프라인 -->
@@ -168,41 +170,50 @@
 
                             <!-- 오프라인 -->
                             <template v-else>
-                                <div class="content-button-full"
-                                     v-if="Helper.dateCompareWithNow(lecture.program.place.ended_at) > 0">
-                                    <div class="btn-wrap">
-                                        <a :href="`/account/lectures/${lecture.program.id}`"
-                                           :class="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
+                                <template v-if="Helper.dateCompareWithNow(lecture.program.place.ended_at) > 0">
+                                    <div class="content-button-full">
+                                        <div class="btn-wrap">
+                                            <a :href="`/account/lectures/${lecture.program.id}`"
+                                               :class="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay ? '' : 'for-margin'">수정하기</a>
 
-                                        <!-- 오프라인 유료 -->
-                                        <template v-if="lecture.is_free == 0">
-                                            <!-- 2일 이상일 때 취소(자동) -->
-                                            <template
-                                                v-if="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay * 2">
-                                                <a href="" @click.prevent="popUpStatus(lecture.id)">취소하기</a>
-                                            </template>
-                                            <!-- 2일 이하 1일 전 일때 취소(수동, 관리자) -->
-                                            <template v-else-if=" Helper.dateCompareWithNow(lecture.program.place.started_at) < milliSecondsDay * 2
+                                            <!-- 오프라인 유료 -->
+                                            <template v-if="lecture.is_free == 0">
+                                                <!-- 2일 이상일 때 취소(자동) -->
+                                                <template
+                                                    v-if="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay * 2">
+                                                    <a href="" @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                                                </template>
+                                                <!-- 2일 이하 1일 전 일때 취소(수동, 관리자) -->
+                                                <template v-else-if=" Helper.dateCompareWithNow(lecture.program.place.started_at) < milliSecondsDay * 2
                                                && Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay">
-                                                <!-- 환불신청 전 -->
-                                                <a href="" v-if="lecture.pay_status === 2"
-                                                   @click.prevent="popUpManualStatus(lecture.id)">
-                                                    취소하기
-                                                </a>
-                                                <!-- 환불 신청 후 -->
-                                                <a href="" v-else-if="lecture.pay_status === 4" @click.prevent>환불요청 중</a>
+                                                    <!-- 환불신청 전 -->
+                                                    <a href="" v-if="lecture.pay_status === 2"
+                                                       @click.prevent="popUpManualStatus(lecture.id)">
+                                                        취소하기
+                                                    </a>
+                                                    <!-- 환불 신청 후 -->
+                                                    <a href="" v-else-if="lecture.pay_status === 4" @click.prevent>환불요청
+                                                        중</a>
+                                                </template>
                                             </template>
-                                        </template>
 
-                                        <!-- 오프라인 무료 -->
-                                        <template v-else-if="lecture.is_free != 0">
-                                            <!-- 하루 이상 일때 취소 -->
-                                            <a href=""
-                                               v-if="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay"
-                                               @click.prevent="popUpStatus(lecture.id)">취소하기</a>
-                                        </template>
+                                            <!-- 오프라인 무료 -->
+                                            <template v-else-if="lecture.is_free != 0">
+                                                <!-- 하루 이상 일때 취소 -->
+                                                <a href=""
+                                                   v-if="Helper.dateCompareWithNow(lecture.program.place.started_at) > milliSecondsDay"
+                                                   @click.prevent="popUpStatus(lecture.id)">취소하기</a>
+                                            </template>
+                                        </div>
                                     </div>
-                                </div>
+                                </template>
+                                <template v-else>
+                                    <template v-if="mobile">
+                                    <div class="content-text">
+                                        <p>본 강의는 종료되었습니다.</p>
+                                    </div>
+                                    </template>
+                                </template>
                             </template>
                         </template>
 
@@ -223,8 +234,8 @@
         </refund-free-pop>
 
         <refund-account-pop v-if="showAccountModal"
-                         :programIdTo="modalData.program.id"
-                         @close="toggleAccountModal">
+                            :programIdTo="modalData.program.id"
+                            @close="toggleAccountModal">
         </refund-account-pop>
 
         <refund-manual-pop v-if="modalData.is_free == 0 && showManualModal"

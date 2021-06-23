@@ -148,9 +148,6 @@ body
                 font-weight: bold
                 font-size: 4.444444vw
 
-                em
-                    color: $page-color
-
             .dedicate
                 +padding(top 1.38888888vw)
                 font-size: 3.05555555vw
@@ -186,16 +183,37 @@ body
                     +margin(right 1.388888vw)
 
             .btn-wrap
-
                 a
                     +size(44.1666666vw)
 
                     &:first-child
                         +margin(right 2.777777vw)
 
+        .content-button-full
+            overflow: hidden
+
+            a
+                +size(44.16666666vw)
+                +margin(0)
+
+            .apply-btn
+                +size(33.3333333vw)
+                +btn(purple-fill)
+
+            .btn-none-active
+                +margin(left 2.777777vw)
+                +border(.2777777vw solid $border-color-base)
+                float: right
+
+        .content-text
+            +padding(top 14px bottom 14px)
+            text-align: center
+
+            p
+                font-size: 3.8888888vw
+                color: $gray-700
 
 .mypage-like
-
     .content-information-wrap
         +border(0.277777vw solid #e6e6e6, bottom)
 
@@ -203,9 +221,49 @@ body
         +margin(top 4.444444vw)
 
         .btn-lecture
-            +size(33.3333333vw, 11.6666666vw)
+            +size(91.1111111vw, 11.6666666vw)
             +margin(0 auto 0 auto)
             +btn(null, .27777777vw solid $border-color-base, 6.9444444vw)
             display: block
             font-weight: bold
             line-height: 11.6666666vw
+
+.account-pop-up
+    +size(91.111111vw)
+    +padding(3.88888888vw 0 4.44444444vw 0)
+    +background(null, null, null, $white)
+    +border(.55555555vw solid $page-color)
+    +box-sizing(border-box)
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    z-index: 220
+
+    h3
+        font-weight: bold
+        font-size: 5vw
+        text-align: center
+
+    p
+        +padding(top 11.11111111vw)
+        text-align: center
+
+    .btn-wrap
+        +size(82.2222222vw)
+        +margin(11.111111vw auto 0 auto)
+
+        .btn-apply
+            +btn(purple-fill)
+            +size(39.72222222vw, 13.8888888vw)
+            font-weight: bold
+            font-size: 4.44444444vw
+            float: right
+
+        .btn-cancel
+            +btn()
+            +size(39.72222222vw, 13.8888888vw)
+            +background(null, null, null, $gray-700)
+            font-weight: bold
+            font-size: 4.44444444vw
+            color: $white

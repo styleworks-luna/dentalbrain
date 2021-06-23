@@ -154,7 +154,7 @@
                             @if($program->waitDeposit($student) || $program->waitConfirmAnotherPay($student))
                                 <div class="btn-wrap">
                                     <span class="btn-apply-complete">
-                                        입금 대기중
+                                        입금대기
                                     </span>
                                     <a href="{{ route('account.lectures.edit',$program->id) }}" class="edit">
                                         신청내역 수정
