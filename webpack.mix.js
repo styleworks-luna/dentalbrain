@@ -122,4 +122,6 @@ mix.sass('resources/sass/mobile/pages/service/notice.sass', 'public/css/mobile/p
     .sass('resources/sass/mobile/pages/service/faq.sass', 'public/css/mobile/pages/service')
     .sass('resources/sass/mobile/pages/service/inquire.sass', 'public/css/mobile/pages/service');
 
+mix.sass('resources/sass/mobile/pages/search/search.sass', 'public/css/mobile/pages/search');
+
 mix.version();

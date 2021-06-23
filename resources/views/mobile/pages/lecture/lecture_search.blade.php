@@ -9,8 +9,12 @@
 @endsection
 
 @section('title')
+    <div class="menu-btn-wrap">
+        <a href="" class="menu-btn"></a>
+    </div>
     <a href="" class="btn-back"></a>
     <h1>검색 결과</h1>
+    <a href="{{ url('/m-search') }}" class="btn-search"></a>
 @endsection
 
 @section('content')

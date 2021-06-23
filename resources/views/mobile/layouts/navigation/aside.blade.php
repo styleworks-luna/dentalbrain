@@ -1,11 +1,11 @@
 <nav class="aside hide">
     <div class="aside-wrap">
         <div class="top">
-            <a href="{{ URL('/') }}">
-                <img src="{{ asset('/images/mobile/navigation/icon_nav_home.svg') }}" alt="메인 바로가기">
-            </a>
             <a href="" class="btn-nav-close">
                 <img src="{{ asset('/images/mobile/navigation/icon_nav_close.svg') }}" alt="닫기">
+            </a>
+            <a href="{{ URL('/') }}">
+                <img src="{{ asset('/images/mobile/navigation/icon_nav_home.svg') }}" alt="메인 바로가기">
             </a>
         </div>
 
@@ -53,16 +53,6 @@
                     <li><a href="{{ route('customer.faqs.index') }}">FAQ</a></li>
                     <li><a href="{{ route('customer.inquiries.index') }}">문의하기</a></li>
                 </ul>
-            </div>
-
-            <div class="search-controller">
-                <form action="{{ route('lectures.search') }}" method="GET">
-                    <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요."/>
-                    <button class="btn-search ir_pm">
-                        검색
-                        <span class="search-icon"></span>
-                    </button>
-                </form>
             </div>
         </div>
 

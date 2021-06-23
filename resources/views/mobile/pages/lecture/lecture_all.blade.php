@@ -9,8 +9,12 @@
 @endsection
 
 @section('title')
+    <div class="menu-btn-wrap">
+        <a href="" class="menu-btn"></a>
+    </div>
     <a href="" class="btn-back"></a>
     <h1>전체강의</h1>
+    <a href="" class="btn-search"></a>
 @endsection
 
 @section('content')

@@ -52,6 +52,10 @@ Route::get('m-find', function () {
 Route::get('m-find-ps', function () {
     return view('mobile.pages.user.find_password');
 });
+// 모바일 검색 창
+Route::get('m-search', function () {
+    return view('mobile.pages.search.search');
+});
 
 //회사 소개 (임시)
 Route::get('introduce', function () {

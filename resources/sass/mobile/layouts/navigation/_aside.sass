@@ -5,7 +5,7 @@
     +background(null, null, null, $white)
     overflow-y: scroll
     position: fixed
-    right: 0
+    left: 0
     top: 0
     z-index: 1000
 
@@ -163,29 +163,6 @@
 
             &:last-child
                 float: right
-
-    .search-controller
-        +padding(5vw 8.3333333vw)
-        position: relative
-
-        input[type="text"]
-            +input(white-light-fill)
-            +size(72.22222222vw, 10.555555vw)
-
-        .btn-search
-            +size(8.3333333vw, 8.3333333vw)
-            +border(0)
-            position: absolute
-            top: 5.8333333vw
-            right: 11.388888vw
-            background-color: inherit
-            cursor: pointer
-
-            .search-icon
-                +size(5.555555vw, 5.555555vw)
-                +background('/images/desktop/global/icon_search.svg',no-repeat, center center)
-                background-size: 5.555555vw 5.555555vw
-                display: block
 
 .aside-dim
     +size(100%, 100%)

@@ -1,0 +1,57 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/mobile/_input.sass'
+
+.search-wrap
+    +padding(3.333333vw 4.444444vw)
+    +border(.2777777vw solid $border-color-base, bottom)
+    overflow: hidden
+
+    .btn-back
+        +size(6.6666666vw, 6.6666666vw)
+        +background('/images/mobile/global/icon_nav_back.svg',no-repeat, center center)
+        display: block
+        float: left
+        background-size: 6.6666666vw 6.6666666vw
+        content: ''
+
+    .input-wrap
+        +margin(top 1.3888888vw left 5.55555555vw)
+        float: left
+
+        input[type="text"]
+            +size(55.5555555vw, 3.888888vw)
+            +padding(0)
+            +border(0)
+            outline: none
+            font-size: 14px
+
+            &::placeholder
+                color: $gray-900
+
+    .btn-delete
+        +size(5.5555555vw, 5.555555vw)
+        +margin(top .555555vw left 6.1111111vw)
+        +background('/images/mobile/global/icon_input_delete.svg',no-repeat, center center)
+        +border-radius(50%)
+        display: none
+        float: left
+        background-color: $border-color-light
+
+    .btn-search
+        +size(6.6666666vw, 6.6666666vw)
+        +padding(0)
+        +border(0)
+        position: absolute
+        top: 3.3333333vw
+        right: 4.444444vw
+        background-color: inherit
+        cursor: pointer
+
+        .search-icon
+            +size(5.555555vw, 5.555555vw)
+            +margin(0 auto)
+            +background('/images/desktop/global/icon_search.svg',no-repeat, center center)
+            background-size: 5.555555vw 5.555555vw
+            display: block
