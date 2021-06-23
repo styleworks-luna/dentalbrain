@@ -35,13 +35,17 @@
             <template v-if="!like">
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
-                                      force-use-infinite-wrapper></infinite-loading>
+                                      force-use-infinite-wrapper>
+                        <div slot="no-more"></div>
+                    </infinite-loading>
                 </div>
             </template>
             <template v-else>
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteLikeId" @infinite="infiniteLikeHandler"
-                                      force-use-infinite-wrapper></infinite-loading>
+                                      force-use-infinite-wrapper>
+                        <div slot="no-more"></div>
+                    </infinite-loading>
                 </div>
             </template>
         </template>

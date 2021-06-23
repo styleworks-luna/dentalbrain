@@ -16,7 +16,9 @@
         </template>
         <template v-else>
             <div class="infinite-wrapper">
-                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
+                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper>
+                    <div slot="no-more"></div>
+                </infinite-loading>
             </div>
         </template>
     </section>
