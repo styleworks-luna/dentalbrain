@@ -14,7 +14,7 @@
     </div>
     <a href="" class="btn-back"></a>
     <h1>전체강의</h1>
-    <a href="" class="btn-search"></a>
+    <a href="{{ url('/m-search') }}" class="btn-search"></a>
 @endsection
 
 @section('content')

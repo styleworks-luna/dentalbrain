@@ -335,16 +335,17 @@ body
                     float: left
 
                 label
-                    +size(25vw)
-                    +padding(4.1666666vw 8.333333vw)
+                    +size(27.777777vw)
+                    +padding(4.1666666vw 1.3888888vw)
                     +border-radius(6.3888888vw)
+                    box-sizing: border-box
                     font-size: 3.3333333vw
                     text-align: center
                     color: $gray-900
 
                 label.active
                     +border(.55555555vw solid $page-color)
-                    +padding(3.61111111vw 7.7777777vw)
+                    +padding(3.61111111vw .833333333vw)
                     +background(null, null, null, $white)
                     font-weight: bold
                     color: $page-color
@@ -361,6 +362,8 @@ body
 
             .separate-tip
                 display: none
+                font-size: 3.05555555vw
+                color: $gray-900
 
 // 결제 완료 페이지
 .lecture-result

@@ -373,7 +373,7 @@
                             <option value="다이너스">다이너스</option>
                             <option value="디스커버">디스커버</option>
                         </select>
-                        <p class="separate-tip">신한은행 140-010-094358 <br>예금주 : ㈜브레인스펙병원교육개발원</p>
+                        <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                     </div>
                 </section>
 
