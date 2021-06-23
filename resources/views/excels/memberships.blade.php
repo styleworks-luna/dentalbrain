@@ -2,7 +2,6 @@
     <thead>
     <tr>
         <th>번호</th>
-        <th>회원구분</th>
         <th>아이디</th>
         <th>이름</th>
         <th>이메일</th>
@@ -14,46 +13,42 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($memberships as $membership)
+    @foreach($users as $user)
         <tr>
-            <td>{{ $membership->id }}</td>
-            <td>{{ $membership->user->login_id }}</td>
-            <td>{{ $membership->user->name }}</td>
-            <td>{{ $membership->user->email }}</td>
-            <td>{{ $membership->user->phone }}</td>
-            <td>{{ $membership->user->job_name }}</td>
-            <td>
-                @if($membership->started_at == null)
-                    결제 전
-                @else
-                    {{ $membership->started_at }}
-                @endif
-            </td>
-            <td>
-                @if($membership->expired_at == null)
-                    결제 전
-                @else
-                    {{ $membership->expired_at }}
-                @endif
-            </td>
-            <td>
-                {{ $membership->payment->method }}
-            </td>
-            <td>
-                @if ($membership->started_at == null || $membership->expired_at == null)
-                    결제 전
-                @else
-                    @if($membership->started_at > now())
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->login_id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->phone }}</td>
+            <td>{{ $user->job_name }}</td>
+            @isset($user->memberships[0])
+                <td>
+                    {{ $user->memberships[0]->started_at ?? '결제 전'}}
+                </td>
+                <td>
+                    {{ $user->memberships[0]->expired_at ?? '결제 전'}}
+                </td>
+                <td>
+                    {{ $user->memberships[0]->payment->method ?? '관리자등록'}}
+                </td>
+
+                <td>
+                    @if($user->memberships[0]->started_at > now())
                         사용 전
                     @else
-                        @if ($membership->expired_at < now())
+                        @if ($user->memberships[0]-> expired_at < now())
                             사용 후
                         @else
                             사용 중
                         @endif
                     @endif
-                @endif
-            </td>
+                </td>
+            @else
+                <td>종료</td>
+                <td>종료</td>
+                <td>종료</td>
+            @endisset
+
         </tr>
     @endforeach
     </tbody>

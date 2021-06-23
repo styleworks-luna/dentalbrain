@@ -140,7 +140,7 @@ class CancelPaymentDto
         }
 
         if (!$student->cancelAvailable()) {
-            Log::error('STUDENT CANNOT CANCEL PROGRAM', [$program]);
+            Log::error('STUDENT CANNOT CANCEL PROGRAM', [$program, $student]);
             return null;
         }
 

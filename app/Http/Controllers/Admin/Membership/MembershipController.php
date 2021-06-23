@@ -61,8 +61,8 @@ class MembershipController extends Controller
 
     public function membershipExport(Request $request)
     {
-        $memberships = $this->search($request)->get();
-        return Excel::download(new MembershipExport($memberships), '유료 회원 정보 엑셀.xlsx');
+        $users = $this->search($request)->get();
+        return Excel::download(new MembershipExport($users), '유료 회원 정보 엑셀.xlsx');
     }
 
     public function confirmAnotherPay(Request $request, Membership $membership)

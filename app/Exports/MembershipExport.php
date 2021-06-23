@@ -10,15 +10,15 @@ class MembershipExport implements FromView
 {
     use Exportable;
 
-    private $memberships;
+    private $users;
 
-    public function __construct($memberships)
+    public function __construct($users)
     {
-        $this->memberships = $memberships;
+        $this->users = $users;
     }
 
     public function view(): View
     {
-        return view('excels.memberships', ['memberships' => $this->memberships]);
+        return view('excels.memberships', ['users' => $this->users]);
     }
 }
