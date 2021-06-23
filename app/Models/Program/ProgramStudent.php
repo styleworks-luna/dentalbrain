@@ -160,8 +160,8 @@ class ProgramStudent extends Model
 
         if ($this->program->is_online) {
             if (
-                strtotime($this->attributes['applied_at']) > now()->subDays(7)->unix()
-                && $this->attributes['is_watched'] == 0
+                strtotime($this->applied_at) > now()->subDays(7)->unix()
+                && $this->is_watched == 0
             ) {
                 return true;
             } else {
@@ -169,7 +169,7 @@ class ProgramStudent extends Model
             }
         } else {
             if (
-                strtotime($this->attributes['expired_at']) > now()->addDays(2)->unix()
+                strtotime($this->expired_at) > now()->addDays(2)->unix()
             ) {
                 return true;
             } else {
