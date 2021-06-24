@@ -8,8 +8,6 @@ import Pagination from 'laravel-vue-pagination';
 import LectureAll from '@/components/lecture/LectureAll.vue';
 import Lecture from '@/components/mypage/lecture/Lecture.vue';
 import Community from '@/components/community/Community.vue';
-import vueMoment from 'vue-moment';
-Vue.use(vueMoment)
 
 Vue.prototype.Helper = Helper;
 

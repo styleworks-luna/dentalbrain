@@ -70,7 +70,7 @@ export const Helper = {
             return '';
         }
 
-        date = new moment(date);
+        date = new Date(date);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
