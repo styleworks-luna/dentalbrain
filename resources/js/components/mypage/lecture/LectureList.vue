@@ -106,7 +106,7 @@
                                 <div class="d-day" v-else><em>기간 만료</em></div>
                                 <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용</p>
                                 </div>
-                                <div class="dedicate" v-else>{{ $moment(Helper.dateFormatYDMByComma(lecture.expired_at)).format('YYYY.MM.DD') }} 까지
+                                <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지
                                 </div>
                             </div>
 

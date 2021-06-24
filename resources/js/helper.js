@@ -69,8 +69,8 @@ export const Helper = {
         if (this.nullCheck(date)) {
             return '';
         }
-
-        date = new Date(date);
+        
+        date = new Date(date.replace(/-/g, "/"));
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
