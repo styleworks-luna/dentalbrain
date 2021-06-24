@@ -256,10 +256,6 @@ import RefundManualPop from '@/components/mypage/lecture/RefundManualPop.vue'
 
 import Mypage from "@/api/mypage/Mypage.js"
 
-import Vue from 'vue';
-import VueMoment from 'vue-moment'
-Vue.use(VueMoment);
-
 export default {
     name: 'MypageLectureList',
     components: {
