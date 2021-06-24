@@ -9,6 +9,9 @@
     top: 0
     z-index: 1000
 
+    .mobile
+        display: none
+
     .aside-wrap
         min-height: 100%
         position: relative
@@ -166,6 +169,10 @@
 
             &:last-child
                 float: right
+
+@media (max-width: 300px)
+    .aside .mobile
+        display: block
 
 .aside-dim
     +size(100%, 100%)
