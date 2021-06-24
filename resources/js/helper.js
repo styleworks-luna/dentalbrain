@@ -30,7 +30,7 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        date = moment(date);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
