@@ -31,9 +31,9 @@ export const Helper = {
         }
 
         date = moment(date);
-        const year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
+        const year = date.format("YYYY");
+        let month = date.format("MM") + 1;
+        let day = date.format("DD");
 
         if (month < 10) {
             month = `0${month}`;
