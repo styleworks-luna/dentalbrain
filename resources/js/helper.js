@@ -30,10 +30,10 @@ export const Helper = {
             return '';
         }
 
-        date = moment(date);
-        const year = date.format("YYYY");
-        let month = date.format("MM") + 1;
-        let day = date.format("DD");
+        date = new Date(date);
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
 
         if (month < 10) {
             month = `0${month}`;
@@ -70,7 +70,7 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        date = new moment(date);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
