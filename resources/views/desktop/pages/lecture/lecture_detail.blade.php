@@ -89,7 +89,7 @@
                                             <th class="exclude-price">결제금액</th>
                                             <td class="lecture-price lecture-exclude-price"
                                                 data-price="{{ $program->price }}">
-                                                {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                                {{ $program->is_free ? '무료' : number_format($program->price).'원' }}
                                             </td>
                                         </tr>
                                         @if ($program->repeatable($student))
@@ -98,7 +98,7 @@
                                                 <th>유료회원가</th>
                                                 <td class="lecture-price"
                                                     data-price="{{ $student->getPrice() }}">
-                                                    {{ $program->membership_is_free ? '무료' : '재수강 할인가 ' . number_format($student->getPrice()) }}
+                                                    {{ $program->membership_is_free ? '무료' : '재수강 할인가 ' . number_format($student->getPrice()).'원' }}
                                                 </td>
                                             </tr>
                                         @else

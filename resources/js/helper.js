@@ -70,6 +70,7 @@ export const Helper = {
             return '';
         }
 
+        // ios 대응
         date = new Date(date.replace(/-/g, "/"));
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
