@@ -46,7 +46,10 @@
                             </template>
                         </template>
                         <template v-else>
-                            무료
+                            <template v-if="slotProps.row.pay_status === 0">
+                                결제전
+                            </template>
+                            <template v-else>무료</template>
                         </template>
                     </td>
                     <td>

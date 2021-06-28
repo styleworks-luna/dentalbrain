@@ -144,13 +144,14 @@ class ProgramStudent extends Model
     public function cancelAvailable()
     {
         if (!in_array($this->pay_status, self::$USER_CANCEL_AVAILABLE_STATUSES)) {
-            Log::alert('pay_status invalid',[$this]);
+            Log::alert('pay_status invalid', [$this]);
             return false;
         }
 
+        // 별도결제 환불 그냥 가능.
         if ($this->pay_status == self::$PAY_ANOTHER_PAID
             || $this->pay_status == self::$PAY_ANOTHER_IN_PROCESS) {
-            Log::alert('another_pay refund request',[$this]);
+            Log::alert('another_pay refund request', [$this]);
             return true;
         }
 
@@ -173,16 +174,25 @@ class ProgramStudent extends Model
             ) {
                 return true;
             } else {
-                Log::alert('online invalid',[$this]);
+                Log::alert('online invalid', [$this]);
                 return false;
             }
         } else {
+            $started_at = $this->program->place->started_at;
+            if ($this->program->is_free) {
+                if (strtotime($started_at) > now()->addDay()->unix()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
             if (
-                strtotime($this->expired_at) > now()->addDays(2)->unix()
+                strtotime($started_at) > now()->addDays(2)->unix()
             ) {
                 return true;
             } else {
-                Log::alert('offline invalid',[$this]);
+                Log::alert('offline invalid', [$this]);
                 return false;
             }
         }
