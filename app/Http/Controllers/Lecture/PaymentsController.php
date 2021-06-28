@@ -37,7 +37,7 @@ class PaymentsController extends Controller
      */
     public function success(SuccessPayments $request, Program $program)
     {
-        $realPrice = $program->canRepeat() ? $program->repeat_price : $program->price;
+        $realPrice = $program->getUserSpecificPrice();
 
         if ($realPrice != $request->get('amount')) {
             return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
