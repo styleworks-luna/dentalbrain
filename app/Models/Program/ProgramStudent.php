@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProgramStudent extends Model
 {
@@ -143,7 +144,14 @@ class ProgramStudent extends Model
     public function cancelAvailable()
     {
         if (!in_array($this->pay_status, self::$USER_CANCEL_AVAILABLE_STATUSES)) {
+            Log::alert('pay_status invalid',[$this]);
             return false;
+        }
+
+        if ($this->pay_status == self::$PAY_ANOTHER_PAID
+            || $this->pay_status == self::$PAY_ANOTHER_IN_PROCESS) {
+            Log::alert('another_pay refund request',[$this]);
+            return true;
         }
 
         /*
@@ -165,6 +173,7 @@ class ProgramStudent extends Model
             ) {
                 return true;
             } else {
+                Log::alert('online invalid',[$this]);
                 return false;
             }
         } else {
@@ -173,6 +182,7 @@ class ProgramStudent extends Model
             ) {
                 return true;
             } else {
+                Log::alert('offline invalid',[$this]);
                 return false;
             }
         }
