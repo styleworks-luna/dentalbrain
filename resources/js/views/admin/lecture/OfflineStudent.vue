@@ -14,9 +14,15 @@
                                 :value="order"
                                 :options="orderOptions"
                                 @setValue="handleSetOrder"></select-box>
-                    <span class="input-group-append">
+                    <div class="input-group">
+                        <input class="form-control"
+                               type="text"
+                               placeholder="ID, 이름, 전화번호, 이메일"
+                               v-model="keyword">
+                        <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
-                    </span>
+                        </span>
+                    </div>
                 </form>
             </div>
         </template>
@@ -166,6 +172,7 @@ export default {
             students: {
                 data: []
             },
+            keyword: '',
             order: 'latest',
             page: 1
         }
@@ -247,6 +254,7 @@ export default {
 
             let params = {
                 page: page,
+                keyword: this.keyword,
                 order: this.order
             };
 
