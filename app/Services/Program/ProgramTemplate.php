@@ -17,6 +17,7 @@ use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\File\SurveyFile;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -92,10 +93,12 @@ abstract class ProgramTemplate
      *
      * @param Program $program
      * @param $order
+     * @param $keyword
      * @return \Illuminate\Database\Query\Builder
      */
-    function getStudents(Program $program, $order)
+    function searchStudents(Program $program, $order, $keyword)
     {
+
         $query = $program->students()
             ->select([
                 'program_students.program_id', 'programs.is_free',
@@ -108,6 +111,15 @@ abstract class ProgramTemplate
             ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
+        if ($keyword != null) {
+            $query->where(/* @param Builder $query */ function ($query) use ($keyword) {
+                $query->where('users.phone', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.login_id', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.email', 'LIKE', '%' . $keyword . '%');
+            });
+        }
+
         if ($order == 'latest') {
             $query->orderBy('program_students.id', 'DESC');
         } elseif ($order == 'login_id') {
@@ -116,6 +128,7 @@ abstract class ProgramTemplate
             $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
             $query->orderBy('expired_at', 'desc');
         } else {
+            // 수미상관.
             $query->orderBy('program_students.id', 'DESC');
         }
 
