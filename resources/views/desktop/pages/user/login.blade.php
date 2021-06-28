@@ -1,7 +1,12 @@
 @extends('desktop.layouts.frames.simple_frame')
 
+@section('script')
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/login.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -33,5 +38,6 @@
                 </form>
             </div>
         </section>
+        @include('.desktop.component.popup.IE.ie_popup')
     </section>
 @endsection
