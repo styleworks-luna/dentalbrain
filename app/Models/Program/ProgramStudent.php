@@ -151,7 +151,7 @@ class ProgramStudent extends Model
         // 별도결제 환불 그냥 가능.
         if ($this->pay_status == self::$PAY_ANOTHER_PAID
             || $this->pay_status == self::$PAY_ANOTHER_IN_PROCESS) {
-            Log::alert('another_pay refund request', [$this]);
+            Log::info('another_pay refund request', [$this]);
             return true;
         }
 
@@ -183,6 +183,7 @@ class ProgramStudent extends Model
                 if (strtotime($started_at) > now()->addDay()->unix()) {
                     return true;
                 } else {
+                    Log::alert('offline free invalid', [$this]);
                     return false;
                 }
             }
