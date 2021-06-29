@@ -118,19 +118,8 @@ class User extends Authenticatable
     }
 
     /**
-     * @return Membership|null
+     * @return Carbon|null
      */
-    public function recentMembership()
-    {
-        return $this->memberships()->whereNotNull('expired_at')
-            ->orderByDesc('expired_at')->first();
-    }
-
-    public function memberships()
-    {
-        return $this->hasMany(Membership::class, 'user_id', 'id');
-    }
-
     public function getMembershipStartedAt()
     {
         $membership = $this->availableEarliestMembership();
@@ -170,6 +159,23 @@ class User extends Authenticatable
         return $this->memberships()->available()->orderByDesc('expired_at');
     }
 
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return int
+     */
+    public function getMembershipLeftDays(): int
+    {
+        $expiredAt = $this->getMembershipExpiredAt();
+        return $expiredAt ? $expiredAt->diff()->days : 0;
+    }
+
+    /**
+     * @return Carbon|null
+     */
     public function getMembershipExpiredAt()
     {
         $membership = $this->availableLatestMembership();

@@ -186,9 +186,11 @@
             <div class="membership-price-wrap">
                 <div class="container">
                     <h2>1년 365일 내내 <em>유료회원 가입 환영합니다!</em></h2>
-                    <div class="membership-left-days">
-                        회원님의 유료회원 잔여기간은 <em>15</em>일 입니다.
-                    </div>
+                    @if($hasMembership)
+                        <div class="membership-left-days">
+                            회원님의 유료회원 잔여기간은 <em>{{ $membershipLeftDays }}</em>일 입니다.
+                        </div>
+                    @endif
                     <div class="membership-price-content">
                         <div class="membership-price-item">
                             <div class="yearly-membership-hidden">

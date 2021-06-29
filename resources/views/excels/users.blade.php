@@ -37,10 +37,10 @@
                 {{ $user->allow_sms ? 'Y' : 'N' }}
             </td>
             <td>
-                {{ $user->getMembershipStartedAt() }}
+                {{ /* @var \App\Models\User $user */ $user->getMembershipStartedAt() }}
             </td>
             <td>
-                {{ $user->getMembershipExpiredAt() }}
+                {{ /* @var \App\Models\User $user */ $user->getMembershipExpiredAt() }}
             </td>
         </tr>
     @endforeach
