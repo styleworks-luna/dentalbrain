@@ -23,7 +23,7 @@ class MembershipController extends Controller
     public function apply(Request $request)
     {
         $v = Validator::make($request->all(), [
-            'days' => ['nullable', Rule::in(30, 100)]
+            'days' => ['nullable', Rule::in(array_keys(Membership::$PriceMap))]
         ]);
 
         if ($v->fails()) {

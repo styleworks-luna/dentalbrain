@@ -32,11 +32,11 @@
                     var paymentObj;
                     var cardCompany = $('.ui-selectmenu-text').text();
 
-                    const amount = {{ \App\Models\Membership\Membership::$PriceMap[$days] }};
+                    const amount = {{ \App\Models\Membership\Membership::$PriceMap[$days] }}; // 1
                     const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                    const orderName = '유료회원 {{ $days }}일권';
+                    const orderName = '유료회원 {{ $days }}일권'; // 2
                     const customerName = '{{ auth()->user()->name }}';
-                    const successUrl = '{{ route('membership.paymentSuccess',['days' => $days]) }}';
+                    const successUrl = '{{ route('membership.paymentSuccess',['days' => $days]) }}'; // 3
                     const customerEmail = '{{ auth()->user()->email }}';
                     const customerMobilePhone = '{{ auth()->user()->phone }}';
 
@@ -96,6 +96,17 @@
                 $('.payment-layer-wrapper .layer').css('display', 'none');
             })
 
+            // 연간에 따른 결제 css 수정
+            let days = getDaysFromParameter();
+            if (days == "30") {
+                $('.yearly-membership-hidden').css('display', 'none');
+            } else if (days == "365") {
+                $('.monthly-membership-hidden').css('display', 'none');
+            } else {
+                alert('잘못된 접근입니다.');
+                location.href = '/';
+            }
+
         });
 
         function getParameter(param) {
@@ -104,6 +115,10 @@
             });
 
             return paramData.length === 0 ? null : paramData[0].split('=')[1];
+        }
+
+        function getDaysFromParameter() {
+            return window.location.search.substr(6);
         }
 
         function paymentMessage(message) {
@@ -121,65 +136,132 @@
 @section('content')
     <section class="content">
         <div class="membership-payment">
-            <div class="membership-payment-method">
-                <div class="radio-wrap">
-                    <input type="radio" id="card" name="payment-method"
-                           class="payment-method" value="카드" checked>
-                    <label for="card">신용카드</label>
-
-                    <select name="payment-method" id="credit" class="select-menu">
-                        <option value="신한">신한</option>
-                        <option value="현대">현대</option>
-                        <option value="삼성">삼성</option>
-                        <option value="우리">우리</option>
-                        <option value="BC">BC</option>
-                        <option value="국민">국민</option>
-                        <option value="롯데">롯데</option>
-                        <option value="농협">농협</option>
-                        <option value="하나">하나</option>
-                        <option value="씨티">씨티</option>
-                        <option value="카카오뱅크">카카오뱅크</option>
-                        <option value="수협">수협</option>
-                        <option value="전북">전북</option>
-                        <option value="우체국">우체국</option>
-                        <option value="새마을">새마을</option>
-                        <option value="저축">저축</option>
-                        <option value="제주">제주</option>
-                        <option value="광주">광주</option>
-                        <option value="신협">신협</option>
-                        <option value="JCB">JCB</option>
-                        <option value="유니온페이">유니온페이</option>
-                        <option value="마스터">마스터</option>
-                        <option value="비자">비자</option>
-                        <option value="다이너스">다이너스</option>
-                        <option value="디스커버">디스커버</option>
-                    </select>
-                </div>
-                <div class="radio-wrap">
-                    <input type="radio" id="transfer" name="payment-method"
-                           class="payment-method" value="계좌이체">
-                    <label for="transfer">{{ changePaymentMethodName("계좌이체") }}</label>
-                </div>
-                <div class="radio-wrap">
-                    <div style="overflow: hidden">
-                        <input type="radio" id="separate" name="payment-method"
-                               class="payment-method" value="계좌입금">
-                        <label for="separate"
-                               class="transfer-label">계좌입금</label>
+            <div class="title-wrap">
+                <div class="container">
+                    <div class="title">
+                        <h1>유료회원</h1>
                     </div>
-                    <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                 </div>
-                {{--<div class="radio-wrap">
-                    <input type="radio" id="deposit" name="payment-method"
-                           class="payment-method" value="가상계좌">
-                    <label for="deposit">무통장입금(가상계좌)</label>
-                </div>--}}
-                </td>
             </div>
-            <section class="btn-wrap">
-                <button type="button" class="btn-confirm btn-submit">결제하기</button>
-                <a href="{{ url()->previous() }}" class="btn-confirm btn-cancel">취소하기</a>
-            </section>
+            <div class="membership-information-wrap">
+                <div class="container">
+                    <div class="membership-information-title">
+                        <h2><em>유료 멤버십 회원</em>이 되면<br>어떤점이 달라지나요?</h2>
+                        <p>유료회원의 혜택(유료 멤버십 회원)을 위한 특별 혜택입니다.<br>
+                            브레인스펙이 운영하는 온라인교육원 덴탈브레인의 전 교육 과정은 계속 업데이트 되며 혜택을 받을 수 있습니다. </p>
+                    </div>
+                    <div class="membership-information-content-wrap">
+                        <div class="membership-information-content">
+                            <div class="membership-information-content-item">
+                                <img src="" alt="">
+                                <p>모든 강의를 1년 동안<br>
+                                    특별 할인가에 수강 가능!</p>
+                            </div>
+                            <div class="membership-information-content-item">
+                                <img src="" alt="">
+                                <p>유료 멤버십 회원 가입시<br>
+                                    웰컴 기프트 증정!</p>
+                            </div>
+                            <div class="membership-information-content-item">
+                                <img src="" alt="">
+                                <p>브레인스펙의<br>
+                                    각종 행사와 특강 초대!</p>
+                            </div>
+                        </div>
+                        <div class="membership-information-content">
+                            <div class="membership-information-content-item">
+                                <img src="" alt="">
+                                <p>브레인스펙의 치과컨설팅 등<br>
+                                    치과내 원내 교육에 특별 할인 적용 가능!</p>
+                            </div>
+                            <div class="membership-information-content-item">
+                                <img src="" alt="">
+                                <p>치과경영, 치과임상,<br>
+                                    치과조직관리 등에 필요한 정보 제공!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="membership-price-wrap">
+                <div class="container">
+                    <h2>1년 365일 내내 <em>유료회원 가입 환영합니다!</em></h2>
+                    <div class="membership-left-days">
+                        회원님의 유료회원 잔여기간은 <em>15</em>일 입니다.
+                    </div>
+                    <div class="membership-price-content">
+                        <div class="membership-price-item">
+                            <div class="yearly-membership-hidden">
+                                <h3>유료회원 연 결제</h3>
+                                <span class="price">99,000원/연</span>
+                                <p class="price-tip">연 회비 99,000원을 결제하면 자동으로 유료회원이 되고, 결제일로부터<br>
+                                    1년 동안 무료강의와 할인 된 강의를 자유롭게 수강하실 수 있습니다.</p>
+                            </div>
+                            <div class="monthly-membership-hidden">
+                                <h3>유료회원 월 결제</h3>
+                                <span class="price">29,000원/월</span>
+                                <p class="price-tip">월 회비 29,000원을 결제하면 자동으로 월 회원이 되고, 결제일로부터<br>
+                                    한달 동안 무료강의와 할인 된 강의를 자유롭게 수강할 수 있습니다.</p>
+                            </div>
+                            <div class="membership-payment-method">
+                                <span class="border-line">결제방식</span>
+                                <div class="radio-wrap">
+                                    <input type="radio" id="card" name="payment-method"
+                                           class="payment-method" value="카드" checked>
+                                    <label for="card">신용카드</label>
+
+                                    <select name="payment-method" id="credit" class="select-menu">
+                                        <option value="신한">신한</option>
+                                        <option value="현대">현대</option>
+                                        <option value="삼성">삼성</option>
+                                        <option value="우리">우리</option>
+                                        <option value="BC">BC</option>
+                                        <option value="국민">국민</option>
+                                        <option value="롯데">롯데</option>
+                                        <option value="농협">농협</option>
+                                        <option value="하나">하나</option>
+                                        <option value="씨티">씨티</option>
+                                        <option value="카카오뱅크">카카오뱅크</option>
+                                        <option value="수협">수협</option>
+                                        <option value="전북">전북</option>
+                                        <option value="우체국">우체국</option>
+                                        <option value="새마을">새마을</option>
+                                        <option value="저축">저축</option>
+                                        <option value="제주">제주</option>
+                                        <option value="광주">광주</option>
+                                        <option value="신협">신협</option>
+                                        <option value="JCB">JCB</option>
+                                        <option value="유니온페이">유니온페이</option>
+                                        <option value="마스터">마스터</option>
+                                        <option value="비자">비자</option>
+                                        <option value="다이너스">다이너스</option>
+                                        <option value="디스커버">디스커버</option>
+                                    </select>
+                                </div>
+                                <div class="radio-wrap transfer-wrap">
+                                    <input type="radio" id="transfer" name="payment-method"
+                                           class="payment-method" value="계좌이체">
+                                    <label for="transfer">{{ changePaymentMethodName("계좌이체") }}</label>
+                                </div>
+                                <div class="radio-wrap separate-wrap">
+                                    <input type="radio" id="separate" name="payment-method"
+                                           class="payment-method" value="계좌입금">
+                                    <label for="separate"
+                                           class="transfer-label">계좌입금</label>
+                                    <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
+                                </div>
+                                {{--<div class="radio-wrap">
+                                    <input type="radio" id="deposit" name="payment-method"
+                                           class="payment-method" value="가상계좌">
+                                    <label for="deposit">무통장입금(가상계좌)</label>
+                                </div>--}}
+                                </td>
+                            </div>
+                            <button type="button" class="btn-confirm btn-submit">결제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form action="{{ route('membership.paymentAnother',['days' => $days]) }}" method="POST" id="separate_form">
                 @csrf
             </form>

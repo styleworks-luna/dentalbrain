@@ -1,4 +1,235 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/_button.sass'
+@import '@sass/components/_selectbox.sass'
+@import '@sass/components/_radio.sass'
+
 @import '@sass/desktop/pages/agreement/payment.sass'
+
+.membership,
+.membership-payment,
+.membership-result
+    .title-wrap
+        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
+        min-width: 1280px
+        height: 300px
+
+        h1
+            +size(240px)
+            +margin(0 auto)
+            +padding(125px 0 0 63px)
+            font-weight: bold
+            font-size: 48px
+
+    .membership-information-wrap
+        +margin(top 100px)
+
+        .membership-information-title
+            text-align: center
+
+            h2
+                font-family: $font-family-gmarket
+                font-weight: bold
+                font-size: 50px
+                line-height: 1.2
+
+                em
+                    color: $page-color
+
+            p
+                +padding(top 20px)
+                font-size: 20px
+                line-height: 1.4
+
+        .membership-information-content-wrap
+            +margin(top 60px)
+            +background(null, null, null, #fdf8ff)
+
+            .membership-information-content
+                overflow: hidden
+
+                .membership-information-content-item
+                    +size(425px, 300px)
+                    float: left
+                    text-align: center
+
+                    p
+                        font-size: 20px
+                        line-height: 1.3
+
+    .membership-price-wrap
+        +margin(top 100px)
+        +background(null, null, null, #f7f7f7)
+        min-width: 1280px
+
+        .membership-left-days
+            +size(600px)
+            +margin(20px auto 0 auto)
+            +padding(10px 73px)
+            +background(null, null, null, $white)
+            +border(1px solid #c8c8c8)
+            font-size: 18px
+            line-height: 40px
+            text-align: center
+
+            em
+                font-weight: bold
+
+        h2
+            +padding(top 100px)
+            font-family: $font-family-gmarket
+            font-weight: bold
+            font-size: 50px
+            text-align: center
+            line-height: 1.2
+
+            em
+                color: $page-color
+
+        .membership-price-content
+            +margin(top 60px)
+            +padding(bottom 100px)
+            overflow: hidden
+
+            .membership-price-item
+                +size(546px)
+                +margin(right 108px)
+                +border(2px solid $page-color)
+                +background(null, null, null, $white)
+                float: left
+                box-sizing: border-box
+
+                h3
+                    +padding(22px 0)
+                    +background(null, null, null, $page-color)
+                    font-family: $font-family-gmarket
+                    font-weight: bold
+                    font-size: 30px
+                    color: $white
+                    text-align: center
+
+                .price
+                    +padding(top 50px)
+                    display: block
+                    font-family: $font-family-gmarket
+                    font-weight: bold
+                    font-size: 60px
+                    text-align: center
+
+                .price-tip
+                    +padding(top 20px)
+                    font-size: 16px
+                    text-align: center
+                    line-height: 1.5
+
+                .btn-apply
+                    +btn(purple-fill)
+                    +size(308px, 54px)
+                    +margin(50px auto)
+                    font-weight: bold
+                    font-size: 18px
+                    line-height: 54px
+
+                &:last-child
+                    +margin(right 0)
+
+.membership-payment
+    .membership-price-wrap .membership-price-content .membership-price-item
+        +margin(0 auto)
+        float: none
+
+        &:last-child
+            +margin(right auto)
+
+    .membership-payment-method
+        +margin(top 50px)
+
+        .border-line
+            display: block
+            font-weight: bold
+            font-size: 16px
+            line-height: 20px
+            text-align: center
+            color: $gray-600
+            position: relative
+
+            &::after
+                +size(198px, 1px)
+                +background(null, null, null, $border-color-base)
+                display: block
+                content: ''
+                position: absolute
+                top: 10px
+                left: 30px
+
+            &::before
+                +size(198px, 1px)
+                +background(null, null, null, $border-color-base)
+                display: block
+                content: ''
+                position: absolute
+                top: 10px
+                right: 30px
+
+        .radio-wrap
+            +radio-wrap()
+            +margin(top 40px left 58px)
+            overflow: hidden
+
+            #card
+                +margin(top 17px)
+
+                + label
+                    +margin(top 17px)
+
+        .transfer-wrap
+            +margin(top 31px)
+
+        .separate-wrap
+            +margin(top 48px)
+
+            .separate-tip
+                +padding(left 10px)
+                display: block
+                float: left
+                font-size: 12px
+                color: $gray-700
+
+        select
+            +selectbox(240px, 50px)
+
+            + .ui-selectmenu-button
+                +margin(left 13px)
+                float: left
+
+    .btn-submit
+        +btn(purple-fill)
+        +size(308px, 54px)
+        +margin(50px auto)
+        font-weight: bold
+        font-size: 18px
+        line-height: 54px
+
+.btn-wrap
+    +size(330px)
+    +margin(0 auto)
+    overflow: hidden
+
+    .btn-cancel
+        +btn()
+        +size(160px, 50px)
+        +background(null, null, null, $gray-700)
+        float: right
+        font-weight: bold
+        font-size: 16px
+        color: $white
+        line-height: 50px
+
+    .btn-confirm
+        +btn(purple-fill)
+        +size(160px, 50px)
+        float: left
+        font-weight: bold
+        font-size: 16px

@@ -24,8 +24,8 @@ class Membership extends Model
     use HasPayStatus, SoftDeletes;
 
     static $PriceMap = [
-        30 => 30000,
-        100 => 100000,
+        30 => 29000,
+        365 => 99000,
     ];
     protected $table = 'memberships';
     protected $guarded = [];
