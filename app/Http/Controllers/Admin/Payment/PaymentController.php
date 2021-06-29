@@ -8,6 +8,7 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,11 +19,12 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $sum = Payment::query()->paid()->sum('totalAmount');
-        $count = Payment::query()->paid()->count();
+        $query = $this->search($request);
+        $sum = (clone $query)->paid()->sum('totalAmount');
+        $count = (clone $query)->paid()->count();
 
         return response()->json([
-            'payments' => $this->search($request)->paginate(10),
+            'payments' => (clone $query)->paginate(10),
             'sum' => number_format($sum),
             'count' => $count,
         ]);
@@ -43,7 +45,7 @@ class PaymentController extends Controller
                 'programs.is_online', 'programs.title', 'programs.id as program_id',
                 'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
 
-                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status','memberships.applied_days',
+                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
 
                 'users.name', 'users.email', 'users.phone'
             )
@@ -64,12 +66,17 @@ class PaymentController extends Controller
             $payments->whereHas('membership');
         }
 
-        if ($status == 'DONE') {
-            $payments->where('payments.status', '=', $status)
-                ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
-        } elseif ($status == 'CANCELED') {
-            $payments->where('payments.status', '=', $status)
-                ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+        if ($status == Payment::$DONE) {
+            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
+                $query->orWhere('payments.status', '=', Payment::$DONE)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+            });
+
+        } elseif ($status == Payment::$CANCELED) {
+            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
+                $query->orWhere('payments.status', '=', Payment::$CANCELED)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+            });
         }
 
         if ($keyword !== null) {
@@ -96,7 +103,7 @@ class PaymentController extends Controller
     {
         $payments = $this->search($request)->get();
 
-        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀'.now()->toDateString().'.xlsx');
+        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀' . now()->toDateString() . '.xlsx');
     }
 
     /**

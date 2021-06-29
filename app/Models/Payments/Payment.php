@@ -19,6 +19,7 @@ class Payment extends Model
     static $ANOTHER_DONE = 'ANOTHER_DONE';
     static $ANOTHER_REJECTED = 'ANOTHER_REJECTED';
     static $ANOTHER_PROGRESS = 'ANOTHER_PROGRESS';
+    static $CANCELED = 'CANCELED';
     static $DONE = 'DONE';
 
     protected $table = 'payments';
