@@ -16,10 +16,10 @@ class MembershipController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $hasMembership = $user->hasMembership;
+        $hasMembership = $user ? $user->hasMembership : false;
         $membershipLeftDays = $hasMembership ? $user->getMembershipLeftDays() : 0;
 
-        return view(viewPrefix() . "pages.membership.membership",[
+        return view(viewPrefix() . "pages.membership.membership", [
             'hasMembership' => $hasMembership,
             'membershipLeftDays' => $membershipLeftDays,
         ]);
@@ -33,7 +33,7 @@ class MembershipController extends Controller
 
         /** @var User $user */
         $user = Auth::user();
-        $hasMembership = $user->hasMembership;
+        $hasMembership = $user ? $user->hasMembership : false;
         $membershipLeftDays = $hasMembership ? $user->getMembershipLeftDays() : 0;
 
         if ($v->fails()) {
