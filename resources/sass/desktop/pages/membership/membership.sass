@@ -52,12 +52,28 @@
 
                 .membership-information-content-item
                     +size(425px, 300px)
+                    +border(2px solid #f4e9f9, right)
                     float: left
+                    position: relative
                     text-align: center
 
+                    &:last-child
+                        +border(0, right)
+
+                    img
+                        +size(160px,154px)
+                        +margin(48px auto 0 auto)
+                        filter: invert(10%) sepia(100%) saturate(6557%) hue-rotate(286deg) brightness(93%) contrast(107%)
+
                     p
+                        +padding(top 15px)
                         font-size: 20px
                         line-height: 1.3
+
+                .item-wide
+                    +size(640px)
+                    +border(2px solid #f4e9f9, top)
+                    +box-sizing(border-box)
 
     .membership-price-wrap
         +margin(top 100px)

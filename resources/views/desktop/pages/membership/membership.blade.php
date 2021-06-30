@@ -27,29 +27,29 @@
                     <div class="membership-information-content-wrap">
                         <div class="membership-information-content">
                             <div class="membership-information-content-item">
-                                <img src="" alt="">
+                                <img src="{{ asset('images/desktop/membership/membership_icon_1.svg') }}" alt="membership_icon_1">
                                 <p>모든 강의를 1년 동안<br>
                                     특별 할인가에 수강 가능!</p>
                             </div>
                             <div class="membership-information-content-item">
-                                <img src="" alt="">
+                                <img src="{{ asset('images/desktop/membership/membership_icon_2.svg') }}" alt="membership_icon_2">
                                 <p>유료 멤버십 회원 가입시<br>
                                     웰컴 기프트 증정!</p>
                             </div>
                             <div class="membership-information-content-item">
-                                <img src="" alt="">
+                                <img src="{{ asset('images/desktop/membership/membership_icon_3.svg') }}" alt="membership_icon_3">
                                 <p>브레인스펙의<br>
                                     각종 행사와 특강 초대!</p>
                             </div>
                         </div>
                         <div class="membership-information-content">
-                            <div class="membership-information-content-item">
-                                <img src="" alt="">
+                            <div class="membership-information-content-item item-wide">
+                                <img src="{{ asset('images/desktop/membership/membership_icon_4.svg') }}" alt="membership_icon_4">
                                 <p>브레인스펙의 치과컨설팅 등<br>
                                     치과내 원내 교육에 특별 할인 적용 가능!</p>
                             </div>
-                            <div class="membership-information-content-item">
-                                <img src="" alt="">
+                            <div class="membership-information-content-item item-wide">
+                                <img src="{{ asset('images/desktop/membership/membership_icon_5.svg') }}" alt="membership_icon_5">
                                 <p>치과경영, 치과임상,<br>
                                     치과조직관리 등에 필요한 정보 제공!</p>
                             </div>
