@@ -9,10 +9,9 @@
 @import '@sass/desktop/pages/agreement/payment.sass'
 
 .membership,
-.membership-payment,
-.membership-result
+.membership-payment
     .title-wrap
-        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
+        +background('/images/desktop/global/article-top-image.png', no-repeat, center center)
         min-width: 1280px
         height: 300px
 
@@ -57,23 +56,59 @@
                     position: relative
                     text-align: center
 
-                    &:last-child
-                        +border(0, right)
-
-                    img
-                        +size(160px,154px)
-                        +margin(48px auto 0 auto)
-                        filter: invert(10%) sepia(100%) saturate(6557%) hue-rotate(286deg) brightness(93%) contrast(107%)
-
                     p
-                        +padding(top 15px)
                         font-size: 20px
                         line-height: 1.3
+
+                    &:last-child
+                        +border(0, right)
 
                 .item-wide
                     +size(640px)
                     +border(2px solid #f4e9f9, top)
                     +box-sizing(border-box)
+
+                &:first-child
+                    .membership-information-content-item:first-child
+                        img
+                            +size(140px, 154px)
+                            +margin(48px auto 0 auto)
+
+                        p
+                            +padding(top 15px)
+
+                    .membership-information-content-item:nth-child(2)
+                        img
+                            +size(160px, 138px)
+                            +margin(55px auto 0 auto)
+
+                        p
+                            +padding(top 24px)
+
+                    .membership-information-content-item:last-child
+                        img
+                            +size(160px, 140px)
+                            +margin(54px auto 0 auto)
+
+                        p
+                            +padding(top 23px)
+
+                &:last-child
+                    .membership-information-content-item:first-child
+                        img
+                            +size(148px, 146px)
+                            +margin(51px auto 0 auto)
+
+                        p
+                            +padding(top 20px)
+
+                    .membership-information-content-item:last-child
+                        img
+                            +size(154px, 154px)
+                            +margin(47px auto 0 auto)
+
+                        p
+                            +padding(top 16px)
 
     .membership-price-wrap
         +margin(top 100px)
