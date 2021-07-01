@@ -65,6 +65,19 @@
                 select_menu_02.selectmenu();
             }
 
+            $('#refund_consent').change(function () {
+                if ($('#refund_consent').is(":checked") == true) {
+                    $('.refund_error_wrap').text('');
+                }
+            });
+
+            $('#refund_consent_02').change(function () {
+                if ($('#refund_consent_02').is(":checked") == true) {
+                    $('.refund_error_wrap_02').text('');
+                }
+            });
+
+
             $('.payment-method').change(function () {
                 paymentmethod = $('.payment-method:checked').val();
             });
@@ -76,8 +89,9 @@
                 e.preventDefault();
 
                 var paymentMethodResult;
-                var cardCompany
+                var cardCompany;
                 var check = false;
+                var isValid;
 
                 e.target.classList.forEach(x => {
                     if (x == 'btn-pay-yearly') {
@@ -85,73 +99,85 @@
                     } else if (x == 'btn-pay-monthly') {
                         return check = false;
                     }
-                })
+                });
 
                 if (check) {
                     paymentMethodResult = paymentmethod;
                     cardCompany = $('#credit-button .ui-selectmenu-text').text();
+                    isValid = $('#refund_consent').is(":checked");
                 } else {
                     paymentMethodResult = paymentmethod_02;
                     cardCompany = $('#credit_02-button .ui-selectmenu-text').text();
+                    isValid = $('#refund_consent_02').is(":checked");
                 }
-                if (paymentMethodResult == "계좌입금") {
-                    $('.dim').css('display', 'block');
-                    $('.payment-layer-wrapper .layer').css('display', 'block');
-                } else {
-                    var paymentObj;
 
-                    const amount = price; // 1
-                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                    const orderName = `유료회원 ${days}일권` // 2
-                    const customerName = '{{ auth()->user()->name ?? '' }}';
-                    const successUrl = '{{ route('membership.paymentSuccess') }}' + `?days=${days}`; // 3
-                    const customerEmail = '{{ auth()->user()->email ?? '' }}';
-                    const customerMobilePhone = '{{ auth()->user()->phone ?? '' }}';
+                if (isValid) {
+                    if (paymentMethodResult == "계좌입금") {
+                        $('.dim').css('display', 'block');
+                        $('.payment-layer-wrapper .layer').css('display', 'block');
+                    } else {
+                        var paymentObj;
 
-                    if (paymentMethodResult === '가상계좌') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
-                    } else if (paymentMethodResult === '카드') {
-                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+                        const amount = price; // 1
+                        const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                        const orderName = `유료회원 ${days}일권` // 2
+                        const customerName = '{{ auth()->user()->name ?? '' }}';
+                        const successUrl = '{{ route('membership.paymentSuccess') }}' + `?days=${days}`; // 3
+                        const customerEmail = '{{ auth()->user()->email ?? '' }}';
+                        const customerMobilePhone = '{{ auth()->user()->phone ?? '' }}';
 
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
+                        if (paymentMethodResult === '가상계좌') {
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+                            };
+                        } else if (paymentMethodResult === '카드') {
+                            var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-                            maxCardInstallmentPlan: maxCardInstallmentPlan,
-                            cardCompany: cardCompany,
-                        };
-                    } else if (paymentMethodResult === '계좌이체') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+
+                                maxCardInstallmentPlan: maxCardInstallmentPlan,
+                                cardCompany: cardCompany,
+                            };
+                        } else if (paymentMethodResult === '계좌이체') {
+                            paymentObj = {
+                                amount: amount,
+                                orderId: orderId,
+                                orderName: orderName,
+                                customerName: customerName,
+                                successUrl: successUrl,
+                                failUrl: window.location.href,
+                                customerEmail: customerEmail,
+                                customerMobilePhone: customerMobilePhone,
+                            };
+                        }
+
+                        tossPayments.requestPayment(paymentMethodResult, paymentObj).catch(function (err) {
+                            alert('결제 요청에 실패하였습니다.');
+                        });
                     }
-
-                    tossPayments.requestPayment(paymentMethodResult, paymentObj).catch(function (err) {
-                        alert('결제 요청에 실패하였습니다.');
-                    });
+                } else {
+                    if (check) {
+                        $('.refund_error_wrap').text('※ 취소/환불약관에 동의해 주세요.');
+                    } else {
+                        $('.refund_error_wrap_02').text('※ 취소/환불약관에 동의해 주세요.');
+                    }
                 }
+
             });
 
             // 계좌입금 pop-up
@@ -316,8 +342,8 @@
                                     <div class="checkbox-form">
                                         <div class="checkbox-wrap">
                                             <input type="checkbox" name="refund-consent"
-                                                   id="refund-consent">
-                                            <label for="refund-consent"> (필수) 취소/환불약관 동의</label>
+                                                   id="refund_consent">
+                                            <label for="refund_consent"> (필수) 취소/환불약관 동의</label>
                                         </div>
                                         <a href="" class="trigger-refund">내용보기</a>
                                     </div>
@@ -399,7 +425,7 @@
                                         </div>
                                         <a href="" class="trigger-refund">내용보기</a>
                                     </div>
-                                    <div class="refund_error_wrap"></div>
+                                    <div class="refund_error_wrap_02"></div>
                                 </div>
                             </div>
                             <a href="#" class="btn-apply btn-apply-monthly">신청하기</a>
