@@ -303,7 +303,7 @@
                                                    class="refund-consent"
                                                    data-parsley-required="true"
                                                    data-parsley-errors-container=".refund_error_wrap"
-                                                   data-parsley-required-message="※ 개인정보 수집 및 이용 동의해 주세요.">
+                                                   data-parsley-required-message="※ 취소/환불약관을 동의해 주세요.">
                                             <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                         </div>
                                         <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>

@@ -8,14 +8,28 @@
         $(function () {
             var days;
             var price;
+            var authCheck = '{{ auth()->check() }}';
+
+            var select_menu = $('.select-menu');
+            var select_menu_02 = $('.select-menu-02');
+            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
+            var tossPayments = TossPayments(clientKey);
+            var message = getParameter('message');
+            var paymentmethod = $('.payment-method:checked').val();
+            var paymentmethod_02 = $('.payment-method-02:checked').val();
 
             // 연간 이벤트
             $('.btn-apply-yearly').click(function (e) {
                 e.preventDefault();
 
-                $('.yearly-membership-hidden').slideDown();
-                $('.btn-apply-yearly').css('display', 'none');
-                $('.btn-pay-yearly').css('display', 'block');
+                if (authCheck) {
+                    $('.yearly-membership-hidden').slideDown();
+                    $('.btn-apply-yearly').css('display', 'none');
+                    $('.btn-pay-yearly').css('display', 'block');
+                } else {
+                    alert('로그인 후 이용해주세요.');
+                    location.href = "/login";
+                }
             });
 
             $('.btn-pay-yearly').click(function (e) {
@@ -25,24 +39,20 @@
             // 월간 이벤트
             $('.btn-apply-monthly').click(function (e) {
                 e.preventDefault();
-
-                $('.monthly-membership-hidden').slideDown();
-                $('.btn-apply-monthly').css('display', 'none');
-                $('.btn-pay-monthly').css('display', 'block');
+                if (authCheck) {
+                    $('.monthly-membership-hidden').slideDown();
+                    $('.btn-apply-monthly').css('display', 'none');
+                    $('.btn-pay-monthly').css('display', 'block');
+                } else {
+                    alert('로그인 후 이용해주세요.');
+                    location.href = "/login";
+                }
             });
 
             $('.btn-pay-monthly').click(function (e) {
                 days = 30;
                 price = 29000;
             });
-
-            var select_menu = $('.select-menu');
-            var select_menu_02 = $('.select-menu-02');
-            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
-            var tossPayments = TossPayments(clientKey);
-            var message = getParameter('message');
-            var paymentmethod = $('.payment-method:checked').val();
-            var paymentmethod_02 = $('.payment-method-02:checked').val();
 
             // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
@@ -302,6 +312,7 @@
                                 </div>
                                 <div class="membership-agreement">
                                     <span class="border-line">신청자 동의</span>
+
                                     <div class="checkbox-form">
                                         <div class="checkbox-wrap">
                                             <input type="checkbox" name="refund-consent"
@@ -310,11 +321,13 @@
                                         </div>
                                         <a href="" class="trigger-refund">내용보기</a>
                                     </div>
+                                    <div class="refund_error_wrap"></div>
                                 </div>
                             </div>
                             <a href="#" class="btn-apply btn-apply-yearly">신청하기</a>
                             <a href="#" class="btn-apply btn-submit btn-pay-yearly">결제하기</a>
                         </div>
+
 
                         <div class="membership-price-item">
                             <h3>유료회원 월 결제</h3>
@@ -386,6 +399,7 @@
                                         </div>
                                         <a href="" class="trigger-refund">내용보기</a>
                                     </div>
+                                    <div class="refund_error_wrap"></div>
                                 </div>
                             </div>
                             <a href="#" class="btn-apply btn-apply-monthly">신청하기</a>
