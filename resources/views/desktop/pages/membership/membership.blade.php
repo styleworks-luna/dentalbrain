@@ -12,7 +12,6 @@
             $('.btn-apply-yearly').click(function (e) {
                 e.preventDefault();
 
-                console.log(1);
                 $('.yearly-membership-hidden').slideDown();
                 $('.btn-apply-yearly').css('display', 'none');
                 $('.btn-pay-yearly').css('display', 'block');
@@ -37,7 +36,7 @@
             });
 
             var select_menu = $('.select-menu');
-            var select_menu_02 = $('.select-menu-02')
+            var select_menu_02 = $('.select-menu-02');
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
