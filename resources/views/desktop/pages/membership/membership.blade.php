@@ -93,10 +93,10 @@
                     const amount = price; // 1
                     const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                     const orderName = `유료회원 ${days}일권` // 2
-                    const customerName = '{{ auth()->user()->name }}';
+                    const customerName = '{{ auth()->user()->name ?? '' }}';
                     const successUrl = '{{ route('membership.paymentSuccess') }}' + `?days=${days}`; // 3
-                    const customerEmail = '{{ auth()->user()->email }}';
-                    const customerMobilePhone = '{{ auth()->user()->phone }}';
+                    const customerEmail = '{{ auth()->user()->email ?? '' }}';
+                    const customerMobilePhone = '{{ auth()->user()->phone ?? '' }}';
 
                     if (paymentMethodResult === '가상계좌') {
                         paymentObj = {
@@ -139,7 +139,7 @@
                     }
 
                     tossPayments.requestPayment(paymentMethodResult, paymentObj).catch(function (err) {
-                        alert('취소');
+                        alert('결제 요청에 실패하였습니다.');
                     });
                 }
             });
