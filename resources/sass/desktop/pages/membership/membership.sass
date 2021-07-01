@@ -8,8 +8,7 @@
 
 @import '@sass/desktop/pages/agreement/payment.sass'
 
-.membership,
-.membership-payment
+.membership
     .title-wrap
         +background('/images/desktop/global/membership-top-image.png', no-repeat, center center)
         min-width: 1280px
@@ -186,85 +185,78 @@
                     font-size: 18px
                     line-height: 54px
 
+                .btn-pay-monthly,
+                .btn-pay-yearly
+                    display: none
+
                 &:last-child
                     +margin(right 0)
 
-.membership-payment
-    .membership-price-wrap .membership-price-content .membership-price-item
-        +margin(0 auto)
-        float: none
+        .membership-payment-method
+            +margin(top 50px)
 
-        &:last-child
-            +margin(right auto)
-
-    .membership-payment-method
-        +margin(top 50px)
-
-        .border-line
-            display: block
-            font-weight: bold
-            font-size: 16px
-            line-height: 20px
-            text-align: center
-            color: $gray-600
-            position: relative
-
-            &::after
-                +size(198px, 1px)
-                +background(null, null, null, $border-color-base)
+            .border-line
                 display: block
-                content: ''
-                position: absolute
-                top: 10px
-                left: 30px
+                font-weight: bold
+                font-size: 16px
+                line-height: 20px
+                text-align: center
+                color: $gray-600
+                position: relative
 
-            &::before
-                +size(198px, 1px)
-                +background(null, null, null, $border-color-base)
-                display: block
-                content: ''
-                position: absolute
-                top: 10px
-                right: 30px
+                &::after
+                    +size(198px, 1px)
+                    +background(null, null, null, $border-color-base)
+                    display: block
+                    content: ''
+                    position: absolute
+                    top: 10px
+                    left: 30px
 
-        .radio-wrap
-            +radio-wrap()
-            +margin(top 40px left 58px)
-            overflow: hidden
+                &::before
+                    +size(198px, 1px)
+                    +background(null, null, null, $border-color-base)
+                    display: block
+                    content: ''
+                    position: absolute
+                    top: 10px
+                    right: 30px
 
-            #card
-                +margin(top 17px)
+            .radio-wrap
+                +radio-wrap()
+                +margin(top 40px left 58px)
+                overflow: hidden
 
-                + label
+                #card,
+                #card_02
                     +margin(top 17px)
 
-        .transfer-wrap
-            +margin(top 31px)
+                    + label
+                        +margin(top 17px)
 
-        .separate-wrap
-            +margin(top 48px)
+            .transfer-wrap
+                +margin(top 31px)
 
-            .separate-tip
-                +padding(left 10px)
-                display: block
-                float: left
-                font-size: 12px
-                color: $gray-700
+            .separate-wrap
+                +margin(top 48px)
 
-        select
-            +selectbox(240px, 50px)
+                .separate-tip
+                    +padding(left 10px)
+                    display: block
+                    float: left
+                    font-size: 12px
+                    color: $gray-700
 
-            + .ui-selectmenu-button
-                +margin(left 13px)
-                float: left
+            select
+                +selectbox(240px, 50px)
 
-    .btn-submit
-        +btn(purple-fill)
-        +size(308px, 54px)
-        +margin(50px auto)
-        font-weight: bold
-        font-size: 18px
-        line-height: 54px
+                + .ui-selectmenu-button
+                    +margin(left 13px)
+                    float: left
+
+        .monthly-membership-hidden,
+        .yearly-membership-hidden
+            display: none
 
 .btn-wrap
     +size(330px)
