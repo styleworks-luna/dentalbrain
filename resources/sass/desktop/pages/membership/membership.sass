@@ -5,8 +5,10 @@
 @import '@sass/components/_button.sass'
 @import '@sass/components/_selectbox.sass'
 @import '@sass/components/_radio.sass'
+@import '@sass/components/_checkbox.sass'
 
 @import '@sass/desktop/pages/agreement/payment.sass'
+@import '@sass/desktop/pages/agreement/agreement.sass'
 
 .membership
     .title-wrap
@@ -189,35 +191,37 @@
                 &:last-child
                     +margin(right 0)
 
+                .border-line
+                    display: block
+                    font-weight: bold
+                    font-size: 16px
+                    line-height: 20px
+                    text-align: center
+                    color: $gray-600
+                    position: relative
+
+                    &::after
+                        +background(null, null, null, $border-color-base)
+                        display: block
+                        content: ''
+                        position: absolute
+                        top: 10px
+                        left: 30px
+
+                    &::before
+                        +background(null, null, null, $border-color-base)
+                        display: block
+                        content: ''
+                        position: absolute
+                        top: 10px
+                        right: 30px
+
         .membership-payment-method
             +margin(top 50px)
 
-            .border-line
-                display: block
-                font-weight: bold
-                font-size: 16px
-                line-height: 20px
-                text-align: center
-                color: $gray-600
-                position: relative
-
-                &::after
-                    +size(198px, 1px)
-                    +background(null, null, null, $border-color-base)
-                    display: block
-                    content: ''
-                    position: absolute
-                    top: 10px
-                    left: 30px
-
-                &::before
-                    +size(198px, 1px)
-                    +background(null, null, null, $border-color-base)
-                    display: block
-                    content: ''
-                    position: absolute
-                    top: 10px
-                    right: 30px
+            .border-line::after,
+            .border-line::before
+                +size(198px, 1px)
 
             .radio-wrap
                 +radio-wrap()
@@ -254,6 +258,28 @@
         .monthly-membership-hidden,
         .yearly-membership-hidden
             display: none
+
+        .membership-agreement
+            +margin(top 50px)
+
+            .border-line::after,
+            .border-line::before
+                +size(188px, 1px)
+
+            .checkbox-form
+                +margin(top 41px)
+                +padding(0 63px)
+                overflow: hidden
+
+            .checkbox-wrap
+                +checkbox-wrap()
+                float: left
+
+            a
+                float: right
+                font-size: 13px
+                color: $gray-700
+                text-decoration: underline
 
 .btn-wrap
     +size(330px)
