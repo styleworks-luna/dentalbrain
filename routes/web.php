@@ -87,10 +87,8 @@ Route::get('refund', function () {
 })->name('refund');
 
 Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
-    Route::get('/', [\App\Http\Controllers\Membership\MembershipController::class, 'showMembershipDescForm'])->name('showForm');
-    Route::group(['middleware' => 'auth'], function () {
-        // 결제 폼
-        Route::get('/payment', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('paymentForm');
+    Route::get('/', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('index');
+    Route::group(['prefix' => 'payment', 'middleware' => 'auth',], function () {
         // 결제 성공 연결
         Route::get('/payment/success', [\App\Http\Controllers\Membership\PaymentController::class, 'success'])->name('paymentSuccess');
         // 결제 성공 연결

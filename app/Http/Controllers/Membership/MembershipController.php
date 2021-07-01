@@ -12,18 +12,6 @@ use Illuminate\Validation\Rule;
 
 class MembershipController extends Controller
 {
-    public function showMembershipDescForm(Request $request)
-    {
-        /** @var User $user */
-        $user = Auth::user();
-        $hasMembership = $user ? $user->hasMembership : false;
-        $membershipLeftDays = $hasMembership ? $user->getMembershipLeftDays() : 0;
-
-        return view(viewPrefix() . "pages.membership.membership", [
-            'hasMembership' => $hasMembership,
-            'membershipLeftDays' => $membershipLeftDays,
-        ]);
-    }
 
     public function apply(Request $request)
     {
@@ -40,10 +28,7 @@ class MembershipController extends Controller
             return redirect('/')->with('alert', '잘못된 접근입니다.');
         }
 
-        $days = $request->get('days', 30);
-
-        return view(viewPrefix() . "pages.membership.membership_payment", [
-            'days' => $days,
+        return view(viewPrefix() . "pages.membership.membership", [
             'hasMembership' => $hasMembership,
             'membershipLeftDays' => $membershipLeftDays,
         ]);
