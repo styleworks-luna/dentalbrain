@@ -428,7 +428,7 @@
                                 <span class="price">29,000원/월</span>
                                 <div class="price-item-row">
                                     <p class="price-tip">월 회비 29,000원을 결제하면 자동으로 월 회원이 되고, 결제일로부터
-                                        <em>한달 동안 무료강의와 할인 된 강의를 자유롭게 수강</em>할 수 있습니다.</p>
+                                        <em>한달 동안 무료강의와 할인 된 강의를 4개까지 수강</em>하실 수 있습니다.</p>
                                     <div class="monthly-membership-hidden">
                                         <div class="membership-payment-method">
                                             <span class="border-line">결제방식</span>
