@@ -1,7 +1,7 @@
 <template>
     <div class="content-title">
         <h2 v-if="!like">신청한 강의</h2>
-        <h2 v-else>찜 강의내역</h2>
+        <h2 v-else>찜 내역</h2>
         <template v-if="!mobile">
             <ul>
                 <li :class="{'active': is_active == 1}" @click.prevent="handleSetOrder('newest',1)">

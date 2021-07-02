@@ -4,7 +4,7 @@
         <li class="{{ (strpos(Route::currentRouteName(), 'account.lectures') !== false) ? 'active-menu' : '' }}">
             <a href="{{ route('account.lectures') }}">신청한 강의</a></li>
         <li class="{{ (strpos(Route::currentRouteName(), 'account.like') !== false) ? 'active-menu' : '' }}">
-            <a href="{{ route('account.like') }}">찜 강의내역</a></li>
+            <a href="{{ route('account.like') }}">찜 내역</a></li>
         <li class="{{ (strpos(Route::currentRouteName(), 'account.payments') !== false) ? 'active-menu' : '' }}">
             <a href="{{ route('account.payments') }}">결제내역</a></li>
         <li class="{{ (strpos(Route::currentRouteName(), 'account.questions.index') !== false) ? 'active-menu' : '' }}">
