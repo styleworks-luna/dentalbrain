@@ -438,7 +438,7 @@
                 </form>
             </div>
         </div>
-        @include('desktop.component.popup.payment.payment_pop')
+        @include('desktop.component.popup.payment.membership_pop')
         @include('desktop.component.popup.agreement.refund')
     </section>
 @endsection

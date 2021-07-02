@@ -113,7 +113,6 @@
 
                 if (isValid) {
                     if (paymentMethodResult == "계좌입금") {
-                        $('.dim').css('display', 'block');
                         $('.payment-layer-wrapper .layer').css('display', 'block');
                     } else {
                         var paymentObj;
@@ -515,8 +514,9 @@
                 </form>
             </div>
         </div>
+        <div class="dim"></div>
         </div>
-        @include('desktop.component.popup.payment.payment_pop')
+        @include('desktop.component.popup.payment.membership_pop')
         @include('desktop.component.popup.agreement.refund')
     </section>
 @endsection

@@ -10,7 +10,7 @@
 @import '@sass/mobile/pages/agreement/payment.sass'
 
 footer
-    +background(null, null, null, #fafafa)
+    +background(null, null, null, $white-light)
     position: static
 
 .membership
@@ -45,7 +45,7 @@ footer
             +size(83.33333333vw)
             +margin(11.1111111vw auto 0 auto)
             +padding(bottom 11.1111111vw)
-            +background(null, null, null, #fdf8ff)
+            +background(null, null, null, $background-color-price)
 
             .membership-information-content-item
                 +padding(top 11.1111111vw)
@@ -63,7 +63,7 @@ footer
     .membership-price-wrap
         +margin(top 13.888888vw)
         +padding(bottom 13.888888vw)
-        +background(null, null, null, #f7f7f7)
+        +background(null, null, null, $background-color-menu)
 
         h2
             +padding(top 13.8888888vw)
@@ -89,9 +89,10 @@ footer
             +size(91.1111111vw)
             +border(.55555556vw solid $page-color)
             +background(null, null, null, $white)
+            box-sizing: border-box
 
             .price-item-row
-                +padding(0 3.888888vw)
+                +padding(0 3.288888vw)
 
             h3
                 +padding(3.8888888vw)
