@@ -65,10 +65,10 @@ $(function () {
     findprice(value);
 
     //옵션값에 변화를주었을때
-    $('#ticket').change(function() {
-        var data = $(this).find('option:selected').data('price');
-        findprice(data);
-    });
+    // $('#ticket').change(function() {
+    //     var data = $(this).find('option:selected').data('price');
+    //     findprice(data);
+    // });
 
     //하트 클릭 이벤트
     var clickLike = $('.like')

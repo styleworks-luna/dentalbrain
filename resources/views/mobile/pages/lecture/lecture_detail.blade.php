@@ -52,15 +52,7 @@
                                     </li>
                                 @endif
                                 <li>
-                                    <select name="ticket" id="ticket" class="lecture-select-box">
-                                        @if ($program->canRepeat($student) || $program->repeated($student))
-                                            <option value="{{$program->id}}"
-                                                    data-price="{{ $program->repeat_price }}">{{ $program->description }}</option>
-                                        @else
-                                            <option value="{{$program->id}}"
-                                                    data-price="{{ $program->price }}">{{ $program->description }}</option>
-                                        @endif
-                                    </select>
+                                    <p class="lecture-description">{{ $program->description }}</p>
                                 </li>
                                 <li class="lecture-price-wrap">
                                     @guest
