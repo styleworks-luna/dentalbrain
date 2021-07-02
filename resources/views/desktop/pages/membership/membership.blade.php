@@ -280,7 +280,7 @@
                             <h3>유료회원 연 결제</h3>
                             <span class="price">99,000원/연</span>
                             <p class="price-tip">연 회비 99,000원을 결제하면 자동으로 유료회원이 되고, 결제일로부터<br>
-                                1년 동안 무료강의와 할인 된 강의를 자유롭게 수강하실 수 있습니다.</p>
+                                <em>1년 동안 무료강의와 할인 된 강의를 자유롭게 수강</em>하실 수 있습니다.</p>
                             <div class="yearly-membership-hidden">
                                 <div class="membership-payment-method">
                                     <span class=" border-line">결제방식</span>
@@ -359,7 +359,7 @@
                             <h3>유료회원 월 결제</h3>
                             <span class="price">29,000원/월</span>
                             <p class="price-tip">월 회비 29,000원을 결제하면 자동으로 월 회원이 되고, 결제일로부터<br>
-                                한달 동안 무료강의와 할인 된 강의를 자유롭게 수강할 수 있습니다.</p>
+                                <em>한달 동안 무료강의와 할인 된 강의를 자유롭게 수강</em>할 수 있습니다.</p>
                             <div class="monthly-membership-hidden">
                                 <div class="membership-payment-method">
                                     <span class="border-line">결제방식</span>
