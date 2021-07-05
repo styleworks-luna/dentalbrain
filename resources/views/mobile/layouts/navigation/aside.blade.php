@@ -30,8 +30,8 @@
                     </div>
                 @else
                     <div class="user-no-login">
-                        <h2><em>로그인</em> 해주세요</h2>
-                        <p>회원이 아니시라면 <strong>회원가입</strong>을 해주세요.</p>
+                        <a href="{{ route('login') }}"><h2><em>로그인</em> 해주세요</h2></a>
+                        <p>회원이 아니시라면 <a href="{{ route('register') }}"><strong>회원가입</strong></a>을 해주세요.</p>
                     </div>
                 @endauth
             </div>
