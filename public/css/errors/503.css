@@ -1,0 +1,22 @@
+/* variables */
+html body {
+  background-color: #ffffff;
+}
+html body .error {
+  display: flex;
+  justify-content: center;
+  transform: translateY(300px);
+}
+html body .error .error-image img {
+  width: 150px;
+  margin: 0 auto;
+}
+html body .error .error-text {
+  margin-top: 30px;
+  font-family: GmarketSans, "dotum", sans-serif;
+  font-size: 40px;
+}
+html body .error .error-sub-text {
+  text-align: center;
+  font-size: 25px;
+}
