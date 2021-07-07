@@ -10,19 +10,26 @@
 
     <title>{{ config('app.name', '덴탈 브레인') }}</title>
 
-    <link rel="stylesheet" href="{{ mix('css/errors/503.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <style>
+        @font-face {
+            font-family: "GmarketSans";
+            font-weight: normal;
+            src: url("/fonts/GmarketSansMedium.otf");
+        }
+    </style>
 </head>
-<body>
-<div class="error">
+<body style="background-color: #fff">
+<div class="error" style="display: flex;
+        justify-content: center;
+        transform: translateY(300px);">
     <div class="error-wrap">
         <div class="error-image">
-            <img src="/images/desktop/global/logo.png" alt="">
+            <img src="/images/desktop/global/logo.png" alt="dentalbrainon" style="display: block; width: 150px; margin: 0 auto;">
         </div>
-        <div class="error-text">
+        <div class="error-text" style="font-family: GmarketSans, 'dotum', sans-serif; font-size: 40px; margin-top: 30px;">
             서비스 점검중입니다.
         </div>
-        <div class="error-sub-text">
+        <div class="error-sub-text" style="text-align: center; font-size: 25px;">
             13:00 ~ 15:00
         </div>
     </div>

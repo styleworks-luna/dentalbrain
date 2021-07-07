@@ -128,7 +128,4 @@ mix.sass('resources/sass/mobile/pages/service/notice.sass', 'public/css/mobile/p
 
 mix.sass('resources/sass/mobile/pages/search/search.sass', 'public/css/mobile/pages/search');
 
-// errors
-mix.sass('resources/sass/errors/503.sass', 'public/css/errors');
-
 mix.version();
