@@ -20,11 +20,15 @@ class PaymentController extends Controller
                             ->with('thumbnail');
                     }]);
             }])
-            ->whereHas('student', function ($query) {
-                $query->where('user_id', Auth::id());
-            })
-            ->whereHas('membership', function ($query) {
-                $query->where('user_id', Auth::id());
+            ->with(['membership' => function ($query) {
+                $query->select('id', 'payment_id', 'user_id', 'applied_days');
+            }])
+            ->where(function ($query) {
+                $query->whereHas('student', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })->orWhereHas('membership', function ($query) {
+                    $query->where('user_id', Auth::id());
+                });
             })
             ->orderBy('id', 'desc')->paginate(10);
 
