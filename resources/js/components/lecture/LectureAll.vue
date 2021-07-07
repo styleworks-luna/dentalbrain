@@ -15,7 +15,7 @@
         </div>
         </template>
         <template v-else>
-            <div class="infinite-wrapper">
+            <div class="infinite-wrapper" v-if="is_pagination">
                 <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper>
                     <div slot="no-more"></div>
                 </infinite-loading>
@@ -98,7 +98,7 @@ export default {
         infiniteHandler($state, page = this.page) {
             let vm = this;
 
-            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            var keyword = document.location.search.replace("?keyword=", "").replace(/"+"/gi, " ");
             keyword = decodeURIComponent(keyword);
 
             if(keyword.length > 0) {
@@ -125,7 +125,7 @@ export default {
                 } else {
                     $state.complete();
                 }
-            });
+            })
 
             this.page = this.page + 1;
         },
