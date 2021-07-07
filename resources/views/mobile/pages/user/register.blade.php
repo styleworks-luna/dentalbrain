@@ -122,6 +122,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th><label for="work_area">근무지역</label></th>
+                                    <td>
+                                        <input type="text"
+                                               id="work_area"
+                                               name="work_area"
+                                               class="work_area"
+                                               placeholder="시/구까지 입력해주세요."
+                                               value="{{ old('work_area') }}">
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th><label for="upw">비밀번호</label></th>
                                     <td>
                                         <input type="password" id="password" name="password"
