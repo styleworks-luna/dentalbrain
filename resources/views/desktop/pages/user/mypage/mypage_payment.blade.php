@@ -115,13 +115,8 @@
                         @isset($payment->membership)
                             <li>
                                 <div class="lecture-information">
-                                    @if ($payment->student->program->is_online)
-                                        <span class="online">온라인</span>
-                                    @else
-                                        <span class="offline">오프라인</span>
-                                    @endif
-
-                                    <h3 class="lecture-name">{{ $payment->student->program->title }}</h3>
+                                    <span class="membership">유료회원</span>
+                                    <h3 class="lecture-name"> 유료회원 {{ $payment->membership->applied_days }}일권</h3>
                                 </div>
                                 <table class="payment-information">
                                     <tr>
