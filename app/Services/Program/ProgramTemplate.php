@@ -59,7 +59,7 @@ abstract class ProgramTemplate
      */
     static function getCategories(): JsonResponse
     {
-        $major = ProgramMajorCategory::query()->select(['id', 'name'])->get();
+        $major = ProgramMajorCategory::query()->select(['id', 'name'])->where('id', '!=', 8)->get();
         $minor = ProgramMinorCategory::query()->select(['id', 'name'])->get();
         return response()->json([
             'major' => $major,
