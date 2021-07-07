@@ -28,6 +28,7 @@ export const UserMixin = {
             has_membership: false,
             job_name_id: 1,
             license_num: '',
+            area: '',
             allow_email: false,
             allow_sms: false,
             jobOptions: [],

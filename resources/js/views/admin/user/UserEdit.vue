@@ -73,6 +73,16 @@
                 </template>
             </single-group>
 
+            <!-- 근무지역 -->
+            <single-group name="근무지역"
+                          :isRow="true"
+                          :isRequired="true" :size="6">
+                <template v-slot:content>
+                    <input class="form-control" placeholder="시/구까지 입력해주세요."
+                           v-model="area"/>
+                </template>
+            </single-group>
+
             <!-- 이메일 수신 -->
             <single-group name="이메일 수신"
                           :isRow="true"
