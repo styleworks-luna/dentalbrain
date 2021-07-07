@@ -55,7 +55,7 @@
             </section>
 
             <div class="m-row">
-                <lecture-all :is_pagination="false" :per_page="8" :mobile="false"></lecture-all>
+                <lecture-all :is_pagination="false" :per_page="8" :mobile="true"></lecture-all>
             </div>
 
             <section class="ad">
