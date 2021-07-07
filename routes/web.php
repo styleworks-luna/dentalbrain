@@ -14,6 +14,7 @@
 /*============================ AUTH ============================*/
 
 // 회원가입
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -30,6 +31,10 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
         Route::get('register', 'Test\TestController@showRegistrationForm');
+    });
+
+    Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
+        Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 }
 
