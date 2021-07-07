@@ -56,7 +56,7 @@
                             </template>
                             <template v-else-if="membership.pay_status === 2">
                                 <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="[handleSetCancelLayer(slotProps.row.id, slotProps.payment.method), getCancelId(membership.id,true)]">
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.id, membership.payment.method), getCancelId(membership.id,true)]">
                                     결제 취소
                                 </a>
                             </template>
