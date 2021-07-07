@@ -125,6 +125,8 @@ export default {
                 } else {
                     $state.complete();
                 }
+            }).catch(err => {
+                alert(err);
             });
 
             this.page = this.page + 1;
