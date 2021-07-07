@@ -58,6 +58,7 @@ export default {
     },
     mounted() {
         this.getData();
+        alert('test');
     },
     methods: {
         handleSetMenu(category_id) {
@@ -116,10 +117,7 @@ export default {
                 keyword: keyword ? keyword : null,
                 page: page
             };
-            alert('TEST');
             Lecture.getData(params).then(res => {
-                alert(res.data.data.length);
-                alert(res.data.data);
                 if(res.data.data.length) {
                     $.each(res.data.data, function (key, value) {
                         vm.mobileList.push(value);
