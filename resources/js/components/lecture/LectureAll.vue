@@ -116,6 +116,7 @@ export default {
                 keyword: keyword ? keyword : null,
                 page: page
             };
+            alert('TEST');
             Lecture.getData(params).then(res => {
                 alert(res.data.data.length);
                 alert(res.data.data);
