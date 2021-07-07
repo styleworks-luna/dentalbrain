@@ -74,7 +74,7 @@ export default {
                 page = 1;
             }
 
-            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            var keyword = document.location.search.replace("?keyword=", "").replace(/"+"/gi, " ");
             keyword = decodeURIComponent(keyword);
 
             if(keyword.length > 0) {
