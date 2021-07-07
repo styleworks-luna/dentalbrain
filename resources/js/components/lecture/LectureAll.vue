@@ -117,6 +117,8 @@ export default {
                 page: page
             };
             Lecture.getData(params).then(res => {
+                alert(res.data.data.length);
+                alert(res.data.data);
                 if(res.data.data.length) {
                     $.each(res.data.data, function (key, value) {
                         vm.mobileList.push(value);
