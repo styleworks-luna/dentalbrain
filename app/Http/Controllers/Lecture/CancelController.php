@@ -30,23 +30,18 @@ class CancelController extends Controller
 
         $student = Auth::user()->students()->where('program_id', '=', $program->id)->first();
 
-        if ($student->pay_status == ProgramStudent::$PAY_PAID) {
-            // PG사 통한 결제일 경우.
-            $data = $concrete->validateUserCancel($request, $program);
-            if ($data == false) {
-                // validation 실패 처리
-                return response()->json([
-                    'msg' => '유효하지 않은 요청입니다.'
-                ], 422);
-            }
-            $success = $concrete->cancel($program, $student, $data);
-        } else {
-            $success = $concrete->cancel($program, $student);
+        $dto = $concrete->validateUserCancel($request, $program);
+        if ($dto == null) {
+            // validation 실패 처리
+            return response()->json([
+                'msg' => '유효하지 않은 요청입니다.'
+            ], 422);
         }
 
+        $success = $concrete->cancel($program, $student, $dto);
+
         if (!$success) {
-            // 실패
-            // 서버 오류 처리
+            // 실패 , 서버 오류 처리
             Log::error('USER AUTO CANCEL ERROR IN CONCRETE', [$request->all(), 'ID' => Auth::id()]);
             return response()->json([
                 'msg' => '환불 실패하였습니다.'

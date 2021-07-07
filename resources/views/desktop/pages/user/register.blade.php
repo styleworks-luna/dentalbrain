@@ -234,9 +234,18 @@
                                         <div class="checkbox-wrap">
                                             <input type="checkbox" name="email-consent"
                                                    id="email-consent"
-                                                   class="email-consent"
                                                    @if(old('email-consent')) checked @endif>
                                             <label for="email-consent"> (선택) 이메일 수신</label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="checkbox-from">
+                                        <div class="checkbox-wrap">
+                                            <input type="checkbox" name="sms-consent"
+                                                   id="sms-consent"
+                                                   @if(old('sms-consent')) checked @endif>
+                                            <label for="sms-consent"> (선택) 문자 수신</label>
                                         </div>
                                     </div>
                                 </li>

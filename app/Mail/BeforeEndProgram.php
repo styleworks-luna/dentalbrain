@@ -33,7 +33,7 @@ class BeforeEndProgram extends Mailable
     public function build()
     {
         return $this
-            ->subject('[DBV2020] 강의 시청 마감 D-3 안내')
+            ->subject('[덴탈브레인] 강의 시청 마감 D-3 안내')
             ->view('emails.lecture.lecture_deadline')
             ->with([
                 'user' => $this->user,

@@ -11,12 +11,13 @@ use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\Survey\SurveyCategory;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
+use App\Services\File\SurveyFile;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -53,52 +54,6 @@ abstract class ProgramTemplate
         }
     }
 
-    function getProgramDetail(Program $program): array
-    {
-        return [
-            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
-            'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
-                ->with('choices:id,question,parent_id')->get()
-                ->whereNull('parent_id')->values()
-        ];
-    }
-
-    /**
-     * 강의 수강현황
-     *
-     * @param Program $program
-     * @param $order
-     * @return \Illuminate\Database\Query\Builder
-     */
-    function getStudents(Program $program, $order)
-    {
-        $query = $program->students()
-            ->select([
-                'program_students.program_id', 'programs.is_free',
-                'program_students.id as student_id', 'program_students.pay_status', 'program_students.applied_at',
-                'program_students.payment_id', 'program_students.is_repeated','program_students.expired_at',
-                'payments.totalAmount', 'payments.status', 'payments.method',
-                'users.id as user_id', 'users.login_id', 'users.name', 'users.is_paid', 'users.email', 'users.phone'
-            ])
-            ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
-            ->leftJoin('programs','programs.id','=','program_students.program_id')
-            ->join('users', 'users.id', '=', 'program_students.user_id');
-
-        if ($order == 'latest') {
-            $query->orderBy('program_students.id', 'DESC');
-        } elseif ($order == 'login_id') {
-            $query->orderBy('users.login_id', 'ASC');
-        } elseif ($order == 'left_days') {
-            $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
-            $query->orderBy('expired_at', 'desc');
-        } else {
-            $query->orderBy('program_students.id', 'DESC');
-        }
-
-        return $query;
-    }
-
-
     /**
      * @return JsonResponse
      */
@@ -123,6 +78,63 @@ abstract class ProgramTemplate
         return $program;
     }
 
+    function getProgramDetail(Program $program): array
+    {
+        return [
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
+            'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
+                ->with('choices:id,question,parent_id')->get()
+                ->whereNull('parent_id')->values()
+        ];
+    }
+
+    /**
+     * 강의 수강현황
+     *
+     * @param Program $program
+     * @param $order
+     * @param $keyword
+     * @return \Illuminate\Database\Query\Builder
+     */
+    function searchStudents(Program $program, $order, $keyword)
+    {
+
+        $query = $program->students()
+            ->select([
+                'program_students.program_id', 'programs.is_free',
+                'program_students.id as student_id', 'program_students.pay_status', 'program_students.applied_at',
+                'program_students.payment_id', 'program_students.is_repeated', 'program_students.expired_at',
+                'payments.totalAmount', 'payments.status', 'payments.method',
+                'users.id as user_id', 'users.login_id', 'users.name', 'users.email', 'users.phone'
+            ])
+            ->leftjoin('payments', 'payments.id', '=', 'program_students.payment_id')
+            ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
+            ->join('users', 'users.id', '=', 'program_students.user_id');
+
+        if ($keyword != null) {
+            $query->where(/* @param Builder $query */ function ($query) use ($keyword) {
+                $query->where('users.phone', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.login_id', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('users.email', 'LIKE', '%' . $keyword . '%');
+            });
+        }
+
+        if ($order == 'latest') {
+            $query->orderBy('program_students.id', 'DESC');
+        } elseif ($order == 'login_id') {
+            $query->orderBy('users.login_id', 'ASC');
+        } elseif ($order == 'left_days') {
+            $query->orderByRaw(DB::raw('CASE WHEN payments.status in ("CANCELED") THEN 0 ELSE 1 END DESC'));
+            $query->orderBy('expired_at', 'desc');
+        } else {
+            // 수미상관.
+            $query->orderBy('program_students.id', 'DESC');
+        }
+
+        return $query;
+    }
+
     /*
      * ========================= Validation =========================
      */
@@ -145,7 +157,10 @@ abstract class ProgramTemplate
 
             'lecture_info' => ['required', 'string'],
             'is_free' => ['required', 'boolean'],
+            'membership_is_free' => ['required', 'boolean'],
+
             'price' => ['nullable', 'numeric'],
+            'membership_price' => ['nullable', 'numeric'],
         ], $additionalRules));
 
         return $v->validate();
@@ -196,8 +211,12 @@ abstract class ProgramTemplate
             'material_id' => $data['material_id'] ?? null,
 
             'is_open' => $data['is_open'],
-            'price' => $data['price'] ?? 0,
+            'price' => $data['is_free'] ? 0 : ($data['price'] ?? 0),
+            'membership_price' => $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0),
+
             'is_free' => $data['is_free'],
+            'membership_is_free' => $data['membership_is_free'],
+
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
@@ -295,6 +314,10 @@ abstract class ProgramTemplate
             $data['price'] = 0;
         }
 
+        if ($data['membership_is_free'] == true) {
+            $data['membership_price'] = 0;
+        }
+
         $program->update([
             'title' => $data['title'],
             'content' => $data['content'],
@@ -306,8 +329,12 @@ abstract class ProgramTemplate
             'material_id' => $data['material_id'],
             'is_open' => $data['is_open'],
 
-            'price' => $data['price'] ?? 0,
             'is_free' => $data['is_free'],
+            'membership_is_free' => $data['membership_is_free'],
+
+            'price' => $data['price'] ?? 0,
+            'membership_price' => $data['membership_price'] ?? 0,
+
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
         ]);
@@ -319,6 +346,8 @@ abstract class ProgramTemplate
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');
+        logger($program->surveys);
+        logger(json_encode($dataSet));
 
         foreach ($dataSet as $data) {
             if (isset($data['id'])) {
@@ -370,8 +399,18 @@ abstract class ProgramTemplate
         }
         // 삭제 된 설문조사들 삭제.
         $newSurveyIds = collect($returnableDataSet)->pluck('id');
-        $deletable = $originalSurveyIds->diff($newSurveyIds);
-        Survey::query()->whereIn('id', $deletable)->delete();
+        // 키 - 값 쌍으로 diff 되는 문제 있음.
+        $deletableIds = $originalSurveyIds->diff($newSurveyIds)->values();
+
+        $surveyFiles = SurveyAnswer::query()->whereIn('survey_id', $deletableIds)
+            ->whereNotNull('file_id')->get()
+            ->mapInto(SurveyFile::class);
+        $surveyFiles->each(/* @param SurveyFile $surveyFile */ function ($surveyFile) {
+            $surveyFile->deleteFile();
+        });
+
+        SurveyAnswer::query()->whereIn('survey_id', $deletableIds)->orWhereIn('choice_id', $deletableIds)->delete();
+        Survey::query()->whereIn('id', $deletableIds)->orWhereIn('parent_id', $deletableIds)->delete();
 
         return $returnableDataSet;
     }

@@ -29,8 +29,10 @@
                                :isRequired="true"
                                :size="9">
                 <template v-slot:content>
-                    <textarea class="form-control" rows="9" placeholder="내용을 입력해 주세요."
-                              v-model="content"></textarea>
+                    <editor :content="content"
+                            :uploadImageUrl="`/api/admin/customer/notice/upload/image`"
+                            :uploadFileUrl="`/api/admin/customer/notice/upload/file`"
+                            @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 

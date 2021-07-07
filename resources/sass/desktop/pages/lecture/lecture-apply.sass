@@ -9,6 +9,7 @@
 @import '@sass/components/_emailbox.sass'
 @import '@sass/components/_button.sass'
 @import '@sass/components/_selectbox.sass'
+
 @import '@sass/desktop/pages/agreement/agreement.sass'
 @import '@sass/desktop/pages/agreement/payment.sass'
 
@@ -338,6 +339,7 @@ h3
 
                         & + label
                             +margin(top 13px)
+                            cursor: pointer
 
                 .payment-method,
                 .payment-method-virtual
@@ -356,9 +358,10 @@ h3
 
                 .separate-tip
                     position: absolute
-                    bottom: -5px
+                    bottom: 12px
                     right: 50px
                     font-size: 12px
+                    line-height: 12px
 
                 .account
                     +padding(top 1px left 9px)
@@ -496,11 +499,13 @@ h3
     .btn-confirm
         +btn(purple-fill)
         +margin(right 10px)
+        float: left
         color: $white
 
     .btn-cancel
         +btn()
         +background(null, null, null, $gray-700)
+        float: right
         color: $white
 
 .form_search

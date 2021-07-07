@@ -14,6 +14,7 @@
 /*============================ AUTH ============================*/
 
 // 회원가입
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -28,34 +29,12 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
-        //FAQ, 공지사항, 문의하기 생성 페이지
-        Route::get('/', 'Test\TestController@index')->name('index');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('faq/{faq}', 'Test\TestController@FaqEdit')->name('FaqEdit');
-
-        //공지사항 업데이트 확인 페이지
-        Route::get('notice/{notice}', 'Test\TestController@NoticeEdit')->name('NoticeEdit');
-
-        //문의하기 업데이트 확인 페이지
-        Route::get('inquiry/{inquiry}', 'Test\TestController@InquiryEdit')->name('InquiryEdit');
-
-        //업로드 파일 확인 페이지
-        Route::get('upload/file', 'Test\TestController@FileUpload')->name('upload.file');
-        //배너 업데이트 확인 페이지
-        Route::get('banner/{banner}', 'Test\TestController@bannerEdit')->name('bannerEdit');
-        //유저 관리자 업로드 확인 페이지
-        Route::get('user/{userId}', 'Test\TestController@UserEdit')->name('userEdit');
-
-        Route::get('search', 'Test\TestController@search')->name('search');
-
-        Route::get('cancel', 'Test\TestController@cancelTest');
-
-        Route::get('mail', 'Test\TestController@mailView');
-        Route::get('mailAdmin', 'Test\TestController@mailViewAdmin');
-
-        // 테스팅 계정 생성
+        // 테스팅 계정 생성 // !! 삭제하지 말것 !!
         Route::get('register', 'Test\TestController@showRegistrationForm');
+    });
+
+    Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
+        Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 }
 
@@ -77,6 +56,10 @@ Route::get('m-find', function () {
 });
 Route::get('m-find-ps', function () {
     return view('mobile.pages.user.find_password');
+});
+// 모바일 검색 창
+Route::get('m-search', function () {
+    return view('mobile.pages.search.search');
 });
 
 //회사 소개 (임시)
@@ -107,6 +90,19 @@ Route::get('privacy', function () {
 Route::get('refund', function () {
     return view(viewPrefix() . 'pages.term.refund');
 })->name('refund');
+
+Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
+    Route::get('/', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('index');
+    Route::group(['prefix' => 'payment', 'middleware' => 'auth',], function () {
+        // 결제 성공 연결
+        Route::get('/payment/success', [\App\Http\Controllers\Membership\PaymentController::class, 'success'])->name('paymentSuccess');
+        // 결제 성공 연결
+        Route::post('/payment/another', [\App\Http\Controllers\Membership\PaymentController::class, 'anotherPay'])->name('paymentAnother');
+        // 결제 결과
+        Route::get('/payment/result', [\App\Http\Controllers\Membership\MembershipController::class, 'result'])->name('paymentResult');
+    });
+
+});
 
 Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     Route::redirect('/', '/customer/notices')->name('index');
@@ -144,7 +140,7 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
 
     Route::group(['prefix' => '{program}'], function () {
         //강의 상세
-        Route::get('/', 'Lecture\DetailController@detail')->name('detail');
+        Route::get('/', [\App\Http\Controllers\Lecture\DetailController::class, 'detail'])->name('detail');
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼
@@ -176,6 +172,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::get('/', 'Lecture\EditController@showEditForm')->name('edit');
         Route::post('/', 'Lecture\EditController@update')->name('update');
     });
+    // 찜 강의 내역
+    Route::get('like', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_like');
+    })->name('like');
+
     // 결제 내역
     Route::get('payments', 'Account\PaymentController@index')->name('payments');
     // 질문 내역
@@ -213,6 +214,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
     // 회원 아이디 중복체크
     Route::post('check-id', 'Account\FindIdController@checkIdDuplication')->name('check-id');
+
+    Route::get('like-lectures', [\App\Http\Controllers\Account\LikeController::class, 'likeLectures'])->name('likes');
 
     Route::group(['prefix' => 'find', 'as' => 'find.'], function () {
         // 회원 아이디 찾기
@@ -270,10 +273,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
         Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
-            Route::post('file', 'Admin\FileController@uploadFile')->name('file');
-            Route::post('image', 'Admin\FileController@uploadImage')->name('image');
+            Route::post('file', [\App\Http\Controllers\Admin\FileController::class, 'uploadFile'])->name('file');
+            Route::post('image', [\App\Http\Controllers\Admin\FileController::class, 'uploadImage'])->name('image');
         });
-        Route::get('download/{file}', 'Admin\FileController@download')->name('download');
+        Route::get('download/{file}', [\App\Http\Controllers\Admin\FileController::class, 'download'])->name('download');
 
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             //user index 페이지 데이터
@@ -283,20 +286,43 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             //user 업데이트 함수
             Route::put('{user}', 'Admin\User\UserController@update')->name('update');
             //user 직업 모두 가져오는 데이터
-            Route::get('category', 'Admin\User\UserController@getUserJobNameCategory')->name('getUserJobNameCategory');
+            Route::get('category', [\App\Http\Controllers\Admin\User\UserController::class, 'getUserJobNameCategory'])->name('getUserJobNameCategory');
             // user 검색 데이터
             Route::post('search', 'Admin\User\UserController@search')->name('search');
             //관리자 회원정보 상세 패스워드 변경 이메일 보내기
             Route::post('find/password/{user}', 'Account\FindPasswordController@sendPasswordMailWithUser')->name('sendPasswordMailWithUser');
-            // user 유료회원 <-> 무료회원 전환
-            Route::patch('{user}/paid', 'Admin\User\UserController@updatePaid')->name('change.paid');
+            // 유저 엑셀 출력
+            Route::get('export', [\App\Http\Controllers\Admin\User\UserController::class, 'userExport'])->name('export');
+
+            Route::get('notification/email', [\App\Http\Controllers\Admin\User\UserController::class, 'emailList'])->name('notification.email');
+            Route::get('notification/sms', [\App\Http\Controllers\Admin\User\UserController::class, 'smsList'])->name('notification.sms');
+        });
+
+        Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'index'])->name('index');
+            // 유료 회원 엑셀 출력
+            Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
+
+            Route::group(['prefix' => 'user/{user}'], function () {
+                // 유료회원 상세 페이지
+                Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'edit'])->name('edit');
+                // 유료회원 상세 페이지 수정 완료
+                Route::post('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'update'])->name('update');
+            });
+            Route::group(['prefix' => '{membership}'], function () {
+                // 유료 회원 결제 확인 ( 별도결제 )
+                Route::post('confirm', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'confirmAnotherPay'])->name('confirm.anotherPay');
+                // 유료 회원 결제 취소
+                Route::post('cancel', [\App\Http\Controllers\Admin\Payment\MembershipCancelController::class, 'cancel'])->name('cancel');
+            });
+
         });
 
         Route::group(['prefix' => 'lecture', 'as' => 'lecture.'], function () {
             // 강의 카테고리 리소스
             Route::get('categories', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'getCategories'])->name('categories');
             // 강의 상세 내용 이미지 업로드
-            Route::post('upload', 'Admin\FileController@uploadProgramDetailImage')->name('upload');
+            Route::post('upload', [\App\Http\Controllers\Admin\FileController::class, 'uploadProgramDetailImage'])->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
                 // 온라인 강의 리스트
@@ -376,8 +402,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
             Route::get('/', 'Admin\Payment\PaymentController@index')->name('index');
-
-            Route::get('export', 'Admin\Payment\PaymentController@paymentExport')->name('export');
+            // 엑셀 출력
+            Route::get('export', [\App\Http\Controllers\Admin\Payment\PaymentController::class, 'paymentExport'])->name('export');
 
             Route::post('/{program}/{student}/revert', [\App\Http\Controllers\Admin\Payment\CancelController::class, 'revert'])->name('revert');
         });
@@ -424,6 +450,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             });
 
             Route::group(['prefix' => 'notice', 'as' => 'notices.'], function () {
+                // 검색
+                Route::post('search', 'Admin\NoticeController@search')->name('search');
+                // 공지사항 이미지 파일 업로드
+                Route::post('upload/image', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeImage'])->name('upload.image');
+                // 공지사항 파일 업로드
+                Route::post('upload/file', [\App\Http\Controllers\Admin\FileController::class, 'uploadNoticeFile'])->name('upload.file');
                 //공지사항 index 페이지 데이터
                 Route::get('/', 'Admin\NoticeController@index')->name('index');
                 // 공지사항 생성 함수
@@ -436,8 +468,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::delete('{notice}', 'Admin\NoticeController@destroy')->name('destroy');
                 //상태 변경 함수
                 Route::patch('{notice}/status', 'Admin\NoticeController@statusChange')->name('statusChange');
-
-                Route::post('search', 'Admin\NoticeController@search')->name('search');
             });
 
             Route::group(['prefix' => 'inquire', 'as' => 'inquiries.'], function () {

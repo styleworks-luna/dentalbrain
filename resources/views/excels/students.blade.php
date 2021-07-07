@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th>번호</th>
+        <th>이름</th>
         <th>아이디</th>
         <th>이메일</th>
         <th>연락처</th>
@@ -24,6 +25,7 @@
     @foreach($students as $student)
         <tr>
             <td>{{ $student->id }}</td>
+            <td>{{ $student->user->name }}</td>
             <td>{{ $student->user->login_id }}</td>
             <td>{{ $student->user->email }}</td>
             <td>{{ $student->user->phone }}</td>
@@ -34,14 +36,14 @@
                 @if($survey->category_id == 2)
                     {{--다중 선택--}}
                     @foreach($survey->choices as $choice)
-                        @if ($surveyAnswers->where('user_id',$student->user->id)->where('choice_id',$choice->id)->first())
+                        @if ($surveyAnswers->where('user_id',$student->user->id)->where('choice_id',$choice->id)->isNotEmpty())
                             <td>{{ $surveyAnswers->where('user_id',$student->user->id)->where('choice_id',$choice->id)->first()->content }}</td>
                         @else
                             <td></td>
                         @endif
                     @endforeach
                 @elseif($survey->category_id == 4)
-                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id))
+                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->isNotEmpty())
                         <td>
                             {{ $surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->first()->address }}
                             ,
@@ -51,7 +53,7 @@
                         <td></td>
                     @endif
                 @elseif($survey->category_id == 5)
-                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id))
+                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->isNotEmpty())
                         <td>
                             {{ $surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->first()->file->name }}
                         </td>
@@ -59,7 +61,7 @@
                         <td></td>
                     @endif
                 @else
-                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id))
+                    @if ($surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->isNotEmpty())
                         <td>
                             {{ $surveyAnswers->where('user_id',$student->user->id)->where('survey_id',$survey->id)->first()->content }}
                         </td>

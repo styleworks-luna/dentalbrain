@@ -38,13 +38,14 @@ $(function () {
     var agreeService = $("input:checkbox[name=service-consent]");
     var agreePrivacy = $("input:checkbox[name=privacy-consent]");
     var agreeEmail = $("input:checkbox[name=email-consent]");
+    var agreeSms = $("input:checkbox[name=sms-consent]");
 
     $('.agreement-all-wrap input[type="checkbox"]').change(function () {
         var check = $(this).is(':checked');
         $('.agreement-wrap input[type="checkbox"]').prop('checked', check);
     });
     $('.agreement-wrap > ul > li').change(function () {
-        if (agreeService.is(':checked') == true && agreePrivacy.is(':checked') == true && agreeEmail.is(':checked') == true) {
+        if (agreeService.is(':checked') == true && agreePrivacy.is(':checked') == true && agreeEmail.is(':checked') == true && agreeSms.is(':checked') == true) {
             agreeAll.prop('checked', true);
         } else {
             agreeAll.prop('checked', false);

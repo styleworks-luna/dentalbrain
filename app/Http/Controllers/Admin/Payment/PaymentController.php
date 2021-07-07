@@ -8,6 +8,8 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -17,42 +19,91 @@ class PaymentController extends Controller
 {
     public function index(Request $request)
     {
-        $payments = Payment::query()
-            ->select(
-                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
-                'programs.is_online', 'programs.title', 'programs.id as program_id',
-                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status',
-                'users.name', 'users.email', 'users.phone'
-            )
-            ->join('program_students', 'program_students.payment_id', '=', 'payments.id')
-            ->join('programs', 'programs.id', '=', 'program_students.program_id')
-            ->join('users', 'users.id', '=', 'program_students.user_id');
-
-        if (isset($request->is_online)) {
-            $payments->where('programs.is_online', '=', $request->is_online);
-        }
-
-        if (isset($request->status)) {
-            $payments->where('payments.status', '=', $request->status);
-        }
-
-        if (isset($request->keyword)) {
-            $payments->where(function ($query) use ($request) {
-                $query->orWhere('programs.title', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('users.name', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('users.email', 'like', '%' . $request->keyword . '%')
-                    ->orWhere('payments.totalAmount', '=', $request->keyword);
-            });
-        }
+        $query = $this->search($request);
+        $sum = (clone $query)->paid()->sum('totalAmount');
+        $count = (clone $query)->paid()->count();
 
         return response()->json([
-            'payments' => $payments->orderBy('payments.id', 'desc')->paginate(10)
+            'payments' => (clone $query)->paginate(10),
+            'sum' => number_format($sum),
+            'count' => $count,
         ]);
     }
 
-    public function paymentExport()
+    private function search(Request $request)
     {
-        return Excel::download(new PaymentExport(), '결제 정보 엑셀.xlsx');
+        $category = $request->get('category');
+        $status = $request->get('status');
+        $keyword = $request->get('keyword');
+        $start_date = $request->get('start_date');
+        $end_date = $request->get('end_date');
+
+        $payments = Payment::query()
+            ->select(
+                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
+
+                'programs.is_online', 'programs.title', 'programs.id as program_id',
+                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
+
+                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
+
+                'users.name', 'users.email', 'users.phone'
+            )
+            ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
+            ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
+            ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
+            ->leftJoin('users', function (JoinClause $join) {
+                $join->on('users.id', '=', 'program_students.user_id')
+                    ->orOn('users.id', '=', 'memberships.user_id');
+            });
+
+
+        if ($category == '온라인') {
+            $payments->where('programs.is_online', '=', 1);
+        } elseif ($category == '오프라인') {
+            $payments->where('programs.is_online', '=', 0);
+        } elseif ($category == '유료회원') {
+            $payments->whereHas('membership');
+        }
+
+        if ($status == Payment::$DONE) {
+            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
+                $query->orWhere('payments.status', '=', Payment::$DONE)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+            });
+
+        } elseif ($status == Payment::$CANCELED) {
+            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
+                $query->orWhere('payments.status', '=', Payment::$CANCELED)
+                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+            });
+        }
+
+        if ($keyword !== null) {
+            $payments->where(function ($query) use ($keyword) {
+                $query->orWhere('programs.title', 'like', '%' . $keyword . '%')
+                    ->orWhere('users.name', 'like', '%' . $keyword . '%')
+                    ->orWhere('users.email', 'like', '%' . $keyword . '%')
+                    ->orWhere('payments.totalAmount', '=', $keyword);
+            });
+        }
+
+        if ($start_date !== null) {
+            $payments->where('payments.requestedAt', '>', $start_date);
+        }
+
+        if ($end_date !== null) {
+            $payments->where('payments.requestedAt', '<', $end_date);
+        }
+
+        return $payments->orderBy('payments.id', 'desc');
+    }
+
+    public function paymentExport(Request $request)
+    {
+        $payments = $this->search($request)->get();
+
+        return Excel::download(new PaymentExport($payments), '결제 정보 엑셀' . now()->toDateString() . '.xlsx');
     }
 
     /**

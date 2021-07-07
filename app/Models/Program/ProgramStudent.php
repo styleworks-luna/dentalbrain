@@ -5,53 +5,16 @@ namespace App\Models\Program;
 use App\Models\Payments\Payment;
 use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
+use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProgramStudent extends Model
 {
-    use SoftDeletes;
-
-    /**
-     * 결제 아직 안했을 경우
-     * @var int
-     */
-    static $PAY_BEFORE = 0;
-    /**
-     *  가상계좌 결제 진행중
-     * @var int
-     */
-    static $PAY_IN_PROCESS = 1;
-    /**
-     * 결제 완료
-     * @var int
-     */
-    static $PAY_PAID = 2;
-    /**
-     * 환불 완료
-     * @var int
-     */
-    static $PAY_REFUNDED = 3;
-    /**
-     * 환불 요청됨
-     * @var int
-     */
-    static $PAY_IN_REFUND_PROCESS = 4;
-
-    /**
-     * 별도 결제
-     * @var int
-     */
-    static $PAY_ANOTHER_IN_PROCESS = 5;
-
-    /**
-     * 별도 결제
-     * @var int
-     */
-    static $PAY_ANOTHER_PAID = 6;
-
+    use SoftDeletes, HasPayStatus;
 
     protected $appends = ['left_days'];
     protected $guarded = [];
@@ -112,7 +75,7 @@ class ProgramStudent extends Model
      */
     public static function updateOrCreateWhenApplySuccess(Program $program)
     {
-        if ($program->is_free) {
+        if ($program->getUserSpecificFree()) {
             return ProgramStudent::updateOrCreate([
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),
@@ -180,9 +143,16 @@ class ProgramStudent extends Model
      */
     public function cancelAvailable()
     {
-        if ($this->attributes['pay_status'] != self::$PAY_PAID
-            && $this->attributes['pay_status'] != self::$PAY_ANOTHER_PAID) {
+        if (!in_array($this->pay_status, self::$USER_CANCEL_AVAILABLE_STATUSES)) {
+            Log::alert('pay_status invalid', [$this]);
             return false;
+        }
+
+        // 별도결제 환불 그냥 가능.
+        if ($this->pay_status == self::$PAY_ANOTHER_PAID
+            || $this->pay_status == self::$PAY_ANOTHER_IN_PROCESS) {
+            Log::info('another_pay refund request', [$this]);
+            return true;
         }
 
         /*
@@ -199,19 +169,31 @@ class ProgramStudent extends Model
 
         if ($this->program->is_online) {
             if (
-                strtotime($this->attributes['applied_at']) > now()->subDays(7)->unix()
-                && $this->attributes['is_watched'] == 0
+                strtotime($this->applied_at) > now()->subDays(7)->unix()
+                && $this->is_watched == 0
             ) {
                 return true;
             } else {
+                Log::alert('online invalid', [$this]);
                 return false;
             }
         } else {
+            $started_at = $this->program->place->started_at;
+            if ($this->program->is_free) {
+                if (strtotime($started_at) > now()->addDay()->unix()) {
+                    return true;
+                } else {
+                    Log::alert('offline free invalid', [$this]);
+                    return false;
+                }
+            }
+
             if (
-                strtotime($this->attributes['expired_at']) > now()->addDays(2)->unix()
+                strtotime($started_at) > now()->addDays(2)->unix()
             ) {
                 return true;
             } else {
+                Log::alert('offline invalid', [$this]);
                 return false;
             }
         }
@@ -251,21 +233,8 @@ class ProgramStudent extends Model
      *
      * @return string
      */
-    public function getPrice(Program $program = null)
+    public function getPrice()
     {
-        if ($program != null) {
-            // param 존재
-            if ($program->canRepeat($this) || $program->repeated($this)) {
-                return $this->program->repeat_price;
-            } else {
-                return $this->program->price;
-            }
-        } else {
-            if ($this->program->canRepeat($this) || $this->program->repeated($this)) {
-                return $this->program->repeat_price;
-            } else {
-                return $this->program->price;
-            }
-        }
+        return $this->program->getUserSpecificPrice(Auth::user());
     }
 }

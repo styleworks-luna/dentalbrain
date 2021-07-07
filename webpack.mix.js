@@ -54,6 +54,9 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
     .sass('resources/sass/desktop/pages/introduce/instructor.sass', 'public/css/desktop/pages/introduce')
     .sass('resources/sass/desktop/pages/introduce/community.sass', 'public/css/desktop/pages/introduce');
 
+// 유료회원
+mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/desktop/pages/membership');
+
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
     .sass('resources/sass/desktop/pages/lecture/lecture-apply.sass', 'public/css/desktop/pages/lecture')
@@ -94,9 +97,13 @@ mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages
     .sass('resources/sass/mobile/pages/user/find-id.sass', 'public/css/mobile/pages/user')
     .sass('resources/sass/mobile/pages/user/register.sass', 'public/css/mobile/pages/user');
 
+// mobile introduce
 mix.sass('resources/sass/mobile/pages/introduce/instructor.sass', 'public/css/mobile/pages/introduce')
     .sass('resources/sass/mobile/pages/introduce/about-us.sass', 'public/css/mobile/pages/introduce')
     .sass('resources/sass/mobile/pages/introduce/community.sass', 'public/css/mobile/pages/introduce');
+
+// mobile membership
+mix.sass('resources/sass/mobile/pages/membership/membership.sass', 'public/css/mobile/pages/membership');
 
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
@@ -118,5 +125,10 @@ mix.sass('resources/sass/mobile/pages/service/notice.sass', 'public/css/mobile/p
     .sass('resources/sass/mobile/pages/service/notice-detail.sass', 'public/css/mobile/pages/service')
     .sass('resources/sass/mobile/pages/service/faq.sass', 'public/css/mobile/pages/service')
     .sass('resources/sass/mobile/pages/service/inquire.sass', 'public/css/mobile/pages/service');
+
+mix.sass('resources/sass/mobile/pages/search/search.sass', 'public/css/mobile/pages/search');
+
+// errors
+mix.sass('resources/sass/errors/503.sass', 'public/css/errors');
 
 mix.version();

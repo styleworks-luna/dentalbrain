@@ -9,22 +9,46 @@
         <th>금액</th>
         <th>결제수단</th>
         <th>상태</th>
-        <th>등록시간</th>
+        <th>신청 시간</th>
+        <th>결제 시간</th>
     </tr>
     </thead>
     <tbody>
-        @foreach($payments as $payment)
+    @foreach($payments as $payment)
         <tr>
             <td>{{ $payment->id }}</td>
-            <td>{{ $payment->student->program->is_online ? '온라인' : '오프라인'}}</td>
-            <td>{{ $payment->student->program->title }}</td>
-            <td>{{ $payment->student->user->name }}</td>
-            <td>{{ $payment->student->user->email }}</td>
+            <td>
+                @if ($payment->is_online === 1)
+                    온라인
+                @elseif ($payment->is_online === 0)
+                    오프라인
+                @else
+                    유료회원
+                @endif
+            </td>
+            <td>
+                @isset ($payment->title)
+                    {{ $payment->title }}
+                @else
+                    @if ($payment->applied_days)
+                        {{ $payment->applied_days .'일권' }}
+                    @endif
+                @endisset
+            </td>
+            <td>{{ $payment->name }}</td>
+            <td>{{ $payment->email }}</td>
             <td>{{ number_format($payment->totalAmount) }}</td>
             <td>{{ changePaymentMethodName($payment->method) }}</td>
             <td>{{ changePaymentStatusName($payment->status) }}</td>
-            <td>{{ date('Y.m.d',strtotime($payment->requestedAt)) }}</td>
+            <td>{{ date('Y.m.d H:i:s',strtotime($payment->requestedAt)) }}</td>
+            <td>
+                @isset ($payment->approvedAt)
+                    {{ date('Y.m.d H:i:s',strtotime($payment->approvedAt)) }}
+                @else
+                    결제 대기중
+                @endisset
+            </td>
         </tr>
-        @endforeach
+    @endforeach
     </tbody>
 </table>

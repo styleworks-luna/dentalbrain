@@ -82,6 +82,7 @@
                             </ul>
                         </div>
                     </li>
+                    <!--
                     <li class="instructor-content">
                         <div class="instructor-head">
                             <img src="{{ asset('images/desktop/instructor/instructor_4.png') }}" alt="정미"
@@ -104,6 +105,7 @@
                             </ul>
                         </div>
                     </li>
+                    -->
                     <li class="instructor-content">
                         <div class="instructor-head">
                             <img src="{{ asset('images/desktop/instructor/instructor_5.png') }}" alt="온은주"

@@ -6,8 +6,6 @@
 @import '@sass/components/mobile/_selectbox.sass'
 @import '@sass/components/mobile/_input.sass'
 
-
-
 body
     +background(null, null, null, $background-color-file)
 
@@ -40,7 +38,7 @@ body
             .mypage-menu-select
                 +border(0)
                 +padding(right 4.6vw)
-                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center)
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
                 background-size: 3.611111111vw 1.94444444vw
                 font-size: 3.8888888vw
                 text-align-last: right
@@ -52,6 +50,7 @@ body
                     +background('/images/mobile/lecture/icon_arrow_up.svg')
 
     .mypage-content
+        +padding(bottom 2.777777vw)
 
         li
             +margin(top 2.7777777vw)
@@ -148,9 +147,6 @@ body
                 font-weight: bold
                 font-size: 4.444444vw
 
-                em
-                    color: $page-color
-
             .dedicate
                 +padding(top 1.38888888vw)
                 font-size: 3.05555555vw
@@ -162,13 +158,19 @@ body
                     color: $page-color
 
         .btn-zone
-            float: right
-
             a
                 +btn(null, 1px solid $border-color-base)
                 +size(33.3333333vw, 11.6666666vw)
                 font-weight: bold
+                float: right
                 line-height: 11.6666666vw
+
+            .btn-none-active
+                +border(0)
+                +background(null, null, null, $border-color-light)
+                color: $gray-900
+                float: left
+                cursor: auto
 
         .content-button-offline
             overflow: hidden
@@ -180,9 +182,87 @@ body
                     +margin(right 1.388888vw)
 
             .btn-wrap
-
                 a
                     +size(44.1666666vw)
 
                     &:first-child
                         +margin(right 2.777777vw)
+
+        .content-button-full
+            overflow: hidden
+
+            a
+                +size(44.16666666vw)
+                +margin(0)
+
+            .apply-btn
+                +size(33.3333333vw)
+                +btn(purple-fill)
+
+            .btn-none-active
+                +margin(left 2.777777vw)
+                +border(.2777777vw solid $border-color-base)
+                float: right
+
+        .content-text
+            +padding(top 14px bottom 14px)
+            text-align: center
+
+            p
+                font-size: 3.8888888vw
+                color: $gray-700
+
+.mypage-like
+    .content-information-wrap
+        +border(0.277777vw solid #e6e6e6, bottom)
+
+    .btn-zone
+        +margin(top 4.444444vw)
+
+        .btn-lecture
+            +size(91.1111111vw, 11.6666666vw)
+            +margin(0 auto 0 auto)
+            +btn(null, .27777777vw solid $border-color-base, 6.9444444vw)
+            display: block
+            font-weight: bold
+            line-height: 11.6666666vw
+
+.account-pop-up
+    +size(91.111111vw)
+    +padding(3.88888888vw 0 4.44444444vw 0)
+    +background(null, null, null, $white)
+    +border(.55555555vw solid $page-color)
+    +box-sizing(border-box)
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    z-index: 220
+
+    h3
+        font-weight: bold
+        font-size: 5vw
+        text-align: center
+
+    p
+        +padding(top 11.11111111vw)
+        text-align: center
+
+    .btn-wrap
+        +size(82.2222222vw)
+        +margin(11.111111vw auto 0 auto)
+
+        .btn-apply
+            +btn(purple-fill)
+            +size(39.72222222vw, 13.8888888vw)
+            font-weight: bold
+            font-size: 4.44444444vw
+            float: right
+
+        .btn-cancel
+            +btn()
+            +size(39.72222222vw, 13.8888888vw)
+            +background(null, null, null, $gray-700)
+            font-weight: bold
+            font-size: 4.44444444vw
+            color: $white

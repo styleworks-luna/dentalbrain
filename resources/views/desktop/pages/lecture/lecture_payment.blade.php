@@ -28,63 +28,59 @@
                     $('.dim').css('display', 'block');
                     $('.payment-layer-wrapper .layer').css('display', 'block');
                 } else {
-                    $('.btn-submit').click(function (e) {
-                        var paymentObj;
-                        var cardCompany = $('.ui-selectmenu-text').text();
+                    var paymentObj;
+                    var cardCompany = $('.ui-selectmenu-text').text();
 
-                        const amount = {{ $program->repeated() ? $program->repeat_price : $program->price }};
-                        const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                        const orderName = '{{$program->title . ', ' . $program->description}}';
-                        const customerName = '{{ auth()->user()->name }}';
-                        const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
-                        const customerEmail = '{{ auth()->user()->email }}';
-                        const customerMobilePhone = '{{ auth()->user()->phone }}';
+                    const amount = {{ $price }};
+                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                    const orderName = '{{$program->title . ', ' . $program->description}}';
+                    const customerName = '{{ auth()->user()->name }}';
+                    const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+                    const customerEmail = '{{ auth()->user()->email }}';
+                    const customerMobilePhone = '{{ auth()->user()->phone }}';
 
-                        e.preventDefault();
+                    if (paymentmethod === '가상계좌') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    } else if (paymentmethod === '카드') {
+                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-                        if (paymentmethod === '가상계좌') {
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
-                            };
-                        } else if (paymentmethod === '카드') {
-                            var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
 
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
+                            maxCardInstallmentPlan: maxCardInstallmentPlan,
+                            cardCompany: cardCompany,
+                        };
+                    } else if (paymentmethod === '계좌이체') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    }
 
-                                maxCardInstallmentPlan: maxCardInstallmentPlan,
-                                cardCompany: cardCompany,
-                            };
-                        } else if (paymentmethod === '계좌이체') {
-                            paymentObj = {
-                                amount: amount,
-                                orderId: orderId,
-                                orderName: orderName,
-                                customerName: customerName,
-                                successUrl: successUrl,
-                                failUrl: window.location.href,
-                                customerEmail: customerEmail,
-                                customerMobilePhone: customerMobilePhone,
-                            };
-                        }
-
-                        tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                            alert('취소');
-                        });
+                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                        alert('취소');
                     });
                 }
             });
@@ -99,7 +95,8 @@
                 $('.payment-layer-wrapper .layer').css('display', 'none');
             })
 
-        });
+        })
+        ;
 
         function getParameter(param) {
             var paramData = window.location.search.substr(1).split('&').filter(function (i) {
@@ -185,14 +182,12 @@
                         <tr>
                             <th>이메일</th>
                             <td>
-                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
                                 <em>{{ auth()->user()->email }}</em>
                             </td>
                         </tr>
                         <tr>
                             <th>휴대전화</th>
                             <td>
-                                {{--TODO: 강의 수강자(program_student) 생기는 대로 업데이트 해야함.--}}
                                 <em>{{ auth()->user()->phone }}</em>
                             </td>
                         </tr>
@@ -281,13 +276,16 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            @if($program->repeated())
-                                {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
-                                <td><em>재수강 할인가 :{{ number_format($program->repeat_price) }}원</em></td>
+                            {{--무료는 존재할 수 없음--}}
+                            @if ($program->repeatable())
+                                <td>
+                                    <em>{{ '재수강 할인가:' . number_format($price).'원' }}</em>
+                                </td>
                             @else
-                                <td><em>{{ number_format($program->price) }}원</em></td>
+                                <td>
+                                    <em>{{ number_format($price).'원' }}</em>
+                                </td>
                             @endif
-
                         </tr>
                         <tr>
                             <th>결제방식</th>
@@ -332,12 +330,12 @@
                                 </div>
                                 <div class="radio-wrap">
                                     <div style="overflow: hidden">
-                                    <input type="radio" id="separate" name="payment-method"
-                                           class="payment-method" value="계좌입금">
-                                    <label for="separate"
-                                           class="transfer-label">계좌입금</label>
+                                        <input type="radio" id="separate" name="payment-method"
+                                               class="payment-method" value="계좌입금">
+                                        <label for="separate"
+                                               class="transfer-label">계좌입금</label>
                                     </div>
-                                    <p class="separate-tip">신한은행 140-010-094358   예금주 : ㈜브레인스펙병원교육개발원</p>
+                                    <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                                 </div>
                                 {{--<div class="radio-wrap">
                                     <input type="radio" id="deposit" name="payment-method"

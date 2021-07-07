@@ -77,22 +77,22 @@
                         <table>
                             <tr>
                                 <th>이름</th>
-                                <td><em>{{ auth()->user()->name }}</em></td>
+                                <td><em>{{ $user->name }}</em></td>
                             </tr>
                             <tr>
                                 <th>아이디</th>
-                                <td><em>{{ auth()->user()->login_id }}</em></td>
+                                <td><em>{{ $user->login_id }}</em></td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
                                 <td>
-                                    <em>{{ auth()->user()->email }}</em>
+                                    <em>{{ $user->email }}</em>
                                 </td>
                             </tr>
                             <tr>
                                 <th>휴대전화</th>
                                 <td>
-                                    <em>{{ auth()->user()->phone }}</em>
+                                    <em>{{ $user->phone }}</em>
                                 </td>
                             </tr>
                         </table>
@@ -261,16 +261,15 @@
                         <table>
                             <tr>
                                 <th>결제금액</th>
-                                @if ($program->canRepeat())
+                                @if ($program->repeatable())
                                     <td>
-                                        <em>{{ $program->is_free ? '무료' : '재수강 할인가:' . number_format($program->repeat_price).'원' }}</em>
+                                        <em>{{ $price == 0 ? '무료' : '재수강 할인가:' . number_format($price).'원' }}</em>
                                     </td>
                                 @else
                                     <td>
-                                        <em>{{ $program->is_free ? '무료' : number_format($program->price).'원' }}</em>
+                                        <em>{{ $price == 0? '무료' : number_format($price).'원' }}</em>
                                     </td>
                                 @endif
-
                             </tr>
                         </table>
                     </section>
@@ -304,7 +303,7 @@
                                                    class="refund-consent"
                                                    data-parsley-required="true"
                                                    data-parsley-errors-container=".refund_error_wrap"
-                                                   data-parsley-required-message="※ 개인정보 수집 및 이용 동의해 주세요.">
+                                                   data-parsley-required-message="※ 취소/환불약관을 동의해 주세요.">
                                             <label for="refund-consent">(필수) 취소/환불약관 동의</label>
                                         </div>
                                         <p>신청기간 마감 전까지 환불신청 가능(결제수단, 사유, 환불시점에 따라 수수료 차감)</p>

@@ -3,8 +3,8 @@
         <h3>강의 신청취소 안내</h3>
         <p>강의 신청을 취소하시겠습니까?</p>
         <div class="btn-wrap">
-            <button id="refund_confirm" @click.prevent="destroy">확인</button>
-            <button @click="$emit('close')">취소</button>
+            <button id="refund_confirm" class="btn-apply" @click.prevent="destroy">확인</button>
+            <button class="btn-cancel" @click="$emit('close')">취소</button>
         </div>
     </div>
 </template>

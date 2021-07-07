@@ -32,7 +32,7 @@ class Reset extends Mailable
      */
     public function build()
     {
-        return $this->subject('[DBV2020] 비밀번호 재설정')
+        return $this->subject('[덴탈브레인] 비밀번호 재설정')
             ->view('emails.user.password_find')
             ->with([
                 'user' => $this->user,

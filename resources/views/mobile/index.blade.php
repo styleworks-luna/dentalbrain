@@ -16,11 +16,15 @@
 @endsection
 
 @section('title')
+    <div class="menu-btn-wrap">
+        <a href="" class="menu-btn"></a>
+    </div>
     <div class="logo-wrap">
         <a href="{{ url('/') }}" class="ir_pm header-logo">
             <img src="{{ asset('/images/mobile/global/logo.svg') }}" alt="덴탈브레인">
         </a>
     </div>
+    <a href="{{ url('/m-search') }}" class="btn-search"></a>
 @endsection
 
 @section('content')

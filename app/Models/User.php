@@ -2,19 +2,30 @@
 
 namespace App\Models;
 
+use App\Models\Membership\Membership;
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
+use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
     use SoftDeletes;
+
+    /*  ==============================================================================
+     *  Attributes
+     *  ==============================================================================
+     */
 
     /**
      * // 6글자 이상, 대문자 혹은 소문자 | 숫자 포함된 패스워드여야 함.
@@ -43,28 +54,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'allow_email' => 'boolean',
-        'is_paid' => 'boolean',
     ];
     protected $appends = [
-        'need_license', 'job_name_id', 'job_name', 'license_num',
+        'need_license', 'job_name_id', 'job_name', 'license_num', 'has_membership'
     ];
+
+    protected $dates = ['last_login_at'];
+
+    /*  ==============================================================================
+     *  Relations
+     *  ==============================================================================
+     */
 
     public function job()
     {
         return $this->belongsTo(UserJob::class, 'job_id', 'id');
     }
 
-    public function isAdmin()
+    public function likes()
     {
-        return $this->attributes['is_admin'] ? true : false;
+        return $this->hasMany(UserLike::class, 'user_id', 'id');
     }
 
-    public function likes(){
-        return $this->hasMany(UserLike::class, 'user_id','id');
-    }
-
-    public function comments(){
-        return $this->hasMany(Comment::class,'user_id','id');
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
     public function students()
@@ -82,12 +96,140 @@ class User extends Authenticatable
         return $this->hasMany(SurveyAnswer::class, 'user_id', 'id');
     }
 
+    public function likePrograms()
+    {
+        return $this->belongsToMany(Program::class, 'user_likes')
+            ->using(UserLike::class);
+    }
+
+    /*  ==============================================================================
+     *  Repositories
+     *  ==============================================================================
+     */
+
+    /*  ==============================================================================
+     *  Functions
+     *  ==============================================================================
+     */
+
+    public function isAdmin()
+    {
+        return (bool)$this->is_admin;
+    }
+
+    /**
+     * @return Carbon|null
+     */
+    public function getMembershipStartedAt()
+    {
+        $membership = $this->availableEarliestMembership();
+        if ($membership) {
+            return $membership->started_at;
+        }
+        return null;
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableEarliestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->last();
+    }
+
+    /**
+     * Order By 'expired_at' DESC
+     * @return Collection
+     */
+    public function availableMemberships()
+    {
+        return $this->availableMembershipsBuilder()->get();
+    }
+
+    /**
+     * @return Builder
+     */
+    public function availableMembershipsBuilder()
+    {
+        // Membership@scopeAvailable()
+        return $this->memberships()->available()->orderByDesc('expired_at');
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return int
+     */
+    public function getMembershipLeftDays(): int
+    {
+        $expiredAt = $this->getMembershipExpiredAt();
+        return $expiredAt ? $expiredAt->diff()->days : 0;
+    }
+
+    /**
+     * @return Carbon|null
+     */
+    public function getMembershipExpiredAt()
+    {
+        $membership = $this->availableLatestMembership();
+        if ($membership) {
+            return $membership->expired_at;
+        }
+        return null;
+    }
+
+    /**
+     * @return Membership|null
+     */
+    public function availableLatestMembership()
+    {
+        $memberships = $this->availableMemberships();
+        if (!$memberships) {
+            return null;
+        }
+        return $memberships->first();
+    }
+
     public function scopeFindIdWithNameAndEmail($query, $name, $email)
     {
         return $query->where([
             'name' => $name,
             'email' => $email
         ])->first();
+    }
+
+    public function getExpiredAtWhenPaid($days): Carbon
+    {
+        return $this->getStartedAtWhenPaid()->addDays($days);
+    }
+
+    public function getStartedAtWhenPaid()
+    {
+        if ($this->isPaid()) {
+            return $this->availableLatestMembership()->expired_at;
+        } else {
+            return now();
+        }
+    }
+
+    /*  ==============================================================================
+     *  Scopes
+     *  ==============================================================================
+     */
+
+    /**
+     * @return bool
+     */
+    public function isPaid(): bool
+    {
+        return $this->availableMembershipsBuilder()->exists();
     }
 
     public function scopeFindIdWithNameAndPhone($query, $name, $phone)
@@ -98,36 +240,80 @@ class User extends Authenticatable
         ])->first();
     }
 
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeUseMembership($query)
+    {
+        return $query->whereHas('memberships', function ($query) {
+            $query->inUse();
+        });
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeDontUseMembership($query)
+    {
+        return $query->whereDoesntHave('memberships', function ($query) {
+            $query->inUse();
+        });
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeHaveExpiredMembership($query)
+    {
+        return $query->whereDoesntHave('memberships', function ($query) {
+            $query->inUse();
+        })->whereHas('memberships');
+    }
+
+    /*  ==============================================================================
+     *  Append & Casting
+     *  ==============================================================================
+     */
+
     protected function getNeedLicenseAttribute()
     {
-        $jobNameId = $this->getJobNameIdAttribute();
-        if ($jobNameId !== null) {
-            return UserJobName::find($jobNameId)->need_license;
+        if (isset($this->job->jobName)) {
+            return $this->job->jobName->need_license;
         }
         return null;
     }
 
     protected function getJobNameIdAttribute()
     {
-        if (isset($this->attributes['job_id'])) {
-            return UserJob::find($this->attributes['job_id'])->job_name_id;
+        if ($this->job) {
+            return $this->job->job_name_id;
         }
         return null;
     }
 
     protected function getJobNameAttribute()
     {
-        if ($this->getJobNameIdAttribute()) {
-            return UserJobName::find($this->getJobNameIdAttribute())->name;
+        if (isset($this->job->jobName)) {
+            return $this->job->jobName->name;
         }
         return null;
     }
 
     protected function getLicenseNumAttribute()
     {
-        if (isset($this->attributes['job_id'])) {
-            return UserJob::find($this->attributes['job_id'])->license_num;
+        if (isset($this->job)) {
+            return $this->job->license_num;
         }
         return null;
     }
+
+    protected function getHasMembershipAttribute(): bool
+    {
+        return $this->isPaid();
+    }
+
+
 }

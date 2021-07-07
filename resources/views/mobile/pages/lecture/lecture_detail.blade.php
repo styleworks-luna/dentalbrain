@@ -43,44 +43,98 @@
                                     </li>
                                 @else
                                     <li>
-
                                         <p class="lecture-length">{{ carbonDate($program->place->started_at,'Y년 MMMM Do (ddd) HH:mm ') }}
                                             ~ {{ carbonDate($program->place->ended_at,'Y년 MMMM Do (ddd) HH:mm ') }}</p>
-
                                     </li>
                                     <li class="lecture-place-wrap">
-
                                         <p class="lecture-place">{{ $program->place->address}}  @isset($program->place->address_detail){{' , '.$program->place->address_detail }}@endisset</p>
                                         <a href="" class="btn-map">지도보기</a>
-
                                     </li>
                                 @endif
                                 <li>
-                                    <select name="ticket" id="ticket" class="lecture-select-box">
-                                        @foreach($program->tickets as $ticket)
-                                            @if ($program->canRepeat() || $program->repeated())
-                                                <option value="{{$ticket->id}}"
-                                                        data-price="{{ $ticket->repeat_price }}">{{ $ticket->name }}</option>
-                                            @else
-                                                <option value="{{$ticket->id}}"
-                                                        data-price="{{ $ticket->price }}">{{ $ticket->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+                                    <p class="lecture-description">{{ $program->description }}</p>
                                 </li>
                                 <li class="lecture-price-wrap">
-                                    <span>결제금액</span>
-                                    @foreach($program->tickets as $ticket)
-                                        @if ($program->canRepeat() || $program->repeated())
-                                            <p class="lecture-price"
-                                               data-price="{{ $ticket->repeat_price }}">{{ $ticket->is_free ? '무료' : '재수강 할인가: ' . number_format($ticket->repeat_price).'원'}}
+                                    @guest
+                                        {{-- 비로그인 사용자 --}}
+                                        <div class="price-individual">
+                                            <span>결제금액</span>
+                                            <p class="lecture-price" data-price="{{ $program->price }}">
+                                                {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
                                             </p>
+                                        </div>
+                                        <div class="price-individual">
+                                            <span>유료회원가</span>
+                                            <p class="lecture-price" data-price="{{ $program->membership_price }}">
+                                                {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
+                                            </p>
+                                        </div>
+                                    @else
+                                        {{-- 로그인 사용자 --}}
+                                        @if (auth()->user()->hasMembership)
+                                            {{-- 유료회원인 경우 --}}
+                                            <div class="price-individual">
+                                                <span class="exclude-price">결제금액</span>
+                                                <p class="lecture-price lecture-exclude-price"
+                                                   data-price="{{ $program->price }}">
+                                                    {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                                </p>
+                                            </div>
+                                            @if ($program->repeatable($student))
+                                                {{-- 유료회원 + 재수강 --}}
+                                                <div class="price-individual">
+                                                    <span>유료회원가</span>
+                                                    <p class="lecture-price"
+                                                       data-price="{{ $student->getPrice() }}">
+                                                        {{ $program->membership_is_free ? '무료' : '재수강 할인가 ' . number_format($student->getPrice()) }}
+                                                    </p>
+                                                </div>
+                                            @else
+                                                {{-- 유료회원 --}}
+                                                <div class="price-individual">
+                                                    <span>유료회원가</span>
+                                                    <p class="lecture-price"
+                                                       data-price="{{ $program->membership_price }}">
+                                                        {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
+                                                    </p>
+                                                </div>
+                                            @endif
                                         @else
-                                            <p class="lecture-price"
-                                               data-price="{{ $ticket->price }}">{{ $ticket->is_free ? '무료' : number_format($ticket->price).'원'}}
-                                            </p>
+                                            {{-- 유료회원이 아닐 경우 --}}
+                                            @if ($program->repeatable($student))
+                                                {{--재수강--}}
+                                                <div class="price-individual">
+                                                    <span class="exclude-price">결제금액</span>
+                                                    <p class="lecture-price lecture-exclude-price"
+                                                       data-price="{{ $program->repeat_price }}">
+                                                        {{ $program->is_free ? '무료' : '재수강 할인가 ' . number_format($program->repeat_price).'원'}}
+                                                    </p>
+                                                </div>
+                                                <div class="price-individual">
+                                                    <span>유료회원가</span>
+                                                    <p class="lecture-price" data-price="{{ $student->getPrice() }}">
+                                                        {{ $program->membership_is_free ? '무료' :'재수강 할인가 ' . number_format($student->getPrice()).'원' }}
+                                                    </p>
+                                                </div>
+                                            @else
+                                                {{--재수강 아닌 경우--}}
+                                                <div class="price-individual">
+                                                    <span>결제금액</span>
+                                                    <p class="lecture-price"
+                                                       data-price="{{ $program->price }}">
+                                                        {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                                    </p>
+                                                </div>
+                                                <div class="price-individual">
+                                                    <span>유료회원가</span>
+                                                    <p class="lecture-price"
+                                                       data-price="{{ $program->membership_price }}">
+                                                        {{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원' }}
+                                                    </p>
+                                                </div>
+                                            @endif
                                         @endif
-                                    @endforeach
+                                    @endguest
                                 </li>
                             </ul>
                         </div>
@@ -89,16 +143,19 @@
                             <a href=""
                                class="like {{ !$program->auth_like ?: 'active' }}">{{ $program->user_like_cnt }}
                             </a>
-                            @if($program->waitDeposit())
+                            @if($program->waitDeposit($student) || $program->waitConfirmAnotherPay($student))
                                 <div class="btn-wrap">
                                     <span class="btn-apply-complete">
-                                        입금 대기중
+                                        입금대기
                                     </span>
+                                    <a href="{{ route('account.lectures.edit',$program->id) }}" class="edit">
+                                        신청내역 수정
+                                    </a>
                                 </div>
-                            @elseif ($program->alreadyApplied())
+                            @elseif ($program->alreadyApplied($student))
                                 {{--이미 신청한 경우--}}
                                 <div class="btn-wrap">
-                                    @if($program->is_online && $program->alreadyPaid())
+                                    @if($program->is_online && $program->alreadyPaid($student))
                                         {{--온라인 && 결제 완료됨 (= 시청 가능 상태)--}}
                                         <a href="{{route('lectures.watch',[$program->id])}}" class="apply-btn">
                                             강의 시청하기
@@ -116,7 +173,7 @@
                             @else
                                 @if($program->is_online)
                                     {{--온라인일 경우--}}
-                                    @if ($program->canRepeat())
+                                    @if ($program->canRepeat($student))
                                         {{--재수강 가능할 경우 (Paid, expired_at > now)--}}
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
@@ -145,6 +202,13 @@
                                         <div class="btn-wrap">
                                             <span class="btn-apply-complete">
                                                 신청기간이 지난 강의 입니다
+                                            </span>
+                                        </div>
+                                    @elseif($program->place->receipt_started_at > now())
+                                        {{--오프라인 강의 신청 마감--}}
+                                        <div class="btn-wrap">
+                                            <span class="btn-apply-complete">
+                                                신청기간이 아닌 강의 입니다
                                             </span>
                                         </div>
                                     @elseif ($program->exceedCapacity())

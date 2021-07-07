@@ -1,8 +1,20 @@
 <template>
     <layout title="결제정보">
+        <template v-slot:button>
+            <a :href="`/api/admin/payment/export?keyword=${keyword}&start_date=${startDateForm}&end_date=${endDateForm}&status=${orderStatus}&category=${order}`"
+               class="btn btn-info" download>엑셀 다운로드</a>
+        </template>
         <template v-slot:search>
+            <div class="float-left">
+                <p style="font-size: 18px;">총 결제건수: {{ count }}건, 총 결제금액: {{ sum }}원 </p>
+            </div>
             <div class="float-right">
                 <form @submit.prevent="getData">
+                    <label class="col-form-label d-block float-left mr-1">시작일</label>
+                    <date-picker class="mr-3" @setTime="handleSetStartDate"></date-picker>
+                    <p class="float-left mr-2 mt-2">~</p>
+                    <label class="col-form-label d-block float-left mr-1">종료일</label>
+                    <date-picker class="mr-3" @setTime="handleSetEndDate"></date-picker>
                     <select-box class="form-control"
                                 text="구분 선택"
                                 :value="order"
@@ -30,16 +42,31 @@
                         :data="payments.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
+                    <!-- 유료회원 결제 시 -->
+                    <template v-if="slotProps.row.membership_id">
+                        <td>
+                            유료회원
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td>
+                            {{ slotProps.row.is_online ? '온라인' : '오프라인' }}
+                        </td>
+                    </template>
+                    <template v-if="slotProps.row.membership_id">
+                        <td>
+                            {{slotProps.row.applied_days}}일 유료회원 결제
+                        </td>
+                    </template>
+                    <template v-else>
+                        <td>
+                            <a :href="Helper.urlFormat(`/lectures/${slotProps.row.program_id}`)" target="_blank">
+                                {{ slotProps.row.title }}
+                            </a>
+                        </td>
+                    </template>
                     <td>
-                        {{ slotProps.row.is_online ? '온라인' : '오프라인' }}
-                    </td>
-                    <td>
-                        <a :href="Helper.urlFormat(`/lectures/${slotProps.row.program_id}`)" target="_blank">
-                            {{ slotProps.row.title }}
-                        </a>
-                    </td>
-                    <td>
-                        <router-link :to="`/admin/user/${slotProps.row.user_id}/1`">
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">
                             {{ slotProps.row.name }}
                         </router-link>
                         <br>
@@ -55,64 +82,111 @@
                            v-if="slotProps.row.receiptUrl">(영수증)</a>
                     </td>
                     <td>{{ slotProps.row.approvedAt || '결제 대기중' }}</td>
-                    <td>
-                        <template v-if="slotProps.row.pay_status === 0">
-                            결제 전
-                        </template>
-                        <template v-else-if="slotProps.row.pay_status === 1">
-                            입금 대기
-                        </template>
-                        <template v-else-if="slotProps.row.pay_status === 3">
-                            취소 완료
-                        </template>
-                        <template v-else-if="slotProps.row.pay_status === 4">
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
-                                결제 취소
-                            </a>
-                        </template>
-                        <template v-else-if="slotProps.row.pay_status === 2">
-                            <a href="#" class="btn btn-danger text-white"
-                               @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getProgramId(slotProps.row.program_id)]">
-                                결제 취소
-                            </a>
-                        </template>
-                        <!-- 별도 결제 입금 전 -->
-                        <template v-else-if="slotProps.row.pay_status === 5">
-                            <a href="#" class="btn btn-success"
-                               @click.prevent="[handleSetIsOnline(slotProps.row.is_online),handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)]">결제
-                                확인</a>
-                            <template v-if="slotProps.row.is_online == true">
+                    <!-- 유료회원 결제 -->
+                    <template v-if="slotProps.row.membership_pay_status">
+                        <td>
+                            <template v-if="slotProps.row.membership_pay_status == 0">
+                                결제 전
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 2">
                                 <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
-                                    신청 취소
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.membership_id,true)]">
+                                    결제 취소
                                 </a>
                             </template>
-                            <template v-else>
+                            <template v-else-if="slotProps.row.membership_pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="slotProps.row.membership_pay_status === 4">
                                 <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
-                                    신청 취소
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.membership_id,true)]">
+                                    결제 취소
                                 </a>
                             </template>
-                        </template>
-                        <!-- 별도 결제 입금 후 -->
-                        <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary"
-                               @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제 완료</a>
-                            <template v-if="slotProps.row.is_online == true">
+                            <!-- 별도결제 확인 -->
+                            <template v-else-if="slotProps.row.membership_pay_status === 5">
+                                <a href="#" class="btn btn-success"
+                                   @click.prevent="confirmMembershipPayment(slotProps.row.membership_id)">
+                                    결제 확인</a>
                                 <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
-                                    신청 취소
+                                   @click.prevent="[getCancelId(slotProps.row.membership_id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
                                 </a>
                             </template>
-                            <template v-else>
+                            <template v-else-if="slotProps.row.membership_pay_status === 6">
                                 <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
-                                    신청 취소
+                                   @click.prevent="[getCancelId(slotProps.row.membership_id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
                                 </a>
                             </template>
-                        </template>
-                    </td>
+                        </td>
+                    </template>
+                    <!-- 강의 결제 -->
+                    <template v-else>
+                        <td>
+                            <template v-if="slotProps.row.program_pay_status === 0">
+                                결제 전
+                            </template>
+                            <template v-else-if="slotProps.row.program_pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="slotProps.row.program_pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="slotProps.row.program_pay_status === 4">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.program_id,false)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="slotProps.row.program_pay_status === 2">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.student_id, slotProps.row.method), getCancelId(slotProps.row.program_id,false)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <!-- 별도 결제 입금 전 -->
+                            <template v-else-if="slotProps.row.program_pay_status === 5">
+                                <a href="#" class="btn btn-success"
+                                   @click.prevent="[handleSetIsOnline(slotProps.row.is_online),handleSetConfirmLayer( slotProps.row.student_id,slotProps.row.program_id)]">결제
+                                    확인</a>
+                                <template v-if="slotProps.row.is_online == true">
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                        신청 취소
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
+                                        신청 취소
+                                    </a>
+                                </template>
+                            </template>
+                            <!-- 별도 결제 입금 후 -->
+                            <template v-else-if="slotProps.row.program_pay_status === 6">
+                                <a href="#" class="btn btn-secondary"
+                                   @click.prevent="revertConfirm( slotProps.row.student_id, slotProps.row.program_id)">결제
+                                    완료</a>
+                                <template v-if="slotProps.row.is_online == true">
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="cancelLecture(slotProps.row.student_id, slotProps.row.program_id)">
+                                        신청 취소
+                                    </a>
+                                </template>
+                                <template v-else>
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="cancelOfflinePayment(slotProps.row.student_id, slotProps.row.program_id)">
+                                        신청 취소
+                                    </a>
+                                </template>
+                            </template>
+                        </td>
+                    </template>
+
                 </template>
             </table-grid>
 
@@ -125,10 +199,15 @@
                 </nav>
             </div>
 
-            <payment-cancel-layer v-if="cancelLayer"
+            <payment-cancel-layer v-if="cancelLayer && !is_membership"
                                   :paymentMethod="paymentMethod"
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelPayment"></payment-cancel-layer>
+
+            <payment-cancel-layer v-if="cancelLayer && is_membership"
+                                  :paymentMethod="paymentMethod"
+                                  @setCancelLayer="handleSetCancelLayer"
+                                  @cancelPayment="cancelMembershipPayment"></payment-cancel-layer>
 
             <payment-confirm-layer v-if="confirmLayer"
                                    :is_online="is_onlineTo"
@@ -142,6 +221,7 @@
 // component
 import Table from '@/components/admin/grid/Table.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+import DatePicker from '@/components/common/DatePicker.vue'
 
 //api
 import {getData} from '@/api/admin/payment/Payment.js'
@@ -159,6 +239,7 @@ export default {
     components: {
         'table-grid': Table,
         SelectBox,
+        DatePicker,
     },
     data() {
         return {
@@ -170,6 +251,11 @@ export default {
             order: '',
             keyword: '',
             orderStatus: '',
+            startDate: '',
+            endDate: '',
+            count: 0,
+            sum: '',
+            is_membership: false,
         }
     },
     mounted() {
@@ -228,13 +314,17 @@ export default {
         orderOptions() {
             return [
                 {
-                    id: '1',
+                    id: '오프라인',
+                    name: '오프라인'
+                },
+                {
+                    id: '온라인',
                     name: '온라인'
                 },
                 {
-                    id: '0',
-                    name: '오프라인'
-                },
+                    id: '유료회원',
+                    name: '유료회원'
+                }
             ]
         },
         orderStatusOptions() {
@@ -248,6 +338,12 @@ export default {
                     name: '결제취소'
                 },
             ]
+        },
+        startDateForm() {
+            return this.startDate ? `${this.Helper.dateFormatYDM(this.startDate)} 00:00:00` : '';
+        },
+        endDateForm() {
+            return this.endDate ? `${this.Helper.dateFormatYDM(this.endDate)} 23:59:59` : '';
         }
     },
     methods: {
@@ -259,13 +355,19 @@ export default {
 
             let params = {
                 page: page,
-                is_online: this.order,
+                category: this.order,
                 keyword: this.keyword,
+                start_date: this.startDateForm,
+                end_date: this.endDateForm,
                 status: this.orderStatus,
             };
 
             getData(params).then(res => {
                 this.payments = res.data.payments;
+
+                this.count = res.data.count;
+                this.sum = res.data.sum;
+
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/payment/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
@@ -306,7 +408,8 @@ export default {
                     return '결제 완료';
             }
         },
-        getProgramId(data) {
+        getCancelId(data, boolean) {
+            this.is_membership = boolean
             this.id = data;
         },
         handleSetOrder(order) {
@@ -314,6 +417,12 @@ export default {
         },
         handleSetStatusOrder(order) {
             this.orderStatus = order;
+        },
+        handleSetStartDate(date) {
+            this.startDate = date;
+        },
+        handleSetEndDate(date) {
+            this.endDate = date;
         },
     }
 }

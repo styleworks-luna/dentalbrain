@@ -2,6 +2,7 @@
 
 namespace App\Models\Payments;
 
+use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsResponse;
@@ -14,6 +15,12 @@ use Illuminate\Support\Str;
 class Payment extends Model
 {
     use SoftDeletes;
+
+    static $ANOTHER_DONE = 'ANOTHER_DONE';
+    static $ANOTHER_REJECTED = 'ANOTHER_REJECTED';
+    static $ANOTHER_PROGRESS = 'ANOTHER_PROGRESS';
+    static $CANCELED = 'CANCELED';
+    static $DONE = 'DONE';
 
     protected $table = 'payments';
     protected $casts = [
@@ -112,25 +119,43 @@ class Payment extends Model
      */
     public static function createWhenAnotherPayProcess(Program $program, ProgramStudent $student)
     {
+        return self::CreateAnotherPayment($student->getPrice());
+    }
+
+    protected static function CreateAnotherPayment($price)
+    {
         $paymentKey = 'another_' . Str::random('5');
         $orderId = 'another_' . Str::random('5');
+
         return Payment::query()->create([
             'paymentKey' => $paymentKey,
             'orderId' => $orderId,
-            'totalAmount' => $student->getPrice(),
+            'totalAmount' => $price,
             'method' => '계좌입금',
-            'status' => 'ANOTHER_PROGRESS',
+            'status' => self::$ANOTHER_PROGRESS,
             'useDiscount' => 0,
             'full_response' => json_encode([
                 'mId' => 'si_dentalbrain',
                 'paymentKey' => $paymentKey,
                 'orderId' => $orderId,
                 'method' => '계좌입금',
-                'totalAmount' => $student->getPrice(),
+                'totalAmount' => $price,
                 'cancels' => null,
             ], JSON_UNESCAPED_UNICODE),
             'requestedAt' => now(),
         ]);
+    }
+
+    /**
+     *  계좌입금 Payment 생성
+     *
+     * @param Program $program
+     * @param ProgramStudent $student
+     * @return Builder|Model
+     */
+    public static function createWhenMembershipAnotherPay($days)
+    {
+        return self::CreateAnotherPayment(Membership::$PriceMap[$days]);
     }
 
     /**
@@ -153,14 +178,14 @@ class Payment extends Model
     {
         return $this->update([
             'approvedAt' => now(),
-            'status' => 'ANOTHER_DONE',
+            'status' => self::$ANOTHER_DONE,
         ]);
     }
 
     public function cancelAnotherPay()
     {
         return $this->update([
-            'status' => 'ANOTHER_REJECTED',
+            'status' => self::$ANOTHER_REJECTED,
             'full_response' => json_encode(
                 array_merge(
                     json_decode($this->attributes['full_response'], true) ?: [],
@@ -176,10 +201,11 @@ class Payment extends Model
         ]);
     }
 
-    public function revert() {
+    public function revert()
+    {
         return $this->update([
             'approvedAt' => null,
-            'status' => 'ANOTHER_PROGRESS'
+            'status' => self::$ANOTHER_PROGRESS
         ]);
     }
 
@@ -201,5 +227,19 @@ class Payment extends Model
     public function isTransfer()
     {
         return $this->attributes['method'] == '계좌이체';
+    }
+
+    public function membership()
+    {
+        return $this->hasOne(Membership::class, 'payment_id', 'id');
+    }
+
+    /**
+     * @param Builder $query
+     * @return mixed
+     */
+    public function scopePaid($query)
+    {
+        return $query->whereIn('status', [self::$ANOTHER_DONE, self::$DONE]);
     }
 }

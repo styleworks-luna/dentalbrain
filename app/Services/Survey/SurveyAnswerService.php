@@ -12,7 +12,6 @@ use App\Models\User;
 use App\Services\File\SurveyFile;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SurveyAnswerService
@@ -219,26 +218,20 @@ class SurveyAnswerService
      * @param Authenticatable|User $user
      * @return bool
      */
-    public function deleteSurveyAnswersOfUser(Program $program, $user)
+    public static function deleteSurveyAnswersOfUser(Program $program, $user): bool
     {
         try {
-
-            DB::beginTransaction();
             $surveyFiles = $program->answers()->where('user_id', '=', $user->id)
-                ->whereNotNull('file_id')
-                ->get()->mapInto(SurveyFile::class);
+                ->whereNotNull('file_id')->get()->mapInto(SurveyFile::class);
 
-            $surveyFiles->each(/**
-             * @param SurveyFile $surveyFile
-             */ function ($surveyFile) {
+            $surveyFiles->each(/* @param SurveyFile $surveyFile */ function ($surveyFile) {
                 $surveyFile->deleteFile();
             });
+
             $program->answers()->where('user_id', '=', $user->id)->delete();
 
-            DB::commit();
             return true;
         } catch (\Exception $exception) {
-            DB::rollBack();
             Log::error('DELETE SURVEY ANSWERS ERROR', [$program, $user, $exception]);
             return false;
         }

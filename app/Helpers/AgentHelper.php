@@ -6,8 +6,8 @@ if (!function_exists('viewPrefix')) {
      * ! 컨트롤러 내부에서 사용해야 함.
      * @return string mobile. || desktop.
      */
-    function viewPrefix()
+    function viewPrefix(): string
     {
-        return session()->get('agent') . ".";
+        return session()->get('agent', "desktop") . ".";
     }
 }

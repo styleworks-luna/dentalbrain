@@ -110,6 +110,7 @@ class RegisterController extends Controller
                     $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
                 })],
             'email-consent' => ['nullable'],
+            'sms-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
             'verification_number' => ['required', 'string', 'size:6',
@@ -144,6 +145,7 @@ class RegisterController extends Controller
                     $query->whereNull('deleted_at')->orWhere('deleted_at', '>', now()->subDays(15));
                 })],
             'email-consent' => ['nullable'],
+            'sms-consent' => ['nullable'],
             'privacy-consent' => ['accepted'],
             'service-consent' => ['accepted'],
             'verification_number' => ['required', 'string', 'size:6',],
@@ -178,6 +180,7 @@ class RegisterController extends Controller
             'api_token' => Str::random(80),
             'job_id' => $userJob->id,
             'allow_email' => isset($data['email-consent']),
+            'allow_sms' => isset($data['sms-consent']),
         ]);
     }
 

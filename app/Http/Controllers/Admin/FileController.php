@@ -152,5 +152,37 @@ class FileController extends Controller
             'file' => $file,
         ]);
     }
+
+    public function uploadNoticeImage(Request $request)
+    {
+        Validator::make($request->all(), [
+            'image' => ['required', 'image']
+        ])->validate();
+
+        $uploadedFile = $request->file('image');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/notice/images');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
+
+    public function uploadNoticeFile(Request $request)
+    {
+        Validator::make($request->all(), [
+            'file' => ['required', 'file']
+        ])->validate();
+
+        $uploadedFile = $request->file('file');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/notice/files');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
 }
 

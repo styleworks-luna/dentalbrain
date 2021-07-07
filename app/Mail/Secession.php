@@ -33,7 +33,7 @@ class Secession extends Mailable
      */
     public function build()
     {
-        return $this->subject('[DBV2020] 탈퇴 완료')
+        return $this->subject('[덴탈브레인] 탈퇴 완료')
             ->view('emails.user.secession_complete')
             ->with([
                 'user' => $this->user,

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers\Admin\Program;
 
 use App\Models\Program\Program;
-use App\Models\Program\ProgramStudent;
-use App\Services\Program\ProgramTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class OfflineStudentController extends OfflineProgramController
 {
@@ -23,11 +20,14 @@ class OfflineStudentController extends OfflineProgramController
      * @return JsonResponse
      */
     public function students(Request $request, Program $program)
-
     {
+        $order = $request->get('order', 'latest');
+        $keyword = $request->get('keyword', null);
+
         return response()->json([
             'program_name' => $program->title,
-            'students' => $this->offlineConcrete->getStudents($program, $request->order)->paginate(10),
+            'students' => $this->offlineConcrete
+                ->searchStudents($program, $order, $keyword)->paginate(10),
         ]);
     }
 }

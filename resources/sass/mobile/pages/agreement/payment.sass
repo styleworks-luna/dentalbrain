@@ -1,0 +1,48 @@
+.payment-layer-wrapper
+    .layer
+        +size(91.111111vw)
+        +background(null, null, null, $white)
+        +border(.55555555vw solid $page-color)
+        +box-sizing(border-box)
+        display: none
+        position: fixed
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+        z-index: 220
+
+        h3
+            +margin(top 3.888888vw)
+            font-weight: bold
+            font-size: 5vw
+            text-align: center
+
+        .layer-content-wrap
+            text-align: center
+
+
+        .account
+            +margin(top 11.111111vw)
+            font-size: 3.8888888vw
+            color: $page-color
+            line-height: 1.45
+
+        p
+            +margin(top 8.3333333vw)
+            font-size: 3.8888888vw
+            line-height: 1.45
+
+        em
+            font-weight: bold
+
+        .btn-wrap
+            +size(82.22222222vw)
+            +margin(8.3333333vw auto 4.4444444vw auto)
+            +padding(0)
+
+            .btn-confirm
+                +size(39.7222222vw)
+
+            .btn-cancel
+                +size(39.7222222vw)
+                background-color: $gray-700

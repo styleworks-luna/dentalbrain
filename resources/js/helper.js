@@ -70,7 +70,8 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        // ios 대응
+        date = new Date(date.replace(/-/g, "/"));
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();

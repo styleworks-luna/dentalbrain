@@ -10,6 +10,7 @@
 @import '@sass/components/mobile/_button.sass'
 @import '@sass/components/mobile/_selectbox.sass'
 @import '@sass/mobile/pages/agreement/agreement.sass'
+@import '@sass/mobile/pages/agreement/payment.sass'
 
 body
     +background(null, null, null, $background-color-file)
@@ -317,6 +318,9 @@ body
                         color: $page-color
                         text-decoration: underline
 
+            &:last-child
+                +padding(bottom 0)
+
     .payment-information
         .payment-method-wrap
             +margin(top 5.555555vw)
@@ -334,16 +338,17 @@ body
                     float: left
 
                 label
-                    +size(25vw)
-                    +padding(4.1666666vw 8.333333vw)
+                    +size(27.777777vw)
+                    +padding(4.1666666vw 1.3888888vw)
                     +border-radius(6.3888888vw)
+                    box-sizing: border-box
                     font-size: 3.3333333vw
                     text-align: center
                     color: $gray-900
 
                 label.active
                     +border(.55555555vw solid $page-color)
-                    +padding(3.61111111vw 7.7777777vw)
+                    +padding(3.61111111vw .833333333vw)
                     +background(null, null, null, $white)
                     font-weight: bold
                     color: $page-color
@@ -351,18 +356,26 @@ body
         .payment-method
             display: none
 
-        .select-wrap
+        .payment-sub-wrap
             +margin(top 3.3333333vw)
             overflow: hidden
 
-        .ui-selectmenu-button
-            display: none
+            p
+                line-height: 1.5
+
+            .separate-tip
+                display: none
+                font-size: 3.05555555vw
+                color: $gray-600
 
 // 결제 완료 페이지
 .lecture-result
     .payment-information
-        .payment-result
+        .payment-result-wrap
             overflow: hidden
+
+            .payment-result
+                overflow: hidden
 
             span
                 +padding(top 5.5555555vw)
@@ -377,7 +390,7 @@ body
                     font-weight: bold
                     color: $page-color
 
-        .tip
+        .tip, .account
             +padding(top 2.777777vw)
             font-size: 3.0555555vw
             color: $gray-900

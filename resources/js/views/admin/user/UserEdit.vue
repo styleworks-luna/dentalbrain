@@ -17,7 +17,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="이름을 입력해 주세요."
-                              v-model="name" />
+                           v-model="name"/>
                 </template>
             </single-group>
 
@@ -27,7 +27,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="이메일을 입력해 주세요."
-                              v-model="email" />
+                           v-model="email"/>
                 </template>
             </single-group>
 
@@ -37,7 +37,7 @@
                           :isRequired="true" :size="2.5">
                 <template v-slot:content>
                     <input class="form-control" placeholder="전화번호를 입력해 주세요."
-                              v-model="phone" />
+                           v-model="phone"/>
                 </template>
             </single-group>
 
@@ -62,12 +62,12 @@
                                     :value="job_name_id"
                                     :options="jobOptions"
                                     @setValue="handleSetJobyId"
-                                    ></select-box>
+                        ></select-box>
                     </div>
 
                     <div class="input-wrap float-left">
                         <input type="text" class="form-control ml-3" placeholder="면허번호를 입력해 주세요."
-                                v-model="license_num">
+                               v-model="license_num">
                     </div>
 
                 </template>
@@ -83,24 +83,54 @@
                 </template>
             </single-group>
 
-            <!-- 유료회원 여부 -->
+            <!-- SMS 수신 -->
+            <single-group name="SMS 수신"
+                          :isRow="true"
+                          :size="2.5">
+                <template v-slot:content>
+                    <input type="checkbox" name="sms-check" id="sms-check" v-model="allow_sms">
+                    <label for="sms-check">수신동의 선택</label>
+                </template>
+            </single-group>
+
+            <!-- 유료회원 여부
             <single-group name="유료회원 여부"
                           :isRow="true"
                           :size="2.5">
                 <template v-slot:content>
-                    <input type="checkbox" name="paid-check" id="paid-check" v-model="is_paid">
-                    <label for="paid-check">유료회원 선택</label>
+                    <div class="input-wrap">
+                        <input type="checkbox" name="paid-check" id="paid-check" v-model="has_membership" @change="handleCheckbox">
+                        <label for="paid-check">유료회원 선택</label>
+                    </div>
+                    <div class="date-wrap">
+                        <date-picker class="mr-3"
+                                     :time="membership_started_date"
+                                     @setTime="handleSetStartDate"></date-picker>
+                        <time-picker class="mr-3"
+                                     :time="membership_started_time"
+                                     @setTime="handleSetStartTime"></time-picker>
+
+                        <p class="float-left mr-3 mt-2">부터</p>
+
+                        <date-picker class="mr-3"
+                                     :time="membership_ended_date"
+                                     @setTime="handleSetEndDate"></date-picker>
+                        <time-picker :time="membership_ended_time"
+                                     @setTime="handleSetEndTime"></time-picker>
+                    </div>
                 </template>
-            </single-group>
+            </single-group>-->
 
         </template>
 
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info"
-                        @click="update">저장</button>
-                <router-link :to="`/admin/user/${page}`"
-                             class="btn btn-dark">취소</router-link>
+                        @click="update">저장
+                </button>
+                <a @click="$router.go(-1)"
+                   class="btn btn-dark text-white">취소
+                </a>
             </div>
         </template>
     </layout>
@@ -111,7 +141,7 @@
 import User from '@/api/admin/user/User.js';
 
 //Mixin
-import { UserMixin } from '@/mixins/admin/user/User.js'
+import {UserMixin} from '@/mixins/admin/user/User.js'
 
 export default {
     name: 'AdminUserEdit',
@@ -123,6 +153,7 @@ export default {
             id: '',
             data: {},
             page: this.$route.params.page,
+            // disabled: true,
         }
     },
     created() {
@@ -134,7 +165,7 @@ export default {
     methods: {
         getEditData() {
             User.getEditData(this.id).then(res => {
-                const result = res.data.user;
+                const result = res.data[0].user;
 
                 this.login_id = result.login_id;
                 this.name = result.name;
@@ -143,24 +174,26 @@ export default {
                 this.job_name_id = result.job_name_id;
                 this.license_num = result.license_num;
                 this.allow_email = result.allow_email;
+                this.allow_sms = result.allow_sms;
                 this.is_paid = result.is_paid;
             });
         },
         update() {
             let data = {
-                login_id : this.login_id,
-                name : this.name,
-                email : this.email,
-                phone : this.phone,
-                job_name_id : this.job_name_id,
-                license_num : this.license_num,
-                allow_email : this.allow_email,
-                is_paid : this.is_paid,
+                login_id: this.login_id,
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+                job_name_id: this.job_name_id,
+                license_num: this.license_num,
+                allow_email: this.allow_email,
+                allow_sms: this.allow_sms,
+                is_paid: this.is_paid,
             };
 
             User.update(this.id, data).then(res => {
                 alert(res.data.msg);
-                this.$router.push(`/admin/user/${this.page}`);
+                window.history.back();
             })
         },
         findPassword(e) {
@@ -170,7 +203,16 @@ export default {
                 e.target.disabled = false;
                 alert(res.data.message);
             })
-        }
+        },
+        // handleCheckbox() {
+        //     var check = document.getElementById('paid-check').checked;
+        //
+        //     if(!check) {
+        //         this.disabled = true;
+        //     } else {
+        //         this.disabled = false;
+        //     }
+        // },
     }
 }
 </script>

@@ -73,37 +73,57 @@
                               :size="9">
                     <template v-slot:content>
 
-                        <div class="radio-wrap">
-                            <input type="radio" id="pay" :value="false"
-                                   :disabled="haveStudents == true"
-                                   v-model="is_free">
-                            <label for="pay" class="mr-3">유료</label>
-                            <input type="text"
-                                   class="form-control"
-                                   placeholder="신청 금액 입력"
-                                   :disabled="is_free == true || haveStudents == true"
-                                   v-model="price">
+                        <div class="price overflow-hidden">
+                            <label class="col-form-label d-block float-left mr-3">일반회원가</label>
+                            <div class="radio-wrap">
+                                <input type="radio" id="pay" :value="false"
+                                       :disabled="haveStudents"
+                                       v-model="is_free">
+                                <label for="pay">유료</label>
+                                <input type="text"
+                                       class="form-control ml-3"
+                                       placeholder="신청 금액 입력"
+                                       :disabled="is_free == true || haveStudents"
+                                       v-model="price">
+                            </div>
+                            <div class="radio-wrap mt-1">
+                                <input type="radio" id="free" :value="true"
+                                       :disabled="haveStudents"
+                                       v-model="is_free">
+                                <label for="free">무료</label>
+                            </div>
                         </div>
-                        <div class="radio-wrap free">
-                            <input type="radio" id="free" :value="true"
-                                   :disabled="haveStudents == true"
-                                   v-model="is_free">
-                            <label for="free">무료</label>
+                        <div class="membership-price overflow-hidden mt-3">
+                            <label class="col-form-label d-block float-left mr-3">유료회원가</label>
+                            <div class="radio-wrap">
+                                <input type="radio" id="membership_pay" :value="false"
+                                       :disabled="haveStudents"
+                                       v-model="membership_is_free">
+                                <label for="membership_pay">유료</label>
+                                <input type="text"
+                                       class="form-control ml-3"
+                                       placeholder="신청 금액 입력"
+                                       :disabled="membership_is_free == true || haveStudents"
+                                       v-model="membership_price">
+                            </div>
+                            <div class="radio-wrap mt-1">
+                                <input type="radio" id="membership_free" :value="true"
+                                       :disabled="haveStudents"
+                                       v-model="membership_is_free">
+                                <label for="membership_free">무료</label>
+                            </div>
                         </div>
 
                     </template>
                 </single-group>
             </div>
 
-            <div :class="haveStudents ? 'bg-light text-dark':''">
                 <single-group name="추가 정보"
                               :size="12">
                     <template v-slot:content>
-                        <additional-information :data="surveys"
-                                                :haveStudentValue="haveStudents"></additional-information>
+                        <additional-information :data="surveys"></additional-information>
                     </template>
                 </single-group>
-            </div>
 
             <single-group name="강의 설정"
                           :isRow="true"
@@ -224,9 +244,13 @@ export default {
 
                 this.is_open = program.is_open;
 
-                this.lecture_info = program.description;
-                this.is_free = program.is_free;
+                this.lecture_info = program.description
+
+                this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
+
+                this.membership_is_free = program.membership_is_free == 1 ? true : false;
+                this.membership_price = program.membership_price;
 
                 this.surveys = res.data.surveys;
 
@@ -259,6 +283,9 @@ export default {
                 price: this.price,
                 is_free: this.is_free,
                 is_open: this.is_open,
+
+                membership_is_free: this.membership_is_free,
+                membership_price: this.membership_price,
 
                 content: this.content,
 

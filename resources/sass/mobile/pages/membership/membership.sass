@@ -1,0 +1,271 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_button.sass'
+@import '@sass/components/mobile/_selectbox.sass'
+@import '@sass/components/mobile/_checkbox.sass'
+@import '@sass/components/mobile/_radio.sass'
+@import '@sass/mobile/pages/agreement/agreement.sass'
+@import '@sass/mobile/pages/agreement/payment.sass'
+
+footer
+    +background(null, null, null, $white-light)
+    position: static
+
+.membership
+    .title-wrap
+        +size(100%, 41.666666vw )
+        +background('/images/mobile/introduce/membership_top_image.png?20210701', no-repeat, center center)
+        background-size: 100%, 41.666666vw
+
+    .membership-information-wrap
+        +margin(top 40px)
+
+        .membership-information-title
+            text-align: center
+
+            h2
+                font-family: $font-family-gmarket
+                font-size: 8.333333333vw
+                line-height: 1.2
+                font-weight: bold
+
+                em
+                    color: $page-color
+
+            p
+                +size(76.6666666vw)
+                +margin(2.77777vw auto 0 auto)
+                font-size: 4.4444444vw
+                line-height: 1.4
+
+
+        .membership-information-content-wrap
+            +size(83.33333333vw)
+            +margin(11.1111111vw auto 0 auto)
+            +padding(bottom 11.1111111vw)
+            +background(null, null, null, $background-color-price)
+
+            .membership-information-content-item
+                +padding(top 11.1111111vw)
+
+                img
+                    +size(30.555555vw, 30.5555555vw)
+                    +margin(0 auto)
+
+                p
+                    +padding(top 2.7777777vw)
+                    text-align: center
+                    font-size: 4.4444444vw
+                    line-height: 1.25
+
+    .membership-price-wrap
+        +margin(top 13.888888vw)
+        +padding(bottom 13.888888vw)
+        +background(null, null, null, $background-color-menu)
+
+        h2
+            +padding(top 13.8888888vw)
+            font-family: $font-family-gmarket
+            font-size: 7.2222222vw
+            line-height: 8.888888vw
+            font-weight: bold
+            text-align: center
+
+            em
+                color: $page-color
+
+        .membership-left-days
+            +size(91.1111111vw)
+            +margin(top 2.777777vw)
+            +padding(2.5vw 0)
+            +background(null, null, null, $white)
+            +border(.2777777vw solid $border-color-pop)
+            text-align: center
+
+        .membership-price-item
+            +margin(top 11.11111111vw)
+            +size(91.1111111vw)
+            +border(.55555556vw solid $page-color)
+            +background(null, null, null, $white)
+            box-sizing: border-box
+
+            .price-item-row
+                +padding(0 3.288888vw)
+
+            h3
+                +padding(3.8888888vw)
+                +background(null, null, null, $page-color)
+                font-family: $font-family-gmarket
+                font-weight: bold
+                font-size: 6.66666667vw
+                line-height: 8.8888888889vw
+                color: $white
+                text-align: center
+
+            .price
+                +padding(top 8.33333333vw)
+                display: block
+                font-family: $font-family-gmarket
+                font-weight: bold
+                font-size: 11.1111111vw
+                text-align: center
+
+            .price-tip
+                +padding(top 4.166666667vw)
+                font-size: 4.44444444vw
+                text-align: center
+                line-height: 1.4
+
+                em
+                    font-weight: bold
+                    font-size: 4.72222222vw
+
+        .border-line
+            display: block
+            font-weight: bold
+            font-size: 4.44444444vw
+            line-height: 5.55555555vw
+            text-align: center
+            color: $gray-600
+            position: relative
+
+            &::after
+                +background(null, null, null, $border-color-base)
+                display: block
+                content: ''
+                position: absolute
+                top: 10px
+                left: 0
+
+            &::before
+                +background(null, null, null, $border-color-base)
+                display: block
+                content: ''
+                position: absolute
+                top: 10px
+                right: 0
+
+        .membership-payment-method
+            +margin(top 8.33333333vw)
+
+            .border-line::after,
+            .border-line::before
+                +size(29.444444444vw, .2777777777vw)
+
+            select
+                +selectbox(83.3333333vw, 11.6666666vw)
+
+            .payment-form-wrap
+                +margin(top 3.3333333vw)
+                +border-radius(6.3888888vw)
+                +background(null, null, null,$background-color-menu)
+                overflow: hidden
+
+                .radio-wrap
+                    float: left
+
+                    label
+                        +size(27.777777vw)
+                        +padding(4.1666666vw 1.3888888vw)
+                        +border-radius(6.3888888vw)
+                        display: block
+                        box-sizing: border-box
+                        font-size: 3.3333333vw
+                        text-align: center
+                        color: $gray-900
+
+                    label.active
+                        +border(.55555555vw solid $page-color)
+                        +padding(3.61111111vw .833333333vw)
+                        +background(null, null, null, $white)
+                        font-weight: bold
+                        color: $page-color
+
+            .payment-method,
+            .payment-method-02
+                display: none
+
+            .payment-sub-wrap
+                +margin(top 3.3333333vw)
+                overflow: hidden
+
+                p
+                    line-height: 1.5
+
+                .separate-tip,
+                .separate-tip-02
+                    display: none
+                    font-size: 3.05555555vw
+                    color: $gray-600
+
+        .monthly-membership-hidden,
+        .yearly-membership-hidden
+            display: none
+    .membership-agreement
+        +margin(top 8.333333334vw)
+
+        .border-line::after,
+        .border-line::before
+            +size(26.6666666vw, .2777777777vw)
+
+        .checkbox-form
+            +margin(top 6.94444445vw)
+            overflow: hidden
+
+            .checkbox-wrap
+                +checkbox-wrap()
+                float: left
+
+                label
+                    font-size: 3.333333vw
+
+            a
+                float: right
+                font-size: 3.055555554vw
+                color: $gray-700
+                text-decoration: underline
+
+        .refund_error_wrap,
+        .refund_error_wrap_02
+            +margin(top 2.7777777vw left 6.1111111vw)
+            font-size: 3.333333335vw
+            color: $red
+
+    .btn-apply
+        +btn(purple-fill)
+        +size(83.333333vw, 13.8888888vw)
+        +margin(8.3333333vw auto 5vw auto)
+        font-weight: bold
+        font-size: 4.4444444vw
+        line-height: 13.8888888vw
+
+    .btn-pay-monthly,
+    .btn-pay-yearly
+        display: none
+
+.btn-wrap
+    +size(82.2222223vw)
+    +margin(0 auto)
+    overflow: hidden
+
+    .btn-cancel
+        +btn()
+        +size(39.7222222vw, 13.888888889vw)
+        +background(null, null, null, $gray-700)
+        float: left
+        font-weight: bold
+        font-size: 4.4444444vw
+        color: $white
+        line-height: 13.888888889vw
+
+    .btn-confirm
+        +btn(purple-fill)
+        +size(39.7222222vw, 13.888888889vw)
+        float: right
+        font-weight: bold
+        font-size: 4.4444444vw
+
+.ui-selectmenu-menu
+    +size(83.3333333vw)

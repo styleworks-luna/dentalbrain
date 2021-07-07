@@ -16,7 +16,9 @@
         </template>
         <template v-else>
             <div class="infinite-wrapper">
-                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper></infinite-loading>
+                <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler" force-use-infinite-wrapper>
+                    <div slot="no-more"></div>
+                </infinite-loading>
             </div>
         </template>
     </section>
@@ -74,7 +76,7 @@ export default {
 
             var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
             keyword = decodeURIComponent(keyword);
-            console.log(keyword);
+
             if(keyword.length > 0) {
                 document.querySelector('.search-text').innerText = '‘' + keyword + '’';
             }
@@ -96,6 +98,13 @@ export default {
         infiniteHandler($state, page = this.page) {
             let vm = this;
 
+            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            keyword = decodeURIComponent(keyword);
+
+            if(keyword.length > 0) {
+                document.querySelector('.search-text').innerText = '‘' + keyword + '’';
+            }
+
             if (this.Helper.nullCheck(page)) {
                 page = 1;
             }
@@ -104,6 +113,7 @@ export default {
                 category_id: this.category_id,
                 per_page: this.per_page,
                 order_by: this.order_by,
+                keyword: keyword ? keyword : null,
                 page: page
             };
             Lecture.getData(params).then(res => {
