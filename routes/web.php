@@ -14,7 +14,6 @@
 /*============================ AUTH ============================*/
 
 // 회원가입
-use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -80,15 +79,15 @@ Route::get('instructor', function () {
 
 // 이용 약관
 Route::get('service', function () {
-    return view(viewPrefix() . 'pages.term.service');
+    return view('desktop.pages.term.service');
 })->name('service');
 
 Route::get('privacy', function () {
-    return view(viewPrefix() . 'pages.term.privacy');
+    return view('desktop.pages.term.privacy');
 })->name('privacy');
 
 Route::get('refund', function () {
-    return view(viewPrefix() . 'pages.term.refund');
+    return view('desktop.pages.term.refund');
 })->name('refund');
 
 Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
