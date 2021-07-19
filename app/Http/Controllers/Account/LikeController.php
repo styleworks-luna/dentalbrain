@@ -21,7 +21,7 @@ class LikeController extends Controller
 //        $user = User::query()->find(Auth::id());
         $user = Auth::user();
         if ($user == null) {
-            Log::error('error in like programs', [$request->all(), Auth::id()]);
+            Log::error('error in like programs', [$request->all(), Auth::id(),session()->all()]);
             return response()->json([], 403);
         }
 
