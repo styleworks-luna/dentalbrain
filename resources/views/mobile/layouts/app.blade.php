@@ -46,4 +46,5 @@
 
 @yield('vue', '')
 </body>
+@yield('pop-script')
 </html>
