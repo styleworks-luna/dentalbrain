@@ -74,7 +74,7 @@ export default {
                 page = 1;
             }
 
-            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            var keyword = document.location.search.replace("?keyword=", "").replace(/"+"/gi, " ");
             keyword = decodeURIComponent(keyword);
 
             if(keyword.length > 0) {
@@ -98,7 +98,7 @@ export default {
         infiniteHandler($state, page = this.page) {
             let vm = this;
 
-            var keyword = document.location.search.replace("?keyword=", "").replaceAll("+", " ");
+            var keyword = document.location.search.replace("?keyword=", "").replace(/"+"/gi, " ");
             keyword = decodeURIComponent(keyword);
 
             if(keyword.length > 0) {
@@ -125,7 +125,7 @@ export default {
                 } else {
                     $state.complete();
                 }
-            });
+            })
 
             this.page = this.page + 1;
         },

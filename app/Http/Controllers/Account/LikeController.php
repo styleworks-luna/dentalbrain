@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class LikeController extends Controller
@@ -17,7 +18,12 @@ class LikeController extends Controller
         ]);
 
         /** @var User $user */
-        $user = User::query()->find(Auth::id());
+//        $user = User::query()->find(Auth::id());
+        $user = Auth::user();
+        if ($user == null) {
+            Log::error('error in like programs', [$request->all(), Auth::id(),session()->all()]);
+            return response()->json([], 403);
+        }
 
         $programs = $user->likePrograms()
             ->with([

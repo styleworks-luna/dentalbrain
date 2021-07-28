@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class BaseProgramController extends Controller
 {
-    private $search;
+    protected $search;
 
     public function getCategories(): \Illuminate\Http\JsonResponse
     {

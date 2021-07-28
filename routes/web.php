@@ -31,6 +31,10 @@ if (env('APP_ENV') != 'production') {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
         Route::get('register', 'Test\TestController@showRegistrationForm');
     });
+
+    Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
+        Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
+    });
 }
 
 /*============================ PAGES ============================*/
@@ -75,15 +79,15 @@ Route::get('instructor', function () {
 
 // 이용 약관
 Route::get('service', function () {
-    return view(viewPrefix() . 'pages.term.service');
+    return view('desktop.pages.term.service');
 })->name('service');
 
 Route::get('privacy', function () {
-    return view(viewPrefix() . 'pages.term.privacy');
+    return view('desktop.pages.term.privacy');
 })->name('privacy');
 
 Route::get('refund', function () {
-    return view(viewPrefix() . 'pages.term.refund');
+    return view('desktop.pages.term.refund');
 })->name('refund');
 
 Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {

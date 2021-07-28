@@ -9,7 +9,7 @@
     </tr>
     <tr>
         <td width="720" height="100" bgcolor="#9b00d8">
-            <h4 style="line-height: 100px; margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
+            <h4 style="margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
                 "{{ $program->title }}"에서 보낸 메일입니다.
             </h4>
         </td>

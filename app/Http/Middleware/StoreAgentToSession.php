@@ -21,11 +21,7 @@ class StoreAgentToSession
         $agent = new Agent();
 
         if ($agent->isMobile()) {
-            if (config('app.env') != 'production') {
-                $request->session()->put(['agent' => 'mobile']);
-            } else {
-                $request->session()->put(['agent' => 'desktop']);
-            }
+            $request->session()->put(['agent' => 'mobile']);
         } else {
             $request->session()->put(['agent' => 'desktop']);
         }
