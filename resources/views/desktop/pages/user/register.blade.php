@@ -110,14 +110,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <th><label for="work_area">근무지역</label></th>
+                            <th><label for="work_address">근무지역</label></th>
                             <td>
                                 <input type="text"
-                                       id="work_area"
-                                       name="work_area"
-                                       class="work_area"
+                                       id="work_address"
+                                       name="work_address"
+                                       class="work_address"
                                        placeholder="시/구까지 입력해주세요."
-                                       value="{{ old('work_area') }}">
+                                       value="{{ old('work_address') }}">
                             </td>
                         </tr>
                         <tr>
