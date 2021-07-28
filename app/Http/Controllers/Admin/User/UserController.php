@@ -129,6 +129,7 @@ class UserController
                 'phone' => $data['phone'],
                 'allow_email' => $data['allow_email'],
                 'allow_sms' => $data['allow_sms'],
+                'work_address' => $data['area'],
             ]);
 
             DB::commit();
@@ -164,6 +165,7 @@ class UserController
             'job_name_id' => ['required', 'min:1', 'max:6'],
             'allow_email' => ['nullable', 'boolean'],
             'allow_sms' => ['nullable', 'boolean'],
+            'area' => ['nullable', 'string', 'max:100'],
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             // 직업군에 따라 면허번호 필요 여부 다르므로.
             return UserJobName::find($input->job_name_id)->need_license == true;

@@ -186,6 +186,7 @@ export default {
                 this.allow_email = result.allow_email;
                 this.allow_sms = result.allow_sms;
                 this.is_paid = result.is_paid;
+                this.area = result.work_address;
             });
         },
         update() {
@@ -199,6 +200,7 @@ export default {
                 allow_email: this.allow_email,
                 allow_sms: this.allow_sms,
                 is_paid: this.is_paid,
+                area: this.area,
             };
 
             User.update(this.id, data).then(res => {
