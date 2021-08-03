@@ -33,6 +33,7 @@ $(function () {
         inputs: 'input, textarea, select, input[type=hidden], :hidden',
     });
 
+
     // 전체 동의
     var agreeAll = $('input:checkbox[name=agree-all]');
     var agreeService = $("input:checkbox[name=service-consent]");
@@ -52,6 +53,10 @@ $(function () {
         }
     });
 
+    $('#login_id').change(function () {
+        $('.id-check-error-wrap').css('display','block');
+    })
+
     // 아이디 중복확인
     $("#login_id_confirm").click(function () {
         var login_id = $('#login_id').val();
@@ -66,6 +71,7 @@ $(function () {
                     $('#login_id_check').val('N');
                 } else {
                     $('#login_id_check').val('Y');
+                    $('.id-check-error-wrap').css('display','none');
                 }
 
                 alert(data.message);
@@ -78,6 +84,7 @@ $(function () {
 
     $('#login_id').change(function () {
         $('#login_id_check').val('N');
+        $(this).addClass('.parsley-error-border');
     });
 
     //초기화
@@ -163,8 +170,10 @@ $(function () {
                     $('#confirm_authentication').css('pointer-events', 'none');
                     $('#phone-check').val('Y');
                     alert('인증번호 확인이 완료되었습니다.');
+                    $('.verification-double-check-error-wrap').css('display','none');
                 } else {
                     $('#phone-check').val('N');
+                    $('.verification-double-check-error-wrap').css('display','block');
                     alert(data.msg);
                 }
             },
@@ -198,6 +207,5 @@ $(function () {
     if(alerts.length != 0) {
         alert(`${errorString}`);
     }
-
     form_submit_check();
 });

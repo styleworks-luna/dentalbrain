@@ -75,10 +75,11 @@
                                                id="login_id_check"
                                                value="N"
                                                data-parsley-pattern="[Y]"
-                                               data-parsley-errors-container=".id-error-wrap"
+                                               data-parsley-errors-container=".id-check-error-wrap"
                                                data-parsley-pattern-message="※ 중복확인을 해 주세요.">
 
                                         <div class="id-error-wrap parsley-error-wrap"></div>
+                                        <div class="id-check-error-wrap parsley-error-wrap"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -201,10 +202,11 @@
                                                id="phone-check"
                                                value="N"
                                                data-parsley-pattern="[Y]"
-                                               data-parsley-errors-container=".verification-check-error-wrap"
+                                               data-parsley-errors-container=".verification-double-check-error-wrap"
                                                data-parsley-pattern-message="※ 일치하지 않습니다.">
 
                                         <div class="verification-check-error-wrap parsley-error-wrap"></div>
+                                        <div class="verification-double-check-error-wrap parsley-error-wrap"></div>
                                     </td>
                                 </tr>
                             </table>
