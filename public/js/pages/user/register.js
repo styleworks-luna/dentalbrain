@@ -55,6 +55,9 @@ $(function () {
 
     $('#login_id').change(function () {
         $('.id-check-error-wrap').css('display','block');
+    });
+    $('#verification_number').change(function () {
+        $('.id-check-error-wrap').css('display','block');
     })
 
     // 아이디 중복확인
