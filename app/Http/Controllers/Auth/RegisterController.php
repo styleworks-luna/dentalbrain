@@ -122,6 +122,7 @@ class RegisterController extends Controller
         ], [
             'email.unique' => '가입 할 수 없는 이메일입니다.',
             'phone.unique' => '가입 할 수 없는 전화번호입니다.',
+            'work_address.max' => '100자 이하로 작성해 주세요.'
         ])->sometimes('license_num', 'required|min:0|max:40', function ($input) {
             return UserJobName::find($input->job)->need_license == true;
         });
