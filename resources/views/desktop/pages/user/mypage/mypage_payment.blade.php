@@ -17,6 +17,7 @@
                 <h2>결제내역</h2>
                 <ul>
                     @forelse($payments as $payment)
+                        {{--강의 결제인경우--}}
                         @isset ($payment->student)
                             <li>
                                 <div class="lecture-information">
@@ -112,6 +113,7 @@
                                 </table>
                             </li>
                         @endisset
+                        {{--멤버십 결제인 경우--}}
                         @isset($payment->membership)
                             <li>
                                 <div class="lecture-information">
