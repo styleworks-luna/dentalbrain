@@ -277,6 +277,20 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="이연아" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">윤경희</h2>
+                            <ul class="instructor-career">
+                                <li>(전)대한치과건강보험협회 공인강사</li>
+                                <li>(현)브레인스펙 치과보험청구 전문강사</li>
+                                <li>치과건강보험청구3급 실무이론 공동저자</li>
+                                <li>대원대학교 치위생과 겸임교수</li>
+                                <li>이즈치과 실장</li>
+                                <li>전문분야 : 치과건강보험청구</li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
