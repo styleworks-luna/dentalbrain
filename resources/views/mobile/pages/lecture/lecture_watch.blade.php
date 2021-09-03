@@ -28,6 +28,7 @@
                         <div class="video-wrap">
                             <input type="hidden" id="youtube_id" value="{{$now->youtube_id}}">
                             <div id="player"></div>
+                            <div class="video-button-disable"></div>
                         </div>
                         <div class="m-row">
                             <div class="lecture-title-wrap">

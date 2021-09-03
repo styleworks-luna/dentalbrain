@@ -17,14 +17,14 @@ function onYouTubeIframeAPIReady() {
         },
         playerVars: {
             modestbranding: true,
-            autoplay: true
+            autoplay: true,
+            showinfo: 0,
         },
     });
 }
 
 function onPlayerReady(event) {
     event.target.playVideo();//자동재생
-    //로딩할때 실행될 동작을 작성한다.
 }
 
 function onPlayerStateChange(event) {
