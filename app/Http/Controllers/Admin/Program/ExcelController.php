@@ -22,6 +22,10 @@ class ExcelController extends Controller
         $students = $program->students()->with('user')->get();
         $surveyAnswers = $program->answers()->get();
 
-        return Excel::download(new StudentExport($surveys, $students, $surveyAnswers), $program->title . ' 명단.xlsx');
+
+        $filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $program->title);
+        $filename = mb_ereg_replace("([\.]{2,})", '', $filename);
+
+        return Excel::download(new StudentExport($surveys, $students, $surveyAnswers), $filename . ' 명단.xlsx');
     }
 }
