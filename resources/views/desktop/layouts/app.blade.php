@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- translate -->
+    <meta name="google" content="notranslate">
+
     <!-- og tag -->
     <meta property="og:title" content="덴탈브레인" />
     <meta property="og:image" content="{{ asset('ogtag-image.png') }}" />
