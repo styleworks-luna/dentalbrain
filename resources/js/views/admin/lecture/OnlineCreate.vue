@@ -133,7 +133,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">유튜브 링크</label>
+                            <label class="col-form-label" for="">
+                                <select name="vidoe_type">
+                                    <option value="youtube">youtube</option>
+                                    <option value="wecandeo">wecandeo</option>
+                                </select>
+                            </label>
                             <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="lecture.url">

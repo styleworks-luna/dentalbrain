@@ -32,9 +32,10 @@ class OnlineProgramConcrete extends ProgramTemplate
             $lecture = Lecture::create([
                 'program_id' => $program->id,
                 'thumbnail_id' => $data['thumbnail_id'] ?? null,
-                'youtube_id' => Lecture::getYoutubeIdFromUrl($data['url']),
+                'youtube_id' => ($data['vidoe_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
                 'url' => $data['url'],
                 'title' => $data['title'],
+                'vidoe_type' => ($data['vidoe_type'] == 'wecandeo'?'wecandeo':'youtube'),
             ]);
             if (isset($data['thumbnail_id'])) {
                 $fileService = new LectureThumbnail($lecture);
@@ -59,6 +60,7 @@ class OnlineProgramConcrete extends ProgramTemplate
             'lectures.*.title' => ['required', 'string'],
             'lectures.*.url' => ['required', 'url'],
             'lectures.*.thumbnail_id' => ['nullable', 'numeric'],
+            'lectures.*.vidoe_type' => ['required', 'string'],
             'lectures' => ['required', 'array']
         ], $additionalRules));
         $validatedData = $v->validate();
@@ -97,9 +99,10 @@ class OnlineProgramConcrete extends ProgramTemplate
                 $lecture->update([
                     'program_id' => $program->id,
                     'thumbnail_id' => $data['thumbnail_id'],
-                    'youtube_id' => Lecture::getYoutubeIdFromUrl($data['url']),
+                    'youtube_id' => ($data['vidoe_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
                     'url' => $data['url'],
                     'title' => $data['title'],
+                    'vidoe_type' => $data['vidoe_type'],
                 ]);
 
             } else {
@@ -107,9 +110,10 @@ class OnlineProgramConcrete extends ProgramTemplate
                 $lecture = Lecture::create([
                     'program_id' => $program->id,
                     'thumbnail_id' => $data['thumbnail_id'],
-                    'youtube_id' => Lecture::getYoutubeIdFromUrl($data['url']),
+                    'youtube_id' => ($data['vidoe_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
                     'url' => $data['url'],
                     'title' => $data['title'],
+                    'vidoe_type' => $data['vidoe_type'],
                 ]);
 
                 if ($data['thumbnail_id'] != null) {
