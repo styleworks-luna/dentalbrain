@@ -134,13 +134,13 @@
 
                         <div class="form-group row">
                             <label class="col-form-label" for="">
-                                <select name="vidoe_type">
-                                    <option value="youtube">youtube</option>
-                                    <option value="wecandeo">wecandeo</option>
-                                </select>
+                                <select-box class="form-control"
+                                            :value="video_type"
+                                            :options="VideoOptions"
+                                            @setValue="handleSetVideo"></select-box>
                             </label>
                             <span class="text-danger mt-2 ml-2">*</span>
-                            <div class="col-md-9">
+                            <div class="col-md-9 mt-2">
                                 <input type="text" class="form-control" v-model="lecture.url">
                             </div>
                         </div>
@@ -206,6 +206,7 @@ import { Online } from '@/api/admin/lecture/Online.js'
 
 export default {
     name: 'AdminOnlineCreate',
+
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
@@ -246,7 +247,8 @@ export default {
                 material_id: this.material ? this.material.id : null,
 
                 surveys: this.surveys,
-                lectures: lectures
+                lectures: lectures,
+                video_type: this.video_type,
             };
 
             Online.create(data).then(res => {

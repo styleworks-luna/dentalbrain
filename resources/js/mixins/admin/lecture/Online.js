@@ -7,6 +7,20 @@ export const OnlineMixin = {
     components: {
         'file-upload': FileUpload,
     },
+    computed: {
+        VideoOptions() {
+            return [
+                {
+                    id: 'youtube',
+                    name: '유뷰트'
+                },
+                {
+                    id: 'wecandeo',
+                    name: 'wecandeo',
+                }
+            ]
+        }
+    },
     data() {
         return {
             material: '',
@@ -19,7 +33,8 @@ export const OnlineMixin = {
 
                     }
                 },
-            ]
+            ],
+            video_type: '',
         }
     },
     methods: {
@@ -39,5 +54,8 @@ export const OnlineMixin = {
         updateFile (data) {
             this.material = data;
         },
+        handleSetVideo (id) {
+            this.video_type = id;
+        }
     }
 };
