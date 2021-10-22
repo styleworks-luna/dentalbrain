@@ -2,9 +2,23 @@ var player;
 
 var tag = document.createElement('script');
 
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+if (video_type == 'wecandeo') {
+    window.addEventListener('load', function () {
+        var playerdiv = document.getElementById("video-wrap");
+        var tempDiv = document.createElement('iframe');
+        tempDiv.setAttribute('width', '100%');
+        tempDiv.setAttribute('height', '100%');
+        tempDiv.setAttribute('src', 'https://play.wecandeo.com/video/v/?key=' + document.getElementById('youtube_id').value + '&auto=true');
+        tempDiv.setAttribute('frameborder', '0');
+        tempDiv.setAttribute('allowfullscreen', '');
+        tempDiv.setAttribute('allow', 'autoplay;fullscreen;');
+        playerdiv.appendChild(tempDiv);
+    });
+} else {
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
@@ -62,4 +76,5 @@ $(function () {
     });
 
     form_submit_check();
-});
+})
+;

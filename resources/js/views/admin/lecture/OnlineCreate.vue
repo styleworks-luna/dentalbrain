@@ -133,9 +133,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">유튜브 링크</label>
+                            <label class="col-form-label" for="">
+                                <select-box class="form-control"
+                                            :value="lecture.video_type"
+                                            :options="VideoOptions"
+                                            :index="index"
+                                            @setValue="handleSetVideo"></select-box>
+                            </label>
                             <span class="text-danger mt-2 ml-2">*</span>
-                            <div class="col-md-9">
+                            <div class="col-md-9 mt-2">
                                 <input type="text" class="form-control" v-model="lecture.url">
                             </div>
                         </div>
@@ -201,6 +207,7 @@ import { Online } from '@/api/admin/lecture/Online.js'
 
 export default {
     name: 'AdminOnlineCreate',
+
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
@@ -214,6 +221,7 @@ export default {
                 lectures.push({
                     title: lecture.title,
                     url: lecture.url,
+                    video_type: lecture.video_type,
                     thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null
                 })
             });
@@ -241,7 +249,7 @@ export default {
                 material_id: this.material ? this.material.id : null,
 
                 surveys: this.surveys,
-                lectures: lectures
+                lectures: lectures,
             };
 
             Online.create(data).then(res => {

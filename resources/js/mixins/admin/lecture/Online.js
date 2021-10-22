@@ -7,6 +7,20 @@ export const OnlineMixin = {
     components: {
         'file-upload': FileUpload,
     },
+    computed: {
+        VideoOptions() {
+            return [
+                {
+                    id: 'youtube',
+                    name: 'youtube'
+                },
+                {
+                    id: 'wecandeo',
+                    name: 'wecandeo',
+                }
+            ]
+        }
+    },
     data() {
         return {
             material: '',
@@ -15,11 +29,12 @@ export const OnlineMixin = {
                 {
                     title: '',
                     url: '',
+                    video_type: 'youtube',
                     thumbnail: {
 
                     }
                 },
-            ]
+            ],
         }
     },
     methods: {
@@ -28,6 +43,7 @@ export const OnlineMixin = {
                 title: '',
                 link: '',
                 thumbnail: '',
+                video_type: 'youtube',
             })
         },
         removeLecture(index) {
@@ -39,5 +55,8 @@ export const OnlineMixin = {
         updateFile (data) {
             this.material = data;
         },
+        handleSetVideo (id, idx) {
+            this.lectures[idx].video_type = id;
+        }
     }
 };

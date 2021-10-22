@@ -1,6 +1,9 @@
 @extends('desktop.layouts.frames.except_frame')
 
 @section('script')
+    <script>
+        var video_type = '{{$now->video_type}}';
+    </script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-watch.js') }}"></script>
 @endsection
 
@@ -26,7 +29,7 @@
                                 </div>
                             @endisset
                         </div>
-                        <div class="video-wrap">
+                        <div class="video-wrap" id="video-wrap">
                             <input type="hidden" id="youtube_id" value="{{$now->youtube_id}}">
                             <div id="player"></div>
                             <div class="video-button-disable"></div>

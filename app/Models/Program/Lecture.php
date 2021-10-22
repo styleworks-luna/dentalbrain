@@ -32,6 +32,22 @@ class Lecture extends Model
         }
     }
 
+    /**
+     * wecandeo URL 로 부터 wecandeo ID 값 얻어냅니다.
+     * @param string $url wecandeo URL
+     * @return string|null wecandeo ID
+     */
+    public static function getWecandeoIdFromUrl($url)
+    {
+        $regExp = /** @lang PhpRegExp */
+            '/(?:play.wecandeo.com\/video\/v\/\?key=)(?<youtube>[0-9a-zA-Z-_]+)/';
+        if (preg_match($regExp, $url, $matches)) {
+            return $matches['youtube'];
+        } else {
+            return null;
+        }
+    }
+
     public function program()
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');

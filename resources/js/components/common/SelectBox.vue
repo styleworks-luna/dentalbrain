@@ -17,14 +17,15 @@
         props: {
             'text': String,
             'value': [Number, String, Boolean],
-            'options': Array
+            'options': Array,
+            'index': Number,
         },
         methods: {
             isSelected(value) {
                 return value === this.value;
             },
             handleSetValue(value) {
-                this.$emit('setValue', value);
+                this.$emit('setValue', value, this.index);
             }
         }
     }
