@@ -29,12 +29,12 @@ export const OnlineMixin = {
                 {
                     title: '',
                     url: '',
+                    video_type: '',
                     thumbnail: {
 
                     }
                 },
             ],
-            video_type: '',
         }
     },
     methods: {
@@ -54,8 +54,8 @@ export const OnlineMixin = {
         updateFile (data) {
             this.material = data;
         },
-        handleSetVideo (id) {
-            this.video_type = id;
+        handleSetVideo (id, idx) {
+            this.lectures[idx].video_type = id;
         }
     }
 };

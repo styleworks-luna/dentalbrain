@@ -135,8 +135,9 @@
                         <div class="form-group row">
                             <label class="col-form-label" for="">
                                 <select-box class="form-control"
-                                            :value="video_type"
+                                            :value="lecture.video_type"
                                             :options="VideoOptions"
+                                            :index="index"
                                             @setValue="handleSetVideo"></select-box>
                             </label>
                             <span class="text-danger mt-2 ml-2">*</span>
@@ -220,6 +221,7 @@ export default {
                 lectures.push({
                     title: lecture.title,
                     url: lecture.url,
+                    video_type: lecture.video_type,
                     thumbnail_id: Object.keys(lecture.thumbnail).length > 0 ? lecture.thumbnail.id : null
                 })
             });
@@ -248,7 +250,6 @@ export default {
 
                 surveys: this.surveys,
                 lectures: lectures,
-                video_type: this.video_type,
             };
 
             Online.create(data).then(res => {

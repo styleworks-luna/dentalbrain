@@ -139,7 +139,13 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-form-label" for="">유튜브 링크</label>
+                            <label class="col-form-label" for="">
+                                <select-box class="form-control"
+                                            :value="lecture.video_type"
+                                            :options="VideoOptions"
+                                            :index="index"
+                                            @setValue="handleSetVideo"></select-box>
+                            </label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="lecture.url">
                             </div>
@@ -267,6 +273,7 @@ export default {
                     id: lecture.id,
                     title: lecture.title,
                     url: lecture.url,
+                    video_type: lecture.video_type,
                     thumbnail_id: lecture.thumbnail ? lecture.thumbnail.id : null
                 });
             });
