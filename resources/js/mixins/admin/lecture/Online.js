@@ -29,7 +29,7 @@ export const OnlineMixin = {
                 {
                     title: '',
                     url: '',
-                    video_type: '',
+                    video_type: 'youtube',
                     thumbnail: {
 
                     }
@@ -43,6 +43,7 @@ export const OnlineMixin = {
                 title: '',
                 link: '',
                 thumbnail: '',
+                video_type: 'youtube',
             })
         },
         removeLecture(index) {
