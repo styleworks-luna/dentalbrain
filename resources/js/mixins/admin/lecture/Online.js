@@ -12,7 +12,7 @@ export const OnlineMixin = {
             return [
                 {
                     id: 'youtube',
-                    name: '유뷰트'
+                    name: 'youtube'
                 },
                 {
                     id: 'wecandeo',
