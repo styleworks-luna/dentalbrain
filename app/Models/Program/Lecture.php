@@ -37,7 +37,7 @@ class Lecture extends Model
      * @param string $url wecandeo URL
      * @return string|null wecandeo ID
      */
-    private function getWecandeoIdFromUrl($url)
+    public static function getWecandeoIdFromUrl($url)
     {
         $regExp = /** @lang PhpRegExp */
             '/(?:play.wecandeo.com\/video\/v\/\?key=)(?<youtube>[0-9a-zA-Z-_]+)/';
