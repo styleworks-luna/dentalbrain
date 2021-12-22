@@ -53,6 +53,7 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
+//        Auth::logoutOtherDevices($request->password);
         $user->last_login_at = now();
         $user->save();
     }
