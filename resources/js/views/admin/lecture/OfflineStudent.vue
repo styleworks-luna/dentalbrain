@@ -39,6 +39,7 @@
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.email }}</td>
+                    <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.phone }} </td>
                     <td>
                         <template v-if="slotProps.row.status">
@@ -207,6 +208,11 @@ export default {
                     width: '10%'
                 },
                 {
+                    name: 'name',
+                    text: '이름',
+                    width: '10%'
+                },
+                {
                     name: 'phone',
                     text: '연락처',
                     width: '10%'
@@ -214,7 +220,7 @@ export default {
                 {
                     name: 'payment',
                     text: '결제금액',
-                    width: '15%'
+                    width: '10%'
                 },
                 {
                     name: 'additional',
@@ -224,7 +230,7 @@ export default {
                 {
                     name: 'cancel',
                     text: '취소',
-                    width: '15%'
+                    width: '10%'
                 },
                 {
                     name: 'started_at',
