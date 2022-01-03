@@ -18,10 +18,9 @@ class LikeController extends Controller
         ]);
 
         /** @var User $user */
-//        $user = User::query()->find(Auth::id());
         $user = Auth::user();
         if ($user == null) {
-            Log::error('error in like programs', [$request->all(), Auth::id(),session()->all()]);
+            Log::info('비로그인 사용자 접근 차단됨.', [$request->all(), Auth::id(), session()->all()]);
             return response()->json([], 403);
         }
 
