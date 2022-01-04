@@ -1,3 +1,12 @@
+function dateFormatReturn(date) {
+    date = date.split(' ');
+    let dateArr = date[0].split('-');
+    let timeArr = date[1].split(':');
+    const format = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], timeArr[0], timeArr[1], 0);
+
+    return format;
+}
+
 export const Helper = {
     urlFormat(url) {
         return `${env.APP_URL}${url}`;
@@ -25,12 +34,20 @@ export const Helper = {
 
         return path;
     },
-    dateFormatYDM(date) {
-        if (this.nullCheck(date)) {
+    dateFullFormat(date) {
+        date = date.split(' ');
+        let dateArr = date[0].split('-');
+        let timeArr = date[1].split(':');
+        const format = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], timeArr[0], timeArr[1], 0);
+
+        return format;
+    },
+    dateFormatYDM(dateFull) {
+        if (this.nullCheck(dateFull)) {
             return '';
         }
 
-        date = new Date(date.replace(/-/g, "/"));
+        const date = dateFormatReturn(dateFull);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -45,12 +62,12 @@ export const Helper = {
 
         return `${year}-${month}-${day}`;
     },
-    dateFormatYMD(date) {
-        if (this.nullCheck(date)) {
+    dateFormatYMD(dateFull) {
+        if (this.nullCheck(dateFull)) {
             return '';
         }
 
-        date = new Date(date.replace(/-/g, "/"));
+        const date = dateFormatReturn(dateFull);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate() + 1;
@@ -65,13 +82,12 @@ export const Helper = {
 
         return `${year}-${month}-${day}`;
     },
-    dateFormatYDMByComma(date) {
-        if (this.nullCheck(date)) {
+    dateFormatYDMByComma(dateFull) {
+        if (this.nullCheck(dateFull)) {
             return '';
         }
 
-        // ios 대응
-        date = new Date(date.replace(/-/g, "/"));
+        const date = dateFormatReturn(dateFull);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -86,12 +102,12 @@ export const Helper = {
 
         return `${year}.${month}.${day}`;
     },
-    dateFormatDMW(date) {
-        if (this.nullCheck(date)) {
+    dateFormatDMW(dateFull) {
+        if (this.nullCheck(dateFull)) {
             return '';
         }
 
-        date = new Date(date.replace(/-/g, "/"));
+        const date = dateFormatReturn(dateFull);
 
         var week = new Array('일', '월', '화', '수', '목', '금', '토');
 
@@ -102,15 +118,10 @@ export const Helper = {
 
         return `${month}.${day} (${dayLabel})`;
     },
-    dateFullFormat(date) {
-        date = date.split(' ');
-        let dateArr = date[0].split('-');
-        let timeArr = date[1].split(':');
-        const format = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], timeArr[0], timeArr[1], 0);
 
-        return format;
-    },
-    timeFormat(date) {
+    timeFormat(dateFull) {
+        const date = dateFormatReturn(dateFull);
+
         let hour = String(date.getHours());
         let minute = String(date.getMinutes());
 
@@ -124,8 +135,8 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
-    getTimeFormat(date) {
-        date = new Date(date);
+    getTimeFormat(dateFull) {
+        const date = dateFormatReturn(dateFull);
 
         let hour = date.getHours();
         let minute = date.getMinutes();
@@ -140,15 +151,16 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
-    dateCompareWithNow(date) {
-        date = new Date(date);
+    dateCompareWithNow(dateFull) {
+        const date = dateFormatReturn(dateFull);
         let datenow = new Date();
 
         return date.getTime() - datenow.getTime()
     },
-    dateCompare(dateStart, dateEnd) {
-        dateStart = new Date(dateStart);
-        dateEnd = new Date(dateEnd);
+    dateCompare(dateFullStart, dateFullEnd) {
+
+        const dateStart = dateFormatReturn(dateFullStart);
+        const dateEnd = dateFormatReturn(dateFullEnd);
 
         const yearStart = dateStart.getFullYear();
         let monthStart = dateStart.getMonth() + 1;
