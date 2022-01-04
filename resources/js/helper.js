@@ -42,35 +42,15 @@ export const Helper = {
 
         return format;
     },
-    dateFormatYDM(dateFull) {
-        if (this.nullCheck(dateFull)) {
+    dateFormatYDM(date) {
+        if (this.nullCheck(date)) {
             return '';
         }
 
-        const date = dateFormatReturn(dateFull);
+        date = new Date(date);
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
-
-        if (month < 10) {
-            month = `0${month}`;
-        }
-
-        if (day < 10) {
-            day = `0${day}`;
-        }
-
-        return `${year}-${month}-${day}`;
-    },
-    dateFormatYMD(dateFull) {
-        if (this.nullCheck(dateFull)) {
-            return '';
-        }
-
-        const date = dateFormatReturn(dateFull);
-        const year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate() + 1;
 
         if (month < 10) {
             month = `0${month}`;
@@ -118,9 +98,8 @@ export const Helper = {
 
         return `${month}.${day} (${dayLabel})`;
     },
-
-    timeFormat(dateFull) {
-        const date = dateFormatReturn(dateFull);
+    timeFormat(date) {
+        date = new Date(date);
 
         let hour = String(date.getHours());
         let minute = String(date.getMinutes());
@@ -137,7 +116,6 @@ export const Helper = {
     },
     getTimeFormat(dateFull) {
         const date = dateFormatReturn(dateFull);
-
         let hour = date.getHours();
         let minute = date.getMinutes();
 
@@ -151,11 +129,11 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
-    dateCompareWithNow(dateFull) {
-        const date = dateFormatReturn(dateFull);
-        let datenow = new Date();
+    dateCompareWithNow(date) {
+        date = new Date(date);
+        let dateNow = new Date();
 
-        return date.getTime() - datenow.getTime()
+        return date.getTime() - dateNow.getTime()
     },
     dateCompare(dateFullStart, dateFullEnd) {
 
