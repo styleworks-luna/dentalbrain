@@ -100,7 +100,7 @@ export const Helper = {
         var dayLabel = week[date.getDay()];
 
 
-        return `${month}.${day} (${dayLabel})`;
+        return month + '.' + day + ' ' + '(' + dayLabel + ')';
     },
     dateFullFormat(date) {
         date = date.split(' ');
