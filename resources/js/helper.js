@@ -30,7 +30,7 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        date = new Date(date.replace(/-/g, "/"));
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
@@ -50,7 +50,7 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        date = new Date(date.replace(/-/g, "/"));
         const year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate() + 1;
@@ -91,7 +91,7 @@ export const Helper = {
             return '';
         }
 
-        date = new Date(date);
+        date = new Date(date.replace(/-/g, "/"));
 
         var week = new Array('일', '월', '화', '수', '목', '금', '토');
 
@@ -100,7 +100,7 @@ export const Helper = {
         var dayLabel = week[date.getDay()];
 
 
-        return month + '.' + day + ' ' + '(' + dayLabel + ')';
+        return `${month}.${day} (${dayLabel})`;
     },
     dateFullFormat(date) {
         date = date.split(' ');
