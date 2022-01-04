@@ -34,14 +34,11 @@ export const Helper = {
 
         return path;
     },
+    // Post
     dateFullFormat(date) {
-        date = date.split(' ');
-        let dateArr = date[0].split('-');
-        let timeArr = date[1].split(':');
-        const format = new Date(dateArr[0], dateArr[1] - 1, dateArr[2], timeArr[0], timeArr[1], 0);
-
-        return format;
+        dateFormatReturn(date);
     },
+    // Post
     dateFormatYDM(date) {
         if (this.nullCheck(date)) {
             return '';
@@ -62,6 +59,24 @@ export const Helper = {
 
         return `${year}-${month}-${day}`;
     },
+    // Post
+    timeFormat(date) {
+        date = new Date(date);
+
+        let hour = String(date.getHours());
+        let minute = String(date.getMinutes());
+
+        if (hour.length === 1) {
+            hour = `0${hour}`;
+        }
+
+        if (minute.length === 1) {
+            minute = `0${minute}`;
+        }
+
+        return `${hour}:${minute}`;
+    },
+    // View
     dateFormatYDMByComma(dateFull) {
         if (this.nullCheck(dateFull)) {
             return '';
@@ -82,6 +97,7 @@ export const Helper = {
 
         return `${year}.${month}.${day}`;
     },
+    // View
     dateFormatDMW(dateFull) {
         if (this.nullCheck(dateFull)) {
             return '';
@@ -98,22 +114,7 @@ export const Helper = {
 
         return `${month}.${day} (${dayLabel})`;
     },
-    timeFormat(date) {
-        date = new Date(date);
-
-        let hour = String(date.getHours());
-        let minute = String(date.getMinutes());
-
-        if (hour.length === 1) {
-            hour = `0${hour}`;
-        }
-
-        if (minute.length === 1) {
-            minute = `0${minute}`;
-        }
-
-        return `${hour}:${minute}`;
-    },
+    // View
     getTimeFormat(dateFull) {
         const date = dateFormatReturn(dateFull);
         let hour = date.getHours();
@@ -129,12 +130,14 @@ export const Helper = {
 
         return `${hour}:${minute}`;
     },
+    // View
     dateCompareWithNow(date) {
         date = new Date(date);
         let dateNow = new Date();
 
         return date.getTime() - dateNow.getTime()
     },
+    // View
     dateCompare(dateFullStart, dateFullEnd) {
 
         const dateStart = dateFormatReturn(dateFullStart);
@@ -152,6 +155,7 @@ export const Helper = {
             return true;
         } else return false;
     },
+    // View
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
