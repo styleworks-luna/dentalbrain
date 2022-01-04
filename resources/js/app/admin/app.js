@@ -7,7 +7,7 @@ import router from '@/router/admin';
 import '@/bootstrap';
 import '@popperjs/core';
 import { Sidebar, Alert, Popover } from '@coreui/coreui';
-import { Helper } from '@/helper.js';
+import { Helper } from '@/helper.js?20220104';
 
 import Layout from '@/components/admin/grid/Layout.vue';
 import Pagination from 'laravel-vue-pagination';

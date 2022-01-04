@@ -3,7 +3,7 @@ import 'es6-promise/auto';
 
 import Vue from 'vue';
 import '@/bootstrap';
-import { Helper } from '@/helper.js';
+import { Helper } from '@/helper.js?20220104';
 import Pagination from 'laravel-vue-pagination';
 import LectureAll from '@/components/lecture/LectureAll.vue';
 import Lecture from '@/components/mypage/lecture/Lecture.vue';
