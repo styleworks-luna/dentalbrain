@@ -320,7 +320,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_17?20220106.png') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_17.png?20220106') }}" alt="이연아"
                                  class="instructor-photo">
                             <h2 class="instructor-name">윤경희</h2>
                         </div>
