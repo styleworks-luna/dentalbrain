@@ -47,7 +47,7 @@
             </section>
 
             <section class="middle-banner">
-                <h2>BEST 강의</h2>
+                <h2>진행중인 인기 이벤트</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)

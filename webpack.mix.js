@@ -31,7 +31,10 @@ mix.webpackConfig({
 });
 
 mix.options({
-    processCssUrls: false
+    processCssUrls: false,
+    // watchOptions: {
+    //     ignored: /node_modules/
+    // }
 });
 
 // global
