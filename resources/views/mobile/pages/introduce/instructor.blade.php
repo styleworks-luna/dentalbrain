@@ -272,27 +272,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-
-                            <img src="{{ asset('images/desktop/instructor/instructor_14.png') }}" alt="조한나"
-                                 class="instructor-photo">
-                            <h2 class="instructor-name">조한나</h2>
-                        </div>
-                        <div class="instructor-description">
-                            <ul class="instructor-career">
-                                <li>(현)브레인스펙 전문강사</li>
-                                <li>(현)고려대학교 보건대학원 보건정책 및 병원관리학과
-                                    석사과정중
-                                </li>
-                                <li>경희대학교 메디컬 최고위 과정 수료</li>
-                                <li>cs서비스강사 과정수료</li>
-                                <li>(현)분당태재한의원 총괄실장</li>
-                                <li>분야 : 병원CS, 병원경영 및 서비스마인드, 환자응대CS</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="instructor-content">
-                        <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_15.png') }}" alt="변지은"
+                            <img src="{{ asset('images/desktop/instructor/instructor_14.png?20220106') }}" alt="변지은"
                                  class="instructor-photo">
                             <h2 class="instructor-name">변지은</h2>
                         </div>
@@ -309,7 +289,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_16.png') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_15.png?20220106') }}" alt="이연아"
                                  class="instructor-photo">
 
                             <h2 class="instructor-name">이연아</h2>
@@ -324,7 +304,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_17.png') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_16.png?20220106') }}" alt="이연아"
                                  class="instructor-photo">
                             <h2 class="instructor-name">김민정</h2>
                         </div>
@@ -340,7 +320,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_17?20220106.png') }}" alt="이연아"
                                  class="instructor-photo">
                             <h2 class="instructor-name">윤경희</h2>
                         </div>
