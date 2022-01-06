@@ -46,22 +46,8 @@
                 </div>
             </section>
 
-            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
-
-            <section class="ad">
-                @if($bar)
-                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
-                        <img src="{{ $bar->desktopFile->url }}" alt="바배너">
-                    </a>
-                @else
-                    <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
-                    </a>
-                @endif
-            </section>
-
             <section class="middle-banner">
-                <h2>추천강의</h2>
+                <h2>BEST 강의</h2>
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
@@ -93,6 +79,21 @@
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
                 <div class="middle-swiper-button-next swiper-button-next-common"></div>
             </section>
+
+            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
+
+            <section class="ad">
+                @if($bar)
+                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
+                        <img src="{{ $bar->desktopFile->url }}" alt="바배너">
+                    </a>
+                @else
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
+                    </a>
+                @endif
+            </section>
+
             <section class="bottom-banner">
                 <div class="bottom-swiper-container">
                     <div class="swiper-wrapper">
