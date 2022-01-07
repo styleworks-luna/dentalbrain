@@ -113,7 +113,7 @@ class CancelPaymentDto
             });
 
         if ($v->fails()) {
-            Log::debug('VALIDATE INFO', $v->failed());
+            Log::warning('VALIDATE INFO', $v->failed());
             return null;
         }
 

@@ -346,8 +346,6 @@ abstract class ProgramTemplate
     {
         $returnableDataSet = [];
         $originalSurveyIds = $program->surveys()->pluck('id');
-        logger($program->surveys);
-        logger(json_encode($dataSet));
 
         foreach ($dataSet as $data) {
             if (isset($data['id'])) {
