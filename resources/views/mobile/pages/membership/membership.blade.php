@@ -11,12 +11,10 @@
             var authCheck = '{{ auth()->check() }}';
 
             var select_menu = $('.select-menu');
-            var select_menu_02 = $('.select-menu-02');
             var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
             var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
             var paymentmethod = $('.payment-method:checked').val();
-            var paymentmethod_02 = $('.payment-method-02:checked').val();
 
             // 연간 이벤트
             $('.btn-apply-yearly').click(function (e) {
@@ -36,23 +34,6 @@
                 days = 365;
                 price = 99000;
             });
-            // 월간 이벤트
-            $('.btn-apply-monthly').click(function (e) {
-                e.preventDefault();
-                if (authCheck) {
-                    $('.monthly-membership-hidden').slideDown();
-                    $('.btn-apply-monthly').css('display', 'none');
-                    $('.btn-pay-monthly').css('display', 'block');
-                } else {
-                    alert('로그인 후 이용해주세요.');
-                    location.href = "/login";
-                }
-            });
-
-            $('.btn-pay-monthly').click(function (e) {
-                days = 30;
-                price = 29000;
-            });
 
             // 결제 실패시 오류 메세지 출력
             paymentMessage(message);
@@ -61,9 +42,6 @@
             if (select_menu.length > 0) {
                 select_menu.selectmenu();
             }
-            if (select_menu_02.length > 0) {
-                select_menu_02.selectmenu();
-            }
 
             $('#refund_consent').change(function () {
                 if ($('#refund_consent').is(":checked") == true) {
@@ -71,18 +49,8 @@
                 }
             });
 
-            $('#refund_consent_02').change(function () {
-                if ($('#refund_consent_02').is(":checked") == true) {
-                    $('.refund_error_wrap_02').text('');
-                }
-            });
-
-
             $('.payment-method').change(function () {
                 paymentmethod = $('.payment-method:checked').val();
-            });
-            $('.payment-method-02').change(function () {
-                paymentmethod_02 = $('.payment-method-02:checked').val();
             });
 
             $('.btn-submit').click(function (e) {
@@ -105,10 +73,6 @@
                     paymentMethodResult = paymentmethod;
                     cardCompany = $('#credit-button .ui-selectmenu-text').text();
                     isValid = $('#refund_consent').is(":checked");
-                } else {
-                    paymentMethodResult = paymentmethod_02;
-                    cardCompany = $('#credit_02-button .ui-selectmenu-text').text();
-                    isValid = $('#refund_consent_02').is(":checked");
                 }
 
                 if (isValid) {
@@ -170,11 +134,7 @@
                         });
                     }
                 } else {
-                    if (check) {
                         $('.refund_error_wrap').text('※ 취소/환불약관에 동의해 주세요.');
-                    } else {
-                        $('.refund_error_wrap_02').text('※ 취소/환불약관에 동의해 주세요.');
-                    }
                 }
 
             });
@@ -208,38 +168,6 @@
                 $('.separate-tip').css('display', 'block');
 
                 $('#credit-button').css('display', 'none');
-            })
-
-            // mobile 결제수단2 click event
-            $('.card-label-02').click(function () {
-                $('.transfer-label-02').removeClass('active');
-                $('.separate-label-02').removeClass('active');
-
-                $('.card-label-02').addClass('active');
-
-                $('.separate-tip-02').css('display', 'none');
-
-                $('#credit_02-button').css('display', 'block');
-            });
-            $('.transfer-label-02').click(function () {
-                $('.card-label-02').removeClass('active');
-                $('.separate-label-02').removeClass('active');
-
-                $('.transfer-label-02').addClass('active');
-
-                $('.separate-tip-02').css('display', 'none');
-
-                $('#credit_02-button').css('display', 'none');
-            });
-            $('.separate-label-02').click(function () {
-                $('.card-label-02').removeClass('active');
-                $('.transfer-label-02').removeClass('active');
-
-                $('.separate-label-02').addClass('active');
-
-                $('.separate-tip-02').css('display', 'block');
-
-                $('#credit_02-button').css('display', 'none');
             })
 
             // 계좌입금 pop-up
@@ -423,89 +351,6 @@
                                 </div>
                             </div>
 
-                            <div class="membership-price-item">
-                                <h3>유료회원 월 결제</h3>
-                                <span class="price">29,000원/월</span>
-                                <div class="price-item-row">
-                                    <p class="price-tip">월 회비 29,000원을 결제하면 자동으로 월 회원이 되고, 결제일로부터
-                                        <em>한달 동안 무료강의와 할인 된 강의를 4개까지 수강</em>하실 수 있습니다.</p>
-                                    <div class="monthly-membership-hidden">
-                                        <div class="membership-payment-method">
-                                            <span class="border-line">결제방식</span>
-                                            <div class="payment-form-wrap">
-                                                <div class="radio-wrap">
-                                                    <input type="radio" id="card_02" name="payment-method_02"
-                                                           class="payment-method-02" value="카드" checked>
-                                                    <label for="card_02" class="card-label-02 active">신용카드</label>
-                                                </div>
-                                                <div class="radio-wrap transfer-wrap">
-                                                    <input type="radio" id="transfer_02" name="payment-method_02"
-                                                           class="payment-method-02" value="계좌이체">
-                                                    <label
-                                                        for="transfer_02"
-                                                        class="transfer-label-02">{{ changePaymentMethodName("계좌이체") }}</label>
-                                                </div>
-                                                <div class="radio-wrap separate-wrap">
-                                                    <input type="radio" id="separate_02" name="payment-method_02"
-                                                           class="payment-method-02" value="계좌입금">
-                                                    <label for="separate_02"
-                                                           class="separate-label-02">계좌입금</label>
-                                                </div>
-                                                {{--<div class="radio-wrap">
-                                            <input type="radio" id="deposit_02" name="payment-method_02"
-                                                   class="payment-method-02" value="가상계좌">
-                                            <label for="deposit_02">무통장입금(가상계좌)</label>
-                                        </div>--}}
-                                            </div>
-                                            <div class="payment-sub-wrap">
-                                                <select name="payment-method_02" id="credit_02" class="select-menu-02">
-                                                    <option value="신한">신한</option>
-                                                    <option value="현대">현대</option>
-                                                    <option value="삼성">삼성</option>
-                                                    <option value="우리">우리</option>
-                                                    <option value="BC">BC</option>
-                                                    <option value="국민">국민</option>
-                                                    <option value="롯데">롯데</option>
-                                                    <option value="농협">농협</option>
-                                                    <option value="하나">하나</option>
-                                                    <option value="씨티">씨티</option>
-                                                    <option value="카카오뱅크">카카오뱅크</option>
-                                                    <option value="수협">수협</option>
-                                                    <option value="전북">전북</option>
-                                                    <option value="우체국">우체국</option>
-                                                    <option value="새마을">새마을</option>
-                                                    <option value="저축">저축</option>
-                                                    <option value="제주">제주</option>
-                                                    <option value="광주">광주</option>
-                                                    <option value="신협">신협</option>
-                                                    <option value="JCB">JCB</option>
-                                                    <option value="유니온페이">유니온페이</option>
-                                                    <option value="마스터">마스터</option>
-                                                    <option value="비자">비자</option>
-                                                    <option value="다이너스">다이너스</option>
-                                                    <option value="디스커버">디스커버</option>
-                                                </select>
-                                                <p class="separate-tip-02">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="membership-agreement">
-                                            <span class="border-line">신청자 동의</span>
-                                            <div class="checkbox-form">
-                                                <div class="checkbox-wrap">
-                                                    <input type="checkbox" name="refund-consent-02"
-                                                           id="refund_consent_02">
-                                                    <label for="refund_consent_02"> (필수) 취소/환불약관 동의</label>
-                                                </div>
-                                                <a href="" class="trigger-refund">내용보기</a>
-                                            </div>
-                                            <div class="refund_error_wrap_02"></div>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn-apply btn-apply-monthly">신청하기</a>
-                                    <a href="#" class="btn-apply btn-submit btn-pay-monthly">결제하기</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
