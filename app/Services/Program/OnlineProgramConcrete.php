@@ -32,10 +32,10 @@ class OnlineProgramConcrete extends ProgramTemplate
             $lecture = Lecture::create([
                 'program_id' => $program->id,
                 'thumbnail_id' => $data['thumbnail_id'] ?? null,
-                'youtube_id' => ($data['video_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
+                'youtube_id' => Lecture::getVideoIdFromUrl($data['url']),
                 'url' => $data['url'],
                 'title' => $data['title'],
-                'video_type' => ($data['video_type'] == 'wecandeo'?'wecandeo':'youtube'),
+                'video_type' => ($data['video_type'] == 'wecandeo' ? 'wecandeo' : 'youtube'),
             ]);
             if (isset($data['thumbnail_id'])) {
                 $fileService = new LectureThumbnail($lecture);
@@ -99,7 +99,7 @@ class OnlineProgramConcrete extends ProgramTemplate
                 $lecture->update([
                     'program_id' => $program->id,
                     'thumbnail_id' => $data['thumbnail_id'],
-                    'youtube_id' => ($data['video_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
+                    'youtube_id' => Lecture::getVideoIdFromUrl($data['url']),
                     'url' => $data['url'],
                     'title' => $data['title'],
                     'video_type' => $data['video_type'],
@@ -110,7 +110,7 @@ class OnlineProgramConcrete extends ProgramTemplate
                 $lecture = Lecture::create([
                     'program_id' => $program->id,
                     'thumbnail_id' => $data['thumbnail_id'],
-                    'youtube_id' => ($data['video_type'] == 'wecandeo'?(Lecture::getWecandeoIdFromUrl($data['url'])):(Lecture::getYoutubeIdFromUrl($data['url']))),
+                    'youtube_id' => Lecture::getVideoIdFromUrl($data['url']),
                     'url' => $data['url'],
                     'title' => $data['title'],
                     'video_type' => $data['video_type'],
