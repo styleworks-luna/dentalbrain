@@ -55,10 +55,12 @@ class Lecture extends Model
      * @param string $url URL
      * @return string|null ID
      */
-    public static function getVideoIdFromUrl($url)
+    public static function getVideoIdFromUrl(string $url): ?string
     {
-        $regExp = /** @lang PhpRegExp */
-            '/(?|(?:youtube.[a-z]+\/[a-z?&]*v[\/|=]|youtu.be\/)([\d\w\-_]+)|play.wecandeo.com\/video\/v\/\?key=([\d\w\-_]+))/';
+        $youtubeRegExp = '(?:youtube.[a-z]+\/[a-z?&]*v[\/|=]|youtu.be\/)([\d\w\-_]+)';
+        $wecandeoRegExp = 'play.wecandeo.com\/video\/v\/\?key=([\d\w\-_]+)';
+        $regExp = '/(?|' . $youtubeRegExp . '|' . $wecandeoRegExp . ')/';
+        //$regExp = '/(?|(?:youtube.[a-z]+\/[a-z?&]*v[\/|=]|youtu.be\/)([\d\w\-_]+)|play.wecandeo.com\/video\/v\/\?key=([\d\w\-_]+))/';
         if (preg_match($regExp, $url, $matches)) {
             return $matches[1];
         } else {
