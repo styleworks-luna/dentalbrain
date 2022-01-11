@@ -22,7 +22,6 @@ export const PaymentCancelMixin = {
             this.cancelLayer = !this.cancelLayer;
             this.cancelStudentId = studentId || '';
             this.paymentMethod = paymentMethod || '';
-            console.log(this.cancelLayer,this.cancelStudentId, this.paymentMethod);
         },
         // 온라인 프로그램 취소
         cancelPayment(params) {

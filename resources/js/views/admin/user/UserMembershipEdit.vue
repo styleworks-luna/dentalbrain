@@ -216,6 +216,7 @@ export default {
     methods: {
         getData() {
             User.getEditMembershipData(this.user_id).then(res => {
+
                 this.memberships_dates=[];
                 const userResult = res.data.user;
                 const membershipResult = res.data.memberships;
