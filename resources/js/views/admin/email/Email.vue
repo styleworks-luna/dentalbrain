@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="editor-wrap">
-                    <editor :content="content" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/email/upload`" @setEditor="handleSetEditor"></editor>
                 </div>
             </section>
 
