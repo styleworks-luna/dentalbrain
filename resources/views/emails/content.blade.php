@@ -10,7 +10,7 @@
     <tr>
         <td width="720" height="100" bgcolor="#9b00d8">
             <h4 style="margin: 0; padding: 0 0 0 30px; font-size: 26px; font-weight: bold; color: #ffffff; letter-spacing: -1px">
-                "{{ $program->title }}"에서 보낸 메일입니다.
+                {{ $title }}
             </h4>
         </td>
     </tr>
@@ -21,18 +21,6 @@
             <p style="line-height: 24px; margin: 0 0 0 20px; font-size: 12px;">
                 {!! $content !!}
             </p>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div
-                style="width:400px; margin: 0 auto; padding: 10px; text-align: center; box-sizing: border-box">
-                <a href="{{ route('lectures.detail',$program->id) }}"
-                   style="display: block; width: 120px; margin: 0 auto; padding: 8px 12px 8px 12px; background-color: #9b00d8; color: #fff; text-decoration: none"
-                >
-                    강의 바로가기
-                </a>
-            </div>
         </td>
     </tr>
     <tr>

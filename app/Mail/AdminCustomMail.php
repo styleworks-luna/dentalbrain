@@ -6,14 +6,14 @@ use App\Models\Program\Program;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
-class Lecture extends Mailable
+class AdminCustomMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     private $title;
     private $content;
-    private $program;
 
 
     /**
@@ -21,17 +21,9 @@ class Lecture extends Mailable
      *
      * @param $title
      * @param $content
-     * @param Program|int $program
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __construct($title, $content, $program)
+    public function __construct($title, $content)
     {
-        if ($program instanceof Program) {
-            $this->program = $program;
-        } else {
-            $this->program = Program::query()->find($program);
-        }
-
         $this->title = $title;
         $this->content = $content;
     }
@@ -47,8 +39,8 @@ class Lecture extends Mailable
             ->subject($this->title)
             ->view('emails.content')
             ->with([
+                'title' => $this->title,
                 'content' => $this->content,
-                'program' => $this->program,
             ]);
     }
 }

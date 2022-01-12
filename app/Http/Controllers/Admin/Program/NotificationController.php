@@ -9,7 +9,7 @@
 namespace App\Http\Controllers\Admin\Program;
 
 use App\Http\Controllers\Controller;
-use App\Mail\Lecture;
+use App\Mail\AdminCustomMail;
 use App\Models\Program\Program;
 use App\Models\User;
 use App\Services\Notification\Sms\Ppurio;
@@ -43,15 +43,14 @@ class NotificationController extends Controller
             'title' => 'required|string',
             'message' => 'required|string',
             'email' => 'required|array',
-            'program_id' => 'required|numeric'
         ]);
-
 
         try {
             Mail::to('do-not-reply@dentalbrain.co.kr')
-                ->bcc($validatedData['email'])->send(new Lecture($validatedData['title'], $validatedData['message'], $validatedData['program_id']));
+                ->bcc($validatedData['email'])
+                ->send(new AdminCustomMail($validatedData['title'], $validatedData['message']));
 
-            return response()->json(['success' => true, 'msg' => '이메일 발신되었습니다.'], 200);
+            return response()->json(['success' => true, 'msg' => '이메일 발신되었습니다.']);
         } catch (\Exception $exception) {
             Log::error('SEND LECTURE EMAIL ERROR', [$exception]);
             return response()->json(['success' => false, 'msg' => '에러가 발생하였습니다.'], 500);

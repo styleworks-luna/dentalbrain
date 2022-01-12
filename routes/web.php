@@ -35,6 +35,8 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
         Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
+
+    Route::get("ndsrhkd", [\App\Http\Controllers\Development\DevelopmentController::class, 'ndsrhkd']);
 }
 
 /*============================ PAGES ============================*/
@@ -202,7 +204,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'a
     Route::view('/{any?}', 'admin.index')->where('any', '.*');;
 });
 
-// TODO: 추후 api 인증 도입하면서 api.php 로 이사갈 예정 //
 Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('toss/deposited', 'Lecture\PaymentsController@deposited');
 
