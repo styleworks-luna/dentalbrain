@@ -278,6 +278,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
         Route::get('download/{file}', [\App\Http\Controllers\Admin\FileController::class, 'download'])->name('download');
 
+        Route::post('email/upload', [\App\Http\Controllers\Admin\FileController::class, 'uploadMailImage']);
+
         Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
             //user index 페이지 데이터
             Route::get('/', 'Admin\User\UserController@index')->name('index');

@@ -121,6 +121,21 @@ class FileController extends Controller
         ]);
     }
 
+    public function uploadMailImage(Request $request) {
+        Validator::make($request->all(), [
+            'image' => ['required', 'image']
+        ])->validate();
+
+        $uploadedFile = $request->file('image');
+
+        $file = $this->uploadToStorage($uploadedFile, 'public/mail/images');
+
+        return response()->json([
+            'link' => $file->url,
+            'file' => $file,
+        ]);
+    }
+
     public function uploadArticleImage(Request $request)
     {
         Validator::make($request->all(), [
