@@ -99,7 +99,7 @@ class FileController extends Controller
      * @param string|null $url 연결 URL
      * @return Builder|File
      */
-    private function uploadToStorage($uploadedFile, string $path, string $url = null)
+    private function uploadToStorage($uploadedFile, string $path, bool $isFullPath = false)
     {
         $name = $uploadedFile->getClientOriginalName();
         $extension = $uploadedFile->extension();
@@ -109,7 +109,9 @@ class FileController extends Controller
 
         $path = Storage::putFileAs($path, $uploadedFile, $randomName);
 
-        if ($url == null) {
+        if ($isFullPath == true) {
+            $url = config('app.url') . str_replace('public/', '/storage/', $path);
+        } else {
             $url = str_replace('public/', '/storage/', $path);
         }
 
@@ -121,14 +123,15 @@ class FileController extends Controller
         ]);
     }
 
-    public function uploadMailImage(Request $request) {
+    public function uploadMailImage(Request $request)
+    {
         Validator::make($request->all(), [
             'image' => ['required', 'image']
         ])->validate();
 
         $uploadedFile = $request->file('image');
 
-        $file = $this->uploadToStorage($uploadedFile, 'public/mail/images');
+        $file = $this->uploadToStorage($uploadedFile, 'public/mail/images', true);
 
         return response()->json([
             'link' => $file->url,
