@@ -6,12 +6,21 @@ $(function () {
         return variable;
     }
 
+    var userAgent = navigator.userAgent.toLocaleLowerCase();
+    var widthForiphone;
+
+    if( (userAgent.search("iphone") > -1) || (userAgent.search("ipod") > -1) || (userAgent.search("ipad") > -1) ) {
+        widthForiphone = { width: 320 }
+    } else {
+        widthForiphone = null
+    }
 
     var mySwiper = new Swiper('.swiper-container', {
         autoplay: {
             delay: 5000,
             disableOnInteraction: false,
         },
+        widthForiphone,
         pagination: {
             el: '.swiper-pagination',
             type: 'fraction',
