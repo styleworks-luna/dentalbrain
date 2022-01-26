@@ -11,6 +11,7 @@ $(function () {
             delay: 5000,
             disableOnInteraction: false,
         },
+        cssMode: true,
         pagination: {
             el: '.swiper-pagination',
             type: 'fraction',
