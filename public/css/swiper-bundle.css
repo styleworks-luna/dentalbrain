@@ -86,6 +86,8 @@
 .swiper-container-autoheight .swiper-wrapper {
     -webkit-box-align: start;
     -webkit-align-items: flex-start;
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
     -ms-flex-align: start;
     align-items: flex-start;
     -webkit-transition-property: height, -webkit-transform;
