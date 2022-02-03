@@ -74,7 +74,7 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="lectures" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="lectures" :limit=3 @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
