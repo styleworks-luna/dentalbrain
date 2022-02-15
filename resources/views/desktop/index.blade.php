@@ -190,7 +190,7 @@
                 <div class="middle-swiper-button-next3 swiper-button-next-common"></div>
             </section>
 
-            <h2>일이삼사오륙칠팔구십일이삼사오육칠팔구십</h2>
+            <h2 class="lecture_title">일이삼사오륙칠팔구십일이삼사오육칠팔구십</h2>
             <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
 
             <section class="ad">
