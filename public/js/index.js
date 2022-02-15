@@ -47,6 +47,24 @@ $(function () {
         },
     });
 
+    var mySwiper = new Swiper('.middle-swiper-container2', {
+        slidesPerView: 4,
+        spaceBetween: 19,
+        navigation: {
+            nextEl: '.middle-swiper-button-next2',
+            prevEl: '.middle-swiper-button-prev2',
+        },
+    });
+
+    var mySwiper = new Swiper('.middle-swiper-container3', {
+        slidesPerView: 4,
+        spaceBetween: 19,
+        navigation: {
+            nextEl: '.middle-swiper-button-next3',
+            prevEl: '.middle-swiper-button-prev3',
+        },
+    });
+
     var mySwiper = new Swiper('.m-middle-swiper-container', {
         slidesPerView: 2.6,
     });
