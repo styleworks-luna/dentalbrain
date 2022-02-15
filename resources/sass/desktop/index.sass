@@ -2,6 +2,16 @@
 @import 'resources/sass/helpers/extends'
 @import 'resources/sass/helpers/mixins'
 
+@mixin middle-swiper-container
+    +margin(top 40px bottom 80px)
+    overflow: hidden
+
+    .swiper-slide img
+        +size(232px, 232px)
+        +border(1px solid rgba(0,0,0,0.1))
+        +border-radius(8px)
+        +box-sizing(border-box)
+
 .swiper-button-prev:after,
 .swiper-button-next:after
     content: ''
@@ -115,27 +125,28 @@
     +margin(80px auto 0 auto)
     position: relative
     text-align: left
-
     h2
         font-weight: bold
         font-size: 30px
 
     .middle-swiper-container
-        +margin(top 40px)
-        overflow: hidden
+        +middle-swiper-container
 
+    .middle-swiper-container2
+        +middle-swiper-container
         .swiper-slide img
-            +size(232px, 232px)
-            +border(1px solid rgba(0,0,0,0.1))
-            +border-radius(8px)
-            +box-sizing(border-box)
+            +size(296px, 222px)
 
-    .middle-swiper-button-prev
-        top: 186px
+    .middle-swiper-container3
+        +middle-swiper-container
+        .swiper-slide img
+            +size(296px, 222px)
 
-    .middle-swiper-button-next
-        top: 186px
-        right: -20px
+    .middle-swiper-button-prev, .middle-swiper-button-prev2, .middle-swiper-button-prev3
+        +middle-swiper-button-prev
+
+    .middle-swiper-button-next, .middle-swiper-button-next2, .middle-swiper-button-next3
+        +middle-swiper-button-next
 
 .bottom-banner
     +size(1240px)
