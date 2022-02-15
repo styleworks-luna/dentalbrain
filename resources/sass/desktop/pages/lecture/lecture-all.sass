@@ -128,20 +128,20 @@
         overflow: hidden
 
         .lecture-card
-            +margin(73px 40px 0 0)
+            +margin(50px 32px 0 0)
             +box-sizing(border-box)
             float: left
             max-width: 400px
             max-height: 450px
 
             img
-                +size(400px 400px, 300px)
+                +size(296px 296px, 222px)
                 +border(1px solid rgba(0, 0, 0, 0.1))
                 +border-radius(5px)
                 +box-sizing(border-box)
 
             .lecture-description
-                +size(400px)
+                +size(296px)
 
                 .lecture-description-sub
                     +padding(top 20px)
@@ -192,12 +192,13 @@
             .lecture-name
                 text-decoration: underline
 
-        .lecture-card:nth-child(3n)
+        .lecture-card:nth-child(4n)
             +margin(right 0px)
 
         .lecture-card:nth-child(1),
         .lecture-card:nth-child(2),
-        .lecture-card:nth-child(3)
+        .lecture-card:nth-child(3),
+        .lecture-card:nth-child(4)
             +margin(top 0)
 
 // 전체강의 페이지만 적용
