@@ -13,7 +13,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/swiper-bundle.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/index.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-list.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
