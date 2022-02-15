@@ -72,6 +72,21 @@
                                     <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
                                 </a>
                             </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
                         @endforelse
 
                     </div>
