@@ -27,16 +27,25 @@
                 </li>
             </ul>
         </div>
-        <div class="header-menu-wrap">
-            <div class="header-menu">
-                <ul>
-                    <li><a href="{{ url('introduce') }}">회사소개</a></li>
-                    <li><a href="{{ url('instructor') }}">강사소개</a></li>
-                    <li><a href="{{ url('community') }}">커뮤니티</a></li>
-                    <li><a href="{{ url('lectures') }}">전체강의</a></li>
-                    <li><a href="{{ url('membership') }}">유료회원</a></li>
-                </ul>
+    </div>
+    <div class="header-menu-wrap">
+        <div class="header-menu">
+            <ul>
+                <li><a href="{{ url('introduce') }}">회사소개</a></li>
+                <li><a href="{{ url('instructor') }}">강사소개</a></li>
+                <li><a href="{{ url('community') }}">커뮤니티</a></li>
+                <li><a href="{{ url('lectures') }}">전체강의</a></li>
+                <li><a href="{{ url('membership') }}">유료회원</a></li>
+            </ul>
+            <form action="{{ route('lectures.search') }}" method="GET">
+            <div class="input-wrap">
+                <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요."/>
+                <button class="btn-search ir_pm">
+                    검색
+                    <span class="search-icon"></span>
+                </button>
             </div>
+            </form>
         </div>
     </div>
 </header>
