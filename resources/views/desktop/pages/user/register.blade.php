@@ -111,6 +111,13 @@
                             </td>
                         </tr>
                         <tr>
+                            <th><label for="work_address">근무처</label></th>
+                            <td>
+                                <input type="text"
+                                       placeholder="근무처를 입력해주세요."
+                            </td>
+                        </tr>
+                        <tr>
                             <th><label for="work_address">근무지역</label></th>
                             <td>
                                 <input type="text"
