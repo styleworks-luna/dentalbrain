@@ -239,7 +239,7 @@
                     <div class="lecture-detail-menu">
                         <ul>
                             <li><a href="#content" class="m-menu-tab-detail active">상세정보</a></li>
-                            <li><a>강의목록</a></li>
+                            <li><a href="#list" class="m-menu-tab-list">강의목록</a></li>
                             <li><a href="#comment" class="m-menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
@@ -250,6 +250,15 @@
                     </div>
                 </div>
             </section>
+
+            <sectrion id="list" class="lecture-list">
+                <ul>
+                    @foreach($comments as $comment)
+                    <li><a>1강</a>ㅁㄴㅇ</li>
+                    @endforeach
+                </ul>
+            </sectrion>
+
 
             <section id="comment" class="lecture-comment">
                 <div class="m-row">

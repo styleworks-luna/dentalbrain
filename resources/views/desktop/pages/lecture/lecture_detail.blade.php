@@ -246,7 +246,7 @@
                     <div class="lecture-detail-menu">
                         <ul>
                             <li><a href="#content" class="menu-tab-detail active">상세정보</a></li>
-                            <li><a>강의목록</a></li>
+                            <li><a href="#list" class="menu-tab-list">강의목록</a></li>
                             <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
@@ -256,6 +256,17 @@
                         </div>
                     </div>
                 </section>
+
+                <sectrion id="list" class="lecture-list">
+                    <div class="list-title">
+                        <h3>강의목록</h3>
+                    </div>
+                    <ul>
+                        @foreach($comments as $comment)
+                        <li><a>1강</a>ㅁㄴㅇ</li>
+                        @endforeach
+                    </ul>
+                </sectrion>
 
                 <section id="comment" class="lecture-comment">
                     <input type="hidden" id="program_id" value="{{ $program->id }}">
