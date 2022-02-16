@@ -2,35 +2,59 @@ $(function () {
 
     //menu tab 클릭 이벤트
     var clickTabDetail = $('.menu-tab-detail');
+    var clickTabList = $('.menu-tab-list');
     var clickTabComment = $('.menu-tab-comment');
 
     clickTabDetail.click(function () {
         clickTabDetail.addClass('active');
+        clickTabComment.removeClass('active');
+        clickTabList.removeClass('active');
+    });
+
+    clickTabList.click(function () {
+        clickTabList.addClass('active');
+        clickTabDetail.removeClass('active');
         clickTabComment.removeClass('active');
     });
 
     clickTabComment.click(function () {
         clickTabComment.addClass('active');
         clickTabDetail.removeClass('active');
+        clickTabList.removeClass('active');
     });
 
     //mobile menu tab 클릭 이벤트
     var clickMTabDetail = $('.m-menu-tab-detail');
+    var clickMTabList = $('.m-menu-tab-list');
     var clickMTabComment = $('.m-menu-tab-comment');
 
     clickMTabDetail.click(function (e) {
         clickMTabDetail.addClass('active');
+        clickMTabList.removeClass('active');
         clickMTabComment.removeClass('active');
         e.preventDefault();
         $('.lecture-detail-content').css('display', 'block');
+        $('.lecture-list').css('display', 'none');
+        $('.lecture-comment').css('display', 'none');
+    });
+
+    clickMTabList.click(function (e) {
+        clickMTabList.addClass('active');
+        clickMTabDetail.removeClass('active');
+        clickMTabComment.removeClass('active');
+        e.preventDefault();
+        $('.lecture-list').css('display', 'block');
+        $('.lecture-detail-content').css('display', 'none');
         $('.lecture-comment').css('display', 'none');
     });
 
     clickMTabComment.click(function (e) {
         clickMTabComment.addClass('active');
         clickMTabDetail.removeClass('active');
-        $('.lecture-detail-content').css('display', 'none');
+        clickMTabList.removeClass('active');
         $('.lecture-comment').css('display', 'block');
+        $('.lecture-detail-content').css('display', 'none');
+        $('.lecture-list').css('display', 'none');
     });
 
     //댓글 갯수 이벤트
