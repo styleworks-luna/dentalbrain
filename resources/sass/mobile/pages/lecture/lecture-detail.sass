@@ -284,6 +284,33 @@
             line-height: 0
             vertical-align: baseline
 
+.lecture-list
+    //+padding(top 138px)
+
+    .list-title
+        overflow: hidden
+
+        h3
+            float: left
+            font-weight: bold
+            font-size: 20px
+
+    ul
+        font-size: 16px
+        a
+            font-weight: bold
+            +padding(right 10px)
+
+        +padding(top 20px)
+        //border-top: 1px solid black
+
+        li
+            &:first-child
+                border-top: 1px solid transparent
+            +padding(20px)
+            border-top: 1px solid $border-color-base
+
+
 .lecture-comment
     display: none
 
