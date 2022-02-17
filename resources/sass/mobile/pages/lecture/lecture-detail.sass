@@ -95,6 +95,11 @@
             .price-individual
                 overflow: hidden
 
+                .lecture-ogprice
+                    color: $gray-c
+                    text-decoration: line-through
+                    font-weight: normal
+
                 .lecture-exclude-price
                     color: $gray-c
                     font-weight: normal
@@ -107,7 +112,7 @@
                     display: none
 
                 span
-                    +size(38.888888vw)
+                    +size(20vw)
                     +padding(top 2.5vw)
                     font-size: 3.8888888vw
                     display: block
@@ -122,6 +127,14 @@
                     font-weight: bold
                     color: $page-color
                     line-height: 6.11111111vw
+            .lecture-sale
+                text-align: right
+                color: black
+                font-weight: bold
+                color: red
+                +margin(bottom 5px)
+                font-size: 3.333333vw
+                //+padding(left 4.72222px)
 
     .lecture-btn
         +size(100%)
@@ -285,6 +298,7 @@
             vertical-align: baseline
 
 .lecture-list
+    display: none
     //+padding(top 138px)
 
     .list-title
@@ -296,19 +310,20 @@
             font-size: 20px
 
     ul
-        font-size: 16px
+
         a
             font-weight: bold
             +padding(right 10px)
 
-        +padding(top 20px)
+        +padding(top 10px)
         //border-top: 1px solid black
 
         li
-            &:first-child
-                border-top: 1px solid transparent
-            +padding(20px)
-            border-top: 1px solid $border-color-base
+            //+size(50vw)
+            +margin(left 16px right 16px)
+            +padding(top 18px bottom 18px)
+            //+margin(4%)
+            +border(1px solid $border-color-base, bottom)
 
 
 .lecture-comment

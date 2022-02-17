@@ -124,7 +124,10 @@
                                                        data-price="{{ $program->price }}">
                                                         {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
                                                     </p>
+                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
+                                                    <p class="lecture-ogprice">990,000원</p>
                                                 </div>
+                                                <p class="lecture-sale">30% 할인</p>
                                                 <div class="price-individual">
                                                     <span>유료회원가</span>
                                                     <p class="lecture-price"
@@ -254,7 +257,7 @@
             <sectrion id="list" class="lecture-list">
                 <ul>
                     @foreach($comments as $comment)
-                    <li><a>1강</a>ㅁㄴㅇ</li>
+                    <li class="a"><a>1강</a>임플란트</li>
                     @endforeach
                 </ul>
             </sectrion>
