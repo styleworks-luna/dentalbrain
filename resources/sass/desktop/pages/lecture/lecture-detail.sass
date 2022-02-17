@@ -124,6 +124,21 @@
                 font-weight: bold
                 font-size: 20px
                 color: $page-color
+                .lecture-ogprice
+                    font-size: 20px
+                    font-weight: normal
+                    color: $gray-c
+                    text-decoration: line-through
+                .lecture-sale
+                    color: black
+                    font-weight: normal
+                    color: red
+                    font-size: 14px
+                    +margin(left 10px)
+                    //+padding(bottom 10px)
+                    //vertical-align: middle
+                    //align-self: center
+
 
             .lecture-exclude-price
                 font-weight: normal
@@ -314,10 +329,15 @@
         //border-top: 1px solid black
 
         li
-            &:first-child
-                border-top: 1px solid black
             +padding(20px)
-            border-top: 1px solid $border-color-base
+            +border(1px solid $border-color-base, bottom)
+
+            &:first-child
+                +border(2px solid $gray-900, top)
+            &:last-child
+                +border(2px solid $border-color-base, bottom)
+
+
 
 .lecture-comment
     +padding(top 138px)

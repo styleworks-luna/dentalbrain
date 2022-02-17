@@ -133,7 +133,11 @@
                                                 <th>결제금액</th>
                                                 <td class="lecture-price"
                                                     data-price="{{ $program->price }}">
-                                                    {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                                    <div style="display: flex; align-items: center">
+                                                        <span class="lecture-ogprice">990,000원</span><span style="color: black; font-weight: normal"> →</span>
+                                                        <span>{{ $program->is_free ? '무료' : number_format($program->price).'원'}}</span>
+                                                        <span class="lecture-sale">30% 할인</span>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
