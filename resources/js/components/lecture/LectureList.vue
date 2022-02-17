@@ -26,9 +26,14 @@
                             </p>
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
-                        <p class="lecture-price" v-if="lecture.is_free == 0">
-                            {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                        <p class="lecture-price" v-else>무료</p>
+                        <div style="display: flex; align-items: center; margin-top: 16px">
+                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
+                            <span class="lecture-price" v-if="lecture.is_free == 0">
+                            {{ Helper.numberWithCommas(lecture.price) }}원</span>
+                            <span class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-else>무료</p>
+                        </div>
+
                     </div>
                 </a>
             </li>
