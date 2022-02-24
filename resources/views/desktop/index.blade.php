@@ -98,13 +98,6 @@
                 <h2>위크 특가! TIME DEAL</h2>
                 <div class="middle-swiper-container2">
                     <div class="swiper-wrapper">
-                        @forelse($recommends as $recommend)
-                        <div class="swiper-slide">
-                            <a href="{{ route('api.banners.redirect',$recommend->id) }}">
-                                <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
-                            </a>
-                        </div>
-                        @empty
                         <div class="swiper-slide">
                             <a href="">
                                 <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
@@ -135,7 +128,6 @@
                                 <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
                             </a>
                         </div>
-                        @endforelse
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev2 swiper-button-prev-common"></div>
@@ -146,13 +138,6 @@
                 <h2>실시간 인기강의</h2>
                 <div class="middle-swiper-container3">
                     <div class="swiper-wrapper">
-                        @forelse($recommends as $recommend)
-                        <div class="swiper-slide">
-                            <a href="{{ route('api.banners.redirect',$recommend->id) }}">
-                                <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
-                            </a>
-                        </div>
-                        @empty
                         <div class="swiper-slide">
                             <a href="">
                                 <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
@@ -183,7 +168,6 @@
                                 <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
                             </a>
                         </div>
-                        @endforelse
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev3 swiper-button-prev-common"></div>
