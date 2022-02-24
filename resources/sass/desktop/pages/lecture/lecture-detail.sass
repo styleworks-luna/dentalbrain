@@ -22,19 +22,41 @@
             +margin(70px auto 80px auto)
 
 .lecture-information-wrap
-    +padding(bottom 80px)
+    +padding(bottom 111px)
     overflow: hidden
 
-    .lecture-image
-        +size(538px, 405px)
-        +border(1px solid rgba(0, 0, 0, 0.1))
-        +border-radius(8px)
-        +box-sizing(border-box)
+    .lecture-test
         float: left
+
+        .lecture-image
+            +size(540px, 405px)
+            +border(1px solid rgba(0, 0, 0, 0.1))
+            +border-radius(8px)
+            +box-sizing(border-box)
+
+        .admin-menu
+            +padding(top 20px)
+
+            ul
+                font-size: 16px
+                text-align: center
+                display: flex
+                justify-content: start
+                align-items: center
+
+                li
+                    +background(null, null, null, $background-color-menu)
+
+                    a
+                        +size(135px, 46px)
+                        +border(1px solid $border-color-base)
+                        +box-sizing(border-box)
+                        display: block
+                        line-height: 46px
 
     .lecture-information
         +size(550px)
-        +padding(18px 0 0 50px)
+        +padding(18px 0 0 42px)
         float: left
 
         .lecture-sort
@@ -202,6 +224,16 @@
         +background('/images/desktop/lecture/lecture_icon_wish.png',no-repeat, center center)
         content: ''
         display: block
+
+.header-menu-wrap
+    +border(1px solid $border-color-light, top)
+
+    .header-menu
+        +size(1280px)
+        +margin(0 auto)
+        +padding(10px 0)
+        overflow: hidden
+
 
 .lecture-detail
 
