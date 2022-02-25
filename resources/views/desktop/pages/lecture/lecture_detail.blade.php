@@ -18,14 +18,18 @@
             <section class="lecture-information-wrap">
                 <div class="lecture-test">
                     <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
-                    <div class="admin-menu">
-                        <ul>
-                            <li><a href="">수정</a></li>
-                            <li><a href="">공개</a></li>
-                            <li><a href="">복사</a></li>
-                            <li><a href="">수강현황</a></li>
-                        </ul>
-                    </div>
+                    @auth()
+                        @if(auth()->user()->isAdmin())
+                        <div class="admin-menu">
+                            <ul>
+                                <li><a href="">수정</a></li>
+                                <li><a href="">공개</a></li>
+                                <li><a href="">복사</a></li>
+                                <li><a href="">수강현황</a></li>
+                            </ul>
+                        </div>
+                        @endif
+                    @endauth
                 </div>
                 <div class="lecture-information">
                     <div class="lecture-sort">
