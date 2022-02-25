@@ -97,6 +97,38 @@ $(function () {
     //하트 클릭 이벤트
     var clickLike = $('.like')
     var lectureIdx = $('.lecture-idx').val();
+    var open = $('.open')
+
+    open.click(function (e){
+        e.preventDefault();
+        var program_id = $('#program_id').val();
+        let isOnline = $('#program_is_online').val();
+        let apiUrl = '';
+
+        if (isOnline) {
+            apiUrl = `/api/admin/lecture/online/${program_id}`;
+        }
+        else {
+            apiUrl = `/api/admin/lecture/offline/${program_id}`;
+        }
+
+        $.ajax({
+            url: apiUrl,
+            type: "patch",
+            success: function (data) {
+                alert('변경되었습니다.')
+                window.location.reload();
+            },
+
+            error: function (request, status, error) {
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
+            }
+        });
+    })
 
     clickLike.click(function (e) {
         e.preventDefault();

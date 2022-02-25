@@ -16,16 +16,33 @@
     <div class="container">
         <div class="row">
             <section class="lecture-information-wrap">
+                <input type="hidden" id="program_is_online" value="{{$program->is_open}}">
                 <div class="lecture-test">
                     <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
                     @auth()
                         @if(auth()->user()->isAdmin())
                         <div class="admin-menu">
                             <ul>
-                                <li><a href="">수정</a></li>
-                                <li><a href="">공개</a></li>
-                                <li><a href="">복사</a></li>
-                                <li><a href="">수강현황</a></li>
+                                @if($program->is_online == true)
+                                <li><a href="/admin/lecture/online/{{$program->id}}/1">수정</a></li>
+                                    @if($program->is_open == true)
+                                    <li><a href="" class="open">공개</a></li>
+                                    @else
+                                    <li><a href="" class="open">비공개</a></li>
+                                    @endif
+                                <li><a href="/admin/lecture/online/{{$program->id}}/duplicate/1">복사</a></li>
+                                <li><a href="/admin/lecture/online/{{$program->id}}/student">수강현황</a></li>
+
+                                @else
+                                <li><a href="/admin/lecture/offline/{{$program->id}}/1">수정</a></li>
+                                    @if($program->is_open == true)
+                                    <li><a href="" class="open">공개</a></li>
+                                    @else
+                                    <li><a href="" class="open">비공개</a></li>
+                                    @endif
+                                <li><a href="/admin/lecture/offline/{{$program->id}}/duplicate/1">복사</a></li>
+                                <li><a href="/admin/lecture/offline/{{$program->id}}/student">수강현황</a></li>
+                                @endif
                             </ul>
                         </div>
                         @endif

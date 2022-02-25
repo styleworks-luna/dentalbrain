@@ -46,9 +46,12 @@
                 li
                     +background(null, null, null, $background-color-menu)
 
+                    &:last-child a
+                        +border(1px solid $border-color-base, right)
+
                     a
                         +size(135px, 46px)
-                        +border(1px solid $border-color-base)
+                        +border(1px solid $border-color-base, top bottom left)
                         +box-sizing(border-box)
                         display: block
                         line-height: 46px
