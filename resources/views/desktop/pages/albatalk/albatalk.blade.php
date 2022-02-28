@@ -8,11 +8,11 @@
 @endsection
 
 @section('style')
-<link rel="stylesheet" href="{{ mix('css/desktop/pages/introduce/community.css') }}">
+<link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-all.css') }}">
 @endsection
 
 @section('content')
-<section class="community-wrap">
+<section class="albatalk-wrap">
     <div class="title-wrap">
         <div class="container">
             <div class="title">

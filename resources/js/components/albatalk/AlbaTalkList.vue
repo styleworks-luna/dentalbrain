@@ -1,10 +1,16 @@
 <template>
-    <div class="alba-talk-list">
+    <div class="albatalk-contents">
         <ul>
-            <li v-for="list in list" :key="list.id">
+            <li class="albatalk-card" v-for="list in list" :key="list.id">
                 <a href="">
                     <img src="/images/dummy/test2.jpg">
-                        <div>{{ list.title }}</div>
+                    <div class="albatak-information">
+                        <p class="albatalk-name">{{ list.title }}</p>
+                        <div class="albatalk-description">
+                            <p class="albatalk-place">{{ list.location }}</p>
+                            <p class="albatalk-date">{{ list.date }}</p>
+                        </div>
+                    </div>
                 </a>
             </li>
         </ul>
@@ -14,7 +20,7 @@
 <script>
 export default {
     name: "AlbaTalkList",
-    data () {
+    data() {
         return {
             list: [
                 {

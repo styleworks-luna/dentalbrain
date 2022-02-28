@@ -1,6 +1,6 @@
 <template>
     <section class="albatalk">
-        <alba-talk-list></alba-talk-list>
+        <albatalk-list></albatalk-list>
     </section>
 </template>
 
@@ -10,7 +10,7 @@ import AlbaTalkList from '@/components/albatalk/AlbaTalkList.vue';
 export default {
     name: "AlbaTalk",
     components: {
-        AlbaTalkList,
+        'albatalk-list': AlbaTalkList,
     },
 }
 </script>
