@@ -156,21 +156,15 @@
                 .lecture-description-sub
                     overflow: hidden
 
-                    .offline,
-                    .online
-                        +padding(.833333vw .555555vw)
-                        font-size: 3.0555555vw
+                    .lecture-type
+                        +padding(1.11111vw 1.38888vw)
+                        font-size: 2.77777vw
                         float: left
                         color: $white
-
-                    .offline
-                        +background(null, null, null, $purply-pink)
-
-                    .online
                         +background(null, null, null, $page-color)
 
-                    .lecture-type
-                        +padding(top .8333333vw left 1.3888888vw)
+                    .lecture-date
+                        +padding(top 1.111111vw left 1.3888888vw)
                         float: left
                         font-size: 3.0555555vw
                         color: $gray-700
@@ -194,10 +188,22 @@
                     line-height: 1.5
 
                 .lecture-price
-                    +padding(top 3.3333333vw)
+                    +padding(top 3.33333vw)
                     font-weight: bold
                     font-size: 3.888888vw
                     color: $page-color
+
+                .lecture-ogprice
+                    font-size: 3.055555px
+                    font-weight: normal
+                    color: $gray-c
+                    text-decoration: line-through
+
+                .lecture-sale
+                    color: black
+                    font-weight: normal
+                    color: red
+                    font-size: 3.055555px
 
 
 // 강의 검색에만 적용

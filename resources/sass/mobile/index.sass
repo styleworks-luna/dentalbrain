@@ -2,6 +2,21 @@
 @import 'resources/sass/helpers/extends'
 @import 'resources/sass/helpers/mixins'
 
+@mixin m-middle-swiper-container
+    +margin(top 2.777777vw)
+    +padding(left 4.44444vw)
+    overflow: hidden
+
+    .swiper-slide
+        +margin(right 3.333333vw)
+        width: 31.66666vw !important
+
+        img
+            +size(31.66666vw, 31.66666vw)
+            +border(.277777vw solid rgba(0,0,0,0.1))
+            +border-radius(2.222222vw)
+            +box-sizing(border-box)
+
 .wrap main
     +padding(bottom 28.61111111vw)
 
@@ -61,6 +76,7 @@
 
     h2
         +padding(left 4.44444vw)
+        +margin(bottom 5.5555vw)
         font-weight: bold
         font-size: 4.444444vw
 
@@ -78,6 +94,20 @@
                 +border(.277777vw solid rgba(0,0,0,0.1))
                 +border-radius(2.222222vw)
                 +box-sizing(border-box)
+
+    .m-middle-swiper-container2
+        +m-middle-swiper-container
+        .swiper-slide
+            width: 43.33333vw !important
+            img
+                +size(43.33333vw, 32.33333vw)
+
+    .m-middle-swiper-container3
+        +m-middle-swiper-container
+        .swiper-slide
+            width: 43.33333vw !important
+            img
+                +size(43.33333vw, 32.33333vw)
 
 .bottom-banner
     +margin(top 8.3333333vw bottom 5.5555555vw)
