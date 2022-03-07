@@ -1,0 +1,159 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/desktop/layouts/navigation/service.sass'
+@import '@sass/components/_button.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/components/_emailbox.sass'
+@import '@sass/components/_textarea.sass'
+@import '@sass/components/_selectbox.sass'
+
+.albatalk-wrap
+    .title-wrap
+        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
+        min-width: 1280px
+        height: 300px
+
+        h1
+            +size(240px)
+            +margin(0 auto)
+            +padding(125px 0 0 63px)
+            font-weight: bold
+            font-size: 48px
+
+.wanted
+    +margin(top 60px bottom 80px)
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="number"]
+        +input(white-light-fill)
+        +size(240px, 50px)
+        +margin(right 5px)
+        font-size: 14px
+
+    textarea
+        +textarea()
+        +size(1058px, 150px)
+        +padding(top 13px)
+
+    .ui-emailbox
+        +emailbox()
+        float: left
+
+        .ui-emailbox-button .ui-icon
+            +margin(top 22px)
+
+        .at
+            +margin(0 8px)
+
+    select
+        +selectbox(240px, 50px)
+
+        + .ui-selectmenu-button
+            +margin(right 10px)
+            float: left
+
+    h2
+        font-size: 24px
+
+    .inquire-form-wrap
+        +margin(top 18px)
+
+        table
+            +size(1280px)
+            &:nth-child(1)
+                +border(2px solid $gray-900, top)
+
+        tr
+            +size(1280px, 72px)
+            +border(1px solid $border-color-base, bottom)
+
+            th
+                +size(182px)
+                +padding(left 40px top 26px)
+                +background(null, null, null, $background-color-menu)
+                +box-sizing(border-box)
+                font-size: 16px
+                text-align: left
+                vertical-align: top
+
+            td
+                +padding(left 20px top 11px bottom 11px)
+                +box-sizing(border-box)
+
+            .name-wrap
+                +size(458px)
+
+            .manager-wrap
+                +size(458px)
+
+            .ceo-wrap
+                +size(458px)
+
+            .manager-phone-wrap
+                +size(458px)
+
+            .num-wrap
+                +size(458px)
+
+            .manager-email-wrap
+                +size(458px)
+
+            .phone-wrap
+                overflow: hidden
+
+                p
+                    +padding(left 20px top 18px)
+                    float: left
+                    color: $gray-700
+
+            .page-wrap
+                overflow: hidden
+
+                p
+                    +padding(left 20px top 18px)
+                    float: left
+                    color: $gray-700
+
+            .address-wrap
+                overflow: hidden
+
+                p
+                    +padding(left 20px top 18px)
+                    float: left
+                    color: $gray-700
+
+                .btn-address
+                    +btn()
+                    +size(86px, 50px)
+                    +background(null, null, null, $white)
+                    +border(1px solid $border-color-base)
+                    +border-radius(25px)
+                    position: absolute
+                    font-weight: bold
+                    font-size: 14px
+
+
+
+            .title-wrap
+                +size(1096px)
+
+                input[name="title"]
+                    +size(810px, 50px)
+
+            .inquire-content-wrap
+                +size(1096px)
+
+    .btn-wrap
+        +size(200px)
+        +margin(50px auto 0 auto)
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(200px, 50px)
+            font-size: 16px
+
+.title-error-wrap
+    +margin(left 250px)
