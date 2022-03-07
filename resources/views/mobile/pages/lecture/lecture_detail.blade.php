@@ -256,9 +256,9 @@
 
             <sectrion id="list" class="lecture-list">
                 <ul>
-                    @foreach($comments as $comment)
                     <li class="a"><a>1강</a>임플란트</li>
-                    @endforeach
+                    <li class="a"><a>1강</a>임플란트</li>
+                    <li class="a"><a>1강</a>임플란트</li>
                 </ul>
             </sectrion>
 
