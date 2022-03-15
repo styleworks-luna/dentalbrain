@@ -19,6 +19,63 @@
         +border-radius(8px)
         +box-sizing(border-box)
 
+@mixin lecture-description
+    +size(296px)
+
+    .lecture-description-sub
+        +padding(top 20px)
+        overflow: hidden
+        color: $gray-700
+
+        .lecture-type
+            +padding(6px 8px)
+            +background(null, null, null, $page-color)
+            float: left
+            font-size: 11px
+            color: $white
+
+        .lecture-date
+            +padding(6px 0 0 10px)
+            float: left
+            font-size: 12px
+
+        .lecture-time
+            +padding(top 6px)
+            +ellipse(220px)
+            float: right
+            font-size: 12px
+
+    .lecture-name
+        +margin(top 8px)
+        +ellipse(null, 2)
+        display: block
+        height: 48px
+        font-size: 16px
+        line-height: 1.5
+
+    .lecture-all-price
+        display: flex
+        align-items: center
+        margin-top: 12px
+
+    .lecture-price
+        font-weight: bold
+        font-size: 16px
+        color: $page-color
+        letter-spacing: 0.8px
+        margin-right: 5px
+
+    .lecture-sale
+        font-weight: bold
+        color: red
+        font-size: 12px
+        margin-right: 5px
+
+    .lecture-ogprice
+        color: $gray-c
+        font-size: 12px
+        text-decoration: line-through
+
 .swiper-button-prev:after,
 .swiper-button-next:after
     content: ''
@@ -146,10 +203,16 @@
         .swiper-slide img
             +size(296px, 222px)
 
+        .lecture-description
+            +lecture-description
+
     .middle-swiper-container3
         +middle-swiper-container
         .swiper-slide img
             +size(296px, 222px)
+
+        .lecture-description
+            +lecture-description
 
     .middle-swiper-button-prev, .middle-swiper-button-prev2, .middle-swiper-button-prev3
         +middle-swiper-button-prev

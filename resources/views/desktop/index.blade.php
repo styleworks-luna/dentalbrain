@@ -97,38 +97,7 @@
             <section class="middle-banner">
                 <h2>위크 특가! TIME DEAL</h2>
                 <div class="middle-swiper-container2">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                    </div>
+                    <lecture-banner1></lecture-banner1>
                 </div>
                 <div class="middle-swiper-button-prev2 swiper-button-prev-common"></div>
                 <div class="middle-swiper-button-next2 swiper-button-next-common"></div>
@@ -137,42 +106,12 @@
             <section class="middle-banner">
                 <h2>실시간 인기강의</h2>
                 <div class="middle-swiper-container3">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                    </div>
+                    <lecture-banner2></lecture-banner2>
                 </div>
                 <div class="middle-swiper-button-prev3 swiper-button-prev-common"></div>
                 <div class="middle-swiper-button-next3 swiper-button-next-common"></div>
             </section>
+
 
             <h2 class="lecture_title">일이삼사오륙칠팔구십일이삼사오육칠팔구십</h2>
             <lecture-all :is_pagination="false" :per_page="9"></lecture-all>

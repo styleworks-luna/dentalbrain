@@ -20,12 +20,19 @@
                             </p>
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
-                        <div class="lecture-all-price">
+                        <div v-if="!isMobile()" class="lecture-all-price">
                             <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
-                            <span class="lecture-price" v-if="lecture.is_free == 0">
-                            {{ Helper.numberWithCommas(lecture.price) }}원</span>
+                            <p class="lecture-price" v-if="lecture.is_free == 0">
+                            {{ Helper.numberWithCommas(lecture.price) }}원</p>
                             <span class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
                             <p class="lecture-price" v-else>무료</p>
+                        </div>
+                        <div v-else class="lecture-all-price">
+                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
+                            <span style="padding-bottom: 4px" class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-if="lecture.is_free == 0">
+                                {{ Helper.numberWithCommas(lecture.price) }}원</p>
+                            <p style="padding-top: 5vw"class="lecture-price" v-else>무료</p>
                         </div>
 
                     </div>
@@ -38,6 +45,15 @@
 <script>
 export default {
     name: 'LectureList',
+    methods: {
+        isMobile() {
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                return true
+            } else {
+                return false
+            }
+        }
+    },
     props: {
         'list': Array
     },
@@ -56,5 +72,4 @@ export default {
 </script>
 
 <style>
-
 </style>

@@ -183,27 +183,31 @@
                     +margin(top 2.222222vw)
                     +ellipse(null, 2)
                     display: block
-                    height: 12vw
+                    height: 11.666666vw
                     font-size: 3.888888vw
                     line-height: 1.5
 
-                .lecture-price
-                    +padding(top 3.33333vw)
-                    font-weight: bold
-                    font-size: 3.888888vw
-                    color: $page-color
+                .lecture-all-price
+                    +size(43.333333vw, 8.888888vw)
+                    .lecture-price
+                        +padding(top 1.111111vw)
+                        font-weight: bold
+                        font-size: 3.888888vw
+                        color: $page-color
+                        position: absolute
 
-                .lecture-ogprice
-                    font-size: 3.055555px
-                    font-weight: normal
-                    color: $gray-c
-                    text-decoration: line-through
 
-                .lecture-sale
-                    color: black
-                    font-weight: normal
-                    color: red
-                    font-size: 3.055555px
+                    .lecture-ogprice
+                        font-size: 3.055555vw
+                        font-weight: normal
+                        color: $gray-c
+                        text-decoration: line-through
+
+                    .lecture-sale
+                        color: black
+                        font-weight: normal
+                        color: red
+                        font-size: 3.055555vw
 
 
 // 강의 검색에만 적용

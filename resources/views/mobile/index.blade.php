@@ -89,56 +89,14 @@
             <section class="middle-banner">
                 <h2>위크 특가! TIME DEAL</h2>
                 <div class="m-middle-swiper-container2">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                    </div>
+                    <lecture-banner1></lecture-banner1>
                 </div>
             </section>
 
             <section class="middle-banner">
                 <h2>실시간 인기강의</h2>
                 <div class="m-middle-swiper-container3">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                    </div>
+                    <lecture-banner2></lecture-banner2>
                 </div>
             </section>
 
