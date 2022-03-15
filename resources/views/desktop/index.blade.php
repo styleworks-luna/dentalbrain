@@ -114,7 +114,7 @@
 
 
             <h2 class="lecture_title">일이삼사오륙칠팔구십일이삼사오육칠팔구십</h2>
-            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
+            <lecture-all :is_pagination="false" :per_page="16"></lecture-all>
 
             <section class="ad">
                 @if($bar)
