@@ -3,6 +3,7 @@
 namespace App\Models\Program;
 
 use App\Models\File;
+use App\Models\Manage\Banner;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\User;
@@ -66,9 +67,9 @@ class Program extends Model
 
         if ($student != null) {
             return $student->expired_at > now()
-                && ($student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-                );
+            && ($student->pay_status == ProgramStudent::$PAY_PAID
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -92,12 +93,12 @@ class Program extends Model
         }
         if ($student != null) {
             return $student->expired_at > now()
-                && (
-                    $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
-                    || $student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-                );
+            && (
+                $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
+                || $student->pay_status == ProgramStudent::$PAY_PAID
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -153,8 +154,8 @@ class Program extends Model
     public function exceedCapacity()
     {
         return $this->place->capacity <= $this->students()
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
-                ->count();
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
+            ->count();
     }
 
     public function students()
@@ -254,8 +255,8 @@ class Program extends Model
         }
         if ($student != null) {
             return ($student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
-                && $student->expired_at < now();
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
+            && $student->expired_at < now();
         } else {
             $user = Auth::user();
             return $user->students()
@@ -351,6 +352,11 @@ class Program extends Model
     public function minorCategory()
     {
         return $this->belongsTo(ProgramMinorCategory::class, 'minor_category_id');
+    }
+
+    public function banners()
+    {
+        return $this->hasMany(Banner::class, 'program_id', 'id');
     }
 
     public function getMinorCategoryNameAttribute()
