@@ -341,6 +341,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'changeOpen'])->name('changeOpen');
+                    // 온라인 강의 삭제
+                    Route::delete('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'delete'])->name('delete');
                     // 온라인 강의 복사 리소스
                     Route::get('/duplicate', 'Admin\Program\OnlineProgramController@duplicateEdit')->name('duplicate-edit');
                     // 온라인 강의 복사
