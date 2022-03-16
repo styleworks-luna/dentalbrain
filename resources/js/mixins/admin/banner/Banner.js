@@ -7,6 +7,8 @@ import DatePicker from '@/components/common/DatePicker.vue';
 
 // api
 import Banner from '@/api/admin/banner/Banner.js';
+import Banner2 from '@/api/admin/banner/Banner2.js';
+import Banner3 from '@/api/admin/banner/Banner3.js';
 
 // 배너 수정,생성
 export const BannerMixin = {
@@ -21,6 +23,7 @@ export const BannerMixin = {
         return {
             title: '',
             link: '',
+            program_id: '',
             started_at: '',
             ended_at: '',
             order: 0,
@@ -84,6 +87,12 @@ export const BannerCategoryMixin = {
     methods: {
         getCategoryData() {
             Banner.getCategoryData().then(res => {
+                this.bannerOptions = res.data.category;
+            }),
+            Banner2.getCategoryData().then(res => {
+                this.bannerOptions = res.data.category;
+            }),
+            Banner3.getCategoryData().then(res => {
                 this.bannerOptions = res.data.category;
             })
         },

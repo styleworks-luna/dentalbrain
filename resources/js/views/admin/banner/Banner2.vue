@@ -1,7 +1,7 @@
 <template>
-    <layout title="배너관리 2" >
+    <layout title="배너관리 2-1" >
         <template v-slot:button>
-            <router-link to="/admin/banner/create"
+            <router-link to="/admin/banner2/create"
                          class="btn btn-lg btn-info">
                  새로 만들기
             </router-link>
@@ -10,18 +10,12 @@
         <template v-slot:search>
             <div class="float-right">
                 <form @submit.prevent="getData">
-                    <select-box class="form-control"
-                                text="종류 선택"
-                                :value="category_id"
-                                :options="bannerOptions"
-                                @setValue="handleSetPosition"></select-box>
-
                     <date-picker class="mr-3" @setTime="handleSetDate"></date-picker>
 
                     <div class="input-group">
                         <input class="form-control"
                                type="text"
-                               placeholder="연결링크 검색"
+                               placeholder="제목 검색"
                                v-model="keyword">
                         <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
@@ -33,19 +27,19 @@
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="banners.data">
+                        :data="banners2.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.categories.name }}</td>
                     <td>{{ slotProps.row.order }}</td>
-                    <td>{{ slotProps.row.link }}</td>
+                    <td>{{ slotProps.row.program_id }}</td>
                     <td>
                         노출 시작 : {{ slotProps.row.started_at }} ~<br>
                         노출 종료 : {{ slotProps.row.ended_at }}
                     </td>
                     <td>{{ slotProps.row.views }}</td>
                     <td>
-                        <router-link :to="`/admin/banner/${slotProps.row.id}/${page}`"
+                        <router-link :to="`/admin/banner2/${slotProps.row.id}/${page}`"
                                      class="btn btn-info float-left mr-2">
                             수정
                         </router-link>
@@ -59,7 +53,7 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="banners" :limit=3 @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="banners2" :limit=3 @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
@@ -77,7 +71,7 @@ import SelectBox from '@/components/common/SelectBox.vue';
 import DatePicker from '@/components/common/DatePicker.vue'
 
 // api
-import Banner from '@/api/admin/banner/Banner.js';
+import Banner2 from '@/api/admin/banner/Banner2.js';
 
 // mixins
 import { BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
@@ -95,7 +89,7 @@ export default {
     },
     data() {
         return {
-            banners: {
+            banners2: {
                 data: []
             },
             keyword: '',
@@ -128,8 +122,8 @@ export default {
                     width: '8%'
                 },
                 {
-                    name: 'link',
-                    text: '연결링크',
+                    name: 'program_id',
+                    text: '강의번호',
                     width: '20%'
                 },
                 {
@@ -159,34 +153,25 @@ export default {
 
             let params = {
                 keyword: this.keyword,
-                category_id: this.category_id,
+                category_id: 5,
                 date: this.Helper.dateFormatYDM(this.date),
                 page: page
             };
 
-            Banner.getData(params).then(res => {
-                this.banners = res.data.banners;
+            Banner2.getData(params).then(res => {
+                this.banners2 = res.data.banners;
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/banner2/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
-                this.banners = [];
+                this.banners2 = [];
             });
-        },
-        handleSetStatus(id) {
-            Banner.setStatus(id).then(res => {
-                this.getData();
-                alert(res.data.msg);
-            })
-        },
-        handleSetPosition(value) {
-            this.category_id = value;
         },
         handleSetDate(date) {
             this.date = date;
         },
         destroy(id) {
-            Banner.destroy(id).then(res => {
+            Banner2.destroy(id).then(res => {
                 alert(res.data.msg);
             })
         }
