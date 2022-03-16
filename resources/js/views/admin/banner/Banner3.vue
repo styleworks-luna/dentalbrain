@@ -1,5 +1,5 @@
 <template>
-    <layout title="배너관리" >
+    <layout title="배너관리 3" >
         <template v-slot:button>
             <router-link to="/admin/banner/create"
                          class="btn btn-lg btn-info">
@@ -167,7 +167,7 @@ export default {
             Banner.getData(params).then(res => {
                 this.banners = res.data.banners;
                 // 뒤로가기 page에 따라 reload
-                const path = `/admin/banner/${page}`
+                const path = `/admin/banner3/${page}`
                 if (this.$route.path !== path) this.$router.push(path);
             }).catch(err => {
                 this.banners = [];

@@ -2,6 +2,100 @@
 @import 'resources/sass/helpers/extends'
 @import 'resources/sass/helpers/mixins'
 
+@mixin m-middle-swiper-container
+    +margin(top 2.777777vw)
+    +padding(left 4.44444vw)
+    overflow: hidden
+
+    .swiper-slide
+        +margin(right 3.333333vw)
+        width: 31.66666vw !important
+
+        img
+            +size(31.66666vw, 31.66666vw)
+            +border(.277777vw solid rgba(0,0,0,0.1))
+            +border-radius(2.222222vw)
+            +box-sizing(border-box)
+
+@mixin lecture-card
+    .lecture-card
+        +size(43.333333vw)
+        +margin(top 11.11111vw)
+        float: left
+        position: relative
+
+        &:nth-child(2n + 1)
+            +margin(right 4.444444vw)
+
+        &:first-child,
+        &:nth-child(2)
+            +margin(top 0)
+
+        img
+            +size(43.333333vw, 32.5vw)
+            +border(1px solid rgba(0, 0, 0, 0.1))
+            +border-radius(2.222222vw)
+            box-sizing: border-box
+
+        .lecture-description
+            +margin(top 3.33333vw)
+
+            .lecture-description-sub
+                overflow: hidden
+
+                .lecture-type
+                    +padding(1.11111vw 1.38888vw)
+                    font-size: 2.77777vw
+                    float: left
+                    color: $white
+                    +background(null, null, null, $page-color)
+
+                .lecture-date
+                    +padding(top 1.111111vw left 1.3888888vw)
+                    float: left
+                    font-size: 3.0555555vw
+                    color: $gray-700
+
+                .lecture-time
+                    +size(18.777777vw)
+                    +ellipse()
+                    position: absolute
+                    bottom: 0
+                    right: 0
+                    font-size: 3.0555555vw
+                    text-align: right
+                    color: $gray-900
+
+            .lecture-name
+                +margin(top 2.222222vw)
+                +ellipse(null, 2)
+                display: block
+                height: 11.666666vw
+                font-size: 3.888888vw
+                line-height: 1.5
+
+            .lecture-all-price
+                +size(43.333333vw, 8.888888vw)
+                .lecture-price
+                    +padding(top 1.111111vw)
+                    font-weight: bold
+                    font-size: 3.888888vw
+                    color: $page-color
+                    position: absolute
+
+
+                .lecture-ogprice
+                    font-size: 3.055555vw
+                    font-weight: normal
+                    color: $gray-c
+                    text-decoration: line-through
+
+                .lecture-sale
+                    color: black
+                    font-weight: bold
+                    color: red
+                    font-size: 3.055555vw
+
 .wrap main
     +padding(bottom 28.61111111vw)
 
@@ -61,6 +155,7 @@
 
     h2
         +padding(left 4.44444vw)
+        +margin(bottom 5.5555vw)
         font-weight: bold
         font-size: 4.444444vw
 
@@ -78,6 +173,25 @@
                 +border(.277777vw solid rgba(0,0,0,0.1))
                 +border-radius(2.222222vw)
                 +box-sizing(border-box)
+
+    .m-middle-swiper-container2
+        +m-middle-swiper-container
+        +lecture-card
+        .swiper-slide
+            width: 43.33333vw !important
+            img
+                +size(43.33333vw, 32.33333vw)
+
+
+
+
+    .m-middle-swiper-container3
+        +m-middle-swiper-container
+        +lecture-card
+        .swiper-slide
+            width: 43.33333vw !important
+            img
+                +size(43.33333vw, 32.33333vw)
 
 .bottom-banner
     +margin(top 8.3333333vw bottom 5.5555555vw)

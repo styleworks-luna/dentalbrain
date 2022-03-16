@@ -34,7 +34,7 @@
                     <td>{{ slotProps.row.student_id }}</td>
                     <td>{{ slotProps.row.is_paid ? '유료회원' : '일반' }}</td>
                     <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}`">
+                        <router-link :to="`/admin/user/membership/${slotProps.row.user_id}/1`">
                             {{ slotProps.row.login_id }}
                         </router-link>
                     </td>
@@ -135,7 +135,7 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="students" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="students" :limit=3 @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>

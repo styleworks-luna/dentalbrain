@@ -7,6 +7,7 @@
 
 .content
     +background(null, null, null, $border-color-light)
+    background: linear-gradient(135deg, #FCE1FE, #C8E1F9)
     min-width: 1280px
     overflow: hidden
 
@@ -21,39 +22,59 @@
             +margin(70px auto 80px auto)
 
 .lecture-information-wrap
-    +padding(bottom 80px)
     overflow: hidden
 
-    .lecture-image
-        +size(538px, 405px)
-        +border(1px solid rgba(0, 0, 0, 0.1))
-        +border-radius(8px)
-        +box-sizing(border-box)
+    .lecture-test
         float: left
+
+        .lecture-image
+            +size(540px, 405px)
+            +border(1px solid rgba(0, 0, 0, 0.1))
+            +border-radius(8px)
+            +box-sizing(border-box)
+
+        .admin-menu
+            +padding(top 20px)
+
+            ul
+                font-size: 16px
+                text-align: center
+                display: flex
+                justify-content: start
+                align-items: center
+
+                li
+                    +background(null, null, null, $background-color-menu)
+
+                    &:last-child a
+                        +border(1px solid $border-color-base, right)
+
+                    a
+                        +size(135px, 46px)
+                        +border(1px solid $border-color-base, top bottom left)
+                        +box-sizing(border-box)
+                        display: block
+                        line-height: 46px
 
     .lecture-information
         +size(550px)
-        +padding(18px 0 0 50px)
+        +padding(18px 0 0 42px)
         float: left
 
         .lecture-sort
             overflow: hidden
 
-            .online,
-            .offline
+            .lecture-type
                 +padding(6px 8px)
                 +background(null, null, null, $page-color)
                 float: left
-                font-size: 12px
+                font-size: 11px
                 color: $white
 
-            .offline
-                +background(null, null, null, $purply-pink)
-
-            .lecture-subject
+            .lecture-date
                 +padding(6px 0 0 10px)
-                font-size: 14px
                 float: left
+                font-size: 12px
                 color: $gray-700
 
         .lecture-title
@@ -123,6 +144,21 @@
                 font-weight: bold
                 font-size: 20px
                 color: $page-color
+                .lecture-ogprice
+                    font-size: 20px
+                    font-weight: normal
+                    color: $gray-c
+                    text-decoration: line-through
+                .lecture-sale
+                    color: black
+                    font-weight: bold
+                    color: red
+                    font-size: 14px
+                    +margin(left 10px)
+                    //+padding(bottom 10px)
+                    //vertical-align: middle
+                    //align-self: center
+
 
             .lecture-exclude-price
                 font-weight: normal
@@ -187,7 +223,18 @@
         content: ''
         display: block
 
+.header-menu-wrap
+    +border(1px solid $border-color-light, top)
+
+    .header-menu
+        +size(1280px)
+        +margin(0 auto)
+        +padding(10px 0)
+        overflow: hidden
+
+
 .lecture-detail
+    +padding(top 80px)
 
     .lecture-detail-menu
         +size(1140px)
@@ -291,6 +338,37 @@
             font-size: 75%
             line-height: 0
             vertical-align: baseline
+
+.lecture-list
+    +padding(top 138px)
+
+    .list-title
+        overflow: hidden
+
+        h3
+            float: left
+            font-weight: bold
+            font-size: 20px
+
+    ul
+        font-size: 16px
+        a
+            font-weight: bold
+            +padding(right 10px)
+
+        +padding(top 20px)
+        //border-top: 1px solid black
+
+        li
+            +padding(20px)
+            +border(1px solid $border-color-base, bottom)
+
+            &:first-child
+                +border(2px solid $gray-900, top)
+            &:last-child
+                +border(2px solid $border-color-base, bottom)
+
+
 
 .lecture-comment
     +padding(top 138px)

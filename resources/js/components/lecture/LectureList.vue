@@ -6,14 +6,8 @@
                     <img :src="lecture.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
-                            <span class="online" v-if="lecture.is_online">온라인</span>
-                            <span class="offline" v-else>오프라인</span>
-                            <p class="lecture-type">
-                                <template v-if="lecture.minor_category_name">
-                                {{ lecture.major_category_name }}・{{ lecture.minor_category_name }}
-                                </template>
-                                <template v-else>{{ lecture.major_category_name }}</template>
-                            </p>
+                            <span class="lecture-type">{{lecture.minor_category_name}}</span>
+                            <p class="lecture-date">수강기간 10일</p>
                             <p class="lecture-time" v-if="lecture.place == null">{{ lecture.running_time }}</p>
                             <p class="lecture-time"
                                v-else-if="lecture.place != null && !Helper.dateCompare(lecture.place.started_at, lecture.place.ended_at)">
@@ -26,9 +20,21 @@
                             </p>
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
-                        <p class="lecture-price" v-if="lecture.is_free == 0">
+                        <div v-if="!isMobile()" class="lecture-all-price">
+                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
+                            <p class="lecture-price" v-if="lecture.is_free == 0">
                             {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                        <p class="lecture-price" v-else>무료</p>
+                            <span class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-else>무료</p>
+                        </div>
+                        <div v-else class="lecture-all-price">
+                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
+                            <span style="padding-bottom: 4px" class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-if="lecture.is_free == 0">
+                                {{ Helper.numberWithCommas(lecture.price) }}원</p>
+                            <p style="padding-top: 5vw"class="lecture-price" v-else>무료</p>
+                        </div>
+
                     </div>
                 </a>
             </li>
@@ -39,6 +45,15 @@
 <script>
 export default {
     name: 'LectureList',
+    methods: {
+        isMobile() {
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                return true
+            } else {
+                return false
+            }
+        }
+    },
     props: {
         'list': Array
     },
@@ -57,5 +72,4 @@ export default {
 </script>
 
 <style>
-
 </style>

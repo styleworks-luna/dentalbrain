@@ -13,7 +13,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('css/swiper-bundle.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/index.css') }}">
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/lecture/lecture-list.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
@@ -51,36 +51,70 @@
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
-                            <div class="swiper-slide">
-                                <a href="{{ route('api.banners.redirect',$recommend->id) }}">
-                                    <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
-                                </a>
-                            </div>
+                        <div class="swiper-slide">
+                            <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                                <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
+                            </a>
+                        </div>
                         @empty
-                            <div class="swiper-slide">
-                                <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                </a>
-                            </div>
-                            <div class="swiper-slide">
-                                <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                                </a>
-                            </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="">
+                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                            </a>
+                        </div>
                         @endforelse
-
                     </div>
                 </div>
                 <div class="middle-swiper-button-prev swiper-button-prev-common"></div>
                 <div class="middle-swiper-button-next swiper-button-next-common"></div>
             </section>
 
-            <lecture-all :is_pagination="false" :per_page="9"></lecture-all>
+            <section class="middle-banner">
+                <h2>위크 특가! TIME DEAL</h2>
+                <div class="middle-swiper-container2">
+                    <lecture-banner1></lecture-banner1>
+                </div>
+                <div class="middle-swiper-button-prev2 swiper-button-prev-common"></div>
+                <div class="middle-swiper-button-next2 swiper-button-next-common"></div>
+            </section>
+
+            <section class="middle-banner">
+                <h2>실시간 인기강의</h2>
+                <div class="middle-swiper-container3">
+                    <lecture-banner2></lecture-banner2>
+                </div>
+                <div class="middle-swiper-button-prev3 swiper-button-prev-common"></div>
+                <div class="middle-swiper-button-next3 swiper-button-next-common"></div>
+            </section>
+
+
+            <h2 class="lecture_title">일이삼사오륙칠팔구십일이삼사오육칠팔구십</h2>
+            <lecture-all :is_pagination="false" :per_page="16"></lecture-all>
 
             <section class="ad">
                 @if($bar)

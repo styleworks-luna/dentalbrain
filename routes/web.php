@@ -14,6 +14,7 @@
 /*============================ AUTH ============================*/
 
 // 회원가입
+use App\Http\Controllers\Admin\Banner\ProgramBannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -412,24 +413,39 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         });
 
         Route::group(['prefix' => 'banner', 'as' => 'banners.'], function () {
+            //배너 종류 데이터
+            Route::get('category', 'Admin\Banner\BannerController@getBannerCategory')->name('getBannerCategory');
+            //배너 클릭 횟수 올리고 링크로 이동
+            Route::get('redirect/{banner}', 'Admin\Banner\BannerController@redirectToLink')->name('redirectToLink');
             //배너 index 페이지 데이터
             Route::get('/', 'Admin\Banner\BannerController@index')->name('index');
             //배너 생성 함수
             Route::post('/', 'Admin\Banner\BannerController@store')->name('store');
             //배너 수정 페이지 데이터
             Route::get('{banner}/edit', 'Admin\Banner\BannerController@edit')->name('edit');
+            //배너 상태 변경 함수
+            Route::patch('{banner}/status', 'Admin\Banner\BannerController@statusChange')->name('statusChange');
             //배너 업데이트 함수
             Route::put('{banner}', 'Admin\Banner\BannerController@update')->name('update');
             //배너 삭제 함수
             Route::delete('{banner}', 'Admin\Banner\BannerController@destroy')->name('destroy');
-            //배너 상태 변경 함수
-            Route::patch('{banner}/status', 'Admin\Banner\BannerController@statusChange')->name('statusChange');
-            //배너 검색
-            Route::post('search', 'Admin\Banner\BannerController@search')->name('search');
-            //배너 클릭 횟수 올리고 링크로 이동
-            Route::get('redirect/{banner}', 'Admin\Banner\BannerController@redirectToLink')->name('redirectToLink');
+        });
+
+        Route::group(['prefix' => 'program-banner', 'as' => 'program-banner.'], function () {
             //배너 종류 데이터
-            Route::get('category', 'Admin\Banner\BannerController@getBannerCategory')->name('getBannerCategory');
+            Route::get('category', [ProgramBannerController::class, 'getBannerCategory'])->name('getBannerCategory');
+            //배너 index 페이지 데이터 (검색)
+            Route::get('/', [ProgramBannerController::class, 'index'])->name('index');
+            //배너 생성 함수
+            Route::post('/', [ProgramBannerController::class, 'store'])->name('store');
+            //배너 상태 변경 함수
+            Route::patch('{banner}/status', [ProgramBannerController::class, 'statusChange'])->name('statusChange');
+            //배너 수정 페이지 데이터
+            Route::get('{banner}', [ProgramBannerController::class, 'edit'])->name('edit');
+            //배너 업데이트 함수
+            Route::put('{banner}', [ProgramBannerController::class, 'update'])->name('update');
+            //배너 삭제 함수
+            Route::delete('{banner}', [ProgramBannerController::class, 'destroy'])->name('destroy');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {

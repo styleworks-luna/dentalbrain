@@ -156,6 +156,9 @@
                                          :index="index"
                                          @setFile="updateLectureFile"></file-upload>
                         </div>
+                        <div class="btn-wrap">
+                            <button class="btn btn-outline-dark" @click.prevent="removeLecture(index)">강의 삭제</button>
+                        </div>
                     </div>
 
                     <button class="btn btn-outline-dark w-100" @click="addLecture">강의 추가</button>

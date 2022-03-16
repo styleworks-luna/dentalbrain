@@ -21,11 +21,7 @@
                         @isset ($payment->student)
                             <li>
                                 <div class="lecture-information">
-                                    @if ($payment->student->program->is_online)
-                                        <span class="online">온라인</span>
-                                    @else
-                                        <span class="offline">오프라인</span>
-                                    @endif
+                                    <span class="lecture-type">{{ $payment->student->program->minor_category_name }}</span>
 
                                     <h3 class="lecture-name">{{ $payment->student->program->title }}</h3>
                                 </div>

@@ -2,35 +2,59 @@ $(function () {
 
     //menu tab 클릭 이벤트
     var clickTabDetail = $('.menu-tab-detail');
+    var clickTabList = $('.menu-tab-list');
     var clickTabComment = $('.menu-tab-comment');
 
     clickTabDetail.click(function () {
         clickTabDetail.addClass('active');
+        clickTabComment.removeClass('active');
+        clickTabList.removeClass('active');
+    });
+
+    clickTabList.click(function () {
+        clickTabList.addClass('active');
+        clickTabDetail.removeClass('active');
         clickTabComment.removeClass('active');
     });
 
     clickTabComment.click(function () {
         clickTabComment.addClass('active');
         clickTabDetail.removeClass('active');
+        clickTabList.removeClass('active');
     });
 
     //mobile menu tab 클릭 이벤트
     var clickMTabDetail = $('.m-menu-tab-detail');
+    var clickMTabList = $('.m-menu-tab-list');
     var clickMTabComment = $('.m-menu-tab-comment');
 
     clickMTabDetail.click(function (e) {
         clickMTabDetail.addClass('active');
+        clickMTabList.removeClass('active');
         clickMTabComment.removeClass('active');
         e.preventDefault();
         $('.lecture-detail-content').css('display', 'block');
+        $('.lecture-list').css('display', 'none');
+        $('.lecture-comment').css('display', 'none');
+    });
+
+    clickMTabList.click(function (e) {
+        clickMTabList.addClass('active');
+        clickMTabDetail.removeClass('active');
+        clickMTabComment.removeClass('active');
+        e.preventDefault();
+        $('.lecture-list').css('display', 'block');
+        $('.lecture-detail-content').css('display', 'none');
         $('.lecture-comment').css('display', 'none');
     });
 
     clickMTabComment.click(function (e) {
         clickMTabComment.addClass('active');
         clickMTabDetail.removeClass('active');
-        $('.lecture-detail-content').css('display', 'none');
+        clickMTabList.removeClass('active');
         $('.lecture-comment').css('display', 'block');
+        $('.lecture-detail-content').css('display', 'none');
+        $('.lecture-list').css('display', 'none');
     });
 
     //댓글 갯수 이벤트
@@ -73,6 +97,38 @@ $(function () {
     //하트 클릭 이벤트
     var clickLike = $('.like')
     var lectureIdx = $('.lecture-idx').val();
+    var open = $('.open')
+
+    open.click(function (e){
+        e.preventDefault();
+        var program_id = $('#program_id').val();
+        let isOnline = $('#program_is_online').val();
+        let apiUrl = '';
+
+        if (isOnline) {
+            apiUrl = `/api/admin/lecture/online/${program_id}`;
+        }
+        else {
+            apiUrl = `/api/admin/lecture/offline/${program_id}`;
+        }
+
+        $.ajax({
+            url: apiUrl,
+            type: "patch",
+            success: function (data) {
+                alert('변경되었습니다.')
+                window.location.reload();
+            },
+
+            error: function (request, status, error) {
+                if(request.status == 401) {
+                    alert('로그인 후 이용해 주세요.');
+                } else {
+                    alert(request.responseJSON.msg);
+                }
+            }
+        });
+    })
 
     clickLike.click(function (e) {
         e.preventDefault();

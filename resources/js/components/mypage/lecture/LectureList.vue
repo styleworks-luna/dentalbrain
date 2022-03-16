@@ -10,17 +10,9 @@
                     </figure>
                     <div class="content-information">
                         <div class="lecture-sort">
-                            <span class="online" v-if="lecture.program.is_online">온라인</span>
-                            <span class="offline" v-else>오프라인</span>
-                            <p class="lecture-subject">
-                                <template v-if="lecture.program.minor_category_name">
-                                    {{ lecture.program.major_category_name }} &middot;
-                                    {{ lecture.program.minor_category_name }}
-                                </template>
-                                <template v-else>
-                                    {{ lecture.program.major_category_name }}
-                                </template>
-                            </p>
+                            <span class="lecture-type">{{ lecture.program.minor_category_name }}</span>
+
+                            <p class="lecture-date">수강기간 10일</p>
                         </div>
                         <h3 class="lecture-title">
                             <a :href="'/lectures/' + lecture.program.id">{{ lecture.program.title }}</a>
@@ -104,7 +96,7 @@
 
                                 <!-- 기간 종료 -->
                                 <div class="d-day" v-else><em>기간 만료</em></div>
-                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용</p>
+                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용됩니다.</p>
                                 </div>
                                 <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지
                                 </div>

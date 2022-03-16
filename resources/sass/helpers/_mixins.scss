@@ -279,3 +279,12 @@
         @content;
     }
 }
+
+@mixin middle-swiper-button-next{
+    top: 186px;
+    right: -20px;
+}
+
+@mixin middle-swiper-button-prev{
+    top: 186px;
+}

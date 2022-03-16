@@ -24,24 +24,17 @@
         .lecture-sort
             overflow: hidden
 
-            .online,
-            .offline
-                +padding(1.6666666vw 2.222222vw)
-                display: block
+            .lecture-type
+                +padding(1.666666vw 2.222222vw)
+                font-size: 3.333333vw
                 float: left
-                font-size: 3.3333333vw
                 color: $white
-
-            .online
                 +background(null, null, null, $page-color)
 
-            .offline
-                +background(null, null, null, $purply-pink)
-
-            .lecture-subject
-                +padding(top 1.3888888vw left 2.7777777vw)
+            .lecture-date
+                +padding(top 1.3888888vw left 2.777777vw)
                 float: left
-                font-size: 3.88888888vw
+                font-size: 3.888888vw
                 color: $gray-700
 
     .lecture-title
@@ -95,6 +88,11 @@
             .price-individual
                 overflow: hidden
 
+                .lecture-ogprice
+                    color: $gray-c
+                    text-decoration: line-through
+                    font-weight: normal
+
                 .lecture-exclude-price
                     color: $gray-c
                     font-weight: normal
@@ -107,7 +105,7 @@
                     display: none
 
                 span
-                    +size(38.888888vw)
+                    +size(20vw)
                     +padding(top 2.5vw)
                     font-size: 3.8888888vw
                     display: block
@@ -122,6 +120,14 @@
                     font-weight: bold
                     color: $page-color
                     line-height: 6.11111111vw
+            .lecture-sale
+                text-align: right
+                color: black
+                font-weight: bold
+                color: red
+                +margin(bottom 5px)
+                font-size: 3.333333vw
+                //+padding(left 4.72222px)
 
     .lecture-btn
         +size(100%)
@@ -187,12 +193,12 @@
             overflow: hidden
 
         li
-            +size(36.6666666vw)
+            +size(28vw)
             text-align: center
             float: left
 
-            &:first-child
-                +margin(right 13.3333333vw)
+            //&:first-child
+            //    +margin(right 2vw)
 
             a
                 +padding(4.16666666vw)
@@ -283,6 +289,35 @@
             font-size: 75%
             line-height: 0
             vertical-align: baseline
+
+.lecture-list
+    display: none
+    //+padding(top 138px)
+
+    .list-title
+        overflow: hidden
+
+        h3
+            float: left
+            font-weight: bold
+            font-size: 20px
+
+    ul
+
+        a
+            font-weight: bold
+            +padding(right 3.888888vw)
+
+        +padding(top 2.777777vw)
+        //border-top: 1px solid black
+
+        li
+            //+size(50vw)
+            +margin(left 5.555555vw right 5.555555vw)
+            +padding(top 5vw bottom 5vw)
+            //+margin(4%)
+            +border(1px solid $border-color-base, bottom)
+
 
 .lecture-comment
     display: none

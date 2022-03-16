@@ -31,14 +31,9 @@
                         </div>
                         <div class="lecture-information">
                             <div class="lecture-sort">
-                                @if($program->is_online == true)
-                                    <span class="online">온라인</span>
-                                @else
-                                    <span class="offline">오프라인</span>
-                                @endif
+                                <span class="lecture-type">{{$program->minor_category_name}}</span>
 
-                                <p class="lecture-subject">
-                                    {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
+                                <p class="lecture-date">수강기간 10일</p>
                             </div>
                             <h2 class="lecture-title">{{ $program->title }}</h2>
                             <table>
@@ -291,7 +286,7 @@
                                                    data-parsley-required-message="※ 이용약관을 동의해 주세요.">
                                             <label for="offer-consent">(필수) 개인정보 제3자 제공 동의</label>
                                         </div>
-                                        <p>신청자의 개인정보가 신청여부 확인 등 모임 진행을 위해 개설자에게 제공됩니다.</p>
+                                        <p>신청자의 개인정보가 신청여부 확인 등 강의 진행을 위해 관리자에게 제공됩니다.</p>
                                         <a href="" class="trigger-privacy-to-third">내용보기</a>
                                     </div>
                                     <div class="offer_error_wrap"></div>

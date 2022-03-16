@@ -3,6 +3,7 @@
 namespace App\Models\Manage;
 
 use App\Models\File;
+use App\Models\Program\Program;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,6 +19,8 @@ class Banner extends Model
     static $POSITION_BAR = 2;
     static $POSITION_RECOMMEND = 3;
     static $POSITION_BOTTOM = 4;
+    static $POSITION_AREA2 = 5;
+    static $POSITION_AREA3 = 6;
 
     protected $guarded = [];
 
@@ -53,7 +56,11 @@ class Banner extends Model
     public function categories()
     {
         return $this->belongsTo(BannerCategory::class, 'category_id', 'id');
+    }
 
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
     /**

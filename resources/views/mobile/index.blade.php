@@ -86,6 +86,22 @@
                 </div>
             </section>
 
+            <section class="middle-banner">
+                <h2>위크 특가! TIME DEAL</h2>
+                <div class="m-middle-swiper-container2">
+                    <lecture-banner1></lecture-banner1>
+                </div>
+            </section>
+
+            <section class="middle-banner">
+                <h2>실시간 인기강의</h2>
+                <div class="m-middle-swiper-container3">
+                    <lecture-banner2></lecture-banner2>
+                </div>
+            </section>
+
+
+
             <div class="m-row">
                 <lecture-all :is_pagination="false" :per_page="8" :mobile="false"></lecture-all>
             </div>

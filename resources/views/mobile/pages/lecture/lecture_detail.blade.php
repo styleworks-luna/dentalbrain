@@ -25,14 +25,9 @@
                 <div class="lecture-information">
                     <div class="m-row">
                         <div class="lecture-sort">
-                            @if($program->is_online == true)
-                                <span class="online">온라인</span>
-                            @else
-                                <span class="offline">오프라인</span>
-                            @endif
+                            <span class="lecture-type">{{$program->minor_category_name}}</span>
 
-                            <p class="lecture-subject">
-                                {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
+                            <p class="lecture-date">수강기간 10일</p>
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <div class="lecture-information-text">
@@ -124,7 +119,10 @@
                                                        data-price="{{ $program->price }}">
                                                         {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
                                                     </p>
+                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
+                                                    <p class="lecture-ogprice">990,000원</p>
                                                 </div>
+                                                <p class="lecture-sale">30% 할인</p>
                                                 <div class="price-individual">
                                                     <span>유료회원가</span>
                                                     <p class="lecture-price"
@@ -239,6 +237,7 @@
                     <div class="lecture-detail-menu">
                         <ul>
                             <li><a href="#content" class="m-menu-tab-detail active">상세정보</a></li>
+                            <li><a href="#list" class="m-menu-tab-list">강의목록</a></li>
                             <li><a href="#comment" class="m-menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
@@ -249,6 +248,15 @@
                     </div>
                 </div>
             </section>
+
+            <sectrion id="list" class="lecture-list">
+                <ul>
+                    <li class="a"><a>1강</a>임플란트</li>
+                    <li class="a"><a>1강</a>임플란트</li>
+                    <li class="a"><a>1강</a>임플란트</li>
+                </ul>
+            </sectrion>
+
 
             <section id="comment" class="lecture-comment">
                 <div class="m-row">

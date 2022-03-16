@@ -6,12 +6,12 @@ $(function () {
         return variable;
     }
 
-
     var mySwiper = new Swiper('.swiper-container', {
         autoplay: {
             delay: 5000,
             disableOnInteraction: false,
         },
+        cssMode: true,
         pagination: {
             el: '.swiper-pagination',
             type: 'fraction',
@@ -47,8 +47,34 @@ $(function () {
         },
     });
 
+    var mySwiper = new Swiper('.middle-swiper-container2', {
+        slidesPerView: 4,
+        spaceBetween: 19,
+        navigation: {
+            nextEl: '.middle-swiper-button-next2',
+            prevEl: '.middle-swiper-button-prev2',
+        },
+    });
+
+    var mySwiper = new Swiper('.middle-swiper-container3', {
+        slidesPerView: 4,
+        spaceBetween: 19,
+        navigation: {
+            nextEl: '.middle-swiper-button-next3',
+            prevEl: '.middle-swiper-button-prev3',
+        },
+    });
+
     var mySwiper = new Swiper('.m-middle-swiper-container', {
         slidesPerView: 2.6,
+    });
+
+    var mySwiper = new Swiper('.m-middle-swiper-container2', {
+        slidesPerView: 2.1,
+    });
+
+    var mySwiper = new Swiper('.m-middle-swiper-container3', {
+        slidesPerView: 2.1,
     });
 
     var mySwiper = new Swiper('.bottom-swiper-container', {

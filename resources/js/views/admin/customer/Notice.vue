@@ -45,7 +45,7 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="notices" @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="notices" :limit=3 @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>

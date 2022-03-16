@@ -83,21 +83,14 @@ body
                     top: 8px
                     left: 16px
 
-                    .online,
-                    .offline
+                    .lecture-type
                         +padding(1.3888888vw 1.666666vw)
-                        display: block
-                        float: left
                         font-size: 2.77777vw
+                        float: left
                         color: $white
-
-                    .online
                         +background(null, null, null, $page-color)
 
-                    .offline
-                        +background(null, null, null, $purply-pink)
-
-                    .lecture-subject
+                    .lecture-date
                         +padding(top 1.1111111vw left 1.666666vw)
                         float: left
                         font-size: 3.3333333vw
@@ -146,6 +139,8 @@ body
             .d-day
                 font-weight: bold
                 font-size: 4.444444vw
+                em
+                    color: $page-color
 
             .dedicate
                 +padding(top 1.38888888vw)

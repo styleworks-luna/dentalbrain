@@ -39,11 +39,30 @@
             </li>
 
             <!-- 배너 관리 메뉴 -->
-            <li class="c-sidebar-nav-item">
-                <router-link to="/admin/banner/1" class="c-sidebar-nav-link"
-                             :class="{ activeClass: checkUrl('/admin/banner') }">
-                    배너관리
-                </router-link>
+            <li class="c-sidebar-nav-dropdown"
+                :class="{ showClass: checkUrl('/admin/lecture') }">
+                <a href="#" class="c-sidebar-nav-dropdown-toggle">배너관리</a>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <router-link to="/admin/banner/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/banner') }">
+                            배너관리 1
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/banner2/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/banner2') }">
+                            배너관리 2
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/banner3/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/banner3') }">
+                            배너관리 3
+                        </a>
+                    </router-link>
+                </ul>
             </li>
 
             <!-- 강의 관리 메뉴 -->
