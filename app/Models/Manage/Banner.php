@@ -30,12 +30,14 @@ class Banner extends Model
 
     public function getDesktopImageNameAttribute()
     {
-        return File::find($this->desktop_file_id)->name;
+        $desktopFile = File::find($this->desktop_file_id);
+        return $desktopFile->name ?? null;
     }
 
     public function getMobileImageNameAttribute()
     {
-        return File::find($this->mobile_file_id)->name;
+        $mobileFile = File::find($this->mobile_file_id);
+        return $mobileFile->name ?? null;
     }
 
     public function getBannerCategoryNameAttribute()
