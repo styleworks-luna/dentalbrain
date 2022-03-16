@@ -338,6 +338,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
                     // 온라인 강의 수강 취소
                     Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
+                    // 온라인 강의 수강 취소
+                    Route::put('students/{student}/extend', [\App\Http\Controllers\Admin\Program\OnlineStudentController::class, 'extend'])->name('students.extend');
                     // 온라인 강의 계좌입금 확인
                     Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 온라인 강의 수정
