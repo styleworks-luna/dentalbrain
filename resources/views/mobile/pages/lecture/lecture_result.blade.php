@@ -21,17 +21,9 @@
 
                     <div class="lecture-information">
                         <div class="lecture-sort">
-                            @if($program->is_online == true)
-                                <span class="online">온라인</span>
-                            @else
-                                <span class="offline">오프라인</span>
-                            @endif
+                            <span class="lecture-type">{{$program->minor_category_name}}</span>
 
-                            <p class="lecture-subject">
-                                {{ $program->major_category_name }} @isset($program->minor_category_name) &middot; {{ $program->minor_category_name}} @endisset</p>
-                            @if($program->is_online == true)
-                                <p class="lecture-length">{{ $program->running_time }}</p>
-                            @endif
+                            <p class="lecture-date">수강기간 10일</p>
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <table>
