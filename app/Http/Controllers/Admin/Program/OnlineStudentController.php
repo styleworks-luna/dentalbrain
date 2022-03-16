@@ -8,6 +8,7 @@ use App\Services\Search\SearchService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class OnlineStudentController extends OnlineProgramController
 {
@@ -39,17 +40,19 @@ class OnlineStudentController extends OnlineProgramController
     /**
      * @param Request $request
      * @param Program $program
-     * @param ProgramStudent $programStudent
+     * @param ProgramStudent $student
      * @return JsonResponse
      */
-    public function extend(Request $request, Program $program, ProgramStudent $programStudent): JsonResponse
+    public function extend(Request $request, Program $program, ProgramStudent $student): JsonResponse
     {
         $data = $request->validate(['expired_at' => 'required']);
-        $expiredAt = Carbon::make($data['expiredAt'] ?? null);
+        $expiredAt = Carbon::make($data['expired_at'] ?? null);
 
-//        $programStudent->update(['expired_at' => $expiredAt]);
+        $student->expired_at = $expiredAt;
+        $student->save();
+
         return response()->json([
-            'expired_at' => $expiredAt
+            'expired_at' => $expiredAt->toDateTimeLocalString()
         ]);
     }
 }
