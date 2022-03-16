@@ -139,6 +139,22 @@ class FileController extends Controller
         ]);
     }
 
+//    public function uploadMailFile(Request $request)
+//    {
+//        Validator::make($request->all(), [
+//            'file' => ['required', 'file']
+//        ])->validate();
+//
+//        $uploadedFile = $request->file('file');
+//
+//        $file = $this->uploadToStorage($uploadedFile, 'public/mail/files', true);
+//
+//        return response()->json([
+//            'link' => $file->url,
+//            'file' => $file,
+//        ]);
+//    }
+
     public function uploadArticleImage(Request $request)
     {
         Validator::make($request->all(), [
