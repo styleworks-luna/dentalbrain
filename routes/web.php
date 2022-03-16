@@ -333,7 +333,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'index'])->name('index');
                 // 온라인 강의 저장
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
-                
+
                 Route::group(['prefix' => '{program}'], function () {
                     // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
@@ -349,13 +349,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // 온라인 강의 수강생 관련
                     Route::group(['prefix' => 'students'], function () {
                         // 온라인 강의 수강생 목록
-                        Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
+                        Route::get('', 'Admin\Program\OnlineStudentController@students')->name('students');
                         // 온라인 강의 수강 취소
-                        Route::put('students/{student}/extend', [\App\Http\Controllers\Admin\Program\OnlineStudentController::class, 'extend'])->name('students.extend');
+                        Route::put('{student}/extend', [\App\Http\Controllers\Admin\Program\OnlineStudentController::class, 'extend'])->name('students.extend');
                         // 온라인 강의 수강 취소
-                        Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
+                        Route::delete('{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
                         // 온라인 강의 계좌입금 확인
-                        Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
+                        Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     });
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
