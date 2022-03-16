@@ -24,24 +24,17 @@
         .lecture-sort
             overflow: hidden
 
-            .online,
-            .offline
-                +padding(1.6666666vw 2.222222vw)
-                display: block
+            .lecture-type
+                +padding(1.666666vw 2.222222vw)
+                font-size: 3.333333vw
                 float: left
-                font-size: 3.3333333vw
                 color: $white
-
-            .online
                 +background(null, null, null, $page-color)
 
-            .offline
-                +background(null, null, null, $purply-pink)
-
-            .lecture-subject
-                +padding(top 1.3888888vw left 2.7777777vw)
+            .lecture-date
+                +padding(top 1.3888888vw left 2.777777vw)
                 float: left
-                font-size: 3.88888888vw
+                font-size: 3.888888vw
                 color: $gray-700
 
     .lecture-title
@@ -313,15 +306,15 @@
 
         a
             font-weight: bold
-            +padding(right 10px)
+            +padding(right 3.888888vw)
 
-        +padding(top 10px)
+        +padding(top 2.777777vw)
         //border-top: 1px solid black
 
         li
             //+size(50vw)
-            +margin(left 16px right 16px)
-            +padding(top 18px bottom 18px)
+            +margin(left 5.555555vw right 5.555555vw)
+            +padding(top 5vw bottom 5vw)
             //+margin(4%)
             +border(1px solid $border-color-base, bottom)
 
