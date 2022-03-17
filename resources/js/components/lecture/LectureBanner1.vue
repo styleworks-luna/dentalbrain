@@ -53,11 +53,6 @@ export default {
         this.getBanner1();
     },
     methods: {
-        getBanner1(){
-            Lecture.getBanner1().then(res =>{
-                this.lectures = res.data.banners;
-            })
-        },
         isMobile() {
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 return true
@@ -65,7 +60,11 @@ export default {
                 return false
             }
         },
-
+        getBanner1(){
+            Lecture.getBanner1().then(res =>{
+                this.lectures = res.data.banners;
+            })
+        }
     },
 
 }

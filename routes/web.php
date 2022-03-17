@@ -335,23 +335,32 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'index'])->name('index');
                 // 온라인 강의 저장
                 Route::post('/', 'Admin\Program\OnlineProgramController@store')->name('store');
+
                 Route::group(['prefix' => '{program}'], function () {
-                    // 온라인 강의 수강생 목록
-                    Route::get('students', 'Admin\Program\OnlineStudentController@students')->name('students');
-                    // 온라인 강의 수강 취소
-                    Route::delete('students/{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
-                    // 온라인 강의 계좌입금 확인
-                    Route::patch('students/{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     // 온라인 강의 수정
                     Route::get('/', 'Admin\Program\OnlineProgramController@edit')->name('edit');
                     // 온라인 강의 업데이트
                     Route::put('/', 'Admin\Program\OnlineProgramController@update')->name('update');
                     // 온라인 강의 비공개/공개 전환
                     Route::patch('/', [\App\Http\Controllers\Admin\Program\BaseProgramController::class, 'changeOpen'])->name('changeOpen');
+                    // 온라인 강의 삭제
+                    Route::delete('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'delete'])->name('delete');
                     // 온라인 강의 복사 리소스
                     Route::get('/duplicate', 'Admin\Program\OnlineProgramController@duplicateEdit')->name('duplicate-edit');
                     // 온라인 강의 복사
                     Route::post('/duplicate', 'Admin\Program\OnlineProgramController@duplicate')->name('duplicate');
+
+                    // 온라인 강의 수강생 관련
+                    Route::group(['prefix' => 'students'], function () {
+                        // 온라인 강의 수강생 목록
+                        Route::get('', 'Admin\Program\OnlineStudentController@students')->name('students');
+                        // 온라인 강의 수강 취소
+                        Route::put('{student}/extend', [\App\Http\Controllers\Admin\Program\OnlineStudentController::class, 'extend'])->name('students.extend');
+                        // 온라인 강의 수강 취소
+                        Route::delete('{student}', 'Admin\Payment\CancelController@cancel')->name('students.cancel');
+                        // 온라인 강의 계좌입금 확인
+                        Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
+                    });
                 });
 //                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });

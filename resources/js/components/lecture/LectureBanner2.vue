@@ -2,8 +2,8 @@
     <div class="swiper-wrapper">
         <ul class="swiper-slide" v-for="lecture in lectures">
             <li class="lecture-card" :key="lectures.id">
-                <a :href="'/lectures/' + lecture.id">
-                    <img :src="lecture.url" alt="">
+                <a :href="'/lectures/' + lecture.program_id">
+                    <img :src="lecture.program.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{lecture.minor_category_name}}</span>
@@ -29,8 +29,29 @@
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
+
+// api
+import Lecture from '@/api/lecture/Lecture.js'
+
 export default {
-    name: 'LectureBanner2',
+    name: 'LectureBanner1',
+    props: {
+        'list': Array
+    },
+    data() {
+        return {
+            lectures: [],
+        }
+    },
+    watch: {
+        list() {
+            this.lectures = this.list;
+        }
+    },
+    mounted() {
+        this.getBanner2();
+    },
     methods: {
         isMobile() {
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -38,58 +59,14 @@ export default {
             } else {
                 return false
             }
+        },
+        getBanner2(){
+            Lecture.getBanner2().then(res =>{
+                this.lectures = res.data.banners;
+            })
         }
     },
-    props: {
-        'list': Array
-    },
-    data() {
-        return {
-            lectures: [
-                {
-                    id: 1,
-                    url: "http://dbv2020.onoffmix.test/storage/program/12/thumbnail/123.jpg",
-                    minor_category_name: "예방",
-                    running_time: "수강기간 10일",
-                    title: "슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉슈슉",
-                    price: "111,123",
 
-
-                },
-                {
-                    id: 2,
-                    url: "http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG",
-                    minor_category_name: "예방",
-                    running_time: "수강기간 10일",
-                    title: "test",
-                    price: "111,123",
-                },
-                {
-                    id: 3,
-                    url: "http://dbv2020.onoffmix.test/storage/program/12/thumbnail/123.jpg",
-                    minor_category_name: "예방",
-                    running_time: "수강기간 10일",
-                    title: "test",
-                    price: "111,123",
-
-
-                },
-                {
-                    id: 4,
-                    url: "http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG",
-                    minor_category_name: "예방",
-                    running_time: "수강기간 10일",
-                    title: "test",
-                    price: "111,123",
-                },
-            ],
-        }
-    },
-    watch: {
-        list() {
-            this.lectures = this.list;
-        }
-    }
 }
 
 </script>

@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Models\Program\Survey\SurveyAnswer;
 use App\Services\File\LectureThumbnail;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -145,6 +147,48 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
         return response()->json([
             'msg' => '온라인 강의가 생성되었습니다.',
+        ]);
+    }
+
+    public function delete(Request $request, Program $program): \Illuminate\Http\JsonResponse
+    {
+        $exists = $program->students()->exists();
+        if ($exists) {
+            return response()->json([
+                'msg' => '신청자가 있는 강의는 삭제할 수 없습니다.'
+            ]);
+        }
+        try {
+            DB::beginTransaction();
+
+            $program->answers()->delete();
+            $program->surveys()->delete();
+
+            $program->comments()->delete();
+
+            $program->lectures()->each(function ($lecture) {
+                $lectureThumbnail = new LectureThumbnail($lecture);
+                $lectureThumbnail->deleteFile();
+            });
+            $program->lectures()->delete();
+
+            $programThumbnail = new ProgramThumbnail($program);
+            $programThumbnail->deleteFile();
+            $program->thumbnail()->delete();
+
+            $program->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('ONLINE PROGRAM DELETE ERROR', [$e]);
+            return response()->json([
+                'msg' => '에러가 발생하였습니다.'
+            ]);
+        }
+
+        return response()->json([
+            'msg' => ' 성공'
         ]);
     }
 }

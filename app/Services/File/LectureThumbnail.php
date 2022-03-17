@@ -21,6 +21,9 @@ class LectureThumbnail extends FileTemplate
     protected function deleteFileInDB()
     {
         $lecture = $this->model;
+        if ($lecture->thumbnail == null) {
+            return false;
+        }
         $path = $lecture->thumbnail->path;
         $lecture->thumbnail->delete();
         return $path;

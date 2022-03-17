@@ -66,6 +66,7 @@
                                      class="btn btn-success text-white float-left">
                             복사
                         </router-link>
+                        <button class="btn btn-danger float-left" @click="destroy(slotProps.row.id)">삭제</button>
                     </td>
                 </template>
             </table-grid>
@@ -186,7 +187,12 @@
                     alert(res.data.msg);
                 })
             },
-
+            destroy(id){
+                Online.destroy(id).then(res => {
+                    alert(res.data.msg);
+                    window.location.reload();
+                })
+            }
         }
     }
 </script>
