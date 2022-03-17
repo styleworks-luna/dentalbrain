@@ -7,6 +7,8 @@
 @import '@sass/components/_emailbox.sass'
 @import '@sass/components/_textarea.sass'
 @import '@sass/components/_selectbox.sass'
+@import '@sass/components/_checkbox.sass'
+@import '@sass/components/_radio.sass'
 
 .albatalk-wrap
     .title-wrap
@@ -32,6 +34,19 @@
         +size(240px, 50px)
         +margin(right 5px)
         font-size: 14px
+
+    input[type="radio"]
+        @extend %radio-default
+        +margin(1px 8px 0 0)
+        float: left
+
+    input[type="checkbox"]
+        @extend %checkbox-default
+        +margin(1px 8px 0 0)
+        float: left
+    label
+        float: left
+        font-size: 16px
 
     textarea
         +textarea()
@@ -62,6 +77,7 @@
         +margin(top 18px)
 
         table
+            table-layout: fixed
             +size(1280px)
             &:nth-child(1)
                 +border(2px solid $gray-900, top)
@@ -84,38 +100,25 @@
                 +box-sizing(border-box)
 
             .name-wrap
-                +size(458px)
 
             .manager-wrap
-                +size(458px)
 
             .ceo-wrap
-                +size(458px)
 
             .manager-phone-wrap
-                +size(458px)
 
             .num-wrap
-                +size(458px)
 
             .manager-email-wrap
-                +size(458px)
 
             .phone-wrap
-                overflow: hidden
 
-                p
-                    +padding(left 20px top 18px)
-                    float: left
-                    color: $gray-700
 
             .page-wrap
+                +size(10px)
                 overflow: hidden
-
-                p
-                    +padding(left 20px top 18px)
-                    float: left
-                    color: $gray-700
+                input[type="text"]
+                    +size(750px, 50px)
 
             .address-wrap
                 overflow: hidden
@@ -135,13 +138,42 @@
                     font-weight: bold
                     font-size: 14px
 
+            .subway-wrap
+                +size(1096px)
+                input[type="text"]
+                    +size(1050px, 50px)
+
+            .field-wrap
+                +padding(left 20px top 28px bottom 11px)
+                label
+                    +padding(right 40px)
+
+            .work-type-wrap
+                +padding(left 20px top 28px bottom 11px)
+                label
+                    +padding(right 40px)
+
+            .job-wrap
+                +padding(left 20px top 28px bottom 11px)
+                label
+                    +padding(right 40px)
+
+            .pay-wrap
+                input[type="radio"]
+                    +margin(top 17px bottom 11px)
+                label
+                    +padding(top 17px right 40px)
+                    &:nth-child(8)
+                        +padding(right 20px)
+                input[type="text"]
+                    +size(400px)
 
 
             .title-wrap
                 +size(1096px)
 
                 input[name="title"]
-                    +size(810px, 50px)
+                    +size(810px)
 
             .inquire-content-wrap
                 +size(1096px)

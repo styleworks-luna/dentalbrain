@@ -101,10 +101,10 @@
                                 <th>홈페이지 주소 *</th>
                                 <td class="page-wrap">
                                     <input type="text"
-                                           id="page-wrap"
-                                           name="page-wrap"
+                                           id="page"
+                                           name="page"
                                            placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
+                                           data-parsley-required="false"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                 </td>
                             </tr>
@@ -127,8 +127,123 @@
                                            data-parsley-required-message="상세주소를 입력하세요">
                                 </td>
                             </tr>
+                            <tr>
+                                <th>인근 지하철역</th>
+                                <td class="subway-wrap">
+                                    <input type="text"
+                                           id="subway"
+                                           name="subway"
+                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>신청분야 *</th>
+                                <td class="field-wrap">
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">진료전반</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">상담/데스크</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">교정</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">보철</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">예방</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">구강외과</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">소아</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">스케일링</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">실장</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>근무형태 *</th>
+                                <td class="work-type-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">정규직</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">계약직</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">아르바이트</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>직종 *</th>
+                                <td class="job-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">치과위생사</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">간호조무사</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">관리 및 경영지원</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">코디네이터/리셉션</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">무관</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>급여 *</th>
+                                <td class="pay-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">협의 후 결정</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">내규에 따름</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">연봉제</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                </td>
+                            </tr>
                         </table>
-
                     </div>
                 </form>
             </section>
