@@ -75,19 +75,19 @@ class ProgramBannerController extends Controller
             ]);
         }
 
-//        $duplicate = Banner::where('program_id', '=', $validatedData['program_id']);
-//        logger($duplicate);
-//
-//        if ($duplicate) {
-//            return response()->json([
-//                'success' => false,
-//                'msg' => '배너가 이미 존재합니다.',
-//            ]);
-//        }
-
         // 현재 활성화 된 배너 중, 같은 program_id 를 가지는 배너가 있는지?
         // y. respoonse->json->[success=false,msh=error]
         // n. 진행
+
+        $duplicate = Banner::where('program_id', "=", $validatedData['program_id'])->first();
+
+        if ($duplicate) {
+            return response()->json([
+                'success' => false,
+                'msg' => '배너가 이미 존재합니다.',
+            ]);
+        }
+        
         $validatedData['link'] = "/lectures/".$validatedData['program_id'];
 
         $validatedData['user_id'] = auth()->id();
