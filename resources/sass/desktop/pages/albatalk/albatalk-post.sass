@@ -35,6 +35,9 @@
         +margin(right 5px)
         font-size: 14px
 
+    select
+        +selectbox(240px, 50px)
+
     input[type="radio"]
         @extend %radio-default
         +margin(1px 8px 0 0)
@@ -168,12 +171,57 @@
                 input[type="text"]
                     +size(400px)
 
+            .school-wrap
+                input[type="radio"]
+                    +margin(top 17px bottom 11px)
+                label
+                    +padding(top 17px right 40px)
+                    &:nth-child(8)
+                        +padding(right 20px)
+                input[type="text"]
+                    +size(240px)
+                    float: left
+                    +margin(right 40px)
+
+            .career-wrap
+                input[type="radio"]
+                    +margin(top 17px bottom 11px)
+                label
+                    +padding(top 17px right 40px)
+                    &:nth-child(8)
+                        +padding(right 20px)
+                .last
+                    +padding(right 20px)
+                input[type="text"]
+                    +size(240px)
+                    +margin(right 40px)
 
             .title-wrap
                 +size(1096px)
 
                 input[name="title"]
                     +size(810px)
+
+            .welfare-wrap
+                +size(770px)
+                +padding(left 20px top 28px bottom 11px)
+                label
+                    +padding(right 40px)
+                .last
+                    +padding(right 380px bottom 20px)
+
+            .deadline-wrap
+                input[type="radio"]
+                    +margin(top 17px bottom 11px)
+                label
+                    +padding(top 17px right 40px)
+                    &:nth-child(8)
+                        +padding(right 20px)
+                .last
+                    +padding(right 20px)
+                input[type="text"]
+                    +size(240px)
+                    +margin(right 40px)
 
             .inquire-content-wrap
                 +size(1096px)

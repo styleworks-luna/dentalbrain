@@ -243,6 +243,63 @@
                                     <input type="text" placeholder="내용을 입력해주세요.">
                                 </td>
                             </tr>
+                            <tr>
+                                <th>학력 *</th>
+                                <td class="school-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <input type="text" placeholder="학력선택">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>경력 *</th>
+                                <td class="career-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">신입</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field" class="last">경력</label>
+                                    <input type="text" placeholder="경력기간 선택">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>복리후생 *</th>
+                                <td class="welfare-wrap">
+                                    <input type="checkbox" id="all" name="all"><label>점심식자</label>
+                                    <input type="checkbox" id="all" name="all"><label>유니폼</label>
+                                    <input type="checkbox" id="all" name="all"><label>주차</label>
+                                    <input type="checkbox" id="all" name="all"><label>자기계발비</label>
+                                    <input type="checkbox" id="all" name="all"><label>연월차지원</label>
+                                    <input type="checkbox" id="all" name="all"><label class="last">휴가비지원</label>
+                                    <input type="checkbox" id="all" name="all"><label>4대보험지원</label>
+                                    <input type="checkbox" id="all" name="all"><label>연봉제</label>
+                                    <input type="checkbox" id="all" name="all"><label>인센티브제</label>
+                                    <input type="checkbox" id="all" name="all"><label>퇴직금지원</label>
+                                    <input type="checkbox" id="all" name="all"><label class="last">야근수당지원</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>모집마감일 *</th>
+                                <td class="deadline-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">신입</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field" class="last">경력</label>
+                                    <input type="text" placeholder="경력기간 선택">
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </form>
