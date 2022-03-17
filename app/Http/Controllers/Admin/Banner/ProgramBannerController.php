@@ -59,6 +59,7 @@ class ProgramBannerController extends Controller
             'category_id' => ['required', Rule::in([Banner::$POSITION_AREA3, Banner::$POSITION_AREA2])],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
+            'link' => ['string', 'nullable'],
             'program_id' => ['required', 'numeric'],
             'started_at' => ['required', 'date_format:Y-m-d'],
             'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
@@ -73,6 +74,16 @@ class ProgramBannerController extends Controller
                 'msg' => '강의가 존재하지 않습니다.',
             ]);
         }
+
+//        $duplicate = Banner::where('program_id', '=', $validatedData['program_id']);
+//        logger($duplicate);
+//
+//        if ($duplicate) {
+//            return response()->json([
+//                'success' => false,
+//                'msg' => '배너가 이미 존재합니다.',
+//            ]);
+//        }
 
         // 현재 활성화 된 배너 중, 같은 program_id 를 가지는 배너가 있는지?
         // y. respoonse->json->[success=false,msh=error]
