@@ -228,6 +228,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
+        Route::get('recommend', [\App\Http\Controllers\Main\RecommendLectureController::class, 'recommend'])->name('recommend');
         Route::group(['prefix' => '{program}'], function () {
 
             Route::group(['middleware' => 'auth'], function () {
