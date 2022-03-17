@@ -27,6 +27,27 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
         $this->onlineConcrete = new OnlineProgramConcrete();
     }
 
+    public function stat()
+    {
+        $noStudentCount = Program::query()->where('is_online', '=', 1)
+            ->whereDoesntHave('students', function ($query) {
+                $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
+                    ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
+            })->count();
+
+        $publicCount = Program::query()->where('is_online', '=', 1)
+            ->where('is_open', '=', true)->count();
+
+        $privateCount = Program::query()->where('is_online', '=', 1)
+            ->where('is_open', '=', false)->count();
+
+        return response()->json([
+            "noStudent" => $noStudentCount,
+            "publicCount" => $publicCount,
+            "privateCount" => $privateCount,
+        ]);
+    }
+
     public function search(Request $request)
     {
         $this->search = new SearchService(Program::query());
