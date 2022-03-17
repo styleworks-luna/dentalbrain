@@ -56,7 +56,7 @@ class ProgramBannerController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'category_id' => ['required', Rule::in([Banner::$POSITION_AREA3, Banner::$POSITION_AREA2])],
+            'category_id' => ['required', Rule::in([Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
             'link' => ['string', 'nullable'],
@@ -87,8 +87,8 @@ class ProgramBannerController extends Controller
                 'msg' => '배너가 이미 존재합니다.',
             ]);
         }
-        
-        $validatedData['link'] = "/lectures/".$validatedData['program_id'];
+
+        $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
 
         $validatedData['user_id'] = auth()->id();
         $banner = Banner::firstOrCreate($validatedData);

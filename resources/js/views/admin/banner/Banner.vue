@@ -21,7 +21,7 @@
                     <div class="input-group">
                         <input class="form-control"
                                type="text"
-                               placeholder="연결링크 검색"
+                               placeholder="제목 검색"
                                v-model="keyword">
                         <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>

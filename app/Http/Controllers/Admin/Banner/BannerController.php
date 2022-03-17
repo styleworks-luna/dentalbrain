@@ -19,6 +19,7 @@ use App\Services\StatusChange\StatusChangeImpl;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class BannerController extends Controller
 {
@@ -33,9 +34,9 @@ class BannerController extends Controller
 
     private function search(Request $request)
     {
-        $this->search = new SearchService(Banner::query());
+        $this->search = new SearchService(Banner::query()->whereNotIn('category_id', [Banner::$POSITION_AREA2, Banner::$POSITION_AREA3]));
 
-        $this->search->addKeyword('link', $request->keyword);
+        $this->search->addKeyword('title', $request->keyword);
         $this->addCategoryDate($request->date);
         $this->addPositionCategoryId($request->category_id);
         $result = $this->search->search()->with('categories')->orderBy('id', 'desc')->paginate('20');
@@ -61,7 +62,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'category_id' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric', Rule::in([Banner::$POSITION_RECOMMEND, Banner::$POSITION_TOP, Banner::$POSITION_BOTTOM, Banner::$POSITION_BAR])],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
             'link' => ['required', 'url'],
@@ -100,7 +101,7 @@ class BannerController extends Controller
     public function update(Request $request, Banner $banner)
     {
         $validatedData = $request->validate([
-            'category_id' => ['required', 'numeric'],
+            'category_id' => ['required', 'numeric', Rule::in([Banner::$POSITION_RECOMMEND, Banner::$POSITION_TOP, Banner::$POSITION_BOTTOM, Banner::$POSITION_BAR]) ],
             'order' => ['required', 'numeric'],
             'title' => ['string', 'nullable'],
             'link' => ['required',],
@@ -157,7 +158,7 @@ class BannerController extends Controller
     public function getBannerCategory()
     {
         return response()->json([
-            'category' => BannerCategory::all()
+            'category' => BannerCategory::query()->whereNotIn('id', [Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])->get()
         ]);
     }
 }

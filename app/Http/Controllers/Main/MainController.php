@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Models\Manage\Banner;
+use App\Models\Manage\BannerTitle;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Notice;
 use App\Models\Program\Program;
@@ -19,6 +20,7 @@ class MainController extends Controller
         $data['recommends'] = Banner::public()->where('category_id', '=', Banner::$POSITION_RECOMMEND)->get();
         $data['notices'] = Notice::public()->take(3)->get();
         $data['faqs'] = Faq::public()->take(3)->get();
+        $data['titles'] = BannerTitle::all()->pluck('title');
 
         return view(viewPrefix() . 'index', $data);
     }

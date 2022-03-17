@@ -15,6 +15,7 @@
 
 // 회원가입
 use App\Http\Controllers\Admin\Banner\ProgramBannerController;
+use App\Http\Controllers\Admin\Banner\TitleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -447,6 +448,13 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::put('{banner}', [ProgramBannerController::class, 'update'])->name('update');
             //배너 삭제 함수
             Route::delete('{banner}', [ProgramBannerController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::group(['prefix' => 'title-banner', 'as' => 'title-banner.'], function () {
+            // 배너 타이틀 보여주기
+            Route::get('/', [TitleController::class, 'show'])->name('show');
+            // 배너별 타이틀 수정하기
+            Route::put('{bannerTitle}', [TitleController::class, 'update'])->name('update');
         });
 
         Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {

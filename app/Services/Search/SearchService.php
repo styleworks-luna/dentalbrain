@@ -34,6 +34,11 @@ class SearchService
         return $this;
     }
 
+    /**
+     * @param string $column
+     * @param string|null $value
+     * @return SearchService
+     */
     public function addKeyword(string $column, $value): SearchService
     {
         if (isset($value)) {
