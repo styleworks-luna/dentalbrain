@@ -48,21 +48,27 @@ $(function () {
     });
 
     var mySwiper = new Swiper('.middle-swiper-container2', {
+        initialSlide: 0,
         slidesPerView: 4,
         spaceBetween: 19,
         navigation: {
             nextEl: '.middle-swiper-button-next2',
             prevEl: '.middle-swiper-button-prev2',
         },
+        observer: true,
+        observeParents: true,
     });
 
     var mySwiper = new Swiper('.middle-swiper-container3', {
+        initialSlide: 0,
         slidesPerView: 4,
         spaceBetween: 19,
         navigation: {
             nextEl: '.middle-swiper-button-next3',
             prevEl: '.middle-swiper-button-prev3',
         },
+        observer: true,
+        observeParents: true,
     });
 
     var mySwiper = new Swiper('.m-middle-swiper-container', {
@@ -70,11 +76,18 @@ $(function () {
     });
 
     var mySwiper = new Swiper('.m-middle-swiper-container2', {
+        initialSlide: 0,
         slidesPerView: 2.1,
+        observer: true,
+        observeParents: true,
+
     });
 
     var mySwiper = new Swiper('.m-middle-swiper-container3', {
+        initialSlide: 0,
         slidesPerView: 2.1,
+        observer: true,
+        observeParents: true,
     });
 
     var mySwiper = new Swiper('.bottom-swiper-container', {
