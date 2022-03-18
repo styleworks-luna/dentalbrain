@@ -14,7 +14,7 @@ class AddPreviewColumnToProgramsTable extends Migration
     public function up()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->string('preview')->comment('강의 미리보기')->after('membership_price');
+            $table->string('preview')->nullable()->comment('강의 미리보기')->after('membership_price');
         });
     }
 
