@@ -310,6 +310,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('export', [\App\Http\Controllers\Admin\Membership\MembershipController::class, 'membershipExport'])->name('export');
 
             Route::group(['prefix' => 'user/{user}'], function () {
+                // 유료회원 상세 페이지 - 강의 신청 정보 통계 (수강중 XX건..)
+                Route::get('/students/stat', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'studentStat'])->name('students');
+                // 유료회원 상세 페이지 - 강의 신청 정보
+                Route::get('/students', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'studentsHistories'])->name('students');
                 // 유료회원 상세 페이지
                 Route::get('/', [\App\Http\Controllers\Admin\Membership\MembershipDetailController::class, 'edit'])->name('edit');
                 // 유료회원 상세 페이지 수정 완료

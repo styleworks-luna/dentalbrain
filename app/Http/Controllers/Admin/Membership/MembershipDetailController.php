@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
+use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Services\Membership\MembershipService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,14 +26,45 @@ class MembershipDetailController extends Controller
     public function edit(User $user): JsonResponse
     {
         $memberships = $user->memberships()->with('payment:id,method,status')->orderByDesc('last_applied_at')->get();
-        $students = $user->students()->with(['payment' => function (BelongsTo $query) {
-            $query->select('id', 'totalAmount', 'status');
-        }, 'program:id,title,minor_category_id'])->get();
-        
         return response()->json([
             'user' => $user,
             'memberships' => $memberships,
+        ]);
+    }
+
+    public function studentsHistories(User $user)
+    {
+        $students = $user->students()->with(['payment' => function (BelongsTo $query) {
+            $query->select('id', 'totalAmount', 'status');
+        }, 'program:id,title,minor_category_id'])
+            ->orderByDesc('applied_at')
+            ->paginate(5);
+
+        return response()->json([
             'students' => $students,
+        ]);
+    }
+
+    public function studentStat(User $user)
+    {
+
+        $available = $user->students()
+            ->whereIn('pay_status', ProgramStudent::$USER_PAID_STATUS)
+            ->where('expired_at', '>=', Carbon::now())->count();
+
+        $expired = $user->students()
+            ->whereIn('pay_status', ProgramStudent::$USER_PAID_STATUS)
+            ->where('expired_at', '<', Carbon::now())->count();
+
+        $paid = Payment::query()->whereHas('student', function ($query) use ($user) {
+            $query->where('pay_status', ProgramStudent::$PAY_PAID)->whereIn('id', $user->students()->pluck('id'));
+        })->sum('totalAmount');
+
+
+        return response()->json([
+            'available' => $available,
+            'expired' => $expired,
+            'paid' => $paid,
         ]);
     }
 
