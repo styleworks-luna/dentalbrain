@@ -1,4 +1,3 @@
-
 // component
 import FileUpload from '@/components/admin/form/FileUpload.vue';
 
@@ -25,14 +24,14 @@ export const OnlineMixin = {
         return {
             material: '',
             running_time: '',
+            preview_url: '',
+            preview_type: '',
             lectures: [
                 {
                     title: '',
                     url: '',
                     video_type: 'youtube',
-                    thumbnail: {
-
-                    }
+                    thumbnail: {}
                 },
             ],
         }
@@ -49,16 +48,16 @@ export const OnlineMixin = {
         removeLecture(index) {
             this.lectures.splice(index, 1);
         },
-        updateLectureFile (file, index) {
+        updateLectureFile(file, index) {
             this.lectures[index].thumbnail = file;
         },
-        updateFile (data) {
+        updateFile(data) {
             this.material = data;
         },
-        handleSetVideo (id, idx) {
+        handleSetVideo(id, idx) {
             this.lectures[idx].video_type = id;
         },
-        handleSetPreview (id, idx) {
+        handleSetPreview(id, idx) {
             this.preview_type = id;
         }
     }

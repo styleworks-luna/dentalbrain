@@ -309,7 +309,7 @@ export default {
         },
         edit: function (){
             alert('dd');
-            this.style.color = "red";
+            this.style.display = "flex";
         }
     }
 }

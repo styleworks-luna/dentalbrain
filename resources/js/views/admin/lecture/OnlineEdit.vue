@@ -118,12 +118,36 @@
                 </single-group>
             </div>
 
-                <single-group name="추가 정보"
-                              :size="12">
-                    <template v-slot:content>
-                        <additional-information :data="surveys"></additional-information>
-                    </template>
-                </single-group>
+            <single-group name="추가 정보"
+                          :size="12">
+                <template v-slot:content>
+                    <additional-information :data="surveys"></additional-information>
+                </template>
+            </single-group>
+
+            <single-group name="미리보기 설정"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="9">
+                <template v-slot:content>
+                    <div class="lecture-setting">
+                        <div class="form-group row">
+                            <label class="col-form-label">
+                                <select-box class="form-control"
+                                            :value="preview_type"
+                                            :options="VideoOptions"
+                                            @setValue="handleSetPreview"></select-box>
+                            </label>
+                            <span class="text-danger mt-2 ml-2">*</span>
+                            <div class="col-md-9 mt-2">
+                                <input type="text" class="form-control" v-model="preview_url">
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </single-group>
+
+
 
             <single-group name="강의 설정"
                           :isRow="true"
@@ -250,7 +274,10 @@ export default {
 
                 this.is_open = program.is_open;
 
-                this.lecture_info = program.description
+                this.lecture_info = program.description;
+
+                this.preview_url = program.preview_url;
+                this.preview_type = program.preview_type;
 
                 this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
@@ -290,6 +317,9 @@ export default {
                 price: this.price,
                 is_free: this.is_free,
                 is_open: this.is_open,
+
+                preview_url: this.preview_url,
+                preview_type: this.preview_type,
 
                 membership_is_free: this.membership_is_free,
                 membership_price: this.membership_price,
