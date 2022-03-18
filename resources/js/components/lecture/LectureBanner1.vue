@@ -12,14 +12,17 @@
                         </div>
                         <p class="lecture-name">{{ lecture.program.title }}</p>
                         <div v-if="!isMobile()" class="lecture-all-price">
-                            <span class="lecture-sale">{{"30%"}}</span>
-                            <span class="lecture-price">{{ Helper.numberWithCommas(lecture.program.price) }}원</span>
-                            <span class="lecture-ogprice">{{"500,000"}}</span>
+                            <span class="lecture-sale" v-if="lecture.program.price != 0">{{"30%"}}</span>
+                            <span class="lecture-price" v-if="lecture.program.price != 0">
+                                {{ Helper.numberWithCommas(lecture.program.price) }}원</span>
+                            <span class="lecture-ogprice" v-if="lecture.program.price != 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-else>무료</p>
                         </div>
                         <div v-else class="lecture-all-price">
-                            <span class="lecture-sale">{{"30%"}}</span>
-                            <span style="padding-bottom: 4px" class="lecture-ogprice">{{"500,000"}}</span>
-                            <p class="lecture-price">{{ Helper.numberWithCommas(lecture.program.price) }}원</p>
+                            <span class="lecture-sale" v-if="lecture.program.price != 0">{{"30%"}}</span>
+                            <span style="padding-bottom: 4px" class="lecture-ogprice" v-if="lecture.program.price != 0">{{"500,000"}}</span>
+                            <p class="lecture-price" v-if="lecture.program.price != 0">{{ Helper.numberWithCommas(lecture.program.price) }}원</p>
+                            <p style="padding-top: 5vw" class="lecture-price" v-else>무료</p>
                         </div>
                     </div>
                 </a>
