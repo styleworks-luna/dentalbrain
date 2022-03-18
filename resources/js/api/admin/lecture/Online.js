@@ -68,5 +68,12 @@ export const Student = {
             url: `/api/admin/lecture/online/${id}/students`,
             method: 'patch'
         });
+    },
+    extend(id, detailId, data) {
+        return Send({
+            url: `/api/admin/lecture/online/${id}/students/${detailId}/extend`,
+            method: 'put',
+            data: data
+        });
     }
 }

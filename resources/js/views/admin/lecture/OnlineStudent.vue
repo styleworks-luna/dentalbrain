@@ -83,13 +83,13 @@
                             <template v-else>
                                 <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
                             </template>
-                            <button class="btn btn-info" v-on:click.prevent.self="edit">변경</button>
-                            <div class="input-group" id="edit" style="display: none">
+                            <button class="btn btn-info" v-on:click="isShow = !isShow">변경</button>
+                            <div v-show="isShow" class="input-group" id="edit">
                                 <input class="form-control"
                                        type="text"
-                                       placeholder="변경일자 입력">
+                                       placeholder="변경일자 입력" v-model="extendDates[slotProps.row.id]">
                                 <span class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">수정</button>
+                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, extendDates[slotProps.row.id])">수정</button>
                                 </span>
                             </div>
                         </template>
@@ -124,14 +124,16 @@
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 5">
-                            <a href="#" class="btn btn-success" @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
+                            <a href="#" class="btn btn-success"
+                               @click.prevent="handleSetConfirmLayer(slotProps.row.student_id)">결제 확인</a>
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
                                 신청 취소
                             </a>
                         </template>
                         <template v-else-if="slotProps.row.pay_status === 6">
-                            <a href="#" class="btn btn-secondary" @click.prevent="revertConfirm(slotProps.row.student_id)">결제 대기</a>
+                            <a href="#" class="btn btn-secondary"
+                               @click.prevent="revertConfirm(slotProps.row.student_id)">결제 대기</a>
 
                             <a href="#" class="btn btn-danger text-white"
                                @click.prevent="cancelLecture(slotProps.row.student_id)">
@@ -160,7 +162,7 @@
             <payment-confirm-layer v-if="confirmLayer"
                                    :is_online="1"
                                    @setConfirmLayer="handleSetConfirmLayer"
-                                    @confirmPayment="confirmPayment"></payment-confirm-layer>
+                                   @confirmPayment="confirmPayment"></payment-confirm-layer>
 
         </template>
     </layout>
@@ -199,7 +201,9 @@ export default {
             },
             order: 'latest',
             keyword: '',
-            page: 1
+            page: 1,
+            isShow: false,
+            extendDates: [],
         }
     },
     created() {
@@ -307,9 +311,15 @@ export default {
         handleSetOrder(order) {
             this.order = order;
         },
-        edit: function (){
-            alert('dd');
-            this.style.display = "flex";
+        extend(id, detailId, extendDate) {
+            let data = {
+                expired_at: extendDate
+            }
+            Student.extend(id, detailId, data).then(res => {
+                alert('변경');
+            }).catch(err => {
+                alert('오류');
+            });
         }
     }
 }

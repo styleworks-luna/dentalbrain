@@ -35,7 +35,7 @@ import InfiniteLoading from 'vue-infinite-loading';
 import Lecture from '@/api/lecture/Lecture.js'
 
 export default {
-    name: 'LectureBanner1',
+    name: 'LectureBanner2',
     props: {
         'list': Array
     },
