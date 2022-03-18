@@ -119,6 +119,7 @@ class RegisterController extends Controller
                         ->where('verification_number', '=', $data['verification_number']);
                 })],
             'work_address' => ['nullable', 'string', 'max:100'],
+            'work_company' => ['nullable', 'string', 'max:100'],
         ], [
             'email.unique' => '가입 할 수 없는 이메일입니다.',
             'phone.unique' => '가입 할 수 없는 전화번호입니다.',
@@ -185,6 +186,7 @@ class RegisterController extends Controller
             'allow_email' => isset($data['email-consent']),
             'allow_sms' => isset($data['sms-consent']),
             'work_address' => $data['work_address'] ?? null,
+            'work_company' => $data['work_company'] ?? null,
         ]);
     }
 
