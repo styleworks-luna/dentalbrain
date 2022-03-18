@@ -67,7 +67,9 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
     public function update(Request $request, Program $program)
     {
         $programData = $this->onlineConcrete->validateProgram($request, [
-            'running_time' => ['required', 'string']
+            'running_time' => ['required', 'string'],
+            'preview_url' => ['nullable', 'url'],
+            'preview_type' => ['nullable', 'string'],
         ]);
 
         $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
@@ -142,7 +144,9 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
     {
         $programData = $this->onlineConcrete->validateProgram($request,
             [
-                'running_time' => ['required', 'string']
+                'running_time' => ['required', 'string'],
+                'preview_url' => ['nullable', 'url'],
+                'preview_type' => ['nullable', 'string'],
             ]);
 
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
