@@ -6,20 +6,20 @@
                     <img :src="lecture.program.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
-                            <span class="lecture-type">{{lecture.minor_category_name}}</span>
+                            <span class="lecture-type">{{lecture.program.minor_category_name}}</span>
                             <p class="lecture-date">수강기간 10일</p>
-                            <p class="lecture-time">{{ lecture.running_time }}</p>
+                            <p class="lecture-time">{{ lecture.program.running_time }}</p>
                         </div>
-                        <p class="lecture-name">{{ lecture.title }}</p>
+                        <p class="lecture-name">{{ lecture.program.title }}</p>
                         <div v-if="!isMobile()" class="lecture-all-price">
                             <span class="lecture-sale">{{"30%"}}</span>
-                            <span class="lecture-price">{{ lecture.price }}원</span>
+                            <span class="lecture-price">{{ Helper.numberWithCommas(lecture.program.price) }}원</span>
                             <span class="lecture-ogprice">{{"500,000"}}</span>
                         </div>
                         <div v-else class="lecture-all-price">
                             <span class="lecture-sale">{{"30%"}}</span>
                             <span style="padding-bottom: 4px" class="lecture-ogprice">{{"500,000"}}</span>
-                            <p class="lecture-price">{{ lecture.price }}원</p>
+                            <p class="lecture-price">{{ Helper.numberWithCommas(lecture.program.price) }}원</p>
                         </div>
                     </div>
                 </a>
