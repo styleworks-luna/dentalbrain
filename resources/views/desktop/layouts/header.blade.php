@@ -36,6 +36,7 @@
                 <li><a href="{{ url('community') }}">커뮤니티</a></li>
                 <li><a href="{{ url('lectures') }}">전체강의</a></li>
                 <li><a href="{{ url('membership') }}">유료회원</a></li>
+                <li><a href="{{ url('albatalk') }}">알바톡</a></li>
             </ul>
             <form action="{{ route('lectures.search') }}" method="GET">
             <div class="input-wrap">

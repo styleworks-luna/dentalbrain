@@ -81,6 +81,15 @@ Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
 });
 
+// 알바톡(임시)
+Route::get('albatalk', function () {
+    return view(viewPrefix() . 'pages.albatalk.albatalk');
+});
+
+Route::get('albatalk/post', function () {
+    return view(viewPrefix() . 'pages.albatalk.albatalk_post');
+});
+
 // 이용 약관
 Route::get('service', function () {
     return view('desktop.pages.term.service');

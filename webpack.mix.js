@@ -60,6 +60,10 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
 // 유료회원
 mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/desktop/pages/membership');
 
+// 알바톡
+mix.sass('resources/sass/desktop/pages/albatalk/albatalk-all.sass', 'public/css/desktop/pages/albatalk');
+mix.sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk');
+
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
     .sass('resources/sass/desktop/pages/lecture/lecture-apply.sass', 'public/css/desktop/pages/lecture')
