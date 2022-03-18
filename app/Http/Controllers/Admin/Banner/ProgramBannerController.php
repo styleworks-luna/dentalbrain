@@ -79,8 +79,7 @@ class ProgramBannerController extends Controller
         // y. respoonse->json->[success=false,msh=error]
         // n. 진행
 
-        $duplicate = Banner::where('program_id', "=", $validatedData['program_id'])->first();
-
+        $duplicate = Banner::where('program_id', "=", $validatedData['program_id'])->where('category_id', '=', $validatedData['category_id'])->first();
         if ($duplicate) {
             return response()->json([
                 'success' => false,
