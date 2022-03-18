@@ -331,6 +331,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::post('upload', [\App\Http\Controllers\Admin\FileController::class, 'uploadProgramDetailImage'])->name('upload');
 
             Route::group(['prefix' => 'online', 'as' => 'online.'], function () {
+                // 온라인 강의 통계
+                Route::get('/stat', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'stat'])->name('index');
                 // 온라인 강의 리스트
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OnlineProgramController::class, 'index'])->name('index');
                 // 온라인 강의 저장
