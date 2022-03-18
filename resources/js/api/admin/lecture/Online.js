@@ -8,6 +8,12 @@ export const Online = {
             params: params
         });
     },
+    getStats() {
+        return Send({
+            url: '/api/admin/lecture/online/stat',
+            method: 'get',
+        });
+    },
     getEditData(id) {
         return Send({
             url: `/api/admin/lecture/online/${id}`,

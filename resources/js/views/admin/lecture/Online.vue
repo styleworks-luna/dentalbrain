@@ -8,7 +8,7 @@
         </template>
 
         <template v-slot:search>
-            <span style="font-size: 12px">강의현황 (공개 00개 / 비공개 00개) | 수강자 없는 강의 00개</span>
+            <span style="font-size: 12px">강의현황 (공개 {{ stats.publicCount }}개 / 비공개 {{ stats.privateCount }}개) | 수강자 없는 강의 {{stats.noStudent }}개</span>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
@@ -112,11 +112,13 @@
                     data: []
                 },
                 page: this.$route.params.page || 1,
-                keyword: ''
+                keyword: '',
+                stats: [],
             }
         },
         mounted() {
             this.getData();
+            this.getStats();
         },
         computed: {
             tableCol() {
@@ -172,6 +174,13 @@
                     // 뒤로가기 page에 따라 reload
                     const path = `/admin/lecture/online/${page}`
                     if (this.$route.path !== path) this.$router.push(path);
+                }).catch(err => {
+                    this.lectures = [];
+                });
+            },
+            getStats() {
+                Online.getStats().then(res => {
+                    this.stats = res.data;
                 }).catch(err => {
                     this.lectures = [];
                 });

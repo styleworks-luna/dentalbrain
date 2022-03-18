@@ -1,5 +1,5 @@
 <template>
-    <layout title="타이틀 관리" >
+    <layout title="타이틀 관리">
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
                         :data="titles">
@@ -7,8 +7,10 @@
                     <td>구역{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.title }}</td>
                     <td><input type="text" class="form-control" placeholder="20자 이하로 입력해주세요."
-                               v-model="title"></td>
-                    <td><button type="submit" class="btn btn-info" @click="update(slotProps.row.id)">저장</button></td>
+                               v-model="inputText[slotProps.row.id]"></td>
+                    <td>
+                        <button type="submit" class="btn btn-info" @click="update(slotProps.row.id,inputText[slotProps.row.id])">저장</button>
+                    </td>
                 </template>
             </table-grid>
         </template>
@@ -26,7 +28,7 @@ import DatePicker from '@/components/common/DatePicker.vue'
 import Title from '@/api/admin/banner/Title.js';
 
 // mixins
-import { BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
+import {BannerCategoryMixin} from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminTitle',
@@ -42,7 +44,7 @@ export default {
     data() {
         return {
             titles: [],
-            title: '',
+            inputText: [],
             id: '',
         }
     },
@@ -81,11 +83,11 @@ export default {
                 this.titles = res.data.banner_titles;
             })
         },
-        update(id){
+        update(id, title) {
             let data = {
-                title: this.title
+                title: title
             };
-            Title.update(id, data).then(res =>{
+            Title.update(id, data).then(res => {
                 alert("변경되었습니다.");
             })
         }
