@@ -161,7 +161,12 @@ abstract class ProgramTemplate
             'membership_is_free' => ['required', 'boolean'],
 
             'price' => ['nullable', 'numeric'],
+            'discounted_price' => ['nullable', 'numeric'],
+            'discount_rate' => ['nullable', 'numeric', 'between:1,99'],
+
             'membership_price' => ['nullable', 'numeric'],
+            'membership_discounted_price' => ['nullable', 'numeric'],
+            'membership_discount_rate' => ['nullable', 'numeric', 'between:1,99'],
         ], $additionalRules));
 
         return $v->validate();
@@ -201,6 +206,24 @@ abstract class ProgramTemplate
      */
     function storeProgram(array $data)
     {
+        $price = $data['is_free'] ? 0 : ($data['price'] ?? 0);
+        if ($data['is_free']) {
+            $discount_rate = 100;
+            $discounted_price = 0;
+        } else {
+            $discount_rate = $data['discount_rate'] ?? 0;
+            $discounted_price = $data['discounted_price'] ?? $price;
+        }
+
+        $memberPrice = $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0);
+        if ($data['membership_is_free']) {
+            $membership_discount_rate = 100;
+            $membership_discounted_price = 0;
+        } else {
+            $membership_discount_rate = $data['membership_discount_rate'] ?? 0;
+            $membership_discounted_price = $data['membership_discounted_price'] ?? $memberPrice;
+        }
+
         $this->program = Program::create([
             'title' => $data['title'],
             'content' => $data['content'],
@@ -212,8 +235,14 @@ abstract class ProgramTemplate
             'material_id' => $data['material_id'] ?? null,
 
             'is_open' => $data['is_open'],
-            'price' => $data['is_free'] ? 0 : ($data['price'] ?? 0),
-            'membership_price' => $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0),
+
+            'price' => $price,
+            'discount_rate' => $discount_rate,
+            'discounted_price' => $discounted_price,
+
+            'membership_price' => $memberPrice,
+            'membership_discount_rate' => $membership_discount_rate,
+            'membership_discounted_price' => $membership_discounted_price,
 
             'preview_url' => $data['preview_url'] ?? null,
             'preview_type' => $data['preview_type'] ?? null,

@@ -26,16 +26,19 @@ export const LectureFormMixin = {
             lecture_info: '',
             is_free: true,
             membership_is_free: true,
-            membership_price: '',
             price: '',
+            discounted_price: '',
+            discount_rate: '',
+            membership_price: '',
+            membership_discounted_price: '',
+            membership_discount_rate: '',
             content: '',
             surveys: [],
             is_open: false,
             haveStudents: '',
         }
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         handleSetThumbnail(file) {
             this.thumbnail = file;
