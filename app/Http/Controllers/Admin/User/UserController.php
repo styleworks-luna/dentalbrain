@@ -60,7 +60,8 @@ class UserController
             ->addKeyword('login_id', $keyword)
             ->addKeyword('name', $keyword)
             ->addKeyword('phone', $keyword)
-            ->addKeyword('email', $keyword);
+            ->addKeyword('email', $keyword)
+            ->addKeyword('work_company', $keyword);
 
         $result = $this->searchService->search();
 

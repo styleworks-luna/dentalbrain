@@ -123,10 +123,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><label for="work_address">근무처</label></th>
+                                    <th><label for="work_company">근무처</label></th>
                                     <td>
                                         <input type="text"
+                                               id="work_company"
+                                               name="work_company"
                                                placeholder="근무처를 입력해주세요."
+                                               value="{{ old('work_company') }}">
                                     </td>
                                 </tr>
                                 <tr>

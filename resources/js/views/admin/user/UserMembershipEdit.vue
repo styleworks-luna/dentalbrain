@@ -48,6 +48,26 @@
                 </template>
             </single-group>
 
+            <single-group name="근무처"
+                          :isRow="true"
+                          :size="4">
+                <template v-slot:content>
+                    <div class="select-box-wrap float-left mr-3">
+                        {{ work_company }}
+                    </div>
+                </template>
+            </single-group>
+
+            <single-group name="가입일자"
+                          :isRow="true"
+                          :size="4">
+                <template v-slot:content>
+                    <div class="select-box-wrap float-left mr-3">
+                        {{ created_at }}
+                    </div>
+                </template>
+            </single-group>
+
             <div class="membership-content mt-5">
                 <h2>유료회원 결제 내역</h2>
                 <table class="w-100">
@@ -69,74 +89,74 @@
                     </thead>
                     <tbody>
                     <template v-for="(membership, idx) in memberships">
-                    <tr>
-                        <td :style="membership.pay_status == 3 || membership.pay_status == 5 ? 'background-color: #9999': ''">
-                            <div class="date-wrap overflow:hidden"  >
-                                <date-picker class=" float-left mr-3"
-                                             :time="memberships_dates[idx].start_date"
-                                             :index="idx"
-                                             @setTime="handleSetStartDate"></date-picker>
-                                <time-picker class=" float-left mr-3"
-                                             :index="idx"
-                                             :time="memberships_dates[idx].start_time"
-                                             @setTime="handleSetStartTime"></time-picker>
+                        <tr>
+                            <td :style="membership.pay_status == 3 || membership.pay_status == 5 ? 'background-color: #9999': ''">
+                                <div class="date-wrap overflow:hidden">
+                                    <date-picker class=" float-left mr-3"
+                                                 :time="memberships_dates[idx].start_date"
+                                                 :index="idx"
+                                                 @setTime="handleSetStartDate"></date-picker>
+                                    <time-picker class=" float-left mr-3"
+                                                 :index="idx"
+                                                 :time="memberships_dates[idx].start_time"
+                                                 @setTime="handleSetStartTime"></time-picker>
 
-                                <p class="float-left mr-3 mt-2">부터</p>
+                                    <p class="float-left mr-3 mt-2">부터</p>
 
-                                <date-picker class=" float-left mr-3"
-                                             :time="memberships_dates[idx].end_date"
-                                             :index="idx"
-                                             @setTime="handleSetEndDate"></date-picker>
-                                <time-picker class="float-left"
-                                             :time="memberships_dates[idx].end_time"
-                                             :index="idx"
-                                             @setTime="handleSetEndTime"></time-picker>
-                            </div>
-                        </td>
-                        <td>{{ membership.applied_days ? membership.applied_days + '일' : '' }}</td>
-                        <td>{{ membership.payment ? paymentStatus(membership.payment.status) : '' }}</td>
-                        <td>{{ membership.payment ? membership.payment.method : '관리자 등록' }}</td>
-                        <td>
-                            <template v-if="membership.pay_status == 0">
-                                결제 전
-                            </template>
-                            <template v-else-if="membership.pay_status === 1">
-                                입금 대기
-                            </template>
-                            <template v-else-if="membership.pay_status === 2">
-                                <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="membership.payment ? [handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)] :
+                                    <date-picker class=" float-left mr-3"
+                                                 :time="memberships_dates[idx].end_date"
+                                                 :index="idx"
+                                                 @setTime="handleSetEndDate"></date-picker>
+                                    <time-picker class="float-left"
+                                                 :time="memberships_dates[idx].end_time"
+                                                 :index="idx"
+                                                 @setTime="handleSetEndTime"></time-picker>
+                                </div>
+                            </td>
+                            <td>{{ membership.applied_days ? membership.applied_days + '일' : '' }}</td>
+                            <td>{{ membership.payment ? paymentStatus(membership.payment.status) : '' }}</td>
+                            <td>{{ membership.payment ? membership.payment.method : '관리자 등록' }}</td>
+                            <td>
+                                <template v-if="membership.pay_status == 0">
+                                    결제 전
+                                </template>
+                                <template v-else-if="membership.pay_status === 1">
+                                    입금 대기
+                                </template>
+                                <template v-else-if="membership.pay_status === 2">
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="membership.payment ? [handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)] :
                                    [getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
-                                    결제 취소
-                                </a>
-                            </template>
-                            <template v-else-if="membership.pay_status === 3">
-                                취소 완료
-                            </template>
-                            <template v-else-if="membership.pay_status === 4">
-                                <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="[handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)]">
-                                    결제 취소
-                                </a>
-                            </template>
-                            <!-- 별도결제 확인 -->
-                            <template v-else-if="membership.pay_status === 5">
-                                <a href="#" class="btn btn-success"
-                                   @click.prevent="confirmMembershipPayment(membership.id)">
-                                    결제 확인</a>
-                                <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
-                                    결제 취소
-                                </a>
-                            </template>
-                            <template v-else-if="membership.pay_status === 6">
-                                <a href="#" class="btn btn-danger text-white"
-                                   @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
-                                    결제 취소
-                                </a>
-                            </template>
-                        </td>
-                    </tr>
+                                        결제 취소
+                                    </a>
+                                </template>
+                                <template v-else-if="membership.pay_status === 3">
+                                    취소 완료
+                                </template>
+                                <template v-else-if="membership.pay_status === 4">
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="[handleSetCancelLayer(membership.id, membership.payment.method), getCancelId(membership.id,true)]">
+                                        결제 취소
+                                    </a>
+                                </template>
+                                <!-- 별도결제 확인 -->
+                                <template v-else-if="membership.pay_status === 5">
+                                    <a href="#" class="btn btn-success"
+                                       @click.prevent="confirmMembershipPayment(membership.id)">
+                                        결제 확인</a>
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                        결제 취소
+                                    </a>
+                                </template>
+                                <template v-else-if="membership.pay_status === 6">
+                                    <a href="#" class="btn btn-danger text-white"
+                                       @click.prevent="[getCancelId(membership.id,true),cancelMembershipAnotherPayment()]">
+                                        결제 취소
+                                    </a>
+                                </template>
+                            </td>
+                        </tr>
                     </template>
                     </tbody>
                 </table>
@@ -154,7 +174,7 @@
             <div class="float-right">
                 <button type="button" class="btn btn-info" @click="update">수정</button>
                 <a @click="$router.go(-1)"
-                             class="btn btn-dark text-white">취소
+                   class="btn btn-dark text-white">취소
                 </a>
             </div>
         </template>
@@ -217,7 +237,7 @@ export default {
         getData() {
             User.getEditMembershipData(this.user_id).then(res => {
 
-                this.memberships_dates=[];
+                this.memberships_dates = [];
                 const userResult = res.data.user;
                 const membershipResult = res.data.memberships;
 
@@ -227,6 +247,8 @@ export default {
                 this.phone = userResult.phone;
                 this.job_name_id = userResult.job_name_id;
                 this.license_num = userResult.license_num;
+                this.work_company = userResult.work_company;
+                this.created_at = userResult.created_at;
                 this.is_paid = userResult.is_paid;
 
                 this.has_membership = userResult.has_membership;
@@ -304,7 +326,7 @@ export default {
         update() {
             this.memberships.forEach((x, index) => {
                 x.started_at = this.memberships_dates[index].start_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].start_date)} ${this.memberships_dates[index].start_time}` : null;
-                x.expired_at =  this.memberships_dates[index].end_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].end_date)} ${this.memberships_dates[index].end_time}`: null;
+                x.expired_at = this.memberships_dates[index].end_date ? `${this.Helper.dateFormatYDM(this.memberships_dates[index].end_date)} ${this.memberships_dates[index].end_time}` : null;
             });
 
             let data = {

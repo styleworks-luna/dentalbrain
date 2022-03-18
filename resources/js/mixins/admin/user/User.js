@@ -28,6 +28,8 @@ export const UserMixin = {
             has_membership: false,
             job_name_id: 1,
             license_num: '',
+            work_company: '',
+            created_at: '',
             area: '',
             allow_email: false,
             allow_sms: false,
@@ -56,10 +58,10 @@ export const UserMixin = {
         handleSetStartTime(time, idx) {
             this.memberships_dates[idx].start_time = time;
         },
-        handleSetEndDate(time,idx) {
+        handleSetEndDate(time, idx) {
             this.memberships_dates[idx].end_date = time;
         },
-        handleSetEndTime(time,idx) {
+        handleSetEndTime(time, idx) {
             this.memberships_dates[idx].end_time = time;
         },
     }
