@@ -368,7 +368,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                         Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     });
                 });
-//                Route::delete('{program}', 'Admin\Program\OnlineProgramController@index');
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트

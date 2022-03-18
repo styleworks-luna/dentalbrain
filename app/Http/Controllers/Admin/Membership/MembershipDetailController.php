@@ -26,9 +26,14 @@ class MembershipDetailController extends Controller
     public function edit(User $user): JsonResponse
     {
         $memberships = $user->memberships()->with('payment:id,method,status')->orderByDesc('last_applied_at')->get();
+        $payment = Payment::query()->whereHas('membership', function ($query) use ($memberships) {
+            $query->whereIn("id", $memberships->pluck('id'));
+        })->sum('totalAmount');
+
         return response()->json([
             'user' => $user,
             'memberships' => $memberships,
+            'membership_paid' => $payment
         ]);
     }
 
