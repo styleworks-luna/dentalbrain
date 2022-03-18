@@ -6,6 +6,7 @@ namespace App\Services\Program;
 
 use App\Models\File;
 use App\Models\Payments\Payment;
+use App\Models\Program\Lecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
 use App\Models\Program\ProgramMinorCategory;
@@ -214,6 +215,10 @@ abstract class ProgramTemplate
             'price' => $data['is_free'] ? 0 : ($data['price'] ?? 0),
             'membership_price' => $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0),
 
+            'preview_url' => $data['preview_url'] ?? null,
+            'preview_type' => $data['preview_type'] ?? null,
+            'preview_id' => Lecture::getVideoIdFromUrl($data['url']),
+
             'is_free' => $data['is_free'],
             'membership_is_free' => $data['membership_is_free'],
 
@@ -334,6 +339,10 @@ abstract class ProgramTemplate
 
             'price' => $data['price'] ?? 0,
             'membership_price' => $data['membership_price'] ?? 0,
+
+            'preview_url' => $data['preview_url'] ?? null,
+            'preview_type' => $data['preview_type'] ?? null,
+            'preview_id' => Lecture::getVideoIdFromUrl($data['url']),
 
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
