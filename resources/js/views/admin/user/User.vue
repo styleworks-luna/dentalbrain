@@ -35,7 +35,7 @@
                     <div class="input-group">
                         <input class="form-control"
                                type="text"
-                               placeholder="ID, 이름, 전화번호, 이메일"
+                               placeholder="ID, 이름, 전화번호, 이메일, 근무처"
                                v-model="keyword">
                         <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
@@ -55,6 +55,7 @@
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
+                    <td>{{ slotProps.row.work_company }}</td>
                     <td>{{ slotProps.row.job_name }}</td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.id}/${page}`"
@@ -119,22 +120,22 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
+                    width: '4%'
                 },
                 {
                     name: 'is_paid',
                     text: '회원구분',
-                    width: '6%'
+                    width: '5%'
                 },
                 {
                     name: 'login_id',
                     text: '아이디',
-                    width: '11%'
+                    width: '10%'
                 },
                 {
                     name: 'name',
                     text: '이름',
-                    width: '12%'
+                    width: '10%'
                 },
                 {
                     name: 'email',
@@ -147,9 +148,14 @@ export default {
                     width: '15%'
                 },
                 {
+                    name: 'work_company',
+                    text: '근무처',
+                    width: '15%'
+                },
+                {
                     name: 'job_id',
                     text: '직업군',
-                    width: '15%'
+                    width: '10%'
                 },
                 {
                     name: 'edit',
