@@ -1,5 +1,5 @@
 <template>
-    <layout title="배너관리 2-1" >
+    <layout title="배너관리 2" >
         <template v-slot:button>
             <router-link to="/admin/banner2/create"
                          class="btn btn-lg btn-info">
@@ -32,6 +32,7 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.categories.name }}</td>
                     <td>{{ slotProps.row.order }}</td>
+                    <td>{{ slotProps.row.title }}</td>
                     <td>{{ slotProps.row.program_id }}</td>
                     <td>
                         노출 시작 : {{ slotProps.row.started_at }} ~<br>
@@ -122,9 +123,14 @@ export default {
                     width: '8%'
                 },
                 {
+                    name: 'title',
+                    text: '제목',
+                    width: '20%'
+                },
+                {
                     name: 'program_id',
                     text: '강의번호',
-                    width: '20%'
+                    width: '7%'
                 },
                 {
                     name: 'started_at',

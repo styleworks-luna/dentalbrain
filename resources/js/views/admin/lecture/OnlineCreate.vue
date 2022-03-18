@@ -58,6 +58,15 @@
                                v-model="lecture_info">
                     </template>
                 </single-group>
+
+                <single-group name="수강기한"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="2">
+                    <template v-slot:content>
+                        <input type="text" class="form-control" placeholder="일수">
+                    </template>
+                </single-group>
             </div>
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
@@ -73,48 +82,94 @@
                 <template v-slot:content>
                     <div class="price overflow-hidden">
                         <label class="col-form-label d-block float-left mr-3">일반회원가</label>
+                        <div class="radio-wrap mt-1" style="margin-right: 5px">
+                            <input type="radio" id="free" :value="true"
+                                   v-model="is_free">
+                            <label for="free">무료</label>
+                        </div>
                         <div class="radio-wrap">
                             <input type="radio" id="pay" :value="false"
                                    v-model="is_free">
                             <label for="pay">유료</label>
                             <input type="text"
-                                   class="form-control ml-3"
+                                   class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    :disabled="is_free == true"
+                                   style="width: 120px; margin-right: 10px"
                                    v-model="price">
-                        </div>
-                        <div class="radio-wrap mt-1">
-                            <input type="radio" id="free" :value="true"
-                                   v-model="is_free">
-                            <label for="free">무료</label>
+                            <label>할인율</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   :disabled="is_free == true"
+                                   style="width: 50px; margin-right: 5px;"><span style="margin-right: 15px;">%</span>
+                            <label>할인가</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_free == true"
+                                   style="width: 120px;">
                         </div>
                     </div>
                     <div class="membership-price overflow-hidden mt-3">
                         <label class="col-form-label d-block float-left mr-3">유료회원가</label>
+                        <div class="radio-wrap mt-1" style="margin-right: 5px">
+                            <input type="radio" id="membership_free" :value="true"
+                                   v-model="membership_is_free">
+                            <label for="membership_free">무료</label>
+                        </div>
                         <div class="radio-wrap">
                             <input type="radio" id="membership_pay" :value="false"
                                    v-model="membership_is_free">
                             <label for="membership_pay">유료</label>
                             <input type="text"
-                                   class="form-control ml-3"
+                                   class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    :disabled="membership_is_free == true"
+                                   style="width: 120px; margin-right: 10px"
                                    v-model="membership_price">
-                        </div>
-                        <div class="radio-wrap mt-1">
-                            <input type="radio" id="membership_free" :value="true"
-                                   v-model="membership_is_free">
-                            <label for="membership_free">무료</label>
+                            <label>할인율</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   :disabled="is_free == true"
+                                   style="width: 50px; margin-right: 5px;"><span style="margin-right: 15px;">%</span>
+                            <label>할인가</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_free == true"
+                                   style="width: 120px;">
                         </div>
                     </div>
                 </template>
             </single-group>
 
-
             <single-group name="추가 정보"
                           :size="12">
                 <template v-slot:content>
                     <additional-information :data="surveys"></additional-information>
+                </template>
+            </single-group>
+
+            <single-group name="미리보기 설정"
+                          :isRow="true"
+                          :isRequired="true"
+                          :size="9">
+                <template v-slot:content>
+                    <div class="lecture-setting" v-for="(lecture, index) in lectures">
+                        <div class="form-group row">
+                            <label class="col-form-label" for="">
+                                <select-box class="form-control"
+                                            :value="lecture.preview_type"
+                                            :options="VideoOptions"
+                                            :index="index"
+                                            @setValue="handleSetVideo"></select-box>
+                            </label>
+                            <span class="text-danger mt-2 ml-2">*</span>
+                            <div class="col-md-9 mt-2">
+                                <input type="text" class="form-control" v-model="lecture.preview_url">
+                            </div>
+                        </div>
+                    </div>
                 </template>
             </single-group>
 

@@ -1,3 +1,4 @@
+import Title from '@/views/admin/banner/Title.vue';
 import Banner from '@/views/admin/banner/Banner.vue';
 import Banner2 from '@/views/admin/banner/Banner2.vue';
 import Banner3 from '@/views/admin/banner/Banner3.vue';
@@ -9,6 +10,11 @@ import Banner2Create from '@/views/admin/banner/Banner2Create.vue';
 import Banner3Create from '@/views/admin/banner/Banner3Create.vue';
 
 const routes = [
+    {
+        path: '/admin/title/:page',
+        name: 'AdminTitle',
+        component: Title
+    },
     {
         path: '/admin/banner/create',
         name: 'AdminBannerCreate',

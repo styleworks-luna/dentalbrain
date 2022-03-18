@@ -73,6 +73,7 @@
                                     <template v-if="slotProps.row.is_watched">(시청함)</template>
                                     <div v-if="slotProps.row.is_repeated">(재수강)</div>
                                 </template>
+                                <button class="btn btn-info">변경</button>
                             </template>
                         </template>
                         <template v-else>
@@ -82,6 +83,15 @@
                             <template v-else>
                                 <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
                             </template>
+                            <button class="btn btn-info" v-on:click.prevent.self="edit">변경</button>
+                            <div class="input-group" id="edit" style="display: none">
+                                <input class="form-control"
+                                       type="text"
+                                       placeholder="변경일자 입력">
+                                <span class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">수정</button>
+                                </span>
+                            </div>
                         </template>
                     </td>
                     <td>
@@ -239,7 +249,7 @@ export default {
                 {
                     name: 'watch',
                     text: '시청기간',
-                    width: '9%'
+                    width: '12%'
                 },
                 {
                     name: 'additional',
@@ -249,7 +259,7 @@ export default {
                 {
                     name: 'cancel',
                     text: '취소',
-                    width: '17%'
+                    width: '10%'
                 },
                 {
                     name: 'started_at',
@@ -296,6 +306,10 @@ export default {
         },
         handleSetOrder(order) {
             this.order = order;
+        },
+        edit: function (){
+            alert('dd');
+            this.style.color = "red";
         }
     }
 }

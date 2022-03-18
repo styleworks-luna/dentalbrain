@@ -44,6 +44,12 @@
                 <a href="#" class="c-sidebar-nav-dropdown-toggle">배너관리</a>
 
                 <ul class="c-sidebar-nav-dropdown-items">
+                    <router-link to="/admin/title/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/title') }">
+                            타이틀 관리
+                        </a>
+                    </router-link>
                     <router-link to="/admin/banner/1" tag="li" class="c-sidebar-nav-item">
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/banner') }">

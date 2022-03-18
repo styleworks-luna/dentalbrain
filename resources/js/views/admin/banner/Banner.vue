@@ -38,6 +38,7 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.categories.name }}</td>
                     <td>{{ slotProps.row.order }}</td>
+                    <td>{{ slotProps.row.title }}</td>
                     <td>{{ slotProps.row.link }}</td>
                     <td>
                         노출 시작 : {{ slotProps.row.started_at }} ~<br>
@@ -128,6 +129,11 @@ export default {
                     width: '8%'
                 },
                 {
+                    name: 'title',
+                    text: '제목',
+                    width: '10%'
+                },
+                {
                     name: 'link',
                     text: '연결링크',
                     width: '20%'
@@ -140,7 +146,7 @@ export default {
                 {
                     name: 'views',
                     text: '클릭회수',
-                    width: '9%'
+                    width: '5%'
                 },
                 {
                     name: 'commend',

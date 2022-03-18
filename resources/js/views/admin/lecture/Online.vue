@@ -8,6 +8,7 @@
         </template>
 
         <template v-slot:search>
+            <span style="font-size: 12px">강의현황 (공개 00개 / 비공개 00개) | 수강자 없는 강의 00개</span>
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
@@ -63,7 +64,7 @@
                                      class="btn-danger text-white border-danger float-left mr-2"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/duplicate/${page}`"
-                                     class="btn btn-success text-white float-left">
+                                     class="btn btn-success text-white float-left mr-2">
                             복사
                         </router-link>
                         <button class="btn btn-danger float-left" @click="destroy(slotProps.row.id)">삭제</button>

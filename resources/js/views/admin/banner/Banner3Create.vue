@@ -37,24 +37,6 @@ Banner3Create.vue<template>
                 </template>
             </single-group>
 
-            <!-- 이미지 -->
-            <single-group name="이미지"
-                          :isRow="true"
-                          :isRequired="true"
-                          :size="9">
-                <template v-slot:content>
-                    <image-upload :inputId="'desktop' + desktop_file.id"
-                                  :initFile="desktop_file"
-                                  @setImage="updateDesktopFile"></image-upload>
-                    <p class="tips">PC 배너로 노출 될 이미지 업로드 (PC 배너 등록 시 첨부)</p>
-
-                    <image-upload :inputId="'mobile' + mobile_file.id"
-                                  :initFile="mobile_file"
-                                  @setImage="updateMobileFile"></image-upload>
-                    <p>Mobile 배너로 노출 될 이미지 업로드 (모바일 배너 등록 시 첨부)</p>
-                </template>
-            </single-group>
-
             <!-- 노출기간 -->
             <single-group name="노출기간"
                           :isRow="true"
