@@ -75,12 +75,10 @@ class ProgramBannerController extends Controller
             ]);
         }
 
-        // 현재 활성화 된 배너 중, 같은 program_id 를 가지는 배너가 있는지?
-        // y. respoonse->json->[success=false,msh=error]
-        // n. 진행
+        $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
+            ->where('category_id', '=', $validatedData['category_id'])->exists();
 
-        $duplicate = Banner::where('program_id', "=", $validatedData['program_id'])->where('category_id', '=', $validatedData['category_id'])->first();
-        if ($duplicate) {
+        if ($isDuplicated) {
             return response()->json([
                 'success' => false,
                 'msg' => '배너가 이미 존재합니다.',
@@ -90,7 +88,7 @@ class ProgramBannerController extends Controller
         $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
 
         $validatedData['user_id'] = auth()->id();
-        $banner = Banner::firstOrCreate($validatedData);
+        Banner::firstOrCreate($validatedData);
 
         return response()->json([
             'success' => true,
