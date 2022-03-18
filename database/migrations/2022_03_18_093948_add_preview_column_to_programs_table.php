@@ -14,7 +14,9 @@ class AddPreviewColumnToProgramsTable extends Migration
     public function up()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->string('preview')->nullable()->comment('강의 미리보기')->after('membership_price');
+            $table->string('preview_id')->nullable()->comment('미리보기 id')->after('membership_price');
+            $table->string('preview_type')->nullable()->comment('미리보기 type')->after('membership_price');
+            $table->string('preview_url')->nullable()->comment('미리보기 url')->after('membership_price');
         });
     }
 
@@ -26,7 +28,9 @@ class AddPreviewColumnToProgramsTable extends Migration
     public function down()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->dropColumn('preview');
+            $table->dropColumn('preview_url');
+            $table->dropColumn('preview_type');
+            $table->dropColumn('preview_id');
         });
     }
 }
