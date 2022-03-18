@@ -57,6 +57,9 @@ export const OnlineMixin = {
         },
         handleSetVideo (id, idx) {
             this.lectures[idx].video_type = id;
+        },
+        handleSetPreview (id, idx) {
+            this.preview_type = id;
         }
     }
 };

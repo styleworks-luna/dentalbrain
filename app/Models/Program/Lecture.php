@@ -52,11 +52,14 @@ class Lecture extends Model
 
     /**
      * URL으로부터 각각의 ID 값 추출함. (wecandeo, youtube)
-     * @param string $url URL
+     * @param ?string $url URL
      * @return string|null ID
      */
-    public static function getVideoIdFromUrl(string $url): ?string
+    public static function getVideoIdFromUrl(?string $url): ?string
     {
+        if ($url == null) {
+            return null;
+        }
         $youtubeRegExp = '(?:youtube.[a-z]+\/[a-z?&]*v[\/|=]|youtu.be\/)([\d\w\-_]+)';
         $wecandeoRegExp = 'play.wecandeo.com\/video\/v\/\?key=([\d\w\-_]+)';
         $regExp = '/(?|' . $youtubeRegExp . '|' . $wecandeoRegExp . ')/';

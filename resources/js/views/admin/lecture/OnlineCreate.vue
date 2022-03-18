@@ -155,18 +155,18 @@
                           :isRequired="true"
                           :size="9">
                 <template v-slot:content>
-                    <div class="lecture-setting" v-for="(lecture, index) in lectures">
+                    <div class="lecture-setting">
                         <div class="form-group row">
                             <label class="col-form-label" for="">
                                 <select-box class="form-control"
-                                            :value="lecture.preview_type"
+                                            :value="preview_type"
                                             :options="VideoOptions"
                                             :index="index"
-                                            @setValue="handleSetVideo"></select-box>
+                                            @setValue="handleSetPreview"></select-box>
                             </label>
                             <span class="text-danger mt-2 ml-2">*</span>
                             <div class="col-md-9 mt-2">
-                                <input type="text" class="form-control" v-model="lecture.preview_url">
+                                <input type="text" class="form-control" v-model="preview_url">
                             </div>
                         </div>
                     </div>
@@ -290,6 +290,9 @@ export default {
                 running_time: this.running_time,
 
                 lecture_info: this.lecture_info,
+
+                preview_url: this.preview_url,
+                preview_type: this.preview_type,
 
                 price: this.price,
                 is_free: this.is_free,

@@ -217,7 +217,7 @@ abstract class ProgramTemplate
 
             'preview_url' => $data['preview_url'] ?? null,
             'preview_type' => $data['preview_type'] ?? null,
-            'preview_id' => Lecture::getVideoIdFromUrl($data['url']),
+            'preview_id' => Lecture::getVideoIdFromUrl($data['preview_url'] ?? null),
 
             'is_free' => $data['is_free'],
             'membership_is_free' => $data['membership_is_free'],
@@ -342,7 +342,7 @@ abstract class ProgramTemplate
 
             'preview_url' => $data['preview_url'] ?? null,
             'preview_type' => $data['preview_type'] ?? null,
-            'preview_id' => Lecture::getVideoIdFromUrl($data['url']),
+            'preview_id' => Lecture::getVideoIdFromUrl($data['preview_url'] ?? null),
 
             'description' => $data['lecture_info'],
             //'term' => 100 days default.
