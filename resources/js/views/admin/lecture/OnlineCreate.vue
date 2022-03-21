@@ -168,7 +168,6 @@
                                 <select-box class="form-control"
                                             :value="preview_type"
                                             :options="VideoOptions"
-                                            :index="index"
                                             @setValue="handleSetPreview"></select-box>
                             </label>
                             <span class="text-danger mt-2 ml-2">*</span>
