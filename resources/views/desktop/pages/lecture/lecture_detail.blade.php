@@ -104,7 +104,7 @@
                                 <td class="lecture-price"
                                     data-price="{{ $program->price }}">
                                     <div style="display: flex; align-items: center">
-                                        @if($program->discount_rate != 0)
+                                        @if($program->discount_rate != 0 && $program->price !=0)
                                         <span class="lecture-ogprice">{{ number_format($program->price).'원' }}</span><span
                                             style="color: black; font-weight: normal"> →</span>
                                         <span>{{ $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}</span>
@@ -131,7 +131,7 @@
                                 <td class="lecture-price"
                                     data-price="{{ $program->price }}">
                                     <div style="display: flex; align-items: center">
-                                        @if($program->discount_rate != 0)
+                                        @if($program->discount_rate != 0 && $program->price !=0)
                                         <span class="lecture-ogprice">{{ number_format($program->price).'원' }}</span><span
                                             style="color: black; font-weight: normal"> →</span>
                                         <span>{{ $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}</span>
@@ -187,7 +187,7 @@
                                 <td class="lecture-price"
                                     data-price="{{ $program->price }}">
                                     <div style="display: flex; align-items: center">
-                                        @if($program->discount_rate != 0)
+                                        @if($program->discount_rate != 0 && $program->price !=0)
                                         <span class="lecture-ogprice">{{ number_format($program->price).'원' }}</span><span
                                             style="color: black; font-weight: normal"> →</span>
                                         <span>{{ $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}</span>

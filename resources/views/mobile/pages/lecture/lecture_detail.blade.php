@@ -52,7 +52,7 @@
                                 <li class="lecture-price-wrap">
                                     @guest
                                         {{-- 비로그인 사용자 --}}
-                                        @if($program->discount_rate != 0)
+                                        @if($program->discount_rate != 0 && $program->price !=0)
                                         <div class="price-individual">
                                             <span>결제금액</span>
                                             <p class="lecture-price"
@@ -82,7 +82,7 @@
                                         {{-- 로그인 사용자 --}}
                                         @if (auth()->user()->hasMembership)
                                             {{-- 유료회원인 경우 --}}
-                                            @if($program->discount_rate != 0)
+                                            @if($program->discount_rate != 0 && $program->price !=0)
                                             <div class="price-individual">
                                                 <span>결제금액</span>
                                                 <p class="lecture-price"
@@ -140,7 +140,7 @@
                                                 </div>
                                             @else
                                                 {{--재수강 아닌 경우--}}
-                                                @if($program->discount_rate != 0)
+                                                @if($program->discount_rate != 0 && $program->price !=0)
                                                 <div class="price-individual">
                                                     <span>결제금액</span>
                                                     <p class="lecture-price"
