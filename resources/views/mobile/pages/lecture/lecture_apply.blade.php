@@ -251,16 +251,9 @@
                         <table>
                             <tr>
                                 <th>결제금액</th>
-                                @if ($program->repeatable())
-                                    <td>
-                                        <em>{{ $price == 0 ? '무료' : '재수강 할인가:' . number_format($price).'원' }}</em>
-                                    </td>
-                                @else
-                                    <td>
-                                        <em>{{ $price == 0? '무료' : number_format($price).'원' }}</em>
-                                    </td>
-                                @endif
-
+                                <td>
+                                    <em>{{ $price == 0? '무료' : number_format($price).'원' }}</em>
+                                </td>
                             </tr>
                         </table>
                     </section>

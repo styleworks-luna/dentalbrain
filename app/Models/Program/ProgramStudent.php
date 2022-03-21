@@ -32,7 +32,7 @@ class ProgramStudent extends Model
             ->first();
         $programStudent->update([
             'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
-            'is_repeated' => $program->canRepeat(),
+            'is_repeated' => $program->repeatable(),
         ]);
 
         return $programStudent->fresh();
@@ -71,11 +71,12 @@ class ProgramStudent extends Model
      *  신청 성공 시에 업데이트 하는 쿼리
      *
      * @param Program $program
+     * @param int $price
      * @return ProgramStudent
      */
-    public static function updateOrCreateWhenApplySuccess(Program $program)
+    public static function updateOrCreateWhenApplySuccess(Program $program, $price)
     {
-        if ($program->getUserSpecificFree()) {
+        if ($price == 0) {
             return ProgramStudent::updateOrCreate([
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),
@@ -85,7 +86,7 @@ class ProgramStudent extends Model
                 'applied_at' => now(),
                 'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
-                'is_repeated' => $program->canRepeat(),
+                'is_repeated' => $program->repeatable(),
             ]);
         } else {
             return ProgramStudent::updateOrCreate([
@@ -95,7 +96,7 @@ class ProgramStudent extends Model
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),
                 'applied_at' => now(),
-                'is_repeated' => $program->canRepeat(),
+                'is_repeated' => $program->repeatable(),
             ]);
         }
     }

@@ -30,7 +30,6 @@ class Program extends Model
         'minor_category_name',
         'user_like_cnt',
         'auth_like',
-        'repeat_price',
     ];
 
     protected $guarded = [];
@@ -195,30 +194,23 @@ class Program extends Model
 
         // 유료회원 가격 적용.
         if ($user->hasMembership) {
-            if ($this->membership_is_free) {
-                return 0;
-            }
-            $price = $this->membership_price;
-        } else {
-            if ($this->is_free) {
-                return 0;
-            }
-            $price = $this->price;
-        }
-
-        /** @var ProgramStudent $student */
-        $student = $this->students()->where('user_id', '=', $user->id)->first();
-        if ($student) {
-            // 신청한 적이 있는 경우
-            if ($this->repeatable($student)) {
-                // 재수강일 경우.
-                return self::discountPrice($price);
+            if ($this->membership_discount_rate != 0) {
+                return $this->membership_discounted_price;
             } else {
-                return $price;
+                if ($this->membership_is_free) {
+                    return 0;
+                }
+                return $this->membership_price;
             }
         } else {
-            // 신청한 적이 없는 경우
-            return $price;
+            if ($this->discount_rate != 0) {
+                return $this->discounted_price;
+            } else {
+                if ($this->is_free) {
+                    return 0;
+                }
+                return $this->price;
+            }
         }
     }
 
@@ -269,17 +261,6 @@ class Program extends Model
         }
     }
 
-    /**
-     * 재수강 가격 할인율 적용
-     *
-     * @param $price
-     * @return int
-     */
-    public static function discountPrice($price): int
-    {
-        return (int)($price * 7 / 10);
-    }
-
     public function getUserSpecificFree($user = null): bool
     {
         if ($user == null) {
@@ -288,15 +269,15 @@ class Program extends Model
 
         // 유료회원 가격 적용.
         if ($user->hasMembership) {
-            if ($this->membership_is_free) {
-                return true;
+            if ($this->membership_discount_rate != 0) {
+                return $this->membership_discounted_price == 0 ? true : false;
             }
-            return false;
+            return $this->membership_is_free ? true : false;
         } else {
-            if ($this->is_free) {
-                return true;
+            if ($this->discount_rate != 0) {
+                return $this->discounted_price == 0 ? true : false;
             }
-            return false;
+            return $this->is_free ? true : false;
         }
     }
 
@@ -383,12 +364,6 @@ class Program extends Model
                 ->where('program_id', '=', $this->attributes['id'])
                 ->where('user_id', '=', Auth::id())->exists();
         }
-    }
-
-    public function getRepeatPriceAttribute()
-    {
-        $price = $this->attributes['price'] ?? 0;
-        return self::discountPrice($price);
     }
 
     public function scopeMain(Builder $query)

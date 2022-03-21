@@ -36,17 +36,10 @@
                                     <th>결제금액</th>
                                     <td>
                                         <p class="lecture-pay">
-                                            <template v-if="!lecture.is_repeated">
-                                                {{
+                                            {{
                                                 lecture.is_free == 1 ? '무료' :
-                                                Helper.numberWithCommas(lecture.price) + '원'
-                                                }}
-                                            </template>
-                                            <template v-else>
-                                                {{
-                                                '재수강 할인가: ' + Helper.numberWithCommas(lecture.repeat_price) + '원'
-                                                }}
-                                            </template>
+                                                    Helper.numberWithCommas(lecture.price) + '원'
+                                            }}
                                         </p>
                                     </td>
                                 </tr>
@@ -63,15 +56,15 @@
                                 <tr>
                                     <th>강의장소</th>
                                     <td><p class="lecture-length lecture-place">{{
-                                        lecture.place.full_address
+                                            lecture.place.full_address
                                         }}</p></td>
                                 </tr>
                             </table>
                         </div>
                     </div>
-                        <div class="btn-zone">
-                            <a :href="'/lectures/' + lecture.id" class="btn-lecture">강의 바로가기</a>
-                        </div>
+                    <div class="btn-zone">
+                        <a :href="'/lectures/' + lecture.id" class="btn-lecture">강의 바로가기</a>
+                    </div>
                 </li>
                 <li class="content-none" v-if="lectures.length == 0">찜한 강의가 없습니다.</li>
             </ul>

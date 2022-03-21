@@ -156,17 +156,17 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼
-            Route::get('apply', 'Lecture\ApplyController@showApplyForm')->name('apply.form');
+            Route::get('apply', [\App\Http\Controllers\Lecture\ApplyController::class, 'showApplyForm'])->name('apply.form');
             // 강의 신청
-            Route::post('apply', 'Lecture\ApplyController@apply')->name('apply');
+            Route::post('apply', [\App\Http\Controllers\Lecture\ApplyController::class, 'apply'])->name('apply');
             // 강의 계좌입금
             Route::post('another', [\App\Http\Controllers\Lecture\ApplyController::class, 'anotherPay'])->name('anotherPay');
             // 강의 결제 폼
-            Route::get('payment', 'Lecture\PaymentsController@showPaymentForm')->name('payment.form');
+            Route::get('payment', [\App\Http\Controllers\Lecture\PaymentsController::class, 'showPaymentForm'])->name('payment.form');
             // 강의 결제 성공
-            Route::get('success', 'Lecture\PaymentsController@success')->name('payment.success');
+            Route::get('success', [\App\Http\Controllers\Lecture\PaymentsController::class, 'success'])->name('payment.success');
             // 강의 신청 성공
-            Route::get('result', 'Lecture\ApplyController@result')->name('result');
+            Route::get('result', [\App\Http\Controllers\Lecture\ApplyController::class, 'result'])->name('result');
             // 강의 시청
             Route::get('watch/{lecture?}', 'Lecture\WatchController@watch')->name('watch');
             // 강의 시청 확인

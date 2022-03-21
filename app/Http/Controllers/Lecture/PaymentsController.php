@@ -73,7 +73,6 @@ class PaymentsController extends Controller
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
         }
 
-
         return redirect()->route('lectures.result', $program->id);
     }
 
