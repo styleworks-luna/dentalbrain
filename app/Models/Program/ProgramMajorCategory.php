@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProgramMajorCategory extends Model
 {
     protected $table = 'program_major_categories';
+    protected $hidden = ['created_at', 'updated_at'];
 
     /**
      * @return Collection
