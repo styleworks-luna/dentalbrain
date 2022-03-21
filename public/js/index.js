@@ -83,6 +83,7 @@ $(function () {
         slidesPerView: 2.1,
         observer: true,
         observeParents: true,
+        freeMode: true,
 
     });
 
@@ -91,6 +92,7 @@ $(function () {
         slidesPerView: 2.1,
         observer: true,
         observeParents: true,
+        freeMode: true,
     });
 
     var mySwiper = new Swiper('.bottom-swiper-container', {
