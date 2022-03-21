@@ -18,10 +18,10 @@ class RecommendLectureController extends Controller
 
         $banners = Banner::public()
             ->with(['program' => function (BelongsTo $query) {
-                $query->with('thumbnail')->select('id', 'title', 'thumbnail_id', 'minor_category_id', 'running_time', 'price');
+                $query->with('thumbnail')->select('id', 'title', 'thumbnail_id', 'minor_category_id', 'running_time', 'price', 'discount_rate', 'discounted_price');
             }])->whereHas('program') // 프로그램이 있는 배너만
             ->where('category_id', '=', $request->category_id)
-            ->select('id', 'program_id', 'category_id', 'discount_rate', 'discounted_price')
+            ->select('id', 'program_id', 'category_id')
             ->orderByDesc('order')
             ->get();
 
