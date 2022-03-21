@@ -84,7 +84,6 @@ $(function () {
         observer: true,
         observeParents: true,
         freeMode: true,
-
     });
 
     var mySwiper = new Swiper('.m-middle-swiper-container3', {
