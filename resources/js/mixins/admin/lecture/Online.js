@@ -26,6 +26,7 @@ export const OnlineMixin = {
             running_time: '',
             preview_url: '',
             preview_type: 'youtube',
+            term: '',
             lectures: [
                 {
                     title: '',
