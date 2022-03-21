@@ -63,9 +63,7 @@
                                 <p>결제금액</p>
                                 <div class="d-day"><em>
                                     <!-- 결제 금액 -->
-                                    <template>
-                                        {{ Helper.numberWithCommas(lecture.program.price) + '원' }}
-                                    </template>
+                                    {{ Helper.numberWithCommas(lecture.program.price) + '원' }}
                                 </em></div>
                             </div>
                         </template>
