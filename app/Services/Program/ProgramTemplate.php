@@ -113,12 +113,13 @@ abstract class ProgramTemplate
             ->join('users', 'users.id', '=', 'program_students.user_id');
 
         if ($keyword != null) {
-            $query->where(/* @param Builder $query */ function ($query) use ($keyword) {
-                $query->where('users.phone', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('users.login_id', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('users.name', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('users.email', 'LIKE', '%' . $keyword . '%');
-            });
+            $query->where(/* @param Builder $query */
+                function ($query) use ($keyword) {
+                    $query->where('users.phone', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('users.login_id', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('users.name', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('users.email', 'LIKE', '%' . $keyword . '%');
+                });
         }
 
         if ($order == 'latest') {
@@ -252,7 +253,7 @@ abstract class ProgramTemplate
             'membership_is_free' => $data['membership_is_free'],
 
             'description' => $data['lecture_info'],
-            //'term' => 100 days default.
+            'term' => $data['term'] ?? Program::$TERM,
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
@@ -374,7 +375,7 @@ abstract class ProgramTemplate
             'preview_id' => Lecture::getVideoIdFromUrl($data['preview_url'] ?? null),
 
             'description' => $data['lecture_info'],
-            //'term' => 100 days default.
+            'term' => $data['term'] ?? Program::$TERM,
         ]);
 
         return $this->program;
@@ -441,9 +442,10 @@ abstract class ProgramTemplate
         $surveyFiles = SurveyAnswer::query()->whereIn('survey_id', $deletableIds)
             ->whereNotNull('file_id')->get()
             ->mapInto(SurveyFile::class);
-        $surveyFiles->each(/* @param SurveyFile $surveyFile */ function ($surveyFile) {
-            $surveyFile->deleteFile();
-        });
+        $surveyFiles->each(/* @param SurveyFile $surveyFile */
+            function ($surveyFile) {
+                $surveyFile->deleteFile();
+            });
 
         SurveyAnswer::query()->whereIn('survey_id', $deletableIds)->orWhereIn('choice_id', $deletableIds)->delete();
         Survey::query()->whereIn('id', $deletableIds)->orWhereIn('parent_id', $deletableIds)->delete();

@@ -21,6 +21,8 @@ class Program extends Model
 {
     use SoftDeletes;
 
+    public static $TERM = 7;
+
     protected $table = 'programs';
 
     protected $appends = [
@@ -410,10 +412,11 @@ class Program extends Model
         if ($keyword != null) {
             $programs->where(/**
              * @param Builder $query
-             */ function ($query) use ($keyword) {
-                $query->where('title', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('description', 'LIKE', '%' . $keyword . '%');
-            });
+             */
+                function ($query) use ($keyword) {
+                    $query->where('title', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+                });
         }
 
         if ((int)$category !== 0) {
