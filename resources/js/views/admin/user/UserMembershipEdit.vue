@@ -73,9 +73,10 @@
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 5%">
-                        <col style="width: 8%">
-                        <col style="width: 15%">
+                        <col style="width: 7%">
+                        <col style="width: 20%">
                         <col style="width: 10%">
+                        <col style="width: 15%">
                         <col style="width: 15%">
                     </colgroup>
                     <thead>
