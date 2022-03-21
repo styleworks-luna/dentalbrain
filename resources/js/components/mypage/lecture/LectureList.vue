@@ -12,7 +12,7 @@
                         <div class="lecture-sort">
                             <span class="lecture-type">{{ lecture.program.minor_category_name }}</span>
 
-                            <p class="lecture-date">수강기간 10일</p>
+                            <p class="lecture-date">{{ lecture.program.term }}</p>
                         </div>
                         <h3 class="lecture-title">
                             <a :href="'/lectures/' + lecture.program.id">{{ lecture.program.title }}</a>
