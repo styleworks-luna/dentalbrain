@@ -402,7 +402,7 @@ class Program extends Model
     {
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
-            'minor_category_id', 'title', 'running_time',
+            'minor_category_id', 'title', 'running_time', 'term',
             'is_free',
             'price', 'discount_rate', 'discounted_price',
         ])
