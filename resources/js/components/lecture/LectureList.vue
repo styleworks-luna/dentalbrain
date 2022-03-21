@@ -7,7 +7,7 @@
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{ lecture.minor_category_name }}</span>
-                            <p class="lecture-date">{{ lecture.term }}</p>
+                            <p class="lecture-date">수강기간 {{ lecture.term }}일</p>
                             <p class="lecture-time" v-if="lecture.place == null">{{ lecture.running_time }}</p>
                             <p class="lecture-time"
                                v-else-if="lecture.place != null && !Helper.dateCompare(lecture.place.started_at, lecture.place.ended_at)">

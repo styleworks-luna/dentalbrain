@@ -164,7 +164,7 @@
                         <div class="lecture-sort">
                             <span class="lecture-type">{{$program->minor_category_name}}</span>
 
-                            <p class="lecture-date">{{ $program->term }}</p>
+                            <p class="lecture-date">수강기간 {{ $program->term }}일</p>
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <table>
