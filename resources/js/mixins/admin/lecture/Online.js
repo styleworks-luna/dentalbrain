@@ -25,7 +25,7 @@ export const OnlineMixin = {
             material: '',
             running_time: '',
             preview_url: '',
-            preview_type: '',
+            preview_type: 'youtube',
             lectures: [
                 {
                     title: '',
@@ -57,7 +57,7 @@ export const OnlineMixin = {
         handleSetVideo(id, idx) {
             this.lectures[idx].video_type = id;
         },
-        handleSetPreview(id, idx) {
+        handleSetPreview(id) {
             this.preview_type = id;
         }
     }

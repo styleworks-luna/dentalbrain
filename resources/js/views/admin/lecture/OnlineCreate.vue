@@ -71,7 +71,8 @@
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
                 <template v-slot:content>
-                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`" @setEditor="handleSetEditor"></editor>
+                    <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`"
+                            @setEditor="handleSetEditor"></editor>
                 </template>
             </single-group>
 
@@ -101,13 +102,16 @@
                             <input type="text"
                                    class="form-control ml-2"
                                    :disabled="is_free == true"
-                                   style="width: 50px; margin-right: 5px;"><span style="margin-right: 15px;">%</span>
+                                   style="width: 50px; margin-right: 5px;"
+                                   v-model="discount_rate">
+                            <span style="margin-right: 15px;">%</span>
                             <label>할인가</label>
                             <input type="text"
                                    class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    :disabled="is_free == true"
-                                   style="width: 120px;">
+                                   style="width: 120px;"
+                                   v-model="discounted_price">
                         </div>
                     </div>
                     <div class="membership-price overflow-hidden mt-3">
@@ -131,11 +135,14 @@
                             <input type="text"
                                    class="form-control ml-2"
                                    :disabled="is_free == true"
-                                   style="width: 50px; margin-right: 5px;"><span style="margin-right: 15px;">%</span>
+                                   style="width: 50px; margin-right: 5px;"
+                                   v-model="membership_discount_rate">
+                            <span style="margin-right: 15px;">%</span>
                             <label>할인가</label>
                             <input type="text"
                                    class="form-control ml-2"
                                    placeholder="신청 금액 입력"
+                                   v-model="membership_discounted_price"
                                    :disabled="is_free == true"
                                    style="width: 120px;">
                         </div>
@@ -161,7 +168,6 @@
                                 <select-box class="form-control"
                                             :value="preview_type"
                                             :options="VideoOptions"
-                                            :index="index"
                                             @setValue="handleSetPreview"></select-box>
                             </label>
                             <span class="text-danger mt-2 ml-2">*</span>
@@ -294,10 +300,16 @@ export default {
                 preview_url: this.preview_url,
                 preview_type: this.preview_type,
 
-                price: this.price,
                 is_free: this.is_free,
                 membership_is_free: this.membership_is_free,
+
+                price: this.price,
+                discounted_price: this.discounted_price,
+                discount_rate: this.discount_rate,
+
                 membership_price: this.membership_price,
+                membership_discounted_price: this.membership_discounted_price,
+                membership_discount_rate: this.membership_discount_rate,
 
                 is_open: this.is_open,
 
