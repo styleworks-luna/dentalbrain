@@ -21,18 +21,26 @@
                         </div>
                         <p class="lecture-name">{{ lecture.title }}</p>
                         <div v-if="!isMobile()" class="lecture-all-price">
-                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
-                            <p class="lecture-price" v-if="lecture.is_free == 0">
-                            {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                            <span class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
-                            <p class="lecture-price" v-else>무료</p>
-                        </div>
-                        <div v-else class="lecture-all-price">
-                            <span class="lecture-sale" v-if="lecture.is_free == 0">{{"30%"}}</span>
-                            <span style="padding-bottom: 4px" class="lecture-ogprice" v-if="lecture.is_free == 0">{{"500,000"}}</span>
-                            <p class="lecture-price" v-if="lecture.is_free == 0">
+                            <template v-if="lecture.is_free == 0 && lecture.discount_rate != 0">
+                                <span class="lecture-sale">{{ lecture.discount_rate }}%</span>
+                                <p class="lecture-price">{{ Helper.numberWithCommas(lecture.discounted_price) }}원</p>
+                                <span class="lecture-ogprice">{{ Helper.numberWithCommas(lecture.price) }}원</span>
+                            </template>
+                            <p class="lecture-price" v-if="lecture.is_free == 0 && lecture.discount_rate == 0">
                                 {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                            <p style="padding-top: 5vw"class="lecture-price" v-else>무료</p>
+                            <p class="lecture-price" v-if="lecture.is_free != 0">무료</p>
+                        </div>
+
+                        <div v-else class="lecture-all-price">
+                            <template v-if="lecture.is_free == 0 && lecture.discount_rate != 0">
+                                <span class="lecture-sale">{{ lecture.discount_rate }}%</span>
+                                <span style="padding-bottom: 4px" class="lecture-ogprice">{{ Helper.numberWithCommas(lecture.price) }}원</span>
+                                <p class="lecture-price">
+                                    {{ Helper.numberWithCommas(lecture.discounted_price) }}원</p>
+                            </template>
+                            <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.is_free == 0 && lecture.discount_rate == 0">
+                                {{ Helper.numberWithCommas(lecture.price) }}원</p>
+                            <p style="padding-top: 5vw"class="lecture-price" v-if="lecture.is_free != 0">무료</p>
                         </div>
 
                     </div>

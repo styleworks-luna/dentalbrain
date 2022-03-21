@@ -64,7 +64,7 @@
                               :isRequired="true"
                               :size="2">
                     <template v-slot:content>
-                        <input type="text" class="form-control" placeholder="일수">
+                        <input type="text" class="form-control" placeholder="일수" v-model="term">
                     </template>
                 </single-group>
             </div>
@@ -296,6 +296,8 @@ export default {
                 running_time: this.running_time,
 
                 lecture_info: this.lecture_info,
+
+                term: this.term,
 
                 preview_url: this.preview_url,
                 preview_type: this.preview_type,
