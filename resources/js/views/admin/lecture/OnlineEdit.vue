@@ -58,6 +58,15 @@
                                v-model="lecture_info">
                     </template>
                 </single-group>
+
+                <single-group name="수강기한"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="2">
+                    <template v-slot:content>
+                        <input type="text" class="form-control" placeholder="일수" v-model="term">
+                    </template>
+                </single-group>
             </div>
 
             <single-group name="상세 정보 입력" :isRequired="true" :size="12">
@@ -276,6 +285,8 @@ export default {
 
                 this.lecture_info = program.description;
 
+                this.term = program.term;
+
                 this.preview_url = program.preview_url;
                 this.preview_type = program.preview_type;
 
@@ -314,6 +325,9 @@ export default {
                 running_time: this.running_time,
 
                 lecture_info: this.lecture_info,
+
+                term: this.term,
+
                 price: this.price,
                 is_free: this.is_free,
                 is_open: this.is_open,
