@@ -102,43 +102,16 @@
                                                 </p>
                                             </div>
                                             @endif
-                                            @if ($program->repeatable($student))
-                                                {{-- 유료회원 + 재수강 --}}
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $student->getPrice() }}">
-                                                        {{ $program->membership_is_free ? '무료' : '재수강 할인가 ' . number_format($student->getPrice()) }}
-                                                    </p>
-                                                </div>
-                                            @else
-                                                {{-- 유료회원 --}}
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->membership_price }}">
-                                                        {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
-                                                    </p>
-                                                </div>
-                                            @endif
+                                            {{-- 유료회원 --}}
+                                            <div class="price-individual">
+                                                <span>유료회원가</span>
+                                                <p class="lecture-price"
+                                                   data-price="{{ $program->membership_price }}">
+                                                    {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
+                                                </p>
+                                            </div>
                                         @else
                                             {{-- 유료회원이 아닐 경우 --}}
-                                            @if ($program->repeatable($student))
-                                                {{--재수강--}}
-                                                <div class="price-individual">
-                                                    <span class="exclude-price">결제금액</span>
-                                                    <p class="lecture-price lecture-exclude-price"
-                                                       data-price="{{ $program->repeat_price }}">
-                                                        {{ $program->is_free ? '무료' : '재수강 할인가 ' . number_format($program->repeat_price).'원'}}
-                                                    </p>
-                                                </div>
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price" data-price="{{ $student->getPrice() }}">
-                                                        {{ $program->membership_is_free ? '무료' :'재수강 할인가 ' . number_format($student->getPrice()).'원' }}
-                                                    </p>
-                                                </div>
-                                            @else
                                                 {{--재수강 아닌 경우--}}
                                                 @if($program->discount_rate != 0)
                                                 <div class="price-individual">
@@ -167,7 +140,6 @@
                                                         {{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원' }}
                                                     </p>
                                                 </div>
-                                            @endif
                                         @endif
                                     @endguest
                                 </li>

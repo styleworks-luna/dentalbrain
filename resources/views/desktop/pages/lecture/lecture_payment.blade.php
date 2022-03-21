@@ -272,15 +272,9 @@
                         <tr>
                             <th>결제금액</th>
                             {{--무료는 존재할 수 없음--}}
-                            @if ($program->repeatable())
-                                <td>
-                                    <em>{{ '재수강 할인가:' . number_format($price).'원' }}</em>
-                                </td>
-                            @else
-                                <td>
-                                    <em>{{ number_format($price).'원' }}</em>
-                                </td>
-                            @endif
+                            <td>
+                                <em>{{ number_format($price).'원' }}</em>
+                            </td>
                         </tr>
                         <tr>
                             <th>결제방식</th>

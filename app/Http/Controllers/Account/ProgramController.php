@@ -36,8 +36,7 @@ class ProgramController extends Controller
                     $query->select('id', 'thumbnail_id', 'title', 'is_online', 'running_time', 'major_category_id', 'minor_category_id', 'price', 'term')
                         ->with('place:id,program_id,address,address_detail,sido,gugun,started_at,ended_at')
                         ->with('thumbnail:id,path,url')
-                        ->with('lectures:id,program_id')
-                        ->getModel()->getAttribute('repeat_price');
+                        ->with('lectures:id,program_id');
                 },
                 // 기본 정렬
             ])->where('user_id', '=', Auth::id())

@@ -28,7 +28,6 @@ class Program extends Model
         'minor_category_name',
         'user_like_cnt',
         'auth_like',
-        'repeat_price',
     ];
 
     protected $guarded = [];
@@ -204,20 +203,7 @@ class Program extends Model
             $price = $this->price;
         }
 
-        /** @var ProgramStudent $student */
-        $student = $this->students()->where('user_id', '=', $user->id)->first();
-        if ($student) {
-            // 신청한 적이 있는 경우
-            if ($this->repeatable($student)) {
-                // 재수강일 경우.
-                return self::discountPrice($price);
-            } else {
-                return $price;
-            }
-        } else {
-            // 신청한 적이 없는 경우
-            return $price;
-        }
+        return $price;
     }
 
     /**
@@ -265,17 +251,6 @@ class Program extends Model
                 ->where('expired_at', '<', now())
                 ->exists();
         }
-    }
-
-    /**
-     * 재수강 가격 할인율 적용
-     *
-     * @param $price
-     * @return int
-     */
-    public static function discountPrice($price): int
-    {
-        return (int)($price * 7 / 10);
     }
 
     public function getUserSpecificFree($user = null): bool
@@ -381,12 +356,6 @@ class Program extends Model
                 ->where('program_id', '=', $this->attributes['id'])
                 ->where('user_id', '=', Auth::id())->exists();
         }
-    }
-
-    public function getRepeatPriceAttribute()
-    {
-        $price = $this->attributes['price'] ?? 0;
-        return self::discountPrice($price);
     }
 
     public function scopeMain(Builder $query)

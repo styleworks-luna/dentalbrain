@@ -85,15 +85,9 @@
                                 <th>강의정보</th>
                                 <td>
                                     <select name="ticket" id="ticket" class="lecture-select-box">
-                                        @if ($program->canRepeat($student) || $program->repeated($student))
-                                        <option value="{{$program->id}}"
-                                                data-price="{{ $program->repeat_price }}">{{ $program->description }}
-                                        </option>
-                                        @else
                                         <option value="{{$program->id}}"
                                                 data-price="{{ $program->price }}">{{ $program->description }}
                                         </option>
-                                        @endif
                                     </select>
                                 </td>
                             </tr>
@@ -142,46 +136,16 @@
                                     </div>
                                 </td>
                             </tr>
-                            @if ($program->repeatable($student))
-                            {{--유료회원 + 재수강--}}
-                            <tr>
-                                <th>유료회원가</th>
-                                <td class="lecture-price"
-                                    data-price="{{ $student->getPrice() }}">
-                                    {{ $program->membership_is_free ? '무료' : '재수강 할인가 '.number_format($student->getPrice()).'원'
-                                    }}
-                                </td>
-                            </tr>
-                            @else
-                            {{--유료회원--}}
-                            <tr>
-                                <th>유료회원가</th>
-                                <td class="lecture-price" data-price="{{ $program->membership_price }}">
-                                    {{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원'
-                                    }}
-                                </td>
-                            </tr>
-                            @endif
-                            @else
+                                        {{--유료회원--}}
+                                        <tr>
+                                            <th>유료회원가</th>
+                                            <td class="lecture-price" data-price="{{ $program->membership_price }}">
+                                                {{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원'
+                                                }}
+                                            </td>
+                                        </tr>
+                                    @else
                             {{--유료회원이 아닐 경우--}}
-                            @if ($program->repeatable($student))
-                            {{--재수강--}}
-                            <tr>
-                                <th class="exclude-price">결제금액</th>
-                                <td class="lecture-price lecture-exclude-price"
-                                    data-price="{{ $program->repeat_price }}">
-                                    {{ $program->is_free ? '무료' : '재수강 할인가 '.number_format($program->repeat_price).'원'}}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>유료회원가</th>
-                                <td class="lecture-price" data-price="{{ $student->getPrice() }}">
-                                    {{ $program->membership_is_free ? '무료' : '재수강 할인가 '.number_format($student->getPrice()).'원'
-                                    }}
-                                </td>
-                            </tr>
-                            @else
-                            {{--재수강 아닌 경우--}}
                             <tr>
                                 <th>결제금액</th>
                                 <td class="lecture-price"
@@ -205,7 +169,6 @@
                                     }}
                                 </td>
                             </tr>
-                            @endif
                             @endif
                             @endguest
                         </table>

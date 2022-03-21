@@ -92,7 +92,7 @@
 
                 $('.card-label').addClass('active');
 
-                $('.separate-tip').css('display','none');
+                $('.separate-tip').css('display', 'none');
 
                 $('.ui-selectmenu-button').css('display', 'block');
             });
@@ -102,7 +102,7 @@
 
                 $('.transfer-label').addClass('active');
 
-                $('.separate-tip').css('display','none');
+                $('.separate-tip').css('display', 'none');
 
                 $('.ui-selectmenu-button').css('display', 'none');
             });
@@ -112,7 +112,7 @@
 
                 $('.separate-label').addClass('active');
 
-                $('.separate-tip').css('display','block');
+                $('.separate-tip').css('display', 'block');
 
                 $('.ui-selectmenu-button').css('display', 'none');
             })
@@ -299,13 +299,7 @@
                     <table>
                         <tr>
                             <th>결제금액</th>
-                            @if($program->repeatable())
-                                {{--무료인 경우 결제 프로세스 없이 넘어가야 함.--}}
-                                <td><em>{{ '재수강 할인가:' . number_format($price).'원' }}</em></td>
-                            @else
-                                <td><em>{{ number_format($price).'원' }}</em></td>
-                            @endif
-
+                            <td><em>{{ number_format($price).'원' }}</em></td>
                         </tr>
                     </table>
                     <div class="payment-method-wrap">
@@ -319,7 +313,8 @@
                             <div class="radio-wrap">
                                 <input type="radio" id="transfer" name="payment-method"
                                        class="payment-method" value="계좌이체">
-                                <label for="transfer" class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
+                                <label for="transfer"
+                                       class="transfer-label">{{ changePaymentMethodName("계좌이체") }}</label>
                             </div>
                             <div class="radio-wrap">
                                 <div style="overflow: hidden">

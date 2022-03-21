@@ -32,7 +32,7 @@ class ProgramStudent extends Model
             ->first();
         $programStudent->update([
             'pay_status' => ProgramStudent::$PAY_ANOTHER_IN_PROCESS,
-            'is_repeated' => $program->canRepeat(),
+            'is_repeated' => $program->repeatable(),
         ]);
 
         return $programStudent->fresh();
@@ -85,7 +85,7 @@ class ProgramStudent extends Model
                 'applied_at' => now(),
                 'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
                 'pay_status' => ProgramStudent::$PAY_PAID,
-                'is_repeated' => $program->canRepeat(),
+                'is_repeated' => $program->repeatable(),
             ]);
         } else {
             return ProgramStudent::updateOrCreate([
@@ -95,7 +95,7 @@ class ProgramStudent extends Model
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),
                 'applied_at' => now(),
-                'is_repeated' => $program->canRepeat(),
+                'is_repeated' => $program->repeatable(),
             ]);
         }
     }
