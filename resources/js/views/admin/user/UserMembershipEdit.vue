@@ -70,6 +70,7 @@
 
             <div class="membership-content mt-5">
                 <h2>강의 신청 정보</h2>
+                <div>강의 신청 정보(수강 (수강중 00건/종료 00건) | 총 결제금액 000,000원)</div>
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 5%">
@@ -89,7 +90,27 @@
                         <th>신청일시</th>
                     </tr>
                     </thead>
+                    <tbody>
+                        <template v-for="(lecture, idx) in lectures.data">
+                            <tr>
+                                <td>{{ lecture.id }}</td>
+                                <td>{{ lecture.program.minor_category_name }}</td>
+                                <td>{{ lecture.program.title }}</td>
+                                <td>{{ lecture.program.payment }}</td>
+                                <td>{{ lecture.left_days }}<a href="#" class="btn btn-info text-white">변경</a></td>
+                                <td>{{ lecture.applied_at }}</td>
+                            </tr>
+                        </template>
+                    </tbody>
                 </table>
+                <div class="paging-wrap text-center">
+                    <nav class="d-inline-block">
+                        <pagination :data="lectures" :limit=3 @pagination-change-page="getLecture" class="mb-0">
+                            <span slot="prev-nav">‹</span>
+                            <span slot="next-nav">›</span>
+                        </pagination>
+                    </nav>
+                </div>
             </div>
 
             <div class="membership-content mt-5">
@@ -230,6 +251,10 @@ export default {
             membership_id: '',
             data: {},
             page: this.$route.params.page,
+            lectures: {
+                data: []
+            },
+            stats: [],
             // disabled: true,
         }
     },
@@ -238,6 +263,8 @@ export default {
     },
     mounted() {
         this.getData();
+        this.getLecture();
+        this.getStats();
     },
     computed: {
         jobName() {
@@ -366,7 +393,22 @@ export default {
             this.is_membership = boolean
             this.id = data;
         },
+        getLecture(page = this.page){
+            let params = {
+                page: page
+            };
+
+            User.getLecture(this.$route.params.id, params).then(res => {
+                this.lectures = res.data.students;
+            }).catch(err => {
+                this.lectures = [];
+            });
+        },
+        getStats() {
+            User.getStats(id).then(res => {
+                this.stats = res.data;
+            })
+        },
     }
 }
-;
 </script>
