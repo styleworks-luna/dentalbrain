@@ -71,11 +71,12 @@ class ProgramStudent extends Model
      *  신청 성공 시에 업데이트 하는 쿼리
      *
      * @param Program $program
+     * @param int $price
      * @return ProgramStudent
      */
-    public static function updateOrCreateWhenApplySuccess(Program $program)
+    public static function updateOrCreateWhenApplySuccess(Program $program, $price)
     {
-        if ($program->getUserSpecificFree()) {
+        if ($price == 0) {
             return ProgramStudent::updateOrCreate([
                 'program_id' => $program->id,
                 'user_id' => Auth::id(),

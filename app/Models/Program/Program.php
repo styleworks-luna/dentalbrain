@@ -194,18 +194,24 @@ class Program extends Model
 
         // 유료회원 가격 적용.
         if ($user->hasMembership) {
-            if ($this->membership_is_free) {
-                return 0;
+            if ($this->membership_discount_rate != 0) {
+                return $this->membership_discounted_price;
+            } else {
+                if ($this->membership_is_free) {
+                    return 0;
+                }
+                return $this->membership_price;
             }
-            $price = $this->membership_price;
         } else {
-            if ($this->is_free) {
-                return 0;
+            if ($this->discount_rate != 0) {
+                return $this->discounted_price;
+            } else {
+                if ($this->is_free) {
+                    return 0;
+                }
+                return $this->price;
             }
-            $price = $this->price;
         }
-
-        return $price;
     }
 
     /**

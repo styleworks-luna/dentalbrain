@@ -26,19 +26,6 @@ class ApplyController extends Controller
             return redirect()->route('lectures.result', $program->id);
         }
 
-//        $appliedBefore = ProgramStudent::query()->where('user_id', '=', Auth::id())
-//            ->where('program_id', '=', $program->id)
-//            ->whereIn('pay_status', [ProgramStudent::$PAY_BEFORE, ProgramStudent::$PAY_REFUNDED])
-//            ->exists();
-//
-//        if ($appliedBefore) {
-//            // 이전에 신청 폼을 완료하였을 경우.
-//            return redirect()->route('lectures.payment.form', $program->id)->with([
-//                'fromApply' => true,
-//                'alert' => "신청정보가 존재하여 결제 페이지로 이동합니다."
-//            ]);
-//        }
-
         if ($program->is_online == 1) {
             // 온라인 강의
             $programService = new OnlineProgramConcrete();
@@ -98,11 +85,12 @@ class ApplyController extends Controller
                 $surveyAnswerService->storeSurveyAnswers($surveyDataSet);
             }
 
-            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program);
+            $price = $program->getUserSpecificPrice();
+            $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $price);
 
-            if ($program->getUserSpecificPrice() == 0) {
+            DB::commit();
+            if ($price == 0) {
                 // 무료 행사인 경우.
-                DB::commit();
 
                 Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
                 Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
@@ -110,7 +98,6 @@ class ApplyController extends Controller
                 return redirect()->route('lectures.result', $program->id);
             }
 
-            DB::commit();
             return redirect()->route('lectures.payment.form', $program)->with(['fromApply' => true]);
 
         } catch (\Exception $exception) {
