@@ -162,12 +162,12 @@ abstract class ProgramTemplate
             'membership_is_free' => ['required', 'boolean'],
 
             'price' => ['nullable', 'numeric'],
-            'discounted_price' => ['nullable', 'numeric'],
-            'discount_rate' => ['nullable', 'numeric', 'between:1,99'],
+            'discounted_price' => ['nullable', 'numeric', 'lt:price'],
+            'discount_rate' => ['nullable', 'numeric', 'between:0,100'],
 
             'membership_price' => ['nullable', 'numeric'],
-            'membership_discounted_price' => ['nullable', 'numeric'],
-            'membership_discount_rate' => ['nullable', 'numeric', 'between:1,99'],
+            'membership_discounted_price' => ['nullable', 'numeric', 'lt:membership_price'],
+            'membership_discount_rate' => ['nullable', 'numeric', 'between:0,100'],
         ], $additionalRules));
 
         return $v->validate();

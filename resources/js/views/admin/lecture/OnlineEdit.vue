@@ -286,6 +286,7 @@ export default {
 
                 this.lecture_info = program.description;
 
+
                 this.term = program.term;
 
                 this.preview_url = program.preview_url;

@@ -49,136 +49,46 @@
                                     <p class="lecture-description">{{ $program->description }}</p>
                                 </li>
                                 <li class="lecture-price-wrap">
-                                    @guest
-                                        {{-- 비로그인 사용자 --}}
-                                        @if($program->discount_rate != 0)
-                                            <div class="price-individual">
-                                                <span>결제금액</span>
-                                                <p class="lecture-price"
-                                                   data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
-                                                    {{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}
-                                                </p>
-                                                <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                <p class="lecture-ogprice">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}</p>
-                                            </div>
-                                            <p class="lecture-sale">{{ $program->discount_rate }}% 할인</p>
-                                        @else
-                                            <div class="price-individual">
-                                                <span>결제금액</span>
-                                                <p class="lecture-price"
-                                                   data-price="{{ $program->price }}">
-                                                    {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
-                                                </p>
-                                            </div>
-                                        @endif
-                                        @if($program->membership_discount_rate != 0)
-                                            <div class="price-individual">
-                                                <span>유료회원가</span>
-                                                <p class="lecture-price"
-                                                   data-price="{{ $program->membership_discount_rate == 0 ? $program->membership_price : $program->membership_discounted_price }}">
-                                                    {{ $program->membership_discounted_price == 0 ? '무료' :number_format($program->membership_discounted_price).'원' }}
-                                                </p>
-                                                <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                <p class="lecture-ogprice">{{ $program->membership_is_fee ? '무료' : number_format($program->membership_price).'원'}}</p>
-                                            </div>
-                                            <p class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</p>
-                                        @else
-                                            <div class="price-individual">
-                                                <span>유료회원가</span>
-                                                <p class="lecture-price"
-                                                   data-price="{{ $program->membership_price }}">
-                                                    {{ $program->membership_is_free == 0 ? '무료' :number_format($program->membership_price).'원' }}
-                                                </p>
-                                            </div>
-                                        @endif
+                                    @if($program->discount_rate != 0 && !$program->is_free)
+                                        <div class="price-individual">
+                                            <span>결제금액</span>
+                                            <p class="lecture-price"
+                                               data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
+                                                {{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}
+                                            </p>
+                                            <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
+                                            <p class="lecture-ogprice">{{ $program->is_free || $program->discounted_price == 0 ? '무료' : number_format($program->price).'원'}}</p>
+                                        </div>
+                                        <p class="lecture-sale">{{ $program->discount_rate }}% 할인</p>
                                     @else
-                                        {{-- 로그인 사용자 --}}
-                                        @if (auth()->user()->hasMembership)
-                                            {{-- 유료회원인 경우 --}}
-                                            @if($program->discount_rate != 0)
-                                                <div class="price-individual">
-                                                    <span class="exclude-price">결제금액</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
-                                                        {{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}
-                                                    </p>
-                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                    <p class="lecture-ogprice">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}</p>
-                                                </div>
-                                                <p class="lecture-sale">{{ $program->discount_rate }}% 할인</p>
-                                            @else
-                                                <div class="price-individual">
-                                                    <span class="exclude-price">결제금액</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->price }}">
-                                                        {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
-                                                    </p>
-                                                </div>
-                                            @endif
-                                            @if($program->membership_discount_rate != 0)
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->membership_discount_rate == 0 ? $program->membership_price : $program->membership_discounted_price }}">
-                                                        {{ $program->membership_discounted_price == 0 ? '무료' :number_format($program->membership_discounted_price).'원' }}
-                                                    </p>
-                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                    <p class="lecture-ogprice">{{ $program->membership_is_fee ? '무료' : number_format($program->membership_price).'원'}}</p>
-                                                </div>
-                                                <p class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</p>
-                                            @else
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->membership_price }}">
-                                                        {{ $program->membership_is_free == 0 ? '무료' :number_format($program->membership_price).'원' }}
-                                                    </p>
-                                                </div>
-                                            @endif
-                                        @else
-                                            {{-- 유료회원이 아닐 경우 --}}
-                                            @if($program->discount_rate != 0)
-                                                <div class="price-individual">
-                                                    <span>결제금액</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
-                                                        {{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}
-                                                    </p>
-                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                    <p class="lecture-ogprice">{{ $program->is_free ? '무료' : number_format($program->price).'원'}}</p>
-                                                </div>
-                                                <p class="lecture-sale">{{ $program->discount_rate }}% 할인</p>
-                                            @else
-                                                <div class="price-individual">
-                                                    <span>결제금액</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->price }}">
-                                                        {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
-                                                    </p>
-                                                </div>
-                                            @endif
-                                            @if($program->membership_discount_rate != 0)
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->membership_discount_rate == 0 ? $program->membership_price : $program->membership_discounted_price }}">
-                                                        {{ $program->membership_discounted_price == 0 ? '무료' :number_format($program->membership_discounted_price).'원' }}
-                                                    </p>
-                                                    <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                                    <p class="lecture-ogprice">{{ $program->membership_is_fee ? '무료' : number_format($program->membership_price).'원'}}</p>
-                                                </div>
-                                                <p class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</p>
-                                            @else
-                                                <div class="price-individual">
-                                                    <span>유료회원가</span>
-                                                    <p class="lecture-price"
-                                                       data-price="{{ $program->membership_price }}">
-                                                        {{ $program->membership_is_free == 0 ? '무료' :number_format($program->membership_price).'원' }}
-                                                    </p>
-                                                </div>
-                                            @endif
-                                        @endif
-                                    @endguest
+                                        <div class="price-individual">
+                                            <span>결제금액</span>
+                                            <p class="lecture-price"
+                                               data-price="{{ $program->price }}">
+                                                {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
+                                            </p>
+                                        </div>
+                                    @endif
+                                    @if($program->membership_discount_rate != 0 && !$program->membership_is_free)
+                                        <div class="price-individual">
+                                            <span>유료회원가</span>
+                                            <p class="lecture-price"
+                                               data-price="{{ $program->membership_discount_rate == 0 ? $program->membership_price : $program->membership_discounted_price }}">
+                                                {{ $program->membership_is_free || $program->membership_discounted_price == 0 ? '무료' :number_format($program->membership_discounted_price).'원' }}
+                                            </p>
+                                            <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
+                                            <p class="lecture-ogprice">{{ number_format($program->membership_price).'원'}}</p>
+                                        </div>
+                                        <p class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</p>
+                                    @else
+                                        <div class="price-individual">
+                                            <span>유료회원가</span>
+                                            <p class="lecture-price"
+                                               data-price="{{ $program->membership_price }}">
+                                                {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
+                                            </p>
+                                        </div>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
