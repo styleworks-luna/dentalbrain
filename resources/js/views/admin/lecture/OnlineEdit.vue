@@ -64,7 +64,8 @@
                               :isRequired="true"
                               :size="2">
                     <template v-slot:content>
-                        <input type="text" class="form-control" placeholder="일수" v-model="term">
+                        <input type="text" class="form-control" placeholder="일수"
+                                v-model="term">
                     </template>
                 </single-group>
             </div>

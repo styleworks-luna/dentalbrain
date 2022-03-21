@@ -15,7 +15,7 @@
                             <template v-if="lecture.program.price != 0 && lecture.program.discount_rate != 0">
                                 <span class="lecture-sale">{{ lecture.discount_rate }}%</span>
                                 <span class="lecture-price">
-                                    {{ Helper.numberWithCommas(lecture.program.price) }}원</span>
+                                    {{ Helper.numberWithCommas(lecture.program.discounted_price) }}원</span>
                                 <span class="lecture-ogprice">{{ Helper.numberWithCommas(lecture.program.price) }}원</span>
                             </template>
                             <p class="lecture-price" v-if="lecture.is_free == 0 && lecture.discount_rate == 0">
