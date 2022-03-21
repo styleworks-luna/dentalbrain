@@ -135,15 +135,15 @@
                                         {{--유료회원인 경우--}}
                                         <tr>
                                             <th class="exclude-price">결제금액</th>
-                                            <td class="lecture-price lecture-exclude-price"
-                                                data-price="{{ $program->price }}">
+                                            <td class="lecture-price"
+                                                data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
                                                 <div style="display: flex; align-items: center">
                                                     @if($program->discount_rate != 0)
                                                         <span
                                                             class="lecture-ogprice">{{ number_format($program->price).'원' }}</span>
                                                         <span
                                                             style="color: black; font-weight: normal"> →</span>
-                                                        <span>{{ $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}</span>
+                                                        <span>{{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}</span>
                                                         <span
                                                             class="lecture-sale">{{ $program->discount_rate }}% 할인</span>
                                                     @else
@@ -174,7 +174,7 @@
                                         <tr>
                                             <th>결제금액</th>
                                             <td class="lecture-price"
-                                                data-price="{{ $program->price }}">
+                                                data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
                                                 <div style="display: flex; align-items: center">
                                                     @if($program->discount_rate != 0)
                                                         <span
