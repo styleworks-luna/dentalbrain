@@ -14,7 +14,7 @@ class AlterTermColumnChangeDefaultValueToProgramsTable extends Migration
     public function up()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->unsignedBigInteger('term')->default(7)->comment('시청 기간');
+            $table->unsignedBigInteger('term')->default(7)->comment('시청 기간')->change();
         });
     }
 
@@ -26,7 +26,7 @@ class AlterTermColumnChangeDefaultValueToProgramsTable extends Migration
     public function down()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->dropColumn('term');
+            $table->unsignedBigInteger('term')->default(100)->comment('시청 기간')->change();
         });
     }
 }

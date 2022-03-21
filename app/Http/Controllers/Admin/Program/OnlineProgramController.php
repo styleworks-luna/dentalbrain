@@ -70,6 +70,7 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
             'running_time' => ['required', 'string'],
             'preview_url' => ['nullable', 'url'],
             'preview_type' => ['nullable', 'string'],
+            'term' => ['required', 'numeric']
         ]);
 
         $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
@@ -147,6 +148,7 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
                 'running_time' => ['required', 'string'],
                 'preview_url' => ['nullable', 'url'],
                 'preview_type' => ['nullable', 'string'],
+                'term' => ['required', 'numeric']
             ]);
 
         $surveyDateSet = $this->onlineConcrete->validateSurveys($request);

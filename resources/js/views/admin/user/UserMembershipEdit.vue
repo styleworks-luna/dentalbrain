@@ -69,6 +69,30 @@
             </single-group>
 
             <div class="membership-content mt-5">
+                <h2>강의 신청 정보</h2>
+                <table class="w-100">
+                    <colgroup>
+                        <col style="width: 5%">
+                        <col style="width: 7%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>소분류</th>
+                        <th>강의제목</th>
+                        <th>결제금액</th>
+                        <th>시청기간</th>
+                        <th>신청일시</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="membership-content mt-5">
                 <h2>유료회원 결제 내역</h2>
                 <table class="w-100">
                     <colgroup>

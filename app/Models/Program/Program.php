@@ -21,6 +21,8 @@ class Program extends Model
 {
     use SoftDeletes;
 
+    public static $TERM = 7;
+
     protected $table = 'programs';
 
     protected $appends = [
@@ -369,7 +371,7 @@ class Program extends Model
     {
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
-            'minor_category_id', 'title', 'running_time',
+            'minor_category_id', 'title', 'running_time', 'term',
             'is_free',
             'price', 'discount_rate', 'discounted_price',
         ])
@@ -380,10 +382,11 @@ class Program extends Model
         if ($keyword != null) {
             $programs->where(/**
              * @param Builder $query
-             */ function ($query) use ($keyword) {
-                $query->where('title', 'LIKE', '%' . $keyword . '%')
-                    ->orWhere('description', 'LIKE', '%' . $keyword . '%');
-            });
+             */
+                function ($query) use ($keyword) {
+                    $query->where('title', 'LIKE', '%' . $keyword . '%')
+                        ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+                });
         }
 
         if ((int)$category !== 0) {
