@@ -67,9 +67,9 @@ class Program extends Model
 
         if ($student != null) {
             return $student->expired_at > now()
-            && ($student->pay_status == ProgramStudent::$PAY_PAID
-                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-            );
+                && ($student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+                );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -93,12 +93,12 @@ class Program extends Model
         }
         if ($student != null) {
             return $student->expired_at > now()
-            && (
-                $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
-                || $student->pay_status == ProgramStudent::$PAY_PAID
-                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
-                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-            );
+                && (
+                    $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
+                    || $student->pay_status == ProgramStudent::$PAY_PAID
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+                );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -154,8 +154,8 @@ class Program extends Model
     public function exceedCapacity()
     {
         return $this->place->capacity <= $this->students()
-            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
-            ->count();
+                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
+                ->count();
     }
 
     public function students()
@@ -255,8 +255,8 @@ class Program extends Model
         }
         if ($student != null) {
             return ($student->pay_status == ProgramStudent::$PAY_PAID
-                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
-            && $student->expired_at < now();
+                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
+                && $student->expired_at < now();
         } else {
             $user = Auth::user();
             return $user->students()
@@ -401,7 +401,8 @@ class Program extends Model
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
             'minor_category_id', 'title', 'running_time',
-            'is_free', 'price'
+            'is_free',
+            'price', 'discount_rate', 'discounted_price',
         ])
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])
