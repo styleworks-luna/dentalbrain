@@ -57,7 +57,9 @@ $(function () {
         },
         observer: true,
         observeParents: true,
+        freeMode: true,
     });
+
 
     var mySwiper = new Swiper('.middle-swiper-container3', {
         initialSlide: 0,
@@ -69,6 +71,7 @@ $(function () {
         },
         observer: true,
         observeParents: true,
+        freeMode: true,
     });
 
     var mySwiper = new Swiper('.m-middle-swiper-container', {
