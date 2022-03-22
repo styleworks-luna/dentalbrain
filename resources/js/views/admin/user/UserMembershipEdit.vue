@@ -98,7 +98,22 @@
                                 <td>{{ lecture.program.title }}</td>
                                 <td v-if="lecture.payment_id!=null">{{ Helper.numberWithCommas(lecture.payment.totalAmount) }}</td>
                                 <td v-else>무료</td>
-                                <td>{{ lecture.left_days }}&ensp;<a href="#" class="btn btn-info text-white">변경</a></td>
+                                <td>
+                                    <template v-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">기간종료&ensp;</template>
+                                    <template v-else><strong class="text-danger">{{ lecture.left_days }}</strong>일 남음
+                                        <template v-if="lecture.is_watched">(시청함)</template>&ensp;
+                                        <template v-if="lecture.is_repeated">(재수강)</template>
+                                    </template>
+                                    <button v-on:click="isShow = !isShow" class="btn btn-info text-white">변경</button>
+                                    <div v-show="isShow" class="input-group" id="edit">
+                                        <input class="form-control"
+                                               type="text"
+                                               placeholder="변경일자 입력" v-model="extendDates[lecture.id]">
+                                        <span class="input-group-append">
+                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, extendDates[lecture.id])">수정</button>
+                                            </span>
+                                    </div>
+                                </td>
                                 <td>{{ lecture.applied_at }}</td>
                             </tr>
                         </template>
@@ -230,6 +245,7 @@
 <script>
 //api
 import User from '@/api/admin/user/User.js';
+import {Student} from '@/api/admin/lecture/Online.js';
 
 //Mixin
 import {UserMixin} from '@/mixins/admin/user/User.js'
@@ -256,6 +272,8 @@ export default {
                 data: []
             },
             stats: [],
+            isShow: false,
+            extendDates: [],
             // disabled: true,
         }
     },
@@ -410,6 +428,17 @@ export default {
                 this.stats = res.data;
             })
         },
+        extend(id, detailId, extendDate) {
+            let data = {
+                expired_at: extendDate
+            }
+            Student.extend(id, detailId, data).then(res => {
+                alert('변경');
+                window.location.reload();
+            }).catch(err => {
+                alert('오류');
+            });
+        }
     }
 }
 </script>

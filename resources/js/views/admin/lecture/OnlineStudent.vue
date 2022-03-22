@@ -317,6 +317,7 @@ export default {
             }
             Student.extend(id, detailId, data).then(res => {
                 alert('변경');
+                window.location.reload();
             }).catch(err => {
                 alert('오류');
             });
