@@ -34,7 +34,7 @@ class DetailController extends Controller
         $children = Comment::ofProgram($program->id)
             ->whereNotNull('parent_id')->orderBy('id')->get();
 
-        $program->with('place', 'minor_category');
+        $program->with('place', 'minorCategory', 'lectures');
 
         if (Auth::check()) {
             $student = $program->students()->where('user_id', '=', Auth::id())
