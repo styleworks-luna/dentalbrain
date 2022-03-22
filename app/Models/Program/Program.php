@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static Builder main ()
- * @method static Builder Public (string|int|null $category = null, $orderBy = 'newest', $keyword = null)
+ * @method static Builder public (string $category = null, $orderBy = 'newest', $keyword = null, $banner = 'Y')
  */
 class Program extends Model
 {
@@ -68,9 +68,9 @@ class Program extends Model
 
         if ($student != null) {
             return $student->expired_at > now()
-                && ($student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-                );
+            && ($student->pay_status == ProgramStudent::$PAY_PAID
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -94,12 +94,12 @@ class Program extends Model
         }
         if ($student != null) {
             return $student->expired_at > now()
-                && (
-                    $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
-                    || $student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
-                );
+            && (
+                $student->pay_status == ProgramStudent::$PAY_IN_PROCESS
+                || $student->pay_status == ProgramStudent::$PAY_PAID
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_IN_PROCESS
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID
+            );
         } else {
             $user = Auth::user();
             return $user->students()
@@ -155,8 +155,8 @@ class Program extends Model
     public function exceedCapacity()
     {
         return $this->place->capacity <= $this->students()
-                ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
-                ->count();
+            ->whereIn('pay_status', [ProgramStudent::$PAY_PAID, ProgramStudent::$PAY_IN_PROCESS, ProgramStudent::$PAY_ANOTHER_PAID])
+            ->count();
     }
 
     public function students()
@@ -249,8 +249,8 @@ class Program extends Model
         }
         if ($student != null) {
             return ($student->pay_status == ProgramStudent::$PAY_PAID
-                    || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
-                && $student->expired_at < now();
+                || $student->pay_status == ProgramStudent::$PAY_ANOTHER_PAID)
+            && $student->expired_at < now();
         } else {
             $user = Auth::user();
             return $user->students()
@@ -373,7 +373,7 @@ class Program extends Model
             ->with('thumbnail:id,url')->orderByDesc('created_at');
     }
 
-    public function scopePublic(Builder $query, $category = null, $orderBy = 'newest', $keyword = null)
+    public function scopePublic(Builder $query, $category = null, $orderBy = 'newest', $keyword = null, $banner = 'Y')
     {
         $programs = $query->select([
             'id', 'thumbnail_id', 'is_online', 'major_category_id',
@@ -404,6 +404,13 @@ class Program extends Model
             $programs = $programs->orderByDesc('students_count');
         } else {
             $programs = $programs->orderByDesc('created_at');
+        }
+
+        if ($banner == 'Y') {
+            $needToExclude = Banner::public ()
+                ->whereIn('category_id', [Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])
+                ->pluck('program_id');
+            $programs->whereNotIn('id', $needToExclude);
         }
 
         return $programs;
