@@ -134,7 +134,7 @@
                             <label>할인율</label>
                             <input type="text"
                                    class="form-control ml-2"
-                                   :disabled="is_free == true"
+                                   :disabled="membership_is_free == true"
                                    style="width: 50px; margin-right: 5px;"
                                    v-model="membership_discount_rate">
                             <span style="margin-right: 15px;">%</span>
@@ -143,7 +143,7 @@
                                    class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    v-model="membership_discounted_price"
-                                   :disabled="is_free == true"
+                                   :disabled="membership_is_free == true"
                                    style="width: 120px;">
                         </div>
                     </div>

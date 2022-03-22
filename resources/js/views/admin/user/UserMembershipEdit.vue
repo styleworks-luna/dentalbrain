@@ -70,7 +70,7 @@
 
             <div class="membership-content mt-5">
                 <h2>강의 신청 정보</h2>
-                <div>강의 신청 정보(수강 (수강중 00건/종료 00건) | 총 결제금액 000,000원)</div>
+                <div>강의 신청 정보(수강 (수강중 {{ stats.available }}건/종료 {{ stats.expired }}건) | 총 결제금액 {{ Helper.numberWithCommas(stats.paid) }}원)</div>
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 5%">
@@ -96,8 +96,9 @@
                                 <td>{{ lecture.id }}</td>
                                 <td>{{ lecture.program.minor_category_name }}</td>
                                 <td>{{ lecture.program.title }}</td>
-                                <td>{{ lecture.program.payment }}</td>
-                                <td>{{ lecture.left_days }}<a href="#" class="btn btn-info text-white">변경</a></td>
+                                <td v-if="lecture.payment_id!=null">{{ Helper.numberWithCommas(lecture.payment.totalAmount) }}</td>
+                                <td v-else>무료</td>
+                                <td>{{ lecture.left_days }}&ensp;<a href="#" class="btn btn-info text-white">변경</a></td>
                                 <td>{{ lecture.applied_at }}</td>
                             </tr>
                         </template>
@@ -404,7 +405,7 @@ export default {
                 this.lectures = [];
             });
         },
-        getStats() {
+        getStats(id = this.$route.params.id) {
             User.getStats(id).then(res => {
                 this.stats = res.data;
             })
