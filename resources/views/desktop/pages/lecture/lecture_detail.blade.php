@@ -3,6 +3,9 @@
 @section('script')
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
+    <script>
+        var preview_type = '{{$program->preview_type}}';
+    </script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-detail.js') }}"></script>
 @endsection
 
@@ -233,8 +236,10 @@
                             <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
-                    <div class="lecture-detail-preview">
-                        {{ $program->preview_url }}
+                    <div class="video-wrap" id="video-wrap">
+                        <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
+                        <div id="player"></div>
+                        <div class="video-button-disable"></div>
                     </div>
                     <div class="lecture-detail-content">
                         <div class="fr-element fr-view">
