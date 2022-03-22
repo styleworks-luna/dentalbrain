@@ -21,6 +21,7 @@ class LectureController extends Controller
             'per_page' => ['required', 'numeric'],
             'order_by' => ['sometimes', 'required', Rule::in(['popular', 'newest'])],
             'keyword' => ['sometimes', 'required', 'string', 'min:2', 'max:200'],
+            'banner' => ['nullable', Rule::in(['Y', 'N'])],
         ]);
 
         $data = $v->validate();
@@ -28,7 +29,7 @@ class LectureController extends Controller
         $keyword = $data['keyword'] ?? null;
         $orderBy = $data['order_by'] ?? 'newest';
 
-        $programs = Program::public($data['category_id'], $orderBy, $keyword)->paginate($data['per_page']);
+        $programs = Program::public($data['category_id'], $orderBy, $keyword, $data['banner'] ?? 'Y')->paginate($data['per_page']);
 
         return response()->json(
             $programs
