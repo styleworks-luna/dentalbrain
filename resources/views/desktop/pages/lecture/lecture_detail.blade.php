@@ -236,11 +236,13 @@
                             <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
-                    <div class="video-wrap" id="video-wrap">
-                        <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
-                        <div id="player"></div>
-                        <div class="video-button-disable"></div>
-                    </div>
+                    @if( $program->preview_id)
+                        <div class="video-wrap" id="video-wrap">
+                            <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
+                            <div id="player"></div>
+                            <div class="video-button-disable"></div>
+                        </div>
+                    @endif
                     <div class="lecture-detail-content">
                         <div class="fr-element fr-view">
                             {!! $program->content !!}
