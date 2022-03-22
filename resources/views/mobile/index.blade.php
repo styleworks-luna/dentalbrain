@@ -103,7 +103,7 @@
 
 
             <div class="m-row">
-                <lecture-all :is_pagination="false" :per_page="16" :mobile="false"></lecture-all>
+                <lecture-all :is_main="true" :is_pagination="false" :per_page="16" :mobile="false"></lecture-all>
             </div>
 
             <section class="ad">

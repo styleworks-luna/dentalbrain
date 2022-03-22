@@ -8,6 +8,13 @@ export default {
             params: value
         });
     },
+    getMain(value) {
+        return Send({
+            url: '/api/lectures',
+            method: 'get',
+            params: value
+        });
+    },
     getBanner1() {
         return Send({
             url: '/api/lectures/recommend?category_id=5',

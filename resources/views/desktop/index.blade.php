@@ -114,7 +114,7 @@
 
 
             <h2 class="lecture_title">{{ $titles[3] }}</h2>
-            <lecture-all :is_pagination="false" :per_page="16"></lecture-all>
+            <lecture-all :is_Main="true" :is_pagination="false" :per_page="16"></lecture-all>
 
             <section class="ad">
                 @if($bar)
