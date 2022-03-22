@@ -162,11 +162,11 @@ abstract class ProgramTemplate
             'membership_is_free' => ['required', 'boolean'],
 
             'price' => ['nullable', 'numeric'],
-            'discounted_price' => ['nullable', 'numeric', 'lt:price'],
+            'discounted_price' => ['nullable', 'numeric', 'lte:price'],
             'discount_rate' => ['nullable', 'numeric', 'between:0,100'],
 
             'membership_price' => ['nullable', 'numeric'],
-            'membership_discounted_price' => ['nullable', 'numeric', 'lt:membership_price'],
+            'membership_discounted_price' => ['nullable', 'numeric', 'lte:membership_price'],
             'membership_discount_rate' => ['nullable', 'numeric', 'between:0,100'],
         ], $additionalRules));
 
@@ -345,12 +345,22 @@ abstract class ProgramTemplate
             }
         }
 
-        if ($data['is_free'] == true) {
-            $data['price'] = 0;
+        $price = $data['is_free'] ? 0 : ($data['price'] ?? 0);
+        if ($data['is_free']) {
+            $discount_rate = 100;
+            $discounted_price = 0;
+        } else {
+            $discount_rate = $data['discount_rate'] ?? 0;
+            $discounted_price = $data['discounted_price'] ?? $price;
         }
 
-        if ($data['membership_is_free'] == true) {
-            $data['membership_price'] = 0;
+        $memberPrice = $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0);
+        if ($data['membership_is_free']) {
+            $membership_discount_rate = 100;
+            $membership_discounted_price = 0;
+        } else {
+            $membership_discount_rate = $data['membership_discount_rate'] ?? 0;
+            $membership_discounted_price = $data['membership_discounted_price'] ?? $memberPrice;
         }
 
         $program->update([
@@ -362,17 +372,23 @@ abstract class ProgramTemplate
             'running_time' => $data['running_time'] ?? null,
             'thumbnail_id' => $data['thumbnail_id'],
             'material_id' => $data['material_id'],
+
             'is_open' => $data['is_open'],
 
-            'is_free' => $data['is_free'],
-            'membership_is_free' => $data['membership_is_free'],
+            'price' => $price,
+            'discount_rate' => $discount_rate,
+            'discounted_price' => $discounted_price,
 
-            'price' => $data['price'] ?? 0,
-            'membership_price' => $data['membership_price'] ?? 0,
+            'membership_price' => $memberPrice,
+            'membership_discount_rate' => $membership_discount_rate,
+            'membership_discounted_price' => $membership_discounted_price,
 
             'preview_url' => $data['preview_url'] ?? null,
             'preview_type' => $data['preview_type'] ?? null,
             'preview_id' => Lecture::getVideoIdFromUrl($data['preview_url'] ?? null),
+
+            'is_free' => $data['is_free'],
+            'membership_is_free' => $data['membership_is_free'],
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
