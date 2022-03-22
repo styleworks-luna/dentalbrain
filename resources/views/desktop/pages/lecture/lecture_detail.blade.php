@@ -239,7 +239,7 @@
                     @if( $program->preview_id)
                         <div class="video-wrap" id="video-wrap">
                             <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
-                            <div id="player"></div>
+                            <div class="player" id="player"></div>
                             <div class="video-button-disable"></div>
                         </div>
                     @endif
