@@ -150,7 +150,7 @@ abstract class ProgramTemplate
     {
         $v = Validator::make($request->all(), array_merge([
             'major_category_id' => ['required', 'numeric'],
-            'minor_category_id' => ['nullable', 'numeric'],
+            'minor_category_id' => ['required', 'numeric'],
             'title' => ['required', 'string', 'max:200'],
             'thumbnail_id' => ['required', 'numeric'],
             'content' => ['required', 'string'],
