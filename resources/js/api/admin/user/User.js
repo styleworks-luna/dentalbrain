@@ -59,4 +59,17 @@ export default {
             method: 'patch'
         });
     },
+    getLecture(id, params) {
+        return Send({
+            url: `/api/admin/membership/user/${id}/students`,
+            method: 'get',
+            params: params
+        });
+    },
+    getStats(id) {
+        return Send({
+            url: `/api/admin/membership/user/${id}/students/stat`,
+            method: 'get',
+        });
+    },
 }

@@ -7,7 +7,7 @@
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{lecture.program.minor_category_name}}</span>
-                            <p class="lecture-date">{{ lecture.program.term }}</p>
+                            <p class="lecture-date">수강기간 {{ lecture.program.term }}일</p>
                             <p class="lecture-time">{{ lecture.program.running_time }}</p>
                         </div>
                         <p class="lecture-name">{{ lecture.program.title }}</p>

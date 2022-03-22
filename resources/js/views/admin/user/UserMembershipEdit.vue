@@ -70,6 +70,7 @@
 
             <div class="membership-content mt-5">
                 <h2>강의 신청 정보</h2>
+                <div>강의 신청 정보(수강 (수강중 {{ stats.available }}건/종료 {{ stats.expired }}건) | 총 결제금액 {{ Helper.numberWithCommas(stats.paid) }}원)</div>
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 5%">
@@ -89,7 +90,43 @@
                         <th>신청일시</th>
                     </tr>
                     </thead>
+                    <tbody>
+                        <template v-for="(lecture, idx) in lectures.data">
+                            <tr>
+                                <td>{{ lecture.id }}</td>
+                                <td>{{ lecture.program.minor_category_name }}</td>
+                                <td>{{ lecture.program.title }}</td>
+                                <td v-if="lecture.payment_id!=null">{{ Helper.numberWithCommas(lecture.payment.totalAmount) }}</td>
+                                <td v-else>무료</td>
+                                <td>
+                                    <template v-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">기간종료&ensp;</template>
+                                    <template v-else><strong class="text-danger">{{ lecture.left_days }}</strong>일 남음
+                                        <template v-if="lecture.is_watched">(시청함)</template>&ensp;
+                                        <template v-if="lecture.is_repeated">(재수강)</template>
+                                    </template>
+                                    <button v-on:click="isShow = !isShow" class="btn btn-info text-white">변경</button>
+                                    <div v-show="isShow" class="input-group" id="edit">
+                                        <input class="form-control"
+                                               type="text"
+                                               placeholder="변경일자 입력" v-model="extendDates[lecture.id]">
+                                        <span class="input-group-append">
+                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, extendDates[lecture.id])">수정</button>
+                                            </span>
+                                    </div>
+                                </td>
+                                <td>{{ lecture.applied_at }}</td>
+                            </tr>
+                        </template>
+                    </tbody>
                 </table>
+                <div class="paging-wrap text-center">
+                    <nav class="d-inline-block">
+                        <pagination :data="lectures" :limit=3 @pagination-change-page="getLecture" class="mb-0">
+                            <span slot="prev-nav">‹</span>
+                            <span slot="next-nav">›</span>
+                        </pagination>
+                    </nav>
+                </div>
             </div>
 
             <div class="membership-content mt-5">
@@ -208,6 +245,7 @@
 <script>
 //api
 import User from '@/api/admin/user/User.js';
+import {Student} from '@/api/admin/lecture/Online.js';
 
 //Mixin
 import {UserMixin} from '@/mixins/admin/user/User.js'
@@ -230,6 +268,12 @@ export default {
             membership_id: '',
             data: {},
             page: this.$route.params.page,
+            lectures: {
+                data: []
+            },
+            stats: [],
+            isShow: false,
+            extendDates: [],
             // disabled: true,
         }
     },
@@ -238,6 +282,8 @@ export default {
     },
     mounted() {
         this.getData();
+        this.getLecture();
+        this.getStats();
     },
     computed: {
         jobName() {
@@ -366,7 +412,33 @@ export default {
             this.is_membership = boolean
             this.id = data;
         },
+        getLecture(page = this.page){
+            let params = {
+                page: page
+            };
+
+            User.getLecture(this.$route.params.id, params).then(res => {
+                this.lectures = res.data.students;
+            }).catch(err => {
+                this.lectures = [];
+            });
+        },
+        getStats(id = this.$route.params.id) {
+            User.getStats(id).then(res => {
+                this.stats = res.data;
+            })
+        },
+        extend(id, detailId, extendDate) {
+            let data = {
+                expired_at: extendDate
+            }
+            Student.extend(id, detailId, data).then(res => {
+                alert('변경');
+                window.location.reload();
+            }).catch(err => {
+                alert('오류');
+            });
+        }
     }
 }
-;
 </script>
