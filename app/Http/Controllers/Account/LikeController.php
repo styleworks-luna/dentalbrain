@@ -46,7 +46,8 @@ class LikeController extends Controller
             'programs.id', 'programs.description', 'programs.major_category_id',
             'programs.minor_category_id', 'programs.title',
             'programs.price', 'programs.running_time', 'programs.thumbnail_id',
-            'programs.is_online', 'programs.is_free']);
+            'programs.is_online', 'programs.is_free',
+            'programs.term']);
 
 
         return response()->json($programs);

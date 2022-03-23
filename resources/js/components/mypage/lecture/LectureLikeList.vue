@@ -11,17 +11,9 @@
                         </figure>
                         <div class="content-information">
                             <div class="lecture-sort">
-                                <span class="online" v-if="lecture.is_online">온라인</span>
-                                <span class="offline" v-else>오프라인</span>
-                                <p class="lecture-subject">
-                                    <template v-if="lecture.minor_category_name">
-                                        {{ lecture.major_category_name }} &middot;
-                                        {{ lecture.minor_category_name }}
-                                    </template>
-                                    <template v-else>
-                                        {{ lecture.major_category_name }}
-                                    </template>
-                                </p>
+                                <span class="lecture-type">{{ lecture.minor_category_name }}</span>
+
+                                <p class="lecture-date">수강기간 {{ lecture.term }}일</p>
                             </div>
                             <h3 class="lecture-title">
                                 <a :href="'/lectures/' + lecture.id">{{ lecture.title }}</a>
