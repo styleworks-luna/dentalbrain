@@ -27,7 +27,8 @@
                             <div class="admin-menu">
                                 <ul>
                                     <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/1">
+                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/1"
+                                           target="_blank">
                                             수정
                                         </a>
                                     </li>
@@ -37,12 +38,14 @@
                                         <li><a href="" class="open">비공개</a></li>
                                     @endif
                                     <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/duplicate/1">
+                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/duplicate/1"
+                                           target="_blank">
                                             복사
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/student">
+                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/student"
+                                           target="_blank">
                                             수강현황
                                         </a>
                                     </li>
@@ -232,7 +235,9 @@
                     <div class="lecture-detail-menu">
                         <ul>
                             <li><a href="#content" class="menu-tab-detail active">상세정보</a></li>
-                            <li><a href="#list" class="menu-tab-list">강의목록</a></li>
+                            @if($program->is_online)
+                                <li><a href="#list" class="menu-tab-list">강의목록</a></li>
+                            @endif
                             <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
@@ -250,18 +255,18 @@
                     </div>
                 </section>
 
-                <section id="list" class="lecture-list">
-                    <div class="list-title">
-                        <h3>강의목록</h3>
-                    </div>
-                    @if($program->is_online == true)
+                @if($program->is_online == true)
+                    <section id="list" class="lecture-list">
+                        <div class="list-title">
+                            <h3>강의목록</h3>
+                        </div>
                         <ul>
                             @foreach($program->lectures as $lecture)
                                 <li><a>{{ $loop->index + 1 }}강</a>{{ $lecture->title }}</li>
                             @endforeach
                         </ul>
-                    @endif
-                </section>
+                    </section>
+                @endif
 
                 <section id="comment" class="lecture-comment">
                     <input type="hidden" id="program_id" value="{{ $program->id }}">
