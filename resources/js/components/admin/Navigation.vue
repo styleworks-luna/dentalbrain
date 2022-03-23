@@ -10,6 +10,14 @@
         <ul class="c-sidebar-nav ps ps--active-y">
             <li class="c-sidebar-nav-title">Resources</li>
 
+            <!-- 대시보드 메뉴 -->
+            <li class="c-sidebar-nav-item">
+                <router-link to="/admin/dashboard/1" class="c-sidebar-nav-link"
+                             :class="{ activeClass: checkUrl('/admin/dashboard') }">
+                    대시보드
+                </router-link>
+            </li>
+
             <!-- 회원 정보 메뉴 -->
             <li class="c-sidebar-nav-dropdown"
                 :class="{ showClass: checkUrl('/admin/user') }">
