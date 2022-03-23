@@ -21,6 +21,15 @@ class TitleController extends Controller
             'title' => ['required', 'string', 'max:20']
         ]);
 
+        $special_pattern = "/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i";
+
+        if (preg_match($special_pattern, $validatedData['title'])){
+            return response()->json([
+                'success' => false,
+                'msg' => '특수 문자는 사용할 수 없습니다.',
+            ]);
+        }
+
         $bannerTitle->update($validatedData);
 
         return response()->json([
