@@ -90,6 +90,10 @@ Route::get('albatalk/post', function () {
     return view(viewPrefix() . 'pages.albatalk.albatalk_post');
 });
 
+Route::get('albatalk/detail', function () {
+    return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
+});
+
 // 이용 약관
 Route::get('service', function () {
     return view('desktop.pages.term.service');

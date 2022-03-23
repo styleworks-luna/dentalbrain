@@ -1,9 +1,5 @@
 @extends('desktop.layouts.frames.basic_frame')
 
-@section('vue')
-    <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
-@endsection
-
 @section('script')
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
 @endsection
@@ -13,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="albatalk-wrap">
+    <section class="albatalk-post-wrap">
         <div class="title-wrap">
             <div class="container">
             </div>
@@ -271,6 +267,28 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>근무요일 *</th>
+                                <td class="pay-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~금(주 5일)</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~토(토요일 격주 휴무)</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~토</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>복리후생 *</th>
                                 <td class="welfare-wrap">
                                     <input type="checkbox" id="all" name="all"><label>점심식자</label>
@@ -292,17 +310,43 @@
                                     <input type="radio" id="field" name="field"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">신입</label>
-                                    <input type="radio" id="field" name="field"
+                                    <input type="text" placeholder="시작일자 선택">
+                                    <input class="time" type="text" placeholder="HH:mm">
+                                    <label id="field">부터</label>
+                                    <input type="text" placeholder="마감일자 선택">
+                                    <input class="time2" type="text" placeholder="HH:mm">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상세정보</th>
+                                <td class="Detail-wrap">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>결제금액</th>
+                                <td class="pay-wrap">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>결제방식 *</th>
+                                <td class="paydeail-wrap">
+                                    <span>
+                                        <input type="radio" id="field" name="field"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">신용카드</label>
+                                        <input type="text" placeholder="신한">
+                                    </span>
+                                    <input class="last" type="radio" id="field" name="field"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field" class="last">경력</label>
-                                    <input type="text" placeholder="경력기간 선택">
+                                    <label id="field">실시간 계좌이체</label>
                                 </td>
                             </tr>
                         </table>
                     </div>
                 </form>
+                <button class="submit" type="submit">구인공고 등록</button>
             </section>
 
         </div>
