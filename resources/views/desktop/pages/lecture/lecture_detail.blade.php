@@ -3,9 +3,6 @@
 @section('script')
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
-    <script>
-        var preview_type = '{{$program->preview_type}}';
-    </script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-detail.js') }}"></script>
 @endsection
 
@@ -23,35 +20,35 @@
                     <div class="lecture-test">
                         <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
                         @auth()
-                        @if(auth()->user()->isAdmin())
-                            <div class="admin-menu">
-                                <ul>
-                                    <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/1"
-                                           target="_blank">
-                                            수정
-                                        </a>
-                                    </li>
-                                    @if($program->is_open == true)
-                                        <li><a href="" class="open">공개</a></li>
-                                    @else
-                                        <li><a href="" class="open">비공개</a></li>
-                                    @endif
-                                    <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/duplicate/1"
-                                           target="_blank">
-                                            복사
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/student"
-                                           target="_blank">
-                                            수강현황
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @endif
+                            @if(auth()->user()->isAdmin())
+                                <div class="admin-menu">
+                                    <ul>
+                                        <li>
+                                            <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/1"
+                                               target="_blank">
+                                                수정
+                                            </a>
+                                        </li>
+                                        @if($program->is_open == true)
+                                            <li><a href="" class="open">공개</a></li>
+                                        @else
+                                            <li><a href="" class="open">비공개</a></li>
+                                        @endif
+                                        <li>
+                                            <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/duplicate/1"
+                                               target="_blank">
+                                                복사
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/lecture/{{$program->is_online ? 'online' : 'offline'}}/{{$program->id}}/student"
+                                               target="_blank">
+                                                수강현황
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
                         @endauth
                     </div>
                     <div class="lecture-information">
@@ -82,7 +79,7 @@
                                         <td>
                                             <p class="lecture-place">{{ $program->place->address}}
                                                 @isset($program->place->address_detail)
-                                                {{' , '.$program->place->address_detail}}
+                                                    {{' , '.$program->place->address_detail}}
                                                 @endisset
                                             </p>
                                             <a href="" class="btn-map">지도보기</a>
@@ -106,7 +103,7 @@
                                         <div style="display: flex; align-items: center">
                                             @if($program->discount_rate != 0 && !$program->is_free)
                                                 <span
-                                                        class="lecture-ogprice">{{ number_format($program->price).'원' }}</span>
+                                                    class="lecture-ogprice">{{ number_format($program->price).'원' }}</span>
                                                 <span style="color: black; font-weight: normal"> →</span>
                                                 <span>{{ $program->discounted_price == 0 || $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}</span>
                                                 <span class="lecture-sale">{{ $program->discount_rate }}% 할인</span>
@@ -123,11 +120,11 @@
                                         <div style="display: flex; align-items: center">
                                             @if($program->membership_discount_rate != 0 && !$program->membership_is_free)
                                                 <span
-                                                        class="lecture-ogprice">{{ number_format($program->membership_price).'원' }}</span>
+                                                    class="lecture-ogprice">{{ number_format($program->membership_price).'원' }}</span>
                                                 <span style="color: black; font-weight: normal"> →</span>
                                                 <span>{{ $program->membership_discounted_price == 0 || $program->membership_is_free ? '무료' : number_format($program->membership_discounted_price).'원'}}</span>
                                                 <span
-                                                        class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</span>
+                                                    class="lecture-sale">{{ $program->membership_discount_rate }}% 할인</span>
                                             @else
                                                 <span>{{ $program->membership_is_free ? '무료' : number_format($program->membership_price).'원'}}</span>
                                             @endif
@@ -243,7 +240,8 @@
                     </div>
                     @if($program->preview_id)
                         <div class="video-wrap" id="video-wrap">
-                            <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
+                            <input type="hidden" id="preview_id" value="{{ $program->preview_id }}">
+                            <input type="hidden" id="preview_type" value="{{ $program->preview_type }}">
                             <div class="player" id="player"></div>
                             <div class="video-button-disable"></div>
                         </div>
@@ -307,12 +305,12 @@
                                             <input type="hidden" name="comment_id" class="comment_id"
                                                    value="{{ $comment->id }}">
                                             @can('update',$comment)
-                                            <button type="button" class="btn-comment-modified comment-modify">수정
-                                            </button>
+                                                <button type="button" class="btn-comment-modified comment-modify">수정
+                                                </button>
                                             @endcan
                                             @can('delete',$comment)
-                                            <button type="button" class="btn-comment-delete comment-delete">삭제
-                                            </button>
+                                                <button type="button" class="btn-comment-delete comment-delete">삭제
+                                                </button>
                                             @endcan
                                         </form>
                                     </div>
@@ -337,13 +335,13 @@
                                                 <div class="comment-area">
                                                     <div class="profile-img">
                                                         <img
-                                                                src="{{ asset('/images/desktop/global/profile_default.png') }}"
-                                                                alt="profile image">
+                                                            src="{{ asset('/images/desktop/global/profile_default.png') }}"
+                                                            alt="profile image">
                                                     </div>
                                                     <div class="modify-input">
                                                         <form
-                                                                action="{{ route('api.lectures.comments.store',$program->id) }}"
-                                                                class="comment-input-form comment-modify-form">
+                                                            action="{{ route('api.lectures.comments.store',$program->id) }}"
+                                                            class="comment-input-form comment-modify-form">
                                                             @csrf
                                                             <textarea name="content" placeholder="댓글을 입력하세요."
                                                                       class="comment-input-text comment-child-modify-content">{{ $child->content }}</textarea>
@@ -360,15 +358,15 @@
                                                             <input type="hidden" name="comment_id" class="comment_id"
                                                                    value="{{ $child->id }}">
                                                             @can('update',$child)
-                                                            <button type="button"
-                                                                    class="btn-comment-modified comment-modify">수정
-                                                            </button>
+                                                                <button type="button"
+                                                                        class="btn-comment-modified comment-modify">수정
+                                                                </button>
                                                             @endcan
                                                             @can('delete',$child)
-                                                            <button type="button"
-                                                                    class="btn-comment-delete comment-child-delete">
-                                                                삭제
-                                                            </button>
+                                                                <button type="button"
+                                                                        class="btn-comment-delete comment-child-delete">
+                                                                    삭제
+                                                                </button>
                                                             @endcan
                                                         </form>
                                                     </div>

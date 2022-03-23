@@ -52,19 +52,17 @@
                                     @if($program->discount_rate != 0 && !$program->is_free)
                                         <div class="price-individual">
                                             <span>결제금액</span>
-                                            <p class="lecture-price"
-                                               data-price="{{ $program->discount_rate == 0 ? $program->price : $program->discounted_price }}">
-                                                {{ $program->discounted_price == 0 ? '무료' : number_format($program->discounted_price).'원'}}
+                                            <p class="lecture-price">
+                                                {{ $program->discounted_price == 0 || $program->is_free ? '무료' : number_format($program->discounted_price).'원'}}
                                             </p>
                                             <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
-                                            <p class="lecture-ogprice">{{ $program->is_free || $program->discounted_price == 0 ? '무료' : number_format($program->price).'원'}}</p>
+                                            <p class="lecture-ogprice">{{ number_format($program->price).'원' }}</p>
                                         </div>
                                         <p class="lecture-sale">{{ $program->discount_rate }}% 할인</p>
                                     @else
                                         <div class="price-individual">
                                             <span>결제금액</span>
-                                            <p class="lecture-price"
-                                               data-price="{{ $program->price }}">
+                                            <p class="lecture-price">
                                                 {{ $program->is_free ? '무료' : number_format($program->price).'원'}}
                                             </p>
                                         </div>
@@ -72,8 +70,7 @@
                                     @if($program->membership_discount_rate != 0 && !$program->membership_is_free)
                                         <div class="price-individual">
                                             <span>유료회원가</span>
-                                            <p class="lecture-price"
-                                               data-price="{{ $program->membership_discount_rate == 0 ? $program->membership_price : $program->membership_discounted_price }}">
+                                            <p class="lecture-price">
                                                 {{ $program->membership_is_free || $program->membership_discounted_price == 0 ? '무료' :number_format($program->membership_discounted_price).'원' }}
                                             </p>
                                             <p style="color: black; font-weight: normal">&nbsp;→&nbsp;</p>
@@ -83,8 +80,7 @@
                                     @else
                                         <div class="price-individual">
                                             <span>유료회원가</span>
-                                            <p class="lecture-price"
-                                               data-price="{{ $program->membership_price }}">
+                                            <p class="lecture-price">
                                                 {{ $program->membership_is_free ? '무료' :number_format($program->membership_price).'원' }}
                                             </p>
                                         </div>
@@ -197,6 +193,14 @@
                             <li><a href="#comment" class="m-menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
+                    @if($program->preview_id)
+                        <div class="video-wrap" id="video-wrap">
+                            <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
+                            <input type="hidden" id="preview_type" value="{{ $program->preview_type }}">
+                            <div class="player" id="player"></div>
+                            <div class="video-button-disable"></div>
+                        </div>
+                    @endif
                     <div class="lecture-detail-content">
                         <div class="fr-element fr-view">
                             {!! $program->content !!}

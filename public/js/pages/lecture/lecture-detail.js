@@ -1,44 +1,28 @@
 var player;
 
-var tag = document.createElement('script');
-
-if (preview_type == 'wecandeo') {
-    window.addEventListener('load', function () {
-        var playerdiv = document.getElementById("video-wrap");
-        var tempDiv = document.createElement('iframe');
-        tempDiv.setAttribute('width', '100%');
-        tempDiv.setAttribute('height', '100%');
-        tempDiv.setAttribute('src', 'https://play.wecandeo.com/video/v/?key=' + document.getElementById('preview_id').value + '&auto=true');
-        tempDiv.setAttribute('frameborder', '0');
-        tempDiv.setAttribute('allowfullscreen', '');
-        tempDiv.setAttribute('allow', 'autoplay;fullscreen;');
-        playerdiv.appendChild(tempDiv);
-    });
-} else {
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-}
+const tag = document.createElement('script');
 
 function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        width: '100%',
-        height: '100%',
-        videoId: document.getElementById('preview_id').value,
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        },
-        playerVars: {
-            modestbranding: true,
-            autoplay: true,
-            showinfo: 0,
-        },
-    });
+    let previewId = document.getElementById('preview_id');
+    if (previewId != null) {
+        player = new YT.Player('player', {
+            width: '100%',
+            height: '100%',
+            videoId: previewId.value,
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            },
+            playerVars: {
+                modestbranding: true,
+                autoplay: true,
+                showinfo: 0,
+            },
+        });
+    }
 }
 
 function onPlayerReady(event) {
-    event.target.playVideo();//자동재생
 }
 
 function onPlayerStateChange(event) {
@@ -48,6 +32,27 @@ function onPlayerStateChange(event) {
 }
 
 $(function () {
+    const preview_type = document.getElementById('preview_type');
+    if (preview_type != null) {
+        if (preview_type == 'wecandeo') {
+            window.addEventListener('load', function () {
+                var playerdiv = document.getElementById("video-wrap");
+                var tempDiv = document.createElement('iframe');
+                tempDiv.setAttribute('width', '100%');
+                tempDiv.setAttribute('height', '100%');
+                tempDiv.setAttribute('src', 'https://play.wecandeo.com/video/v/?key=' + document.getElementById('preview_id').value + '&auto=true');
+                tempDiv.setAttribute('frameborder', '0');
+                tempDiv.setAttribute('allowfullscreen', '');
+                tempDiv.setAttribute('allow', 'autoplay;fullscreen;');
+                playerdiv.appendChild(tempDiv);
+            });
+        } else {
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+    }
+
 
     //menu tab 클릭 이벤트
     var clickTabDetail = $('.menu-tab-detail');
@@ -126,7 +131,7 @@ $(function () {
         var price = $('.lecture-price');
 
         price.each(function () {
-            if($(this).data('price') == value) {
+            if ($(this).data('price') == value) {
                 $(this).removeClass('price-hidden');
                 $(this).siblings('.lecture-price').addClass('price-hidden');
             }
@@ -148,7 +153,7 @@ $(function () {
     var lectureIdx = $('.lecture-idx').val();
     var open = $('.open')
 
-    open.click(function (e){
+    open.click(function (e) {
         e.preventDefault();
         var program_id = $('#program_id').val();
         let isOnline = $('#program_is_online').val();
@@ -156,8 +161,7 @@ $(function () {
 
         if (isOnline) {
             apiUrl = `/api/admin/lecture/online/${program_id}`;
-        }
-        else {
+        } else {
             apiUrl = `/api/admin/lecture/offline/${program_id}`;
         }
 
@@ -170,7 +174,7 @@ $(function () {
             },
 
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -194,16 +198,16 @@ $(function () {
             url: '/api/lectures/' + lectureIdx + '/like',
             type: 'post',
             data: {
-               'like' : like
+                'like': like
             },
-            success: function(res) {
+            success: function (res) {
                 var cnt = res.cnt;
 
                 clickLike.toggleClass('active');
                 $('.like').text(cnt);
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -213,26 +217,26 @@ $(function () {
     });
 
     //지도보기 팝업
-    $('.btn-map').click(function(e) {
+    $('.btn-map').click(function (e) {
         e.preventDefault();
         $('.dim').css('display', 'block');
         $('.popup-wrap').slideDown();
     });
 
-    $('.btn-popup-close, .dim').click(function(e) {
+    $('.btn-popup-close, .dim').click(function (e) {
         e.preventDefault();
         $('.dim').css('display', 'none');
         $('.popup-wrap').slideUp();
     });
 
-    $('#mapzone').each(function(){
+    $('#mapzone').each(function () {
         var map_x = $('.map_x').val();
-        var map_y= $('.map_y').val();
+        var map_y = $('.map_y').val();
 
-        if(map_x == ''){
+        if (map_x == '') {
             map_x = '127.105399';
         }
-        if(map_y == ''){
+        if (map_y == '') {
             map_y = '37.3595704';
         }
 
@@ -265,7 +269,7 @@ $(function () {
             },
 
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -274,7 +278,7 @@ $(function () {
         });
     });
 
-    $('.comment-child-submit').click(function() {
+    $('.comment-child-submit').click(function () {
         var target = $(this);
 
         var program_id = $('#program_id').val();
@@ -295,7 +299,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -305,7 +309,7 @@ $(function () {
     });
 
     // 댓글 삭제
-    $('.comment-delete').click(function() {
+    $('.comment-delete').click(function () {
         var target = $(this).closest('form');
 
         var program_id = $('#program_id').val();
@@ -325,7 +329,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -334,7 +338,7 @@ $(function () {
         });
     });
 
-    $('.comment-child-delete').click(function() {
+    $('.comment-child-delete').click(function () {
         var target = $(this).closest('form');
 
         var program_id = $('#program_id').val();
@@ -356,7 +360,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -366,7 +370,7 @@ $(function () {
     });
 
     // 댓글 수정
-    $('.comment-modify').click(function() {
+    $('.comment-modify').click(function () {
         var target = $(this).closest('form');
 
         var modify_input = target.parents('.comment-area').find('.modify-input');
@@ -377,12 +381,12 @@ $(function () {
 
         modify_input.css('display', 'block');
         image.css('display', 'none');
-        write_info.css('display','none');
-        comment_btn.css('display','none');
+        write_info.css('display', 'none');
+        comment_btn.css('display', 'none');
         write_content.css('display', 'none');
     });
 
-    $('.comment-modify-submit').click(function() {
+    $('.comment-modify-submit').click(function () {
         var target = $(this).closest('form');
 
         var program_id = $('#program_id').val();
@@ -403,7 +407,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);
@@ -412,7 +416,7 @@ $(function () {
         });
     });
 
-    $('.comment-child-modify-submit').click(function() {
+    $('.comment-child-modify-submit').click(function () {
         var target = $(this).closest('form');
 
         var program_id = $('#program_id').val();
@@ -435,7 +439,7 @@ $(function () {
                 location.reload()
             },
             error: function (request, status, error) {
-                if(request.status == 401) {
+                if (request.status == 401) {
                     alert('로그인 후 이용해 주세요.');
                 } else {
                     alert(request.responseJSON.msg);

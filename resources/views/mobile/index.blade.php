@@ -55,7 +55,7 @@
             </section>
 
             <section class="middle-banner">
-                <h2>진행중인 인기 이벤트</h2>
+                <h2>{{ $titles[0] }}</h2>
                 <div class="m-middle-swiper-container">
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
@@ -87,7 +87,7 @@
             </section>
 
             <section class="middle-banner">
-                <h2>위크 특가! TIME DEAL</h2>
+                <h2>{{ $titles[1] }}</h2>
                 <div class="m-middle-swiper-container2">
                     <lecture-banner1></lecture-banner1>
                     {{--
@@ -125,7 +125,7 @@
             </section>
 
             <section class="middle-banner">
-                <h2>실시간 인기강의</h2>
+                <h2>{{ $titles[2] }}</h2>
                 <div class="m-middle-swiper-container3">
                     <lecture-banner2></lecture-banner2>
                 </div>
@@ -134,6 +134,7 @@
 
 
             <div class="m-row">
+                <h2 class="lecture_title">{{ $titles[3] }}</h2>
                 <lecture-all :is_main="true" :is_pagination="false" :per_page="16" :mobile="false"></lecture-all>
             </div>
 
