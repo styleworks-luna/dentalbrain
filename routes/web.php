@@ -559,5 +559,14 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 커뮤니티 (기사) 삭제
             Route::delete('{article}', 'Admin\ArticleController@destroy')->name('destroy');
         });
+
+        Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+            // 강의 질문 내역 데이터
+            Route::get('question', [\App\Http\Controllers\Admin\Dashboard\LectureQuestionController::class, 'index'])->name('question');
+            // 고객센터 문의 내역 데이터
+            Route::get('inquiries', [\App\Http\Controllers\Admin\Dashboard\InquiryController::class, 'index'])->name('inquiries');
+
+
+        });
     });
 });
