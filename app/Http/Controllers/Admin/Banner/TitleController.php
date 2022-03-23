@@ -18,17 +18,10 @@ class TitleController extends Controller
     public function update(Request $request, BannerTitle $bannerTitle)
     {
         $validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:20']
+            'title' => ['required', 'string', 'max:20', 'not_regex:/[#\&\+\-%@=\/\\\:;,\.\'"\^`~\_\|\!\?\*$#<>()\[\]\{\}]/i']
+        ],[
+            'not_regex' => '특수문자를 사용할 수 없습니다.'
         ]);
-
-        $special_pattern = "/[#\&\+\-%@=\/\\\:;,\.'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/i";
-
-        if (preg_match($special_pattern, $validatedData['title'])){
-            return response()->json([
-                'success' => false,
-                'msg' => '특수 문자는 사용할 수 없습니다.',
-            ]);
-        }
 
         $bannerTitle->update($validatedData);
 
