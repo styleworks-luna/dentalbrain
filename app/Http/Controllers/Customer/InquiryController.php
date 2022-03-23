@@ -24,11 +24,11 @@ class InquiryController
     {
         //'phone' => 'required|regex:/^\d{2,3}[-]?\d{3,4}[-]?\d{4}$/',
         $validateData = request()->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'title' => ['required','string'],
-            'content' => ['required','string'],
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|max:255',
+            'title' => ['required','string','max:255'],
+            'content' => ['required','string', 'max:2000'],
             'category_id' => ['required', Rule::exists('inquiry_categories', 'id')],
         ]);
 
