@@ -232,6 +232,7 @@
                                      :initFile="material"
                                      @setFile="updateFile"></file-upload>
                     </div>
+                    <a class="btn-download" v-bind:href="material.url" download>{{material.name}}</a>
                 </template>
             </single-group>
 
