@@ -29,8 +29,7 @@
                                     <p class="lecture-pay">
                                         <template>
                                             {{
-                                                lecture.is_free == 1 ? '무료' :
-                                                    Helper.numberWithCommas(lecture.program.price) + '원'
+                                                lecture.payment == null ? '무료' : Helper.numberWithCommas(lecture.payment.totalAmount) + '원'
                                             }}
                                         </template>
                                     </p>
@@ -190,9 +189,9 @@
                                 </template>
                                 <template v-else>
                                     <template v-if="mobile">
-                                    <div class="content-text">
-                                        <p>본 강의는 종료되었습니다.</p>
-                                    </div>
+                                        <div class="content-text">
+                                            <p>본 강의는 종료되었습니다.</p>
+                                        </div>
                                     </template>
                                 </template>
                             </template>

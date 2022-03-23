@@ -16,8 +16,8 @@ class PaymentController extends Controller
             ->with(['student' => function ($query) {
                 $query->select('id', 'payment_id', 'program_id', 'user_id', 'expired_at')
                     ->with(['program' => function ($query) {
-                        $query->select('id', 'title', 'is_online', 'thumbnail_id', 'price')
-                            ->with('thumbnail');
+                        $query->select('id', 'title', 'is_online', 'thumbnail_id', 'price', 'minor_category_id')
+                            ->with('thumbnail', 'minorCategory');
                     }]);
             }])
             ->with(['membership' => function ($query) {

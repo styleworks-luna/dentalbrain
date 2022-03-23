@@ -241,7 +241,7 @@
                             <li><a href="#comment" class="menu-tab-comment">댓글</a></li>
                         </ul>
                     </div>
-                    @if( $program->preview_id)
+                    @if($program->preview_id)
                         <div class="video-wrap" id="video-wrap">
                             <input type="hidden" id="preview_id" value="{{$program->preview_id}}">
                             <div class="player" id="player"></div>
