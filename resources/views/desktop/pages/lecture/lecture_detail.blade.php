@@ -60,10 +60,35 @@
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <div class="lecture-information-text">
                             <table>
-                                @if($program->is_online == true)
+                                @if($program->is_online == true && $program->majorCategory->id == 7)
+                                    <tr>
+                                        <th>상품정보</th>
+                                        <td><p class="lecture-length">{{ $program->running_time }}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>배송정보</th>
+                                        <td>
+                                            <select name="ticket" id="ticket" class="lecture-select-box">
+                                                <option value="{{$program->id}}"
+                                                        data-price="{{ $program->price }}">{{ $program->description }}
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                @elseif($program->is_online == true)
                                     <tr>
                                         <th>강의시간</th>
                                         <td><p class="lecture-length">{{ $program->running_time }}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>강의정보</th>
+                                        <td>
+                                            <select name="ticket" id="ticket" class="lecture-select-box">
+                                                <option value="{{$program->id}}"
+                                                        data-price="{{ $program->price }}">{{ $program->description }}
+                                                </option>
+                                            </select>
+                                        </td>
                                     </tr>
                                 @else
                                     <tr>
@@ -86,16 +111,6 @@
                                         </td>
                                     </tr>
                                 @endif
-                                <tr>
-                                    <th>강의정보</th>
-                                    <td>
-                                        <select name="ticket" id="ticket" class="lecture-select-box">
-                                            <option value="{{$program->id}}"
-                                                    data-price="{{ $program->price }}">{{ $program->description }}
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr>
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="lecture-price"
@@ -171,6 +186,13 @@
                                         <div class="btn-wrap">
                                             <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
                                                 재수강 신청하기
+                                            </a>
+                                        </div>
+                                    @elseif ($program->majorCategory->id == 7)
+                                        {{--대분류 카테고리가 스토어--}}
+                                        <div class="btn-wrap">
+                                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                                구매하기
                                             </a>
                                         </div>
                                     @else
