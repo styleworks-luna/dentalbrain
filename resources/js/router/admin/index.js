@@ -6,7 +6,7 @@ import Customer from '@/router/admin/customer/index.js';
 import User from '@/router/admin/user/index.js';
 import Banner from '@/router/admin/banner/index.js';
 import Community from '@/router/admin/community/community.js';
-import Dashboard from '@/router/admin/dashboard/Dashboard.js';
+import Dashboard from '@/router/admin/dashboard/dashboard.js';
 import Payment from '@/router/admin/payment/index.js';
 import Email from '@/router/admin/email/index.js';
 
