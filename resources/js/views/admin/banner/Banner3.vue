@@ -173,6 +173,12 @@ export default {
                 this.banners2 = [];
             });
         },
+        handleSetStatus(id) {
+            Banner3.setStatus(id).then(res => {
+                this.getData();
+                alert(res.data.msg);
+            })
+        },
         handleSetDate(date) {
             this.date = date;
         },

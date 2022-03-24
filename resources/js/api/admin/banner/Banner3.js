@@ -42,7 +42,7 @@ export default {
     },
     setStatus(id) {
         return Send({
-            url: `/api/admin/program-banner/${id}/status`,
+            url: `/api/admin/banner/${id}/status`,
             method: 'patch'
         });
     },
