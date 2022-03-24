@@ -6,6 +6,7 @@
                 <thumbnail :id="'thumbnail'"
                            :file="thumbnail"
                            @setFile="handleSetThumbnail"></thumbnail>
+                <div style="text-align: center">540x405</div>
             </div>
 
             <div class="right-wrap">
@@ -69,7 +70,7 @@
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력" :isRequired="true" :size="12">
+            <single-group name="상세 정보 입력(가로사이즈 1140px)" :isRequired="true" :size="12"">
                 <template v-slot:content>
                     <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`"
                             @setEditor="handleSetEditor"></editor>
@@ -333,3 +334,9 @@ export default {
     }
 }
 </script>
+<style>
+    label.col-form-label col-md-2{
+        max-width: 500px;
+    }
+
+</style>
