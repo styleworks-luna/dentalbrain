@@ -1,37 +1,37 @@
 <template>
     <div class="swiper-wrapper">
-        <ul class="swiper-slide" v-for="lecture in lectures">
-            <li class="lecture-card" :key="lectures.id">
-                <a :href="'/lectures/' + lecture.program_id">
-                    <img :src="lecture.program.thumbnail.url" alt="">
+        <ul class="swiper-slide" v-for="banner in banners">
+            <li class="lecture-card" :key="banner.id">
+                <a :href="'/banner-redirect/' + banner.id">
+                    <img :src="banner.program.thumbnail.url" alt="">
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
-                            <span class="lecture-type">{{lecture.program.minor_category_name}}</span>
-                            <p class="lecture-date">수강기간 {{ lecture.program.term }}일</p>
-                            <p class="lecture-time">{{ lecture.program.running_time }}</p>
+                            <span class="lecture-type">{{banner.program.minor_category_name}}</span>
+                            <p class="lecture-date">수강기간 {{ banner.program.term }}일</p>
+                            <p class="lecture-time">{{ banner.program.running_time }}</p>
                         </div>
-                        <p class="lecture-name">{{ lecture.program.title }}</p>
+                        <p class="lecture-name">{{ banner.program.title }}</p>
                         <div v-if="!isMobile()" class="lecture-all-price">
-                            <template v-if="lecture.program.price != 0 && lecture.program.discount_rate != 0">
-                                <span class="lecture-sale">{{ lecture.program.discount_rate }}%</span>
+                            <template v-if="banner.program.price != 0 && banner.program.discount_rate != 0">
+                                <span class="lecture-sale">{{ banner.program.discount_rate }}%</span>
                                 <span class="lecture-price">
-                                    {{ Helper.numberWithCommas(lecture.program.discounted_price) }}원</span>
-                                <span class="lecture-ogprice">{{ Helper.numberWithCommas(lecture.program.price) }}원</span>
+                                    {{ Helper.numberWithCommas(banner.program.discounted_price) }}원</span>
+                                <span class="lecture-ogprice">{{ Helper.numberWithCommas(banner.program.price) }}원</span>
                             </template>
-                            <p class="lecture-price" v-if="lecture.program.price != 0 && lecture.program.discount_rate == 0">
-                                {{ Helper.numberWithCommas(lecture.program.price) }}원</p>
-                            <p class="lecture-price" v-if="lecture.program.price == 0">무료</p>
+                            <p class="lecture-price" v-if="banner.program.price != 0 && banner.program.discount_rate == 0">
+                                {{ Helper.numberWithCommas(banner.program.price) }}원</p>
+                            <p class="lecture-price" v-if="banner.program.price == 0">무료</p>
                         </div>
                         <div v-else class="lecture-all-price">
-                            <template v-if="lecture.program.price != 0 && lecture.program.discount_rate != 0">
-                                <span class="lecture-sale">{{ lecture.program.discount_rate }}%</span>
+                            <template v-if="banner.program.price != 0 && banner.program.discount_rate != 0">
+                                <span class="lecture-sale">{{ banner.program.discount_rate }}%</span>
                                 <span style="padding-bottom: 4px" class="lecture-ogprice">
-                                    {{ Helper.numberWithCommas(lecture.program.price) }}원</span>
-                                <p class="lecture-price">{{ Helper.numberWithCommas(lecture.program.discounted_price) }}원</p>
+                                    {{ Helper.numberWithCommas(banner.program.price) }}원</span>
+                                <p class="lecture-price">{{ Helper.numberWithCommas(banner.program.discounted_price) }}원</p>
                             </template>
-                            <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.program.price != 0 && lecture.program.discount_rate == 0">
-                                {{ Helper.numberWithCommas(lecture.program.price) }}원</p>
-                            <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.program.price == 0">무료</p>
+                            <p style="padding-top: 5vw" class="lecture-price" v-if="banner.program.price != 0 && banner.program.discount_rate == 0">
+                                {{ Helper.numberWithCommas(banner.program.price) }}원</p>
+                            <p style="padding-top: 5vw" class="lecture-price" v-if="banner.program.price == 0">무료</p>
                         </div>
                     </div>
                 </a>
@@ -53,12 +53,12 @@ export default {
     },
     data() {
         return {
-            lectures: [],
+            banners: [],
         }
     },
     watch: {
         list() {
-            this.lectures = this.list;
+            this.banners = this.list;
         }
     },
     mounted() {
@@ -74,7 +74,7 @@ export default {
         },
         getBanner2(){
             Lecture.getBanner2().then(res =>{
-                this.lectures = res.data.banners;
+                this.banners = res.data.banners;
             })
         }
     },
