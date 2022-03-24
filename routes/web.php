@@ -39,6 +39,20 @@ if (env('APP_ENV') != 'production') {
     });
 
     Route::get("ndsrhkd", [\App\Http\Controllers\Development\DevelopmentController::class, 'ndsrhkd']);
+
+    // 알바톡(임시)
+    Route::get('albatalk', function () {
+        return view(viewPrefix() . 'pages.albatalk.albatalk');
+    });
+
+    Route::get('albatalk/post', function () {
+        return view(viewPrefix() . 'pages.albatalk.albatalk_post');
+    });
+
+    Route::get('albatalk/detail', function () {
+        return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
+    });
+
 }
 
 /*============================ PAGES ============================*/
@@ -79,19 +93,6 @@ Route::group(['prefix' => 'community', 'as' => 'community.'], function () {
 //강사 소개
 Route::get('instructor', function () {
     return view(viewPrefix() . 'pages.introduce.instructor');
-});
-
-// 알바톡(임시)
-Route::get('albatalk', function () {
-    return view(viewPrefix() . 'pages.albatalk.albatalk');
-});
-
-Route::get('albatalk/post', function () {
-    return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-});
-
-Route::get('albatalk/detail', function () {
-    return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
 });
 
 // 이용 약관
