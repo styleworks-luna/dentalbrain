@@ -25,7 +25,7 @@
                     <div class="swiper-wrapper">
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.banners.redirect',$slide->id) }}">
+                                <a href="{{ route('banner-redirect',$slide->id) }}">
                                     <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
@@ -52,7 +52,7 @@
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
                         <div class="swiper-slide">
-                            <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                            <a href="{{ route('banner-redirect',$recommend->id) }}">
                                 <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
                             </a>
                         </div>
@@ -149,7 +149,7 @@
 
             <section class="ad">
                 @if($bar)
-                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
+                    <a href="{{ route('banner-redirect',$bar->id) }}">
                         <img src="{{ $bar->desktopFile->url }}" alt="바배너">
                     </a>
                 @else
@@ -164,7 +164,7 @@
                     <div class="swiper-wrapper">
                         @forelse($bottomSlides as $bottom)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.banners.redirect',$bottom->id)}}">
+                                <a href="{{ route('banner-redirect',$bottom->id)}}">
                                     <img src="{{ $bottom->desktopFile->url }}" alt="하단배너">
                                 </a>
                             </div>

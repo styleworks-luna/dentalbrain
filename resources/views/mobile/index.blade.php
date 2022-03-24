@@ -36,7 +36,7 @@
                     <div class="swiper-wrapper">
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.banners.redirect',$slide->id) }}">
+                                <a href="{{ route('banner-redirect',$slide->id) }}">
                                     <img src="{{ $slide->mobileFile->url }}" alt="최상단 슬라이드">
                                 </a>
                             </div>
@@ -60,7 +60,7 @@
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
                             <div class="swiper-slide">
-                                <a href="{{ route('api.banners.redirect',$recommend->id) }}">
+                                <a href="{{ route('banner-redirect',$recommend->id) }}">
                                     <img src="{{ $recommend->mobileFile->url }}" alt="추천배너">
                                 </a>
                             </div>
@@ -132,7 +132,6 @@
             </section>
 
 
-
             <div class="m-row">
                 <h2 class="lecture_title">{{ $titles[3] }}</h2>
                 <lecture-all :is_main="true" :is_pagination="false" :per_page="16" :mobile="false"></lecture-all>
@@ -140,7 +139,7 @@
 
             <section class="ad">
                 @if($bar)
-                    <a href="{{ route('api.banners.redirect',$bar->id) }}">
+                    <a href="{{ route('banner-redirect',$bar->id) }}">
                         <img src="{{ $bar->mobileFile->url }}" alt="바배너">
                     </a>
                 @else
@@ -154,7 +153,7 @@
             <section class="bottom-banner">
                 <div class="banner-wrap">
                     @forelse($bottomSlides as $bottom)
-                        <a href="{{ route('api.banners.redirect',$bottom->id)}}">
+                        <a href="{{ route('banner-redirect',$bottom->id)}}">
                             <img src="{{ $bottom->mobileFile->url }}" alt="하단배너">
                         </a>
                         @break($loop->iteration == 2)

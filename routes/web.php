@@ -108,6 +108,9 @@ Route::get('refund', function () {
     return view('desktop.pages.term.refund');
 })->name('refund');
 
+// 배너 연결 링크
+Route::get('banner-redirect/{banner}/', 'Main\BannerController@redirectToLink')->name('banner-redirect');
+
 Route::group(['prefix' => 'membership', 'as' => 'membership.'], function () {
     Route::get('/', [\App\Http\Controllers\Membership\MembershipController::class, 'apply'])->name('index');
     Route::group(['prefix' => 'payment', 'middleware' => 'auth',], function () {
@@ -269,12 +272,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::group(['prefix' => 'answers', 'as' => 'answers.'], function () {
                 Route::get('{answer}/download', 'Survey\FileController@download')->name('download');
             });
-        });
-    });
-
-    Route::group(['prefix' => 'banners', 'as' => 'banners.'], function () {
-        Route::group(['prefix' => '{banner}'], function () {
-            Route::get('/', 'Main\BannerController@redirectToLink')->name('redirect');
         });
     });
 
