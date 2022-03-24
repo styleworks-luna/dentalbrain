@@ -18,6 +18,9 @@
                 <div class="title">
                     <h1>알바톡</h1>
                 </div>
+                <a>이력서 등록</a>
+                <a>구인등록</a>
+                <a>헤드헌팅</a>
             </div>
         </div>
         <div class="container">

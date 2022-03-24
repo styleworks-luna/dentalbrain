@@ -12,6 +12,9 @@
     <section class="albatalk-post-wrap">
         <div class="title-wrap">
             <div class="container">
+                <a>이력서 등록</a>
+                <a>구인등록</a>
+                <a>헤드헌팅</a>
             </div>
         </div>
         <div class="container">

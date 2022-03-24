@@ -12,6 +12,9 @@
     <section class="albatalk-detail-wrap">
         <div class="title-wrap">
             <div class="container">
+                <a>이력서 등록</a>
+                <a>구인등록</a>
+                <a>헤드헌팅</a>
             </div>
         </div>
         <div class="container">
@@ -21,17 +24,22 @@
                     @csrf
                     <section class="apply-title">
                         <h1>구인정보</h1>
-                        <p>구인정보 수정하기</p>
+                        <a href="http://dbv2020.onoffmix.test/albatalk/detail">구인정보 수정하기</a>
                     </section>
 
                     <section class="lecture-information-wrap">
                         <div class="lecture-image">
                             <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                            <div style="display: flex">
+                                <img class="frist-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                                <img class="second-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                                <img class="third-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                            </div>
                         </div>
                         <div class="lecture-information">
                             <h2 class="lecture-title">서초 온오프믹스 치과</h2>
-                            <div style="display: flex">
-                                <table>
+                            <div class="alba-card" style="display: flex; flex-wrap: wrap;">
+                                <table class="first-card">
                                     <tr>
                                         <th>대표자명</th>
                                         <td><p class="lecture-length">홍길동</p></td>
@@ -44,20 +52,9 @@
                                         <th>전화번호</th>
                                         <td><p class="lecture-length">02-123-12345</p></td>
                                     </tr>
-                                    <tr>
-                                        <th>홈페이지 주소</th>
-                                        <td><p class="lecture-length">http://dbv2020.onoffmix.test/albatalk/detail</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>주소</th>
-                                        <td><p class="lecture-length">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>인근 지하철역</th>
-                                        <td><p class="lecture-length">7호선 논현역 1번 출구 도보 5분</p></td>
-                                    </tr>
+
                                 </table>
-                                <table>
+                                <table class="second-card">
                                     <tr>
                                         <th>담당자명</th>
                                         <td><p class="lecture-length">홍길순</p></td>
@@ -69,6 +66,20 @@
                                     <tr>
                                         <th>담당자 이메일</th>
                                         <td><p class="lecture-length">hongildong@test.com</p></td>
+                                    </tr>
+                                </table>
+                                <table class="third-card">
+                                    <tr>
+                                        <th>홈페이지 주소</th>
+                                        <td><p class="lecture-length">http://dbv2020.onoffmix.test</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>주소</th>
+                                        <td><p class="lecture-length">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>인근 지하철역</th>
+                                        <td><p class="lecture-length">7호선 논현역 1번 출구 도보 5분</p></td>
                                     </tr>
                                 </table>
                             </div>

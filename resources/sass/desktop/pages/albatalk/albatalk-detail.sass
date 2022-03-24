@@ -25,6 +25,20 @@
             +padding(125px 0 0 63px)
             font-weight: bold
             font-size: 48px
+        
+        a
+            +border(1px solid transparent)
+            +size(102px, 36px)
+            float: right
+            +margin(top 244px right 20px)
+            background-color: rgba(0, 0, 0, 0.4)
+            border-radius: 1px
+            display: flex
+            align-items: center
+            justify-content: center
+            color: #fff
+            font-size: 16px
+
 
     +background(null, null, null, #f5f4f5)
     min-width: 1280px
@@ -72,18 +86,18 @@
         float: left
         font-size: 30px
 
-    p
+    a
         float: right
         font-size: 13px
         color: $gray-700
         transform: translateY(15px)
 
-        em
-            font-weight: bold
+        &:hover
             color: $page-color
+            font-weight: bold
+            text-decoration: revert
 
-        .for-padding
-            +padding(0 6px)
+
 
 .lecture-information-wrap
     +padding(top 20px)
@@ -91,18 +105,21 @@
     min-height: 225px
 
     .lecture-image
-        +size(298px, 223px)
+        +size(280px, 290px)
         float: left
 
         img
-            +size(298px, 223px)
-            +border(1px solid rgba(0, 0, 0, 0.1))
-            +border-radius(8px)
+            +size(280px, 210px)
+
+        .frist-detail, .second-detail, .third-detail
+            +size(80px, 60px)
+            +margin(top 20px right 20px)
 
     .lecture-information
         +size(790px)
-        +padding(top 20px left 52px)
+        +padding(top 20px left 50px)
         float: left
+
 
         .lecture-sort
             overflow: hidden
@@ -121,16 +138,16 @@
                 color: $gray-700
 
         .lecture-title
-            +padding(top 13px)
+            +padding(top 13px bottom 12px)
             font-weight: bold
             font-size: 24px
             line-height: 1.21
 
-        table
+        .first-card, .second-card
             width: 390px
-            height: 250px
+            height: 102px
             //table-layout: fixed
-            +padding(top 16px)
+            //+padding(top 16px)
             display: block
 
             tr
@@ -149,12 +166,40 @@
                     +padding(left 10px)
                     font-size: 16px
                     vertical-align: middle
+                    &:nth-child(5)
+
+        .third-card
+            width: 800px
+            height: 102px
+            //table-layout: fixed
+            //+padding(top 16px)
+            display: block
+
+            tr
+                +padding(top 18px)
+                display: block
+
+                th
+                    +size(100px)
+                    font-size: 14px
+                    color: $gray-700
+                    vertical-align: middle
+                    text-align: left
+
+                td
+                    +size(500px)
+                    +padding(left 10px)
+                    font-size: 16px
+                    vertical-align: middle
+                    &:nth-child(5)
+
+                        
 
 h3
     font-size: 24px
 
 .applicant-information
-    +padding(top 62px)
+    +padding(top 116px)
 
     .applicant-title
         overflow: hidden
@@ -169,6 +214,7 @@ h3
         width: 1140px
         height: 300px
         display: block
+        line-height: 1.88
         //table-layout: fixed
 
         tr
