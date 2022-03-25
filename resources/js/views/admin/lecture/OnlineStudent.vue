@@ -83,13 +83,15 @@
                             <template v-else>
                                 <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
                             </template>
-                            <button class="btn btn-info" v-on:click="isShow = !isShow">변경</button>
+                            <button style="margin-bottom: 10px" class="btn btn-info" v-on:click="isShow = !isShow">변경</button>
                             <div v-show="isShow" class="input-group" id="edit">
-                                <input class="form-control"
-                                       type="text"
-                                       placeholder="변경일자 입력" v-model="extendDates[slotProps.row.student_id]">
+
+                                <date-picker style="width: 100px; padding:0;" class="mr-3" @setTime="handleSetStartDate" v-model="extendDates[slotProps.row.student_id]"></date-picker>
+
+
+
                                 <span class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, extendDates[slotProps.row.student_id])">수정</button>
+                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, doneDate)">수정</button>
                                 </span>
                             </div>
                         </template>
@@ -173,6 +175,7 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+import DatePicker from '@/components/common/DatePicker.vue'
 
 //api
 import {Student} from '@/api/admin/lecture/Online.js';
@@ -191,6 +194,7 @@ export default {
         'table-grid': Table,
         'button-open': ButtonOpen,
         SelectBox,
+        DatePicker,
     },
     data() {
         return {
@@ -204,6 +208,7 @@ export default {
             page: 1,
             isShow: false,
             extendDates: [],
+            doneDate: '',
         }
     },
     created() {
@@ -218,12 +223,12 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
+                    width: '5%'
                 },
                 {
                     name: 'is_paid',
                     text: '회원구분',
-                    width: '7%'
+                    width: '5%'
                 },
                 {
                     name: 'user_id',
@@ -233,7 +238,7 @@ export default {
                 {
                     name: 'name',
                     text: '이름',
-                    width: '8%'
+                    width: '7%'
                 },
                 {
                     name: 'email',
@@ -253,7 +258,7 @@ export default {
                 {
                     name: 'watch',
                     text: '시청기간',
-                    width: '12%'
+                    width: '15%'
                 },
                 {
                     name: 'additional',
@@ -321,7 +326,15 @@ export default {
             }).catch(err => {
                 alert('오류');
             });
-        }
+        },
+        handleSetStartDate(date) {
+            this.doneDate = date;
+        },
     }
 }
 </script>
+<style>
+.datepicker form-control {
+    width: 10px
+}
+</style>
