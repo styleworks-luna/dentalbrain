@@ -87,9 +87,9 @@
                             <div v-show="isShow" class="input-group" id="edit">
                                 <input class="form-control"
                                        type="text"
-                                       placeholder="변경일자 입력" v-model="extendDates[slotProps.row.id]">
+                                       placeholder="변경일자 입력" v-model="extendDates[slotProps.row.student_id]">
                                 <span class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, extendDates[slotProps.row.id])">수정</button>
+                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, extendDates[slotProps.row.student_id])">수정</button>
                                 </span>
                             </div>
                         </template>
