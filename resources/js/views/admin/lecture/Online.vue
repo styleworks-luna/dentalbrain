@@ -146,12 +146,12 @@
                     {
                         name: 'count',
                         text: '수강현황',
-                        width: '14%'
+                        width: '10%'
                     },
                     {
                         name: 'control',
                         text: '수정',
-                        width: '18%'
+                        width: '25%'
                     },
                 ]
             }
