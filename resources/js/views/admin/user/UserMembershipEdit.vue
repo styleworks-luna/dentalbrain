@@ -130,7 +130,7 @@
             </div>
 
             <div class="membership-content mt-5">
-                <h2>유료회원 결제 내역</h2>
+                <h2>유료회원 결제 내역</h2><div>총 결제금액: {{ Helper.numberWithCommas(membership_paid) }}원</div>
                 <table class="w-100">
                     <colgroup>
                         <col style="width: 55%">
@@ -275,6 +275,7 @@ export default {
             isShow: false,
             extendDates: [],
             // disabled: true,
+            membership_paid: '',
         }
     },
     created() {
@@ -310,6 +311,8 @@ export default {
                 this.memberships_dates = [];
                 const userResult = res.data.user;
                 const membershipResult = res.data.memberships;
+
+                this.membership_paid =res.data.membership_paid;
 
                 this.login_id = userResult.login_id;
                 this.name = userResult.name;
