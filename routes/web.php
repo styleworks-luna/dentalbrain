@@ -53,6 +53,10 @@ if (env('APP_ENV') != 'production') {
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
     });
 
+    Route::get('albatalk/resume/detail', function () {
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
+    });
+
     Route::get('albatalk/resume', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
     });

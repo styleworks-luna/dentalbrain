@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="albatalk-detail-wrap">
+    <section class="albatalk-post-wrap">
         <div class="title-wrap">
             <div class="container">
                 <a>이력서 등록</a>
@@ -18,175 +18,340 @@
             </div>
         </div>
         <div class="container">
-            <form id="lecture-apply-form" method="POST"
-                  enctype="multipart/form-data">
-                <div class="row">
+            <section class="wanted">
+                <h2>구인 등록</h2>
+                <form>
                     @csrf
-                    <section class="apply-title">
-                        <h1>이력서 정보</h1>
-                    </section>
-
-                    <section class="lecture-information-wrap">
-                        <div class="lecture-image">
-                            <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                        </div>
-                        <div class="lecture-information">
-                            <h2 class="lecture-title">홍길동</h2>
-                            <div class="alba-card" style="display: flex">
-                                <table class="first-card">
-                                    <tr>
-                                        <th>영문 이름</th>
-                                        <td><p class="lecture-length">HGD</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>생년 월일</th>
-                                        <td><p class="lecture-length">1900년 01월 01일</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>휴대폰 번호</th>
-                                        <td><p class="lecture-length">010-5678-1234</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>비상연락처</th>
-                                        <td><p class="lecture-length">010-5678-1234</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>주소</th>
-                                        <td><p class="lecture-length">010-5678-1234</p></td>
-                                    </tr>
-
-                                </table>
-                                <table class="third-card">
-                                    <tr>
-                                        <th>희망 근무 지역</th>
-                                        <td><p class="lecture-length">서울</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>희망 근무 요일</th>
-                                        <td><p class="lecture-length">월, 화, 수, 목</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>희망 근무 시간</th>
-                                        <td><p class="lecture-length">오전 10시 ~ 오후 6시</p></td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                        </div>
-                    </section>
-
-                    <section class="applicant-information">
-                        <div class="applicant-title">
-                            <h3>학력 사항 및 희망순위</h3>
-                        </div>
-                        <div style="display: flex">
-                            <table>
-                                <tr>
-                                    <th>학위취득년월</th>
-                                    <td><p class="lecture-length">1900년 02월 01일</p></td>
-                                </tr>
-                                <tr>
-                                    <th>출신학교</th>
-                                    <td><p class="lecture-length">온오프믹스 대학교</p></td>
-                                </tr>
-                                <tr>
-                                    <th>학과(세부전공)</th>
-                                    <td><p class="lecture-length">사업팀</p></td>
-                                </tr>
-                                <tr>
-                                    <th>학위</th>
-                                    <td><p class="lecture-length">박사</p></td>
-                                </tr>
-                                <tr>
-                                    <th>졸업구분</th>
-                                    <td><p class="lecture-length"></p></td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <th>희망 진료과</th>
-                                    <td><p class="lecture-length">1순위 교정&emsp;|&emsp;2순위 보철</p></td>
-                                </tr>
-                                <tr>
-                                    <th>희망 부서</th>
-                                    <td><p class="lecture-length">1순위 진료실&emsp;|&emsp;2순위 데스크&emsp;|&emsp;3순위 교육</p></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div class="applicant-title">
-                            <h3>자기소개</h3>
-                        </div>
-                        <div class="second">
-                            <div class="text">
-                                잘 할 수 있습니다.
-                            </div>
-                        </div>
-
-                        <div class="applicant-title">
-                            <h3>면허/자격증 보유 현황</h3>
-                        </div>
-                        <table class="certificate">
+                    <div class="inquire-form-wrap">
+                        <table>
                             <tr>
-                                <th style="width: 15%">구분</th>
-                                <th>자격증명</th>
-                                <th>취득년월</th>
-                                <th>인가, 관리기관</th>
+                                <th>치과명 *</th>
+                                <td class="name-wrap">
+                                    <input type="text"
+                                           id="name"
+                                           name="name"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 치과명을 입력해주세요">
+                                </td>
+
+                                <th>담당자명 *</th>
+                                <td class="manager-wrap">
+                                    <input type="text"
+                                           id="manager"
+                                           name="manager"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 담당자명을 입력해주세요">
+                                </td>
                             </tr>
                             <tr>
-                                <td>1</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <th>대표자명 *</th>
+                                <td class="ceo-wrap">
+                                    <input type="text"
+                                           id="ceo"
+                                           name="ceo"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                </td>
+
+                                <th>담장자 전화번호 *</th>
+                                <td class="manager-phone-wrap">
+                                    <input type="text"
+                                           id="manager-phone"
+                                           name="manager-phone"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <th>사업자등록번호 *</th>
+                                <td class="num-wrap">
+                                    <input type="text"
+                                           id="num"
+                                           name="num"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                </td>
+
+                                <th>담장자 이메일 *</th>
+                                <td class="manager-email-wrap">
+                                    <input type="text"
+                                           id="manager-email"
+                                           name="manager-email"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
                             </tr>
                             <tr>
-                                <td>2</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <th>전화번호 *</th>
+                                <td class="phone-wrap">
+                                    <input type="text"
+                                           id="phone"
+                                           name="phone"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>홈페이지 주소 *</th>
+                                <td class="page-wrap">
+                                    <input type="text"
+                                           id="page"
+                                           name="page"
+                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           data-parsley-required="false"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
                             </tr>
                         </table>
-
-                        <div class="applicant-title">
-                            <h3>치과 업무 능력 자기 평가표</h3>
-                        </div>
-                        <table class="self-test">
+                        <table>
                             <tr>
-                                <th style="width: 14%">구분</th>
-                                <th style="width: 16%"></th>
-                                <th>자가평가 점수</th>
-                                <th>교육가능 유무</th>
-                                <th style="width: 14%">구분</th>
-                                <th style="width: 16%"></th>
-                                <th>자가평가 점수</th>
-                                <th>교육가능 유무</th>
+                                <th>주소입력 *</th>
+                                <td class="address-wrap">
+                                    <input type="button" class="btn-address" value="주소검색"
+                                           data-index="test">
+                                    <input type="text" id="address" name="surveys[test][address]"
+                                           class="address"
+                                           data-index="test"
+                                           readonly="readonly"
+                                           data-parsley-required-message="주소를 검색해주세요.">
+                                    <input type="text" id="address-detail"
+                                           name="surveys[test][address_detail]"
+                                           class="address-detail"
+                                           placeholder="상세주소를 입력하세요."
+                                           data-parsley-required-message="상세주소를 입력하세요">
+                                </td>
                             </tr>
                             <tr>
-                                <td>임플란트</td>
-                                <td>구치부싱글크라운 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>임플란트</td>
-                                <td>러버댐장착</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
+                                <th>인근 지하철역</th>
+                                <td class="subway-wrap">
+                                    <input type="text"
+                                           id="subway"
+                                           name="subway"
+                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>신청분야 *</th>
+                                <td class="field-wrap">
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">진료전반</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">상담/데스크</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">교정</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">보철</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">예방</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">구강외과</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">소아</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">스케일링</label>
+                                    <input type="checkbox" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">실장</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>근무형태 *</th>
+                                <td class="work-type-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">정규직</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">계약직</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">아르바이트</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>직종 *</th>
+                                <td class="job-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">치과위생사</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">간호조무사</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">관리 및 경영지원</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">코디네이터/리셉션</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">무관</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>급여 *</th>
+                                <td class="pay-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">협의 후 결정</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">내규에 따름</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">연봉제</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>학력 *</th>
+                                <td class="school-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <input type="text" placeholder="학력선택">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>경력 *</th>
+                                <td class="career-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">신입</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field" class="last">경력</label>
+                                    <input type="text" placeholder="경력기간 선택">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>근무요일 *</th>
+                                <td class="pay-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~금(주 5일)</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~토(토요일 격주 휴무)</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">월~토</label>
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">기타</label>
+                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>복리후생 *</th>
+                                <td class="welfare-wrap">
+                                    <input type="checkbox" id="all" name="all"><label>점심식자</label>
+                                    <input type="checkbox" id="all" name="all"><label>유니폼</label>
+                                    <input type="checkbox" id="all" name="all"><label>주차</label>
+                                    <input type="checkbox" id="all" name="all"><label>자기계발비</label>
+                                    <input type="checkbox" id="all" name="all"><label>연월차지원</label>
+                                    <input type="checkbox" id="all" name="all"><label class="last">휴가비지원</label>
+                                    <input type="checkbox" id="all" name="all"><label>4대보험지원</label>
+                                    <input type="checkbox" id="all" name="all"><label>연봉제</label>
+                                    <input type="checkbox" id="all" name="all"><label>인센티브제</label>
+                                    <input type="checkbox" id="all" name="all"><label>퇴직금지원</label>
+                                    <input type="checkbox" id="all" name="all"><label class="last">야근수당지원</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>모집마감일 *</th>
+                                <td class="deadline-wrap">
+                                    <input type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <input type="text" placeholder="시작일자 선택">
+                                    <input class="time" type="text" placeholder="HH:mm">
+                                    <label id="field">부터</label>
+                                    <input type="text" placeholder="마감일자 선택">
+                                    <input class="time2" type="text" placeholder="HH:mm">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>상세정보</th>
+                                <td class="Detail-wrap">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>결제금액</th>
+                                <td class="pay-wrap">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>결제방식 *</th>
+                                <td class="paydeail-wrap">
+                                    <span>
+                                        <input type="radio" id="field" name="field"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">신용카드</label>
+                                        <input type="text" placeholder="신한">
+                                    </span>
+                                    <input class="last" type="radio" id="field" name="field"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <label id="field">실시간 계좌이체</label>
+                                </td>
                             </tr>
                         </table>
-                    </section>
-                </div>
-            </form>
-            <div class="dim"></div>
-            <div class="popup-control">
-                @include('desktop.component.popup.agreement.privacy_to_third')
-                @include('desktop.component.popup.agreement.refund')
-            </div>
+                    </div>
+                </form>
+                <button class="submit" type="submit">구인공고 등록</button>
+            </section>
+
         </div>
     </section>
 @endsection
-
