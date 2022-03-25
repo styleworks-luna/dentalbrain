@@ -63,7 +63,7 @@
                 <single-group name="수강기한"
                               :isRow="true"
                               :isRequired="true"
-                              :size="2">
+                              :size="3">
                     <template v-slot:content>
                         <input type="text" class="form-control" placeholder="일수" v-model="term">
                     </template>
@@ -335,8 +335,8 @@ export default {
 }
 </script>
 <style>
-    label.col-form-label col-md-2{
-        max-width: 500px;
-    }
+.col-md-2 {
+    max-width: 100%
+}
 
 </style>
