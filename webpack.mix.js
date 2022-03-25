@@ -64,6 +64,7 @@ mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/
 mix.sass('resources/sass/desktop/pages/albatalk/albatalk-all.sass', 'public/css/desktop/pages/albatalk');
 mix.sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk');
 mix.sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk');
+mix.sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk');
 
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
