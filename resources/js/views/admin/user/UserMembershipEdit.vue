@@ -76,8 +76,8 @@
                         <col style="width: 5%">
                         <col style="width: 7%">
                         <col style="width: 20%">
-                        <col style="width: 10%">
-                        <col style="width: 15%">
+                        <col style="width: 7%">
+                        <col style="width: 18%">
                         <col style="width: 15%">
                     </colgroup>
                     <thead>
@@ -104,14 +104,12 @@
                                         <template v-if="lecture.is_watched">(시청함)</template>&ensp;
                                         <template v-if="lecture.is_repeated">(재수강)</template>
                                     </template>
-                                    <button v-on:click="isShow = !isShow" class="btn btn-info text-white">변경</button>
+                                    <button style="margin-bottom: 10px" v-on:click="isShow = !isShow" class="btn btn-info text-white">변경</button>
                                     <div v-show="isShow" class="input-group" id="edit">
-                                        <input class="form-control"
-                                               type="text"
-                                               placeholder="변경일자 입력" v-model="extendDates[lecture.id]">
+                                        <date-picker class="mr-3" @setTime="handleSetStartDate" v-model="extendDates[lecture.id]"></date-picker>
                                         <span class="input-group-append">
-                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, extendDates[lecture.id])">수정</button>
-                                            </span>
+                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, doneDate)">수정</button>
+                                        </span>
                                     </div>
                                 </td>
                                 <td>{{ lecture.applied_at }}</td>
@@ -276,6 +274,7 @@ export default {
             extendDates: [],
             // disabled: true,
             membership_paid: '',
+            doneDate: '',
         }
     },
     created() {
@@ -441,7 +440,10 @@ export default {
             }).catch(err => {
                 alert('오류');
             });
-        }
+        },
+        handleSetStartDate(date) {
+            this.doneDate = date;
+        },
     }
 }
 </script>
