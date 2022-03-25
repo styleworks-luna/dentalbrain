@@ -120,12 +120,12 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '4%'
+                    width: '5%'
                 },
                 {
                     name: 'is_paid',
                     text: '회원구분',
-                    width: '5%'
+                    width: '7%'
                 },
                 {
                     name: 'login_id',
@@ -140,12 +140,12 @@ export default {
                 {
                     name: 'email',
                     text: '이메일',
-                    width: '25%'
+                    width: '20%'
                 },
                 {
                     name: 'phone',
                     text: '전화번호',
-                    width: '15%'
+                    width: '12%'
                 },
                 {
                     name: 'work_company',
