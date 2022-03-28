@@ -2,7 +2,7 @@
 
 @section('script')
     <script>
-        var video_type = '{{$now->video_type}}';
+        var video_type = '{{ $now->video_type }}';
     </script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-watch.js') }}"></script>
 @endsection

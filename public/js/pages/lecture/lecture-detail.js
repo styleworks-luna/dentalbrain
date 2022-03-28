@@ -1,7 +1,5 @@
 var player;
 
-const tag = document.createElement('script');
-
 function onYouTubeIframeAPIReady() {
     let previewId = document.getElementById('preview_id');
     if (previewId != null) {
@@ -34,7 +32,7 @@ function onPlayerStateChange(event) {
 $(function () {
     const preview_type = document.getElementById('preview_type');
     if (preview_type != null) {
-        if (preview_type == 'wecandeo') {
+        if (preview_type.value == 'wecandeo') {
             window.addEventListener('load', function () {
                 var playerdiv = document.getElementById("video-wrap");
                 var tempDiv = document.createElement('iframe');
@@ -47,6 +45,7 @@ $(function () {
                 playerdiv.appendChild(tempDiv);
             });
         } else {
+            const tag = document.createElement('script');
             tag.src = "https://www.youtube.com/iframe_api";
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
