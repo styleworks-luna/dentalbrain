@@ -73,7 +73,6 @@
                                     <template v-if="slotProps.row.is_watched">(시청함)</template>
                                     <div v-if="slotProps.row.is_repeated">(재수강)</div>
                                 </template>
-                                <button class="btn btn-info">변경</button>
                             </template>
                         </template>
                         <template v-else>
@@ -83,18 +82,19 @@
                             <template v-else>
                                 <strong class="text-danger">{{ slotProps.row.left_days }}</strong>일 남음
                             </template>
-                            <button style="margin-bottom: 10px" class="btn btn-info" v-on:click="isShow = !isShow">변경</button>
-                            <div v-show="isShow" class="input-group" id="edit">
-
-                                <date-picker style="width: 100px; padding:0;" class="mr-3" @setTime="handleSetStartDate" v-model="extendDates[slotProps.row.student_id]"></date-picker>
-
-
-
-                                <span class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" @click="extend(id, slotProps.row.student_id, doneDate)">수정</button>
-                                </span>
-                            </div>
                         </template>
+                        <button style="margin-bottom: 10px" class="btn btn-info"
+                                @click="handleShowExtendDate(slotProps.row)">변경
+                        </button>
+                        <div v-if="slotProps.row.isShow" class="input-group" id="edit">
+                            <date-picker style="width: 100px; padding:0;" class="mr-3" @setTime="handleSetStartDate"
+                                         v-model="extendDates[slotProps.row.student_id]"></date-picker>
+
+                            <span class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"
+                                            @click="extend(id, slotProps.row.student_id, doneDate)">수정</button>
+                                </span>
+                        </div>
                     </td>
                     <td>
                         <router-link :to="`/admin/lecture/online/${id}/${slotProps.row.user_id}/additional`"
@@ -206,7 +206,6 @@ export default {
             order: 'latest',
             keyword: '',
             page: 1,
-            isShow: false,
             extendDates: [],
             doneDate: '',
         }
@@ -309,6 +308,9 @@ export default {
             Student.getStudentsData(this.id, params).then(res => {
                 this.program_name = res.data.program_name;
                 this.students = res.data.students;
+                this.students.data.forEach(element => {
+                    this.$set(element, 'isShow', false);
+                })
             }).catch(err => {
                 this.students = [];
             });
@@ -330,6 +332,9 @@ export default {
         handleSetStartDate(date) {
             this.doneDate = date;
         },
+        handleShowExtendDate(row) {
+            this.$set(row, 'isShow', !row.isShow);
+        }
     }
 }
 </script>
