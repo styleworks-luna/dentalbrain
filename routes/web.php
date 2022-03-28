@@ -255,6 +255,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('/', 'Main\LectureController@index')->name('list');
         Route::get('categories', 'Main\LectureController@categories')->name('categories');
         Route::get('recommend', [\App\Http\Controllers\Main\RecommendLectureController::class, 'recommend'])->name('recommend');
+        Route::post('{lecture}/save-progress', [\App\Http\Controllers\Lecture\WatchController::class, 'saveProgress']);
         Route::group(['prefix' => '{program}'], function () {
 
             Route::group(['middleware' => 'auth'], function () {

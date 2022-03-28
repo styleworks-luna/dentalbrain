@@ -1,22 +1,32 @@
 var player;
 
-var tag = document.createElement('script');
+var preProgress = 0;
 
-if (video_type == 'wecandeo') {
-    window.addEventListener('load', function () {
-        var playerdiv = document.getElementById("video-wrap");
-        var tempDiv = document.createElement('iframe');
-        tempDiv.setAttribute('width', '100%');
-        tempDiv.setAttribute('height', '100%');
-        tempDiv.setAttribute('src', 'https://play.wecandeo.com/video/v/?key=' + document.getElementById('youtube_id').value + '&auto=true');
-        tempDiv.setAttribute('frameborder', '0');
-        tempDiv.setAttribute('allowfullscreen', '');
-        tempDiv.setAttribute('allow', 'autoplay;fullscreen;');
-        playerdiv.appendChild(tempDiv);
-    });
-} else {
+function isWecandeoVideo() {
+    return video_type == 'wecandeo';
+}
+
+function createWecandeoPlayer() {
+    const iFramePlayer = document.createElement('iframe');
+    iFramePlayer.setAttribute('width', '100%');
+    iFramePlayer.setAttribute('height', '100%');
+
+    let url = new URL('https://play.wecandeo.com/video/v/');
+    url.searchParams.append('key', youtube_id);
+    url.searchParams.append('auto', true);
+    url.searchParams.append('start', preProgress);
+
+    iFramePlayer.setAttribute('src', url.toString());
+    iFramePlayer.setAttribute('frameborder', '0');
+    iFramePlayer.setAttribute('allowfullscreen', '');
+    iFramePlayer.setAttribute('allow', 'autoplay;fullscreen;');
+    return iFramePlayer;
+}
+
+function insertScriptForYoutube() {
+    const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
+    const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
@@ -24,7 +34,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         width: '100%',
         height: '100%',
-        videoId: document.getElementById('youtube_id').value,
+        videoId: youtube_id,
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -47,8 +57,70 @@ function onPlayerStateChange(event) {
     }
 }
 
+function setUpPlayer(iFrame, lectureId = null) {
+    function callProgressAPI(lectureId, time) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: `/api/lectures/${lectureId}/save-progress`,
+            type: "POST",
+            data: {
+                time: time,
+            }
+        }).then(function (data) {
+            console.log(data);
+        }).fail(function (xhr, textStatus, errorThrown) {
+            let response = xhr.responseJSON;
+            console.log(response.msg);
+        });
+    }
+
+    function updateProgress(lectureId, time) {
+        if (Math.abs(time - preProgress) > 5) {
+            preProgress = time;
+            callProgressAPI(lectureId, time);
+        }
+    }
+
+    const wrapper = document.getElementById("video-wrap");
+    wrapper.appendChild(iFrame);
+    var content = iFrame.contentWindow || iFrame.contentDocument;
+    let iframeAPI = new smIframeAPI(content);
+
+    iframeAPI.onEvent(smIframeEvent.READY, function () {
+        // 플레이어 준비 완료 이벤트
+    });
+
+    iframeAPI.onEvent(smIframeEvent.PLAY, function () {
+        callProgressAPI(lectureId, iframeAPI.getPosition());
+    });
+
+    iframeAPI.onEvent(smIframeEvent.PAUSE, function (data) {
+        //영상 일시정지 이벤트
+        updateProgress(lectureId, iframeAPI.getPosition());
+    });
+
+    iframeAPI.onEvent(smIframeEvent.COMPLETE, function () {
+        //영상 재생 완료 이벤트
+        callProgressAPI(lectureId, 0);
+    });
+
+    iframeAPI.onEvent(smIframeEvent.TIME, function (data) {
+        //영상 재생시간 이벤트
+        updateProgress(lectureId, data.position);
+    });
+}
+
 $(function () {
     let lecture = $('#lecture_id').val()
+
+    if (isWecandeoVideo()) {
+        let iFrame = createWecandeoPlayer();
+        setUpPlayer(iFrame, lecture);
+    } else {
+        insertScriptForYoutube();
+    }
 
     $('#question_submit').click(function () {
         var question = $('#question').val();
@@ -71,6 +143,8 @@ $(function () {
         });
     });
 
+
+    //모바일 페이지 전용
     var mySwiper = new Swiper('.list-swiper-container', {
         slidesPerView: 2.05,
     });

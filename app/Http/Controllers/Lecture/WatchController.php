@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Program\Lecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,5 +56,20 @@ class WatchController extends Controller
                 ->update(['is_watched' => 1]);
         }
         return redirect()->route('lectures.watch', [$program, $lecture]);
+    }
+
+    public function saveProgress(Lecture $lecture, Request $request): \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json([
+                'msg' => 'success',
+                'lecture' => $lecture->id,
+                'time' => $request->time,
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'msg' => 'error',
+            ], 500);
+        }
     }
 }
