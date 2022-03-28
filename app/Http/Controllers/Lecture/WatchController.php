@@ -8,6 +8,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 class WatchController extends Controller
@@ -60,15 +61,22 @@ class WatchController extends Controller
 
     public function saveProgress(Lecture $lecture, Request $request): \Illuminate\Http\JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'time' => ['required', 'numeric'],
+            'completed' => ['required', 'boolean'],
+        ]);
+        $data = $validator->validate();
+
         try {
             return response()->json([
-                'msg' => 'success',
+                'message' => 'success',
                 'lecture' => $lecture->id,
-                'time' => $request->time,
+                'time' => $data['time'],
+                'completed' => $data['completed'],
             ]);
         } catch (\Exception $exception) {
             return response()->json([
-                'msg' => 'error',
+                'message' => 'error',
             ], 500);
         }
     }

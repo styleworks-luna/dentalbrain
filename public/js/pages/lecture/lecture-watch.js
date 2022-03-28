@@ -58,7 +58,7 @@ function onPlayerStateChange(event) {
 }
 
 function setUpPlayer(iFrame, lectureId = null) {
-    function callProgressAPI(lectureId, time) {
+    function callProgressAPI(lectureId, time, completed = false) {
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -67,12 +67,17 @@ function setUpPlayer(iFrame, lectureId = null) {
             type: "POST",
             data: {
                 time: time,
+                completed: completed ? 1 : 0,
             }
         }).then(function (data) {
             console.log(data);
         }).fail(function (xhr, textStatus, errorThrown) {
             let response = xhr.responseJSON;
-            console.log(response.msg);
+            if (xhr.status == 422) {
+                console.log(response.errors);
+            } else {
+                console.log(response.message);
+            }
         });
     }
 
@@ -103,7 +108,7 @@ function setUpPlayer(iFrame, lectureId = null) {
 
     iframeAPI.onEvent(smIframeEvent.COMPLETE, function () {
         //영상 재생 완료 이벤트
-        callProgressAPI(lectureId, 0);
+        callProgressAPI(lectureId, 0, true);
     });
 
     iframeAPI.onEvent(smIframeEvent.TIME, function (data) {
