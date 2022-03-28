@@ -104,11 +104,11 @@
                                         <template v-if="lecture.is_watched">(시청함)</template>&ensp;
                                         <template v-if="lecture.is_repeated">(재수강)</template>
                                     </template>
-                                    <button style="margin-bottom: 10px" v-on:click="isShow = !isShow" class="btn btn-info text-white">변경</button>
-                                    <div v-show="isShow" class="input-group" id="edit">
-                                        <date-picker class="mr-3" @setTime="handleSetStartDate" v-model="extendDates[lecture.id]"></date-picker>
+                                    <button style="margin-bottom: 10px" @click="handleShowExtendDate(lecture); handleSetId(lecture.id)" class="btn btn-info text-white">변경</button>
+                                    <div v-if="lecture.isShow" class="input-group" id="edit">
+                                        <date-picker class="mr-3" @setTime="handleSetStartDate" v-model="doneDate[lecture.id]"></date-picker>
                                         <span class="input-group-append">
-                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, doneDate)">수정</button>
+                                                <button class="btn btn-primary" type="submit" @click="extend(lecture.program.id, lecture.id, doneDate[lecture.id])">수정</button>
                                         </span>
                                     </div>
                                 </td>
@@ -274,7 +274,7 @@ export default {
             extendDates: [],
             // disabled: true,
             membership_paid: '',
-            doneDate: '',
+            doneDate: [],
         }
     },
     created() {
@@ -421,6 +421,9 @@ export default {
 
             User.getLecture(this.$route.params.id, params).then(res => {
                 this.lectures = res.data.students;
+                this.lectures.data.forEach(element => {
+                    this.$set(element, 'isShow', false);
+                })
             }).catch(err => {
                 this.lectures = [];
             });
@@ -438,12 +441,17 @@ export default {
                 alert('변경');
                 window.location.reload();
             }).catch(err => {
-                alert('오류');
             });
         },
-        handleSetStartDate(date) {
-            this.doneDate = date;
+        handleSetId(id) {
+            this.cnt = id;
         },
+        handleSetStartDate(date) {
+            this.doneDate[this.cnt] = date;
+        },
+        handleShowExtendDate(row) {
+            this.$set(row, 'isShow', !row.isShow);
+        }
     }
 }
 </script>

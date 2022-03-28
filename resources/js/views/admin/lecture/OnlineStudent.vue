@@ -84,15 +84,15 @@
                             </template>
                         </template>
                         <button style="margin-bottom: 10px" class="btn btn-info"
-                                @click="handleShowExtendDate(slotProps.row)">변경
+                                @click="handleShowExtendDate(slotProps.row); handleSetId(slotProps.row.student_id)">변경
                         </button>
                         <div v-if="slotProps.row.isShow" class="input-group" id="edit">
                             <date-picker style="width: 100px; padding:0;" class="mr-3" @setTime="handleSetStartDate"
-                                         v-model="extendDates[slotProps.row.student_id]"></date-picker>
+                                         v-model="doneDate[slotProps.row.student_id]"></date-picker>
 
                             <span class="input-group-append">
                                     <button class="btn btn-primary" type="submit"
-                                            @click="extend(id, slotProps.row.student_id, doneDate)">수정</button>
+                                            @click="extend(id, slotProps.row.student_id, doneDate[slotProps.row.student_id])">수정</button>
                                 </span>
                         </div>
                     </td>
@@ -207,7 +207,8 @@ export default {
             keyword: '',
             page: 1,
             extendDates: [],
-            doneDate: '',
+            doneDate: [],
+            cnt: 0,
         }
     },
     created() {
@@ -326,11 +327,13 @@ export default {
                 alert('변경');
                 window.location.reload();
             }).catch(err => {
-                alert('오류');
             });
         },
+        handleSetId(id) {
+            this.cnt = id;
+        },
         handleSetStartDate(date) {
-            this.doneDate = date;
+            this.doneDate[this.cnt] = date;
         },
         handleShowExtendDate(row) {
             this.$set(row, 'isShow', !row.isShow);
