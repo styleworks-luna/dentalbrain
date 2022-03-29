@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\Lecture;
+use App\Models\Program\LectureProgress;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Http\Request;
@@ -42,10 +43,15 @@ class WatchController extends Controller
             $now = $lecture;
         }
 
+        $progress = LectureProgress::query()->where('user_id', '=', Auth::id())
+            ->where('youtube_id', '=', $now->youtube_id)
+            ->first();
+
         return view(viewPrefix() . 'pages.lecture.lecture_watch', [
             'program' => $program,
             'lectures' => $program->lectures,
             'now' => $now,
+            'progress' => $progress,
         ]);
     }
 
@@ -62,17 +68,23 @@ class WatchController extends Controller
     public function saveProgress(Lecture $lecture, Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'time' => ['required', 'numeric'],
-            'completed' => ['required', 'boolean'],
+            'position' => ['required', 'numeric'],
+            'is_completed' => ['required', 'boolean'],
+            'duration' => ['required', 'numeric']
         ]);
         $data = $validator->validate();
 
         try {
+            LectureProgress::query()->updateOrCreate(
+                ['user_id' => Auth::id(), 'youtube_id' => $lecture->youtube_id,],
+                ['position' => $data['position'], 'duration' => $data['duration'], 'is_completed' => $data['is_completed']]);
+
             return response()->json([
                 'message' => 'success',
                 'lecture' => $lecture->id,
-                'time' => $data['time'],
-                'completed' => $data['completed'],
+                'position' => $data['position'],
+                'is_completed' => $data['is_completed'],
+                'duration' => $data['duration'],
             ]);
         } catch (\Exception $exception) {
             return response()->json([

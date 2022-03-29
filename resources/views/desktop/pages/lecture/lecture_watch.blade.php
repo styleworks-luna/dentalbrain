@@ -2,8 +2,9 @@
 
 @section('script')
     <script>
-        const video_type = '{{ $now->video_type }}';
-        const youtube_id = '{{ $now->youtube_id }}';
+        const VIDEO_TYPE = '{{ $now->video_type }}';
+        const YOUTUBE_ID = '{{ $now->youtube_id }}';
+        const INITIAL_POSITION = '{{ $progress->position ?? 0 }}'
     </script>
     <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-watch.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>

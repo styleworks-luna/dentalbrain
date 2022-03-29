@@ -1,9 +1,12 @@
 var player;
 
-var preProgress = 0;
+const videoType = VIDEO_TYPE;
+const youtubeId = YOUTUBE_ID;
+const startAt = INITIAL_POSITION;
+var preProgress = startAt;
 
 function isWecandeoVideo() {
-    return video_type == 'wecandeo';
+    return videoType == 'wecandeo';
 }
 
 function createWecandeoPlayer() {
@@ -12,9 +15,11 @@ function createWecandeoPlayer() {
     iFramePlayer.setAttribute('height', '100%');
 
     let url = new URL('https://play.wecandeo.com/video/v/');
-    url.searchParams.append('key', youtube_id);
+    url.searchParams.append('key', youtubeId);
     url.searchParams.append('auto', true);
-    url.searchParams.append('start', preProgress);
+    if (startAt >= 0) {
+        url.searchParams.append('start', startAt);
+    }
 
     iFramePlayer.setAttribute('src', url.toString());
     iFramePlayer.setAttribute('frameborder', '0');
@@ -34,7 +39,7 @@ function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         width: '100%',
         height: '100%',
-        videoId: youtube_id,
+        videoId: youtubeId,
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -58,19 +63,23 @@ function onPlayerStateChange(event) {
 }
 
 function setUpPlayer(iFrame, lectureId = null) {
-    function callProgressAPI(lectureId, time, completed = false) {
+    function callProgressAPI(lectureId, time, duration, completed = false) {
+        if (duration == null || isNaN(duration)) {
+            return;
+        }
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: `/api/lectures/${lectureId}/save-progress`,
-            type: "POST",
+            type: 'POST',
             data: {
-                time: time,
-                completed: completed ? 1 : 0,
+                position: time,
+                is_completed: completed ? 1 : 0,
+                duration: duration,
             }
         }).then(function (data) {
-            console.log(data);
+            console.log(`진행상황 저장됨 : ${time} / ${duration}`);
         }).fail(function (xhr, textStatus, errorThrown) {
             let response = xhr.responseJSON;
             if (xhr.status == 422) {
@@ -81,10 +90,10 @@ function setUpPlayer(iFrame, lectureId = null) {
         });
     }
 
-    function updateProgress(lectureId, time) {
+    function updateProgress(lectureId, time, duration) {
         if (Math.abs(time - preProgress) > 5) {
             preProgress = time;
-            callProgressAPI(lectureId, time);
+            callProgressAPI(lectureId, time, duration);
         }
     }
 
@@ -94,26 +103,25 @@ function setUpPlayer(iFrame, lectureId = null) {
     let iframeAPI = new smIframeAPI(content);
 
     iframeAPI.onEvent(smIframeEvent.READY, function () {
-        // 플레이어 준비 완료 이벤트
     });
 
     iframeAPI.onEvent(smIframeEvent.PLAY, function () {
-        callProgressAPI(lectureId, iframeAPI.getPosition());
+        updateProgress(lectureId, iframeAPI.getPosition(), iframeAPI.getDuration());
     });
 
     iframeAPI.onEvent(smIframeEvent.PAUSE, function (data) {
         //영상 일시정지 이벤트
-        updateProgress(lectureId, iframeAPI.getPosition());
+        updateProgress(lectureId, iframeAPI.getPosition(), iframeAPI.getDuration());
     });
 
     iframeAPI.onEvent(smIframeEvent.COMPLETE, function () {
         //영상 재생 완료 이벤트
-        callProgressAPI(lectureId, 0, true);
+        callProgressAPI(lectureId, 0, iframeAPI.getDuration(), true);
     });
 
     iframeAPI.onEvent(smIframeEvent.TIME, function (data) {
         //영상 재생시간 이벤트
-        updateProgress(lectureId, data.position);
+        updateProgress(lectureId, data.position, iframeAPI.getDuration());
     });
 }
 
