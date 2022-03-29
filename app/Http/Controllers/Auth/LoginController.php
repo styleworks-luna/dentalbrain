@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,7 +54,9 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-//        Auth::logoutOtherDevices($request->password);
+        if ($user->isAdmin == false) {
+            Auth::logoutOtherDevices($request->password);
+        }
         $user->last_login_at = now();
         $user->save();
     }
