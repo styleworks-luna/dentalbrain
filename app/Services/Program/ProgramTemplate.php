@@ -83,7 +83,7 @@ abstract class ProgramTemplate
     function getProgramDetail(Program $program): array
     {
         return [
-            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name')->append(),
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
             'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
                 ->with('choices:id,question,parent_id')->get()
                 ->whereNull('parent_id')->values()
