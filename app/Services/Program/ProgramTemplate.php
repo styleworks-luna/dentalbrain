@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Fluent;
 use Illuminate\Validation\Rule;
 
 abstract class ProgramTemplate
@@ -82,7 +83,7 @@ abstract class ProgramTemplate
     function getProgramDetail(Program $program): array
     {
         return [
-            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name'),
+            'program' => $program->load('material:id,url,name', 'thumbnail:id,url,name')->append(),
             'surveys' => $program->surveys()->select(['id', 'question', 'parent_id', 'category_id', 'is_required'])
                 ->with('choices:id,question,parent_id')->get()
                 ->whereNull('parent_id')->values()
@@ -158,17 +159,46 @@ abstract class ProgramTemplate
             'material_id' => ['sometimes', 'nullable', 'numeric'],
 
             'lecture_info' => ['required', 'string'],
+
             'is_free' => ['required', 'boolean'],
+            'price' => ['nullable'],
+
+            'is_discount' => ['required', 'boolean'],
+            'discounted_price' => ['nullable'],
+            'discount_rate' => ['nullable'],
+
             'membership_is_free' => ['required', 'boolean'],
+            'membership_price' => ['nullable'],
 
-            'price' => ['nullable', 'numeric'],
-            'discounted_price' => ['nullable', 'numeric', 'lte:price'],
-            'discount_rate' => ['nullable', 'numeric', 'between:0,100'],
+            'membership_is_discount' => ['required', 'boolean'],
+            'membership_discounted_price' => ['nullable'],
+            'membership_discount_rate' => ['nullable'],
 
-            'membership_price' => ['nullable', 'numeric'],
-            'membership_discounted_price' => ['nullable', 'numeric', 'lte:membership_price'],
-            'membership_discount_rate' => ['nullable', 'numeric', 'between:0,100'],
-        ], $additionalRules));
+        ], $additionalRules))
+            ->sometimes('price', ['required', 'numeric', 'min:100'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->is_free;
+                })
+            ->sometimes('discount_rate', ['required', 'numeric', 'between:1,100'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->is_free && $input->is_discount == true;
+                })
+            ->sometimes('discounted_price', ['required', 'numeric', 'min:0', 'lt:price'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->is_free && $input->is_discount == true;
+                })
+            ->sometimes('membership_price', ['required', 'numeric', 'min:100'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->membership_is_free;
+                })
+            ->sometimes('membership_discount_rate', ['required', 'numeric', 'between:1,100'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->membership_is_free && $input->membership_is_discount == true;
+                })
+            ->sometimes('membership_discounted_price', ['required', 'numeric', 'min:0', 'lt:membership_price'],
+                function (/* @param Fluent $input */ $input) {
+                    return !$input->membership_is_free && $input->membership_is_discount == true;
+                });
 
         return $v->validate();
     }
@@ -207,22 +237,38 @@ abstract class ProgramTemplate
      */
     function storeProgram(array $data)
     {
-        $price = $data['is_free'] ? 0 : ($data['price'] ?? 0);
         if ($data['is_free']) {
+            $price = 0;
+            $is_discount = false;
             $discount_rate = 100;
             $discounted_price = 0;
         } else {
-            $discount_rate = $data['discount_rate'] ?? 0;
-            $discounted_price = $data['discounted_price'] ?? $price;
+            $price = $data['price'];
+            $is_discount = $data['is_discount'];
+            if ($is_discount) {
+                $discount_rate = $data['discount_rate'];
+                $discounted_price = $data['discounted_price'];
+            } else {
+                $discount_rate = 0;
+                $discounted_price = $price;
+            }
         }
 
-        $memberPrice = $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0);
         if ($data['membership_is_free']) {
+            $membership_price = 0;
+            $membership_is_discount = false;
             $membership_discount_rate = 100;
             $membership_discounted_price = 0;
         } else {
-            $membership_discount_rate = $data['membership_discount_rate'] ?? 0;
-            $membership_discounted_price = $data['membership_discounted_price'] ?? $memberPrice;
+            $membership_price = $data['membership_price'];
+            $membership_is_discount = $data['membership_is_discount'];
+            if ($membership_is_discount) {
+                $membership_discount_rate = $data['membership_discount_rate'];
+                $membership_discounted_price = $data['discounted_price'];
+            } else {
+                $membership_discount_rate = 0;
+                $membership_discounted_price = $membership_price;
+            }
         }
 
         $this->program = Program::create([
@@ -238,10 +284,12 @@ abstract class ProgramTemplate
             'is_open' => $data['is_open'],
 
             'price' => $price,
+            'is_discount' => $is_discount,
             'discount_rate' => $discount_rate,
             'discounted_price' => $discounted_price,
 
-            'membership_price' => $memberPrice,
+            'membership_price' => $membership_price,
+            'membership_is_discount' => $membership_is_discount,
             'membership_discount_rate' => $membership_discount_rate,
             'membership_discounted_price' => $membership_discounted_price,
 
@@ -345,22 +393,38 @@ abstract class ProgramTemplate
             }
         }
 
-        $price = $data['is_free'] ? 0 : ($data['price'] ?? 0);
         if ($data['is_free']) {
+            $price = 0;
+            $is_discount = false;
             $discount_rate = 100;
             $discounted_price = 0;
         } else {
-            $discount_rate = $data['discount_rate'] ?? 0;
-            $discounted_price = $data['discounted_price'] ?? $price;
+            $price = $data['price'];
+            $is_discount = $data['is_discount'];
+            if ($is_discount) {
+                $discount_rate = $data['discount_rate'];
+                $discounted_price = $data['discounted_price'];
+            } else {
+                $discount_rate = 0;
+                $discounted_price = $price;
+            }
         }
 
-        $memberPrice = $data['membership_is_free'] ? 0 : ($data['membership_price'] ?? 0);
         if ($data['membership_is_free']) {
+            $membership_price = 0;
+            $membership_is_discount = false;
             $membership_discount_rate = 100;
             $membership_discounted_price = 0;
         } else {
-            $membership_discount_rate = $data['membership_discount_rate'] ?? 0;
-            $membership_discounted_price = $data['membership_discounted_price'] ?? $memberPrice;
+            $membership_price = $data['membership_price'];
+            $membership_is_discount = $data['membership_is_discount'];
+            if ($membership_is_discount) {
+                $membership_discount_rate = $data['membership_discount_rate'];
+                $membership_discounted_price = $data['discounted_price'];
+            } else {
+                $membership_discount_rate = 0;
+                $membership_discounted_price = $membership_price;
+            }
         }
 
         $program->update([
@@ -376,10 +440,12 @@ abstract class ProgramTemplate
             'is_open' => $data['is_open'],
 
             'price' => $price,
+            'is_discount' => $is_discount,
             'discount_rate' => $discount_rate,
             'discounted_price' => $discounted_price,
 
-            'membership_price' => $memberPrice,
+            'membership_price' => $membership_price,
+            'membership_is_discount' => $membership_is_discount,
             'membership_discount_rate' => $membership_discount_rate,
             'membership_discounted_price' => $membership_discounted_price,
 
