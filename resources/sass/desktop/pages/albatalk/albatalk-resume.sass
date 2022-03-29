@@ -265,6 +265,48 @@
                 span
                     float: left
 
+            .school-day-wrap
+                input[type="text"]
+                    +size(370px)
+        
+        .head
+            td
+                input[type="text"]
+                    +size(1030px)
+        
+        .middle3
+            width: 620px
+            margin-top: 10px
+            th
+                width: 25%
+                padding-left: 0
+                text-align: center
+            td
+                input[type="text"]
+                    +size(114px)
+        
+        .middle4
+            width: 1280px
+            margin-top: 10px
+            tr
+                +border(1px solid #d8d8d8, right)
+                &:nth-child(1), &:nth-child(2), &:nth-child(3)
+                    +border(0px solid #d8d8d8, right)
+                    
+            th
+                +border(1px solid #d8d8d8, right)
+                &:nth-child(4)
+                    +border(0px solid #d8d8d8, right)
+                padding-left: 0
+                text-align: center
+            td
+                +border(1px solid #d8d8d8, right)
+                &:nth-child(4)
+                    +border(0px solid #d8d8d8, right)
+                input[type="text"]
+                    +size(323px)
+
+
     .submit
         +margin(50px 0px 0px 540px)
         width: 200px
