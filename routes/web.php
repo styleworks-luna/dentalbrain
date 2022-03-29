@@ -40,6 +40,8 @@ if (env('APP_ENV') != 'production') {
 
     Route::get("ndsrhkd", [\App\Http\Controllers\Development\DevelopmentController::class, 'ndsrhkd']);
 
+    Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
+
     // 알바톡(임시)
     Route::get('albatalk', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk');
@@ -60,7 +62,6 @@ if (env('APP_ENV') != 'production') {
     Route::get('albatalk/resume', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
     });
-
 }
 
 /*============================ PAGES ============================*/
