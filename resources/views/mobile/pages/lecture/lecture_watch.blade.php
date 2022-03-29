@@ -2,10 +2,13 @@
 
 @section('script')
     <script>
-        var video_type = '{{$now->video_type}}';
+        const VIDEO_TYPE = '{{ $now->video_type }}';
+        const YOUTUBE_ID = '{{ $now->youtube_id }}';
+        const INITIAL_POSITION = '{{ $progress->position ?? 0 }}'
     </script>
+    <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-watch.js') }}" defer></script>
     <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/lecture/lecture-watch.js') }}"></script>
+    <script src="https://play.wecandeo.com/html/utils/iframeAPI.js"></script>
 @endsection
 
 @section('style')
@@ -29,7 +32,6 @@
                 <div class="lecture-wrapper">
                     <div class="lecture-watch-content">
                         <div class="video-wrap" id="video-wrap">
-                            <input type="hidden" id="youtube_id" value="{{$now->youtube_id}}">
                             <div id="player"></div>
                             <div class="video-button-disable"></div>
                         </div>

@@ -19,96 +19,130 @@
         </div>
         <div class="container">
             <section class="wanted">
-                <h2>구인 등록</h2>
+                <h2>이력서 작성</h2>
                 <form>
                     @csrf
-                    <div class="inquire-form-wrap">
+                    <div style="padding-bottom: 40px" class="inquire-form-wrap">
                         <table>
                             <tr>
-                                <th>치과명 *</th>
-                                <td class="name-wrap">
+                                <th>인근 지하철역</th>
+                                <td class="subway-wrap">
                                     <input type="text"
-                                           id="name"
-                                           name="name"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 치과명을 입력해주세요">
-                                </td>
-
-                                <th>담당자명 *</th>
-                                <td class="manager-wrap">
-                                    <input type="text"
-                                           id="manager"
-                                           name="manager"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 담당자명을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>대표자명 *</th>
-                                <td class="ceo-wrap">
-                                    <input type="text"
-                                           id="ceo"
-                                           name="ceo"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
-                                </td>
-
-                                <th>담장자 전화번호 *</th>
-                                <td class="manager-phone-wrap">
-                                    <input type="text"
-                                           id="manager-phone"
-                                           name="manager-phone"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           id="subway"
+                                           name="subway"
+                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                 </td>
                             </tr>
                             <tr>
-                                <th>사업자등록번호 *</th>
-                                <td class="num-wrap">
+                                <th>인근 지하철역</th>
+                                <td class="subway-wrap">
                                     <input type="text"
-                                           id="num"
-                                           name="num"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
-                                </td>
-
-                                <th>담장자 이메일 *</th>
-                                <td class="manager-email-wrap">
-                                    <input type="text"
-                                           id="manager-email"
-                                           name="manager-email"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           id="subway"
+                                           name="subway"
+                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                 </td>
                             </tr>
                             <tr>
-                                <th>전화번호 *</th>
-                                <td class="phone-wrap">
+                                <th>인근 지하철역</th>
+                                <td class="subway-wrap">
                                     <input type="text"
-                                           id="phone"
-                                           name="phone"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
+                                           id="subway"
+                                           name="subway"
+                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
                                            data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>홈페이지 주소 *</th>
-                                <td class="page-wrap">
-                                    <input type="text"
-                                           id="page"
-                                           name="page"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="false"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                 </td>
                             </tr>
                         </table>
-                        <table>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; margin-bottom: 40px;">
+                        <img class="imgcard" src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg"></img>
+                        <div class="inquire-form-wrap" style="float: right;">
+                            <table class="middle" style="width: 1040px; margin-top: -18px; border-top: 0px">
+                                <tr>
+                                    <th>치과명 *</th>
+                                    <td class="name-wrap">
+                                        <input type="text"
+                                               id="name"
+                                               name="name"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 치과명을 입력해주세요">
+                                    </td>
+
+                                    <th>담당자명 *</th>
+                                    <td class="manager-wrap">
+                                        <input type="text"
+                                               id="manager"
+                                               name="manager"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 담당자명을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>대표자명 *</th>
+                                    <td class="ceo-wrap">
+                                        <input type="text"
+                                               id="ceo"
+                                               name="ceo"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                    </td>
+
+                                    <th>담장자 전화번호 *</th>
+                                    <td class="manager-phone-wrap">
+                                        <input type="text"
+                                               id="manager-phone"
+                                               name="manager-phone"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>사업자등록번호 *</th>
+                                    <td class="num-wrap">
+                                        <input type="text"
+                                               id="num"
+                                               name="num"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                    </td>
+
+                                    <th>담장자 이메일 *</th>
+                                    <td class="manager-email-wrap">
+                                        <input type="text"
+                                               id="manager-email"
+                                               name="manager-email"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 1040px;">
+                                <tr>
+                                    <th>홈페이지 주소 *</th>
+                                    <td class="page-wrap">
+                                        <input type="text"
+                                               id="page"
+                                               name="page"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="false"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="font-size: 12px; color: #777; margin-top: 10px">※ 2MB 이내의 JPG, JPEG, PNG, GIF </div>
+                    </div>
+                    <div class="inquire-form-wrap">
+                        <table style="border-top: 0px">
                             <tr>
                                 <th>주소입력 *</th>
                                 <td class="address-wrap">

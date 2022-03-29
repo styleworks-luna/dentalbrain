@@ -22,7 +22,7 @@ function email_box(email){
     }, 100);
 }
 
-function form_submit_check(element){
+function form_submit_check(element = 'form'){
     if(element == '' || element == null || element == 'undefined'){
         element = 'form';
     }
