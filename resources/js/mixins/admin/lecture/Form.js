@@ -25,6 +25,8 @@ export const LectureFormMixin = {
             title: '',
             lecture_info: '',
             is_free: true,
+            is_discount: false,
+            membership_is_discount: false,
             membership_is_free: true,
             price: '',
             discounted_price: '',
