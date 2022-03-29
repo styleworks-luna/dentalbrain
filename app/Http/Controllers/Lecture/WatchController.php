@@ -9,6 +9,8 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -75,10 +77,13 @@ class WatchController extends Controller
         $data = $validator->validate();
 
         try {
+            DB::beginTransaction();
+
             LectureProgress::query()->updateOrCreate(
                 ['user_id' => Auth::id(), 'youtube_id' => $lecture->youtube_id,],
                 ['position' => $data['position'], 'duration' => $data['duration'], 'is_completed' => $data['is_completed']]);
 
+            DB::commit();
             return response()->json([
                 'message' => 'success',
                 'lecture' => $lecture->id,
@@ -87,6 +92,8 @@ class WatchController extends Controller
                 'duration' => $data['duration'],
             ]);
         } catch (\Exception $exception) {
+            Log::error("LECTURE PROGRESS UPDATE OR SAVE ERROR", [$exception]);
+            DB::rollBack();
             return response()->json([
                 'message' => 'error',
             ], 500);
