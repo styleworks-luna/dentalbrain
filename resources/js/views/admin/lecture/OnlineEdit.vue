@@ -109,7 +109,7 @@
                                 <label>할인율</label>
                                 <input type="text"
                                        class="form-control ml-2"
-                                       :disabled="is_discount == false || haveStudents"
+                                       :disabled="is_discount == false || is_free == true || haveStudents"
                                        style="width: 50px; margin-right: 5px;"
                                        v-model="discount_rate">
                                 <span style="margin-right: 15px;">%</span>
@@ -117,7 +117,7 @@
                                 <input type="text"
                                        class="form-control ml-2"
                                        placeholder="신청 금액 입력"
-                                       :disabled="is_discount == false || haveStudents"
+                                       :disabled="is_discount == false || is_free == true || haveStudents"
                                        style="width: 120px;"
                                        v-model="discounted_price">
                             </div>
@@ -148,7 +148,7 @@
                                 <label>할인율</label>
                                 <input type="text"
                                        class="form-control ml-2"
-                                       :disabled="membership_is_discount == false || haveStudents"
+                                       :disabled="membership_is_discount == false || membership_is_free == true || haveStudents"
                                        style="width: 50px; margin-right: 5px;"
                                        v-model="membership_discount_rate">
                                 <span style="margin-right: 15px;">%</span>
@@ -157,7 +157,7 @@
                                        class="form-control ml-2"
                                        placeholder="신청 금액 입력"
                                        v-model="membership_discounted_price"
-                                       :disabled="membership_is_discount == false || haveStudents"
+                                       :disabled="membership_is_discount == false || membership_is_free == true || haveStudents"
                                        style="width: 120px;">
                             </div>
                         </div>
