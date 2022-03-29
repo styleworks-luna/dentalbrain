@@ -102,10 +102,14 @@
                                        :disabled="is_free == true || haveStudents"
                                        style="width: 120px; margin-right: 10px"
                                        v-model="price">
+                                <input type="checkbox" id="discount"
+                                       :disabled="is_free == true"
+                                       v-model="is_discount">
+                                <label for="discount" style="margin-right: 10px">할인 : </label>
                                 <label>할인율</label>
                                 <input type="text"
                                        class="form-control ml-2"
-                                       :disabled="is_free == true || haveStudents"
+                                       :disabled="is_discount == false || haveStudents"
                                        style="width: 50px; margin-right: 5px;"
                                        v-model="discount_rate">
                                 <span style="margin-right: 15px;">%</span>
@@ -113,7 +117,7 @@
                                 <input type="text"
                                        class="form-control ml-2"
                                        placeholder="신청 금액 입력"
-                                       :disabled="is_free == true || haveStudents"
+                                       :disabled="is_discount == false || haveStudents"
                                        style="width: 120px;"
                                        v-model="discounted_price">
                             </div>
@@ -137,10 +141,14 @@
                                        :disabled="membership_is_free == true || haveStudents"
                                        style="width: 120px; margin-right: 10px"
                                        v-model="membership_price">
+                                <input type="checkbox" id="membership_discount"
+                                       :disabled="membership_is_free == true"
+                                       v-model="membership_is_discount">
+                                <label for="discount" style="margin-right: 10px">할인 : </label>
                                 <label>할인율</label>
                                 <input type="text"
                                        class="form-control ml-2"
-                                       :disabled="membership_is_free == true || haveStudents"
+                                       :disabled="membership_is_discount == false || haveStudents"
                                        style="width: 50px; margin-right: 5px;"
                                        v-model="membership_discount_rate">
                                 <span style="margin-right: 15px;">%</span>
@@ -149,7 +157,7 @@
                                        class="form-control ml-2"
                                        placeholder="신청 금액 입력"
                                        v-model="membership_discounted_price"
-                                       :disabled="membership_is_free == true || haveStudents"
+                                       :disabled="membership_is_discount == false || haveStudents"
                                        style="width: 120px;">
                             </div>
                         </div>
@@ -321,6 +329,9 @@ export default {
                 this.preview_url = program.preview_url;
                 this.preview_type = program.preview_type;
 
+                this.is_discount = program.is_discount == 1 ? true : false;
+                this.membership_is_discount = program.membership_is_discount == 1 ? true : false;
+
                 this.is_free = program.is_free == 1 ? true : false;
                 this.price = program.price;
 
@@ -364,6 +375,10 @@ export default {
                 lecture_info: this.lecture_info,
                 term: this.term,
                 price: this.price,
+
+                is_discount: this.is_discount,
+                membership_is_discount: this.membership_is_discount,
+
                 is_free: this.is_free,
                 is_open: this.is_open,
 
