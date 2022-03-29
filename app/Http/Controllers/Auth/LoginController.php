@@ -54,7 +54,7 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if ($user->isAdmin == false) {
+        if ($user->is_admin == false) {
             Auth::logoutOtherDevices($request->password);
         }
         $user->last_login_at = now();
