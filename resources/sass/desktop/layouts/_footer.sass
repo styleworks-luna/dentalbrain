@@ -17,7 +17,7 @@
         +padding(30px 0 0 50px)
         overflow: hidden
         float: left
-        width: 543px
+        width: 600px
 
         li::after
             content: ''
@@ -50,7 +50,7 @@
 
 
         .footer-information
-            +size(512px)
+            +size(600px)
             +padding(top 11px)
 
             li
@@ -64,17 +64,12 @@
                     letter-spacing: 0
                     line-height: 1.54
 
-            li:nth-child(2)::after
+            li:nth-child(3)::after, li:nth-child(5)::after, li:nth-child(7)::after
                 width: 0
                 height: 0
 
-            li:nth-child(4)::after
-                width: 0
-                height: 0
-
-            li:nth-child(6)::after
-                width: 0
-                height: 0
+            li:nth-child(3), li:nth-child(5), li:nth-child(7)
+                +padding(0)
 
         .office-address
             font-size: 13px
