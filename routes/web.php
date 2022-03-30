@@ -49,7 +49,7 @@ if (env('APP_ENV') != 'production') {
 
     Route::get('albatalk/post', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-    });
+    })->name('albatalk.form');
 
     Route::get('albatalk/detail', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
@@ -62,6 +62,10 @@ if (env('APP_ENV') != 'production') {
     Route::get('albatalk/resume', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
     });
+
+    Route::get('albatalk/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('albatalk.payment');
+
+    Route::post('albatalk/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('albatalk.store');
 }
 
 /*============================ PAGES ============================*/
