@@ -89,6 +89,7 @@ export default {
             };
             Title.update(id, data).then(res => {
                 alert("변경되었습니다.");
+                window.location.reload();
             })
         }
     }
