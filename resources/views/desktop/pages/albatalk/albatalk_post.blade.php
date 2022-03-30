@@ -19,8 +19,17 @@
         </div>
         <div class="container">
             <section class="wanted">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <h2>구인 등록</h2>
-                <form>
+                <form action={{route('albatalk.store')}} method="post">
                     @csrf
                     <div class="inquire-form-wrap">
                         <table>
@@ -29,7 +38,8 @@
                                 <td class="name-wrap">
                                     <input type="text"
                                            id="name"
-                                           name="name"
+                                           name="company_name"
+                                           value="{{ old('company_name') }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 치과명을 입력해주세요">
                                 </td>
@@ -38,7 +48,8 @@
                                 <td class="manager-wrap">
                                     <input type="text"
                                            id="manager"
-                                           name="manager"
+                                           name="name"
+                                           value="{{ old('name') }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 담당자명을 입력해주세요">
                                 </td>
@@ -48,7 +59,8 @@
                                 <td class="ceo-wrap">
                                     <input type="text"
                                            id="ceo"
-                                           name="ceo"
+                                           name="company_leader"
+                                           value="{{ old('company_leader') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 대표자명을 입력해주세요">
@@ -58,7 +70,8 @@
                                 <td class="manager-phone-wrap">
                                     <input type="text"
                                            id="manager-phone"
-                                           name="manager-phone"
+                                           name="phone"
+                                           value="{{ old('phone') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -69,7 +82,8 @@
                                 <td class="num-wrap">
                                     <input type="text"
                                            id="num"
-                                           name="num"
+                                           name="company_license"
+                                           value="{{ old('company_license') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 대표자명을 입력해주세요">
@@ -79,7 +93,8 @@
                                 <td class="manager-email-wrap">
                                     <input type="text"
                                            id="manager-email"
-                                           name="manager-email"
+                                           name="email"
+                                           value="{{ old('email') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -90,7 +105,8 @@
                                 <td class="phone-wrap">
                                     <input type="text"
                                            id="phone"
-                                           name="phone"
+                                           name="company_phone"
+                                           value="{{ old('company_phone') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -101,7 +117,8 @@
                                 <td class="page-wrap">
                                     <input type="text"
                                            id="page"
-                                           name="page"
+                                           name="url"
+                                           value="{{ old('url') }}"
                                            placeholder="대표자명 입력(최소 2자 이상)"
                                            data-parsley-required="false"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -132,6 +149,7 @@
                                     <input type="text"
                                            id="subway"
                                            name="subway"
+                                           value="{{ old('subway') }}"
                                            placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -348,8 +366,8 @@
                             </tr>
                         </table>
                     </div>
+                    <button class="submit" type="submit">구인공고 등록</button>
                 </form>
-                <button class="submit" type="submit">구인공고 등록</button>
             </section>
 
         </div>
