@@ -30,8 +30,9 @@
                         <div class="lecture-information">
                             <div class="lecture-sort">
                                 <span class="lecture-type">{{$program->minor_category_name}}</span>
-
+                                @if($program->minor_category_name != '스토어')
                                 <p class="lecture-date">수강기간 {{ $program->term }}일</p>
+                                @endif
                                 @if($program->is_online == true)
                                     <p class="lecture-length">{{ $program->running_time }}</p>
                                 @endif

@@ -26,7 +26,9 @@
                     <div class="m-row">
                         <div class="lecture-sort">
                             <span class="lecture-type">{{$program->minor_category_name}}</span>
+                            @if($program->minor_category_name != '스토어')
                             <p class="lecture-date">수강기간 {{ $program->term }}일</p>
+                            @endif
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>
                         <div class="lecture-information-text">

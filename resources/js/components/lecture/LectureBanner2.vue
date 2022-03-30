@@ -7,7 +7,7 @@
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{banner.program.minor_category_name}}</span>
-                            <p class="lecture-date">수강기간 {{ banner.program.term }}일</p>
+                            <p class="lecture-date" v-if="banner.program.minor_category_name!='스토어'">수강기간 {{ banner.program.term }}일</p>
                             <p class="lecture-time">{{ banner.program.running_time }}</p>
                         </div>
                         <p class="lecture-name">{{ banner.program.title }}</p>
