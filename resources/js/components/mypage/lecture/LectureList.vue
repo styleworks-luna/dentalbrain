@@ -84,7 +84,7 @@
 
                                 <!-- 기간 종료 -->
                                 <div class="d-day" v-else><em>기간 만료</em></div>
-                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile"><p>재수강시 30% 할인 적용됩니다.</p>
+                                <div class="dedicate" v-if="lecture.left_days < 0 && mobile">
                                 </div>
                                 <div class="dedicate" v-else>{{ Helper.dateFormatYDMByComma(lecture.expired_at) }} 까지
                                 </div>
@@ -144,7 +144,6 @@
                                 <div class="content-button-full"
                                      v-else-if="Helper.dateCompareWithNow(lecture.expired_at) < 0">
                                     <a :href="'/lectures/' + lecture.program.id" class="apply-btn">강의신청</a>
-                                    <p v-if="!mobile">재수강시<br>30% 할인 적용됩니다.</p>
                                 </div>
                             </template>
 
