@@ -38,9 +38,10 @@ if (env('APP_ENV') != 'production') {
         Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 
-    Route::get("ndsrhkd", [\App\Http\Controllers\Development\DevelopmentController::class, 'ndsrhkd']);
-
     Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
+
+    Route::get("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'getAbilities']);
+    Route::post("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'postAbilities'])->name('postAbilities');
 
     // 알바톡(임시)
     Route::get('albatalk', function () {
