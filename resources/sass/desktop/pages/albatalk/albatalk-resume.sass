@@ -104,7 +104,10 @@
 
         tr
             +size(1280px, 72px)
-            +border(1px solid $border-color-base, bottom)
+            +border(1px solid $border-color-base, top)
+            &:nth-last-child(1)
+                +border(1px solid $border-color-base, bottom)
+                
 
             th
                 +size(182px)
@@ -290,7 +293,7 @@
             margin-top: 10px
             tr
                 +border(1px solid #d8d8d8, right)
-                &:nth-child(1), &:nth-child(2), &:nth-child(3)
+                &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6)
                     +border(0px solid #d8d8d8, right)
                     
             th
@@ -306,6 +309,22 @@
                 input[type="text"]
                     +size(323px)
 
+        .middle5
+            width: 630px
+            margin-top: 10px
+            th
+                width: 25%
+                padding-left: 0
+                text-align: center
+            td
+                input[type="text"]
+                    +size(112px)
+            
+            .second-department-wrap
+                font-size: 16px
+
+            .third-department-wrap
+                +padding(left 50px)
 
     .submit
         +margin(50px 0px 0px 540px)

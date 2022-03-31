@@ -126,7 +126,7 @@
                                 </tr>
                             </table>
                             <table style="width: 1040px;">
-                                <tr>
+                                <tr style="border-top: 0px">
                                     <th>홈페이지 주소 *</th>
                                     <td class="page-wrap">
                                         <input type="text"
@@ -242,6 +242,7 @@
                                 </tr>
                             </table>
                         </div>
+                    </div>
                         <div class="inquire-form-wrap" style="margin-top: 40px">
                             <table class="middle4">
                                 <div style="font-size: 16px; font-weight: bold;">면허/자격증 보유 현황</div>
@@ -373,11 +374,179 @@
                                 </tr>
                             </table>
                         </div>
+                        <div class="inquire-form-wrap" style="margin-top: 40px;">
+                            <div style="font-size: 16px; font-weight: bold;">자기소개</div>
+                            <input type="text"
+                                   id="subway"
+                                   name="subway"
+                                   data-parsley-required="true"
+                                   style="margin-top: 10px; width: 1280px; height: 250px; border-radius: 25px;"
+                                   placeholder="자기소개를 1,000자 이내로 입력해 주세요.">
+                        </div>
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div style="margin-top: 40px;font-size: 16px; font-weight: bold;">치과 업무 능력 자기 평가표<span style="margin-left: 10px; color: #222; font-weight: normal;">생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.</span></div>
+                        <div class="inquire-form-wrap" style="margin-top: 0; margin-right: 20px;">
+                            <table class="middle5">
+                                <tr>
+                                    <th style="width: 190px;">구분</th>
+                                    <th style="width: 220px;"></th>
+                                    <th>자가평가 점수</th>
+                                    <th>교욱가능 유무</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan=4>임플란트</th>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="inquire-form-wrap" style="margin-top: 0">
+                            <table class="middle5">
+                                <tr>
+                                    <th style="width: 190px;">구분</th>
+                                    <th style="width: 220px;"></th>
+                                    <th>자가평가 점수</th>
+                                    <th>교욱가능 유무</th>
+                                </tr>
+                                <tr>
+                                    <th rowspan=4>임플란트</th>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
+                                    <td style="padding-left: 0" class="second-department-wrap">
+                                        <input type="text"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="checkbox"
+                                               id="subway"
+                                               name="subway"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </form>
                 <button class="submit" type="submit">이력서 등록</button>
             </section>
-
         </div>
     </section>
 @endsection
