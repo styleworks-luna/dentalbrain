@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="container">
-            <albatalk></albatalk>
+            <albatalk-all></albatalk-all>
         </div>
     </section>
 @endsection

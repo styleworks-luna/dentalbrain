@@ -83,6 +83,7 @@ mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/
 // 마이페이지
 mix.sass('resources/sass/desktop/pages/user/mypage/mypage-login.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-lecture.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-offer.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-payment.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-question.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-secession.sass', 'public/css/desktop/pages/user')

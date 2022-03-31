@@ -1,14 +1,28 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
-@import '@sass/desktop/layouts/navigation/service.sass'
-@import '@sass/components/_button.sass'
-@import '@sass/components/_input.sass'
-@import '@sass/components/_emailbox.sass'
-@import '@sass/components/_textarea.sass'
-@import '@sass/components/_selectbox.sass'
-@import '@sass/components/_checkbox.sass'
 
+@import '@sass/components/_button.sass'
+@import '@sass/components/_pagination.sass'
+@import '@sass/components/_selectbox.sass'
+@import '@sass/components/_input.sass'
+@import '@sass/desktop/layouts/navigation/account.sass'
+
+.content-title
+    font-size: 24px
+    color: #222
+    +margin(top 60px)
+    +padding(bottom 18px)
+    +border(2px solid $gray-900, bottom)
+    a
+        float: right
+        +margin(top 10px)
+        font-size: 14px
+        color: #777
+        &:hover
+            color: $page_color
+            font-weight: bold
+            text-decoration: underline
 .wanted
     +margin(top 60px bottom 15px)
 
@@ -16,7 +30,6 @@
         font-size: 24px
 
     input[type="checkbox"]
-        @extend %checkbox-default
         +margin(1px 8px 0 0)
         float: left
     label
@@ -93,9 +106,12 @@
         //+margin(top 28px)
         overflow: hidden
 
+        ul
+            display: flex
+
         .albatalk-card
             +size(296px, 310px)
-            +margin(32px 32px 0 0)
+            +margin(20px 32px 0 0)
             +border(1px solid rgba(0, 0, 0, 0.1))
             +border-radius(8px)
             +box-sizing(border-box)
@@ -136,29 +152,23 @@
                 +border(1px solid $page-color)
                 .albatalk-name
                     text-decoration: underline
+        
+        .albatalk-bottom
+            +padding(top 342px)
+            top: 10px
+            +size(296px)
+            font-size: 16px
+            text-align: center
 
-.albatalk-order
-    +margin(top 50px)
-    overflow: hidden
-
-    ul
-        float: right
-        overflow: hidden
-
-        li
-            float: left
-
-            .active
+            .albatalk-state
+                +padding(top 8px bottom 20px)
+                strong
+                    color: $page-color
+            
+            .btn
+                display: inline
+                +size(140px, 50px)
+                +btn(null,1px solid $border-color-base, 25px)
                 font-weight: bold
-                color: $page-color
-
-            &:last-child::before
-                +size(1px, 16px)
-                +margin(0 10px)
-                +background(null, null, null, $border-color-base)
-                display: block
-                float: left
-                content: ''
-
-            &:hover
-                text-decoration: underline
+                font-size: 16px
+                line-height: 1.2

@@ -1,20 +1,19 @@
 <template>
     <section class="albatalk">
-        <albatalk-navigation></albatalk-navigation>
         <albatalk-list></albatalk-list>
     </section>
 </template>
 
 <script>
-import AlbaTalkList from '@/components/albatalk/AlbaTalkList.vue';
-import AlbaTalkNavigation from '@/components/albatalk/AlbaTalkNavigation.vue';
+import AlbaTalkList from '@/components/mypage/albatalk/AlbaTalkList.vue';
 
 export default {
     name: "AlbaTalk",
     components: {
         'albatalk-list': AlbaTalkList,
-        'albatalk-navigation': AlbaTalkNavigation,
     },
+    props: {
+    }
 }
 </script>
 

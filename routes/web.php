@@ -215,6 +215,10 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
 
+    Route::get('offer', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
+    })->name('offer');
+
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');
     Route::post('update', 'Account\UserController@update')->name('update');
