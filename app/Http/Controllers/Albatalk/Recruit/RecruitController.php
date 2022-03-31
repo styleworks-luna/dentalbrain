@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recruit\Option\TypeDay;
+use App\Models\Recruit\Option\TypeJob;
+use App\Models\Recruit\Option\TypeSalary;
+use App\Models\Recruit\Option\TypeWork;
+use App\Models\Recruit\Recruit;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RecruitController extends Controller
 {
@@ -14,34 +20,78 @@ class RecruitController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'company_name' => ['required', 'string', 'max:255'],
+        $recruit = $request->validate([
+            'company_name' => ['required', 'string', 'min:2', 'max:255'],
             'company_leader' => ['required', 'string', 'max:255'],
             'company_license' => ['required', 'string', 'max:255'],
             'company_phone' => ['required', 'numeric', 'digits_between:9,11'],
 
             'name' => ['required', 'string', 'min:2', 'max:100'],
             'phone' => ['required', 'numeric', 'digits_between:9,11'],
-            'email' => ['required', 'string', 'email' ,'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'url' => ['required', 'url'],
+            'subway' => ['nullable', 'string', 'max:255'],
+
+            // checkbox
+            'type_application' => ['required'],
+            // radio
+            'type_work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
+            // radio
+            'type_job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
+            // radio
+            'type_salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
+            // radio + text
+            'type_study' => ['required'],
+            // radio + text
+            'career' => ['required', 'numeric'],
+            // radio
+            'type_day' => ['required', Rule::in([TypeDay::$TYPE_DAY_1, TypeDay::$TYPE_DAY_2, TypeDay::$TYPE_DAY_3, TypeDay::$TYPE_DAY_4])],
+            // checkbox
+            'type_benefit' => ['required'],
+
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'content' => ['nullable'],
         ]);
 
-        $validatedData['user_id'] = auth()->id();
-        $validatedData['address'] = "서울 송파구 오금동";
-        $validatedData['address_detail'] = "아남아파트";
-        $validatedData['sido'] = "서울";
-        $validatedData['gugun'] = "송파구";
-        $validatedData['dong'] = "오금동";
-        $validatedData['latitude'] = "37.50416961685561";
-        $validatedData['longitude'] = "127.02096038259408";
-        $validatedData['subway'] = "신논현 3번출구 도보 5분거리";
-        $validatedData['career'] = "20";
-        $validatedData['type_work_id'] = "1";
-        $validatedData['type_job_id'] = "1";
-        $validatedData['type_study_id'] = "1";
-        $validatedData['started_at'] = "2022-03-29 15:32:32";
-        $validatedData['ended_at'] = "2022-03-29 15:32:32";
-        $validatedData['content'] = "안녕";
+        $recruit['type_study_id'] = "3";
+//
+        Recruit::create([
+            'user_id' => auth()->id(),
+            'company_name' => $recruit['company_name'],
+            'company_leader' => $recruit['company_name'],
+            'company_license' => $recruit['company_name'],
+            'company_phone' => $recruit['company_name'],
+
+            'name' => $recruit['name'],
+            'phone' => $recruit['phone'],
+            'email' => $recruit['email'],
+            'url' => $recruit['url'],
+            'subway' => $recruit['subway'],
+
+            'address' => "서울 송파구 오금동",
+            'address_detail' => "아남아파트",
+            'sido' => "서울",
+            'gugun' => '송파구',
+            'dong' => '오금동',
+            'latitude' => '37.50416961685561',
+            'longtitude' => '127.02096038259408',
+
+            // radio
+            'type_work_id' => $recruit['type_work'],
+            // radio
+            'type_job_id' => $recruit['type_job'],
+            // radio + text
+            'type_study_id' => $recruit['type_study'],
+            // radio + text
+            'career' => $recruit['name'],
+
+            'started_at' => $recruit['name'],
+            'ended_at' => $recruit['name'],
+            'content' => $recruit['content'],
+        ]);
+
+        ddd($request->request);
 
         return redirect()->route('albatalk.payment');
     }
