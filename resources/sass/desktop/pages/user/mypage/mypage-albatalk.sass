@@ -8,26 +8,12 @@
 @import '@sass/components/_input.sass'
 @import '@sass/desktop/layouts/navigation/account.sass'
 
-.offer-navigation
-    +size(1280px, 80px)
-    font-size: 24px
-    
-    th
-        +padding(top 29px bottom 29px right 219px left 219px)
-        +border(1px solid $border-color-base, top left right)
-        +border(1px solid $page_color, bottom)
-
-        .active
-            font-weight: bold
-            color: $page_color
-            +border(1px solid $page_color, top right left)
-            +border(0, bottom)
-
 .content-title
     font-size: 24px
     color: #222
     +margin(top 60px)
     +padding(bottom 18px)
+    +border(2px solid $gray-900, bottom)
     a
         float: right
         +margin(top 10px)

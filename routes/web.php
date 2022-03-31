@@ -215,6 +215,12 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
 
+    //구인 정보
+    Route::get('albatalk', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
+    })->name('albatalk');
+
+    //구직 정보
     Route::get('offer', function () {
         return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
     })->name('offer');
