@@ -7,9 +7,14 @@ use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use App\Models\Resume\Ability\Ability;
+use App\Models\Resume\Ability\AbilityAnswer;
+use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class DevelopmentController extends Controller
 {
@@ -17,20 +22,6 @@ class DevelopmentController extends Controller
     {
         Auth::loginUsingId($user->id);
         return redirect('/');
-    }
-
-    public function ndsrhkd(Request $request)
-    {
-        return view('emails.content')->with(
-            [
-                "title" => "제목",
-                "content" => "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?"
-            ]
-        );
     }
 
     public function dlstjd(Request $request)
@@ -73,6 +64,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
         );
     }
 
+<<<<<<< HEAD
     public function payment()
     {
         return view('test');
@@ -113,5 +105,37 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
 
         return redirect()->route('albatalk.payment');
 
+=======
+    public function getAbilities()
+    {
+        return view('desktop.pages.test.ability')->with([
+            'list' => AbilityCategory::query()->with('abilities')->get(),
+        ]);
+    }
+
+    public function postAbilities(Request $request)
+    {
+        $validator = $this->validateAbility(Ability::all(), $request->all());
+        $validator->validate();
+    }
+
+    private function validateAbility(Collection $abilities, array $data): \Illuminate\Contracts\Validation\Validator
+    {
+        $rules = $abilities->flatMap(function ($item, $key) {
+            $inputName = $item->input_name;
+            if ($item->type == 'select') {
+                return [
+                    $inputName . '_score' => ['required', 'between:1,5'],
+                    $inputName . '_can_learn' => ['required', 'boolean']
+                ];
+            } else {
+                return [
+                    $inputName . '_content' => ['required', 'string']
+                ];
+            }
+        });
+
+        return Validator::make($data, $rules->toArray());
+>>>>>>> develop
     }
 }
