@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="albatalk-information">
-                            <h2 class="albatalk-title">서초 온오프믹스 치과</h2>
+                            <h2 class="albatalk-title">서초 온오프믹스 치과<span>모집마감일 :  2월 17일까지</span></h2>
                             <div class="albatalk-card" style="display: flex; flex-wrap: wrap;">
                                 <table class="first-card">
                                     <tr>
