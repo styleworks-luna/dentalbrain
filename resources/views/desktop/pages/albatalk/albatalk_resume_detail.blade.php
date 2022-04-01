@@ -80,7 +80,7 @@
                             <h3>학력 사항 및 희망순위</h3>
                         </div>
                         <div style="display: flex">
-                            <table>
+                            <table style="padding-top: 20px">
                                 <tr>
                                     <th>학위취득년월</th>
                                     <td><p class="lecture-length">1900년 02월 01일</p></td>
@@ -102,7 +102,7 @@
                                     <td><p class="lecture-length"></p></td>
                                 </tr>
                             </table>
-                            <table>
+                            <table style="padding-top: 20px">
                                 <tr>
                                     <th>희망 진료과</th>
                                     <td><p class="lecture-length">1순위 교정&emsp;|&emsp;2순위 보철</p></td>

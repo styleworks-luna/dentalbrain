@@ -92,7 +92,7 @@
                             <h3>채용 정보</h3>
                         </div>
                         <div style="display: flex">
-                            <table>
+                            <table style="padding-top: 18px">
                                 <tr>
                                     <th>신청분야</th>
                                     <td><p class="lecture-length">진료전반, 상담/데스크, 교정, 보철, 예방</p></td>
@@ -114,7 +114,7 @@
                                     <td><p class="lecture-length">대학교 졸업(학사)</p></td>
                                 </tr>
                             </table>
-                            <table>
+                            <table style="padding-top: 18px">
                                 <tr>
                                     <th>경력</th>
                                     <td><p class="lecture-length">신입</p></td>
