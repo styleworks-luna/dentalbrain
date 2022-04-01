@@ -9,74 +9,74 @@
                             <th>근무지역</th>
                             <td class="all-wrap">
                                 <input type="checkbox" id="all" name="all">
-                                <label>전체</label>
+                                <label for="all">전체</label>
                                 <div class="second">
                                     <input type="checkbox" id="ulsan" name="ulsan">
-                                    <label>울산</label>
+                                    <label for="ulsan">울산</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Seoul" name="Seoul">
-                                <label>서울</label>
+                                <label for="Seoul">서울</label>
                                 <div class="second">
                                     <input type="checkbox" id="Gangwon" name="Gangwon">
-                                    <label>강원</label>
+                                    <label for="Gangwon">강원</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Gyeonggi" name="Gyeonggi">
-                                <label>경기</label>
+                                <label for="Gyeonggi">경기</label>
                                 <div class="second">
                                     <input type="checkbox" id="Gyeongnam" name="Gyeongnam">
-                                    <label>경남</label>
+                                    <label for="Gyeongnam">경남</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Incheon" name="Incheon">
-                                <label>인천</label>
+                                <label for="Incheon">인천</label>
                                 <div class="second">
                                     <input type="checkbox" id="Gyeongbuk" name="Gyeongbuk">
-                                    <label>경북</label>
+                                    <label for="Gyeongbuk">경북</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Busan" name="Busan">
-                                <label>부산</label>
+                                <label for="Busan">부산</label>
                                 <div class="second">
                                     <input type="checkbox" id="Jeonnam" name="Jeonnam">
-                                    <label>전남</label>
+                                    <label for="Jeonnam">전남</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Daegu" name="Daegu">
-                                <label>대구</label>
+                                <label for="Daegu">대구</label>
                                 <div class="second">
                                     <input type="checkbox" id="Jeonbuk" name="Jeonbuk">
-                                    <label>전북</label>
+                                    <label for="Jeonbuk">전북</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Daejeon" name="Daejeon">
-                                <label>대전</label>
+                                <label for="Daejeon">대전</label>
                                 <div class="second">
                                     <input type="checkbox" id="Chungnam" name="Chungnam">
-                                    <label>충남</label>
+                                    <label for="Chungnam">충남</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Sejong" name="Sejong">
-                                <label>세종</label>
+                                <label for="Sejong">세종</label>
                                 <div class="second">
                                     <input type="checkbox" id="Chungbuk" name="Chungbuk">
-                                    <label>충북</label>
+                                    <label for="Chungbuk">충북</label>
                                 </div>
                             </td>
                             <td class="all-wrap">
                                 <input type="checkbox" id="Gwangju" name="Gwangju">
-                                <label>광주</label>
+                                <label for="Gwangju">광주</label>
                                 <div class="second">
                                     <input type="checkbox" id="Jeju" name="Jeju">
-                                    <label>제주</label>
+                                    <label for="Jeju">제주</label>
                                 </div>
                             </td>
                         </tr>

@@ -29,103 +29,95 @@
                     </div>
                 @endif
                 <h2>구인 등록</h2>
-                <form action={{route('albatalk.store')}} method="post">
-                    @csrf
+                <form>
+                    <div style="display: flex; float: right;">
+                        <div class="inquire-form-wrap">
+                            <table class="top">
+                                <tr>
+                                    <th>치과명 *</th>
+                                    <td class="name-wrap">
+                                        <input type="text"
+                                               id="name"
+                                               name="name"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 치과명을 입력해주세요">
+                                    </td>
+
+                                    <th>담당자명 *</th>
+                                    <td class="manager-wrap">
+                                        <input type="text"
+                                               id="manager"
+                                               name="manager"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 담당자명을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>대표자명 *</th>
+                                    <td class="ceo-wrap">
+                                        <input type="text"
+                                               id="ceo"
+                                               name="ceo"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                    </td>
+
+                                    <th>담장자 전화번호 *</th>
+                                    <td class="manager-phone-wrap">
+                                        <input type="text"
+                                               id="manager-phone"
+                                               name="manager-phone"
+                                               placeholder="‘-‘ 없이 입력"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>사업자등록번호 *</th>
+                                    <td class="num-wrap">
+                                        <input type="text"
+                                               id="num"
+                                               name="num"
+                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
+                                    </td>
+
+                                    <th>담장자 이메일 *</th>
+                                    <td class="manager-email-wrap">
+                                        <input type="text"
+                                               id="manager-email"
+                                               name="manager-email"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 이메일을 입력해주세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>전화번호 *</th>
+                                    <td class="phone-wrap">
+                                        <input type="text"
+                                               id="phone"
+                                               name="phone"
+                                               placeholder="‘-‘ 없이 입력"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>홈페이지 주소</th>
+                                    <td class="page-wrap">
+                                        <input type="text"
+                                               id="page"
+                                               name="page"
+                                               data-parsley-required="false">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                     <div class="inquire-form-wrap">
-                        <table>
-                            <tr>
-                                <th>치과명 *</th>
-                                <td class="name-wrap">
-                                    <input type="text"
-                                           id="name"
-                                           name="company_name"
-                                           value="{{ old('company_name') }}"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 치과명을 입력해주세요">
-                                </td>
-
-                                <th>담당자명 *</th>
-                                <td class="manager-wrap">
-                                    <input type="text"
-                                           id="manager"
-                                           name="name"
-                                           value="{{ old('name') }}"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 담당자명을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>대표자명 *</th>
-                                <td class="ceo-wrap">
-                                    <input type="text"
-                                           id="ceo"
-                                           name="company_leader"
-                                           value="{{ old('company_leader') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
-                                </td>
-
-                                <th>담장자 전화번호 *</th>
-                                <td class="manager-phone-wrap">
-                                    <input type="text"
-                                           id="manager-phone"
-                                           name="phone"
-                                           value="{{ old('phone') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사업자등록번호 *</th>
-                                <td class="num-wrap">
-                                    <input type="text"
-                                           id="num"
-                                           name="company_license"
-                                           value="{{ old('company_license') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 대표자명을 입력해주세요">
-                                </td>
-
-                                <th>담장자 이메일 *</th>
-                                <td class="manager-email-wrap">
-                                    <input type="text"
-                                           id="manager-email"
-                                           name="email"
-                                           value="{{ old('email') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>전화번호 *</th>
-                                <td class="phone-wrap">
-                                    <input type="text"
-                                           id="phone"
-                                           name="company_phone"
-                                           value="{{ old('company_phone') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>홈페이지 주소 *</th>
-                                <td class="page-wrap">
-                                    <input type="text"
-                                           id="page"
-                                           name="url"
-                                           value="{{ old('url') }}"
-                                           placeholder="대표자명 입력(최소 2자 이상)"
-                                           data-parsley-required="false"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                        </table>
-                        <table>
+                        <table style="border-top: 0">
                             <tr>
                                 <th>주소입력 *</th>
                                 <td class="address-wrap">
@@ -135,11 +127,11 @@
                                            class="address"
                                            data-index="test"
                                            readonly="readonly"
-                                           data-parsley-required-message="주소를 검색해주세요.">
+                                           data-parsley-required-message="※ 주소를 입력해주세요.">
                                     <input type="text" id="address-detail"
                                            name="surveys[test][address_detail]"
                                            class="address-detail"
-                                           placeholder="상세주소를 입력하세요."
+                                           placeholder="상세주소를 입력"
                                            data-parsley-required-message="상세주소를 입력하세요">
                                 </td>
                             </tr>
@@ -349,7 +341,7 @@
                             <tr>
                                 <th>모집마감일 *</th>
                                 <td class="deadline-wrap">
-                                    <input type="radio" id="field" name="field"
+                                    <input type="radio" id="field" name="deadline"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <input type="text" name="started_at" value="{{old('started_at')}}"
@@ -359,6 +351,8 @@
                                     <input type="text" name="ended_at" value="{{old('ended_at')}}"
                                            placeholder="마감일자 선택">
                                     <input class="time2" type="text" placeholder="HH:mm">
+                                    <input type="radio" id="until-hiring" name="deadline">
+                                    <label name="until-hiring" for="until-hiring">채용시까지</label>
                                 </td>
                             </tr>
                             <tr>
@@ -371,20 +365,20 @@
                             </tr>
                             <tr>
                                 <th>결제금액</th>
-                                <td class="pay-wrap">
+                                <td class="payment-wrap">
                                 </td>
                             </tr>
                             <tr>
                                 <th>결제방식 *</th>
                                 <td class="paydeail-wrap">
                                     <span>
-                                        <input type="radio" id="field" name="field"
+                                        <input type="radio" id="field" name="paydeail"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                         <label id="field">신용카드</label>
                                         <input type="text" placeholder="신한">
                                     </span>
-                                    <input class="last" type="radio" id="field" name="field"
+                                    <input class="last" type="radio" id="field" name="paydeail"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">실시간 계좌이체</label>
@@ -395,7 +389,6 @@
                     <button class="submit" type="submit">구인공고 등록</button>
                 </form>
             </section>
-
         </div>
     </section>
 @endsection
