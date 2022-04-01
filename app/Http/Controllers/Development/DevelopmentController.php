@@ -64,7 +64,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
         );
     }
 
-<<<<<<< HEAD
+
     public function payment()
     {
         return view('test');
@@ -104,8 +104,8 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
 //        Recruit::firstOrCreate($validatedData);
 
         return redirect()->route('albatalk.payment');
+    }
 
-=======
     public function getAbilities()
     {
         return view('desktop.pages.test.ability')->with([
@@ -136,6 +136,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
         });
 
         return Validator::make($data, $rules->toArray());
->>>>>>> develop
+
     }
 }

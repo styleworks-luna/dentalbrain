@@ -40,8 +40,8 @@ class RecruitController extends Controller
             'type_job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
             // radio
             'type_salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
-            // radio + text
-            'type_study' => ['required'],
+            // radio + text ***
+            'type_study' => ['required', 'digits_between:1,13'],
             // radio + text
             'career' => ['required', 'numeric'],
             // radio
@@ -54,8 +54,6 @@ class RecruitController extends Controller
             'content' => ['nullable'],
         ]);
 
-        $recruit['type_study_id'] = "3";
-//
         Recruit::create([
             'user_id' => auth()->id(),
             'company_name' => $recruit['company_name'],
@@ -75,19 +73,15 @@ class RecruitController extends Controller
             'gugun' => '송파구',
             'dong' => '오금동',
             'latitude' => '37.50416961685561',
-            'longtitude' => '127.02096038259408',
+            'longitude' => '127.02096038259408',
 
-            // radio
             'type_work_id' => $recruit['type_work'],
-            // radio
             'type_job_id' => $recruit['type_job'],
-            // radio + text
             'type_study_id' => $recruit['type_study'],
-            // radio + text
-            'career' => $recruit['name'],
+            'career' => $recruit['career'],
 
-            'started_at' => $recruit['name'],
-            'ended_at' => $recruit['name'],
+            'started_at' => $recruit['started_at'],
+            'ended_at' => $recruit['ended_at'],
             'content' => $recruit['content'],
         ]);
 
