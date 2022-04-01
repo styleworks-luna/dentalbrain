@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="albatalk-post-wrap">
+    <section class="albatalk-resume-wrap">
         <div class="title-wrap">
             <div class="container">
                 <a>이력서 등록</a>
