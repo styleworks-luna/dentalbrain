@@ -18,17 +18,16 @@
             </div>
         </div>
         <div class="container">
-            <form id="lecture-apply-form" method="POST"
-                  enctype="multipart/form-data">
+            <form id="albatalk-detail-form">
                 <div class="row">
                     @csrf
-                    <section class="apply-title">
+                    <section class="albatalk-detail-title">
                         <h1>구인정보</h1>
                         <a href="http://dbv2020.onoffmix.test/albatalk/detail">구인정보 수정하기</a>
                     </section>
 
-                    <section class="lecture-information-wrap">
-                        <div class="lecture-image">
+                    <section class="albatalk-information-wrap">
+                        <div class="albatalk-image">
                             <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
                             <div style="display: flex">
                                 <img class="frist-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
@@ -36,50 +35,50 @@
                                 <img class="third-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
                             </div>
                         </div>
-                        <div class="lecture-information">
-                            <h2 class="lecture-title">서초 온오프믹스 치과</h2>
-                            <div class="alba-card" style="display: flex; flex-wrap: wrap;">
+                        <div class="albatalk-information">
+                            <h2 class="albatalk-title">서초 온오프믹스 치과</h2>
+                            <div class="albatalk-card" style="display: flex; flex-wrap: wrap;">
                                 <table class="first-card">
                                     <tr>
                                         <th>대표자명</th>
-                                        <td><p class="lecture-length">홍길동</p></td>
+                                        <td><p class="albatalk-length">홍길동</p></td>
                                     </tr>
                                     <tr>
                                         <th>사업자등록번호</th>
-                                        <td><p class="lecture-length">123-123-12345</p></td>
+                                        <td><p class="albatalk-length">123-123-12345</p></td>
                                     </tr>
                                     <tr>
                                         <th>전화번호</th>
-                                        <td><p class="lecture-length">02-123-12345</p></td>
+                                        <td><p class="albatalk-length">02-123-12345</p></td>
                                     </tr>
 
                                 </table>
                                 <table class="second-card">
                                     <tr>
                                         <th>담당자명</th>
-                                        <td><p class="lecture-length">홍길순</p></td>
+                                        <td><p class="albatalk-length">홍길순</p></td>
                                     </tr>
                                     <tr>
                                         <th>담당자 전화번호</th>
-                                        <td><p class="lecture-length">123-123-12345</p></td>
+                                        <td><p class="albatalk-length">123-123-12345</p></td>
                                     </tr>
                                     <tr>
                                         <th>담당자 이메일</th>
-                                        <td><p class="lecture-length">hongildong@test.com</p></td>
+                                        <td><p class="albatalk-length">hongildong@test.com</p></td>
                                     </tr>
                                 </table>
                                 <table class="third-card">
                                     <tr>
                                         <th>홈페이지 주소</th>
-                                        <td><p class="lecture-length">http://dbv2020.onoffmix.test</p></td>
+                                        <td><p class="albatalk-length">http://dbv2020.onoffmix.test</p></td>
                                     </tr>
                                     <tr>
                                         <th>주소</th>
-                                        <td><p class="lecture-length">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p></td>
+                                        <td><p class="albatalk-length">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p></td>
                                     </tr>
                                     <tr>
                                         <th>인근 지하철역</th>
-                                        <td><p class="lecture-length">7호선 논현역 1번 출구 도보 5분</p></td>
+                                        <td><p class="albatalk-length">7호선 논현역 1번 출구 도보 5분</p></td>
                                     </tr>
                                 </table>
                             </div>
@@ -87,49 +86,49 @@
                         </div>
                     </section>
 
-                    <section class="applicant-information">
-                        <div class="applicant-title">
+                    <section class="detail-information">
+                        <div class="detail-title">
                             <h3>채용 정보</h3>
                         </div>
                         <div style="display: flex">
                             <table style="padding-top: 18px">
                                 <tr>
                                     <th>신청분야</th>
-                                    <td><p class="lecture-length">진료전반, 상담/데스크, 교정, 보철, 예방</p></td>
+                                    <td><p class="albatalk-length">진료전반, 상담/데스크, 교정, 보철, 예방</p></td>
                                 </tr>
                                 <tr>
                                     <th>근무형태</th>
-                                    <td><p class="lecture-length">정규직</p></td>
+                                    <td><p class="albatalk-length">정규직</p></td>
                                 </tr>
                                 <tr>
                                     <th>직종</th>
-                                    <td><p class="lecture-length">치과위생사</p></td>
+                                    <td><p class="albatalk-length">치과위생사</p></td>
                                 </tr>
                                 <tr>
                                     <th>급여</th>
-                                    <td><p class="lecture-length">협의 후 결정</p></td>
+                                    <td><p class="albatalk-length">협의 후 결정</p></td>
                                 </tr>
                                 <tr>
                                     <th>학력</th>
-                                    <td><p class="lecture-length">대학교 졸업(학사)</p></td>
+                                    <td><p class="albatalk-length">대학교 졸업(학사)</p></td>
                                 </tr>
                             </table>
                             <table style="padding-top: 18px">
                                 <tr>
                                     <th>경력</th>
-                                    <td><p class="lecture-length">신입</p></td>
+                                    <td><p class="albatalk-length">신입</p></td>
                                 </tr>
                                 <tr>
                                     <th>근무요일</th>
-                                    <td><p class="lecture-length">월~금(주5일)</p></td>
+                                    <td><p class="albatalk-length">월~금(주5일)</p></td>
                                 </tr>
                                 <tr>
                                     <th>복리후생</th>
-                                    <td><p class="lecture-length">점심식자 제공, 유니폼, 주차, 자기계발비, 연월차지원, 휴가비지원, 4대보험지원, 연봉제, 인센티브제, 퇴직금 지원, 야근수당지원</p></td>
+                                    <td><p class="albatalk-length">점심식자 제공, 유니폼, 주차, 자기계발비, 연월차지원, 휴가비지원, 4대보험지원, 연봉제, 인센티브제, 퇴직금 지원, 야근수당지원</p></td>
                                 </tr>
                             </table>
                         </div>
-                        <div class="applicant-title">
+                        <div class="detail-title">
                             <h3>상세정보</h3>
                         </div>
                         <div class="second">
