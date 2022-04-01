@@ -1,14 +1,7 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
-
-@import '@sass/components/_input.sass'
-@import '@sass/components/_checkbox.sass'
-@import '@sass/components/_radio.sass'
-@import '@sass/components/_file.sass'
-@import '@sass/components/_emailbox.sass'
 @import '@sass/components/_button.sass'
-@import '@sass/components/_selectbox.sass'
 
 @import '@sass/desktop/pages/agreement/agreement.sass'
 @import '@sass/desktop/pages/agreement/payment.sass'
@@ -53,31 +46,13 @@
         .row
             +margin(50px auto 80px)
 
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"]
-        +input(white-light-fill)
-        +size(240px, 50px)
-        +margin(right 5px)
-
-    select
-        +selectbox(240px, 50px)
 
         + .ui-selectmenu-button
             +margin(left 13px top 12px bottom 12px)
             float: left
 
-    .ui-emailbox
-        +emailbox()
 
-    .checkbox-wrap
-        +checkbox-wrap()
-
-    .radio-wrap
-        +radio-wrap()
-
-.apply-title
+.albatalk-detail-title
     +padding(bottom 20px)
     +border(1px solid $border-color-base, bottom)
     overflow: hidden
@@ -99,12 +74,12 @@
 
 
 
-.lecture-information-wrap
+.albatalk-information-wrap
     +padding(top 20px)
     overflow: hidden
     min-height: 225px
 
-    .lecture-image
+    .albatalk-image
         +size(280px, 290px)
         float: left
 
@@ -115,7 +90,7 @@
             +size(80px, 60px)
             +margin(top 20px right 20px)
 
-    .lecture-information
+    .albatalk-information
         +size(790px)
         +padding(top 20px left 50px)
         float: left
@@ -137,11 +112,17 @@
                 font-size: 12px
                 color: $gray-700
 
-        .lecture-title
+        .albatalk-title
             +padding(top 13px bottom 12px)
             font-weight: bold
             font-size: 24px
             line-height: 1.21
+            span
+                float: right
+                color: #777
+                font-size: 13px
+                font-weight: normal
+                +padding(top 5px)
 
         .first-card, .second-card
             width: 390px
@@ -198,10 +179,10 @@
 h3
     font-size: 24px
 
-.applicant-information
-    +padding(top 116px)
+.detail-information
+    +padding(top 60px)
 
-    .applicant-title
+    .detail-title
         overflow: hidden
 
         h3
@@ -221,7 +202,9 @@ h3
     
 
             th
-                +padding(top 22px left 40px)
+                +padding(top 12px left 40px)
+                &:nth-child(1)
+                    +padding(top 12px left 40px)
                 +size(100px)
                 font-size: 14px
                 color: $gray-700
@@ -230,7 +213,7 @@ h3
 
             td
                 +size(350px)
-                +padding(top 22px right 10px)
+                +padding(top 12px right 10px)
                 font-size: 16px
                 vertical-align: middle
     .second
@@ -250,305 +233,6 @@ h3
     background-color: #8816b5
     font-size: 15px
     color: #ffffff
-
-.additional-information
-    +margin(top 60px)
-
-    em
-        font-weight: normal
-        font-size: 14px
-        color: $font-color-emphasis
-
-    h3
-        +padding(bottom 20px)
-        +border(2px solid $gray-900, bottom)
-
-    h4
-        +padding(left 40px)
-        font-weight: bold
-        font-size: 16px
-
-    .choices
-        +padding(left 60px)
-
-    .answers
-        +padding(left 40px)
-
-    .multiple-single-choice
-        +margin(top 30px)
-        +border(1px solid $border-color-base, bottom)
-
-        ul
-            +margin(bottom 30px)
-
-            li
-                +padding(top 20px)
-                font-size: 16px
-
-    .multiple-choice
-        +margin(top 30px)
-        +border(1px solid $border-color-base, bottom)
-
-        ul
-            +margin(bottom 30px)
-
-            li
-                +padding(top 20px)
-                font-size: 16px
-
-    .short-answer
-        +margin(top 30px)
-        +padding(bottom 30px)
-        +border(1px solid $border-color-base, bottom)
-
-        .short-answer-response
-            +size(1060px, 50px)
-            +margin(top 20px)
-            +padding(left 20px)
-            +border(1px solid $border-color-base)
-            +border-radius(25px)
-            +background(null, null, null, $white-light)
-            +box-sizing(border-box)
-            font-size: 14px
-
-    .address-question
-        +margin(top 30px)
-        +padding(bottom 30px)
-        +border(1px solid $border-color-base, bottom)
-
-        .address-form-wrap
-            +margin(top 20px)
-            position: relative
-
-            .btn-address
-                +btn()
-                +size(86px, 50px)
-                +background(null, null, null, $white)
-                +border(1px solid $border-color-base)
-                +border-radius(25px)
-                position: absolute
-                font-weight: bold
-                font-size: 14px
-
-            .address
-                +size(525px)
-                +padding(left 106px)
-                +margin(right 7px)
-
-            .address-detail
-                +size(525px)
-
-    .file-question
-        +margin(top 30px)
-        +border(2px solid $border-color-base, bottom)
-        position: relative
-
-        .file-wrap
-            +file()
-            +margin(top 20px)
-            +padding(right 40px)
-
-        .tips
-            +size(1060px)
-            +margin(top 10px bottom 30px)
-            +border(1px solid #ece6ec)
-            +background(null, null, null, #fdf8ff)
-
-            p
-                +padding(14px 0 14px 20px)
-                display: block
-                font-size: 12px
-                line-height: 1.5
-                letter-spacing: 0.1px
-                color: $gray-700
-
-    .additional-none
-        +padding(top 30px)
-        font-size: 16px
-
-.payment-information
-    +margin(top 63px)
-
-    table
-        +margin(top 18px)
-        +border(2px solid $gray-900, top)
-        display: block
-
-        tr
-            +size(1140px, 72px)
-            +border(1px solid $border-color-base,bottom)
-
-            th
-                +size(142px)
-                +padding(left 40px)
-                +background(null, null, null, $background-color-menu)
-                font-size: 16px
-                text-align: left
-                vertical-align: middle
-
-            td
-                +size(958px)
-                +padding(left 23px)
-                font-size: 16px
-                vertical-align: middle
-                position: relative
-
-                em
-                    font-weight: bold
-                    color: $page-color
-
-                .radio-wrap
-                    +margin(right 40px)
-                    float: left
-                    line-height: 48px
-
-                    input[type="radio"]
-                        +margin(top 30px)
-
-                        & + label
-                            +margin(top 13px)
-                            cursor: pointer
-
-                .payment-method,
-                .payment-method-virtual
-                    float: left
-                    font-weight: bold
-
-                .payment-method-virtual
-                    +padding(top 11px)
-
-                .tip
-                    +padding(left 17px)
-                    float: left
-                    font-size: 12px
-                    color: $page-color
-                    line-height: 1.5
-
-                .separate-tip
-                    position: absolute
-                    bottom: 12px
-                    right: 50px
-                    font-size: 12px
-                    line-height: 12px
-
-                .account
-                    +padding(top 1px left 9px)
-                    float: left
-                    font-size: 12px
-
-        tr:last-child
-            +border(2px solid $border-color-base,bottom)
-
-            td
-                +padding(left 23px)
-
-.lecture-apply .payment-information tr
-    height: 77px
-
-// lecture payment, result blade에 적용
-.additional-information-list
-    +margin(top 60px)
-
-    .information-answers-list
-        +margin(top 18px)
-        +border(2px solid $gray-900, top)
-
-        .information-answers
-            +padding(30px 40px)
-            +border(1px solid $border-color-base, bottom)
-
-            h4
-                font-weight: bold
-                font-size: 16px
-
-                em
-                    font-weight: normal
-                    font-size: 14px
-                    color: $red
-
-
-        .for-padding
-            +padding(bottom 35px)
-
-        .answer li, p
-            +margin(top 20px)
-            +padding(left 30px)
-            position: relative
-            font-size: 16px
-
-            em
-                color: $page-color
-
-        .answer .short-answer
-            +margin(top 13px)
-
-            &::before
-                top: 13px
-
-        .answer li::before,
-        .answer p::before
-            +size(2px, 2px)
-            +background(null, null, null, $gray-200)
-            position: absolute
-            top: 7px
-            left: 20px
-            content: ''
-
-.agree
-    +margin(top 63px)
-
-    h3
-        +padding(bottom 18px)
-        +border(2px solid $gray-900, bottom)
-
-    .agreement-all-wrap
-        +padding(29px 0 28px 40px)
-        +border(1px solid $border-color-base, bottom)
-
-        label
-            font-weight: bold
-            font-size: 16px
-
-    .agreement-wrap
-        +padding(26px 40px 26px 40px)
-        +border(2px solid $border-color-base, bottom)
-
-        .agreement-list
-            overflow: hidden
-            line-height: 14px
-
-            &:last-child
-                +margin(top 40px)
-
-        .checkbox-wrap
-            float: left
-
-        p
-            +margin(top 3px)
-            +padding(left 10px)
-            float: left
-            font-size: 12px
-            line-height: 12px
-            color: $gray-900
-
-        a
-            float: right
-            font-size: 13px
-            color: $gray-700
-            text-decoration: underline
-
-        .for-overflow
-            overflow: hidden
-
-
-.lecture-result
-    .btn-wrap
-        +size(200px)
-        +margin(top 63px)
-        +padding(top 10px)
-
-        .btn-confirm
-            +size(200px)
 
 .btn-wrap
     +size(330px)
@@ -575,23 +259,3 @@ h3
         +background(null, null, null, $gray-700)
         float: right
         color: $white
-
-.form_search
-    +background(null, null, null, $gray-700)
-
-.parsley-errors-list li
-    font-size: 16px
-
-.address-error
-    clear: both
-
-    ul
-        float: left
-
-        &:first-child
-            +margin(right 360px)
-
-.offer_error_wrap,
-.refund_error_wrap
-    li
-        font-size: 12px

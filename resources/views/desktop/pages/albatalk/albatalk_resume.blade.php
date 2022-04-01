@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <section class="albatalk-post-wrap">
+    <section class="albatalk-resume-wrap">
         <div class="title-wrap">
             <div class="container">
                 <a>이력서 등록</a>
@@ -25,36 +25,27 @@
                     <div style="padding-bottom: 40px" class="inquire-form-wrap">
                         <table class="head">
                             <tr>
-                                <th>인근 지하철역</th>
-                                <td class="subway-wrap">
+                                <th>희망 근무 지역</th>
+                                <td class="work-area-wrap">
                                     <input type="text"
-                                           id="subway"
-                                           name="subway"
-                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                           id="work-area"
+                                           name="work-area">
                                 </td>
                             </tr>
                             <tr>
-                                <th>인근 지하철역</th>
-                                <td class="subway-wrap">
+                                <th>희망 근무 요일</th>
+                                <td class="work-day-wrap">
                                     <input type="text"
-                                           id="subway"
-                                           name="subway"
-                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                           id="work-day"
+                                           name="work-day">
                                 </td>
                             </tr>
                             <tr>
-                                <th>인근 지하철역</th>
-                                <td class="subway-wrap">
+                                <th>희망 근무 시간</th>
+                                <td class="work-time-wrap">
                                     <input type="text"
-                                           id="subway"
-                                           name="subway"
-                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                           id="work-time"
+                                           name="work-time">
                                 </td>
                             </tr>
                         </table>
@@ -64,77 +55,76 @@
                         <div class="inquire-form-wrap" style="float: right;">
                             <table class="middle" style="width: 1040px; margin-top: -18px; border-top: 0px">
                                 <tr>
-                                    <th>치과명 *</th>
+                                    <th>이름 *</th>
                                     <td class="name-wrap">
                                         <input type="text"
                                                id="name"
                                                name="name"
+                                               placeholder="이름 입력 (최소 2자 이상)"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 치과명을 입력해주세요">
+                                               data-parsley-required-message="※ 이름을 입력해주세요">
                                     </td>
 
-                                    <th>담당자명 *</th>
-                                    <td class="manager-wrap">
+                                    <th>영문 이름 *</th>
+                                    <td class="english-name-wrap">
                                         <input type="text"
-                                               id="manager"
-                                               name="manager"
+                                               id="english-name"
+                                               name="english-name"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 담당자명을 입력해주세요">
+                                               data-parsley-required-message="※ 영문 이름을 입력해주세요.">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>대표자명 *</th>
-                                    <td class="ceo-wrap">
+                                    <th>생년 월일 *</th>
+                                    <td class="birthday-wrap">
                                         <input type="text"
-                                               id="ceo"
-                                               name="ceo"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               id="birthday"
+                                               name="birthday"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                               data-parsley-required-message="※ 생년 월일을 입력해주세요.">
                                     </td>
 
-                                    <th>담장자 전화번호 *</th>
-                                    <td class="manager-phone-wrap">
+                                    <th>휴대폰 번호 *</th>
+                                    <td class="phone-wrap">
                                         <input type="text"
-                                               id="manager-phone"
-                                               name="manager-phone"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               id="phone"
+                                               name="phone"
+                                               placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               data-parsley-required-message="※ 휴대폰 번호를 입력해주세요.">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>사업자등록번호 *</th>
-                                    <td class="num-wrap">
+                                    <th>비상연락처 *</th>
+                                    <td class="emer-phone-wrap">
                                         <input type="text"
-                                               id="num"
-                                               name="num"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               id="emer-phone"
+                                               name="emer-phone"
+                                               placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 대표자명을 입력해주세요">
+                                               data-parsley-required-message="※ 비상연락처를 입력해주세요.">
                                     </td>
 
-                                    <th>담장자 이메일 *</th>
-                                    <td class="manager-email-wrap">
+                                    <th>이메일 *</th>
+                                    <td class="email-wrap">
                                         <input type="text"
-                                               id="manager-email"
-                                               name="manager-email"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               id="email"
+                                               name="email"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               data-parsley-required-message="※ 이메일을 입력해주세요.">
                                     </td>
                                 </tr>
                             </table>
                             <table style="width: 1040px;">
                                 <tr style="border-top: 0px">
-                                    <th>홈페이지 주소 *</th>
-                                    <td class="page-wrap">
+                                    <th>주소 *</th>
+                                    <td class="address-wrap">
                                         <input type="text"
-                                               id="page"
-                                               name="page"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
-                                               data-parsley-required="false"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="address"
+                                               name="address"
+                                               style="width: 790px"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 주소를 입력해주세요">
                                     </td>
                                 </tr>
                             </table>
@@ -147,52 +137,42 @@
                                 <div style="font-size: 16px; font-weight: bold;">학력사항</div>
                                 <tr>
                                     <th>학위취득년월</th>
-                                    <td class="school-day-wrap">
+                                    <td class="grade-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="grade-day"
+                                               name="grade-day">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>학위취득년월</th>
-                                    <td class="school-day-wrap">
+                                    <th>출신학교</th>
+                                    <td class="school-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="school"
+                                               name="school">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>학위취득년월</th>
-                                    <td class="school-day-wrap">
+                                    <th>학과(세부전공)</th>
+                                    <td class="major-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="major"
+                                               name="major">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>학위취득년월</th>
-                                    <td class="school-day-wrap">
+                                    <th>학위</th>
+                                    <td class="degree-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="degree"
+                                               name="degree">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>학위취득년월</th>
-                                    <td class="school-day-wrap">
+                                    <th>졸업구분</th>
+                                    <td class="graduated-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="graduated"
+                                               name="graduated">
                                     </td>
                                 </tr>
                             </table>
@@ -208,36 +188,40 @@
                                 </tr>
                                 <tr>
                                     <th>희망 진료과</th>
-                                    <td class="first-department-wrap">
+                                    <td class="first-treatment-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="first-treatment"
+                                               name="first-treatment"
+                                               placeholder="ex. 교정">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="second-treatment-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="second-treatment"
+                                               name="second-treatment">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="third-treatment-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="third-treatment"
+                                               name="third-treatment">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>희망 부서</th>
-                                    <td class="school-day-wrap">
+                                    <td class="first-department-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="first-department"
+                                               name="first-department"
+                                               placeholder="ex. 진료실">
+                                    </td>
+                                    <td class="second-department-wrap">
+                                        <input type="text"
+                                               id="second-department"
+                                               name="second-department">
+                                    </td>
+                                    <td class="third-department-wrap">
+                                        <input type="text"
+                                               id="third-department"
+                                               name="third-department">
                                     </td>
                                 </tr>
                             </table>
@@ -254,122 +238,92 @@
                                 </tr>
                                 <tr>
                                     <th>1</th>
-                                    <td class="first-department-wrap">
+                                    <td class="first-certificate-name-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="first-certificate-name"
+                                               name="first-certificate-name">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="first-certificate-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="second-certificate-day"
+                                               name="second-certificate-day">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="first-certificate-agency-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="third-certificate-agency"
+                                               name="third-certificate-agency">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>2</th>
-                                    <td class="first-department-wrap">
+                                    <td class="second-certificate-name-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="second-certificate-name"
+                                               name="second-certificate-name">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="second-certificate-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="second-certificate-day"
+                                               name="second-certificate-day">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="second-certificate-agency-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="second-certificate-agency"
+                                               name="second-certificate-agency">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>3</th>
-                                    <td class="first-department-wrap">
+                                    <td class="third-certificate-name-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="third-certificate-name"
+                                               name="third-certificate-name">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="third-certificate-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="third-certificate-day"
+                                               name="third-certificate-day">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="third-certificate-agency-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="third-certificate-agency"
+                                               name="third-certificate-agency">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>4</th>
-                                    <td class="first-department-wrap">
+                                    <td class="fourth-certificate-name-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fourth-certificate-name"
+                                               name="fourth-certificate-name">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="fourth-certificate-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fourth-certificate-day"
+                                               name="fourth-certificate-day">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="fourth-certificate-agency-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fourth-certificate-agency"
+                                               name="fourth-certificate-agency">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>5</th>
-                                    <td class="first-department-wrap">
+                                    <td class="fifth-certificate-name-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fifth-certificate-name"
+                                               name="fifth-certificate-name">
                                     </td>
-                                    <td class="second-department-wrap">
+                                    <td class="fifth-certificate-day-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fifth-certificate-day"
+                                               name="fifth-certificate-day">
                                     </td>
-                                    <td class="third-department-wrap">
+                                    <td class="fifth-certificate-agency-wrap">
                                         <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                               id="fifth-certificate-agency"
+                                               name="fifth-certificate-agency">
                                     </td>
                                 </tr>
                             </table>
@@ -395,71 +349,211 @@
                                 </tr>
                                 <tr>
                                     <th rowspan=4>임플란트</th>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>임플란트 수술 어시스트</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>임플란트 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>임플란트 셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>사용했던 임플란트 종류</td>
+                                    <td class="select-box">
+                                        <input type="text" placeholder="수기입력" style="width: 200px">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                </tr>
+                                <tr>
+                                    <th rowspan=13>보철</th>
+                                    <td>어시스트</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>구치부싱글크라운 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>구치부싱글크라운 임시치아</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>전치부싱글크라운 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>전치부싱글크라운 임시치아</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>구치부브릿지 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>구치부브릿지 임시치아</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>전치부브릿지 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>전치부브릿지 임시치아</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>싱글크라운셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>싱글크라운(여러개) 셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>브릿지셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>resin core</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan=2>치주</th>
+                                    <td>스켈링</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Curette</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan=2>미백</th>
+                                    <td>전문가미백</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>자가미백</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan=2>보험청구</th>
+                                    <td>교정과 보험청구</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>교정외 보험청구</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                             </table>
@@ -473,72 +567,232 @@
                                     <th>교욱가능 유무</th>
                                 </tr>
                                 <tr>
-                                    <th rowspan=4>임플란트</th>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <th rowspan=11>보존</th>
+                                    <td>러버댐장착</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>인레이셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>전치부레진필링</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="second-department-wrap">임플란트 수술 어시스트</td>
-                                    <td style="padding-left: 0" class="second-department-wrap">
-                                        <input type="text"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>구치부 레진 필링</td>
+                                    <td class="select-box">
+                                        <input type="text">
                                     </td>
-                                    <td class="third-department-wrap">
-                                        <input type="checkbox"
-                                               id="subway"
-                                               name="subway"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>인레이셋팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>CA 레진 필링</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>base 도포</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>실란트</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>불소도포</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>PA촬영(구내엑스레이촬영)</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>pano촬영</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan=9>교정</th>
+                                    <td>Ceph촬영</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>교정환자 cleasing</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>와이어 넣기</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>와이어 결찰</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>진단 모델 인상채득</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>마운팅</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>E/O촬영</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>I/O촬영</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>석고 붓기</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th rowspan=4>상담</th>
+                                    <td>임플란트 상담</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>보철상담</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>덴쳐상담</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>교정상담</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>병원 OPEN</th>
+                                    <td>open&setting</td>
+                                    <td class="select-box">
+                                        <input type="text">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox">
                                     </td>
                                 </tr>
                             </table>

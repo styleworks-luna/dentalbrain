@@ -23,7 +23,7 @@
 <body>
 <form action="{{ route('postAbilities') }}" method="post" enctype="application/x-www-form-urlencoded">
     @csrf
-    <table>
+    <table style="float:left;">
         <thead>
         <tr>
             <th colspan="2">구분</th>
@@ -33,7 +33,7 @@
         </thead>
 
         <tbody>
-        @foreach($list as $category)
+        @foreach($leftList as $category)
             @foreach($category->abilities as $ability)
                 <tr>
                     @if($loop->first)
@@ -42,7 +42,7 @@
                     <td>{{ $ability->name }}</td>
                     @if($ability->type == 'select')
                         <td>
-                            <select name="{{ $ability->input_name . '_score'}}" id="">
+                            <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
                                 <option value="0">선택</option>
                                 <option value="1">경험없음</option>
                                 <option value="2">미흡</option>
@@ -52,21 +52,76 @@
                             </select>
                         </td>
                         <td>
-                            <input type="hidden" name="{{ $ability->input_name . '_can_learn' }}" value="0">
-                            <input type="checkbox" name="{{ $ability->input_name . '_can_learn' }}" value="1">
+                            <input type="hidden" name="{{ 'abilities['.$ability->id.'][can_learn]' }}" value="0">
+                            <input type="checkbox" name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                   value="1">
                         </td>
                     @else
                         <td colspan="2">
-                            <input type="text" name="{{ $ability->input_name . '_content' }}">
+                            <input type="text" name="{{ 'abilities['.$ability->id.'][content]' }}">
                         </td>
                     @endif
-
                 </tr>
             @endforeach
         @endforeach
         </tbody>
     </table>
-    <input type="submit">
+    <table style="float:left;">
+        <thead>
+        <tr>
+            <th colspan="2">구분</th>
+            <th>점수</th>
+            <th>가능</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach($rightList as $category)
+            @foreach($category->abilities as $ability)
+                <tr>
+                    @if($loop->first)
+                        <td rowspan="{{ $loop->count }}">{{ $category->name }}</td>
+                    @endif
+                    <td>{{ $ability->name }}</td>
+                    @if($ability->type == 'select')
+                        <td>
+                            <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
+                                <option value="0">선택</option>
+                                <option value="1">경험없음</option>
+                                <option value="2">미흡</option>
+                                <option value="3">보통</option>
+                                <option value="4">잘함</option>
+                                <option value="5">매우잘함</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="hidden" name="{{ 'abilities['.$ability->id.'][can_learn]' }}" value="0">
+                            <input type="checkbox" name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                   value="1">
+                        </td>
+                    @else
+                        <td colspan="2">
+                            <input type="text" name="{{ 'abilities['.$ability->id.'][content]' }}">
+                        </td>
+                    @endif
+                </tr>
+            @endforeach
+        @endforeach
+        </tbody>
+    </table>
+    <button style="width: 200px; height: 120px;">
+        등록
+    </button>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 </form>
 </body>
 

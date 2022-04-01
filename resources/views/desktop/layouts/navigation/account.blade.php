@@ -9,10 +9,10 @@
             <a href="{{ route('account.payments') }}">결제내역</a></li>
         <li class="{{ (strpos(Route::currentRouteName(), 'account.questions.index') !== false) ? 'active-menu' : '' }}">
             <a href="{{ route('account.questions.index') }}">질문내역</a></li>
-        <li class="{{ (strpos(Route::currentRouteName(), 'account.albatalk') !== false) ? 'active-menu' : '' }}">
-            <a href="{{ route('account.albatalk') }}">구인정보</a></li>
-        <li class="{{ (strpos(Route::currentRouteName(), 'account.offer') !== false) ? 'active-menu' : '' }}">
-            <a href="{{ route('account.offer') }}">구직정보</a></li>
+{{--        <li class="{{ (strpos(Route::currentRouteName(), 'account.albatalk') !== false) ? 'active-menu' : '' }}">--}}
+{{--            <a href="{{ route('account.albatalk') }}">구인정보</a></li>--}}
+{{--        <li class="{{ (strpos(Route::currentRouteName(), 'account.offer') !== false) ? 'active-menu' : '' }}">--}}
+{{--            <a href="{{ route('account.offer') }}">구직정보</a></li>--}}
         <li class="{{
     (strpos(Route::currentRouteName(), 'account.modify') !== false ||
      (strpos(Route::currentRouteName(), 'account.confirm') !== false)) ? 'active-menu' : '' }}">

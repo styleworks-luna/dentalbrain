@@ -10,7 +10,7 @@
 @import '@sass/components/_checkbox.sass'
 @import '@sass/components/_radio.sass'
 
-.albatalk-post-wrap
+.albatalk-resume-wrap
     .title-wrap
         +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
         min-width: 1280px
@@ -122,39 +122,6 @@
                 +padding(left 20px top 11px bottom 11px)
                 +box-sizing(border-box)
 
-            .name-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .manager-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .ceo-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .manager-phone-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .num-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .manager-email-wrap
-                input[type="text"]
-                    +size(270px)
-
-            .phone-wrap
-                input[type="text"]
-                    +size(270px)
-
-
-            .page-wrap
-                input[type="text"]
-                    +size(790px)
-
             .address-wrap
                 overflow: hidden
 
@@ -172,110 +139,19 @@
                     position: absolute
                     font-weight: bold
                     font-size: 14px
-
-            .subway-wrap
-                +size(1096px)
-                input[type="text"]
-                    +size(1050px, 50px)
-
-            .field-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .work-type-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .job-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .pay-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                input[type="text"]
-                    +size(400px)
-
-            .school-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                input[type="text"]
-                    +size(240px)
-                    float: left
-                    +margin(right 40px)
-
-            .career-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                .last
-                    +padding(right 20px)
-                input[type="text"]
-                    +size(240px)
-                    +margin(right 40px)
-
-            .title-wrap
-                +size(1096px)
-
-                input[name="title"]
-                    +size(810px)
-
-            .welfare-wrap
-                +size(770px)
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-                .last
-                    +padding(right 380px bottom 20px)
-
-            .deadline-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 20px left 10px)
-                input[type="text"]
-                    +size(240px)
-                    float: left
-                    +margin(right 10px)
-                input[class="time"], input[class="time2"]
-                    +size(100px)
-
-            .inquire-content-wrap
-                +size(1096px)
-            
-            .paydeail-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 10px)
-                input[type="text"]
-                    +size(240px)
-                    +margin(right 40px)
-                span
-                    float: left
-
-            .school-day-wrap
-                input[type="text"]
-                    +size(370px)
         
         .head
             td
                 input[type="text"]
                     +size(1030px)
+
+        .middle
+            input[type="text"]
+                +size(270px)
+
+        .middle2
+            input[type="text"]
+                +size(370px)
         
         .middle3
             width: 620px
@@ -317,14 +193,14 @@
                 padding-left: 0
                 text-align: center
             td
+                font-size: 16px
                 input[type="text"]
                     +size(112px)
-            
-            .second-department-wrap
-                font-size: 16px
+            .select-box
+                +padding(left 0)
 
-            .third-department-wrap
-                +padding(left 50px)
+            input[type="checkbox"]
+                +margin(left 30px)
 
     .submit
         +margin(50px 0px 0px 540px)
