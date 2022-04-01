@@ -89,6 +89,10 @@
     h2
         font-size: 24px
 
+    
+    .imgcard
+        +size(200px, 210px)
+
     .inquire-form-wrap
         +margin(top 18px)
 
@@ -97,6 +101,9 @@
             +size(1280px)
             &:nth-child(1)
                 +border(2px solid $gray-900, top)
+
+        .top
+            +size(980px)
 
         tr
             +size(1280px, 72px)
@@ -133,7 +140,7 @@
             .page-wrap
                 +size(1096px)
                 input[type="text"]
-                    +size(1050px, 50px)
+                    +size(750px, 50px)
 
             .address-wrap
                 overflow: hidden
@@ -208,6 +215,16 @@
                     +size(240px)
                     +margin(right 40px)
 
+            .payday-wrap
+                input[type="radio"]
+                    +margin(top 17px bottom 11px)
+                label
+                    +padding(top 17px right 40px)
+                    &:nth-child(8)
+                        +padding(right 20px)
+                input[type="text"]
+                    +size(400px)
+
             .title-wrap
                 +size(1096px)
 
@@ -227,15 +244,22 @@
                     +margin(top 17px bottom 11px)
                 label
                     +padding(top 17px right 20px left 10px)
+                label[name="until-hiring"]
+                    +padding(right 0 left 0)
                 input[type="text"]
                     +size(240px)
                     float: left
                     +margin(right 10px)
                 input[class="time"], input[class="time2"]
                     +size(100px)
+                input[name="until-hiring"]
+                    +margin(left 40px)
+
 
             .inquire-content-wrap
                 +size(1096px)
+
+            .payment-wrap
             
             .paydeail-wrap
                 input[type="radio"]
