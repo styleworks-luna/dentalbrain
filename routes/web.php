@@ -69,6 +69,18 @@ if (env('APP_ENV') != 'production') {
 
         Route::post('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('store');
     });
+
+    Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
+        //구인 정보
+        Route::get('albatalk', function () {
+            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
+        })->name('albatalk');
+
+        //구직 정보
+        Route::get('offer', function () {
+            return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
+        })->name('offer');
+    });
 }
 
 /*============================ PAGES ============================*/
