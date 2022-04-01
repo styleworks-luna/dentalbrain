@@ -11,6 +11,7 @@ use App\Models\Resume\Ability\Ability;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\User;
+use App\Services\Recruit\AbilityService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,17 @@ use Illuminate\Support\Facades\Validator;
 
 class DevelopmentController extends Controller
 {
+
+    /**
+     * @var AbilityService
+     */
+    private $abilityService;
+
+    public function __construct(AbilityService $abilityService)
+    {
+        $this->abilityService = $abilityService;
+    }
+
     public function pretend(User $user)
     {
         Auth::loginUsingId($user->id);
@@ -109,33 +121,25 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
     public function getAbilities()
     {
         return view('desktop.pages.test.ability')->with([
-            'list' => AbilityCategory::query()->with('abilities')->get(),
+            'leftList' => AbilityCategory::query()->where('id', '<=', '5')->with('abilities')->get(),
+            'rightList' => AbilityCategory::query()->where('id', '>', '5')->with('abilities')->get()
         ]);
     }
 
     public function postAbilities(Request $request)
     {
-        $validator = $this->validateAbility(Ability::all(), $request->all());
-        $validator->validate();
-    }
-
-    private function validateAbility(Collection $abilities, array $data): \Illuminate\Contracts\Validation\Validator
-    {
-        $rules = $abilities->flatMap(function ($item, $key) {
-            $inputName = $item->input_name;
-            if ($item->type == 'select') {
-                return [
-                    $inputName . '_score' => ['required', 'between:1,5'],
-                    $inputName . '_can_learn' => ['required', 'boolean']
-                ];
-            } else {
-                return [
-                    $inputName . '_content' => ['required', 'string']
-                ];
-            }
+        $validator = $this->abilityService->getValidatorOfAbilityAnswers(Ability::all(), $request->all());
+        $data = $validator->validate();
+        $collection = Collection::make($data['abilities']);
+        $collection->each(function ($item, $key) {
+            AbilityAnswer::query()->create([
+                'ability_id' => $key,
+                'score' => $item['score'] ?? null,
+                'can_learn' => $item['can_learn'] ?? false,
+                'content' => $item['content'] ?? null,
+            ]);
         });
-
-        return Validator::make($data, $rules->toArray());
-
     }
+
+
 }
