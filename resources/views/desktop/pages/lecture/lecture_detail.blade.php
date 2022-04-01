@@ -254,7 +254,7 @@
                                     @else
                                         {{--일반적 상황--}}
                                         <div class="btn-wrap">
-                                            <a href="{{ route('lectures.apply',$program->id) }}" class="apply-btn">
+                                            <a href="{{ route('lectures.apply.form',$program->id) }}" class="apply-btn">
                                                 신청하기
                                             </a>
                                         </div>

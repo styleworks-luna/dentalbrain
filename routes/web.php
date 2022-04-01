@@ -63,6 +63,12 @@ if (env('APP_ENV') != 'production') {
     Route::get('albatalk/resume', function () {
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
     });
+
+    Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+        Route::get('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
+
+        Route::post('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('store');
+    });
 }
 
 /*============================ PAGES ============================*/

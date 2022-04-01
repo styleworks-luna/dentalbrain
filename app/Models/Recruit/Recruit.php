@@ -16,6 +16,8 @@ class Recruit extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = [];
+
     public function recruitApplications(){
         return $this->hasMany(RecruitApplication::class, 'recruit_id', 'id');
     }

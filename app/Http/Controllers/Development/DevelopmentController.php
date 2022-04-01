@@ -26,16 +26,6 @@ class DevelopmentController extends Controller
 
     public function dlstjd(Request $request)
     {
-//        $typeWork = new TypeWork();
-//        $typeWork->type = '개발';
-//        $typeWork->save();
-//        $typeJob= new TypeJob();
-//        $typeJob->type = '개발';
-//        $typeJob->save();
-//        $typeStudy = new TypeStudy();
-//        $typeStudy->type = '개발';
-//        $typeStudy->save();
-
         $recruit = new Recruit;
 
         $recruit->user_id = '1';
@@ -60,7 +50,7 @@ class DevelopmentController extends Controller
         $recruit->content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
+Lorem ipsum dolor sit amet, consect etur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus fugit illum iure labore, laudantium libero maiores odio optio quam quasi, qui quidem quod quos rem velit vitae voluptas?';
 
 
@@ -74,6 +64,48 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
         );
     }
 
+<<<<<<< HEAD
+    public function payment()
+    {
+        return view('test');
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+//            'company_name' => ['required', 'string', 'max:255'],
+//            'company_leader' => ['required', 'string', 'max:255'],
+//            'company_license' => ['required', 'string', 'max:255'],
+//            'company_phone' => ['required', 'numeric', 'between:9,11'],
+//            'name' => ['required', 'string', 'max:255'],
+//            'phone' => ['required', 'numeric', 'between:9,11'],
+//            'email' => ['required', 'string', 'max:255'],
+//            'url' => ['required', 'string', 'max:255'],
+        ]);
+
+        $validatedData['user_id'] = auth()->id();
+        $validatedData['address'] = "서울 송파구 오금동";
+        $validatedData['address_detail'] = "아남아파트";
+        $validatedData['sido'] = "서울";
+        $validatedData['gugun'] = "송파구";
+        $validatedData['dong'] = "오금동";
+        $validatedData['latitude'] = "37.50416961685561";
+        $validatedData['longitude'] = "127.02096038259408";
+        $validatedData['subway'] = "신논현 3번출구 도보 5분거리";
+        $validatedData['career'] = "20";
+        $validatedData['type_work_id'] = "1";
+        $validatedData['type_job_id'] = "1";
+        $validatedData['type_study_id'] = "1";
+        $validatedData['started_at'] = "2022-03-29 15:32:32";
+        $validatedData['ended_at'] = "2022-03-29 15:32:32";
+        $validatedData['content'] = "안녕";
+
+
+//        Recruit::firstOrCreate($validatedData);
+
+        return redirect()->route('albatalk.payment');
+
+=======
     public function getAbilities()
     {
         return view('desktop.pages.test.ability')->with([
@@ -104,5 +136,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
         });
 
         return Validator::make($data, $rules->toArray());
+>>>>>>> develop
     }
 }
