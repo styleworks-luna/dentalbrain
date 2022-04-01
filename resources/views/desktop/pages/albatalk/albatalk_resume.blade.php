@@ -20,7 +20,8 @@
         <div class="container">
             <section class="wanted">
                 <h2>이력서 작성</h2>
-                <form>
+                <form action="{{ route('albatalk.resume.create') }}" method="post"
+                      enctype="application/x-www-form-urlencoded">
                     @csrf
                     <div style="padding-bottom: 40px" class="inquire-form-wrap">
                         <table class="head">
@@ -51,7 +52,8 @@
                         </table>
                     </div>
                     <div style="display: flex; flex-wrap: wrap; margin-bottom: 40px;">
-                        <img class="imgcard" src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg"></img>
+                        <img class="imgcard"
+                             src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg"></img>
                         <div class="inquire-form-wrap" style="float: right;">
                             <table class="middle" style="width: 1040px; margin-top: -18px; border-top: 0px">
                                 <tr>
@@ -129,7 +131,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div style="font-size: 12px; color: #777; margin-top: 10px">※ 2MB 이내의 JPG, JPEG, PNG, GIF </div>
+                        <div style="font-size: 12px; color: #777; margin-top: 10px">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                     </div>
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="inquire-form-wrap" style="margin-right: 40px">
@@ -227,577 +229,224 @@
                             </table>
                         </div>
                     </div>
-                        <div class="inquire-form-wrap" style="margin-top: 40px">
-                            <table class="middle4">
-                                <div style="font-size: 16px; font-weight: bold;">면허/자격증 보유 현황</div>
-                                <tr>
-                                    <th style="width: 13%;">구분</th>
-                                    <th>자격증명</th>
-                                    <th>취득년월</th>
-                                    <th>인가, 관리기관</th>
-                                </tr>
-                                <tr>
-                                    <th>1</th>
-                                    <td class="first-certificate-name-wrap">
-                                        <input type="text"
-                                               id="first-certificate-name"
-                                               name="first-certificate-name">
-                                    </td>
-                                    <td class="first-certificate-day-wrap">
-                                        <input type="text"
-                                               id="second-certificate-day"
-                                               name="second-certificate-day">
-                                    </td>
-                                    <td class="first-certificate-agency-wrap">
-                                        <input type="text"
-                                               id="third-certificate-agency"
-                                               name="third-certificate-agency">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>2</th>
-                                    <td class="second-certificate-name-wrap">
-                                        <input type="text"
-                                               id="second-certificate-name"
-                                               name="second-certificate-name">
-                                    </td>
-                                    <td class="second-certificate-day-wrap">
-                                        <input type="text"
-                                               id="second-certificate-day"
-                                               name="second-certificate-day">
-                                    </td>
-                                    <td class="second-certificate-agency-wrap">
-                                        <input type="text"
-                                               id="second-certificate-agency"
-                                               name="second-certificate-agency">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>3</th>
-                                    <td class="third-certificate-name-wrap">
-                                        <input type="text"
-                                               id="third-certificate-name"
-                                               name="third-certificate-name">
-                                    </td>
-                                    <td class="third-certificate-day-wrap">
-                                        <input type="text"
-                                               id="third-certificate-day"
-                                               name="third-certificate-day">
-                                    </td>
-                                    <td class="third-certificate-agency-wrap">
-                                        <input type="text"
-                                               id="third-certificate-agency"
-                                               name="third-certificate-agency">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>4</th>
-                                    <td class="fourth-certificate-name-wrap">
-                                        <input type="text"
-                                               id="fourth-certificate-name"
-                                               name="fourth-certificate-name">
-                                    </td>
-                                    <td class="fourth-certificate-day-wrap">
-                                        <input type="text"
-                                               id="fourth-certificate-day"
-                                               name="fourth-certificate-day">
-                                    </td>
-                                    <td class="fourth-certificate-agency-wrap">
-                                        <input type="text"
-                                               id="fourth-certificate-agency"
-                                               name="fourth-certificate-agency">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>5</th>
-                                    <td class="fifth-certificate-name-wrap">
-                                        <input type="text"
-                                               id="fifth-certificate-name"
-                                               name="fifth-certificate-name">
-                                    </td>
-                                    <td class="fifth-certificate-day-wrap">
-                                        <input type="text"
-                                               id="fifth-certificate-day"
-                                               name="fifth-certificate-day">
-                                    </td>
-                                    <td class="fifth-certificate-agency-wrap">
-                                        <input type="text"
-                                               id="fifth-certificate-agency"
-                                               name="fifth-certificate-agency">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="inquire-form-wrap" style="margin-top: 40px;">
-                            <div style="font-size: 16px; font-weight: bold;">자기소개</div>
-                            <input type="text"
-                                   id="subway"
-                                   name="subway"
-                                   data-parsley-required="true"
-                                   style="margin-top: 10px; width: 1280px; height: 250px; border-radius: 25px;"
-                                   placeholder="자기소개를 1,000자 이내로 입력해 주세요.">
-                        </div>
+                    <div class="inquire-form-wrap" style="margin-top: 40px">
+                        <table class="middle4">
+                            <div style="font-size: 16px; font-weight: bold;">면허/자격증 보유 현황</div>
+                            <tr>
+                                <th style="width: 13%;">구분</th>
+                                <th>자격증명</th>
+                                <th>취득년월</th>
+                                <th>인가, 관리기관</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td class="first-certificate-name-wrap">
+                                    <input type="text"
+                                           id="first-certificate-name"
+                                           name="first-certificate-name">
+                                </td>
+                                <td class="first-certificate-day-wrap">
+                                    <input type="text"
+                                           id="second-certificate-day"
+                                           name="second-certificate-day">
+                                </td>
+                                <td class="first-certificate-agency-wrap">
+                                    <input type="text"
+                                           id="third-certificate-agency"
+                                           name="third-certificate-agency">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td class="second-certificate-name-wrap">
+                                    <input type="text"
+                                           id="second-certificate-name"
+                                           name="second-certificate-name">
+                                </td>
+                                <td class="second-certificate-day-wrap">
+                                    <input type="text"
+                                           id="second-certificate-day"
+                                           name="second-certificate-day">
+                                </td>
+                                <td class="second-certificate-agency-wrap">
+                                    <input type="text"
+                                           id="second-certificate-agency"
+                                           name="second-certificate-agency">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td class="third-certificate-name-wrap">
+                                    <input type="text"
+                                           id="third-certificate-name"
+                                           name="third-certificate-name">
+                                </td>
+                                <td class="third-certificate-day-wrap">
+                                    <input type="text"
+                                           id="third-certificate-day"
+                                           name="third-certificate-day">
+                                </td>
+                                <td class="third-certificate-agency-wrap">
+                                    <input type="text"
+                                           id="third-certificate-agency"
+                                           name="third-certificate-agency">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td class="fourth-certificate-name-wrap">
+                                    <input type="text"
+                                           id="fourth-certificate-name"
+                                           name="fourth-certificate-name">
+                                </td>
+                                <td class="fourth-certificate-day-wrap">
+                                    <input type="text"
+                                           id="fourth-certificate-day"
+                                           name="fourth-certificate-day">
+                                </td>
+                                <td class="fourth-certificate-agency-wrap">
+                                    <input type="text"
+                                           id="fourth-certificate-agency"
+                                           name="fourth-certificate-agency">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>5</th>
+                                <td class="fifth-certificate-name-wrap">
+                                    <input type="text"
+                                           id="fifth-certificate-name"
+                                           name="fifth-certificate-name">
+                                </td>
+                                <td class="fifth-certificate-day-wrap">
+                                    <input type="text"
+                                           id="fifth-certificate-day"
+                                           name="fifth-certificate-day">
+                                </td>
+                                <td class="fifth-certificate-agency-wrap">
+                                    <input type="text"
+                                           id="fifth-certificate-agency"
+                                           name="fifth-certificate-agency">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="inquire-form-wrap" style="margin-top: 40px;">
+                        <div style="font-size: 16px; font-weight: bold;">자기소개</div>
+                        <input type="text"
+                               id="subway"
+                               name="subway"
+                               data-parsley-required="true"
+                               style="margin-top: 10px; width: 1280px; height: 250px; border-radius: 25px;"
+                               placeholder="자기소개를 1,000자 이내로 입력해 주세요.">
+                    </div>
                     <div style="display: flex; flex-wrap: wrap;">
-                        <div style="margin-top: 40px;font-size: 16px; font-weight: bold;">치과 업무 능력 자기 평가표<span style="margin-left: 10px; color: #222; font-weight: normal;">생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.</span></div>
+                        <div style="margin-top: 40px;font-size: 16px; font-weight: bold;">치과 업무 능력 자기 평가표
+                            <span style="margin-left: 10px; color: #222; font-weight: normal;">
+                                생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.
+                            </span>
+                        </div>
                         <div class="inquire-form-wrap" style="margin-top: 0; margin-right: 20px;">
                             <table class="middle5">
+                                <thead>
                                 <tr>
                                     <th style="width: 190px;">구분</th>
                                     <th style="width: 220px;"></th>
                                     <th>자가평가 점수</th>
-                                    <th>교욱가능 유무</th>
+                                    <th>교육가능 유무</th>
                                 </tr>
-                                <tr>
-                                    <th rowspan=4>임플란트</th>
-                                    <td>임플란트 수술 어시스트</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>임플란트 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>임플란트 셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>사용했던 임플란트 종류</td>
-                                    <td class="select-box">
-                                        <input type="text" placeholder="수기입력" style="width: 200px">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=13>보철</th>
-                                    <td>어시스트</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>구치부싱글크라운 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>구치부싱글크라운 임시치아</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>전치부싱글크라운 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>전치부싱글크라운 임시치아</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>구치부브릿지 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>구치부브릿지 임시치아</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>전치부브릿지 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>전치부브릿지 임시치아</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>싱글크라운셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>싱글크라운(여러개) 셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>브릿지셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>resin core</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=2>치주</th>
-                                    <td>스켈링</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Curette</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=2>미백</th>
-                                    <td>전문가미백</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>자가미백</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=2>보험청구</th>
-                                    <td>교정과 보험청구</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>교정외 보험청구</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($leftList as $category)
+                                    @foreach($category->abilities as $ability)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
+                                            @endif
+                                            <td>{{ $ability->name }}</td>
+                                            @if($ability->type == 'select')
+                                                <td class="select-box">
+                                                    <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
+                                                        <option value="0">선택</option>
+                                                        <option value="1">경험없음</option>
+                                                        <option value="2">미흡</option>
+                                                        <option value="3">보통</option>
+                                                        <option value="4">잘함</option>
+                                                        <option value="5">매우잘함</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                           value="1">
+                                                </td>
+                                            @else
+                                                <td class="select-box">
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                         <div class="inquire-form-wrap" style="margin-top: 0">
                             <table class="middle5">
+                                <thead>
                                 <tr>
                                     <th style="width: 190px;">구분</th>
                                     <th style="width: 220px;"></th>
                                     <th>자가평가 점수</th>
-                                    <th>교욱가능 유무</th>
+                                    <th>교육가능 유무</th>
                                 </tr>
-                                <tr>
-                                    <th rowspan=11>보존</th>
-                                    <td>러버댐장착</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>인레이셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>전치부레진필링</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>구치부 레진 필링</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>인레이셋팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>CA 레진 필링</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>base 도포</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>실란트</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>불소도포</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>PA촬영(구내엑스레이촬영)</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>pano촬영</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=9>교정</th>
-                                    <td>Ceph촬영</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>교정환자 cleasing</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>와이어 넣기</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>와이어 결찰</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>진단 모델 인상채득</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>마운팅</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>E/O촬영</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>I/O촬영</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>석고 붓기</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan=4>상담</th>
-                                    <td>임플란트 상담</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>보철상담</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>덴쳐상담</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>교정상담</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>병원 OPEN</th>
-                                    <td>open&setting</td>
-                                    <td class="select-box">
-                                        <input type="text">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($rightList as $category)
+                                    @foreach($category->abilities as $ability)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
+                                            @endif
+                                            <td>{{ $ability->name }}</td>
+                                            @if($ability->type == 'select')
+                                                <td class="select-box">
+                                                    <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
+                                                        <option value="0">선택</option>
+                                                        <option value="1">경험없음</option>
+                                                        <option value="2">미흡</option>
+                                                        <option value="3">보통</option>
+                                                        <option value="4">잘함</option>
+                                                        <option value="5">매우잘함</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                           value="1">
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
+                    <input type="submit">
                 </form>
                 <button class="submit" type="submit">이력서 등록</button>
             </section>

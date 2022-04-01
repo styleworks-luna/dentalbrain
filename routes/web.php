@@ -40,31 +40,35 @@ if (env('APP_ENV') != 'production') {
 
     Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
 
-    Route::get("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'getAbilities']);
-    Route::post("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'postAbilities'])->name('postAbilities');
-
-    // 알바톡(임시)
-    Route::get('albatalk', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk');
-    });
-
-    Route::get('albatalk/post', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-    });
-
-    Route::get('albatalk/detail', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
-    });
-
-    Route::get('albatalk/resume/detail', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
-    });
-
-    Route::get('albatalk/resume', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
-    });
 
     Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+
+        Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+
+        });
+
+        Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
+            Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('create');
+
+            Route::get('detail', function () {
+                return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
+            });
+        });
+
+        // 알바톡(임시)
+        Route::get('/', function () {
+            return view(viewPrefix() . 'pages.albatalk.albatalk');
+        });
+
+        Route::get('post', function () {
+            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
+        });
+
+        Route::get('detail', function () {
+            return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
+        });
+
         Route::get('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
 
         Route::post('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('store');

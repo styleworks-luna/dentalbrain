@@ -3,19 +3,11 @@
 namespace App\Http\Controllers\Development;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recruit\Option\TypeJob;
-use App\Models\Recruit\Option\TypeStudy;
-use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
-use App\Models\Resume\Ability\Ability;
-use App\Models\Resume\Ability\AbilityAnswer;
-use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\User;
 use App\Services\Recruit\AbilityService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class DevelopmentController extends Controller
 {
@@ -117,29 +109,4 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cupiditate ducimus
 
         return redirect()->route('albatalk.payment');
     }
-
-    public function getAbilities()
-    {
-        return view('desktop.pages.test.ability')->with([
-            'leftList' => AbilityCategory::query()->where('id', '<=', '5')->with('abilities')->get(),
-            'rightList' => AbilityCategory::query()->where('id', '>', '5')->with('abilities')->get()
-        ]);
-    }
-
-    public function postAbilities(Request $request)
-    {
-        $validator = $this->abilityService->getValidatorOfAbilityAnswers(Ability::all(), $request->all());
-        $data = $validator->validate();
-        $collection = Collection::make($data['abilities']);
-        $collection->each(function ($item, $key) {
-            AbilityAnswer::query()->create([
-                'ability_id' => $key,
-                'score' => $item['score'] ?? null,
-                'can_learn' => $item['can_learn'] ?? false,
-                'content' => $item['content'] ?? null,
-            ]);
-        });
-    }
-
-
 }
