@@ -10,6 +10,7 @@ use App\Models\Recruit\Option\TypeBenefit;
 use App\Models\Recruit\Option\TypeDay;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
+use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use Illuminate\Http\Request;
@@ -17,12 +18,20 @@ use Illuminate\Validation\Rule;
 
 class RecruitController extends Controller
 {
-    public function payment()
+    public function createForm()
     {
-        return view('test');
+        return view(viewPrefix() . 'pages.albatalk.albatalk_post')->with([
+            'typeApplication' => TypeApplication::all(),
+            'typeWork' => TypeWork::all(),
+            'typeJob' => TypeJob::all(),
+            'typeSalary' => TypeSalary::all(),
+            'typeStudy' => TypeStudy::all(),
+            'typeDay' => TypeDay::all(),
+            'typeBenefit' => TypeBenefit::all(),
+        ]);
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $validatedData = $request->validate([
 //            'company_name' => ['required', 'string', 'min:2', 'max:255'],
@@ -37,7 +46,7 @@ class RecruitController extends Controller
 //            'subway' => ['nullable', 'string', 'max:255'],
 //
 //            // checkbox
-//            'type_application' => ['required'],
+            'type_application' => ['required'],
 //            // radio
 //            'type_work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
 //            // radio
@@ -103,6 +112,6 @@ class RecruitController extends Controller
 
         ddd($request->request);
 
-        return redirect()->route('albatalk.payment');
+//        return redirect()->route('albatalk.payment');
     }
 }

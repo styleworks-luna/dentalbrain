@@ -44,9 +44,8 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
 
         Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
-            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('create');
-
-//            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
+            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
@@ -63,9 +62,9 @@ if (env('APP_ENV') != 'production') {
             return view(viewPrefix() . 'pages.albatalk.albatalk');
         });
 
-        Route::get('post', function () {
-            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-        });
+//        Route::get('post', function () {
+//            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
+//        });
 
         Route::get('detail', function () {
             return view(viewPrefix() . 'pages.albatalk.albatalk_detail');

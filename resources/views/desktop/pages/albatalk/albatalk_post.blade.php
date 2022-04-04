@@ -159,119 +159,53 @@
                             <tr>
                                 <th>신청분야 *</th>
                                 <td class="field-wrap">
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">진료전반</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">상담/데스크</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">교정</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">보철</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">예방</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">구강외과</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">소아</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-
-                                    <label id="field">스케일링</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">실장</label>
+                                    @foreach($typeApplication as $application)
+                                        <input type="checkbox" id="field" name="type_application[{{$application->id}}]"
+                                               @if(old('type_application')[$application->id] ?? 'off' == 'on') checked
+                                               @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">{{$application->type}}</label>
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
                                 <th>근무형태 *</th>
                                 <td class="work-type-wrap">
-                                    <input type="radio" id="field" name="type_work" value="1"
-                                           @if(old('type_work') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">정규직</label>
-                                    <input type="radio" id="field" name="type_work" value="2"
-                                           @if(old('type_work') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">계약직</label>
-                                    <input type="radio" id="field" name="type_work" value="3"
-                                           @if(old('type_work') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">아르바이트</label>
+                                    @foreach($typeWork as $work)
+                                        <input type="radio" id="field" name="type_work" value={{$work->id}}
+                                        @if(old('type_work') == $work->id) checked @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">{{$work->type}}</label>
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
                                 <th>직종 *</th>
                                 <td class="job-wrap">
-                                    <input type="radio" id="field" name="type_job" value="1"
-                                           @if(old('type_job') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">치과위생사</label>
-                                    <input type="radio" id="field" name="type_job" value="2"
-                                           @if(old('type_job') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">간호조무사</label>
-                                    <input type="radio" id="field" name="type_job" value="3"
-                                           @if(old('type_job') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">관리 및 경영지원</label>
-                                    <input type="radio" id="field" name="type_job" value="4"
-                                           @if(old('type_job') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">코디네이터/리셉션</label>
-                                    <input type="radio" id="field" name="type_job" value="5"
-                                           @if(old('type_job') == 5) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">무관</label>
+                                    @foreach($typeJob as $job)
+                                        <input type="radio" id="field" name="type_job" value={{$job->id}}
+                                        @if(old('type_job') == $job->id) checked @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">{{$job->type}}</label>
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
                                 <th>급여 *</th>
                                 <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_salary" value="1"
-                                           @if(old('type_salary') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">협의 후 결정</label>
-                                    <input type="radio" id="field" name="type_salary" value="2"
-                                           @if(old('type_salary') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">내규에 따름</label>
-                                    <input type="radio" id="field" name="type_salary" value="3"
-                                           @if(old('type_salary') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">연봉제</label>
-                                    <input type="radio" id="field" name="type_salary" value="4"
-                                           @if(old('type_salary') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                    @foreach($typeSalary as $salary)
+                                        <input type="radio" id="field" name="type_salary" value={{$salary->id}}
+                                        @if(old('type_salary') == $salary->id) checked @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">{{$salary->type}}</label>
+                                        @if($salary->id == 4)
+                                            <input type="text" placeholder="내용을 입력해주세요.">
+                                        @endif
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
@@ -306,56 +240,33 @@
                             <tr>
                                 <th>근무요일 *</th>
                                 <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_day" value="1"
-                                           @if(old('type_day') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~금(주 5일)</label>
-                                    <input type="radio" id="field" name="type_day" value="2"
-                                           @if(old('type_day') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토(토요일 격주 휴무)</label>
-                                    <input type="radio" id="field" name="type_day" value="3"
-                                           @if(old('type_day') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토</label>
-                                    <input type="radio" id="field" name="type_day" value="4"
-                                           @if(old('type_day') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
+                                    @foreach($typeDay as $day)
+                                        <input type="radio" id="field" name="type_day" value={{$day->id}}
+                                        @if(old('type_day') == $day->id) checked @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        <label id="field">{{$day->type}}</label>
+                                        @if($day->id == 4)
+                                            <input type="text" placeholder="내용을 입력해주세요.">
+                                        @endif
+                                    @endforeach
                                 </td>
                             </tr>
                             <tr>
                                 <th>복리후생 *</th>
                                 <td class="welfare-wrap">
-                                    <input type="checkbox" id="all" name="type_benefit[1]"
-                                           @if(old('type_benefit')[1] ?? 'off' == 'on') checked @endif><label>점심식자</label>
-                                    <input type="checkbox" id="all" name="type_benefit[2]"
-                                           @if(old('type_benefit')[2] ?? 'off' == 'on') checked @endif><label>유니폼</label>
-                                    <input type="checkbox" id="all" name="type_benefit[3]"
-                                           @if(old('type_benefit')[3] ?? 'off' == 'on') checked @endif><label>주차</label>
-                                    <input type="checkbox" id="all" name="type_benefit[4]"
-                                           @if(old('type_benefit')[4] ?? 'off' == 'on') checked @endif><label>자기계발비</label>
-                                    <input type="checkbox" id="all" name="type_benefit[5]"
-                                           @if(old('type_benefit')[5] ?? 'off' == 'on') checked @endif><label>연월차지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit[6]"
-                                           @if(old('type_benefit')[6] ?? 'off' == 'on') checked @endif><label
-                                            class="last">휴가비지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit[7]"
-                                           @if(old('type_benefit')[7] ?? 'off' == 'on') checked @endif><label>4대보험지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit[8]"
-                                           @if(old('type_benefit')[8] ?? 'off' == 'on') checked @endif><label>연봉제</label>
-                                    <input type="checkbox" id="all" name="type_benefit[9]"
-                                           @if(old('type_benefit')[9] ?? 'off' == 'on') checked @endif><label>인센티브제</label>
-                                    <input type="checkbox" id="all" name="type_benefit[10]"
-                                           @if(old('type_benefit')[10] ?? 'off' == 'on') checked @endif><label>퇴직금지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit[11]"
-                                           @if(old('type_benefit')[11] ?? 'off' == 'on') checked @endif><label
-                                            class="last">야근수당지원</label>
+                                    @foreach($typeBenefit as $benefit)
+                                        <input type="checkbox" id="field" name="type_benefit[{{$benefit->id}}]"
+                                               @if(old('type_benefit')[$benefit->id] ?? 'off' == 'on') checked
+                                               @endif
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
+                                        @if($benefit->id == 6 || $benefit->id == 11)
+                                            <label class="last" id="field">{{$benefit->type}}</label>
+                                        @else
+                                            <label id="field">{{$benefit->type}}</label>
+                                        @endif
+                                    @endforeach
 
                                 </td>
                             </tr>
