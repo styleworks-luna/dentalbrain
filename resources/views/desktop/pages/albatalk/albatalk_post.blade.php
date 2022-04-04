@@ -29,7 +29,8 @@
                     </div>
                 @endif
                 <h2>구인 등록</h2>
-                <form>
+                <form action={{route('albatalk.recruit.create')}} method="post">
+                    @csrf
                     <div style="display: flex; float: right;">
                         <div class="inquire-form-wrap">
                             <table class="top">
@@ -38,7 +39,8 @@
                                     <td class="name-wrap">
                                         <input type="text"
                                                id="name"
-                                               name="name"
+                                               name="company_name"
+                                               value="{{ old('company_name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
@@ -47,7 +49,8 @@
                                     <td class="manager-wrap">
                                         <input type="text"
                                                id="manager"
-                                               name="manager"
+                                               name="name"
+                                               value="{{ old('name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
@@ -57,7 +60,8 @@
                                     <td class="ceo-wrap">
                                         <input type="text"
                                                id="ceo"
-                                               name="ceo"
+                                               name="company_leader"
+                                               value="{{ old('company_leader') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
@@ -67,7 +71,8 @@
                                     <td class="manager-phone-wrap">
                                         <input type="text"
                                                id="manager-phone"
-                                               name="manager-phone"
+                                               name="phone"
+                                               value="{{ old('phone') }}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -78,7 +83,8 @@
                                     <td class="num-wrap">
                                         <input type="text"
                                                id="num"
-                                               name="num"
+                                               name="company_license"
+                                               value="{{ old('company_license') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
@@ -88,7 +94,8 @@
                                     <td class="manager-email-wrap">
                                         <input type="text"
                                                id="manager-email"
-                                               name="manager-email"
+                                               name="email"
+                                               value="{{ old('email') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 이메일을 입력해주세요.">
                                     </td>
@@ -98,7 +105,8 @@
                                     <td class="phone-wrap">
                                         <input type="text"
                                                id="phone"
-                                               name="phone"
+                                               name="company_phone"
+                                               value="{{ old('company_phone') }}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -109,7 +117,8 @@
                                     <td class="page-wrap">
                                         <input type="text"
                                                id="page"
-                                               name="page"
+                                               name="url"
+                                               value="{{ old('url') }}"
                                                data-parsley-required="false">
                                     </td>
                                 </tr>
@@ -243,18 +252,22 @@
                                 <th>급여 *</th>
                                 <td class="pay-wrap">
                                     <input type="radio" id="field" name="type_salary" value="1"
+                                           @if(old('type_salary') == 1) checked @endif
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">협의 후 결정</label>
                                     <input type="radio" id="field" name="type_salary" value="2"
+                                           @if(old('type_salary') == 2) checked @endif
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">내규에 따름</label>
                                     <input type="radio" id="field" name="type_salary" value="3"
+                                           @if(old('type_salary') == 3) checked @endif
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">연봉제</label>
                                     <input type="radio" id="field" name="type_salary" value="4"
+                                           @if(old('type_salary') == 4) checked @endif
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">기타</label>
@@ -267,7 +280,8 @@
                                     <input type="radio" id="field" name="type_study"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" placeholder="학력선택">
+                                    <input type="text" name="type_study" value="{{old('type_study')}}"
+                                           placeholder="학력선택">
                                     <input type="radio" id="field" name="type_study"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -318,20 +332,31 @@
                             <tr>
                                 <th>복리후생 *</th>
                                 <td class="welfare-wrap">
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="1" @if(old('type_benefit[]')) checked @endif>
-                                    <label>점심식자</label>
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="124135"><label>유니폼</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>주차</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>자기계발비</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연월차지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">휴가비지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>4대보험지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연봉제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>인센티브제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>퇴직금지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">야근수당지원</label>
+                                    <input type="checkbox" id="all" name="type_benefit[1]"
+                                           @if(old('type_benefit')[1] ?? 'off' == 'on') checked @endif><label>점심식자</label>
+                                    <input type="checkbox" id="all" name="type_benefit[2]"
+                                           @if(old('type_benefit')[2] ?? 'off' == 'on') checked @endif><label>유니폼</label>
+                                    <input type="checkbox" id="all" name="type_benefit[3]"
+                                           @if(old('type_benefit')[3] ?? 'off' == 'on') checked @endif><label>주차</label>
+                                    <input type="checkbox" id="all" name="type_benefit[4]"
+                                           @if(old('type_benefit')[4] ?? 'off' == 'on') checked @endif><label>자기계발비</label>
+                                    <input type="checkbox" id="all" name="type_benefit[5]"
+                                           @if(old('type_benefit')[5] ?? 'off' == 'on') checked @endif><label>연월차지원</label>
+                                    <input type="checkbox" id="all" name="type_benefit[6]"
+                                           @if(old('type_benefit')[6] ?? 'off' == 'on') checked @endif><label
+                                            class="last">휴가비지원</label>
+                                    <input type="checkbox" id="all" name="type_benefit[7]"
+                                           @if(old('type_benefit')[7] ?? 'off' == 'on') checked @endif><label>4대보험지원</label>
+                                    <input type="checkbox" id="all" name="type_benefit[8]"
+                                           @if(old('type_benefit')[8] ?? 'off' == 'on') checked @endif><label>연봉제</label>
+                                    <input type="checkbox" id="all" name="type_benefit[9]"
+                                           @if(old('type_benefit')[9] ?? 'off' == 'on') checked @endif><label>인센티브제</label>
+                                    <input type="checkbox" id="all" name="type_benefit[10]"
+                                           @if(old('type_benefit')[10] ?? 'off' == 'on') checked @endif><label>퇴직금지원</label>
+                                    <input type="checkbox" id="all" name="type_benefit[11]"
+                                           @if(old('type_benefit')[11] ?? 'off' == 'on') checked @endif><label
+                                            class="last">야근수당지원</label>
+
                                 </td>
                             </tr>
                             <tr>
@@ -344,7 +369,8 @@
                                            placeholder="시작일자 선택">
                                     <input class="time" type="text" placeholder="HH:mm">
                                     <label id="field">부터</label>
-                                    <input type="text" name="ended_at" value="{{old('ended_at')}}" placeholder="마감일자 선택">
+                                    <input type="text" name="ended_at" value="{{old('ended_at')}}"
+                                           placeholder="마감일자 선택">
                                     <input class="time2" type="text" placeholder="HH:mm">
                                     <input type="radio" id="until-hiring" name="deadline">
                                     <label name="until-hiring" for="until-hiring">채용시까지</label>
