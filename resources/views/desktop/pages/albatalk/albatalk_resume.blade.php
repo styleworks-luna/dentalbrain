@@ -12,9 +12,9 @@
     <section class="albatalk-resume-wrap">
         <div class="title-wrap">
             <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
+                <a href="#">이력서 등록</a>
+                <a href="#">구인등록</a>
+                <a href="#">헤드헌팅</a>
             </div>
         </div>
         <div class="container">
@@ -53,7 +53,7 @@
                     </div>
                     <div style="display: flex; flex-wrap: wrap; margin-bottom: 40px;">
                         <img class="imgcard"
-                             src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg"></img>
+                             src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg" />
                         <div class="inquire-form-wrap" style="float: right;">
                             <table class="middle" style="width: 1040px; margin-top: -18px; border-top: 0px">
                                 <tr>

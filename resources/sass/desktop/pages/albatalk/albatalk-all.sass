@@ -13,6 +13,7 @@
         @extend %checkbox-default
         +margin(1px 8px 0 0)
         float: left
+
     label
         float: left
         font-size: 16px
@@ -22,6 +23,7 @@
 
         table
             +size(1280px)
+
             &:nth-child(1)
                 +border(2px solid $gray-900, top)
 
@@ -42,17 +44,14 @@
                 .all-wrap
                     +size(92px 50px)
 
-
             td
+                +size(92px)
                 +padding(left 30px top 30px bottom 11px)
                 +box-sizing(border-box)
                 white-space: pre-wrap
-                +size(92px)
 
                 .second
                     +padding(top 20px)
-
-
 
 .albatalk-wrap
     .title-wrap
@@ -66,12 +65,12 @@
             +padding(125px 0 0 63px)
             font-weight: bold
             font-size: 48px
-        
+
         a
-            +border(1px solid transparent)
             +size(102px, 36px)
-            float: right
+            +border(1px solid transparent)
             +margin(top 60px right 20px)
+            float: right
             background-color: rgba(0, 0, 0, 0.4)
             border-radius: 1px
             display: flex
@@ -84,7 +83,6 @@
     +margin(bottom 100px)
 
     .albatalk-contents
-        //+margin(top 28px)
         overflow: hidden
 
         .albatalk-card
@@ -104,7 +102,7 @@
             img
                 +size(296px 296px, 222px)
 
-            .albatak-information
+            .albatalk-information
                 +padding(20px)
 
                 .albatalk-name
