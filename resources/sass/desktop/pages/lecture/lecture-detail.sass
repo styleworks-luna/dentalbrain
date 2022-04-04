@@ -353,12 +353,12 @@
             font-size: 20px
 
     ul
-        font-size: 16px
-        a
-            font-weight: bold
-            +padding(right 10px)
-
         +padding(top 20px)
+        font-size: 16px
+
+        a
+            +padding(right 10px)
+            font-weight: bold
 
         li
             +padding(20px)
@@ -366,6 +366,7 @@
 
             &:first-child
                 +border(2px solid $gray-900, top)
+
             &:last-child
                 +border(2px solid $border-color-base, bottom)
 
