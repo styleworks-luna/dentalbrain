@@ -420,7 +420,7 @@
                                                 @if($loop->first)
                                                     <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
                                                 @endif
-                                                <td>{{ $ability->name }}</td>
+                                                <td class="ability-cell">{{ $ability->name }}</td>
                                                 @if($ability->type == 'select')
                                                     <td class="select-cell">
                                                         <select class="select-menu" name="{{ 'abilities['.$ability->id.'][score]' }}">
