@@ -160,8 +160,8 @@
                                 <th>신청분야 *</th>
                                 <td class="field-wrap">
                                     @foreach($typeApplication as $application)
-                                        <input type="checkbox" id="field" name="type_application[{{$application->id}}]"
-                                               @if(old('type_application')[$application->id] ?? 'off' == 'on') checked
+                                        <input type="checkbox" id="field" name="application[{{$application->id}}]"
+                                               @if(old('application')[$application->id] ?? 'off' == 'on') checked
                                                @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -173,8 +173,8 @@
                                 <th>근무형태 *</th>
                                 <td class="work-type-wrap">
                                     @foreach($typeWork as $work)
-                                        <input type="radio" id="field" name="type_work" value={{$work->id}}
-                                        @if(old('type_work') == $work->id) checked @endif
+                                        <input type="radio" id="field" name="work" value={{$work->id}}
+                                        @if(old('work') == $work->id) checked @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                         <label id="field">{{$work->type}}</label>
@@ -185,8 +185,8 @@
                                 <th>직종 *</th>
                                 <td class="job-wrap">
                                     @foreach($typeJob as $job)
-                                        <input type="radio" id="field" name="type_job" value={{$job->id}}
-                                        @if(old('type_job') == $job->id) checked @endif
+                                        <input type="radio" id="field" name="job" value={{$job->id}}
+                                        @if(old('job') == $job->id) checked @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                         <label id="field">{{$job->type}}</label>
@@ -197,13 +197,13 @@
                                 <th>급여 *</th>
                                 <td class="pay-wrap">
                                     @foreach($typeSalary as $salary)
-                                        <input type="radio" id="field" name="type_salary" value={{$salary->id}}
-                                        @if(old('type_salary') == $salary->id) checked @endif
+                                        <input type="radio" id="field" name="salary" value={{$salary->id}}
+                                        @if(old('salary') == $salary->id) checked @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                         <label id="field">{{$salary->type}}</label>
                                         @if($salary->id == 4)
-                                            <input type="text" placeholder="내용을 입력해주세요.">
+                                            <input type="text" name="salary_value" value="{{old("salary_value")}}" placeholder="내용을 입력해주세요.">
                                         @endif
                                     @endforeach
                                 </td>
@@ -211,12 +211,12 @@
                             <tr>
                                 <th>학력 *</th>
                                 <td class="school-wrap">
-                                    <input type="radio" id="field" name="type_study"
+                                    <input type="radio" id="field" name="study"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" name="type_study" value="{{old('type_study')}}"
+                                    <input type="text" name="study" value="{{old('study')}}"
                                            placeholder="학력선택">
-                                    <input type="radio" id="field" name="type_study"
+                                    <input type="radio" id="field" name="study"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     <label id="field">기타</label>
@@ -241,13 +241,13 @@
                                 <th>근무요일 *</th>
                                 <td class="pay-wrap">
                                     @foreach($typeDay as $day)
-                                        <input type="radio" id="field" name="type_day" value={{$day->id}}
-                                        @if(old('type_day') == $day->id) checked @endif
+                                        <input type="radio" id="field" name="day" value={{$day->id}}
+                                        @if(old('day') == $day->id) checked @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                         <label id="field">{{$day->type}}</label>
                                         @if($day->id == 4)
-                                            <input type="text" placeholder="내용을 입력해주세요.">
+                                            <input type="text" name="day_value" value="{{old("day_value")}}" placeholder="내용을 입력해주세요.">
                                         @endif
                                     @endforeach
                                 </td>
@@ -256,8 +256,8 @@
                                 <th>복리후생 *</th>
                                 <td class="welfare-wrap">
                                     @foreach($typeBenefit as $benefit)
-                                        <input type="checkbox" id="field" name="type_benefit[{{$benefit->id}}]"
-                                               @if(old('type_benefit')[$benefit->id] ?? 'off' == 'on') checked
+                                        <input type="checkbox" id="field" name="benefit[{{$benefit->id}}]"
+                                               @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked
                                                @endif
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
