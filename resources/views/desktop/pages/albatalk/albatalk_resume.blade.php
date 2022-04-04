@@ -2,6 +2,9 @@
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-resume.js') }}"></script>
 @endsection
 
 @section('style')
@@ -12,150 +15,153 @@
     <section class="albatalk-resume-wrap">
         <div class="title-wrap">
             <div class="container">
-                <a href="#">이력서 등록</a>
-                <a href="#">구인등록</a>
-                <a href="#">헤드헌팅</a>
+                <div class="albatalk-navigation">
+                    <a href="#">헤드헌팅</a>
+                    <a href="#">구인등록</a>
+                    <a href="#">이력서 등록</a>
+                </div>
             </div>
         </div>
         <div class="container">
-            <section class="wanted">
+            <section class="resume">
                 <h2>이력서 작성</h2>
                 <form action="{{ route('albatalk.resume.create') }}" method="post"
                       enctype="application/x-www-form-urlencoded">
                     @csrf
-                    <div style="padding-bottom: 40px" class="inquire-form-wrap">
-                        <table class="head">
+                    <div class="desire-form-wrap common-form-wrap">
+                        <table>
                             <tr>
                                 <th>희망 근무 지역</th>
-                                <td class="work-area-wrap">
+                                <td>
                                     <input type="text"
-                                           id="work-area"
-                                           name="work-area">
+                                           id="work_area"
+                                           name="work_area"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>희망 근무 요일</th>
-                                <td class="work-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="work-day"
-                                           name="work-day">
+                                           id="work_day"
+                                           name="work_day"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>희망 근무 시간</th>
-                                <td class="work-time-wrap">
+                                <td>
                                     <input type="text"
-                                           id="work-time"
-                                           name="work-time">
+                                           id="work_time"
+                                           name="work_time"/>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div style="display: flex; flex-wrap: wrap; margin-bottom: 40px;">
-                        <img class="imgcard"
-                             src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg" />
-                        <div class="inquire-form-wrap" style="float: right;">
-                            <table class="middle" style="width: 1040px; margin-top: -18px; border-top: 0px">
-                                <tr>
-                                    <th>이름 *</th>
-                                    <td class="name-wrap">
-                                        <input type="text"
-                                               id="name"
-                                               name="name"
-                                               placeholder="이름 입력 (최소 2자 이상)"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 이름을 입력해주세요">
-                                    </td>
 
-                                    <th>영문 이름 *</th>
-                                    <td class="english-name-wrap">
-                                        <input type="text"
-                                               id="english-name"
-                                               name="english-name"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 영문 이름을 입력해주세요.">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>생년 월일 *</th>
-                                    <td class="birthday-wrap">
-                                        <input type="text"
-                                               id="birthday"
-                                               name="birthday"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 생년 월일을 입력해주세요.">
-                                    </td>
-
-                                    <th>휴대폰 번호 *</th>
-                                    <td class="phone-wrap">
-                                        <input type="text"
-                                               id="phone"
-                                               name="phone"
-                                               placeholder="‘-‘ 없이 입력"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 휴대폰 번호를 입력해주세요.">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>비상연락처 *</th>
-                                    <td class="emer-phone-wrap">
-                                        <input type="text"
-                                               id="emer-phone"
-                                               name="emer-phone"
-                                               placeholder="‘-‘ 없이 입력"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 비상연락처를 입력해주세요.">
-                                    </td>
-
-                                    <th>이메일 *</th>
-                                    <td class="email-wrap">
-                                        <input type="text"
-                                               id="email"
-                                               name="email"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 이메일을 입력해주세요.">
-                                    </td>
-                                </tr>
-                            </table>
-                            <table style="width: 1040px;">
-                                <tr style="border-top: 0px">
-                                    <th>주소 *</th>
-                                    <td class="address-wrap">
-                                        <input type="text"
-                                               id="address"
-                                               name="address"
-                                               style="width: 790px"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 주소를 입력해주세요">
-                                    </td>
-                                </tr>
-                            </table>
+                    <div class="user-form-wrap common-form-wrap">
+                        <div class="image-wrap">
+                            <img class="resume-profile"
+                                 src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg" alt="이력서 사진"/>
+                            <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                         </div>
-                        <div style="font-size: 12px; color: #777; margin-top: 10px">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
+                        <table>
+                            <tr>
+                                <th>이름 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="name"
+                                           class="name"
+                                           name="name"
+                                           placeholder="이름 입력 (최소 2자 이상)"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 이름을 입력해주세요"/>
+                                </td>
+                                <th>영문 이름 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="english_name"
+                                           class="english-name"
+                                           name="english_name"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 영문 이름을 입력해주세요."/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>생년 월일 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="birthday"
+                                           class="birthday"
+                                           name="birthday"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 생년 월일을 입력해주세요."/>
+                                </td>
+
+                                <th>휴대폰 번호 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="phone"
+                                           class="phone"
+                                           name="phone"
+                                           placeholder="‘-‘ 없이 입력"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 휴대폰 번호를 입력해주세요."/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>비상연락처 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="emergency_phone"
+                                           name="emergency_phone"
+                                           class="emergency-phone"
+                                           placeholder="‘-‘ 없이 입력"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 비상연락처를 입력해주세요."/>
+                                </td>
+
+                                <th>이메일 *</th>
+                                <td>
+                                    <input type="text"
+                                           id="email"
+                                           class="email"
+                                           name="email"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 이메일을 입력해주세요."/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>주소 *</th>
+                                <td colspan="3">
+                                    <input type="text"
+                                           id="address"
+                                           class="address"
+                                           name="address"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 주소를 입력해주세요"/>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div style="display: flex; flex-wrap: wrap;">
-                        <div class="inquire-form-wrap" style="margin-right: 40px">
-                            <table class="middle2" style="width: 620px; margin-top: 10px;">
-                                <div style="font-size: 16px; font-weight: bold;">학력사항</div>
+
+                    <div class="double-form-wrap">
+                        <div class="education-form-wrap common-form-wrap">
+                            <h3>학력사항</h3>
+                            <table>
                                 <tr>
                                     <th>학위취득년월</th>
-                                    <td class="grade-day-wrap">
-                                        <input type="text"
-                                               id="grade-day"
-                                               name="grade-day">
+                                    <td>
+                                        <input type="text" name="grade_day">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>출신학교</th>
-                                    <td class="school-wrap">
-                                        <input type="text"
-                                               id="school"
-                                               name="school">
+                                    <td>
+                                        <input type="text" name="school">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>학과(세부전공)</th>
-                                    <td class="major-wrap">
+                                    <td>
                                         <input type="text"
                                                id="major"
                                                name="major">
@@ -163,7 +169,7 @@
                                 </tr>
                                 <tr>
                                     <th>학위</th>
-                                    <td class="degree-wrap">
+                                    <td>
                                         <input type="text"
                                                id="degree"
                                                name="degree">
@@ -171,7 +177,7 @@
                                 </tr>
                                 <tr>
                                     <th>졸업구분</th>
-                                    <td class="graduated-wrap">
+                                    <td>
                                         <input type="text"
                                                id="graduated"
                                                name="graduated">
@@ -179,276 +185,280 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="inquire-form-wrap">
-                            <table class="middle3">
-                                <div style="font-size: 16px; font-weight: bold;">희망 순위</div>
+                        <div class="desire-ranking-form-wrap common-form-wrap">
+                            <h3>희망 순위</h3>
+                            <table>
+                                <thead>
                                 <tr>
                                     <th>구분</th>
                                     <th>1순위</th>
                                     <th>2순위</th>
                                     <th>3순위</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 <tr>
                                     <th>희망 진료과</th>
-                                    <td class="first-treatment-wrap">
-                                        <input type="text"
-                                               id="first-treatment"
-                                               name="first-treatment"
-                                               placeholder="ex. 교정">
-                                    </td>
-                                    <td class="second-treatment-wrap">
-                                        <input type="text"
-                                               id="second-treatment"
-                                               name="second-treatment">
-                                    </td>
-                                    <td class="third-treatment-wrap">
-                                        <input type="text"
-                                               id="third-treatment"
-                                               name="third-treatment">
-                                    </td>
+                                    <td colspan="3">
+                                        <div class="input-wrap">
+                                            <input type="text"
+                                                   id="first_treatment"
+                                                   name="first_treatment"
+                                                   placeholder="ex. 교정">
+                                            <input type="text"
+                                                   id="second_treatment"
+                                                   name="second_treatment">
+                                            <input type="text"
+                                                   id="third_treatment"
+                                                   name="third_treatment">
+                                        </div>
                                 </tr>
                                 <tr>
                                     <th>희망 부서</th>
-                                    <td class="first-department-wrap">
-                                        <input type="text"
-                                               id="first-department"
-                                               name="first-department"
-                                               placeholder="ex. 진료실">
-                                    </td>
-                                    <td class="second-department-wrap">
-                                        <input type="text"
-                                               id="second-department"
-                                               name="second-department">
-                                    </td>
-                                    <td class="third-department-wrap">
-                                        <input type="text"
-                                               id="third-department"
-                                               name="third-department">
-                                    </td>
+                                    <td colspan="3">
+                                        <div class="input-wrap">
+                                            <input type="text"
+                                                   id="first_department"
+                                                   name="first_department"
+                                                   placeholder="ex. 진료실">
+                                            <input type="text"
+                                                   id="second_department"
+                                                   name="second_department">
+                                            <input type="text"
+                                                   id="third_department"
+                                                   name="third_department">
+                                        </div>
                                 </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="inquire-form-wrap" style="margin-top: 40px">
-                        <table class="middle4">
-                            <div style="font-size: 16px; font-weight: bold;">면허/자격증 보유 현황</div>
+
+                    <div class="certification-form-wrap common-form-wrap">
+                        <h3>면허/자격증 보유 현황</h3>
+                        <table>
+                            <thead>
                             <tr>
-                                <th style="width: 13%;">구분</th>
+                                <th>구분</th>
                                 <th>자격증명</th>
                                 <th>취득년월</th>
                                 <th>인가, 관리기관</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             <tr>
                                 <th>1</th>
-                                <td class="first-certificate-name-wrap">
+                                <td>
                                     <input type="text"
-                                           id="first-certificate-name"
-                                           name="first-certificate-name">
+                                           id="first_certificate_name"
+                                           name="first_certificate_name">
                                 </td>
-                                <td class="first-certificate-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="second-certificate-day"
-                                           name="second-certificate-day">
+                                           id="second_certificate_day"
+                                           name="second_certificate_day">
                                 </td>
-                                <td class="first-certificate-agency-wrap">
+                                <td>
                                     <input type="text"
-                                           id="third-certificate-agency"
-                                           name="third-certificate-agency">
+                                           id="third_certificate_agency"
+                                           name="third_certificate_agency">
                                 </td>
                             </tr>
                             <tr>
                                 <th>2</th>
-                                <td class="second-certificate-name-wrap">
+                                <td>
                                     <input type="text"
-                                           id="second-certificate-name"
-                                           name="second-certificate-name">
+                                           id="second_certificate_name"
+                                           name="second_certificate_name">
                                 </td>
-                                <td class="second-certificate-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="second-certificate-day"
-                                           name="second-certificate-day">
+                                           id="second_certificate_day"
+                                           name="second_certificate_day">
                                 </td>
-                                <td class="second-certificate-agency-wrap">
+                                <td>
                                     <input type="text"
-                                           id="second-certificate-agency"
-                                           name="second-certificate-agency">
+                                           id="second_certificate_agency"
+                                           name="second_certificate_agency">
                                 </td>
                             </tr>
                             <tr>
                                 <th>3</th>
-                                <td class="third-certificate-name-wrap">
+                                <td>
                                     <input type="text"
-                                           id="third-certificate-name"
-                                           name="third-certificate-name">
+                                           id="third_certificate_name"
+                                           name="third_certificate_name">
                                 </td>
-                                <td class="third-certificate-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="third-certificate-day"
-                                           name="third-certificate-day">
+                                           id="third_certificate_day"
+                                           name="third_certificate_day">
                                 </td>
-                                <td class="third-certificate-agency-wrap">
+                                <td>
                                     <input type="text"
-                                           id="third-certificate-agency"
-                                           name="third-certificate-agency">
+                                           id="third_certificate_agency"
+                                           name="third_certificate_agency">
                                 </td>
                             </tr>
                             <tr>
                                 <th>4</th>
-                                <td class="fourth-certificate-name-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fourth-certificate-name"
-                                           name="fourth-certificate-name">
+                                           id="fourth_certificate_name"
+                                           name="fourth_certificate_name">
                                 </td>
-                                <td class="fourth-certificate-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fourth-certificate-day"
-                                           name="fourth-certificate-day">
+                                           id="fourth_certificate_day"
+                                           name="fourth_certificate_day">
                                 </td>
-                                <td class="fourth-certificate-agency-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fourth-certificate-agency"
-                                           name="fourth-certificate-agency">
+                                           id="fourth_certificate_agency"
+                                           name="fourth_certificate_agency">
                                 </td>
                             </tr>
                             <tr>
                                 <th>5</th>
-                                <td class="fifth-certificate-name-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fifth-certificate-name"
-                                           name="fifth-certificate-name">
+                                           id="fifth_certificate_name"
+                                           name="fifth_certificate_name">
                                 </td>
-                                <td class="fifth-certificate-day-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fifth-certificate-day"
-                                           name="fifth-certificate-day">
+                                           id="fifth_certificate_day"
+                                           name="fifth_certificate_day">
                                 </td>
-                                <td class="fifth-certificate-agency-wrap">
+                                <td>
                                     <input type="text"
-                                           id="fifth-certificate-agency"
-                                           name="fifth-certificate-agency">
+                                           id="fifth_certificate_agency"
+                                           name="fifth_certificate_agency">
                                 </td>
                             </tr>
+                            </tbody>
                         </table>
                     </div>
-                    <div class="inquire-form-wrap" style="margin-top: 40px;">
-                        <div style="font-size: 16px; font-weight: bold;">자기소개</div>
-                        <input type="text"
-                               id="subway"
-                               name="subway"
-                               data-parsley-required="true"
-                               style="margin-top: 10px; width: 1280px; height: 250px; border-radius: 25px;"
-                               placeholder="자기소개를 1,000자 이내로 입력해 주세요.">
+
+                    <div class="information-form-wrap common-form-wrap">
+                        <h3>자기소개</h3>
+                        <textarea id="information"
+                                  name="information"
+                                  placeholder="자기소개를 1,000자 이내로 입력해 주세요."></textarea>
                     </div>
-                    <div style="display: flex; flex-wrap: wrap;">
-                        <div style="margin-top: 40px;font-size: 16px; font-weight: bold;">치과 업무 능력 자기 평가표
-                            <span style="margin-left: 10px; color: #222; font-weight: normal;">
-                                생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.
-                            </span>
+
+                    <div class="evaluation-form-wrap common-form-wrap">
+                        <div class="evaluation-title-wrap">
+                            <h3>
+                                치과 업무 능력 자기 평가표
+                            </h3>
+                            <span>생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.</span>
                         </div>
-                        <div class="inquire-form-wrap" style="margin-top: 0; margin-right: 20px;">
-                            <table class="middle5">
-                                <thead>
-                                <tr>
-                                    <th style="width: 190px;">구분</th>
-                                    <th style="width: 220px;"></th>
-                                    <th>자가평가 점수</th>
-                                    <th>교육가능 유무</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($leftList as $category)
-                                    @foreach($category->abilities as $ability)
-                                        <tr>
-                                            @if($loop->first)
-                                                <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                            @endif
-                                            <td>{{ $ability->name }}</td>
-                                            @if($ability->type == 'select')
-                                                <td class="select-box">
-                                                    <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
-                                                        <option value="0">선택</option>
-                                                        <option value="1">경험없음</option>
-                                                        <option value="2">미흡</option>
-                                                        <option value="3">보통</option>
-                                                        <option value="4">잘함</option>
-                                                        <option value="5">매우잘함</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="hidden"
-                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                           value="0">
-                                                    <input type="checkbox"
-                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                           value="1">
-                                                </td>
-                                            @else
-                                                <td class="select-box">
-                                                    <input type="text"
-                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                           placeholder="수기입력" style="width: 200px">
-                                                </td>
-                                            @endif
-                                        </tr>
+                        <div class="evaluation-content-wrap">
+                            <div class="left-content-wrap">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2">구분</th>
+                                        <th>자가평가 점수</th>
+                                        <th>교육가능 유무</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($leftList as $category)
+                                        @foreach($category->abilities as $ability)
+                                            <tr>
+                                                @if($loop->first)
+                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
+                                                @endif
+                                                <td class="ability-cell">{{ $ability->name }}</td>
+                                                @if($ability->type == 'select')
+                                                    <td class="select-cell">
+                                                        <select class="select-menu" name="{{ 'abilities['.$ability->id.'][score]' }}">
+                                                            <option value="0">선택</option>
+                                                            <option value="1">경험없음</option>
+                                                            <option value="2">미흡</option>
+                                                            <option value="3">보통</option>
+                                                            <option value="4">잘함</option>
+                                                            <option value="5">매우잘함</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="checkbox-cell">
+                                                        <input type="hidden"
+                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                               value="0">
+                                                        <input type="checkbox"
+                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                               value="1">
+                                                    </td>
+                                                @else
+                                                    <td class="input-cell" colspan="2">
+                                                        <input type="text"
+                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                               placeholder="수기입력" style="width: 200px">
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="inquire-form-wrap" style="margin-top: 0">
-                            <table class="middle5">
-                                <thead>
-                                <tr>
-                                    <th style="width: 190px;">구분</th>
-                                    <th style="width: 220px;"></th>
-                                    <th>자가평가 점수</th>
-                                    <th>교육가능 유무</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($rightList as $category)
-                                    @foreach($category->abilities as $ability)
-                                        <tr>
-                                            @if($loop->first)
-                                                <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                            @endif
-                                            <td>{{ $ability->name }}</td>
-                                            @if($ability->type == 'select')
-                                                <td class="select-box">
-                                                    <select name="{{ 'abilities['.$ability->id.'][score]' }}" id="">
-                                                        <option value="0">선택</option>
-                                                        <option value="1">경험없음</option>
-                                                        <option value="2">미흡</option>
-                                                        <option value="3">보통</option>
-                                                        <option value="4">잘함</option>
-                                                        <option value="5">매우잘함</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="hidden"
-                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                           value="0">
-                                                    <input type="checkbox"
-                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                           value="1">
-                                                </td>
-                                            @else
-                                                <td>
-                                                    <input type="text"
-                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                           placeholder="수기입력" style="width: 200px">
-                                                </td>
-                                            @endif
-                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="right-content-wrap">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2">구분</th>
+                                        <th>자가평가 점수</th>
+                                        <th>교육가능 유무</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($rightList as $category)
+                                        @foreach($category->abilities as $ability)
+                                            <tr>
+                                                @if($loop->first)
+                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
+                                                @endif
+                                                <td>{{ $ability->name }}</td>
+                                                @if($ability->type == 'select')
+                                                    <td class="select-cell">
+                                                        <select class="select-menu" name="{{ 'abilities['.$ability->id.'][score]' }}">
+                                                            <option value="0">선택</option>
+                                                            <option value="1">경험없음</option>
+                                                            <option value="2">미흡</option>
+                                                            <option value="3">보통</option>
+                                                            <option value="4">잘함</option>
+                                                            <option value="5">매우잘함</option>
+                                                        </select>
+                                                    </td>
+                                                    <td class="checkbox-cell">
+                                                        <input type="hidden"
+                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                               value="0">
+                                                        <input type="checkbox"
+                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
+                                                               value="1">
+                                                    </td>
+                                                @else
+                                                    <td class="input-cell" colspan="2">
+                                                        <input type="text"
+                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                               placeholder="수기입력">
+                                                    </td>
+                                                @endif
+                                            </tr>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <input type="submit">
+                    <div class="btn-wrap">
+                        <button class="btn-submit" type="submit">이력서 등록</button>
+                    </div>
                 </form>
-                <button class="submit" type="submit">이력서 등록</button>
             </section>
         </div>
     </section>
