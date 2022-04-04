@@ -4,7 +4,7 @@
             <li v-for="list in list" :key="list.id">
                 <a class="albatalk-card" href="">
                     <img src="/images/dummy/test2.jpg">
-                    <div class="albatak-information">
+                    <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.title }}</p>
                         <div class="albatalk-description">
                             <p class="albatalk-place">{{ list.location }}</p>
