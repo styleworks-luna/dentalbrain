@@ -103,9 +103,11 @@ mix.sass('resources/sass/desktop/pages/term/term-common.sass', 'public/css/deskt
 
 // mobile
 mix.sass('resources/sass/mobile/app.sass', 'public/css/mobile')
+    .version();
 
 // mobile pages
 mix.sass('resources/sass/mobile/index.sass', 'public/css/mobile')
+    .version();
 
 // mobile 회원가입, 로그인, 아이디 비밀번호 찾기
 mix.sass('resources/sass/mobile/pages/user/login.sass', 'public/css/mobile/pages/user')

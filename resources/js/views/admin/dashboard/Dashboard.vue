@@ -106,11 +106,11 @@ a {
 }
 
 .question-tag {
-    width: 9.6vw;
+    max-width: 9.6vw;
 }
 
 .inquiry-title {
-    width: 21.5vw;
+    max-width: 15vw;
 }
 
 a:hover {
