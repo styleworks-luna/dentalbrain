@@ -113,6 +113,38 @@ a {
     max-width: 15vw;
 }
 
+
+@media screen and (max-width: 1660px) {
+    .question-tag {
+        max-width: 6vw;
+    }
+
+    .inquiry-title {
+        max-width: 14vw;
+    }
+}
+
+@media screen and (max-width: 1550px) {
+    .question-tag {
+        max-width: 5vw;
+    }
+
+    .inquiry-title {
+        max-width: 12vw;
+    }
+}
+
+@media screen and (max-width: 1470px) {
+    .question-tag {
+        max-width: 4vw;
+    }
+
+    .inquiry-title {
+        max-width: 10vw;
+    }
+}
+
+
 a:hover {
     color: #333;
     text-decoration: underline;
