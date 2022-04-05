@@ -18,6 +18,10 @@
 @endsection
 
 @section('content')
+    <article class="header-banner active">
+        <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너" />
+        <a href="" class="btn-close-banner">닫기</a>
+    </article>
     <section class="content">
         <div class="container">
             <section class="top-banner">
@@ -26,13 +30,13 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('banner-redirect',$slide->id) }}">
-                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드">
+                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드" />
                                 </a>
                             </div>
                         @empty
                             <div class="swiper-slide">
                                 <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드" />
                                 </a>
                             </div>
                         @endforelse

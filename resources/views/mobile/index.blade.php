@@ -30,7 +30,9 @@
 @section('content')
     <section class="content">
         <div class="m-container">
-
+            <article class="header-banner">
+                <img src="{{ asset('images/mobile/popup/m_header_banner.png') }}" alt="헤더 베너" />
+            </article>
             <section class="top-banner">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
