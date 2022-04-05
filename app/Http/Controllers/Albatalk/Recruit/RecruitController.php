@@ -44,10 +44,20 @@ class RecruitController extends Controller
     public function create(Request $request)
     {
         $data = $this->recruitTemplate->validateRecruit($request);
-        session(['data' => $data]);
+        session([
+            'data' =>
+                $data,
+        ]);
         $sessionData = $request->session()->get('data');
+        ddd($sessionData);
 
-        $this->recruitTemplate->storeRecruit($sessionData);
+
+        // 결제가 되고 나서 구인 등록
+        $recruit = $this->recruitTemplate->storeRecruit($sessionData);
+        $application = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
+        $salary = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
+        $day = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
+        $benefit = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
 
         return redirect()->route('albatalk.recruit.payment')->with(['data' => $sessionData]);
     }

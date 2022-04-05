@@ -18,7 +18,6 @@ use Illuminate\Validation\Rule;
 
 class RecruitTemplate
 {
-
     public function validateRecruit(Request $request)
     {
         $data = $request->validate([
@@ -54,91 +53,105 @@ class RecruitTemplate
 
     public function storeRecruit(array $data)
     {
-            $recruit = Recruit::create([
-                'user_id' => auth()->id(),
-                'company_name' => $data['company_name'],
-                'company_leader' => $data['company_leader'],
-                'company_license' => $data['company_license'],
-                'company_phone' => $data['company_phone'],
+        $recruit = Recruit::create([
+            'user_id' => auth()->id(),
+            'company_name' => $data['company_name'],
+            'company_leader' => $data['company_leader'],
+            'company_license' => $data['company_license'],
+            'company_phone' => $data['company_phone'],
 
-                'name' => $data['name'],
-                'phone' => $data['phone'],
-                'email' => $data['email'],
-                'url' => $data['url'],
-                'subway' => $data['subway'],
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'email' => $data['email'],
+            'url' => $data['url'],
+            'subway' => $data['subway'],
 
-                'address' => "서울 송파구 오금동",
-                'address_detail' => "아남아파트",
-                'sido' => "서울",
-                'gugun' => '송파구',
-                'dong' => '오금동',
-                'latitude' => '37.50416961685561',
-                'longitude' => '127.02096038259408',
+            'address' => "서울 송파구 오금동",
+            'address_detail' => "아남아파트",
+            'sido' => "서울",
+            'gugun' => '송파구',
+            'dong' => '오금동',
+            'latitude' => '37.50416961685561',
+            'longitude' => '127.02096038259408',
 
-                'type_work_id' => $data['work'],
-                'type_job_id' => $data['job'],
-                'type_study_id' => $data['study'],
-                'career' => $data['career'],
+            'type_work_id' => $data['work'],
+            'type_job_id' => $data['job'],
+            'type_study_id' => $data['study'],
+            'career' => $data['career'],
 
-                'started_at' => $data['started_at'],
-                'ended_at' => $data['ended_at'],
-                'content' => $data['content'],
-            ]);
-
-            // 신청분야 다중 선택값 넣기
-            $application = RecruitApplication::where('recruit_id', '=', $recruit->id)->first();
-            if (!$application) {
-                foreach($data['application'] as $key => $value) {
-                    RecruitApplication::create([
-                        'type' => TypeApplication::find($key)['type'],
-                        'recruit_id' => $recruit->id,
-                        'type_application_id' => $key,
-                    ]);
-                }
-            }
-
-            // 급여
-            $salary = RecruitSalary::where('recruit_id', '=', $recruit->id)->first();
-            if (!$salary) {
-                RecruitSalary::create([
-                    'type' => TypeSalary::find($data['salary'])['type'],
-                    'value' => $data['salary_value'],
-                    'recruit_id' => $recruit->id,
-                    'type_salary_id' => $data['salary'],
-                ]);
-            }
-
-            // 근무요일
-            $day = RecruitDay::where('recruit_id', '=', $recruit->id)->first();
-            if (!$day) {
-                RecruitDay::create([
-                    'type' => TypeDay::find($data['day'])['type'],
-                    'value' => $data['day_value'],
-                    'recruit_id' => $recruit->id,
-                    'type_day_id' => $data['day'],
-                ]);
-            }
-
-            // 복리후생 다중 선택값 넣기
-            $benefit = RecruitBenefit::where('recruit_id', '=', $recruit->id)->first();
-            if (!$benefit) {
-                foreach($data['benefit'] as $key => $value) {
-                    RecruitBenefit::create([
-                        'type' => TypeBenefit::find($key)['type'],
-                        'recruit_id' => $recruit->id,
-                        'type_benefit_id' => $key,
-                    ]);
-                }
-            }
-
-
-        return response()->json([
-            'recruit' => $recruit,
-            'application' => $application,
-            'salary' => $salary,
-            'day' => $day,
-            'benefit' => $benefit,
+            'started_at' => $data['started_at'],
+            'ended_at' => $data['ended_at'],
+            'content' => $data['content'],
         ]);
+
+        return $recruit;
+
+    }
+
+    public function storeRecruitApplication(Recruit $recruit, array $data)
+    {
+        // 신청분야 다중 선택값 넣기
+        $application = RecruitApplication::where('recruit_id', '=', $recruit->id)->first();
+        if (!$application) {
+            foreach ($data['application'] as $key => $value) {
+                RecruitApplication::create([
+                    'type' => TypeApplication::find($key)['type'],
+                    'recruit_id' => $recruit->id,
+                    'type_application_id' => $key,
+                ]);
+            }
+        }
+
+        return $application;
+    }
+
+    public function storeRecruitSalary(Recruit $recruit, array $data)
+    {
+        // 급여
+        $salary = RecruitSalary::where('recruit_id', '=', $recruit->id)->first();
+        if (!$salary) {
+            RecruitSalary::create([
+                'type' => TypeSalary::find($data['salary'])['type'],
+                'value' => $data['salary_value'],
+                'recruit_id' => $recruit->id,
+                'type_salary_id' => $data['salary'],
+            ]);
+        }
+
+        return $salary;
+    }
+
+    public function storeRecruitDay(Recruit $recruit, array $data)
+    {
+        // 근무요일
+        $day = RecruitDay::where('recruit_id', '=', $recruit->id)->first();
+        if (!$day) {
+            RecruitDay::create([
+                'type' => TypeDay::find($data['day'])['type'],
+                'value' => $data['day_value'],
+                'recruit_id' => $recruit->id,
+                'type_day_id' => $data['day'],
+            ]);
+        }
+
+        return $day;
+    }
+
+    public function storeRecruitBenefit(Recruit $recruit, array $data)
+    {
+        // 복리후생 다중 선택값 넣기
+        $benefit = RecruitBenefit::where('recruit_id', '=', $recruit->id)->first();
+        if (!$benefit) {
+            foreach ($data['benefit'] as $key => $value) {
+                RecruitBenefit::create([
+                    'type' => TypeBenefit::find($key)['type'],
+                    'recruit_id' => $recruit->id,
+                    'type_benefit_id' => $key,
+                ]);
+            }
+        }
+
+        return $benefit;
     }
 
 }
