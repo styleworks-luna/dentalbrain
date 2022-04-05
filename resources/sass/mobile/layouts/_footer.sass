@@ -1,13 +1,13 @@
 footer
     +background(null, null, null, $background-color-menu)
-    height: 28.61111111vw
+    height: 36.91111111vw
     position: absolute
     bottom: 0
     left: 0
     right: 0
 
     .footer
-        +padding(5.555555vw 4.44444444vw)
+        +padding(4.655555vw 4.44444444vw)
 
         ul
             +size(91.1111111vw)
@@ -26,7 +26,10 @@ footer
                 display: inline-block
                 content: '|'
 
-            &:nth-child(2n-1):before
+            &:nth-child(2n-1)::before
+                content: ''
+
+            &:nth-child(6)::before
                 content: ''
 
             &:nth-child(2n)

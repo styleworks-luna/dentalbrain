@@ -31,7 +31,9 @@
     <section class="content">
         <div class="m-container">
             <article class="header-banner">
-                <img src="{{ asset('images/mobile/popup/m_header_banner.png') }}" alt="헤더 베너" />
+                <a href="https://dentalbrain.co.kr/customer/notices/35">
+                <img src="{{ asset('images/mobile/popup/m_header_banner.png?20220405') }}" alt="헤더 베너" />
+                </a>
             </article>
             <section class="top-banner">
                 <div class="swiper-container">

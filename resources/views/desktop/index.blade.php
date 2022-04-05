@@ -7,7 +7,7 @@
 @endsection
 
 @section('vue')
-    <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/app/app.js?20220405')}}"></script>
 @endsection
 
 @section('style')
@@ -19,8 +19,10 @@
 
 @section('content')
     <article class="header-banner active">
+        <a href="https://dentalbrain.co.kr/customer/notices/35">
         <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너" />
-        <a href="" class="btn-close-banner">닫기</a>
+        {{--<a href="" class="btn-close-banner">닫기</a>--}}
+        </a>
     </article>
     <section class="content">
         <div class="container">
