@@ -215,13 +215,13 @@
                 </div>
             </section>
 
-            <sectrion id="list" class="lecture-list">
+            <section id="list" class="lecture-list">
                 <ul>
-                    <li class="a"><a>1강</a>임플란트</li>
-                    <li class="a"><a>1강</a>임플란트</li>
-                    <li class="a"><a>1강</a>임플란트</li>
+                    @foreach($program->lectures as $lecture)
+                        <li><a>{{ $loop->index + 1 }}강</a>{{ $lecture->title }}</li>
+                    @endforeach
                 </ul>
-            </sectrion>
+            </section>
 
 
             <section id="comment" class="lecture-comment">

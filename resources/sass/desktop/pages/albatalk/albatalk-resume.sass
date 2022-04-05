@@ -1,14 +1,12 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
-@import '@sass/desktop/layouts/navigation/service.sass'
+
 @import '@sass/components/_button.sass'
 @import '@sass/components/_input.sass'
-@import '@sass/components/_emailbox.sass'
-@import '@sass/components/_textarea.sass'
 @import '@sass/components/_selectbox.sass'
+@import '@sass/components/_textarea.sass'
 @import '@sass/components/_checkbox.sass'
-@import '@sass/components/_radio.sass'
 
 .albatalk-resume-wrap
     .title-wrap
@@ -22,203 +20,274 @@
             +padding(125px 0 0 63px)
             font-weight: bold
             font-size: 48px
-        
-        a
-            +border(1px solid transparent)
-            +size(102px, 36px)
+
+        .albatalk-navigation
+            +margin(top 244px)
+            display: flex
             float: right
-            +margin(top 244px right 20px)
+            justify-content: flex-start
+
+        a
+            +size(102px, 36px)
+            +margin(right 20px)
+            +border(1px solid transparent)
+            +box-sizing(border-box)
             background-color: rgba(0, 0, 0, 0.4)
             border-radius: 1px
-            display: flex
-            align-items: center
-            justify-content: center
-            color: #fff
             font-size: 16px
+            line-height: 36px
+            text-align: center
+            color: #fff
 
-.wanted
+            &:last-child
+                +margin(right 0)
+
+.resume
     +margin(top 60px bottom 80px)
 
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"]
+    input[type="text"]
         +input(white-light-fill)
-        +size(240px, 50px)
-        +margin(right 5px)
+        display: block
         font-size: 14px
-
-    select
-        +selectbox(240px, 50px)
-
-    input[type="radio"]
-        @extend %radio-default
-        +margin(1px 8px 0 0)
-        float: left
 
     input[type="checkbox"]
         @extend %checkbox-default
-        +margin(1px 8px 0 0)
-        float: left
-    label
-        float: left
-        font-size: 16px
-
-    textarea
-        +textarea()
-        +size(1058px, 150px)
-        +padding(top 13px)
-
-    .ui-emailbox
-        +emailbox()
-        float: left
-
-        .ui-emailbox-button .ui-icon
-            +margin(top 22px)
-
-        .at
-            +margin(0 8px)
-
-    select
-        +selectbox(240px, 50px)
-
-        + .ui-selectmenu-button
-            +margin(right 10px)
-            float: left
 
     h2
         font-size: 24px
 
-    .imgcard
-        +size(220px, 293px)
-        +margin(right 20px)
+    .common-form-wrap
+        h3
+            font-weight: bold
+            font-size: 16px
 
-    .inquire-form-wrap
+        table
+            width: 100%
+
+            th
+                +background(null, null, null, $background-color-menu)
+                +box-sizing(border-box)
+                +border(1px solid $border-color-base, bottom)
+                font-size: 16px
+
+            td
+                +padding(11px 0)
+                +border(1px solid $border-color-base, bottom)
+                +box-sizing(border-box)
+                vertical-align: middle
+
+            thead
+                th
+                    +padding(27px 0)
+
+            tbody
+                th
+                    +padding(left 40px)
+                    text-align: left
+                    vertical-align: middle
+
+    .desire-form-wrap
         +margin(top 18px)
 
         table
-            table-layout: fixed
-            +size(1280px)
-            &:nth-child(1)
-                +border(2px solid $gray-900, top)
+            +border(2px solid $border-color-base, top)
 
-        tr
-            +size(1280px, 72px)
+            th
+                +size(190px)
+
+            td
+                +padding(left 20px)
+
+        input[type="text"]
+            +size(1030px, 50px)
+
+    .user-form-wrap
+        +margin(top 40px)
+        display: flex
+        justify-content: space-between
+        align-items: start
+
+        input[type="text"]
+            +size(270px, 50px)
+
+        #address
+            +size(790px)
+
+        .image-wrap
+            .resume-profile
+                +size(220px, 293px)
+                +margin(right 20px)
+                +border(1px dashed $border-color-base)
+                +box-sizing(border-box)
+
+            .image-tip
+                +padding(top 10px)
+                font-size: 12px
+                color: $gray-700
+
+        table
             +border(1px solid $border-color-base, top)
-            &:nth-last-child(1)
-                +border(1px solid $border-color-base, bottom)
-                
 
             th
-                +size(182px)
-                +padding(left 40px top 26px)
-                +background(null, null, null, $background-color-menu)
-                +box-sizing(border-box)
-                font-size: 16px
-                text-align: left
-                vertical-align: top
+                +size(190px)
 
             td
-                +padding(left 20px top 11px bottom 11px)
-                +box-sizing(border-box)
+                +padding(left 20px)
 
-            .address-wrap
-                overflow: hidden
 
-                p
-                    +padding(left 20px top 18px)
+    .double-form-wrap
+        +margin(top 40px)
+        display: flex
+        justify-content: space-between
+
+        table
+            +margin(top 10px)
+
+        .education-form-wrap
+            input[type="text"]
+                +size(370px, 50px)
+
+            table
+                +border(1px solid $border-color-base, top)
+
+                th
+                    +size(190px)
+
+                td
+                    +padding(left 20px right 40px)
+
+        .desire-ranking-form-wrap
+            .input-wrap
+                display: flex
+                justify-content: space-between
+
+            input[type="text"]
+                +size(114px, 50px)
+                +margin(left 41px)
+
+                &:first-child
+                    +margin(left 0)
+
+            table
+                +border(1px solid $border-color-base, top)
+
+                td
+                    +padding(left 20px right 20px)
+
+                thead
+                    th
+                        line-height: 20px
+                        text-align: center
+
+                tbody
+                    th
+                        +size(156px)
+
+    .certification-form-wrap
+        +margin(top 40px)
+
+        input[type="text"]
+            +size(323px, 50px)
+            +margin(0 auto)
+
+        table
+            +margin(top 10px)
+            +border(1px solid $border-color-base, top)
+
+            thead
+                th
+                    +border(1px solid $border-color-base, right)
+                    line-height: 20px
+                    text-align: center
+
+                    &:last-child
+                        +border(0, right)
+
+            tbody
+                th
+                    +size(190px)
+                    +padding(0)
+                    +border(1px solid $border-color-base, right)
+                    text-align: center
+
+                td
+                    +border(1px solid $border-color-base, right)
+
+                    &:last-child
+                        +border(0, right)
+
+    .information-form-wrap
+        +margin(top 40px)
+
+        textarea
+            +textarea()
+            +margin(top 10px)
+            +size(1280px, 250px)
+
+    .evaluation-form-wrap
+        +margin(top 40px)
+
+        .evaluation-title-wrap
+            overflow: hidden
+
+            h3
+                float: left
+
+            span
+                +margin(left 10px)
+                display: block
+                float: left
+                font-size: 16px
+
+        .evaluation-content-wrap
+            +margin(top 10px)
+            display: flex
+            justify-content: space-between
+            align-items: flex-start
+
+            input[type="text"]
+                +size(200px, 50px)
+
+            select
+                +selectbox(112px, 50px)
+
+                + .ui-selectmenu-button
+                    +margin(right 10px)
                     float: left
-                    color: $gray-700
 
-                .btn-address
-                    +btn()
-                    +size(86px, 50px)
-                    +background(null, null, null, $white)
-                    +border(1px solid $border-color-base)
-                    +border-radius(25px)
-                    position: absolute
-                    font-weight: bold
-                    font-size: 14px
-        
-        .head
-            td
-                input[type="text"]
-                    +size(1030px)
+            table
+                +border(1px solid $border-color-base, top)
 
-        .middle
-            input[type="text"]
-                +size(270px)
+                thead
+                    th:first-child
+                        +padding(left 37px)
+                        text-align: left
 
-        .middle2
-            input[type="text"]
-                +size(370px)
-        
-        .middle3
-            width: 620px
-            margin-top: 10px
-            th
-                width: 25%
-                padding-left: 0
-                text-align: center
-            td
-                input[type="text"]
-                    +size(114px)
-        
-        .middle4
-            width: 1280px
-            margin-top: 10px
-            tr
-                +border(1px solid #d8d8d8, right)
-                &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6)
-                    +border(0px solid #d8d8d8, right)
-                    
-            th
-                +border(1px solid #d8d8d8, right)
-                &:nth-child(4)
-                    +border(0px solid #d8d8d8, right)
-                padding-left: 0
-                text-align: center
-            td
-                +border(1px solid #d8d8d8, right)
-                &:nth-child(4)
-                    +border(0px solid #d8d8d8, right)
-                input[type="text"]
-                    +size(323px)
+                tbody
+                    th
+                        +size(190px)
 
-        .middle5
-            width: 630px
-            margin-top: 10px
-            th
-                width: 25%
-                padding-left: 0
-                text-align: center
-            td
-                font-size: 16px
-                input[type="text"]
-                    +size(112px)
-            .select-box
-                +padding(left 0)
+                    td
+                        font-size: 16px
 
-            input[type="checkbox"]
-                +margin(left 30px)
+                    .ability-cell
+                        +padding(left 20px)
 
-    .submit
-        +margin(50px 0px 0px 540px)
-        width: 200px
-        height: 50px
-        border-radius: 27px
-        background-color: #8816b5
-        font-size: 15px
-        color: #ffffff
+                    .select-cell,
+                    .input-cell
+                        +padding(left 10px)
+
+                    .checkbox-cell
+                        +padding(left 42px right 52px)
 
     .btn-wrap
         +size(200px)
-        +margin(50px auto 0 auto)
+        +margin(28px auto 0 auto)
 
         .btn-submit
             +btn(purple-fill)
             +size(200px, 50px)
             font-size: 16px
 
-.title-error-wrap
-    +margin(left 250px)
+.ui-selectmenu-menu
+    +size(112px, auto 200px)

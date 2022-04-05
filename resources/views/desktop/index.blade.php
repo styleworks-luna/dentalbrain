@@ -7,7 +7,7 @@
 @endsection
 
 @section('vue')
-    <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('js/app/app.js?20220405')}}"></script>
 @endsection
 
 @section('style')
@@ -18,6 +18,12 @@
 @endsection
 
 @section('content')
+    <article class="header-banner active">
+        <a href="https://dentalbrain.co.kr/customer/notices/35">
+        <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너" />
+        {{--<a href="" class="btn-close-banner">닫기</a>--}}
+        </a>
+    </article>
     <section class="content">
         <div class="container">
             <section class="top-banner">
@@ -26,13 +32,13 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('banner-redirect',$slide->id) }}">
-                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드">
+                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드" />
                                 </a>
                             </div>
                         @empty
                             <div class="swiper-slide">
                                 <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드" />
                                 </a>
                             </div>
                         @endforelse
@@ -98,37 +104,6 @@
                 <h2>{{ $titles[1] }}</h2>
                 <div class="middle-swiper-container2">
                     <lecture-banner1></lecture-banner1>
-                    {{--
-                    <div class="swiper-wrapper">
-                        <ul class="swiper-slide">
-                            <li class="lecture-card" :key="lectures.id">
-                                <a :href="'/lectures/' + lecture.program_id">
-                                    <img :src="lecture.program.thumbnail.url" alt="">
-                                    <div class="lecture-description">
-                                        <div class="lecture-description-sub">
-                                            <span class="lecture-type">{{lecture.program.minor_category_name}}</span>
-                                            <p class="lecture-date">수강기간 {{ lecture.program.term }}일</p>
-                                            <p class="lecture-time">{{ lecture.program.running_time }}</p>
-                                        </div>
-                                        <p class="lecture-name">{{ lecture.program.title }}</p>
-                                        <divclass="lecture-all-price">
-                                            <template v-if="lecture.program.price != 0 && lecture.program.discount_rate != 0">
-                                                <span class="lecture-sale">{{ lecture.program.discount_rate }}%</span>
-                                                <span class="lecture-price">
-                                                    {{ Helper.numberWithCommas(lecture.program.discounted_price) }}원</span>
-                                                <span class="lecture-ogprice">{{ Helper.numberWithCommas(lecture.program.price) }}원</span>
-                                            </template>
-                                            //if="lecture.program.price != 0 && lecture.program.discount_rate == 0"
-                                            <p class="lecture-price">{{ Helper.numberWithCommas(lecture.program.price) }}원</p>
-                                            //if="lecture.program.price == 0"
-                                            <p class="lecture-price">무료</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    --}}
                 </div>
                 <div class="middle-swiper-button-prev2 swiper-button-prev-common"></div>
                 <div class="middle-swiper-button-next2 swiper-button-next-common"></div>
