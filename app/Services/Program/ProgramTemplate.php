@@ -264,7 +264,7 @@ abstract class ProgramTemplate
             $membership_is_discount = $data['membership_is_discount'];
             if ($membership_is_discount) {
                 $membership_discount_rate = $data['membership_discount_rate'];
-                $membership_discounted_price = $data['discounted_price'];
+                $membership_discounted_price = $data['membership_discounted_price'];
             } else {
                 $membership_discount_rate = 0;
                 $membership_discounted_price = $membership_price;
