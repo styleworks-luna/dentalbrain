@@ -19,8 +19,8 @@
                 <tr v-for="question in questions">
                     <td>{{question.id}}</td>
                     <td>{{question.user.login_id}}</td>
-                    <td><a :href="`/lectures/${question.lecture.program_id}`">{{question.lecture.program.title}}</a></td>
-                    <td><a :href="`/admin/lecture/question/${question.id}/1`">{{question.question}}</a></td>
+                    <td><a :href="`/lectures/${question.lecture.program_id}`" class="question-tag">{{question.lecture.program.title}}</a></td>
+                    <td><a :href="`/admin/lecture/question/${question.id}/1`" class="question-tag">{{question.question}}</a></td>
                     <td><a :href="`/admin/`">{{question.created_at}}</a></td>
                     <td v-if="question.is_answer==true">완료</td>
                     <td else>미완료</td>
@@ -46,7 +46,7 @@
                 <tr v-for="inquiry in inquiries">
                     <td>{{inquiry.id}}</td>
                     <td>{{inquiry.name}}</td>
-                    <td><a :href="`/admin/customer/inquire/${inquiry.id}/1`">{{inquiry.title}}</a></td>
+                    <td><a :href="`/admin/customer/inquire/${inquiry.id}/1`" class="inquiry-title">{{inquiry.title}}</a></td>
                     <td>{{inquiry.created_at}}</td>
                     <td v-if="inquiry.is_answer==true">완료</td>
                     <td else>미완료</td>
@@ -98,7 +98,19 @@ table tbody tr:hover {
     background-color: #DEEBF7;
 }
 a {
+    display: block;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.question-tag {
+    width: 9.6vw;
+}
+
+.inquiry-title {
+    width: 21.5vw;
 }
 
 a:hover {

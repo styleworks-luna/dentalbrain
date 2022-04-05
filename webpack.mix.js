@@ -39,7 +39,8 @@ mix.options({
 
 // global
 mix.js('resources/js/app/app.js', 'public/js/app')
-    .sass('resources/sass/app.sass', 'public/css');
+    .sass('resources/sass/app.sass', 'public/css')
+    .version();
 
 // admin
 mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
@@ -47,7 +48,8 @@ mix.js('resources/js/app/admin/app.js', 'public/js/app/admin');
 // Desktop
 
 // pages TODO: 추후 수정
-mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop');
+mix.sass('resources/sass/desktop/index.sass', 'public/css/desktop')
+    .version();
 
 // popup
 mix.sass('resources/sass/desktop/pages/popup/ie-popup.sass', 'public/css/desktop/pages/popup');
