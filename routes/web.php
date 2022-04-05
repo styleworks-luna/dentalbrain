@@ -38,7 +38,7 @@ if (env('APP_ENV') != 'production') {
         Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 
-    Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
+    Route::get("show", [\App\Http\Controllers\Development\DevelopmentController::class, 'show']);
 
 
     Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
@@ -46,6 +46,7 @@ if (env('APP_ENV') != 'production') {
         Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
             Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
             Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
+            Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
