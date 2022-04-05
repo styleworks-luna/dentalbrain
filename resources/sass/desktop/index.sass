@@ -2,6 +2,42 @@
 @import 'resources/sass/helpers/extends'
 @import 'resources/sass/helpers/mixins'
 
+.header-banner
+    display: none
+    position: fixed
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
+    z-index: 1000
+
+    .btn-close-banner
+        +size(50px, 50px)
+        position: absolute
+        right: 315px
+        top: 0
+        color: $white
+        font-size: 0
+
+        &::before
+            +size(1px, 30px)
+            display: block
+            position: relative
+            left: 24px
+            top: 10px
+            background-color: $white
+            transform: rotate(45deg)
+            content: ''
+
+        &::after
+            +size(1px, 30px)
+            display: block
+            position: relative
+            left: 24px
+            top: -20px
+            background-color: $white
+            transform: rotate(-45deg)
+            content: ''
+
 .lecture_title
     font-weight: bold
     font-size: 30px

@@ -201,6 +201,14 @@ return [
         'address' => '주소',
         'license_num' => '면허번호',
         'name' => '이름',
+        'price' => '가격',
+        'discounted_price' => '할인가',
+        'discount_rate' => '할인율',
+        'membership_price' => '유료회원 가격',
+        'membership_is_discount' => '유료회원 할인 여부',
+        'membership_discounted_price' => '유료회원 할인가',
+        'membership_discount_rate' => '유료회원 할인율',
+        'lecture_info' => '강의 정보',
     ],
 
 ];
