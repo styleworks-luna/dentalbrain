@@ -37,7 +37,7 @@
                         <p>사업장 소재지 : 서울특별시 서초구 효령로 140 (방배동,3층)</p>
                     </li>
                     <li>
-                        <p>TEL : 010-3618-2080</p>
+                        <p>TEL : 02-6747-6520</p>
                     </li>
                 </ul>
                 <div class="office-address">© BRAINSPEC. ALL RIGHTS RESERVED.</div>
