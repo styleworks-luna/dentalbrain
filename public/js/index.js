@@ -73,7 +73,7 @@ $(function () {
         },
     });
 
-    var mySwiper = new Swiper('.middle-swiper-container', {
+    var mySwiper2 = new Swiper('.middle-swiper-container', {
         slidesPerView: 5,
         spaceBetween: 20,
         navigation: {
@@ -82,32 +82,34 @@ $(function () {
         },
     });
 
-    var mySwiper = new Swiper('.middle-swiper-container2', {
-        initialSlide: 0,
-        slidesPerView: 4,
-        spaceBetween: 19,
-        navigation: {
-            nextEl: '.middle-swiper-button-next2',
-            prevEl: '.middle-swiper-button-prev2',
-        },
-        observer: true,
-        observeParents: true,
-        freeMode: true,
-    });
+    setTimeout(function() {
+        var mySwiper3 = new Swiper('.middle-swiper-container2', {
+            initialSlide: 0,
+            slidesPerView: 4,
+            spaceBetween: 19,
+            navigation: {
+                nextEl: '.middle-swiper-button-next2',
+                prevEl: '.middle-swiper-button-prev2',
+            },
+            observer: true,
+            observeParents: true,
+            freeMode: true,
+        });
 
 
-    var mySwiper = new Swiper('.middle-swiper-container3', {
-        initialSlide: 0,
-        slidesPerView: 4,
-        spaceBetween: 19,
-        navigation: {
-            nextEl: '.middle-swiper-button-next3',
-            prevEl: '.middle-swiper-button-prev3',
-        },
-        observer: true,
-        observeParents: true,
-        freeMode: true,
-    });
+        var mySwiper4 = new Swiper('.middle-swiper-container3', {
+            initialSlide: 0,
+            slidesPerView: 4,
+            spaceBetween: 19,
+            navigation: {
+                nextEl: '.middle-swiper-button-next3',
+                prevEl: '.middle-swiper-button-prev3',
+            },
+            observer: true,
+            observeParents: true,
+            freeMode: true,
+        });
+    }, 800)
 
     var mySwiper = new Swiper('.m-middle-swiper-container', {
         slidesPerView: 2.6,
