@@ -5,7 +5,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-resume_detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-resume-detail.css') }}">
 @endsection
 
 @section('content')

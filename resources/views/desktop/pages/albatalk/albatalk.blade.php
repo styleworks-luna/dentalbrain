@@ -8,7 +8,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk.css') }}">
 @endsection
 
 @section('content')
