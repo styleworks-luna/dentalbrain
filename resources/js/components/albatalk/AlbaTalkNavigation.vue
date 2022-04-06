@@ -1,10 +1,9 @@
 <template>
     <div class="albatalk-menu">
-        <h2>구인정보</h2>
         <div class="albatalk-menu-list-wrap">
             <p class="label">근무지역</p>
             <ul class="albatalk-menu-list">
-                <li v-for="menuList in menuLists">
+                <li v-for="menuList in menuLists" :key="menuList.name">
                     <div class="input-wrap">
                         <input type="checkbox" :id="menuList.name" name="menuList.name">
                         <label for="menuList.name">{{ menuList.text }}</label>

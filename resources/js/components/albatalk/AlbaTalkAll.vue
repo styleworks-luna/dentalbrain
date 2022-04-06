@@ -1,7 +1,7 @@
 <template>
     <section class="albatalk">
-        <albatalk-navigation></albatalk-navigation>
         <albatalk-order></albatalk-order>
+        <albatalk-navigation></albatalk-navigation>
         <albatalk-list></albatalk-list>
     </section>
 </template>
