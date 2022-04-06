@@ -1,6 +1,6 @@
 <template>
     <div class="albatalk-contents">
-        <ul class="albatalk-content-list">
+        <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-card" v-for="list in lists" :key="list.id">
                 <a href="">
                     <img src="/images/dummy/test2.jpg">
@@ -12,6 +12,9 @@
                         </div>
                     </div>
                 </a>
+            </li>
+            <li class="none" v-if="lists.length <= 0">
+                <p>등록 된 구인 정보가 없습니다.</p>
             </li>
         </ul>
     </div>

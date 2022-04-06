@@ -6,7 +6,7 @@
                 <li v-for="menuList in menuLists" :key="menuList.name">
                     <div class="input-wrap">
                         <input type="checkbox" :id="menuList.name" name="menuList.name">
-                        <label for="menuList.name">{{ menuList.text }}</label>
+                        <label :for="menuList.name">{{ menuList.text }}</label>
                     </div>
                 </li>
             </ul>

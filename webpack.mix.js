@@ -63,11 +63,12 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
 mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/desktop/pages/membership');
 
 // 알바톡
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-resume-detail.sass', 'public/css/desktop/pages/albatalk');
+mix.sass('resources/sass/desktop/pages/albatalk/albatalk.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-common.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-resume-detail.sass', 'public/css/desktop/pages/albatalk');
 
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
