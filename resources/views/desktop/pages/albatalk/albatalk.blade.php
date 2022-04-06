@@ -8,19 +8,19 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-all.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
 
 @section('content')
     <section class="albatalk-wrap">
         <div class="title-wrap">
             <div class="container">
-                <div class="title">
-                    <h1>알바톡</h1>
+                <div class="albatalk-navigation">
+                    <a href="#">헤드헌팅</a>
+                    <a href="#">구인등록</a>
+                    <a href="#">이력서 등록</a>
                 </div>
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
             </div>
         </div>
         <div class="container">
