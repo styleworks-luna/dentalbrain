@@ -44,26 +44,48 @@ class RecruitController extends Controller
     public function create(Request $request)
     {
         $data = $this->recruitTemplate->validateRecruit($request);
-        session([
-            'data' =>
-                $data,
-        ]);
+
+        session(['data' => $data]);
         $sessionData = $request->session()->get('data');
-        ddd($sessionData);
+//        ddd($sessionData);
 
 
         // 결제가 되고 나서 구인 등록
         $recruit = $this->recruitTemplate->storeRecruit($sessionData);
         $application = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
-        $salary = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
-        $day = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
-        $benefit = $this->recruitTemplate->storeRecruitApplication($recruit, $data);
+        $salary = $this->recruitTemplate->storeRecruitSalary($recruit, $data);
+        $day = $this->recruitTemplate->storeRecruitDay($recruit, $data);
+        $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $data);
 
-        return redirect()->route('albatalk.recruit.payment')->with(['data' => $sessionData]);
+        return redirect()->route('albatalk.recruit.payment.form');
     }
 
-    public function payment()
+    public function showPaymentForm()
     {
-        return view('test');
+        $price = 10000;
+
+        return view('test')->with([
+            'price' => $price,
+        ]);
+    }
+
+    public function detail(Recruit $recruit)
+    {
+        $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
+        $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
+        $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
+        $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
+
+        $recruit->with('typeWork', 'typeJob', 'typeStudy');
+
+        logger($days);
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
+            'recruit' => $recruit,
+            'applications' => $applications,
+            'salaries' => $salaries,
+            'days' => $days,
+            'benefits' => $benefits,
+        ]);
     }
 }

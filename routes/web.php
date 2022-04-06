@@ -44,9 +44,20 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
 
         Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+            // 구인 등록 폼
             Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
+            // 구인 등록
             Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
-            Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
+            // 구인 등록 결제 폼
+            Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'showPaymentForm'])->name('payment.form');
+            // 구인 등록 결제 성공
+
+            // 구인 등록 결과
+
+            // 구인 상세
+            Route::group(['prefix' => '{recruit}'], function () {
+                Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'detail'])->name('detail');
+            });
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {

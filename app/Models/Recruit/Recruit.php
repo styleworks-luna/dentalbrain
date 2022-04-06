@@ -18,6 +18,8 @@ class Recruit extends Model
 
     protected $guarded = [];
 
+    protected $dates = ['ended_at'];
+
     public function recruitApplications(){
         return $this->hasMany(RecruitApplication::class, 'recruit_id', 'id');
     }
