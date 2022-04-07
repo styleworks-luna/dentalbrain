@@ -51,7 +51,7 @@ if (env('APP_ENV') != 'production') {
             // 구인 등록 결제 폼
             Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'showPaymentForm'])->name('payment.form');
             // 구인 등록 결제 성공
-
+            Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
             // 구인 등록 결과
 
             // 구인 상세

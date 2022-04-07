@@ -35,7 +35,7 @@
                     const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                     const orderName = '구인 결제';
                     const customerName = '{{ auth()->user()->name }}';
-                    const successUrl = '{{ route('albatalk.recruit.payment.form') }}';
+                    const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
                     const customerEmail = '{{ auth()->user()->email }}';
                     const customerMobilePhone = '{{ auth()->user()->phone }}';
 

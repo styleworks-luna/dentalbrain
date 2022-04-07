@@ -5,6 +5,7 @@ namespace App\Models\Payments;
 use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Models\Recruit\Recruit;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -212,6 +213,11 @@ class Payment extends Model
     public function student()
     {
         return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
+    }
+
+    public function recruit()
+    {
+        return $this->hasOne(Recruit::class, 'payment_id', 'id');
     }
 
     public function isCard()

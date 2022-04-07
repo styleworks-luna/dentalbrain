@@ -2,6 +2,7 @@
 
 namespace App\Models\Recruit;
 
+use App\Models\Payments\Payment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
@@ -9,8 +10,10 @@ use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
+use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Recruit extends Model
 {
@@ -20,19 +23,28 @@ class Recruit extends Model
 
     protected $dates = ['ended_at'];
 
-    public function recruitApplications(){
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
+
+    public function recruitApplications()
+    {
         return $this->hasMany(RecruitApplication::class, 'recruit_id', 'id');
     }
 
-    public function recruitBenefits(){
+    public function recruitBenefits()
+    {
         return $this->hasMany(RecruitBenefit::class, 'recruit_id', 'id');
     }
 
-    public function recruitDays(){
+    public function recruitDays()
+    {
         return $this->hasMany(RecruitDay::class, 'recruit_id', 'id');
     }
 
-    public function recruitSalaries(){
+    public function recruitSalaries()
+    {
         return $this->hasMany(RecruitSalary::class, 'recruit_id', 'id');
     }
 
@@ -50,6 +62,5 @@ class Recruit extends Model
     {
         return $this->belongsTo(TypeStudy::class, 'type_study_id', 'id');
     }
-
 
 }
