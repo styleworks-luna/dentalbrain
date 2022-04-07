@@ -148,6 +148,7 @@
                                             <input type="button" class="btn-address" value="주소검색">
                                             <input type="text" id="address"
                                                    class="address input-l"
+                                                   readonly
                                                    data-parsley-required-message="※ 주소를 입력해주세요.">
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
