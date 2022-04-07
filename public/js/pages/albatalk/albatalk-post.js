@@ -33,7 +33,7 @@ $(function () {
 
     $('.start-date').blur(function() {
         $(this).removeClass('on-show');
-    })
+    });
 
     $('.end-date').datepicker({
         dateFormat: "yy-mm-dd",
@@ -57,7 +57,7 @@ $(function () {
 
     $('.end-date').focus(function (e) {
         $(this).addClass('on-show');
-    })
+    });
 
     $('.end-date').blur(function() {
         $(this).removeClass('on-show');
