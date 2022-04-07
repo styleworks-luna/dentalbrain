@@ -1,73 +1,91 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-post.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
 
 @section('content')
     <section class="albatalk-post-wrap">
         <div class="title-wrap">
             <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
+                <div class="albatalk-navigation">
+                    <a href="#">헤드헌팅</a>
+                    <a href="#">구인등록</a>
+                    <a href="#">이력서 등록</a>
+                </div>
             </div>
         </div>
         <div class="container">
-            <section class="wanted">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <h2>구인 등록</h2>
-                <form>
-                    <div style="display: flex; float: right;">
-                        <div class="inquire-form-wrap">
-                            <table class="top">
+            <section class="albatalk-post">
+                <div class="sub-title-wrap">
+                    <h2>구인 등록</h2>
+                    <span class="tip">* 필수 입력 항목입니다.</span>
+                </div>
+                <div class="albatalk-post-content">
+                    <form>
+                        <div class="dental-form-wrap">
+                            <div class="thumbnail-wrap">
+                                <img class="main-thumbnail" src="" alt="치과 사진">
+                                <div class="sub-thumbnail-wrap">
+                                    <div class="sub-thumbnail-title">
+                                        <h3>기타 사진</h3>
+                                        <span class="sub-thumbnail-tip">최대 3개까지 등록 가능 (800px × 600px)</span>
+                                    </div>
+                                    <div class="sub-thumbnail-content">
+                                        <img class="sub-thumbnail" src="" alt="치과 사진">
+                                        <img class="sub-thumbnail" src="" alt="치과 사진">
+                                        <img class="sub-thumbnail" src="" alt="치과 사진">
+                                    </div>
+                                </div>
+                                <p class="thumbnail-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF </p>
+                            </div>
+                            <table>
                                 <tr>
                                     <th>치과명 *</th>
-                                    <td class="name-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="name"
-                                               name="name"
+                                               id="dental_name"
+                                               class="input-s"
+                                               name="dental_name"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
 
                                     <th>담당자명 *</th>
-                                    <td class="manager-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="manager"
-                                               name="manager"
+                                               id="manager_name"
+                                               class="input-s"
+                                               name="manager_name"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>대표자명 *</th>
-                                    <td class="ceo-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="ceo"
-                                               name="ceo"
+                                               id="ceo_name"
+                                               class="input-s"
+                                               name="ceo_name"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
                                     <th>담장자 전화번호 *</th>
-                                    <td class="manager-phone-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="manager-phone"
-                                               name="manager-phone"
+                                               id="manager_phone"
+                                               class="input-s"
+                                               name="manager_phone"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -75,9 +93,10 @@
                                 </tr>
                                 <tr>
                                     <th>사업자등록번호 *</th>
-                                    <td class="num-wrap">
+                                    <td>
                                         <input type="text"
                                                id="num"
+                                               class="input-s"
                                                name="num"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
@@ -85,19 +104,21 @@
                                     </td>
 
                                     <th>담장자 이메일 *</th>
-                                    <td class="manager-email-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="manager-email"
-                                               name="manager-email"
+                                               id="manager_email"
+                                               class="input-s"
+                                               name="manager_email"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 이메일을 입력해주세요.">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>전화번호 *</th>
-                                    <td class="phone-wrap">
+                                    <td colspan="3">
                                         <input type="text"
                                                id="phone"
+                                               class="input-s"
                                                name="phone"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
@@ -106,283 +127,355 @@
                                 </tr>
                                 <tr>
                                     <th>홈페이지 주소</th>
-                                    <td class="page-wrap">
+                                    <td colspan="3">
                                         <input type="text"
-                                               id="page"
-                                               name="page"
-                                               data-parsley-required="false">
+                                               id="homepage"
+                                               class="input-xl"
+                                               name="homepage">
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                    <div class="inquire-form-wrap">
-                        <table style="border-top: 0">
-                            <tr>
-                                <th>주소입력 *</th>
-                                <td class="address-wrap">
-                                    <input type="button" class="btn-address" value="주소검색"
-                                           data-index="test">
-                                    <input type="text" id="address" name="surveys[test][address]"
-                                           class="address"
-                                           data-index="test"
-                                           readonly="readonly"
-                                           data-parsley-required-message="※ 주소를 입력해주세요.">
-                                    <input type="text" id="address-detail"
-                                           name="surveys[test][address_detail]"
-                                           class="address-detail"
-                                           placeholder="상세주소를 입력"
-                                           data-parsley-required-message="상세주소를 입력하세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>인근 지하철역</th>
-                                <td class="subway-wrap">
-                                    <input type="text"
-                                           id="subway"
-                                           name="subway"
-                                           value="{{ old('subway') }}"
-                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>신청분야 *</th>
-                                <td class="field-wrap">
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">진료전반</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">상담/데스크</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">교정</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">보철</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">예방</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">구강외과</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">소아</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
 
-                                    <label id="field">스케일링</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">실장</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>근무형태 *</th>
-                                <td class="work-type-wrap">
-                                    <input type="radio" id="field" name="type_work" value="1"
-                                           @if(old('type_work') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">정규직</label>
-                                    <input type="radio" id="field" name="type_work" value="2"
-                                           @if(old('type_work') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">계약직</label>
-                                    <input type="radio" id="field" name="type_work" value="3"
-                                           @if(old('type_work') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">아르바이트</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>직종 *</th>
-                                <td class="job-wrap">
-                                    <input type="radio" id="field" name="type_job" value="1"
-                                           @if(old('type_job') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">치과위생사</label>
-                                    <input type="radio" id="field" name="type_job" value="2"
-                                           @if(old('type_job') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">간호조무사</label>
-                                    <input type="radio" id="field" name="type_job" value="3"
-                                           @if(old('type_job') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">관리 및 경영지원</label>
-                                    <input type="radio" id="field" name="type_job" value="4"
-                                           @if(old('type_job') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">코디네이터/리셉션</label>
-                                    <input type="radio" id="field" name="type_job" value="5"
-                                           @if(old('type_job') == 5) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">무관</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>급여 *</th>
-                                <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_salary" value="1"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">협의 후 결정</label>
-                                    <input type="radio" id="field" name="type_salary" value="2"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">내규에 따름</label>
-                                    <input type="radio" id="field" name="type_salary" value="3"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">연봉제</label>
-                                    <input type="radio" id="field" name="type_salary" value="4"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>학력 *</th>
-                                <td class="school-wrap">
-                                    <input type="radio" id="field" name="type_study"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" placeholder="학력선택">
-                                    <input type="radio" id="field" name="type_study"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>경력 *</th>
-                                <td class="career-wrap">
-                                    <input type="radio" id="field" name="career"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">신입</label>
-                                    <input type="radio" id="field" name="career"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field" class="last">경력</label>
-                                    <input type="text" name="career" value="{{ old('career') }}"
-                                           placeholder="경력기간 선택">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>근무요일 *</th>
-                                <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_day" value="1"
-                                           @if(old('type_day') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~금(주 5일)</label>
-                                    <input type="radio" id="field" name="type_day" value="2"
-                                           @if(old('type_day') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토(토요일 격주 휴무)</label>
-                                    <input type="radio" id="field" name="type_day" value="3"
-                                           @if(old('type_day') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토</label>
-                                    <input type="radio" id="field" name="type_day" value="4"
-                                           @if(old('type_day') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>복리후생 *</th>
-                                <td class="welfare-wrap">
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="1" @if(old('type_benefit[]')) checked @endif>
-                                    <label>점심식자</label>
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="124135"><label>유니폼</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>주차</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>자기계발비</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연월차지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">휴가비지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>4대보험지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연봉제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>인센티브제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>퇴직금지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">야근수당지원</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>모집마감일 *</th>
-                                <td class="deadline-wrap">
-                                    <input type="radio" id="field" name="deadline"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" name="started_at" value="{{old('started_at')}}"
-                                           placeholder="시작일자 선택">
-                                    <input class="time" type="text" placeholder="HH:mm">
-                                    <label id="field">부터</label>
-                                    <input type="text" name="ended_at" value="{{old('ended_at')}}" placeholder="마감일자 선택">
-                                    <input class="time2" type="text" placeholder="HH:mm">
-                                    <input type="radio" id="until-hiring" name="deadline">
-                                    <label name="until-hiring" for="until-hiring">채용시까지</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>상세정보</th>
-                                <td class="Detail-wrap">
-                                    <input type="textarea" id="field" name="content" value="{{old('content')}}">
+                        <div class="dental-additional-form-wrap">
+                            <table>
+                                <tr>
+                                    <th>주소입력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="address-wrap">
+                                            <input type="button" class="btn-address" value="주소검색">
+                                            <input type="text" id="address"
+                                                   class="address input-l"
+                                                   readonly="readonly"
+                                                   data-parsley-required-message="※ 주소를 입력해주세요.">
+                                            <input type="text" id="address_detail"
+                                                   class="address-detail input-l"
+                                                   placeholder="상세주소를 입력"
+                                                   data-parsley-required="true"
+                                                   data-parsley-required-message="상세주소를 입력하세요">
+                                        </div>
+                                        <div class="map"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>인근 지하철역</th>
+                                    <td class="wrapper-s">
+                                        <input type="text"
+                                               id="subway"
+                                               class="input-xxl"
+                                               name="subway"
+                                               placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>신청분야 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="checkbox-container">
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_01"
+                                                       name="application_type">
+                                                <label for="application_field_01">진료전반</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_02"
+                                                       name="application_type">
+                                                <label for="application_field_02">상담/데스크</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_03"
+                                                       name="application_type">
+                                                <label for="application_field_03">교정</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_04"
+                                                       name="application_type">
+                                                <label for="application_field_04">보철</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_05"
+                                                       name="application_type">
+                                                <label for="application_field_05">예방</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_06"
+                                                       name="application_type">
+                                                <label for="application_field_06">구강외과</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_07"
+                                                       name="application_type">
+                                                <label for="application_field_07">소아</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_08"
+                                                       name="application_type">
+                                                <label for="application_field_08">스케일링</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="application_field_09"
+                                                       name="application_type">
+                                                <label for="application_field_09">실장</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>근무형태 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="work_type_field_01" name="work_type" value="1">
+                                                <label for="work_type_field_01">정규직</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="work_type_field_02" name="work_type" value="2">
+                                                <label for="work_type_field_02">계약직</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="work_type_field_03" name="job_type" value="3">
+                                                <label for="work_type_field_03">아르바이트</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>직종 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="job_type_filed_01" name="job_type" value="1">
+                                                <label id="job_type_filed_01">치과위생사</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="job_type_filed_02" name="job_type" value="2">
+                                                <label id="job_type_filed_02">간호조무사</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="job_type_filed_03" name="job_type" value="3">
+                                                <label id="job_type_filed_03">관리 및 경영지원</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="job_type_filed_04" name="job_type" value="4">
+                                                <label id="job_type_filed_04">코디네이터/리셉션</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="job_type_filed_05" name="job_type" value="5">
+                                                <label id="job_type_filed_05">무관</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>급여 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="salary_type_field_01" name="salary_type"
+                                                       value="1">
+                                                <label for="salary_type_field_01">협의 후 결정</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="salary_type_field_02" name="salary_type"
+                                                       value="2">
+                                                <label for="salary_type_field_02">내규에 따름</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="salary_type_field_03" name="salary_type"
+                                                       value="3">
+                                                <label for="salary_type_field_03">연봉제</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="salary_type_field_04" name="salary_type"
+                                                       value="4">
+                                                <label for="salary_type_field_04">기타</label>
+                                                <input type="text" class="input-m radio-input"
+                                                       placeholder="내용을 입력해주세요.">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>학력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="study_type_field_01" name="study_type">
+                                                <select class="input-xs select-menu">
+                                                    <option value="">학력 선택</option>
+                                                </select>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="study_type_field_02" name="study_type">
+                                                <label for="study_type_field_02">기타</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>경력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="career_field_01" name="career">
+                                                <label for="career_field_01">신입</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="career_field_02" name="career">
+                                                <label for="career_field_02" class="career-radio-label">경력</label>
+                                                <select name="" id="" class="input-xs radio-input select-menu">
+                                                    <option value="">경력기간 선택</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>근무요일 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="day_type_field_01" name="day_type" value="1">
+                                                <label for="day_type_field_01">월~금(주 5일)</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="day_type_field_02" name="day_type" value="2">
+                                                <label for="day_type_field_02">월~토(토요일 격주 휴무)</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="day_type_field_03" name="day_type" value="3">
+                                                <label for="day_type_field_03">월~토</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="day_type_field_04" name="day_type" value="4">
+                                                <label for="day_type_field_04">기타</label>
+                                                <input type="text" class="input-m radio-input"
+                                                       placeholder="내용을 입력해주세요.">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>복리후생 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="checkbox-grid-container">
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_01" name="benefit_type"
+                                                       value="1">
+                                                <label for="benefit_type_field_01">점심식사 제공</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_02" name="benefit_type"
+                                                       value="2">
+                                                <label for="benefit_type_field_02">유니폼</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_03" name="benefit_type"
+                                                       value="3">
+                                                <label for="benefit_type_field_03">주차</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_04" name="benefit_type"
+                                                       value="4">
+                                                <label for="benefit_type_field_04">자기계발비</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_05" name="benefit_type"
+                                                       value="5">
+                                                <label for="benefit_type_field_05">연월차지원</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_06" name="benefit_type"
+                                                       value="6">
+                                                <label for="benefit_type_field_06">휴가비지원</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_07" name="benefit_type"
+                                                       value="7">
+                                                <label for="benefit_type_field_07">4대보험지원</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_08" name="benefit_type"
+                                                       value="8">
+                                                <label for="benefit_type_field_08">연봉제</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_09" name="benefit_type"
+                                                       value="9">
+                                                <label for="benefit_type_field_09">인센티브제</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_10" name="benefit_type"
+                                                       value="10">
+                                                <label for="benefit_type_field_10">퇴직금지원</label>
+                                            </div>
+                                            <div class="checkbox-wrap">
+                                                <input type="checkbox" id="benefit_type_field_11" name="benefit_type"
+                                                       value="11">
+                                                <label for="benefit_type_field_11">야근수당지원</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>모집마감일 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="deadline_field_01" name="deadline">
 
-                                    </input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>결제금액</th>
-                                <td class="payment-wrap">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>결제방식 *</th>
-                                <td class="paydeail-wrap">
-                                    <span>
-                                        <input type="radio" id="field" name="paydeail"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                        <label id="field">신용카드</label>
-                                        <input type="text" placeholder="신한">
-                                    </span>
-                                    <input class="last" type="radio" id="field" name="paydeail"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">실시간 계좌이체</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <button class="submit" type="submit">구인공고 등록</button>
-                </form>
+                                                <input type="text" class="input-xs start-date" name="started_at"
+                                                       placeholder="시작일자 선택" readonly>
+                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm">
+                                                <p class="time-from">부터</p>
+                                                <input type="text" class="input-xs end-date" name="ended_at"
+                                                       placeholder="마감일자 선택">
+                                                <input type="text" class="input-xxs end-tme" placeholder="HH:mm">
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="deadline_field_02" name="deadline">
+                                                <label for="deadline_field_02">채용시까지</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>상세정보</th>
+                                    <td class="wrapper-s">
+                                        <textarea></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>결제금액</th>
+                                    <td class="wrapper-lg">
+                                        <p class="money">100,000원</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>결제방식 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="pay_method_filed_01" name="pay_method">
+                                                <label for="pay_method_filed_01" class="card-radio-label">신용카드</label>
+                                                <select name="" id="" class="input-xs select-menu">
+                                                    <option value="">신한</option>
+                                                </select>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input class="last" type="radio" id="pay_method_filed_01"
+                                                       name="pay_method">
+                                                <label id="pay_method_filed_01">실시간 계좌이체</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btn-wrap">
+                            <button class="btn-submit" type="submit">구인공고 등록</button>
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
     </section>
