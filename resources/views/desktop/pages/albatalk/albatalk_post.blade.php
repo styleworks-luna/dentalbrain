@@ -4,6 +4,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bx56ktabzx&submodules=geocoder"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 @endsection
 
 @section('style')
@@ -146,7 +148,6 @@
                                             <input type="button" class="btn-address" value="주소검색">
                                             <input type="text" id="address"
                                                    class="address input-l"
-                                                   readonly="readonly"
                                                    data-parsley-required-message="※ 주소를 입력해주세요.">
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
@@ -154,7 +155,9 @@
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="상세주소를 입력하세요">
                                         </div>
-                                        <div class="map"></div>
+                                        <div id="map" class="map">
+
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>

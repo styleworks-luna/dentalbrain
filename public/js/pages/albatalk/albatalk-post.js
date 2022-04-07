@@ -7,6 +7,56 @@ $(function () {
         })
     }
 
+    // search address
+    function DaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                var roadAddr = data.roadAddress;
+                var addresses = $('.address');
+
+                addresses.val(roadAddr);
+                searchAddressToCoordinate(addresses.val());
+            },
+        }).open({
+            autoClose: true
+        });
+    }
+
+    $('.btn-address').click(function () {
+        DaumPostcode();
+    });
+
+    // naver map
+    var mapOptions = {
+        center: new naver.maps.LatLng(37.481431, 126.999342),
+        zoom: 17
+    };
+
+    var map = new naver.maps.Map('map', mapOptions);
+
+    var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(37.481431, 126.999342),
+        map: map
+    });
+
+    function searchAddressToCoordinate(address) {
+        naver.maps.Service.geocode({
+            query: address
+        }, function (status, response) {
+            if (status !== naver.maps.Service.Status.OK) {
+                return alert('오류가 발생하였습니다.');
+            }
+
+            var result = response.v2, // 검색 결과의 컨테이너
+                item = result.addresses[0], // 검색 결과의 배열
+                point = new naver.maps.Point(item.x, item.y);
+
+            map.setCenter(point);
+            marker.setPosition(point);
+        });
+    }
+
+    // date event
     $('.start-date').datepicker({
         dateFormat: "yy-mm-dd",
         beforeShow: function (input, inst) {
@@ -31,7 +81,7 @@ $(function () {
         $(this).addClass('on-show');
     });
 
-    $('.start-date').blur(function() {
+    $('.start-date').blur(function () {
         $(this).removeClass('on-show');
     });
 
@@ -59,7 +109,7 @@ $(function () {
         $(this).addClass('on-show');
     });
 
-    $('.end-date').blur(function() {
+    $('.end-date').blur(function () {
         $(this).removeClass('on-show');
     });
 });
