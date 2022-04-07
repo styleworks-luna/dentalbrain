@@ -428,7 +428,7 @@
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm">
                                                 <p class="time-from">부터</p>
                                                 <input type="text" class="input-xs end-date" name="ended_at"
-                                                       placeholder="마감일자 선택">
+                                                       placeholder="마감일자 선택" readonly>
                                                 <input type="text" class="input-xxs end-tme" placeholder="HH:mm">
                                             </div>
                                             <div class="radio-wrap">

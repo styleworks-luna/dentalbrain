@@ -6,12 +6,60 @@ $(function () {
             width: 240
         })
     }
+
     $('.start-date').datepicker({
         dateFormat: "yy-mm-dd",
+        beforeShow: function (input, inst) {
+            setTimeout(function () {
+                inst.dpDiv.css({
+                    top: $('.start-date').offset().top + 35,
+                    left: $('.start-date').offset().left
+                });
+            }, 0);
+        },
+        showMonthAfterYear: true,
+        nextText: "",
+        prevText: "",
         numberOfMonths: 1,
-        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
         minDate: 0,
-        yearSuffix: '년'
+        yearSuffix: '.',
+    });
+
+    $('.start-date').focus(function (e) {
+        $(this).addClass('on-show');
+    });
+
+    $('.start-date').blur(function() {
+        $(this).removeClass('on-show');
+    })
+
+    $('.end-date').datepicker({
+        dateFormat: "yy-mm-dd",
+        showMonthAfterYear: true,
+        beforeShow: function (input, inst) {
+            setTimeout(function () {
+                inst.dpDiv.css({
+                    top: $('.end-date').offset().top + 35,
+                    left: $('.end-date').offset().left
+                });
+            }, 0);
+        },
+        nextText: "",
+        prevText: "",
+        numberOfMonths: 1,
+        monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        minDate: 0,
+        yearSuffix: '.',
+    });
+
+    $('.end-date').focus(function (e) {
+        $(this).addClass('on-show');
+    })
+
+    $('.end-date').blur(function() {
+        $(this).removeClass('on-show');
     });
 });

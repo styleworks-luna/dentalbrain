@@ -8,6 +8,7 @@
 @import '@sass/components/_selectbox.sass'
 @import '@sass/components/_checkbox.sass'
 @import '@sass/components/_radio.sass'
+@import '@sass/components/_datepicker.sass'
 
 .albatalk-post
     +margin(top 80px bottom 80px)
@@ -137,6 +138,7 @@
 
             .wrapper-lg
                 +padding(top 27px bottom 27px)
+
             td
                 +padding(left 20px)
 
@@ -195,6 +197,11 @@
 
                         .start-date
                             +margin(right 10px)
+                            transition: all 0.2s ease-in-out
+
+                            &.on-show
+                                border-bottom-left-radius: 0
+                                border-bottom-right-radius: 0
 
                         .time-from
                             +margin(0 20px)
@@ -202,6 +209,11 @@
 
                         .end-date
                             +margin(right 10px)
+                            transition: all 0.2s ease-in-out
+
+                            &.on-show
+                                border-bottom-left-radius: 0
+                                border-bottom-right-radius: 0
 
                 .checkbox-container
                     display: flex
@@ -228,3 +240,6 @@
                     font-size: 16px
                     line-height: 18px
                     color: $page-color
+
+.ui-datepicker
+    +size(240px)
