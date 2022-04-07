@@ -35,7 +35,8 @@
                                 <td>
                                     <input type="text"
                                            id="work_area"
-                                           name="work_area"/>
+                                           name="work_area"
+                                           value="{{ old("work_area") }}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -43,7 +44,8 @@
                                 <td>
                                     <input type="text"
                                            id="work_day"
-                                           name="work_day"/>
+                                           name="work_day"
+                                           value="{{ old("work_day") }}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -51,7 +53,8 @@
                                 <td>
                                     <input type="text"
                                            id="work_time"
-                                           name="work_time"/>
+                                           name="work_time"
+                                           value="{{ old("work_time") }}"/>
                                 </td>
                             </tr>
                         </table>
@@ -71,6 +74,7 @@
                                            id="name"
                                            class="name"
                                            name="name"
+                                           value="{{ old("name") }}"
                                            placeholder="이름 입력 (최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 이름을 입력해주세요"/>
@@ -81,6 +85,7 @@
                                            id="english_name"
                                            class="english-name"
                                            name="english_name"
+                                           value="{{ old("english_name") }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 영문 이름을 입력해주세요."/>
                                 </td>
@@ -92,6 +97,7 @@
                                            id="birthday"
                                            class="birthday"
                                            name="birthday"
+                                           value="{{ old("birthday") }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 생년 월일을 입력해주세요."/>
                                 </td>
@@ -102,6 +108,7 @@
                                            id="phone"
                                            class="phone"
                                            name="phone"
+                                           value="{{ old("phone") }}"
                                            placeholder="‘-‘ 없이 입력"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 휴대폰 번호를 입력해주세요."/>
@@ -112,8 +119,9 @@
                                 <td>
                                     <input type="text"
                                            id="emergency_phone"
-                                           name="emergency_phone"
                                            class="emergency-phone"
+                                           name="emergency_phone"
+                                           value="{{ old("emergency_phone") }}"
                                            placeholder="‘-‘ 없이 입력"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 비상연락처를 입력해주세요."/>
@@ -125,6 +133,7 @@
                                            id="email"
                                            class="email"
                                            name="email"
+                                           value="{{ old("email") }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 이메일을 입력해주세요."/>
                                 </td>
@@ -136,6 +145,7 @@
                                            id="address"
                                            class="address"
                                            name="address"
+                                           value="{{ old("address") }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 주소를 입력해주세요"/>
                                 </td>
@@ -150,13 +160,13 @@
                                 <tr>
                                     <th>학위취득년월</th>
                                     <td>
-                                        <input type="text" name="grade_day">
+                                        <input type="text" name="graduated_at" value="{{ old("graduated_at") }}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>출신학교</th>
                                     <td>
-                                        <input type="text" name="school">
+                                        <input type="text" name="school" value="{{ old("school") }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -164,7 +174,7 @@
                                     <td>
                                         <input type="text"
                                                id="major"
-                                               name="major">
+                                               name="major" value="{{ old("major") }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -172,7 +182,8 @@
                                     <td>
                                         <input type="text"
                                                id="degree"
-                                               name="degree">
+                                               name="degree"
+                                               value="{{ old("degree") }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -180,7 +191,8 @@
                                     <td>
                                         <input type="text"
                                                id="graduated"
-                                               name="graduated">
+                                               name="graduation_type"
+                                               value="{{ old("graduation_type") }}">
                                     </td>
                                 </tr>
                             </table>
@@ -343,8 +355,9 @@
                     <div class="information-form-wrap common-form-wrap">
                         <h3>자기소개</h3>
                         <textarea id="information"
-                                  name="information"
-                                  placeholder="자기소개를 1,000자 이내로 입력해 주세요."></textarea>
+                                  name="about_me"
+                                  placeholder="자기소개를 1,000자 이내로 입력해 주세요."
+                        >{{ old('about_me','') }}</textarea>
                     </div>
 
                     <div class="evaluation-form-wrap common-form-wrap">
@@ -372,15 +385,37 @@
                                                     <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
                                                 @endif
                                                 <td class="ability-cell">{{ $ability->name }}</td>
+                                                <input type="hidden"
+                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                       value="{{ $ability->id }}">
                                                 @if($ability->type == 'select')
                                                     <td class="select-cell">
-                                                        <select class="select-menu" name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option value="0">선택</option>
-                                                            <option value="1">경험없음</option>
-                                                            <option value="2">미흡</option>
-                                                            <option value="3">보통</option>
-                                                            <option value="4">잘함</option>
-                                                            <option value="5">매우잘함</option>
+                                                        <select class="select-menu"
+                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
+                                                            <option
+                                                                value="0">
+                                                                선택
+                                                            </option>
+                                                            <option value="1"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
+                                                                경험없음
+                                                            </option>
+                                                            <option value="2"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
+                                                                미흡
+                                                            </option>
+                                                            <option value="3"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
+                                                                보통
+                                                            </option>
+                                                            <option value="4"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
+                                                                잘함
+                                                            </option>
+                                                            <option value="5"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
+                                                                매우잘함
+                                                            </option>
                                                         </select>
                                                     </td>
                                                     <td class="checkbox-cell">
@@ -389,12 +424,15 @@
                                                                value="0">
                                                         <input type="checkbox"
                                                                name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1">
+                                                               value="1"
+                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
+                                                        >
                                                     </td>
                                                 @else
                                                     <td class="input-cell" colspan="2">
                                                         <input type="text"
                                                                name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
                                                                placeholder="수기입력" style="width: 200px">
                                                     </td>
                                                 @endif
@@ -421,15 +459,37 @@
                                                     <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
                                                 @endif
                                                 <td class="ability-cell">{{ $ability->name }}</td>
+                                                <input type="hidden"
+                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                       value="{{ $ability->id }}">
                                                 @if($ability->type == 'select')
                                                     <td class="select-cell">
-                                                        <select class="select-menu" name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option value="0">선택</option>
-                                                            <option value="1">경험없음</option>
-                                                            <option value="2">미흡</option>
-                                                            <option value="3">보통</option>
-                                                            <option value="4">잘함</option>
-                                                            <option value="5">매우잘함</option>
+                                                        <select class="select-menu"
+                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
+                                                            <option
+                                                                value="0">
+                                                                선택
+                                                            </option>
+                                                            <option value="1"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
+                                                                경험없음
+                                                            </option>
+                                                            <option value="2"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
+                                                                미흡
+                                                            </option>
+                                                            <option value="3"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
+                                                                보통
+                                                            </option>
+                                                            <option value="4"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
+                                                                잘함
+                                                            </option>
+                                                            <option value="5"
+                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
+                                                                매우잘함
+                                                            </option>
                                                         </select>
                                                     </td>
                                                     <td class="checkbox-cell">
@@ -438,13 +498,16 @@
                                                                value="0">
                                                         <input type="checkbox"
                                                                name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1">
+                                                               value="1"
+                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
+                                                        >
                                                     </td>
                                                 @else
                                                     <td class="input-cell" colspan="2">
                                                         <input type="text"
                                                                name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                               placeholder="수기입력">
+                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
+                                                               placeholder="수기입력" style="width: 200px">
                                                     </td>
                                                 @endif
                                             </tr>
@@ -455,6 +518,24 @@
                             </div>
                         </div>
                     </div>
+                    {{--
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $key => $error)
+                                    <li>{{ $key }} => {{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                @foreach ($errors->keys() as $key)
+                                    <li>{{ $key }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    --}}
                     <div class="btn-wrap">
                         <button class="btn-submit" type="submit">이력서 등록</button>
                     </div>
