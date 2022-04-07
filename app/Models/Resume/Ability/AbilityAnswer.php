@@ -2,8 +2,10 @@
 
 namespace App\Models\Resume\Ability;
 
+use App\Models\Resume\Resume;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
@@ -27,8 +29,13 @@ class AbilityAnswer extends Model
         'can_learn' => 'boolean',
     ];
 
-    public function ability(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function ability(): BelongsTo
     {
         return $this->belongsTo(Ability::class, 'ability_id', 'id');
+    }
+
+    public function resume(): BelongsTo
+    {
+        return $this->belongsTo(Resume::class, 'resume_id', 'id');
     }
 }
