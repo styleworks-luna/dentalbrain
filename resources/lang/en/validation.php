@@ -96,7 +96,7 @@ return [
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
-    'required' => ':attribute 를 작성해야 합니다.',
+    'required' => ':attribute 작성이 필요합니다.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
     'required_with' => ':attribute 는 :values 와 함께 있어야 합니다.',
@@ -209,6 +209,8 @@ return [
         'membership_discounted_price' => '유료회원 할인가',
         'membership_discount_rate' => '유료회원 할인율',
         'lecture_info' => '강의 정보',
+        'resume_image' => '이력서 사진',
+        'english_name' => '영문 이름',
     ],
 
 ];
