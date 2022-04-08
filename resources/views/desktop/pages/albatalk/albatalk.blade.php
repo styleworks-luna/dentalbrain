@@ -14,15 +14,7 @@
 
 @section('content')
     <section class="albatalk-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <div class="albatalk-navigation">
-                    <a href="#">헤드헌팅</a>
-                    <a href="#">구인등록</a>
-                    <a href="#">이력서 등록</a>
-                </div>
-            </div>
-        </div>
+        @include('desktop.layouts.albatalk')
         <div class="container">
             <albatalk-all></albatalk-all>
         </div>

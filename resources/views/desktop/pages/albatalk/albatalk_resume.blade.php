@@ -13,19 +13,11 @@
 
 @section('content')
     <section class="albatalk-resume-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <div class="albatalk-navigation">
-                    <a href="#">헤드헌팅</a>
-                    <a href="#">구인등록</a>
-                    <a href="#">이력서 등록</a>
-                </div>
-            </div>
-        </div>
+        @include('desktop.layouts.albatalk')
         <div class="container">
             <section class="resume">
                 <h2>이력서 작성</h2>
-                <form action="{{ route('albatalk.resume.create') }}" method="post"
+                <form action="{{ route('albatalk.resume.store') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
@@ -545,7 +537,6 @@
                             </div>
                         </div>
                     </div>
-                    {{--
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
