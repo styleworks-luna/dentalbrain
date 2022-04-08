@@ -20,7 +20,7 @@
 
                     <section class="resume-information-wrap">
                         <div class="resume-image">
-                            <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                            <img src="{{ $resume->file->url ?? '' }}" alt="강의 사진">
                         </div>
                         <div class="resume-information">
                             <h2 class="resume-title">{{ $resume->name }}</h2>
@@ -179,251 +179,49 @@
                                 <th style="width: 16%"></th>
                                 <th>자가평가 점수</th>
                                 <th>교육가능 유무</th>
+                            </tr>
+                            @foreach($leftList as $answer)
+                                <tr>
+                                    <td>{{ $answer->ability->category->name }}</td>
+                                    <td>{{ $answer->ability->name }}</td>
+                                    <td>
+                                        @switch($answer->score)
+                                            @case(1) 경험없음 @break
+                                            @case(2) 미흡 @break
+                                            @case(3) 보통 @break
+                                            @case(4) 잘함 @break
+                                            @case(5) 매우잘함 @break
+                                            @default 보통
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $answer->can_learn ? '●': '' }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                        <table class="self-test">
+                            <tr>
                                 <th style="width: 14%">구분</th>
                                 <th style="width: 16%"></th>
                                 <th>자가평가 점수</th>
                                 <th>교육가능 유무</th>
                             </tr>
-                            <tr>
-                                <td>임플란트</td>
-                                <td>구치부싱글크라운 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>러버댐장착</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>임플란트</td>
-                                <td>임플란트 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>인레이셋팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>임플란트</td>
-                                <td>임플란트 셋팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>임플란트</td>
-                                <td>전치부레진필링</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>임플란트</td>
-                                <td>사용했던 임플란트 종류</td>
-                                <td></td>
-                                <td></td>
-                                <td>보존</td>
-                                <td>구치부 레진 필링</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>어시스트</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>CA 레진 필링</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>구치부싱글크라운 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>base 도포</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>구치부싱글크라운 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>실란트</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>전치부싱글크라운 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>불소도포</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>전치부싱글크라운 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>PA촬영(구내엑스레이촬영)</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>구치부브릿지 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>보존</td>
-                                <td>pano촬영</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>구치부브릿지 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>Ceph촬영</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>전치부브릿지 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>교정환자 cleasing</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>전치부브릿지 임시치아</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>와이어 넣기</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>싱글크라운셋팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>와이어 결찰</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>싱글크라운(여러개) 셋팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>진단 모델 인상채득</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>브릿지셋팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>마운팅</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보철</td>
-                                <td>resin core</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>E/O촬영</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>치주</td>
-                                <td>스켈링</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>I/O촬영</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>치주</td>
-                                <td>Curette</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>교정</td>
-                                <td>석고 붓기</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>미백</td>
-                                <td>전문가미백</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>상담</td>
-                                <td>임플란트 상담</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>미백</td>
-                                <td>Curette</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>상담</td>
-                                <td>보철 상담</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보험청구</td>
-                                <td>교정과 보험청구</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>상담</td>
-                                <td>덴쳐상담</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td>보험청구</td>
-                                <td>교정외 보험청구</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                                <td>상담</td>
-                                <td>교정상담</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>병원 OPEN</td>
-                                <td>open&setting</td>
-                                <td>매우잘함</td>
-                                <td>●</td>
-                            </tr>
+                            @foreach($rightList as $answer)
+                                <tr>
+                                    <td>{{ $answer->ability->category->name }}</td>
+                                    <td>{{ $answer->ability->name }}</td>
+                                    <td>
+                                        @switch($answer->score)
+                                            @case(1) 경험없음 @break
+                                            @case(2) 미흡 @break
+                                            @case(3) 보통 @break
+                                            @case(4) 잘함 @break
+                                            @case(5) 매우잘함 @break
+                                            @default 보통
+                                        @endswitch
+                                    </td>
+                                    <td>{{ $answer->can_learn ? '●': '' }}</td>
+                                </tr>
+                            @endforeach
                         </table>
                     </section>
                 </div>

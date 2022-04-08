@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Albatalk\Resume;
 use App\Http\Controllers\Controller;
 use App\Models\File;
 use App\Models\Resume\Ability\Ability;
+use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\Resume;
 use App\Services\File\ResumeThumbnail;
@@ -63,9 +64,10 @@ class ResumeController extends Controller
             $abilityAnswers = $resume->abilityAnswers()->createMany($abilityValidator->validated());
 
             $resumeThumbnail = new ResumeThumbnail($resume);
-            $resumeThumbnail->saveFile($fileValidator->validated()['resume_image']);
+            $resume->file = $resumeThumbnail->saveFile($fileValidator->validated()['resume_image']);
 
             $resume->user = Auth::user();
+
             $resume->save();
         } catch (\Exception $exception) {
             report($exception);
@@ -78,13 +80,28 @@ class ResumeController extends Controller
     public function detail(Request $request)
     {
         $userId = Auth::id();
-        $resume = Resume::query()->with(['file', 'user', 'abilityAnswers'])
+        $resume = Resume::query()->with(['file', 'user'])
             ->where('user_id', '=', $userId)->first();
 
         if ($resume == null) {
             return \redirect()->route('albatalk.recruit.create')->with('alert', '이력서를 생성해 주세요.');
         }
 
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail', ['resume' => $resume]);
+        $leftList = AbilityAnswer::query()
+            ->whereHas('ability.category', function ($query) {
+                return $query->where('id', '<=', 5);
+            })
+            ->where('resume_id', '=', $resume->id)->get();
+        $rightList = AbilityAnswer::query()
+            ->whereHas('ability.category', function ($query) {
+                return $query->where('id', '>', 5);
+            })
+            ->where('resume_id', '=', $resume->id)->get();
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail', [
+            'resume' => $resume,
+            'leftList' => $leftList,
+            'rightList' => $rightList,
+        ]);
     }
 }
