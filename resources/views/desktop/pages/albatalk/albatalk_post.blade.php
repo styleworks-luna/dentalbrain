@@ -254,6 +254,7 @@
                                                     <label for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
+                                                               class="radio-input input-m"
                                                                value="{{old("salary_value")}}"
                                                                placeholder="내용을 입력해주세요.">
                                                     @endif
@@ -307,7 +308,7 @@
                                                            value={{$day->id}} @if(old('day') == $day->id) checked @endif>
                                                     <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
                                                     @if($day->id == 4)
-                                                        <input type="text" name="day_value" value="{{old("day_value")}}"
+                                                        <input type="text" name="day_value" class="radio-input input-m" value="{{old("day_value")}}"
                                                                placeholder="내용을 입력해주세요.">
                                                     @endif
                                                 </div>
