@@ -30,47 +30,54 @@
                         <div class="albatalk-image">
                             <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
                             <div style="display: flex">
-                                <img class="frist-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                                <img class="second-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                                <img class="third-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                                <img class="frist-detail"
+                                     src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG"
+                                     alt="강의 사진">
+                                <img class="second-detail"
+                                     src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG"
+                                     alt="강의 사진">
+                                <img class="third-detail"
+                                     src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG"
+                                     alt="강의 사진">
                             </div>
                         </div>
                         <div class="albatalk-information">
-                            <h2 class="albatalk-title">서초 온오프믹스 치과<span>모집마감일 :  2월 17일까지</span></h2>
+                            <h2 class="albatalk-title">{{$recruit->company_name}}
+                                <span>모집마감일 : {{$recruit->ended_at->format('n 월 d일까지')}}</span></h2>
                             <div class="albatalk-card" style="display: flex; flex-wrap: wrap;">
                                 <table class="first-card">
                                     <tr>
                                         <th>대표자명</th>
-                                        <td><p class="albatalk-length">홍길동</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->company_leader}}</p></td>
                                     </tr>
                                     <tr>
                                         <th>사업자등록번호</th>
-                                        <td><p class="albatalk-length">123-123-12345</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->company_license}}</p></td>
                                     </tr>
                                     <tr>
                                         <th>전화번호</th>
-                                        <td><p class="albatalk-length">02-123-12345</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->company_phone}}</p></td>
                                     </tr>
 
                                 </table>
                                 <table class="second-card">
                                     <tr>
                                         <th>담당자명</th>
-                                        <td><p class="albatalk-length">홍길순</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->name}}</p></td>
                                     </tr>
                                     <tr>
                                         <th>담당자 전화번호</th>
-                                        <td><p class="albatalk-length">123-123-12345</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->phone}}</p></td>
                                     </tr>
                                     <tr>
                                         <th>담당자 이메일</th>
-                                        <td><p class="albatalk-length">hongildong@test.com</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->email}}</p></td>
                                     </tr>
                                 </table>
                                 <table class="third-card">
                                     <tr>
                                         <th>홈페이지 주소</th>
-                                        <td><p class="albatalk-length">http://dbv2020.onoffmix.test</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->url}}</p></td>
                                     </tr>
                                     <tr>
                                         <th>주소</th>
@@ -78,7 +85,7 @@
                                     </tr>
                                     <tr>
                                         <th>인근 지하철역</th>
-                                        <td><p class="albatalk-length">7호선 논현역 1번 출구 도보 5분</p></td>
+                                        <td><p class="albatalk-length">{{$recruit->subway}}</p></td>
                                     </tr>
                                 </table>
                             </div>
@@ -94,23 +101,37 @@
                             <table style="padding-top: 18px">
                                 <tr>
                                     <th>신청분야</th>
-                                    <td><p class="albatalk-length">진료전반, 상담/데스크, 교정, 보철, 예방</p></td>
+                                    <td><p class="albatalk-length">
+                                            @foreach($applications as $application)
+                                                @if($loop->last)
+                                                    {{$application->type}}
+                                                @else
+                                                    {{$application->type}},
+                                                @endif
+                                            @endforeach
+                                        </p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>근무형태</th>
-                                    <td><p class="albatalk-length">정규직</p></td>
+                                    <td><p class="albatalk-length">{{$recruit->typeWork->type}}</p></td>
                                 </tr>
                                 <tr>
                                     <th>직종</th>
-                                    <td><p class="albatalk-length">치과위생사</p></td>
+                                    <td><p class="albatalk-length">{{$recruit->typeJob->type}}</p></td>
                                 </tr>
                                 <tr>
                                     <th>급여</th>
-                                    <td><p class="albatalk-length">협의 후 결정</p></td>
+                                    @if($salaries[0]->type_salary_id == 4)
+                                        <td><p class="albatalk-length">{{$salaries[0]->value}}</p></td>
+                                    @else
+                                        <td><p class="albatalk-length">{{$salaries[0]->type}}</p></td>
+                                    @endif
+
                                 </tr>
                                 <tr>
                                     <th>학력</th>
-                                    <td><p class="albatalk-length">대학교 졸업(학사)</p></td>
+                                    <td><p class="albatalk-length">{{$recruit->typeStudy->type}}</p></td>
                                 </tr>
                             </table>
                             <table style="padding-top: 18px">
@@ -120,11 +141,23 @@
                                 </tr>
                                 <tr>
                                     <th>근무요일</th>
-                                    <td><p class="albatalk-length">월~금(주5일)</p></td>
+                                    @if($days[0]->type_day_id == 4)
+                                        <td><p class="albatalk-length">{{$days[0]->value}}</p></td>
+                                    @else
+                                        <td><p class="albatalk-length">{{$days[0]->type}}</p></td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <th>복리후생</th>
-                                    <td><p class="albatalk-length">점심식자 제공, 유니폼, 주차, 자기계발비, 연월차지원, 휴가비지원, 4대보험지원, 연봉제, 인센티브제, 퇴직금 지원, 야근수당지원</p></td>
+                                    <td><p class="albatalk-length">@foreach($applications as $application)
+                                                @if($loop->last)
+                                                    {{$application->type}}
+                                                @else
+                                                    {{$application->type}},
+                                                @endif
+                                            @endforeach
+                                        </p>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -133,12 +166,7 @@
                         </div>
                         <div class="second">
                             <div class="text">
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
+                                {{$recruit->content}}
                             </div>
                         </div>
                     </section>

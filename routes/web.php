@@ -38,13 +38,26 @@ if (env('APP_ENV') != 'production') {
         Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 
-    Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
+    Route::get("show", [\App\Http\Controllers\Development\DevelopmentController::class, 'show']);
 
 
     Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
 
         Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+            // 구인 등록 폼
+            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
+            // 구인 등록
+            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
+            // 구인 등록 결제 폼
+            Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'showPaymentForm'])->name('payment.form');
+            // 구인 등록 결제 성공
+            Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
+            // 구인 등록 결과
 
+            // 구인 상세
+            Route::group(['prefix' => '{recruit}'], function () {
+                Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'detail'])->name('detail');
+            });
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
@@ -61,17 +74,13 @@ if (env('APP_ENV') != 'production') {
             return view(viewPrefix() . 'pages.albatalk.albatalk');
         });
 
-        Route::get('post', function () {
-            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-        });
+//        Route::get('post', function () {
+//            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
+//        });
 
         Route::get('detail', function () {
             return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
         });
-
-        Route::get('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
-
-        Route::post('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('store');
     });
 
     Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecruitSalary extends Model
 {
+
+    protected $guarded = [];
+
     public function recruit()
     {
         return $this->belongsTo(Recruit::class, 'recruit_id', 'id');

@@ -3,90 +3,150 @@
 namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\SuccessPayments;
+use App\Models\Payments\Payment;
+use App\Models\Recruit\Option\RecruitApplication;
+use App\Models\Recruit\Option\RecruitBenefit;
+use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitSalary;
+use App\Models\Recruit\Option\TypeApplication;
+use App\Models\Recruit\Option\TypeBenefit;
 use App\Models\Recruit\Option\TypeDay;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
+use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\Recruit\RecruitTemplate;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RecruitController extends Controller
 {
-    public function payment()
+    protected $recruitTemplate;
+
+    public function __construct()
+    {
+        $this->recruitTemplate = new RecruitTemplate();
+    }
+
+    public function createForm()
+    {
+        return view(viewPrefix() . 'pages.albatalk.albatalk_post')->with([
+            'typeApplication' => TypeApplication::all(),
+            'typeWork' => TypeWork::all(),
+            'typeJob' => TypeJob::all(),
+            'typeSalary' => TypeSalary::all(),
+            'typeStudy' => TypeStudy::all(),
+            'typeDay' => TypeDay::all(),
+            'typeBenefit' => TypeBenefit::all(),
+        ]);
+    }
+
+    public function detail(Recruit $recruit)
+    {
+        $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
+        $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
+        $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
+        $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
+
+        $recruit->with('typeWork', 'typeJob', 'typeStudy');
+
+        logger($days);
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
+            'recruit' => $recruit,
+            'applications' => $applications,
+            'salaries' => $salaries,
+            'days' => $days,
+            'benefits' => $benefits,
+        ]);
+    }
+
+    public function create(Request $request)
+    {
+//         구인 등록 유효성 검사
+        $data = $this->recruitTemplate->validateRecruit($request);
+
+        // 검사한 데이터 세션에 저장
+        session(['data' => $data]);
+
+//        $sessionData = $request->session()->get('data');
+
+        return redirect()->route('albatalk.recruit.payment.form');
+    }
+
+    public function showPaymentForm()
     {
         return view('test');
     }
 
-    public function store(Request $request)
+    public function success(SuccessPayments $request)
     {
-        $recruit = $request->validate([
-            'company_name' => ['required', 'string', 'min:2', 'max:255'],
-            'company_leader' => ['required', 'string', 'max:255'],
-            'company_license' => ['required', 'string', 'max:255'],
-            'company_phone' => ['required', 'numeric', 'digits_between:9,11'],
+        // validation : amount (금액) 확인
+//        $validator = Validator::make($request->all(), [
+//            'amount', ['required', 'numeric', 'min:100'],
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
+//        }
 
-            'name' => ['required', 'string', 'min:2', 'max:100'],
-            'phone' => ['required', 'numeric', 'digits_between:9,11'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'url' => ['required', 'url'],
-            'subway' => ['nullable', 'string', 'max:255'],
+        // 결제 승인 API
+        try {
 
-            // checkbox
-            'type_application' => ['required'],
-            // radio
-            'type_work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
-            // radio
-            'type_job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
-            // radio
-            'type_salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
-            // radio + text ***
-            'type_study' => ['required', 'digits_between:1,13'],
-            // radio + text
-            'career' => ['required', 'numeric'],
-            // radio
-            'type_day' => ['required', Rule::in([TypeDay::$TYPE_DAY_1, TypeDay::$TYPE_DAY_2, TypeDay::$TYPE_DAY_3, TypeDay::$TYPE_DAY_4])],
-            // checkbox
-            'type_benefit' => ['required'],
+            // TossPayment 객체생성
+            $tossPayments = new TossPayments($request['paymentKey']);
+            $tossResponse = $tossPayments->success($request['orderId'], $request['amount']);
 
-            'started_at' => ['required', 'date_format:Y-m-d'],
-            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
-            'content' => ['nullable'],
-        ]);
+            logger($tossResponse);
 
-        Recruit::create([
-            'user_id' => auth()->id(),
-            'company_name' => $recruit['company_name'],
-            'company_leader' => $recruit['company_name'],
-            'company_license' => $recruit['company_name'],
-            'company_phone' => $recruit['company_name'],
+            // response 오류
+            if (!$tossResponse) {
+                return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
+            }
 
-            'name' => $recruit['name'],
-            'phone' => $recruit['phone'],
-            'email' => $recruit['email'],
-            'url' => $recruit['url'],
-            'subway' => $recruit['subway'],
+            DB::beginTransaction();
 
-            'address' => "서울 송파구 오금동",
-            'address_detail' => "아남아파트",
-            'sido' => "서울",
-            'gugun' => '송파구',
-            'dong' => '오금동',
-            'latitude' => '37.50416961685561',
-            'longitude' => '127.02096038259408',
+            // 구인등록 인스턴스 생성
+            $recruitData = $request->session()->get('data');
+            $recruit = $this->recruitTemplate->storeRecruit($recruitData);
+            $application = $this->recruitTemplate->storeRecruitApplication($recruit, $recruitData);
+            $salary = $this->recruitTemplate->storeRecruitSalary($recruit, $recruitData);
+            $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
+            $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
 
-            'type_work_id' => $recruit['type_work'],
-            'type_job_id' => $recruit['type_job'],
-            'type_study_id' => $recruit['type_study'],
-            'career' => $recruit['career'],
+            // 페이먼츠 인스턴스 생성
+            $payment = Payment::createByTossSuccess($tossResponse);
 
-            'started_at' => $recruit['started_at'],
-            'ended_at' => $recruit['ended_at'],
-            'content' => $recruit['content'],
-        ]);
+            // 구인등록 페이먼츠 생성
+            // 방금 만들어진 구인등록에 대한 처리가 필요!
 
-        ddd($request->request);
+            logger($recruit->id);
+            $recruitUpdate = Recruit::find($recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
 
-        return redirect()->route('albatalk.payment');
+            logger($recruitUpdate);
+
+            DB::commit();
+        } catch (TossPaymentsException $exception) {
+            DB::rollBack();
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+
+            Log::error('PROGRAM TOSS SUCCESS ERROR', [$exception]);
+            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
+        }
+
+        return view('emails.content')->with(
+            [
+                "title" => "payments",
+                "content" => "success",
+            ]
+        );
     }
 }

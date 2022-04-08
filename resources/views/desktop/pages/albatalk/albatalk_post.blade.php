@@ -4,7 +4,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bx56ktabzx&submodules=geocoder"></script>
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bx56ktabzx&submodules=geocoder"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
@@ -27,13 +28,23 @@
             </div>
         </div>
         <div class="container">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <section class="albatalk-post">
                 <div class="sub-title-wrap">
                     <h2>구인 등록</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form>
+                    <form action={{route('albatalk.recruit.create')}} method="post">
+                        @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
                                 <img class="main-thumbnail" src="" alt="치과 사진">
@@ -55,9 +66,11 @@
                                     <th>치과명 *</th>
                                     <td>
                                         <input type="text"
+
                                                id="dental_name"
                                                class="input-s"
                                                name="dental_name"
+                                               value="{{old('dental_name')}}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
@@ -68,6 +81,7 @@
                                                id="manager_name"
                                                class="input-s"
                                                name="manager_name"
+                                               value="{{old('manager_name')}}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
@@ -79,6 +93,7 @@
                                                id="ceo_name"
                                                class="input-s"
                                                name="ceo_name"
+                                               value="{{old('ceo_name')}}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
@@ -90,6 +105,7 @@
                                                id="manager_phone"
                                                class="input-s"
                                                name="manager_phone"
+                                               value="{{old('manager_phone')}}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -102,6 +118,7 @@
                                                id="num"
                                                class="input-s"
                                                name="num"
+                                               value="{{old('num')}}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
@@ -113,6 +130,7 @@
                                                id="manager_email"
                                                class="input-s"
                                                name="manager_email"
+                                               value="{{old('manager_email')}}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 이메일을 입력해주세요.">
                                     </td>
@@ -124,6 +142,7 @@
                                                id="phone"
                                                class="input-s"
                                                name="phone"
+                                               value="{{old('dental_name')}}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -135,7 +154,8 @@
                                         <input type="text"
                                                id="homepage"
                                                class="input-xl"
-                                               name="homepage">
+                                               name="homepage"
+                                               value="{{old('homepage')}}">
                                     </td>
                                 </tr>
                             </table>
@@ -158,9 +178,7 @@
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="상세주소를 입력하세요">
                                         </div>
-                                        <div id="map" class="map">
-
-                                        </div>
+                                        <div id="map" class="map"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,6 +188,7 @@
                                                id="subway"
                                                class="input-xxl"
                                                name="subway"
+                                               value="{{old('subway')}}"
                                                placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)">
                                     </td>
                                 </tr>
@@ -177,51 +196,14 @@
                                     <th>신청분야 *</th>
                                     <td class="wrapper-lg">
                                         <div class="checkbox-container">
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_01"
-                                                       name="application_type">
-                                                <label for="application_field_01">진료전반</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_02"
-                                                       name="application_type">
-                                                <label for="application_field_02">상담/데스크</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_03"
-                                                       name="application_type">
-                                                <label for="application_field_03">교정</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_04"
-                                                       name="application_type">
-                                                <label for="application_field_04">보철</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_05"
-                                                       name="application_type">
-                                                <label for="application_field_05">예방</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_06"
-                                                       name="application_type">
-                                                <label for="application_field_06">구강외과</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_07"
-                                                       name="application_type">
-                                                <label for="application_field_07">소아</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_08"
-                                                       name="application_type">
-                                                <label for="application_field_08">스케일링</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="application_field_09"
-                                                       name="application_type">
-                                                <label for="application_field_09">실장</label>
-                                            </div>
+                                            @foreach($typeApplication as $application)
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox" id="application_field_[{{$application->id}}]"
+                                                           name="application[{{$application->id}}]"
+                                                           @if(old('application')[$application->id] ?? 'off' == 'on') checked @endif>
+                                                    <label for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>
@@ -229,18 +211,17 @@
                                     <th>근무형태 *</th>
                                     <td class="wrapper-lg">
                                         <div class="radio-container">
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="work_type_field_01" name="work_type" value="1">
-                                                <label for="work_type_field_01">정규직</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="work_type_field_02" name="work_type" value="2">
-                                                <label for="work_type_field_02">계약직</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="work_type_field_03" name="job_type" value="3">
-                                                <label for="work_type_field_03">아르바이트</label>
-                                            </div>
+                                            @foreach($typeWork as $work)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="work_type_field_[{{$work->id}}]"
+                                                           name="work"
+                                                           value={{$work->id}}
+                                                           @if(old('work') == $work->id)
+                                                                   checked
+                                                            @endif>
+                                                    <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>
@@ -248,26 +229,13 @@
                                     <th>직종 *</th>
                                     <td class="wrapper-lg">
                                         <div class="radio-container">
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="job_type_filed_01" name="job_type" value="1">
-                                                <label id="job_type_filed_01">치과위생사</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="job_type_filed_02" name="job_type" value="2">
-                                                <label id="job_type_filed_02">간호조무사</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="job_type_filed_03" name="job_type" value="3">
-                                                <label id="job_type_filed_03">관리 및 경영지원</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="job_type_filed_04" name="job_type" value="4">
-                                                <label id="job_type_filed_04">코디네이터/리셉션</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="job_type_filed_05" name="job_type" value="5">
-                                                <label id="job_type_filed_05">무관</label>
-                                            </div>
+                                            @foreach($typeJob as $job)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="job_type_filed_[{{$job->id}}]" name="job"
+                                                           value={{$job->id}} @if(old('job') == $job->id) checked @endif>
+                                                    <label id="job_type_filed_[{{$job->id}}]">{{$job->type}}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>
@@ -275,28 +243,22 @@
                                     <th>급여 *</th>
                                     <td class="wrapper-s">
                                         <div class="radio-container">
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="salary_type_field_01" name="salary_type"
-                                                       value="1">
-                                                <label for="salary_type_field_01">협의 후 결정</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="salary_type_field_02" name="salary_type"
-                                                       value="2">
-                                                <label for="salary_type_field_02">내규에 따름</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="salary_type_field_03" name="salary_type"
-                                                       value="3">
-                                                <label for="salary_type_field_03">연봉제</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="salary_type_field_04" name="salary_type"
-                                                       value="4">
-                                                <label for="salary_type_field_04">기타</label>
-                                                <input type="text" class="input-m radio-input"
-                                                       placeholder="내용을 입력해주세요.">
-                                            </div>
+                                            @foreach($typeSalary as $salary)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="salary_type_field_[{{$salary->id}}]"
+                                                           name="salary"
+                                                           value={{$salary->id}}
+                                                           @if(old('salary') == $salary->id)
+                                                                   checked
+                                                            @endif>
+                                                    <label for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
+                                                    @if($salary->id == 4)
+                                                        <input type="text" name="salary_value"
+                                                               value="{{old("salary_value")}}"
+                                                               placeholder="내용을 입력해주세요.">
+                                                    @endif
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>
@@ -305,13 +267,13 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_01" name="study_type">
+                                                <input type="radio" id="study_type_field_01" name="study">
                                                 <select class="input-xs select-menu">
                                                     <option value="">학력 선택</option>
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_02" name="study_type">
+                                                <input type="radio" id="study_type_field_02" name="study">
                                                 <label for="study_type_field_02">기타</label>
                                             </div>
                                         </div>
@@ -339,24 +301,17 @@
                                     <th>근무요일 *</th>
                                     <td class="wrapper-s">
                                         <div class="radio-container">
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="day_type_field_01" name="day_type" value="1">
-                                                <label for="day_type_field_01">월~금(주 5일)</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="day_type_field_02" name="day_type" value="2">
-                                                <label for="day_type_field_02">월~토(토요일 격주 휴무)</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="day_type_field_03" name="day_type" value="3">
-                                                <label for="day_type_field_03">월~토</label>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="day_type_field_04" name="day_type" value="4">
-                                                <label for="day_type_field_04">기타</label>
-                                                <input type="text" class="input-m radio-input"
-                                                       placeholder="내용을 입력해주세요.">
-                                            </div>
+                                            @foreach($typeDay as $day)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="day_type_field_[{{$day->id}}]" name="day"
+                                                           value={{$day->id}} @if(old('day') == $day->id) checked @endif>
+                                                    <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
+                                                    @if($day->id == 4)
+                                                        <input type="text" name="day_value" value="{{old("day_value")}}"
+                                                               placeholder="내용을 입력해주세요.">
+                                                    @endif
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>
@@ -364,61 +319,14 @@
                                     <th>복리후생 *</th>
                                     <td class="wrapper-lg">
                                         <div class="checkbox-grid-container">
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_01" name="benefit_type"
-                                                       value="1">
-                                                <label for="benefit_type_field_01">점심식사 제공</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_02" name="benefit_type"
-                                                       value="2">
-                                                <label for="benefit_type_field_02">유니폼</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_03" name="benefit_type"
-                                                       value="3">
-                                                <label for="benefit_type_field_03">주차</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_04" name="benefit_type"
-                                                       value="4">
-                                                <label for="benefit_type_field_04">자기계발비</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_05" name="benefit_type"
-                                                       value="5">
-                                                <label for="benefit_type_field_05">연월차지원</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_06" name="benefit_type"
-                                                       value="6">
-                                                <label for="benefit_type_field_06">휴가비지원</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_07" name="benefit_type"
-                                                       value="7">
-                                                <label for="benefit_type_field_07">4대보험지원</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_08" name="benefit_type"
-                                                       value="8">
-                                                <label for="benefit_type_field_08">연봉제</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_09" name="benefit_type"
-                                                       value="9">
-                                                <label for="benefit_type_field_09">인센티브제</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_10" name="benefit_type"
-                                                       value="10">
-                                                <label for="benefit_type_field_10">퇴직금지원</label>
-                                            </div>
-                                            <div class="checkbox-wrap">
-                                                <input type="checkbox" id="benefit_type_field_11" name="benefit_type"
-                                                       value="11">
-                                                <label for="benefit_type_field_11">야근수당지원</label>
-                                            </div>
+                                            @foreach($typeBenefit as $benefit)
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
+                                                           name="benefit[{{$benefit->id}}]"
+                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif>
+                                                    <label for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </td>
                                 </tr>

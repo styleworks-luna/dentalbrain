@@ -26,7 +26,7 @@
             <section class="resume">
                 <h2>이력서 작성</h2>
                 <form action="{{ route('albatalk.resume.create') }}" method="post"
-                      enctype="application/x-www-form-urlencoded">
+                      enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
                         <table>
@@ -63,7 +63,12 @@
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
                             <img class="resume-profile"
-                                 src="http://dbv2020.onoffmix.test/storage/program/2/thumbnail/123.jpg" alt="이력서 사진"/>
+                                 id="profile-preview"
+                                 src="/storage/program/2/thumbnail/123.jpg" alt="이력서 사진"/>
+{{--                            1. profile-preview의 src값을 복구--}}
+{{--                            2. ajax로 하는 것.--}}
+                            <input type="file" accept="image/jpeg, image/png, image/gif" id="profile-input"
+                                   name="resume_image">
                             <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                         </div>
                         <table>
