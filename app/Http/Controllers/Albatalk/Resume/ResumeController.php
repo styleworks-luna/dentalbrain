@@ -64,9 +64,9 @@ class ResumeController extends Controller
             $abilityAnswers = $resume->abilityAnswers()->createMany($abilityValidator->validated());
 
             $resumeThumbnail = new ResumeThumbnail($resume);
-            $resume->file = $resumeThumbnail->saveFile($fileValidator->validated()['resume_image']);
+            $resume->file_id = $resumeThumbnail->saveFile($fileValidator->validated()['resume_image'])->id;
 
-            $resume->user = Auth::user();
+            $resume->user_id = Auth::id();
 
             $resume->save();
         } catch (\Exception $exception) {
