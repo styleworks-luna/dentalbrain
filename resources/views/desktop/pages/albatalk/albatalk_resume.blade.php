@@ -9,6 +9,7 @@
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-resume.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
 
 @section('content')
@@ -16,7 +17,10 @@
         @include('desktop.layouts.albatalk')
         <div class="container">
             <section class="resume">
-                <h2>이력서 작성</h2>
+                <div class="sub-title-wrap">
+                    <h2>이력서 작성</h2>
+                    <span class="tip">* 필수 입력 항목입니다.</span>
+                </div>
                 <form action="{{ route('albatalk.resume.store') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
@@ -569,7 +573,6 @@
                             </ul>
                         </div>
                     @endif
-                    --}}
                     <div class="btn-wrap">
                         <button class="btn-submit" type="submit">이력서 등록</button>
                     </div>
