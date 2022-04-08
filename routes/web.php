@@ -64,9 +64,7 @@ if (env('APP_ENV') != 'production') {
             Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('store');
             Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
 
-            Route::get('detail', function () {
-                return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
-            });
+            Route::get('detail', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'detail'])->name('detail');
         });
 
         Route::get('head-hunting', function () {
@@ -76,14 +74,6 @@ if (env('APP_ENV') != 'production') {
         // 알바톡(임시)
         Route::get('/', function () {
             return view(viewPrefix() . 'pages.albatalk.albatalk');
-        });
-
-//        Route::get('post', function () {
-//            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-//        });
-
-        Route::get('detail', function () {
-            return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
         });
     });
 

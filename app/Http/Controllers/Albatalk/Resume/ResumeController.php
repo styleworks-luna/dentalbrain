@@ -74,4 +74,17 @@ class ResumeController extends Controller
 
         return \redirect('/')->with('alert', '등록되었습니다.');
     }
+
+    public function detail(Request $request)
+    {
+        $userId = Auth::id();
+        $resume = Resume::query()->with(['file', 'user', 'abilityAnswers'])
+            ->where('user_id', '=', $userId)->first();
+
+        if ($resume == null) {
+            return \redirect()->route('albatalk.recruit.create')->with('alert', '이력서를 생성해 주세요.');
+        }
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail', ['resume' => $resume]);
+    }
 }
