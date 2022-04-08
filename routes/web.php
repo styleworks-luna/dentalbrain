@@ -60,26 +60,20 @@ if (env('APP_ENV') != 'production') {
             });
         });
 
-        Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
-            Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('create');
-            Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('create');
+        Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+            Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('store');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
 
-            Route::get('detail', function () {
-                return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
-            });
+            Route::get('detail', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'detail'])->name('detail');
         });
+
+        Route::get('head-hunting', function () {
+            return back()->with('alert', '헤드헌팅으로 리다이렉트');
+        })->name('head-hunting');
 
         // 알바톡(임시)
         Route::get('/', function () {
             return view(viewPrefix() . 'pages.albatalk.albatalk');
-        });
-
-//        Route::get('post', function () {
-//            return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-//        });
-
-        Route::get('detail', function () {
-            return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
         });
     });
 

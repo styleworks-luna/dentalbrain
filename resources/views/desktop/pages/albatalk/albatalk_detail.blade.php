@@ -10,13 +10,7 @@
 
 @section('content')
     <section class="albatalk-detail-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
-            </div>
-        </div>
+        @include('desktop.layouts.albatalk')
         <div class="container">
             <form id="albatalk-detail-form">
                 <div class="row">

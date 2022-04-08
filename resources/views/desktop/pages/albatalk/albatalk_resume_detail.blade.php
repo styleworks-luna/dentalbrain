@@ -10,13 +10,7 @@
 
 @section('content')
     <section class="albatalk-resume-detail-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
-            </div>
-        </div>
+        @include('desktop.layouts.albatalk')
         <div class="container">
             <form>
                 <div class="row">
@@ -29,12 +23,12 @@
                             <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
                         </div>
                         <div class="resume-information">
-                            <h2 class="resume-title">홍길동</h2>
+                            <h2 class="resume-title">{{ $resume->name }}</h2>
                             <div class="resume-card" style="display: flex">
                                 <table class="first-card">
                                     <tr>
                                         <th>영문 이름</th>
-                                        <td><p class="resume-length">HGD</p></td>
+                                        <td><p class="resume-length">{{ $resume->english_name }}</p></td>
                                     </tr>
                                     <tr>
                                         <th>생년 월일</th>
@@ -42,30 +36,30 @@
                                     </tr>
                                     <tr>
                                         <th>휴대폰 번호</th>
-                                        <td><p class="resume-length">010-5678-1234</p></td>
+                                        <td><p class="resume-length">{{ $resume->phone }}</p></td>
                                     </tr>
                                     <tr>
                                         <th>비상연락처</th>
-                                        <td><p class="resume-length">010-5678-1234</p></td>
+                                        <td><p class="resume-length">{{ $resume->emergency_phone }}</p></td>
                                     </tr>
                                     <tr>
                                         <th>주소</th>
-                                        <td><p class="resume-length">010-5678-1234</p></td>
+                                        <td><p class="resume-length">{{ $resume->address }}</p></td>
                                     </tr>
 
                                 </table>
                                 <table class="second-card">
                                     <tr>
                                         <th>희망 근무 지역</th>
-                                        <td><p class="resume-length">서울</p></td>
+                                        <td><p class="resume-length">{{ $resume->work_area }}</p></td>
                                     </tr>
                                     <tr>
                                         <th>희망 근무 요일</th>
-                                        <td><p class="resume-length">월, 화, 수, 목</p></td>
+                                        <td><p class="resume-length">{{ $resume->work_day }}</p></td>
                                     </tr>
                                     <tr>
                                         <th>희망 근무 시간</th>
-                                        <td><p class="resume-length">오전 10시 ~ 오후 6시</p></td>
+                                        <td><p class="resume-length">{{ $resume->work_time }}</p></td>
                                     </tr>
                                 </table>
                             </div>
@@ -81,33 +75,45 @@
                             <table style="padding-top: 20px">
                                 <tr>
                                     <th>학위취득년월</th>
-                                    <td><p class="resume-length">1900년 02월 01일</p></td>
+                                    <td><p class="resume-length">{{ $resume->graduated_at }}</p></td>
                                 </tr>
                                 <tr>
                                     <th>출신학교</th>
-                                    <td><p class="resume-length">온오프믹스 대학교</p></td>
+                                    <td><p class="resume-length">{{ $resume->school }}</p></td>
                                 </tr>
                                 <tr>
                                     <th>학과(세부전공)</th>
-                                    <td><p class="resume-length">사업팀</p></td>
+                                    <td><p class="resume-length">{{ $resume->major }}</p></td>
                                 </tr>
                                 <tr>
                                     <th>학위</th>
-                                    <td><p class="resume-length">박사</p></td>
+                                    <td><p class="resume-length">{{ $resume->degree }}</p></td>
                                 </tr>
                                 <tr>
                                     <th>졸업구분</th>
-                                    <td><p class="resume-length"></p></td>
+                                    <td><p class="resume-length">{{ $resume->graduation_type }}</p></td>
                                 </tr>
                             </table>
                             <table style="padding-top: 20px">
                                 <tr>
                                     <th>희망 진료과</th>
-                                    <td><p class="resume-length">1순위 교정&emsp;|&emsp;2순위 보철</p></td>
+                                    <td>
+                                        <p class="resume-length">
+                                            @if($resume->treatment_1) {{ '1순위 ' . $resume->treatment_1 }} @endif
+                                            @if($resume->treatment_2) {{ ' | 2순위 ' . $resume->treatment_2 }} @endif
+                                            @if($resume->treatment_3) {{ ' | 3순위 ' . $resume->treatment_3 }} @endif
+                                        </p>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>희망 부서</th>
-                                    <td><p class="resume-length">1순위 진료실&emsp;|&emsp;2순위 데스크&emsp;|&emsp;3순위 교육</p></td>
+                                    <td>
+                                        <p class="resume-length">
+                                            @if($resume->department_1) {{ '1순위 ' . $resume->department_1 }} @endif
+                                            @if($resume->department_2) {{ ' | 2순위 ' . $resume->department_2 }} @endif
+                                            @if($resume->department_3) {{ ' | 3순위 ' . $resume->department_3 }} @endif
+                                        </p>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -117,7 +123,7 @@
                         </div>
                         <div class="second">
                             <div class="text">
-                                잘 할 수 있습니다.
+                                {{ $resume->about_me }}
                             </div>
                         </div>
 
@@ -133,21 +139,34 @@
                             </tr>
                             <tr>
                                 <td>1</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <td>{{ $resume->certificate_name_1 }}</td>
+                                <td>{{ $resume->certificate_day_1 }}</td>
+                                <td>{{ $resume->certificate_agency_1 }}</td>
                             </tr>
                             <tr>
+
                                 <td>2</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <td>{{ $resume->certificate_name_2 }}</td>
+                                <td>{{ $resume->certificate_day_2 }}</td>
+                                <td>{{ $resume->certificate_agency_2 }}</td>
                             </tr>
                             <tr>
                                 <td>3</td>
-                                <td>자격증 이름</td>
-                                <td>2022년 02월 01일</td>
-                                <td>자격증 인증 협회</td>
+                                <td>{{ $resume->certificate_name_3 }}</td>
+                                <td>{{ $resume->certificate_day_3 }}</td>
+                                <td>{{ $resume->certificate_agency_3 }}</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>{{ $resume->certificate_name_4 }}</td>
+                                <td>{{ $resume->certificate_day_4 }}</td>
+                                <td>{{ $resume->certificate_agency_4 }}</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>{{ $resume->certificate_name_5 }}</td>
+                                <td>{{ $resume->certificate_day_5 }}</td>
+                                <td>{{ $resume->certificate_agency_5 }}</td>
                             </tr>
                         </table>
 
