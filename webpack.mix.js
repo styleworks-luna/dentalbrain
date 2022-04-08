@@ -66,6 +66,7 @@ mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/
 mix.sass('resources/sass/desktop/pages/albatalk/albatalk.sass', 'public/css/desktop/pages/albatalk')
     .sass('resources/sass/desktop/pages/albatalk/albatalk-common.sass', 'public/css/desktop/pages/albatalk')
     .sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-list.sass', 'public/css/desktop/pages/albatalk')
     .sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk')
     .sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk')
     .sass('resources/sass/desktop/pages/albatalk/albatalk-resume-detail.sass', 'public/css/desktop/pages/albatalk');
@@ -86,12 +87,12 @@ mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/
 // 마이페이지
 mix.sass('resources/sass/desktop/pages/user/mypage/mypage-login.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-lecture.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-offer.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-payment.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-question.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-secession.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user');
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/desktop/pages/user');
 
 // 고객센터
 mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop/pages/service')

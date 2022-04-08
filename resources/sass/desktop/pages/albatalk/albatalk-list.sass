@@ -1,0 +1,45 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.albatalk-content-list
+    display: grid
+    grid-template-columns: repeat(4, 296px)
+    gap: 32px
+
+    .albatalk-card
+        +size(296px 296px, 310px 310px)
+        +border(1px solid rgba(0, 0, 0, 0.1))
+        +border-radius(8px)
+        +box-sizing(border-box)
+        overflow: hidden
+
+        &:hover
+            +border(1px solid $page-color)
+
+            .albatalk-name
+                text-decoration: underline
+
+        img
+            +size(296px, 222px)
+
+        .albatalk-information
+            +padding(20px)
+
+            .albatalk-name
+                +ellipse()
+                display: block
+                font-weight: bold
+                font-size: 16px
+                line-height: 1.5
+
+        .albatalk-description
+            +padding(top 15px)
+            display: flex
+            justify-content: space-between
+            align-items: center
+            color: $gray-700
+
+            .albatalk-place,
+            .albatalk-date
+                font-size: 12px

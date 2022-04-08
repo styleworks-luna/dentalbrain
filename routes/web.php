@@ -80,12 +80,12 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
         //구인 정보
         Route::get('albatalk', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
+            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_recruit');
         })->name('albatalk');
 
         //구직 정보
         Route::get('offer', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
+            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
         })->name('offer');
     });
 }
@@ -242,12 +242,12 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
     //구인 정보
     Route::get('albatalk', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_recruit');
     })->name('albatalk');
 
     //구직 정보
     Route::get('offer', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
     })->name('offer');
 
     // 회원정보 수정

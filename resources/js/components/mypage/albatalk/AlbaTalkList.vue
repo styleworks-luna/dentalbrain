@@ -1,8 +1,8 @@
 <template>
     <div class="albatalk-contents">
-        <ul>
-            <li v-for="list in list" :key="list.id">
-                <a class="albatalk-card" href="">
+        <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
+            <li class="albatalk-card" v-for="list in lists" :key="list.id">
+                <a href="">
                     <img src="/images/dummy/test2.jpg">
                     <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.title }}</p>
@@ -27,7 +27,7 @@ export default {
     name: "AlbaTalkList",
     data() {
         return {
-            list: [
+            lists: [
                 {
                     key: 1,
                     title: "덴탈브레인 치과의원",
