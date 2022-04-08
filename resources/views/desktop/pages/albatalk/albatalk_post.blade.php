@@ -3,12 +3,12 @@
 @section('script')
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bx56ktabzx&submodules=geocoder"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
 @endsection
 
 @section('style')
@@ -49,7 +49,8 @@
                                     </div>
                                     <div class="image-hover-common image-hover-lg">
                                         <input type="file" id="main_thumbnail_input">
-                                        <label for="main_thumbnail" class="image-icon-common image-icon-lg btn-plus"></label>
+                                        <label for="main_thumbnail"
+                                               class="image-icon-common image-icon-lg btn-plus"></label>
                                     </div>
                                     <!-- 썸네일 존재 할 경우 (등록 이미지) -->
                                     <!--<img class="main-thumbnail" src="" alt="치과 사진">
@@ -70,7 +71,8 @@
                                             </div>
                                             <div class="image-hover-common image-hover-sm">
                                                 <input type="file" id="sub_thumbnail_input_01">
-                                                <label for="sub_thumbnail_input_01" class="image-icon-common image-icon-sm btn-plus"></label>
+                                                <label for="sub_thumbnail_input_01"
+                                                       class="image-icon-common image-icon-sm btn-plus"></label>
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)
                                             <img class="sub-thumbnail" src="" alt="치과 사진">
@@ -85,7 +87,8 @@
                                             </div>
                                             <div class="image-hover-common image-hover-sm">
                                                 <input type="file" id="sub_thumbnail_input_02">
-                                                <label for="sub_thumbnail_input_02" class="image-icon-common image-icon-sm btn-plus"></label>
+                                                <label for="sub_thumbnail_input_02"
+                                                       class="image-icon-common image-icon-sm btn-plus"></label>
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)
                                             <img class="sub-thumbnail" src="" alt="치과 사진">
@@ -100,7 +103,8 @@
                                             </div>
                                             <div class="image-hover-common image-hover-sm">
                                                 <input type="file" id="sub_thumbnail_input_03">
-                                                <label for="sub_thumbnail_input_03" class="image-icon-common image-icon-sm btn-plus"></label>
+                                                <label for="sub_thumbnail_input_03"
+                                                       class="image-icon-common image-icon-sm btn-plus"></label>
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)
                                             <img class="sub-thumbnail" src="" alt="치과 사진">
@@ -283,9 +287,9 @@
                                         <div class="radio-container">
                                             @foreach($typeJob as $job)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="job_type_filed_[{{$job->id}}]" name="job"
+                                                    <input type="radio" id="job_type_field_[{{$job->id}}]" name="job"
                                                            value={{$job->id}} @if(old('job') == $job->id) checked @endif>
-                                                    <label id="job_type_filed_[{{$job->id}}]">{{$job->type}}</label>
+                                                    <label for="job_type_field_[{{$job->id}}]">{{$job->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -299,6 +303,7 @@
                                                 <div class="radio-wrap">
                                                     <input type="radio" id="salary_type_field_[{{$salary->id}}]"
                                                            name="salary"
+                                                           class="salary"
                                                            value={{$salary->id}}
                                                            @if(old('salary') == $salary->id)
                                                                checked
@@ -307,9 +312,10 @@
                                                         for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
-                                                               class="radio-input input-m"
+                                                               class="radio-input input-m salary-input"
                                                                value="{{old("salary_value")}}"
-                                                               placeholder="내용을 입력해주세요.">
+                                                               placeholder="내용을 입력해주세요."
+                                                               disabled>
                                                     @endif
                                                 </div>
                                             @endforeach
@@ -321,13 +327,15 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_01" name="study">
-                                                <select class="input-xs select-menu">
+                                                <input type="radio" id="study_type_field_01" class="study" name="study"
+                                                       value="1">
+                                                <select class="input-xs select-menu study-select" disabled>
                                                     <option value="">학력 선택</option>
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_02" name="study">
+                                                <input type="radio" id="study_type_field_02" class="study" name="study"
+                                                       value="2">
                                                 <label for="study_type_field_02">기타</label>
                                             </div>
                                         </div>
@@ -338,13 +346,17 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="career_field_01" name="career">
+                                                <input type="radio" id="career_field_01" class="career" name="career"
+                                                       value="1">
                                                 <label for="career_field_01">신입</label>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="career_field_02" name="career">
+                                                <input type="radio" id="career_field_02" class="career" name="career"
+                                                       value="2">
                                                 <label for="career_field_02" class="career-radio-label">경력</label>
-                                                <select name="" id="" class="input-xs radio-input select-menu">
+                                                <select name="" id=""
+                                                        class="input-xs radio-input select-menu career-select"
+                                                        disabled>
                                                     <option value="">경력기간 선택</option>
                                                 </select>
                                             </div>
@@ -357,13 +369,18 @@
                                         <div class="radio-container">
                                             @foreach($typeDay as $day)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="day_type_field_[{{$day->id}}]" name="day"
+                                                    <input type="radio"
+                                                           id="day_type_field_[{{$day->id}}]"
+                                                           name="day"
+                                                           class="work-day"
                                                            value={{$day->id}} @if(old('day') == $day->id) checked @endif>
                                                     <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
                                                     @if($day->id == 4)
-                                                        <input type="text" name="day_value" class="radio-input input-m"
+                                                        <input type="text" name="day_value"
+                                                               class="radio-input input-m work-day-input"
                                                                value="{{old("day_value")}}"
-                                                               placeholder="내용을 입력해주세요.">
+                                                               placeholder="내용을 입력해주세요."
+                                                               disabled>
                                                     @endif
                                                 </div>
                                             @endforeach
@@ -391,18 +408,22 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="deadline_field_01" name="deadline">
+                                                <input type="radio" id="deadline_field_01" class="deadline"
+                                                       name="deadline" value="1">
 
                                                 <input type="text" class="input-xs start-date" name="started_at"
-                                                       placeholder="시작일자 선택" readonly>
-                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm">
+                                                       placeholder="시작일자 선택" readonly disabled>
+                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm"
+                                                       disabled>
                                                 <p class="time-from">부터</p>
                                                 <input type="text" class="input-xs end-date" name="ended_at"
-                                                       placeholder="마감일자 선택" readonly>
-                                                <input type="text" class="input-xxs end-tme" placeholder="HH:mm">
+                                                       placeholder="마감일자 선택" readonly disabled>
+                                                <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
+                                                       disabled>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="deadline_field_02" name="deadline">
+                                                <input type="radio" id="deadline_field_02" class="deadline"
+                                                       name="deadline" value="2">
                                                 <label for="deadline_field_02">채용시까지</label>
                                             </div>
                                         </div>
@@ -435,16 +456,22 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="pay_method_filed_01" name="pay_method">
-                                                <label for="pay_method_filed_01" class="card-radio-label">신용카드</label>
-                                                <select name="" id="" class="input-xs select-menu">
+                                                <input type="radio"
+                                                       id="pay_method_field_01"
+                                                       class="pay-method"
+                                                       name="pay_method"
+                                                       value="1">
+                                                <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
+                                                <select name="" id="" class="input-xs select-menu pay-method-select" disabled="disabled">
                                                     <option value="">신한</option>
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input class="last" type="radio" id="pay_method_filed_01"
-                                                       name="pay_method">
-                                                <label id="pay_method_filed_01">실시간 계좌이체</label>
+                                                <input type="radio"
+                                                       id="pay_method_field_02"
+                                                       class="pay-method"
+                                                       name="pay_method" value="2">
+                                                <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
                                         </div>
                                     </td>

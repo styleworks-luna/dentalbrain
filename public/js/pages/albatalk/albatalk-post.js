@@ -118,4 +118,65 @@ $(function () {
     $('.end-date').blur(function () {
         $(this).removeClass('on-show');
     });
+
+    // radio event
+    $('.salary').change(function() {
+        if($(this).val() == '4') {
+            $('.salary-input').attr('disabled', false);
+        } else {
+            $('.salary-input').attr('disabled', true);
+        }
+    });
+
+    $('.study').change(function() {
+        if($(this).val() == '1') {
+            $('.study-select').attr('disabled', false);
+            $( ".study-select" ).selectmenu( "enable" );
+        } else {
+            $('.study-select').attr('disabled', true);
+            $( ".study-select" ).selectmenu( "disable" );
+        }
+    });
+
+    $('.career').change(function() {
+        if($(this).val() == '2') {
+            $('.career-select').attr('disabled', false);
+            $( ".career-select" ).selectmenu( "enable" );
+        } else {
+            $('.career-select').attr('disabled', true);
+            $( ".career-select" ).selectmenu( "disable" );
+        }
+    });
+
+    $('.work-day').change(function() {
+        if($(this).val() == '4') {
+            $('.work-day-input').attr('disabled', false);
+        } else {
+            $('.work-day-input').attr('disabled', true);
+        }
+    });
+
+    $('.deadline').change(function() {
+        if($(this).val() == '1') {
+            $('.start-date').attr('disabled', false);
+            $('.start-time').attr('disabled', false);
+            $('.end-date').attr('disabled', false);
+            $('.end-tme').attr('disabled', false);
+        } else {
+            $('.start-date').attr('disabled', true);
+            $('.start-time').attr('disabled', true);
+            $('.end-date').attr('disabled', true);
+            $('.end-tme').attr('disabled', true);
+        }
+    });
+
+    $('.pay-method').change(function() {
+        if($(this).val() == '1') {
+            $('.pay-method-select').attr('disabled', false);
+            $( ".pay-method-select" ).selectmenu( "enable" );
+        } else {
+            $('.pay-method-select').attr('disabled', true);
+            $( ".pay-method-select" ).selectmenu( "disable" );
+        }
+    });
 });
