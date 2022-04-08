@@ -9,26 +9,55 @@ class ResumeService
 {
     public function getResumeValidator(array $data)
     {
-        return Validator::make($data, [
-            'work_area' => ['nullable', 'string',],
-            'work_day' => ['nullable', 'string',],
-            'work_time' => ['nullable', 'string',],
-            'name' => ['required', 'string',],
-            'english_name' => ['required', 'string',],
-            'birthday' => ['required', 'string',],
-            'phone' => ['required', 'string',],
-            'emergency_phone' => ['required', 'string',],
-            'email' => ['required', 'email',],
-            'address' => ['required', 'string',],
-            'graduated_at' => ['nullable', 'string',],
-            'school' => ['nullable', 'string',],
-            'major' => ['nullable', 'string',],
-            'degree' => ['nullable', 'string',],
-            'graduation_type' => ['nullable', 'string',],
-            'about_me' => ['nullable', 'string',],
-        ], [
-            'required' => '필수로 작성하셔야 합니다.',
+        $privacyRules = [
+            'work_area' => ['nullable', 'string', 'max:100',],
+            'work_day' => ['nullable', 'string', 'max:100',],
+            'work_time' => ['nullable', 'string', 'max:100',],
+            'name' => ['required', 'string', 'max:100',],
+            'english_name' => ['required', 'string', 'max:100',],
+            'birthday' => ['required', 'string', 'max:100',],
+            'phone' => ['required', 'string', 'max:100',],
+            'emergency_phone' => ['required', 'string', 'max:100',],
+            'email' => ['required', 'email', 'max:100'],
+            'address' => ['required', 'string', 'max:100',],
+            'graduated_at' => ['nullable', 'string', 'max:100',],
+            'school' => ['nullable', 'string', 'max:100',],
+            'major' => ['nullable', 'string', 'max:100',],
+            'degree' => ['nullable', 'string', 'max:100',],
+            'graduation_type' => ['nullable', 'string', 'max:100',],
+            'about_me' => ['nullable', 'string', 'max:1000'],
+        ];
 
+        $certificateRules = [
+            'certificate_name_1' => ['nullable', 'string', 'max:100'],
+            'certificate_day_1' => ['nullable', 'string', 'max:100'],
+            'certificate_agency_1' => ['nullable', 'string', 'max:100'],
+            'certificate_name_2' => ['nullable', 'string', 'max:100'],
+            'certificate_day_2' => ['nullable', 'string', 'max:100'],
+            'certificate_agency_2' => ['nullable', 'string', 'max:100'],
+            'certificate_name_3' => ['nullable', 'string', 'max:100'],
+            'certificate_day_3' => ['nullable', 'string', 'max:100'],
+            'certificate_agency_3' => ['nullable', 'string', 'max:100'],
+            'certificate_name_4' => ['nullable', 'string', 'max:100'],
+            'certificate_day_4' => ['nullable', 'string', 'max:100'],
+            'certificate_agency_4' => ['nullable', 'string', 'max:100'],
+            'certificate_name_5' => ['nullable', 'string', 'max:100'],
+            'certificate_day_5' => ['nullable', 'string', 'max:100'],
+            'certificate_agency_5' => ['nullable', 'string', 'max:100'],
+        ];
+
+        $jobPositionRules = [
+            'treatment_1' => ['nullable', 'string', 'max:100',],
+            'treatment_2' => ['nullable', 'string', 'max:100',],
+            'treatment_3' => ['nullable', 'string', 'max:100',],
+            'department_1' => ['nullable', 'string', 'max:100',],
+            'department_2' => ['nullable', 'string', 'max:100',],
+            'department_3' => ['nullable', 'string', 'max:100',],
+        ];
+
+        return Validator::make($data, array_merge($privacyRules, $certificateRules, $jobPositionRules), [
+            'required' => '필수로 작성하셔야 합니다.',
+            'max' => ':max 자 이내로 입력해 주세요.'
         ]);
     }
 

@@ -65,8 +65,8 @@
                             <img class="resume-profile"
                                  id="profile-preview"
                                  src="/storage/program/2/thumbnail/123.jpg" alt="이력서 사진"/>
-{{--                            1. profile-preview의 src값을 복구--}}
-{{--                            2. ajax로 하는 것.--}}
+                            {{--                            1. profile-preview의 src값을 복구--}}
+                            {{--                            2. ajax로 하는 것.--}}
                             <input type="file" accept="image/jpeg, image/png, image/gif" id="profile-input"
                                    name="resume_image">
                             <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
@@ -220,14 +220,17 @@
                                         <div class="input-wrap">
                                             <input type="text"
                                                    id="first_treatment"
-                                                   name="first_treatment"
-                                                   placeholder="ex. 교정">
+                                                   name="treatment_1"
+                                                   placeholder="ex. 교정"
+                                                   value="{{ old('treatment_1') }}">
                                             <input type="text"
                                                    id="second_treatment"
-                                                   name="second_treatment">
+                                                   name="treatment_2"
+                                                   value="{{ old('treatment_2') }}">
                                             <input type="text"
                                                    id="third_treatment"
-                                                   name="third_treatment">
+                                                   name="treatment_3"
+                                                   value="{{ old('treatment_3') }}">
                                         </div>
                                 </tr>
                                 <tr>
@@ -236,14 +239,17 @@
                                         <div class="input-wrap">
                                             <input type="text"
                                                    id="first_department"
-                                                   name="first_department"
+                                                   name="department_1"
+                                                   value="{{ old('department_1') }}"
                                                    placeholder="ex. 진료실">
                                             <input type="text"
                                                    id="second_department"
-                                                   name="second_department">
+                                                   name="department_2"
+                                                   value="{{ old('department_2') }}">
                                             <input type="text"
                                                    id="third_department"
-                                                   name="third_department">
+                                                   name="department_3"
+                                                   value="{{ old('department_3') }}">
                                         </div>
                                 </tr>
                                 </tbody>
@@ -268,17 +274,20 @@
                                 <td>
                                     <input type="text"
                                            id="first_certificate_name"
-                                           name="first_certificate_name">
+                                           name="certificate_name_1"
+                                           value="{{ old('certificate_name_1') }}">
                                 </td>
                                 <td>
                                     <input type="text"
-                                           id="second_certificate_day"
-                                           name="second_certificate_day">
+                                           id="first_certificate_day"
+                                           name="certificate_day_1"
+                                           value="{{ old('certificate_day_1') }}">
                                 </td>
                                 <td>
                                     <input type="text"
-                                           id="third_certificate_agency"
-                                           name="third_certificate_agency">
+                                           id="first_certificate_agency"
+                                           name="certificate_agency_1"
+                                           value="{{ old('certificate_agency_1') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -286,17 +295,21 @@
                                 <td>
                                     <input type="text"
                                            id="second_certificate_name"
-                                           name="second_certificate_name">
+                                           name="certificate_name_2"
+                                           value="{{ old('certificate_name_2') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_day"
-                                           name="second_certificate_day">
+                                           name="certificate_day_2"
+                                           value="{{ old('certificate_agency_2') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_agency"
-                                           name="second_certificate_agency">
+                                           name="certificate_agency_2"
+                                           value="{{ old('certificate_agency_2') }}">
+
                                 </td>
                             </tr>
                             <tr>
@@ -304,17 +317,20 @@
                                 <td>
                                     <input type="text"
                                            id="third_certificate_name"
-                                           name="third_certificate_name">
+                                           name="certificate_name_3"
+                                           value="{{ old('certificate_name_3') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_day"
-                                           name="third_certificate_day">
+                                           name="certificate_day_3"
+                                           value="{{ old('certificate_day_3') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_agency"
-                                           name="third_certificate_agency">
+                                           name="certificate_agency_3"
+                                           value="{{ old('certificate_agency_3') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -322,17 +338,20 @@
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_name"
-                                           name="fourth_certificate_name">
+                                           name="certificate_name_4"
+                                           value="{{ old('certificate_name_4') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_day"
-                                           name="fourth_certificate_day">
+                                           name="certificate_day_4"
+                                           value="{{ old('certificate_day_4') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_agency"
-                                           name="fourth_certificate_agency">
+                                           name="certificate_agency_4"
+                                           value="{{ old('certificate_agency_4') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -340,17 +359,20 @@
                                 <td>
                                     <input type="text"
                                            id="fifth_certificate_name"
-                                           name="fifth_certificate_name">
+                                           name="certificate_name_5"
+                                           value="{{ old('certificate_name_5') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fifth_certificate_day"
-                                           name="fifth_certificate_day">
+                                           name="certificate_day_5"
+                                           value="{{ old('certificate_day_5') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fifth_certificate_agency"
-                                           name="fifth_certificate_agency">
+                                           name="certificate_agency_5"
+                                           value="{{ old('certificate_agency_5') }}">
                                 </td>
                             </tr>
                             </tbody>
