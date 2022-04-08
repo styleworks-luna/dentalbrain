@@ -8,33 +8,6 @@
 @import '@sass/components/_textarea.sass'
 @import '@sass/components/_checkbox.sass'
 
-.albatalk-resume-wrap
-    .title-wrap
-        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
-        min-width: 1280px
-        height: 300px
-
-        .albatalk-navigation
-            +margin(top 244px)
-            display: flex
-            float: right
-            justify-content: flex-start
-
-        a
-            +size(102px, 36px)
-            +margin(right 20px)
-            +border(1px solid transparent)
-            +box-sizing(border-box)
-            background-color: rgba(0, 0, 0, 0.4)
-            border-radius: 1px
-            font-size: 16px
-            line-height: 36px
-            text-align: center
-            color: #fff
-
-            &:last-child
-                +margin(right 0)
-
 .resume
     +margin(top 60px bottom 80px)
 
@@ -46,8 +19,18 @@
     input[type="checkbox"]
         @extend %checkbox-default
 
-    h2
-        font-size: 24px
+    .sub-title-wrap
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
+
+        h2
+            font-size: 24px
+            line-height: 26px
+
+        .tip
+            font-size: 12px
+            color: $red
 
     .common-form-wrap
         h3
@@ -107,11 +90,63 @@
             +size(790px)
 
         .image-wrap
+            position: relative
+
+            &:hover .image-hover
+                display: block
+
             .resume-profile
                 +size(220px, 293px)
                 +margin(right 20px)
                 +border(1px dashed $border-color-base)
                 +box-sizing(border-box)
+
+                &.none-image
+                    background-color: $white-light
+
+                    .none-image-title
+                        +padding(top 73px)
+                        font-size: 16px
+                        text-align: center
+                        line-height: 20px
+
+                    .none-image-tip
+                        +padding(top 5px)
+                        font-size: 12px
+                        color: $gray-700
+                        text-align: center
+
+                    .none-image-icon
+                        +size(100px, 100px)
+                        +margin(10px auto 0 auto)
+                        +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                        display: block
+
+            .image-hover
+                +size(220px, 293px)
+                display: none
+                background-color: rgba(0,0,0,0.4)
+                position: absolute
+                top: 0
+                left: 0
+
+                input[type="file"]
+                    display: none
+
+                .image-icon-common
+                    +size(60px, 60px)
+                    display: block
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%, -50%)
+                    cursor: pointer
+
+                .btn-plus
+                    +background('/images/desktop/global/icon_plus.svg', no-repeat, center center)
+
+                .btn-delete-thumbnail
+                    +background('/images/desktop/global/icon_delete_img.svg', no-repeat, center center)
 
             .image-tip
                 +padding(top 10px)
