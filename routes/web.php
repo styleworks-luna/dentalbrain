@@ -64,7 +64,7 @@ if (env('APP_ENV') != 'production') {
             Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('store');
             Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
 
-            Route::get('detail', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'detail'])->name('detail');
+            Route::get('complete', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'complete'])->name('complete');
         });
 
         Route::get('head-hunting', function () {

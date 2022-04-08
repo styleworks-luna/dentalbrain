@@ -23,7 +23,7 @@ class ResumeThumbnail extends FileTemplate
         return $path = 'public/resume/' . $resume->id . '/thumbnail/' . $fileName;
     }
 
-    public function saveFile($uploadedFile)
+    public function saveFile($uploadedFile): File
     {
         $name = $uploadedFile->getClientOriginalName();
         $extension = $uploadedFile->extension();
@@ -37,6 +37,7 @@ class ResumeThumbnail extends FileTemplate
         $path = Storage::putFileAs('resume/' . $resume->id . '/thumbnail',
             $uploadedFile, $name);
 
+        /** @var File $file */
         $file = File::create([
             'path' => $path,
             'name' => $name,
