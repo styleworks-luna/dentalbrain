@@ -125,7 +125,9 @@ class RecruitController extends Controller
 
             // 구인등록 페이먼츠 생성
             // 방금 만들어진 구인등록에 대한 처리가 필요!
-            $recruitUpdate = Recruit::where('user_id', "=", Auth::id())->first()->update(['payment_id' => $payment->id]);
+
+            logger($recruit->id);
+            $recruitUpdate = Recruit::find($recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
 
             logger($recruitUpdate);
 

@@ -21,15 +21,15 @@ class RecruitTemplate
     public function validateRecruit(Request $request)
     {
         $data = $request->validate([
-            'company_name' => ['required', 'string', 'min:2', 'max:255'],
-            'company_leader' => ['required', 'string', 'max:255'],
-            'company_license' => ['required', 'string', 'max:255'],
-            'company_phone' => ['required', 'numeric', 'digits_between:9,11'],
-
-            'name' => ['required', 'string', 'min:2', 'max:100'],
+            'dental_name' => ['required', 'string', 'min:2', 'max:255'],
+            'ceo_name' => ['required', 'string', 'max:255'],
+            'num' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'numeric', 'digits_between:9,11'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'url' => ['required', 'url'],
+
+            'manager_name' => ['required', 'string', 'min:2', 'max:100'],
+            'manager_phone' => ['required', 'numeric', 'digits_between:9,11'],
+            'manager_email' => ['required', 'string', 'email', 'max:255'],
+            'homepage' => ['required', 'url'],
             'subway' => ['nullable', 'string', 'max:255'],
 
             'application' => ['required'],
@@ -37,15 +37,15 @@ class RecruitTemplate
             'job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
             'salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
             'salary_value' => ['nullable', Rule::requiredIf($request->salary == TypeSalary::$TYPE_SALARY_4)],
-            'study' => ['required', 'digits_between:1,13'],
-            'career' => ['required', 'numeric', 'digits_between:0, 30'],
+//            'study' => ['required', 'digits_between:1,13'],
+//            'career' => ['required', 'numeric', 'digits_between:0, 30'],
             'day' => ['required', Rule::in([TypeDay::$TYPE_DAY_1, TypeDay::$TYPE_DAY_2, TypeDay::$TYPE_DAY_3, TypeDay::$TYPE_DAY_4])],
             'day_value' => ['nullable', Rule::requiredIf($request->day == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
 
-            'started_at' => ['required', 'date_format:Y-m-d'],
-            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
-            'content' => ['nullable'],
+//            'started_at' => ['required', 'date_format:Y-m-d'],
+//            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+//            'content' => ['nullable'],
         ]);
 
         return $data;
@@ -55,15 +55,15 @@ class RecruitTemplate
     {
         $recruit = Recruit::create([
             'user_id' => auth()->id(),
-            'company_name' => $data['company_name'],
-            'company_leader' => $data['company_leader'],
-            'company_license' => $data['company_license'],
-            'company_phone' => $data['company_phone'],
+            'company_name' => $data['dental_name'],
+            'company_leader' => $data['ceo_name'],
+            'company_license' => $data['num'],
+            'company_phone' => $data['phone'],
 
-            'name' => $data['name'],
-            'phone' => $data['phone'],
-            'email' => $data['email'],
-            'url' => $data['url'],
+            'name' => $data['manager_name'],
+            'phone' => $data['manager_phone'],
+            'email' => $data['manager_email'],
+            'url' => $data['homepage'],
             'subway' => $data['subway'],
 
             'address' => "서울 송파구 오금동",
@@ -76,12 +76,16 @@ class RecruitTemplate
 
             'type_work_id' => $data['work'],
             'type_job_id' => $data['job'],
-            'type_study_id' => $data['study'],
-            'career' => $data['career'],
+//            'type_study_id' => $data['study'],
+            'type_study_id' => 12,
+//            'career' => $data['career'],
+            'career' => 12,
 
-            'started_at' => $data['started_at'],
-            'ended_at' => $data['ended_at'],
-            'content' => $data['content'],
+//            'started_at' => $data['started_at'],
+//            'ended_at' => $data['ended_at'],
+            'started_at' => "2020-03-01",
+            'ended_at' => "2020-06-01",
+//            'content' => $data['content'],
         ]);
 
         return $recruit;
