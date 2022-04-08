@@ -103,8 +103,6 @@ class RecruitController extends Controller
             $tossPayments = new TossPayments($request['paymentKey']);
             $tossResponse = $tossPayments->success($request['orderId'], $request['amount']);
 
-            logger($tossResponse);
-
             // response 오류
             if (!$tossResponse) {
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
@@ -125,11 +123,7 @@ class RecruitController extends Controller
 
             // 구인등록 페이먼츠 생성
             // 방금 만들어진 구인등록에 대한 처리가 필요!
-
-            logger($recruit->id);
-            $recruitUpdate = Recruit::find($recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
-
-            logger($recruitUpdate);
+            $recruitUpdate = Recruit::where("id", "=", $recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
 
             DB::commit();
         } catch (TossPaymentsException $exception) {
