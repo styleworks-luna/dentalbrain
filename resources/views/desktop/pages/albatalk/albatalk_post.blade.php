@@ -47,16 +47,75 @@
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
-                                <img class="main-thumbnail" src="" alt="치과 사진">
+                                <div class="img-wrap">
+                                    <!-- TODO:: 썸네일 존재 여부 if문 작업 필요 -->
+                                    <!-- 썸네일 존재하지 않을경우 -->
+                                    <div class="main-thumbnail none-image">
+                                        <h4 class="none-image-title">치과 대표 사진 *</h4>
+                                        <p class="none-image-tip">(800px × 600px)</p>
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                    <div class="image-hover-common image-hover-lg">
+                                        <input type="file" id="main_thumbnail_input">
+                                        <label for="main_thumbnail" class="image-icon-common image-icon-lg btn-plus"></label>
+                                    </div>
+                                    <!-- 썸네일 존재 할 경우 (등록 이미지) -->
+                                    <!--<img class="main-thumbnail" src="" alt="치과 사진">
+                                    <div class="image-hover-common image-hover-lg">
+                                        <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
+                                    </div>-->
+                                </div>
                                 <div class="sub-thumbnail-wrap">
                                     <div class="sub-thumbnail-title">
                                         <h3>기타 사진</h3>
                                         <span class="sub-thumbnail-tip">최대 3개까지 등록 가능 (800px × 600px)</span>
                                     </div>
                                     <div class="sub-thumbnail-content">
-                                        <img class="sub-thumbnail" src="" alt="치과 사진">
-                                        <img class="sub-thumbnail" src="" alt="치과 사진">
-                                        <img class="sub-thumbnail" src="" alt="치과 사진">
+                                        <div class="img-wrap">
+                                            <!-- 썸네일 존재하지 않을경우-->
+                                            <div class="sub-thumbnail none-image">
+                                                <span class="none-image-icon"></span>
+                                            </div>
+                                            <div class="image-hover-common image-hover-sm">
+                                                <input type="file" id="sub_thumbnail_input_01">
+                                                <label for="sub_thumbnail_input_01" class="image-icon-common image-icon-sm btn-plus"></label>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
+                                            <img class="sub-thumbnail" src="" alt="치과 사진">
+                                            <div class="image-hover-common image-hover-sm">
+                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                            </div>-->
+                                        </div>
+                                        <div class="img-wrap">
+                                            <!-- 썸네일 존재하지 않을경우-->
+                                            <div class="sub-thumbnail none-image">
+                                                <span class="none-image-icon"></span>
+                                            </div>
+                                            <div class="image-hover-common image-hover-sm">
+                                                <input type="file" id="sub_thumbnail_input_02">
+                                                <label for="sub_thumbnail_input_02" class="image-icon-common image-icon-sm btn-plus"></label>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
+                                            <img class="sub-thumbnail" src="" alt="치과 사진">
+                                            <div class="image-hover-common image-hover-sm">
+                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                            </div>-->
+                                        </div>
+                                        <div class="img-wrap">
+                                            <!-- 썸네일 존재하지 않을경우-->
+                                            <div class="sub-thumbnail none-image">
+                                                <span class="none-image-icon"></span>
+                                            </div>
+                                            <div class="image-hover-common image-hover-sm">
+                                                <input type="file" id="sub_thumbnail_input_03">
+                                                <label for="sub_thumbnail_input_03" class="image-icon-common image-icon-sm btn-plus"></label>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
+                                            <img class="sub-thumbnail" src="" alt="치과 사진">
+                                            <div class="image-hover-common image-hover-sm">
+                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                            </div>-->
+                                        </div>
                                     </div>
                                 </div>
                                 <p class="thumbnail-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF </p>
@@ -201,7 +260,8 @@
                                                     <input type="checkbox" id="application_field_[{{$application->id}}]"
                                                            name="application[{{$application->id}}]"
                                                            @if(old('application')[$application->id] ?? 'off' == 'on') checked @endif>
-                                                    <label for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                    <label
+                                                        for="application_field_[{{$application->id}}]">{{$application->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -217,8 +277,8 @@
                                                            name="work"
                                                            value={{$work->id}}
                                                            @if(old('work') == $work->id)
-                                                                   checked
-                                                            @endif>
+                                                               checked
+                                                        @endif>
                                                     <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
                                                 </div>
                                             @endforeach
@@ -249,9 +309,10 @@
                                                            name="salary"
                                                            value={{$salary->id}}
                                                            @if(old('salary') == $salary->id)
-                                                                   checked
-                                                            @endif>
-                                                    <label for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
+                                                               checked
+                                                        @endif>
+                                                    <label
+                                                        for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m"
@@ -308,7 +369,8 @@
                                                            value={{$day->id}} @if(old('day') == $day->id) checked @endif>
                                                     <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
                                                     @if($day->id == 4)
-                                                        <input type="text" name="day_value" class="radio-input input-m" value="{{old("day_value")}}"
+                                                        <input type="text" name="day_value" class="radio-input input-m"
+                                                               value="{{old("day_value")}}"
                                                                placeholder="내용을 입력해주세요.">
                                                     @endif
                                                 </div>
@@ -325,7 +387,8 @@
                                                     <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
                                                            name="benefit[{{$benefit->id}}]"
                                                            @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif>
-                                                    <label for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                    <label
+                                                        for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>

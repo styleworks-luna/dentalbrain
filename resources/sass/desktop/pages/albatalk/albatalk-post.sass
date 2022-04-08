@@ -92,10 +92,75 @@
             +padding(20px 20px 20px 0)
             +border(1px solid $border-color-base, bottom)
 
+            .img-wrap
+                position: relative
+
+                &:hover .image-hover-common
+                    display: block
+
+                .image-hover-common
+                    display: none
+                    background-color: rgba(0,0,0,0.4)
+                    position: absolute
+                    top: 0
+                    left: 0
+
+                    input[type="file"]
+                        display: none
+
+                    .image-icon-common
+                        display: block
+                        position: absolute
+                        top: 50%
+                        left: 50%
+                        transform: translate(-50%, -50%)
+                        cursor: pointer
+
+                    .btn-plus
+                        +background('/images/desktop/global/icon_plus.svg', no-repeat, center center)
+
+                    .btn-delete-thumbnail
+                        +background('/images/desktop/global/icon_delete_img.svg', no-repeat, center center)
+
+                .image-hover-lg
+                    +size(280px, 210px)
+
+                    .image-icon-lg
+                        +size(60px, 60px)
+                        background-size: 60px 60px
+
+                .image-hover-sm
+                    +size(80px, 60px)
+
+                    .image-icon-sm
+                        +size(20px, 20px)
+                        background-size: 20px 20px
+
             .main-thumbnail
                 +size(280px,210px)
                 +border(1px dashed $border-color-base)
                 +box-sizing(border-box)
+
+                &.none-image
+                    background-color: $white-light
+
+                    .none-image-title
+                        +padding(top 32px)
+                        font-size: 16px
+                        text-align: center
+                        line-height: 20px
+
+                    .none-image-tip
+                        +padding(top 5px)
+                        font-size: 12px
+                        color: $gray-700
+                        text-align: center
+
+                    .none-image-icon
+                        +size(100px, 100px)
+                        +margin(10px auto 0 auto)
+                        +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                        display: block
 
             .sub-thumbnail-wrap
                 .sub-thumbnail-title
@@ -122,6 +187,11 @@
                         +size(80px, 60px)
                         +border(1px dashed $border-color-base)
                         +box-sizing(border-box)
+
+                        &.none-image
+                            +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                            background-color: $white-light
+                            background-size: 30px 30px
 
             .thumbnail-tip
                 +padding(top 10px)
