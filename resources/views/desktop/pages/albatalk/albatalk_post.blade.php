@@ -6,6 +6,8 @@
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=bx56ktabzx&submodules=geocoder"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
 @endsection
 
 @section('style')
@@ -445,7 +447,17 @@
                                 <tr>
                                     <th>상세정보</th>
                                     <td class="wrapper-s">
-                                        <textarea></textarea>
+                                        <ul class="editor-extra-toolbar">
+                                            <li>
+                                                <label for="image" class="ir_pm">사진</label>
+                                                <input type="file" id="image" class="btn-editor-image" accept="image/*">
+                                            </li>
+                                            <li>
+                                                <label for="file" class="ir_pm">파일</label>
+                                                <input type="file" id="file" class="btn-editor-file">
+                                            </li>
+                                        </ul>
+                                        <textarea id="editor" class="editor"></textarea>
                                     </td>
                                 </tr>
                                 <tr>

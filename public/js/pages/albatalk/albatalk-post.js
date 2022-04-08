@@ -56,6 +56,12 @@ $(function () {
         });
     }
 
+    //editor
+    CKEDITOR.replace('editor', {
+        height: 370,
+        resize_enabled: false,
+    });
+
     // date event
     $('.start-date').datepicker({
         dateFormat: "yy-mm-dd",

@@ -1,0 +1,41 @@
+.cke_screen_reader_only.cke_copyformatting_notification
+    display: none
+
+.wrapper-s
+    position: relative
+
+.editor-extra-toolbar
+    position: absolute
+    top: 20px
+    left: 475px
+    overflow: hidden
+
+    &::before
+        +size(1px, 18px)
+        +margin(top 4px)
+        display: block
+        background-color: #bcbcbc
+        float: left
+        content: ""
+
+    li
+        +size(28px, 26px)
+        +padding(4px 6px)
+        +box-sizing(border-box)
+        float: left
+
+        input[type=file]
+            display: none
+
+        &:hover
+            +padding(3px 5px)
+            +border(1px solid #bcbcbc)
+            background-color: #e5e5e5
+
+        &:first-child label
+            +size(16px, 16px)
+            +background('/images/desktop/global/editor-image.png', no-repeat, center center)
+
+        &:nth-child(2) label
+            +size(16px, 16px)
+            +background('/images/desktop/global/editor-file.png', no-repeat, center center)
