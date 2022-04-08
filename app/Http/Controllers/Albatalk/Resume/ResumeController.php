@@ -74,10 +74,10 @@ class ResumeController extends Controller
             return \redirect(url()->previous())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
         }
 
-        return \redirect('/')->with('alert', '등록되었습니다.');
+        return \redirect()->route('albatalk.resume.complete')->with('alert', '등록되었습니다.');
     }
 
-    public function detail(Request $request)
+    public function complete(Request $request)
     {
         $userId = Auth::id();
         $resume = Resume::query()->with(['file', 'user'])
