@@ -27,7 +27,7 @@ class AddResumeIdToAbilityAnswers extends Migration
     public function down()
     {
         Schema::table('ability_answers', function (Blueprint $table) {
-            $table->dropForeign(['ability_id']);
+            $table->dropForeign(['resume_id']);
         });
 
         Schema::table('ability_answers', function (Blueprint $table) {
