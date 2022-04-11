@@ -92,8 +92,10 @@
                                     <th>주소</th>
                                     <td colspan="3">
                                         <div class="address-wrap">
-                                        <p>서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
-                                        <a href="" class="btn-map">지도보기</a>
+                                            <input type="hidden" class="hidden-latitude">
+                                            <input type="hidden" class="hidden-longitude">
+                                            <p>서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
+                                            <a href="" class="btn-map">지도보기</a>
                                         </div>
                                     </td>
                                 </tr>
