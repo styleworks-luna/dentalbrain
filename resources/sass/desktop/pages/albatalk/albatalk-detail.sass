@@ -49,7 +49,7 @@
                 background-color: $white-light
 
             .main-thumbnail
-                +size(278px, 208px)
+                +size(280px, 210px)
 
                 &.none-image
                     display: flex
@@ -85,7 +85,7 @@
                             background-size: 30px 30px
 
                     .sub-thumbnail
-                        +size(78px, 58px)
+                        +size(80px, 60px)
 
         .office-information
             +padding(top 20px)
@@ -182,6 +182,62 @@
             +padding(30px 45px 0 45px)
             +border(2px solid $gray-900, top)
             min-height: 200px
+
+            img
+                max-width: 100%
+                display: inline-block
+
+            a
+                color: $blue
+
+                &:hover
+                    text-decoration: underline
+
+            strong
+                font-weight: bold
+
+            em
+                font-style: italic
+
+            sup
+                vertical-align: super
+                font-size: smaller
+
+            sub
+                vertical-align: sub
+                font-size: smaller
+
+            blockquote
+                padding-left: 20px
+                padding-right: 8px
+                border-left-width: 5px
+                font-style: italic
+                border-style: solid
+                border-color: #ccc
+                display: block
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 40px
+                margin-inline-end: 40px
+
+            ol
+                display: block
+                list-style-type: decimal
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 0
+                margin-inline-end: 0
+                padding-inline-start: 40px
+                padding: 0 40px
+
+            li
+                display: list-item
+                text-align: -webkit-match-parent
+
+            ul
+                display: block
+                list-style-type: disc
+                padding: 0 40px
 
     .btn-wrap
         +size(200px)

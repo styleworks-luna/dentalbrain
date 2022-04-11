@@ -24,12 +24,12 @@
                     <div class="thumbnail-wrap">
                         <div class="main-img-wrap">
                             <!-- TODO:: 썸네일 존재 여부 if문 작업 필요 -->
-                            <!-- 썸네일 존재하지 않을경우 -->
+                            <!-- 썸네일 존재하지 않을경우
                             <div class="main-thumbnail none-image">
                                 <span class="none-image-icon"></span>
-                            </div>
+                            </div>-->
                             <!-- 썸네일 존재 할 경우 (등록 이미지) -->
-                            <!--<img class="main-thumbnail" src="" alt="치과 사진">-->
+                            <img class="main-thumbnail" src="{{ asset('/images/dummy/test.png') }}" alt="치과 사진">
                         </div>
                         <div class="sub-thumbnail-wrap">
                             <div class="img-wrap">
