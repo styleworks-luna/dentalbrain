@@ -35,7 +35,7 @@
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form action={{route('albatalk.recruit.create')}} method="post">
+                    <form id="albatalk_recruit_form" action={{route('albatalk.recruit.create')}} method="post">
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">

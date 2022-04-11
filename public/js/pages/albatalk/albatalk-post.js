@@ -1,4 +1,10 @@
 $(function () {
+    // parsley
+    $("#albatalk_recruit_form").parsley({
+        excluded: 'input[type=button], input[type=submit], input[type=reset]',
+        inputs: 'div, input, textarea, select, input[type=hidden], :hidden',
+    });
+
     // select menu
     var select_menu = $('.select-menu');
     if (select_menu.length > 0) {
