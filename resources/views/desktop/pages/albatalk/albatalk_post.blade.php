@@ -197,7 +197,7 @@
                                                id="phone"
                                                class="input-s"
                                                name="phone"
-                                               value="{{old('dental_name')}}"
+                                               value="{{old('phone')}}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -225,10 +225,14 @@
                                             <input type="button" class="btn-address" value="주소검색">
                                             <input type="text" id="address"
                                                    class="address input-l"
+                                                   name="address"
+                                                   value="{{old('address')}}"
                                                    readonly
                                                    data-parsley-required-message="※ 주소를 입력해주세요.">
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
+                                                   name="address_detail"
+                                                   value="{{old('address_detail')}}"
                                                    placeholder="상세주소를 입력"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="상세주소를 입력하세요">
@@ -262,7 +266,7 @@
                                                            name="application[{{$application->id}}]"
                                                            @if(old('application')[$application->id] ?? 'off' == 'on') checked @endif>
                                                     <label
-                                                        for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                            for="application_field_[{{$application->id}}]">{{$application->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -278,8 +282,8 @@
                                                            name="work"
                                                            value={{$work->id}}
                                                            @if(old('work') == $work->id)
-                                                               checked
-                                                        @endif>
+                                                                   checked
+                                                            @endif>
                                                     <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
                                                 </div>
                                             @endforeach
@@ -311,16 +315,16 @@
                                                            class="salary"
                                                            value={{$salary->id}}
                                                            @if(old('salary') == $salary->id)
-                                                               checked
-                                                        @endif>
+                                                                   checked
+                                                            @endif>
                                                     <label
-                                                        for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
+                                                            for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m salary-input"
                                                                value="{{old("salary_value")}}"
                                                                placeholder="내용을 입력해주세요."
-                                                               disabled>
+                                                               @if(old('salary') != 4) disabled @endif>
                                                     @endif
                                                 </div>
                                             @endforeach
@@ -332,16 +336,28 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_01" class="study" name="study"
-                                                       value="1">
-                                                <select class="input-xs select-menu study-select" disabled>
-                                                    <option value="">학력 선택</option>
+                                                <input type="radio" id="study_type_field_01" class="study"
+                                                       name="is_study" value="1"
+                                                       @if(old('is_study') == 1) checked @endif>
+                                                <select class="input-xs select-menu study-select"
+                                                        @if(old('is_study') != 1) disabled @endif
+                                                        name="study">
+                                                    <option value="" selected>학력 선택</option>
+                                                    @foreach($typeStudy as $study)
+                                                        @if($study->id == 14)
+                                                            @break
+                                                        @else
+                                                            <option value="{{ $study->id }}"
+                                                                    @if(old('study') == $study->id) selected @endif>{{$study->type}}</option>
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="study_type_field_02" class="study" name="study"
-                                                       value="2">
-                                                <label for="study_type_field_02">기타</label>
+                                                <input type="radio" id="study_type_field_02" class="study"
+                                                       name="is_study" value="2"
+                                                       @if(old('is_study') == 2) checked @endif>
+                                                <label for="study_type_field_02">학력무관</label>
                                             </div>
                                         </div>
                                     </td>
@@ -351,18 +367,29 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="radio" id="career_field_01" class="career" name="career"
-                                                       value="1">
+                                                <input type="radio" id="career_field_01" class="career" name="is_career"
+                                                       value="1" @if(old('is_career') == 1) checked @endif>
                                                 <label for="career_field_01">신입</label>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="career_field_02" class="career" name="career"
-                                                       value="2">
+                                                <input type="radio" id="career_field_02" class="career" name="is_career"
+                                                       value="2" @if(old('is_career') == 2) checked @endif>
                                                 <label for="career_field_02" class="career-radio-label">경력</label>
-                                                <select name="" id=""
+                                                <select name="career" id="career"
                                                         class="input-xs radio-input select-menu career-select"
-                                                        disabled>
+                                                        @if(old('is_career') != 2) disabled @endif>
                                                     <option value="">경력기간 선택</option>
+                                                    @for ($i = 1; $i <= 30; $i++)
+                                                        @if($i == 30)
+                                                            <option value="{{$i}}"
+                                                                    @if(old('career') == $i) selected @endif>{{$i}}년 이상
+                                                            </option>
+                                                        @else
+                                                            <option value="{{$i}}"
+                                                                    @if(old('career') == $i) selected @endif>{{$i}}년
+                                                            </option>
+                                                        @endif
+                                                    @endfor
                                                 </select>
                                             </div>
                                         </div>
@@ -385,7 +412,7 @@
                                                                class="radio-input input-m work-day-input"
                                                                value="{{old("day_value")}}"
                                                                placeholder="내용을 입력해주세요."
-                                                               disabled>
+                                                               @if(old('day') != 4) disabled @endif>
                                                     @endif
                                                 </div>
                                             @endforeach
@@ -402,7 +429,7 @@
                                                            name="benefit[{{$benefit->id}}]"
                                                            @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif>
                                                     <label
-                                                        for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                            for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -414,21 +441,31 @@
                                         <div class="radio-container">
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_01" class="deadline"
-                                                       name="deadline" value="1">
+                                                       name="deadline" value="1"
+                                                       @if(old('deadline') == 1) checked @endif>
 
-                                                <input type="text" class="input-xs start-date" name="started_at"
-                                                       placeholder="시작일자 선택" readonly disabled>
+                                                <input type="text" class="input-xs start-date" name="started_at_ymd"
+                                                       value="{{old("started_at_ymd")}}"
+                                                       placeholder="시작일자 선택"
+                                                       @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
-                                                       disabled>
+                                                       name="started_at_hm"
+                                                       value="{{old("started_at_hm")}}"
+                                                       @if(old('deadline') != 1) disabled @endif>
                                                 <p class="time-from">부터</p>
-                                                <input type="text" class="input-xs end-date" name="ended_at"
-                                                       placeholder="마감일자 선택" readonly disabled>
+                                                <input type="text" class="input-xs end-date" name="ended_at_ymd"
+                                                       value="{{old("ended_at_ymd")}}"
+                                                       placeholder="마감일자 선택"
+                                                       @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
-                                                       disabled>
+                                                       name="ended_at_hm"
+                                                       value="{{old("ended_at_hm")}}"
+                                                       @if(old('deadline') != 1) disabled @endif>
                                             </div>
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_02" class="deadline"
-                                                       name="deadline" value="2">
+                                                       name="deadline" value="2"
+                                                       @if(old('deadline') == 2) checked @endif>
                                                 <label for="deadline_field_02">채용시까지</label>
                                             </div>
                                         </div>
@@ -447,7 +484,7 @@
                                                 <input type="file" id="file" class="btn-editor-file">
                                             </li>
                                         </ul>
-                                        <textarea id="editor" class="editor"></textarea>
+                                        <textarea id="editor" class="editor" name="content" value="{{old('content')}}"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
@@ -467,7 +504,8 @@
                                                        name="pay_method"
                                                        value="1">
                                                 <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
-                                                <select name="" id="" class="input-xs select-menu pay-method-select" disabled="disabled">
+                                                <select name="" id="" class="input-xs select-menu pay-method-select"
+                                                        disabled="disabled">
                                                     <option value="">신한</option>
                                                 </select>
                                             </div>
