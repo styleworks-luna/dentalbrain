@@ -1,8 +1,8 @@
 <template>
     <div class="albatalk-contents">
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
-            <li class="albatalk-card" v-for="list in lists" :key="list.id">
-                <a href="">
+            <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
+                <a href="" class="albatalk-card">
                     <img src="/images/dummy/test2.jpg">
                     <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.title }}</p>
@@ -12,10 +12,18 @@
                         </div>
                     </div>
                 </a>
-                <div class="albatalk-bottom">
-                    <div class="albatalk-period">게재 기간 : {{ list.period }}일 남음</div>
-                    <div class="albatalk-state">이력서 제출 현황 : <strong>{{ list.state }}</strong>건</div>
-                    <button class="btn">수정하기</button>
+                <div class="albatalk-additional-information">
+                    <p class="albatalk-period">게재 기간 : {{ list.period }}일 남음</p>
+                    <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.state }}</em>건</p>
+                    <div class="btn-wrap">
+                        <button class="btn-edit">수정하기</button>
+                    </div>
+                </div>
+            </li>
+            <li class="none" v-if="lists.length <= 0">
+                <p>등록 된 구인 정보가 없습니다.</p>
+                <div class="btn-wrap">
+                    <a href="" class="btn-go-recruit">구인 등록하기</a>
                 </div>
             </li>
         </ul>

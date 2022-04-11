@@ -14,7 +14,10 @@
         <div class="container">
             @include('desktop.layouts.navigation.account')
             <div class="mypage-content-wrap">
-                <div class="content-title">구인정보<a href="">구인 등록하기</a></div>
+                <div class="content-title">
+                    <h2>구인정보</h2>
+                    <a href="">구인 등록하기</a>
+                </div>
                 <albatalk></albatalk>
             </div>
         </div>

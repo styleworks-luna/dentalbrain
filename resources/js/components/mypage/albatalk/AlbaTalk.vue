@@ -1,5 +1,5 @@
 <template>
-    <section class="albatalk">
+    <section class="mypage-albatalk">
         <albatalk-navigation v-if="is_navigation"></albatalk-navigation>
         <albatalk-offer-list v-if="is_offer"></albatalk-offer-list>
         <albatalk-list v-else></albatalk-list>

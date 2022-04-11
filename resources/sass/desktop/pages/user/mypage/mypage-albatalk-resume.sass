@@ -8,180 +8,86 @@
 @import '@sass/components/_input.sass'
 @import '@sass/desktop/layouts/navigation/account.sass'
 
-.offer-navigation
-    +size(1280px, 80px)
-    font-size: 24px
+.mypage-albatalk-navigation
+    display: grid
+    grid-template-columns: 1fr 1fr
 
-    th
-        +padding(top 29px bottom 29px right 219px left 219px)
-        +border(1px solid $border-color-base, top left right)
-        +border(1px solid $page_color, bottom)
-
-        .active
-            font-weight: bold
-            color: $page_color
-            +border(1px solid $page_color, top right left)
-            +border(0, bottom)
-
-.content-title
-    font-size: 24px
-    color: #222
-    +margin(top 60px)
-    +padding(bottom 18px)
-    a
-        float: right
-        +margin(top 10px)
-        font-size: 14px
-        color: #777
-        &:hover
-            color: $page_color
-            font-weight: bold
-            text-decoration: underline
-.wanted
-    +margin(top 60px bottom 15px)
-
-    h2
-        font-size: 24px
-
-    input[type="checkbox"]
-        +margin(1px 8px 0 0)
-        float: left
-    label
-        float: left
-        font-size: 16px
-
-    .inquire-form-wrap
-        +margin(top 18px)
-
-        table
-            +size(1280px)
-            &:nth-child(1)
-                +border(2px solid $gray-900, top)
-
-        tr
-            +size(1280px, 116px)
-            +border(1px solid $border-color-base, bottom)
-
-
-            th
-                +size(190px)
-                +padding(top 48px)
-                +background(null, null, null, $background-color-menu)
-                +box-sizing(border-box)
-                font-size: 16px
-                text-align: center
-                vertical-align: top
-
-                .all-wrap
-                    +size(92px 50px)
-
-
-            td
-                +padding(left 30px top 30px bottom 11px)
-                +box-sizing(border-box)
-                white-space: pre-wrap
-                +size(92px)
-
-                .second
-                    +padding(top 20px)
-
-
-
-.albatalk-wrap
-    .title-wrap
-        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
-        min-width: 1280px
-        height: 300px
-
-        h1
-            +size(240px)
-            +margin(0 auto)
-            +padding(125px 0 0 63px)
-            font-weight: bold
-            font-size: 48px
+    .navigation-list
+        +border(1px solid $border-color-base)
 
         a
-            +border(1px solid transparent)
-            +size(102px, 36px)
-            float: right
-            +margin(top 60px right 20px)
-            background-color: rgba(0, 0, 0, 0.4)
-            border-radius: 1px
-            display: flex
-            align-items: center
-            justify-content: center
-            color: #fff
-            font-size: 16px
+            +padding(29px 0)
+            display: block
+            font-size: 24px
+            color: $gray-700
+            text-align: center
 
-.albatalk
-    +margin(bottom 100px)
+        &.active
+            +border(0, bottom)
+            border-color: $page-color
+
+            a
+                font-weight: bold
+                color: $page-color
+
+.mypage-content-wrap
+    +margin(top 60px bottom 200px)
+
+    .content-title
+        +padding(bottom 18px)
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
+
+        h2
+            font-size: 24px
+            color: #222
+        a
+            +margin(top 10px)
+            font-size: 14px
+            color: #777
+
+            &:hover
+                color: $page_color
+                font-weight: bold
+                text-decoration: underline
 
     .albatalk-contents
-        //+margin(top 28px)
-        overflow: hidden
+        +margin(top 20px)
 
-        ul
-            display: flex
-
-        .albatalk-card
-            +size(296px, 310px)
-            +margin(20px 32px 0 0)
-            +border(1px solid rgba(0, 0, 0, 0.1))
-            +border-radius(8px)
-            +box-sizing(border-box)
-            max-width: 296px
-            max-height: 310px
-            overflow: hidden
-            float: left
-
-            &:nth-child(4n)
-                +margin(right 0px)
-
-            img
-                +size(296px 296px, 222px)
-
-            .albatalk-information
-                +padding(20px)
-
-                .albatalk-name
-                    +ellipse()
-                    display: block
-                    font-weight: bold
-                    font-size: 16px
-                    line-height: 1.5
-
-            .albatalk-description
-                +padding(top 15px)
-                display: flex
-                justify-content: space-between
-                align-items: center
-                color: $gray-700
-
-                .albatalk-place
-                    font-size: 12px
-
-                .albatalk-date
-                    font-size: 12px
-            &:hover
-                +border(1px solid $page-color)
-                .albatalk-name
-                    text-decoration: underline
-
-        .albatalk-bottom
-            +padding(top 342px)
-            top: 10px
-            +size(296px)
+        .albatalk-additional-information
+            +margin(top 20px)
             font-size: 16px
             text-align: center
 
-            .albatalk-state
-                +padding(top 8px bottom 20px)
-                strong
-                    color: $page-color
+            .refuse-state
+                color: $gray-700
+                line-height: 50px
 
-            .btn
-                display: inline
-                +size(140px, 50px)
-                +btn(null,1px solid $border-color-base, 25px)
-                font-weight: bold
-                font-size: 16px
+            .btn-wrap
+                +margin(0 auto)
+                +size(140px)
+
+                .btn-cancel
+                    +size(140px, 50px)
+                    +btn(null,1px solid $border-color-base, 25px)
+                    font-weight: bold
+                    font-size: 16px
+
+
+        .none
+            +margin(top 100px)
+
+            p
+                font-size: 20px
+                text-align: center
+
+            .btn-wrap
+                +size(200px)
+                +margin(100px auto 0 auto)
+
+                .btn-go-offer
+                    +size(200px, 50px)
+                    +btn(purple-fill)
+                    font-size: 16px
+                    line-height: 50px

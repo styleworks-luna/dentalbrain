@@ -3,92 +3,72 @@
 @import '@sass/helpers/_mixins.scss'
 
 @import '@sass/components/_button.sass'
-@import '@sass/components/_pagination.sass'
-@import '@sass/components/_selectbox.sass'
-@import '@sass/components/_input.sass'
 @import '@sass/desktop/layouts/navigation/account.sass'
 
-.content-title
-    font-size: 24px
-    color: #222
-    +margin(top 60px)
-    +padding(bottom 18px)
-    +border(2px solid $gray-900, bottom)
-    a
-        float: right
-        +margin(top 10px)
-        font-size: 14px
-        color: #777
-        &:hover
-            color: $page_color
-            font-weight: bold
-            text-decoration: underline
-.wanted
-    +margin(top 60px bottom 15px)
+.mypage-content-wrap
+    +margin(top 60px bottom 200px)
 
-    h2
-        font-size: 24px
+    .content-title
+        +padding(bottom 18px)
+        +border(2px solid $gray-900, bottom)
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
 
-    input[type="checkbox"]
-        +margin(1px 8px 0 0)
-        float: left
-    label
-        float: left
-        font-size: 16px
+        h2
+            font-size: 24px
+            color: #222
+        a
+            +margin(top 10px)
+            font-size: 14px
+            color: #777
 
-    .inquire-form-wrap
-        +margin(top 18px)
+            &:hover
+                color: $page_color
+                font-weight: bold
+                text-decoration: underline
 
-        table
-            +size(1280px)
-            &:nth-child(1)
-                +border(2px solid $gray-900, top)
+    .mypage-albatalk
+        +margin(top 20px)
 
-        tr
-            +size(1280px, 116px)
-            +border(1px solid $border-color-base, bottom)
+        .albatalk-additional-information
+            +size(296px)
+            +margin(top 12px)
 
-
-            th
-                +size(190px)
-                +padding(top 48px)
-                +background(null, null, null, $background-color-menu)
-                +box-sizing(border-box)
+            p
                 font-size: 16px
                 text-align: center
-                vertical-align: top
 
-                .all-wrap
-                    +size(92px 50px)
+            .albatalk-state
+                +padding(top 8px)
 
-
-            td
-                +padding(left 30px top 30px bottom 11px)
-                +box-sizing(border-box)
-                white-space: pre-wrap
-                +size(92px)
-
-                .second
-                    +padding(top 20px)
-
-.albatalk
-    +margin(bottom 100px)
-
-    .albatalk-bottom
-        +padding(top 342px)
-        top: 10px
-        +size(296px)
-        font-size: 16px
-        text-align: center
-
-        .albatalk-state
-            +padding(top 8px bottom 20px)
-            strong
+            em
+                font-weight: bold
                 color: $page-color
 
-        .btn
-            display: inline
-            +size(140px, 50px)
-            +btn(null,1px solid $border-color-base, 25px)
-            font-weight: bold
-            font-size: 16px
+            .btn-wrap
+                +size(140px)
+                +margin(20px auto 0 auto)
+
+                .btn-edit
+                    +size(140px, 50px)
+                    +btn(null,1px solid $border-color-base, 25px)
+                    font-weight: bold
+                    font-size: 16px
+
+        .none
+            +margin(top 100px)
+
+            p
+                font-size: 20px
+                text-align: center
+
+            .btn-wrap
+                +size(200px)
+                +margin(100px auto 0 auto)
+
+                .btn-go-recruit
+                    +size(200px, 50px)
+                    +btn(purple-fill)
+                    font-size: 16px
+                    line-height: 50px

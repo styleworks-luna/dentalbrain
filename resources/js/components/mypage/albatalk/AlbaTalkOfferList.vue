@@ -1,7 +1,7 @@
 <template>
     <div class="albatalk-contents">
-        <ul>
-            <li v-for="list in list" :key="list.id">
+        <ul  :class="lists.length > 0 ? 'albatalk-content-list' : ''">
+            <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
                 <a class="albatalk-card" href="">
                     <img src="/images/dummy/test2.jpg">
                     <div class="albatalk-information">
@@ -12,8 +12,17 @@
                         </div>
                     </div>
                 </a>
-                <div class="albatalk-bottom">
-                    <button class="btn">제출취소</button>
+                <div class="albatalk-additional-information">
+                    <p class="refuse-state" v-if="list.state == '1'">모집마감</p>
+                    <div class="btn-wrap" v-else>
+                    <button class="btn-cancel">제출취소</button>
+                    </div>
+                </div>
+            </li>
+            <li class="none" v-if="lists.length <= 0">
+                <p>신청한 구직 내역이 없습니다.</p>
+                <div class="btn-wrap">
+                    <a href="" class="btn-go-offer">구직 신청하러가기</a>
                 </div>
             </li>
         </ul>
@@ -25,14 +34,20 @@ export default {
     name: "AlbaTalkOfferList",
     data() {
         return {
-            list: [
+            lists: [
                 {
-                    key: 1,
                     title: "덴탈브레인 치과의원",
                     location: "서울 강서구",
                     date: "채용시까지",
                     period: '7',
                     state: '0',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '1',
                 },
             ]
         }
