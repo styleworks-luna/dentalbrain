@@ -18,7 +18,7 @@
                     <h2>구직정보</h2>
                     <a href="">구직 신청하러가기</a>
                 </div>
-                <albatalk :is_navigation="true" :is_offer="true"></albatalk>
+                <albatalk :is_offer="true"></albatalk>
             </div>
         </div>
     </section>

@@ -1,7 +1,9 @@
 <template>
     <section class="mypage-albatalk">
-        <albatalk-navigation v-if="is_navigation"></albatalk-navigation>
-        <albatalk-offer-list v-if="is_offer"></albatalk-offer-list>
+        <template v-if="is_offer">
+            <albatalk-navigation></albatalk-navigation>
+            <albatalk-offer-list></albatalk-offer-list>
+        </template>
         <albatalk-list v-else></albatalk-list>
     </section>
 </template>
@@ -19,8 +21,7 @@ export default {
         'albatalk-navigation': AlbaTalkNavigation,
     },
     props: {
-        'is_offer': Boolean,
-        'is_navigation': Boolean
+        'is_offer': Boolean
     }
 }
 </script>
