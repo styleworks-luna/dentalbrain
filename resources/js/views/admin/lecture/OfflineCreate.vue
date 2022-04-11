@@ -112,38 +112,76 @@
                 <template v-slot:content>
                     <div class="price overflow-hidden">
                         <label class="col-form-label d-block float-left mr-3">일반회원가</label>
+                        <div class="radio-wrap mt-1" style="margin-right: 5px">
+                            <input type="radio" id="free" :value="true"
+                                   v-model="is_free">
+                            <label for="free">무료</label>
+                        </div>
                         <div class="radio-wrap">
                             <input type="radio" id="pay" :value="false"
                                    v-model="is_free">
                             <label for="pay">유료</label>
                             <input type="text"
-                                   class="form-control ml-3"
+                                   class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    :disabled="is_free == true"
+                                   style="width: 120px; margin-right: 10px"
                                    v-model="price">
-                        </div>
-                        <div class="radio-wrap mt-1">
-                            <input type="radio" id="free" :value="true"
-                                   v-model="is_free">
-                            <label for="free">무료</label>
+                            <input type="checkbox" id="discount"
+                                   :disabled="is_free == true"
+                                   v-model="is_discount">
+                            <label for="discount" style="margin-right: 10px">할인 : </label>
+                            <label>할인율</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   :disabled="is_discount == false || is_free == true"
+                                   style="width: 50px; margin-right: 5px;"
+                                   v-model="discount_rate">
+                            <span style="margin-right: 15px;">%</span>
+                            <label>할인가</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   placeholder="신청 금액 입력"
+                                   :disabled="is_discount == false || is_free == true"
+                                   style="width: 120px;"
+                                   v-model="discounted_price">
                         </div>
                     </div>
                     <div class="membership-price overflow-hidden mt-3">
                         <label class="col-form-label d-block float-left mr-3">유료회원가</label>
+                        <div class="radio-wrap mt-1" style="margin-right: 5px">
+                            <input type="radio" id="membership_free" :value="true"
+                                   v-model="membership_is_free">
+                            <label for="membership_free">무료</label>
+                        </div>
                         <div class="radio-wrap">
                             <input type="radio" id="membership_pay" :value="false"
                                    v-model="membership_is_free">
                             <label for="membership_pay">유료</label>
                             <input type="text"
-                                   class="form-control ml-3"
+                                   class="form-control ml-2"
                                    placeholder="신청 금액 입력"
                                    :disabled="membership_is_free == true"
+                                   style="width: 120px; margin-right: 10px"
                                    v-model="membership_price">
-                        </div>
-                        <div class="radio-wrap mt-1">
-                            <input type="radio" id="membership_free" :value="true"
-                                   v-model="membership_is_free">
-                            <label for="membership_free">무료</label>
+                            <input type="checkbox" id="membership_discount"
+                                   :disabled="membership_is_free == true"
+                                   v-model="membership_is_discount">
+                            <label for="discount" style="margin-right: 10px">할인 : </label>
+                            <label>할인율</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   :disabled="membership_is_discount == false || membership_is_free == true"
+                                   style="width: 50px; margin-right: 5px;"
+                                   v-model="membership_discount_rate">
+                            <span style="margin-right: 15px;">%</span>
+                            <label>할인가</label>
+                            <input type="text"
+                                   class="form-control ml-2"
+                                   placeholder="신청 금액 입력"
+                                   v-model="membership_discounted_price"
+                                   :disabled="membership_is_discount == false || membership_is_free == true"
+                                   style="width: 120px;">
                         </div>
                     </div>
                 </template>
@@ -219,11 +257,20 @@ export default {
                 title: this.title,
                 lecture_info: this.lecture_info,
 
+                is_discount: this.is_discount,
+                membership_is_discount: this.membership_is_discount,
+
                 is_free: this.is_free,
                 price: this.price,
 
                 membership_is_free: this.membership_is_free,
                 membership_price: this.membership_price,
+
+                discounted_price: this.discounted_price,
+                discount_rate: this.discount_rate,
+
+                membership_discounted_price: this.membership_discounted_price,
+                membership_discount_rate: this.membership_discount_rate,
 
                 content: this.content,
 
