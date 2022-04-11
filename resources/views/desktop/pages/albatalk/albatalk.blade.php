@@ -15,7 +15,7 @@
 
 @section('content')
     <section class="albatalk-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             <albatalk-all></albatalk-all>
         </div>

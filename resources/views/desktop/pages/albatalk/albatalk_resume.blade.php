@@ -14,7 +14,7 @@
 
 @section('content')
     <section class="albatalk-resume-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             <section class="resume">
                 <div class="sub-title-wrap">

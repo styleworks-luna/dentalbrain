@@ -16,6 +16,11 @@ $(function () {
 
                 addresses.val(roadAddr);
                 searchAddressToCoordinate(addresses.val());
+
+                $('.address-hidden-sido').val(data.sido);
+                $('.address-hidden-gugun').val(data.sigungu);
+                $('.address-hidden-dong').val(data.bname);
+
             },
         }).open({
             autoClose: true
@@ -50,6 +55,9 @@ $(function () {
             var result = response.v2, // 검색 결과의 컨테이너
                 item = result.addresses[0], // 검색 결과의 배열
                 point = new naver.maps.Point(item.x, item.y);
+
+            $('.address-hidden-latitude').val(result.addresses[0].x);
+            $('.address-hidden-longitude').val(result.addresses[0].y);
 
             map.setCenter(point);
             marker.setPosition(point);

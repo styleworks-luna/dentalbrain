@@ -18,7 +18,7 @@
 
 @section('content')
     <section class="albatalk-post-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -232,6 +232,11 @@
                                                    placeholder="상세주소를 입력"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="상세주소를 입력하세요">
+                                            <input type="hidden" class="address-hidden-sido" name="sido">
+                                            <input type="hidden" class="address-hidden-gugun" name="gugun">
+                                            <input type="hidden" class="address-hidden-dong" name="dong">
+                                            <input type="hidden" class="address-hidden-latitude" name="latitude">
+                                            <input type="hidden" class="address-hidden-longitude" name="longitude">
                                         </div>
                                         <div id="map" class="map"></div>
                                     </td>
