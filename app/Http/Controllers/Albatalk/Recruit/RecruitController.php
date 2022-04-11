@@ -84,12 +84,10 @@ class RecruitController extends Controller
 //         구인 등록 유효성 검사
         $data = $this->recruitTemplate->validateRecruit($request);
 
-        ddd($data);
+//        ddd($data);
 
         // 검사한 데이터 세션에 저장
         session(['data' => $data]);
-
-
 
         return redirect()->route('albatalk.recruit.payment.form');
     }

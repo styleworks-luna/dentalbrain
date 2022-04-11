@@ -32,16 +32,16 @@ class RecruitTemplate
             'manager_email' => ['required', 'string', 'email', 'max:255'],
             'homepage' => ['required', 'url'],
             'subway' => ['nullable', 'string', 'max:255'],
-
+//
             'address' => ['required', 'string',],
-//            'address_detail' => ['nullable', 'string',],
-//
-//            'sido' => ['required', 'string',],
-//            'gugun' => ['required', 'string',],
-//            'dong' => ['required', 'string', 'nullable'],
-//
-//            'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
-//            'longitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
+            'address_detail' => ['nullable', 'string',],
+
+            'sido' => ['required', 'string',],
+            'gugun' => ['required', 'string',],
+            'dong' => ['required', 'string', 'nullable'],
+
+            'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
+            'longitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
 
             'application' => ['required'],
             'work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
@@ -83,13 +83,13 @@ class RecruitTemplate
             'url' => $data['homepage'],
             'subway' => $data['subway'],
 
-            'address' => "서울 송파구 오금동",
-            'address_detail' => "아남아파트",
-            'sido' => "서울",
-            'gugun' => '송파구',
-            'dong' => '오금동',
-            'latitude' => '37.50416961685561',
-            'longitude' => '127.02096038259408',
+            'address' => $data['address'],
+            'address_detail' => $data['address_detail'],
+            'sido' => $data['sido'],
+            'gugun' => $data['gugun'],
+            'dong' => $data['dong'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
 
             'type_work_id' => $data['work'],
             'type_job_id' => $data['job'],
@@ -129,7 +129,7 @@ class RecruitTemplate
         if (!$salary) {
             RecruitSalary::create([
                 'type' => TypeSalary::find($data['salary'])['type'],
-                'value' => $data['salary_value'],
+                'value' => $data['salary_value'] ?? null,
                 'recruit_id' => $recruit->id,
                 'type_salary_id' => $data['salary'],
             ]);
@@ -145,7 +145,7 @@ class RecruitTemplate
         if (!$day) {
             RecruitDay::create([
                 'type' => TypeDay::find($data['day'])['type'],
-                'value' => $data['day_value'],
+                'value' => $data['day_value']  ?? null,
                 'recruit_id' => $recruit->id,
                 'type_day_id' => $data['day'],
             ]);

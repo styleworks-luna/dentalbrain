@@ -197,7 +197,7 @@
                                                id="phone"
                                                class="input-s"
                                                name="phone"
-                                               value="{{old('dental_name')}}"
+                                               value="{{old('phone')}}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -231,6 +231,8 @@
                                                    data-parsley-required-message="※ 주소를 입력해주세요.">
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
+                                                   name="address_detail"
+                                                   value="{{old('address_detail')}}"
                                                    placeholder="상세주소를 입력"
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="상세주소를 입력하세요">
@@ -482,7 +484,7 @@
                                                 <input type="file" id="file" class="btn-editor-file">
                                             </li>
                                         </ul>
-                                        <textarea id="editor" class="editor"></textarea>
+                                        <textarea id="editor" class="editor" name="content" value="{{old('content')}}"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
