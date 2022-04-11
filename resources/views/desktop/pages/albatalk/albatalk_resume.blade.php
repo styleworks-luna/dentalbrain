@@ -21,7 +21,7 @@
                     <h2>이력서 작성</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
-                <form action="{{ route('albatalk.resume.store') }}" method="post"
+                <form id="albatalk_resume_form" action="{{ route('albatalk.resume.store') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
@@ -164,7 +164,7 @@
                                            name="address"
                                            value="{{ old("address") }}"
                                            data-parsley-required="true"
-                                           data-parsley-required-message="※ 주소를 입력해주세요"/>
+                                           data-parsley-required-message="※ 주소를 입력해주세요."/>
                                 </td>
                             </tr>
                         </table>
