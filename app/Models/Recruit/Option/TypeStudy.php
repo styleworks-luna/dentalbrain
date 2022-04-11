@@ -34,6 +34,8 @@ class TypeStudy extends Model
     static $TYPE_STUDY_12 = '12';
     // 대학원 졸업(박사)
     static $TYPE_STUDY_13 = '13';
+    // 학력무관
+    static $TYPE_STUDY_14 = '14';
 
     public function recruits()
     {
