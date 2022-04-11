@@ -256,6 +256,11 @@
                         </table>
                     </div>
                 </section>
+
+                <div class="btn-wrap">
+                    <a href="" class="btn-go-edit">이력서 수정</a>
+               </div>
+
             </div>
         </div>
     </section>
