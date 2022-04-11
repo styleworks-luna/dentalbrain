@@ -17,6 +17,7 @@ use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use App\Models\Recruit\RecruitPrice;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitTemplate;
@@ -28,6 +29,7 @@ use Illuminate\Support\Facades\Log;
 class RecruitController extends Controller
 {
     protected $recruitTemplate;
+    protected $price;
 
     public function __construct()
     {
@@ -36,6 +38,18 @@ class RecruitController extends Controller
 
     public function createForm()
     {
+        // 회원 상태 확인
+        $user = Auth::user();
+        $hasMembership = $user ? $user->hasMembership : false;
+
+        if($hasMembership) {
+            $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_MEMBERSHIP);
+            $this->price = $recruitPrice->price;
+        } else {
+            $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_NOT_MEMBERSHIP);
+            $this->price = $recruitPrice->price;
+        }
+
         return view(viewPrefix() . 'pages.albatalk.albatalk_post')->with([
             'typeApplication' => TypeApplication::all(),
             'typeWork' => TypeWork::all(),
@@ -56,8 +70,6 @@ class RecruitController extends Controller
 
         $recruit->with('typeWork', 'typeJob', 'typeStudy');
 
-        logger($days);
-
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
             'recruit' => $recruit,
             'applications' => $applications,
@@ -72,10 +84,12 @@ class RecruitController extends Controller
 //         구인 등록 유효성 검사
         $data = $this->recruitTemplate->validateRecruit($request);
 
+        ddd($data);
+
         // 검사한 데이터 세션에 저장
         session(['data' => $data]);
 
-//        $sessionData = $request->session()->get('data');
+
 
         return redirect()->route('albatalk.recruit.payment.form');
     }
