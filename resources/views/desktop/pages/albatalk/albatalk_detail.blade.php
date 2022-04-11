@@ -10,7 +10,7 @@
 
 @section('content')
     <section class="albatalk-detail-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             <form id="albatalk-detail-form">
                 <div class="row">

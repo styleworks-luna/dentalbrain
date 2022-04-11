@@ -10,7 +10,7 @@
 
 @section('content')
     <section class="albatalk-resume-detail-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             <div class="row">
                 <section class="title">
