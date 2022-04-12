@@ -2,9 +2,12 @@
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-detail.js') }}"></script>
 @endsection
 
 @section('style')
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-detail.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
@@ -29,7 +32,7 @@
                                 <span class="none-image-icon"></span>
                             </div>-->
                             <!-- 썸네일 존재 할 경우 (등록 이미지) -->
-                            <img class="main-thumbnail" src="{{ asset('/images/dummy/test.png') }}" alt="치과 사진">
+                            <img class="main-thumbnail thumbnail-on" src="{{ asset('/images/dummy/test.png') }}" alt="치과 사진">
                         </div>
                         <div class="sub-thumbnail-wrap">
                             <div class="img-wrap">
@@ -38,7 +41,7 @@
                                     <span class="none-image-icon"></span>
                                 </div>
                                 <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail" src="" alt="치과 사진">-->
+                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
                             </div>
                             <div class="img-wrap">
                                 <!-- 썸네일 존재하지 않을경우-->
@@ -46,7 +49,7 @@
                                     <span class="none-image-icon"></span>
                                 </div>
                                 <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail" src="" alt="치과 사진">-->
+                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
                             </div>
                             <div class="img-wrap">
                                 <!-- 썸네일 존재하지 않을경우-->
@@ -54,7 +57,7 @@
                                     <span class="none-image-icon"></span>
                                 </div>
                                 <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail" src="" alt="치과 사진">-->
+                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
                             </div>
                         </div>
                     </div>
@@ -92,8 +95,6 @@
                                     <th>주소</th>
                                     <td colspan="3">
                                         <div class="address-wrap">
-                                            <input type="hidden" class="hidden-latitude">
-                                            <input type="hidden" class="hidden-longitude">
                                             <p>서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
                                             <a href="" class="btn-map">지도보기</a>
                                         </div>
@@ -188,6 +189,29 @@
                 <section class="btn-wrap">
                     <button type="submit" class="btn-submit">이력서 제출</button>
                 </section>
+            </div>
+        </div>
+    </section>
+    <section class="popup-area">
+        <div class="dim"></div>
+        <div class="map-popup-wrap popup-wrap">
+            <div class="popup-header">
+                <h3>지도보기</h3>
+                <a href="#" class="btn-popup-close"></a>
+            </div>
+
+            <input type="hidden" class="map_x" value="127.105399">
+            <input type="hidden" class="map_y" value="37.3595704">
+            <div id="mapzone" class="map"></div>
+
+            <p class="address">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
+        </div>
+        <div class="image-popup-wrap popup-wrap">
+            <div class="popup-header">
+                <a href="#" class="btn-popup-close"></a>
+            </div>
+            <div class="img-wrap">
+            <img src="" class="popup-img" alt="구인정보 이미지">
             </div>
         </div>
     </section>
