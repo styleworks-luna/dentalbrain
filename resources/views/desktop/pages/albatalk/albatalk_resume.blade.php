@@ -73,7 +73,7 @@
                                        class="resume-profile"
                                        name="resume_image"
                                        accept="image/jpeg, image/png, image/gif"
-                                       data-parsley-required="true"
+                                       data-parsley-required="false"
                                        data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
                                        data-parsley-errors-container=".thumbnail-error-container">
                                 <label for="resume_image" class="image-icon-common btn-plus"></label>

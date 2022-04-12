@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="image-hover-common image-hover-lg">
                                         <input type="file" id="main_thumbnail_input"
-                                               data-parsley-required="true"
+                                               data-parsley-required="false"
                                                data-parsley-required-message="※ 치과 대표 사진을 업로드 해주세요."
                                                data-parsley-errors-container=".thumbnail-error-container">
                                         <label for="main_thumbnail"
