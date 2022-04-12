@@ -127,11 +127,13 @@ class ResumeController extends Controller
         }
 
         $leftList = AbilityAnswer::query()
+            ->with('ability.category')
             ->whereHas('ability.category', function ($query) {
                 return $query->where('id', '<=', 5);
             })
             ->where('resume_id', '=', $resume->id)->get();
         $rightList = AbilityAnswer::query()
+            ->with('ability.category')
             ->whereHas('ability.category', function ($query) {
                 return $query->where('id', '>', 5);
             })

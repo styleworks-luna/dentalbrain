@@ -14,7 +14,7 @@
 
 @section('content')
     <section class="albatalk-resume-wrap">
-        @include('desktop.layouts.albatalk')
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
             <section class="resume">
                 <div class="sub-title-wrap">
@@ -114,7 +114,7 @@
                                            id="birthday"
                                            class="birthday"
                                            name="birthday"
-                                           value="{{ old("birthday", $resume->birhday) }}"
+                                           value="{{ old("birthday", $resume->birthday) }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 생년 월일을 입력해주세요."/>
                                 </td>
@@ -418,66 +418,65 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($leftList as $category)
-                                        @foreach($category->abilities as $ability)
-                                            <tr>
-                                                @if($loop->first)
-                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                                @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
-                                                @if($ability->type == 'select')
-                                                    <td class="select-cell">
-                                                        <select class="select-menu"
-                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option
-                                                                value="0">
-                                                                선택
-                                                            </option>
-                                                            <option value="1"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
-                                                                경험없음
-                                                            </option>
-                                                            <option value="2"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
-                                                                미흡
-                                                            </option>
-                                                            <option value="3"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
-                                                                보통
-                                                            </option>
-                                                            <option value="4"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
-                                                                잘함
-                                                            </option>
-                                                            <option value="5"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
-                                                                매우잘함
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="checkbox-cell">
-                                                        <input type="hidden"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="0">
-                                                        <input type="checkbox"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1"
-                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
-                                                        >
-                                                    </td>
-                                                @else
-                                                    <td class="input-cell" colspan="2">
-                                                        <input type="text"
-                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
+                                    @foreach($leftList as $abilityAnswer)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @endif
+                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <input type="hidden"
+                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
+                                                   value="{{ $abilityAnswer->ability->id }}">
+                                            {{$abilityAnswer->score}}
+                                            @if($abilityAnswer->ability->type == 'select')
+                                                <td class="select-cell">
+                                                    <select class="select-menu"
+                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                        <option
+                                                            value="0">
+                                                            선택
+                                                        </option>
+                                                        <option value="1"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                            경험없음
+                                                        </option>
+                                                        <option value="2"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                            미흡
+                                                        </option>
+                                                        <option value="3"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                            보통
+                                                        </option>
+                                                        <option value="4"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                            잘함
+                                                        </option>
+                                                        <option value="5"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                            매우잘함
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td class="checkbox-cell">
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="1"
+                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                    >
+                                                </td>
+                                            @else
+                                                <td class="input-cell" colspan="2">
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
+                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -492,66 +491,64 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($rightList as $category)
-                                        @foreach($category->abilities as $ability)
-                                            <tr>
-                                                @if($loop->first)
-                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                                @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
-                                                @if($ability->type == 'select')
-                                                    <td class="select-cell">
-                                                        <select class="select-menu"
-                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option
-                                                                value="0">
-                                                                선택
-                                                            </option>
-                                                            <option value="1"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
-                                                                경험없음
-                                                            </option>
-                                                            <option value="2"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
-                                                                미흡
-                                                            </option>
-                                                            <option value="3"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
-                                                                보통
-                                                            </option>
-                                                            <option value="4"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
-                                                                잘함
-                                                            </option>
-                                                            <option value="5"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
-                                                                매우잘함
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="checkbox-cell">
-                                                        <input type="hidden"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="0">
-                                                        <input type="checkbox"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1"
-                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
-                                                        >
-                                                    </td>
-                                                @else
-                                                    <td class="input-cell" colspan="2">
-                                                        <input type="text"
-                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
+                                    @foreach($rightList as $abilityAnswer)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @endif
+                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <input type="hidden"
+                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
+                                                   value="{{ $abilityAnswer->ability->id }}">
+                                            @if($abilityAnswer->ability->type == 'select')
+                                                <td class="select-cell">
+                                                    <select class="select-menu"
+                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                        <option
+                                                            value="0">
+                                                            선택
+                                                        </option>
+                                                        <option value="1"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                            경험없음
+                                                        </option>
+                                                        <option value="2"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                            미흡
+                                                        </option>
+                                                        <option value="3"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                            보통
+                                                        </option>
+                                                        <option value="4"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                            잘함
+                                                        </option>
+                                                        <option value="5"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                            매우잘함
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td class="checkbox-cell">
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="1"
+                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                    >
+                                                </td>
+                                            @else
+                                                <td class="input-cell" colspan="2">
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
+                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
