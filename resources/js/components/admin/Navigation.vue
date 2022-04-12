@@ -79,6 +79,38 @@
                 </ul>
             </li>
 
+            <li class="c-sidebar-nav-dropdown"
+                :class="{ showClass: checkUrl('/admin/albatalk') }">
+                <a href="#" class="c-sidebar-nav-dropdown-toggle">알바톡</a>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <router-link to="/admin/recruit/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/recruit') }">
+                            구인 정보
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/offer/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/offer') }">
+                            구직 정보
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/headhunting/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/headhunting') }">
+                            헤드헌팅 주소 입력
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/recruit/pay/1" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/recruit/pay') }">
+                            구인등록 결제 금액
+                        </a>
+                    </router-link>
+                </ul>
+            </li>
+
             <!-- 강의 관리 메뉴 -->
             <li class="c-sidebar-nav-dropdown"
                 :class="{ showClass: checkUrl('/admin/lecture') }">
