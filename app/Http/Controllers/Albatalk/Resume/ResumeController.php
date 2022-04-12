@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Albatalk\Resume;
 
 use App\Http\Controllers\Controller;
-use App\Models\File;
-use App\Models\Resume\Ability\Ability;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\Resume;
 use App\Services\File\ResumeThumbnail;
 use App\Services\Recruit\AbilityService;
 use App\Services\Recruit\ResumeService;
+use Closure;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Validator;
 
 class ResumeController extends Controller
 {
@@ -37,8 +32,12 @@ class ResumeController extends Controller
         $this->resumeService = $resumeService;
     }
 
-    public function createForm()
+    public function resumeIndex()
     {
+        if ($this->resumeService->existsResume()) {
+            return $this->completeForm();
+        }
+
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume')->with([
             'leftList' => AbilityCategory::query()->where('id', '<=', '5')->with('abilities')->get(),
             'rightList' => AbilityCategory::query()->where('id', '>', '5')->with('abilities')->get()
@@ -77,7 +76,7 @@ class ResumeController extends Controller
             return \redirect(url()->previous())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
         }
 
-        return \redirect()->route('albatalk.resume.complete')->with('alert', '등록되었습니다.');
+        return \redirect()->route('albatalk.resume.index')->with('alert', '등록되었습니다.');
     }
 
     public function edit(Request $request)
@@ -110,7 +109,7 @@ class ResumeController extends Controller
         }
 
         try {
-            $resume = $this->getLoginUsersResume();
+            $resume = $this->resumeService->getLoginUsersResume();
             /** @var Resume $resume */
             $resume->update($resumeValidator->validated());
 
@@ -127,11 +126,11 @@ class ResumeController extends Controller
             return \redirect(url()->previous())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
         }
 
-        return \redirect()->route('albatalk.resume.complete')->with('alert', '등록되었습니다.');
+        return \redirect()->route('albatalk.resume.index')->with('alert', '등록되었습니다.');
 
     }
 
-    public function complete(Request $request)
+    private function completeForm()
     {
         try {
             $detail = $this->getDetail();
@@ -150,7 +149,7 @@ class ResumeController extends Controller
      */
     public function getDetail(): array
     {
-        $resume = $this->getLoginUsersResume();
+        $resume = $this->resumeService->getLoginUsersResume();
 
         if ($resume == null) {
             throw new ModelNotFoundException('이력서를 생성해 주세요.');
@@ -187,9 +186,9 @@ class ResumeController extends Controller
      * @return array
      * @throws ModelNotFoundException
      */
-    public function getEdit(): array
+    private function getEdit(): array
     {
-        $resume = $this->getLoginUsersResume();
+        $resume = $this->resumeService->getLoginUsersResume();
 
         if ($resume == null) {
             throw new ModelNotFoundException('이력서를 생성해 주세요.');
@@ -233,9 +232,9 @@ class ResumeController extends Controller
 
     /**
      * @param int $sum
-     * @return \Closure
+     * @return Closure
      */
-    private function createCategoryHeader(int $sum): \Closure
+    private function createCategoryHeader(int $sum): Closure
     {
         return function ($category) use (&$sum) {
             $index = $sum;
@@ -248,16 +247,5 @@ class ResumeController extends Controller
                 ]
             ];
         };
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
-     */
-    public function getLoginUsersResume()
-    {
-        $userId = Auth::id();
-        return Resume::query()->with(['file', 'user'])
-            ->where('user_id', '=', $userId)
-            ->orderBy('created_at', 'desc')->first();
     }
 }
