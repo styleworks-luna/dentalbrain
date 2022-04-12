@@ -1,19 +1,21 @@
 <template>
     <layout title="구직 정보">
         <template v-slot:search>
-            <span style="font-size: 12px">구직 정보 [ 전체 0개 ]</span>
-            <div class="float-right">
-                <form @submit.prevent="">
-                    <div class="input-group">
-                        <input class="form-control"
-                               type="text"
-                               placeholder="제목"
-                               v-model="keyword">
-                        <span class="input-group-append">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0" style="font-size: 12px">구직 정보 [ 전체 0개 ]</p>
+                <div>
+                    <form @submit.prevent="">
+                        <div class="input-group">
+                            <input class="form-control"
+                                   type="text"
+                                   placeholder="제목"
+                                   v-model="keyword">
+                            <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
                         </span>
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
         </template>
 
@@ -27,8 +29,14 @@
                             {{ slotProps.row.user_id }}
                         </router-link>
                     </td>
-                    <td><router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.name }}</router-link></td>
-                    <td><router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.email }}</router-link></td>
+                    <td>
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.name }}
+                        </router-link>
+                    </td>
+                    <td>
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.email }}
+                        </router-link>
+                    </td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.job }}</td>
                     <td>
@@ -115,7 +123,6 @@ export default {
             keyword: "",
         }
     },
-    methods: {
-    }
+    methods: {}
 }
 </script>

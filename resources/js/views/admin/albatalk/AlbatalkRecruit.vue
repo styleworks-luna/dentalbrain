@@ -1,25 +1,27 @@
 <template>
     <layout title="구인 정보">
         <template v-slot:search>
-            <span style="font-size: 12px">구인등록 정보 [전체 0개 (진행중 0건 | 종료 0건) ]</span>
-            <div class="float-right">
-                <form @submit.prevent="">
-                    <select-box class="form-control"
-                                text="선택"
-                                :value="category_id"
-                                :options="CategoryOptions"
-                                @setValue="handleSetCategoryId"></select-box>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0" style="font-size: 12px">구인등록 정보 [전체 0개 (진행중 0건 | 종료 0건) ]</p>
+                <div>
+                    <form @submit.prevent="">
+                        <select-box class="form-control"
+                                    text="선택"
+                                    :value="category_id"
+                                    :options="CategoryOptions"
+                                    @setValue="handleSetCategoryId"></select-box>
 
-                    <div class="input-group">
-                        <input class="form-control"
-                               type="text"
-                               placeholder="제목"
-                               v-model="keyword">
-                        <span class="input-group-append">
+                        <div class="input-group">
+                            <input class="form-control"
+                                   type="text"
+                                   placeholder="제목"
+                                   v-model="keyword">
+                            <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
                         </span>
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
         </template>
 
@@ -35,8 +37,14 @@
                             {{ slotProps.row.user_id }}
                         </router-link>
                     </td>
-                    <td><router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.name }}</router-link></td>
-                    <td><router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.email }}</router-link></td>
+                    <td>
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.name }}
+                        </router-link>
+                    </td>
+                    <td>
+                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.email }}
+                        </router-link>
+                    </td>
                     <td>{{ slotProps.row.created_at }}</td>
                     <td>{{ slotProps.row.ended_at }}</td>
                     <td>{{ slotProps.row.banner_date }}</td>
