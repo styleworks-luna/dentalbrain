@@ -15,13 +15,14 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class RecruitTemplate
 {
-    public function validateRecruit(Request $request)
+    public function getValidatorRecruit($rawData)
     {
-        $data = $request->validate([
+        return Validator::make($rawData, [
             'dental_name' => ['required', 'string', 'min:2', 'max:255'],
             'ceo_name' => ['required', 'string', 'max:255'],
             'num' => ['required', 'string', 'max:255'],
@@ -47,26 +48,24 @@ class RecruitTemplate
             'work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
             'job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
             'salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
-            'salary_value' => ['nullable', Rule::requiredIf($request->salary == TypeSalary::$TYPE_SALARY_4)],
+            'salary_value' => ['nullable', Rule::requiredIf(($rawData['salary'] ?? 0) == TypeSalary::$TYPE_SALARY_4)],
             'is_study' => ['required', Rule::in(Recruit::$ACADEMIC, Recruit::$NO_ACADEMIC)],
-            'study' => ['nullable', Rule::requiredIf($request->is_study == Recruit::$ACADEMIC), 'digits_between:1, 14'],
+            'study' => ['nullable', Rule::requiredIf(($rawData['is_study'] ?? 0) == Recruit::$ACADEMIC), 'digits_between:1, 14'],
 
             'is_career' => ['required', Rule::in(Recruit::$JUNIOR, Recruit::$SENIOR)],
-            'career' => ['nullable', Rule::requiredIf($request->is_career == Recruit::$SENIOR), 'digits_between:1, 30'],
+            'career' => ['nullable', Rule::requiredIf(($rawData['is_career'] ?? 0) == Recruit::$SENIOR), 'digits_between:1, 30'],
             'day' => ['required', Rule::in([TypeDay::$TYPE_DAY_1, TypeDay::$TYPE_DAY_2, TypeDay::$TYPE_DAY_3, TypeDay::$TYPE_DAY_4])],
-            'day_value' => ['nullable', Rule::requiredIf($request->day == TypeDay::$TYPE_DAY_4)],
+            'day_value' => ['nullable', Rule::requiredIf(($rawData['day'] ?? 0) == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
 
             'deadline' => ['required', Rule::in(Recruit::$DEADLINE_RECRUIT, Recruit::$TIME_FOR_RECRUIT)],
-            'started_at_ymd' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
-            'ended_at_ymd' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
-            'started_at_hm' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
-            'ended_at_hm' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
+            'started_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
+            'ended_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
+            'started_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
+            'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
 
             'content' => ['nullable'],
         ]);
-
-        return $data;
     }
 
     public function storeRecruit(array $data)
@@ -97,8 +96,8 @@ class RecruitTemplate
             'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-            'started_at' => $data['started_at_ymd']." ".$data['started_at_hm'].":00" ?? null,
-            'ended_at' => $data['ended_at_ymd']." ".$data['ended_at_hm'].":00" ?? null,
+            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
+            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
         ]);
 

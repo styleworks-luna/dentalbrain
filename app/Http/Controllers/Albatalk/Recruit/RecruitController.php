@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RecruitController extends Controller
 {
@@ -43,7 +44,7 @@ class RecruitController extends Controller
         $hasMembership = $user ? $user->hasMembership : false;
 
         // 회원 상태에 따른 결제 금액
-        if($hasMembership) {
+        if ($hasMembership) {
             $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_MEMBERSHIP);
             $this->price = $recruitPrice->price;
         } else {
@@ -59,6 +60,7 @@ class RecruitController extends Controller
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
+            'price' => $this->price,
         ]);
     }
 
@@ -83,19 +85,22 @@ class RecruitController extends Controller
     public function create(Request $request)
     {
         // 구인 등록 유효성 검사
-        $data = $this->recruitTemplate->validateRecruit($request);
+        $validator = $this->recruitTemplate->getValidatorRecruit($request->all());
+        if ($validator->fails()) {
+            $messageBag = $validator->errors();
+
+            $collection = collect($messageBag)->map(function ($item, $key) {
+                return ['name' => $key, 'message' => $item[0]];
+            });
+
+            return response()->json($collection->toArray());
+        }
 
         // 검사한 데이터 세션에 저장
-        session(['data' => $data]);
+        session(['recruit_create_data' => $validator->validated()]);
 
         // 결제 폼으로 이동
-        return redirect()->route('albatalk.recruit.payment.form');
-    }
-
-    // 테스트 결제 페이지
-    public function showPaymentForm()
-    {
-        return view('test');
+        return response()->json(['massage' => 'ok']);
     }
 
     public function success(SuccessPayments $request)
@@ -108,6 +113,12 @@ class RecruitController extends Controller
 //        if ($validator->fails()) {
 //            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
 //        }
+
+        $realPrice = $program->getUserSpecificPrice();
+
+        if ($realPrice != $request->get('amount')) {
+            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
+        }
 
         // 결제 승인 API
         try {
