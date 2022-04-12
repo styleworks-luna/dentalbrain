@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class RecruitController extends Controller
 {
@@ -42,7 +43,8 @@ class RecruitController extends Controller
         $user = Auth::user();
         $hasMembership = $user ? $user->hasMembership : false;
 
-        if($hasMembership) {
+        // 회원 상태에 따른 결제 금액
+        if ($hasMembership) {
             $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_MEMBERSHIP);
             $this->price = $recruitPrice->price;
         } else {
@@ -58,6 +60,7 @@ class RecruitController extends Controller
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
+            'price' => $this->price,
         ]);
     }
 
@@ -81,20 +84,23 @@ class RecruitController extends Controller
 
     public function create(Request $request)
     {
-//         구인 등록 유효성 검사
-        $data = $this->recruitTemplate->validateRecruit($request);
+        // 구인 등록 유효성 검사
+        $validator = $this->recruitTemplate->getValidatorRecruit($request->all());
+        if ($validator->fails()) {
+            $messageBag = $validator->errors();
 
-//        ddd($data);
+            $collection = collect($messageBag)->map(function ($item, $key) {
+                return ['name' => $key, 'message' => $item[0]];
+            });
+
+            return response()->json($collection->toArray());
+        }
 
         // 검사한 데이터 세션에 저장
-        session(['data' => $data]);
+        session(['recruit_create_data' => $validator->validated()]);
 
-        return redirect()->route('albatalk.recruit.payment.form');
-    }
-
-    public function showPaymentForm()
-    {
-        return view('test');
+        // 결제 폼으로 이동
+        return response()->json(['massage' => 'ok']);
     }
 
     public function success(SuccessPayments $request)
@@ -107,6 +113,12 @@ class RecruitController extends Controller
 //        if ($validator->fails()) {
 //            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
 //        }
+
+        $realPrice = $program->getUserSpecificPrice();
+
+        if ($realPrice != $request->get('amount')) {
+            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
+        }
 
         // 결제 승인 API
         try {
@@ -130,12 +142,17 @@ class RecruitController extends Controller
             $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
 
+            // session 지우기
+            session()->forget('data');
+
             // 페이먼츠 인스턴스 생성
             $payment = Payment::createByTossSuccess($tossResponse);
 
             // 구인등록 페이먼츠 생성
             // 방금 만들어진 구인등록에 대한 처리가 필요!
             $recruitUpdate = Recruit::where("id", "=", $recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
+
+            // 결제 취소 됐을 때 처리도 필요함
 
             DB::commit();
         } catch (TossPaymentsException $exception) {
