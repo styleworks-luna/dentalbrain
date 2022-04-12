@@ -21,7 +21,7 @@
                     <h2>이력서 작성</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
-                <form action="{{ route('albatalk.resume.store') }}" method="post"
+                <form action="{{ route('albatalk.resume.update') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">

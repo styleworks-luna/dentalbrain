@@ -2,7 +2,11 @@
 
 namespace App\Services\Recruit;
 
+use App\Models\Resume\Resume;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ResumeService
@@ -70,5 +74,31 @@ class ResumeService
         return Validator::make($request->file(),
             ['resume_image' => ['required', 'image', 'max:2048',]],
             ['resume_image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+    }
+
+    /**
+     * @return Builder|Model|object|null
+     */
+    public function getLoginUsersResume()
+    {
+        if (Auth::check() == false) {
+            return null;
+        }
+
+        $userId = Auth::id();
+        return Resume::query()->with(['file', 'user'])
+            ->where('user_id', '=', $userId)
+            ->orderBy('created_at', 'desc')->first();
+    }
+
+    public function existsResume(): bool
+    {
+        $userId = Auth::id();
+        if (!Auth::check()) {
+            return false;
+        }
+        return Resume::query()
+            ->where('user_id', '=', $userId)
+            ->exists();
     }
 }
