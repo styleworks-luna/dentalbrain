@@ -27,7 +27,7 @@
                 color: $page-color
 
 .mypage-content-wrap
-    +margin(top 60px bottom 200px)
+    +margin(top 60px bottom 70px)
 
     .content-title
         +padding(bottom 18px)
@@ -48,3 +48,231 @@
                 color: $page_color
                 font-weight: bold
                 text-decoration: underline
+
+    .mypage-content
+        +padding(70px 70px 0 70px)
+
+        .user-information-wrap
+            display: flex
+            justify-content: flex-start
+            align-items: flex-end
+
+            table
+                th
+                    +size(100px)
+                    color: $gray-700
+                    text-align: left
+                    line-height: 24px
+
+                tr
+                    &:first-child td
+                        +padding(top 0)
+
+                    &:last-child td
+                        +padding(bottom 0)
+
+                td
+                    +size(245px)
+                    +padding(6px 0 6px 10px)
+
+                    p
+                        font-size: 16px
+                        line-height: 23px
+
+            .user-image-wrap
+                +border(1px solid $border-color-base)
+
+                .user-image
+                    +size(218px, 291px)
+
+            .user-personal-information
+                +padding(bottom 15px left 50px)
+
+                .user-name
+                    +padding(bottom 30px)
+                    font-weight: bold
+                    font-size: 24px
+
+            .user-hope-information
+                +padding(left 80px bottom 15px)
+
+        .information-title
+            +margin(bottom 18px)
+
+            h2
+                font-size: 24px
+                line-height: 26px
+
+        .study-information-wrap
+            +margin(top 60px)
+
+            .study-information-content
+                +padding(top 30px left 40px right 40px)
+                +border(2px solid $gray-900, top)
+                display: flex
+                justify-content: space-between
+                align-items: flex-start
+
+                table
+                    tr
+                        &:first-child td
+                            +padding(top 0)
+
+                        &:last-child td
+                            +padding(bottom 0)
+
+                    th
+                        +size(100px)
+                        line-height: 24px
+                        color: $gray-700
+                        text-align: left
+
+                    td
+                        +padding(6px 0 6px 10px)
+
+                        p
+                            font-size: 16px
+                            line-height: 24px
+
+                    .ranking-wrap
+                        display: flex
+                        justify-content: flex-start
+                        align-items: center
+
+                        p
+                            display: flex
+                            justify-content: flex-start
+                            align-items: center
+
+                            &::after
+                                +margin(0 20px)
+                                display: block
+                                width: 1px
+                                height: 16px
+                                background-color: $gray-200
+                                content: ''
+
+                            &:last-child::after
+                                display: none
+
+        .self-information-wrap
+            +margin(top 65px)
+
+            .self-information-content
+                +padding(top 40px)
+                +border(2px solid $gray-900, top)
+
+                .self-information-text
+                    +padding(0 45px)
+                    min-height: 100px
+
+        .certification-information-wrap
+            +margin(top 60px)
+
+            .certification-information-content
+                +border(2px solid $gray-900, top)
+
+                table
+                    +size(100%)
+                    +border(2px solid $border-color-base, bottom)
+
+                    thead
+                        +border(1px solid $border-color-base, bottom)
+
+                        th
+                            +size(250px)
+                            +padding(14px 40px)
+                            background-color: $background-color-menu
+                            color: $gray-700
+                            line-height: 16px
+
+                            &:first-child
+                                +size(100px)
+                                +padding(right 10px)
+
+                    tbody
+                        tr
+                            +border(1px solid $border-color-base, bottom)
+
+                            &:last-child
+                                +border(0, bottom)
+
+                        td
+                            +size(250px)
+                            +padding(22px 40px)
+                            font-size: 16px
+                            line-height: 18px
+                            text-align: center
+
+                            &:first-child
+                                +size(100px)
+                                +padding(right 10px)
+
+        .ability-information-wrap
+            +margin(top 60px)
+
+            .ability-information-content
+                +border(2px solid $gray-900, top)
+                display: flex
+                justify-content: flex-start
+                align-items: flex-start
+
+                table
+                    +size(50%)
+                    +border(2px solid $border-color-base, bottom)
+
+                    thead
+                        +border(1px solid $border-color-base, bottom)
+
+                        th
+                            +padding(14px 0)
+                            background-color: $background-color-menu
+                            color: $gray-700
+                            line-height: 16px
+
+                            &:first-child
+                                +size(100px)
+                                +padding(left 40px right 20px)
+
+                            &:nth-child(2)
+                                +size(190px)
+
+                            &:nth-child(3)
+                                +size(90px)
+                                +padding(right 20px)
+
+                            &:last-child
+                                +size(90px)
+                                +padding(right 20px)
+
+                    tbody
+                        tr
+                            +border(1px solid $border-color-base, bottom)
+
+                            &:last-child
+                                +border(0, bottom)
+
+                        td
+                            +size(null, 18px)
+                            +padding(22px 0)
+                            font-size: 16px
+                            line-height: 18px
+                            text-align: center
+
+                            &:first-child
+                                +size(100px)
+                                +padding(left 40px right 20px)
+
+                            &:nth-child(2)
+                                +size(190px)
+
+                            &:nth-child(3)
+                                +size(90px)
+                                +padding(right 20px)
+
+                            &:last-child
+                                +size(90px)
+                                +padding(right 20px)
+
+                    &:first-child
+                        +border(1px solid $border-color-base, right)

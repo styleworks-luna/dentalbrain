@@ -16,6 +16,7 @@
 // 회원가입
 use App\Http\Controllers\Admin\Banner\ProgramBannerController;
 use App\Http\Controllers\Admin\Banner\TitleController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -90,9 +91,7 @@ if (env('APP_ENV') != 'production') {
         })->name('offer');
 
         //구직 이력서 정보
-        Route::get('resume', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
-        })->name('resume');
+        Route::get('resume', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'testMyPage'])->name('resume');
     });
 }
 
@@ -245,21 +244,6 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::get('/', 'Account\QuestionController@index')->name('index');
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
-
-    //구인 정보
-    Route::get('albatalk', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_recruit');
-    })->name('albatalk');
-
-    //구직 정보
-    Route::get('offer', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
-    })->name('offer');
-
-    //구직 이력서 정보
-    Route::get('resume', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
-    })->name('resume');
 
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');

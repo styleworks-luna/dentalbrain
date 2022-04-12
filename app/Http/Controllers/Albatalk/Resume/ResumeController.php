@@ -143,6 +143,18 @@ class ResumeController extends Controller
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume_complete', $detail);
     }
 
+    public function testMyPage() {
+        try {
+            $detail = $this->getDetail();
+        } catch (ModelNotFoundException $exception) {
+            return \redirect()->back()->with('alert', $exception->getMessage());
+        } catch (Exception $exception) {
+            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
+        }
+
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume', $detail);
+    }
+
     /**
      * @return array
      * @throws ModelNotFoundException
