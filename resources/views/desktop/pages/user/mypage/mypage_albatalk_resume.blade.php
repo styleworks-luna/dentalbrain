@@ -15,7 +15,7 @@
             <div class="mypage-content-wrap">
                 <div class="content-title">
                     <h2>구직정보</h2>
-                    <a href="">이력서 수정하기</a>
+                    <a href="{{ route('albatalk.resume.edit') }}">이력서 수정하기</a>
                 </div>
                 <ul class="mypage-albatalk-navigation">
                     <li class="navigation-list">
@@ -125,9 +125,12 @@
                                     <th>희망 부서</th>
                                     <td>
                                         <div class="ranking-wrap">
-                                            @if($resume->department_1) <p>{{ '1순위 ' . $resume->department_1 }}</p> @endif
-                                            @if($resume->department_2) <p>{{ '2순위 ' . $resume->department_2 }}</p> @endif
-                                            @if($resume->department_3) <p>{{ '3순위 ' . $resume->department_3 }}</p> @endif
+                                            @if($resume->department_1)
+                                                <p>{{ '1순위 ' . $resume->department_1 }}</p> @endif
+                                            @if($resume->department_2)
+                                                <p>{{ '2순위 ' . $resume->department_2 }}</p> @endif
+                                            @if($resume->department_3)
+                                                <p>{{ '3순위 ' . $resume->department_3 }}</p> @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -215,17 +218,21 @@
                                     <tr>
                                         <td>{{ $categories[$answer->ability->category_id] }}</td>
                                         <td>{{ $answer->ability->name }}</td>
-                                        <td>
-                                            @switch($answer->score)
-                                                @case(1) 경험없음 @break
-                                                @case(2) 미흡 @break
-                                                @case(3) 보통 @break
-                                                @case(4) 잘함 @break
-                                                @case(5) 매우잘함 @break
-                                                @default 보통
-                                            @endswitch
-                                        </td>
-                                        <td>{{ $answer->can_learn ? '●': '' }}</td>
+                                        @if($answer->ability->type == 'text')
+                                            <td colspan="2">{{ $answer->content }}</td>
+                                        @else
+                                            <td>
+                                                @switch($answer->score)
+                                                    @case(1) 경험없음 @break
+                                                    @case(2) 미흡 @break
+                                                    @case(3) 보통 @break
+                                                    @case(4) 잘함 @break
+                                                    @case(5) 매우잘함 @break
+                                                    @default 보통
+                                                @endswitch
+                                            </td>
+                                            <td>{{ $answer->can_learn ? '●': '' }}</td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 <tr>
