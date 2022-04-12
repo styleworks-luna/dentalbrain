@@ -93,6 +93,14 @@ if (env('APP_ENV') != 'production') {
         //구직 이력서 정보
         Route::get('resume', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'testMyPage'])->name('resume');
     });
+
+    Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
+        Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+            Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
+            });
+        });
+    });
 }
 
 /*============================ PAGES ============================*/

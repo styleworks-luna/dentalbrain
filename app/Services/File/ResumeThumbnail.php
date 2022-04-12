@@ -24,15 +24,11 @@ class ResumeThumbnail extends FileTemplate
         return 'public/resume/' . $resume->id . '/thumbnail/' . $fileName;
     }
 
-    public function saveFile($uploadedFile)
+    public static function saveFile($uploadedFile)
     {
         $name = $uploadedFile->getClientOriginalName();
         $size = $uploadedFile->getSize();
-
-        /** @var Resume $resume */
-        $resume = $this->model;
-
-        $path = Storage::putFileAs('public/resume/' . $resume->id . '/thumbnail',
+        $path = Storage::putFileAs('public/resume/temp/thumbnail',
             $uploadedFile, $name);
 
         /** @var File $file */
@@ -41,7 +37,7 @@ class ResumeThumbnail extends FileTemplate
             'path' => $path,
             'name' => $name,
             'size' => $size,
-            'url' => $this->getDownloadUrl($path),
+            'url' => str_replace('public', '/storage', $path),
         ]);
     }
 

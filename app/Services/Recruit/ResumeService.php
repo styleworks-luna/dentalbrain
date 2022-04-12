@@ -72,8 +72,8 @@ class ResumeService
     public function getFileValidator(Request $request): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($request->file(),
-            ['resume_image' => ['required', 'image', 'max:2048',]],
-            ['resume_image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+            ['image' => ['required', 'image', 'max:2048',]],
+            ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
     }
 
     /**
