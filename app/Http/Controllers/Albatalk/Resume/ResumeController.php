@@ -11,6 +11,9 @@ use App\Models\Resume\Resume;
 use App\Services\File\ResumeThumbnail;
 use App\Services\Recruit\AbilityService;
 use App\Services\Recruit\ResumeService;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -69,7 +72,7 @@ class ResumeController extends Controller
             $resume->user_id = Auth::id();
 
             $resume->save();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             report($exception);
             return \redirect(url()->previous())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
         }
@@ -77,31 +80,69 @@ class ResumeController extends Controller
         return \redirect()->route('albatalk.resume.complete')->with('alert', '등록되었습니다.');
     }
 
+    public function edit(Request $request)
+    {
+        try {
+            $detail = $this->getDetail();
+        } catch (ModelNotFoundException $exception) {
+            return \redirect()->back()->with('alert', $exception->getMessage());
+        } catch (Exception $exception) {
+            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
+        }
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_edit', $detail);
+    }
+
+    public function update(Request $request)
+    {
+
+    }
+
     public function complete(Request $request)
+    {
+        try {
+            $detail = $this->getDetail();
+        } catch (ModelNotFoundException $exception) {
+            return \redirect()->back()->with('alert', $exception->getMessage());
+        } catch (Exception $exception) {
+            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
+        }
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_complete', $detail);
+    }
+
+    /**
+     * @return array
+     * @throws ModelNotFoundException
+     */
+    public function getDetail(): array
     {
         $userId = Auth::id();
         $resume = Resume::query()->with(['file', 'user'])
-            ->where('user_id', '=', $userId)->first();
+            ->where('user_id', '=', $userId)
+            ->orderBy('created_at', 'desc')->first();
 
         if ($resume == null) {
-            return \redirect()->route('albatalk.recruit.create')->with('alert', '이력서를 생성해 주세요.');
+            throw new ModelNotFoundException('이력서를 생성해 주세요.');
         }
 
         $leftList = AbilityAnswer::query()
+            ->with('ability.category')
             ->whereHas('ability.category', function ($query) {
                 return $query->where('id', '<=', 5);
             })
             ->where('resume_id', '=', $resume->id)->get();
         $rightList = AbilityAnswer::query()
+            ->with('ability.category')
             ->whereHas('ability.category', function ($query) {
                 return $query->where('id', '>', 5);
             })
             ->where('resume_id', '=', $resume->id)->get();
 
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail', [
+        return [
             'resume' => $resume,
             'leftList' => $leftList,
             'rightList' => $rightList,
-        ]);
+        ];
     }
 }

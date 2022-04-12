@@ -31,7 +31,7 @@
                             </tr>
                             <tr>
                                 <th>생년 월일</th>
-                                <td><p>1900년 01월 01일</p></td>
+                                <td><p>{{ $resume->birthday }}</p></td>
                             </tr>
                             <tr>
                                 <th>휴대폰 번호</th>
@@ -259,7 +259,7 @@
 
                 <div class="btn-wrap">
                     <a href="" class="btn-go-edit">이력서 수정</a>
-               </div>
+                </div>
 
             </div>
         </div>

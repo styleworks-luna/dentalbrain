@@ -80,6 +80,9 @@
         td
             +border(1px solid $border-color-base, bottom)
 
+    .parsley-required
+        +padding(left 0)
+
 .albatalk-post-content
     +margin(top 18px)
 
@@ -208,7 +211,10 @@
                 +padding(top 11px bottom 11px)
 
             .wrapper-lg
-                +padding(top 27px bottom 27px)
+                height: 43px
+                +padding(top 27px)
+                .parsley-required
+                    +padding(bottom 11px)
 
             td
                 +padding(left 20px)

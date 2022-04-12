@@ -21,7 +21,7 @@
                     <h2>이력서 작성</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
-                <form id="albatalk_resume_form" action="{{ route('albatalk.resume.store') }}" method="post"
+                <form action="{{ route('albatalk.resume.store') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
@@ -32,7 +32,7 @@
                                     <input type="text"
                                            id="work_area"
                                            name="work_area"
-                                           value="{{ old("work_area") }}"/>
+                                           value="{{ old("work_area", $resume->work_area) }}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -41,7 +41,7 @@
                                     <input type="text"
                                            id="work_day"
                                            name="work_day"
-                                           value="{{ old("work_day") }}"/>
+                                           value="{{ old("work_day", $resume->work_day) }}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -50,7 +50,7 @@
                                     <input type="text"
                                            id="work_time"
                                            name="work_time"
-                                           value="{{ old("work_time") }}"/>
+                                           value="{{ old("work_time", $resume->work_time) }}"/>
                                 </td>
                             </tr>
                         </table>
@@ -64,7 +64,6 @@
                                 <p class="none-image-tip">(800px × 600px)</p>
                                 <span class="none-image-icon"></span>
                             </div>
-
                             <div class="image-hover">
                                 {{-- 1. profile-preview의 src값을 복구 --}}
                                 {{-- 2. ajax로 하는 것. --}}
@@ -72,13 +71,9 @@
                                        id="resume_image"
                                        class="resume-profile"
                                        name="resume_image"
-                                       accept="image/jpeg, image/png, image/gif"
-                                       data-parsley-required="true"
-                                       data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
-                                       data-parsley-errors-container=".thumbnail-error-container">
+                                       accept="image/jpeg, image/png, image/gif">
                                 <label for="resume_image" class="image-icon-common btn-plus"></label>
                             </div>
-                            <div class="thumbnail-error-container parsley-error-container"></div>
                             <!-- 썸네일 존재 할 경우 (등록 이미지)
                             <img class="resume-profile"
                                  id="profile-preview"
@@ -96,7 +91,7 @@
                                            id="name"
                                            class="name"
                                            name="name"
-                                           value="{{ old("name") }}"
+                                           value="{{ old("name", $resume->name) }}"
                                            placeholder="이름 입력 (최소 2자 이상)"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 이름을 입력해주세요"/>
@@ -107,7 +102,7 @@
                                            id="english_name"
                                            class="english-name"
                                            name="english_name"
-                                           value="{{ old("english_name") }}"
+                                           value="{{ old("english_name", $resume->english_name) }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 영문 이름을 입력해주세요."/>
                                 </td>
@@ -119,7 +114,7 @@
                                            id="birthday"
                                            class="birthday"
                                            name="birthday"
-                                           value="{{ old("birthday") }}"
+                                           value="{{ old("birthday", $resume->birthday) }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 생년 월일을 입력해주세요."/>
                                 </td>
@@ -130,7 +125,7 @@
                                            id="phone"
                                            class="phone"
                                            name="phone"
-                                           value="{{ old("phone") }}"
+                                           value="{{ old("phone", $resume->phone) }}"
                                            placeholder="‘-‘ 없이 입력"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 휴대폰 번호를 입력해주세요."/>
@@ -143,7 +138,7 @@
                                            id="emergency_phone"
                                            class="emergency-phone"
                                            name="emergency_phone"
-                                           value="{{ old("emergency_phone") }}"
+                                           value="{{ old("emergency_phone", $resume->emergency_phone) }}"
                                            placeholder="‘-‘ 없이 입력"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 비상연락처를 입력해주세요."/>
@@ -155,7 +150,7 @@
                                            id="email"
                                            class="email"
                                            name="email"
-                                           value="{{ old("email") }}"
+                                           value="{{ old("email", $resume->email) }}"
                                            data-parsley-required="true"
                                            data-parsley-required-message="※ 이메일을 입력해주세요."/>
                                 </td>
@@ -167,9 +162,9 @@
                                            id="address"
                                            class="address"
                                            name="address"
-                                           value="{{ old("address") }}"
+                                           value="{{ old("address", $resume->address) }}"
                                            data-parsley-required="true"
-                                           data-parsley-required-message="※ 주소를 입력해주세요."/>
+                                           data-parsley-required-message="※ 주소를 입력해주세요"/>
                                 </td>
                             </tr>
                         </table>
@@ -182,13 +177,14 @@
                                 <tr>
                                     <th>학위취득년월</th>
                                     <td>
-                                        <input type="text" name="graduated_at" value="{{ old("graduated_at") }}">
+                                        <input type="text" name="graduated_at"
+                                               value="{{ old("graduated_at", $resume->graduated_at) }}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>출신학교</th>
                                     <td>
-                                        <input type="text" name="school" value="{{ old("school") }}">
+                                        <input type="text" name="school" value="{{ old("school", $resume->school) }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -196,7 +192,7 @@
                                     <td>
                                         <input type="text"
                                                id="major"
-                                               name="major" value="{{ old("major") }}">
+                                               name="major" value="{{ old("major", $resume->major) }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -205,7 +201,7 @@
                                         <input type="text"
                                                id="degree"
                                                name="degree"
-                                               value="{{ old("degree") }}">
+                                               value="{{ old("degree", $resume->degree) }}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -214,7 +210,7 @@
                                         <input type="text"
                                                id="graduated"
                                                name="graduation_type"
-                                               value="{{ old("graduation_type") }}">
+                                               value="{{ old("graduation_type", $resume->graduation_type) }}">
                                     </td>
                                 </tr>
                             </table>
@@ -239,15 +235,15 @@
                                                    id="first_treatment"
                                                    name="treatment_1"
                                                    placeholder="ex. 교정"
-                                                   value="{{ old('treatment_1') }}">
+                                                   value="{{ old('treatment_1', $resume->treatment_1) }}">
                                             <input type="text"
                                                    id="second_treatment"
                                                    name="treatment_2"
-                                                   value="{{ old('treatment_2') }}">
+                                                   value="{{ old('treatment_2', $resume->treatment_2) }}">
                                             <input type="text"
                                                    id="third_treatment"
                                                    name="treatment_3"
-                                                   value="{{ old('treatment_3') }}">
+                                                   value="{{ old('treatment_3', $resume->treatment_3) }}">
                                         </div>
                                 </tr>
                                 <tr>
@@ -257,16 +253,16 @@
                                             <input type="text"
                                                    id="first_department"
                                                    name="department_1"
-                                                   value="{{ old('department_1') }}"
+                                                   value="{{ old('department_1', $resume->department_1) }}"
                                                    placeholder="ex. 진료실">
                                             <input type="text"
                                                    id="second_department"
                                                    name="department_2"
-                                                   value="{{ old('department_2') }}">
+                                                   value="{{ old('department_2', $resume->department_2) }}">
                                             <input type="text"
                                                    id="third_department"
                                                    name="department_3"
-                                                   value="{{ old('department_3') }}">
+                                                   value="{{ old('department_3', $resume->department_3) }}">
                                         </div>
                                 </tr>
                                 </tbody>
@@ -292,19 +288,19 @@
                                     <input type="text"
                                            id="first_certificate_name"
                                            name="certificate_name_1"
-                                           value="{{ old('certificate_name_1') }}">
+                                           value="{{ old('certificate_name_1', $resume->certificate_name_1) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="first_certificate_day"
                                            name="certificate_day_1"
-                                           value="{{ old('certificate_day_1') }}">
+                                           value="{{ old('certificate_day_1', $resume->certificate_day_1) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="first_certificate_agency"
                                            name="certificate_agency_1"
-                                           value="{{ old('certificate_agency_1') }}">
+                                           value="{{ old('certificate_agency_1', $resume->certificate_agency_1) }}">
                                 </td>
                             </tr>
                             <tr>
@@ -313,19 +309,19 @@
                                     <input type="text"
                                            id="second_certificate_name"
                                            name="certificate_name_2"
-                                           value="{{ old('certificate_name_2') }}">
+                                           value="{{ old('certificate_name_2', $resume->certificate_name_2) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_day"
                                            name="certificate_day_2"
-                                           value="{{ old('certificate_agency_2') }}">
+                                           value="{{ old('certificate_agency_2', $resume->certificate_day_2) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_agency"
                                            name="certificate_agency_2"
-                                           value="{{ old('certificate_agency_2') }}">
+                                           value="{{ old('certificate_agency_2', $resume->certificate_agency_2) }}">
 
                                 </td>
                             </tr>
@@ -335,19 +331,19 @@
                                     <input type="text"
                                            id="third_certificate_name"
                                            name="certificate_name_3"
-                                           value="{{ old('certificate_name_3') }}">
+                                           value="{{ old('certificate_name_3', $resume->certificate_name_3) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_day"
                                            name="certificate_day_3"
-                                           value="{{ old('certificate_day_3') }}">
+                                           value="{{ old('certificate_day_3', $resume->certificate_day_3) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_agency"
                                            name="certificate_agency_3"
-                                           value="{{ old('certificate_agency_3') }}">
+                                           value="{{ old('certificate_agency_3', $resume->certificate_agency_3) }}">
                                 </td>
                             </tr>
                             <tr>
@@ -356,19 +352,19 @@
                                     <input type="text"
                                            id="fourth_certificate_name"
                                            name="certificate_name_4"
-                                           value="{{ old('certificate_name_4') }}">
+                                           value="{{ old('certificate_name_4', $resume->certificate_name_4) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_day"
                                            name="certificate_day_4"
-                                           value="{{ old('certificate_day_4') }}">
+                                           value="{{ old('certificate_day_4', $resume->certificate_day_4) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_agency"
                                            name="certificate_agency_4"
-                                           value="{{ old('certificate_agency_4') }}">
+                                           value="{{ old('certificate_agency_4', $resume->certificate_agency_4) }}">
                                 </td>
                             </tr>
                             <tr>
@@ -377,19 +373,19 @@
                                     <input type="text"
                                            id="fifth_certificate_name"
                                            name="certificate_name_5"
-                                           value="{{ old('certificate_name_5') }}">
+                                           value="{{ old('certificate_name_5', $resume->certificate_name_5) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fifth_certificate_day"
                                            name="certificate_day_5"
-                                           value="{{ old('certificate_day_5') }}">
+                                           value="{{ old('certificate_day_5', $resume->certificate_day_5) }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fifth_certificate_agency"
                                            name="certificate_agency_5"
-                                           value="{{ old('certificate_agency_5') }}">
+                                           value="{{ old('certificate_agency_5', $resume->certificate_agency_5) }}">
                                 </td>
                             </tr>
                             </tbody>
@@ -422,66 +418,65 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($leftList as $category)
-                                        @foreach($category->abilities as $ability)
-                                            <tr>
-                                                @if($loop->first)
-                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                                @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
-                                                @if($ability->type == 'select')
-                                                    <td class="select-cell">
-                                                        <select class="select-menu"
-                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option
-                                                                value="0">
-                                                                선택
-                                                            </option>
-                                                            <option value="1"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
-                                                                경험없음
-                                                            </option>
-                                                            <option value="2"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
-                                                                미흡
-                                                            </option>
-                                                            <option value="3"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
-                                                                보통
-                                                            </option>
-                                                            <option value="4"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
-                                                                잘함
-                                                            </option>
-                                                            <option value="5"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
-                                                                매우잘함
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="checkbox-cell">
-                                                        <input type="hidden"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="0">
-                                                        <input type="checkbox"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1"
-                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
-                                                        >
-                                                    </td>
-                                                @else
-                                                    <td class="input-cell" colspan="2">
-                                                        <input type="text"
-                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
+                                    @foreach($leftList as $abilityAnswer)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @endif
+                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <input type="hidden"
+                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
+                                                   value="{{ $abilityAnswer->ability->id }}">
+                                            {{$abilityAnswer->score}}
+                                            @if($abilityAnswer->ability->type == 'select')
+                                                <td class="select-cell">
+                                                    <select class="select-menu"
+                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                        <option
+                                                            value="0">
+                                                            선택
+                                                        </option>
+                                                        <option value="1"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                            경험없음
+                                                        </option>
+                                                        <option value="2"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                            미흡
+                                                        </option>
+                                                        <option value="3"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                            보통
+                                                        </option>
+                                                        <option value="4"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                            잘함
+                                                        </option>
+                                                        <option value="5"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                            매우잘함
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td class="checkbox-cell">
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="1"
+                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                    >
+                                                </td>
+                                            @else
+                                                <td class="input-cell" colspan="2">
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
+                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -496,72 +491,71 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($rightList as $category)
-                                        @foreach($category->abilities as $ability)
-                                            <tr>
-                                                @if($loop->first)
-                                                    <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
-                                                @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
-                                                @if($ability->type == 'select')
-                                                    <td class="select-cell">
-                                                        <select class="select-menu"
-                                                                name="{{ 'abilities['.$ability->id.'][score]' }}">
-                                                            <option
-                                                                value="0">
-                                                                선택
-                                                            </option>
-                                                            <option value="1"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 1) selected @endif>
-                                                                경험없음
-                                                            </option>
-                                                            <option value="2"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 2) selected @endif>
-                                                                미흡
-                                                            </option>
-                                                            <option value="3"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 3) selected @endif>
-                                                                보통
-                                                            </option>
-                                                            <option value="4"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 4) selected @endif>
-                                                                잘함
-                                                            </option>
-                                                            <option value="5"
-                                                                    @if((old('abilities')[$ability->id]['score'] ?? 0) == 5) selected @endif>
-                                                                매우잘함
-                                                            </option>
-                                                        </select>
-                                                    </td>
-                                                    <td class="checkbox-cell">
-                                                        <input type="hidden"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="0">
-                                                        <input type="checkbox"
-                                                               name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
-                                                               value="1"
-                                                               @if( (old('abilities')[$ability->id]['can_learn'] ?? false) ) checked @endif
-                                                        >
-                                                    </td>
-                                                @else
-                                                    <td class="input-cell" colspan="2">
-                                                        <input type="text"
-                                                               name="{{ 'abilities['.$ability->id.'][content]' }}"
-                                                               value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
-                                                    </td>
-                                                @endif
-                                            </tr>
-                                        @endforeach
+                                    @foreach($rightList as $abilityAnswer)
+                                        <tr>
+                                            @if($loop->first)
+                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @endif
+                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <input type="hidden"
+                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
+                                                   value="{{ $abilityAnswer->ability->id }}">
+                                            @if($abilityAnswer->ability->type == 'select')
+                                                <td class="select-cell">
+                                                    <select class="select-menu"
+                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                        <option
+                                                            value="0">
+                                                            선택
+                                                        </option>
+                                                        <option value="1"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                            경험없음
+                                                        </option>
+                                                        <option value="2"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                            미흡
+                                                        </option>
+                                                        <option value="3"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                            보통
+                                                        </option>
+                                                        <option value="4"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                            잘함
+                                                        </option>
+                                                        <option value="5"
+                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                            매우잘함
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td class="checkbox-cell">
+                                                    <input type="hidden"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="0">
+                                                    <input type="checkbox"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           value="1"
+                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                    >
+                                                </td>
+                                            @else
+                                                <td class="input-cell" colspan="2">
+                                                    <input type="text"
+                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
+                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           placeholder="수기입력" style="width: 200px">
+                                                </td>
+                                            @endif
+                                        </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
