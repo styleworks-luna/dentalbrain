@@ -21,7 +21,7 @@ class ResumeThumbnail extends FileTemplate
     protected function getSavePath(string $fileName)
     {
         $resume = $this->model;
-        return $path = 'public/resume/' . $resume->id . '/thumbnail/' . $fileName;
+        return 'public/resume/' . $resume->id . '/thumbnail/' . $fileName;
     }
 
     public function saveFile($uploadedFile)
@@ -32,7 +32,7 @@ class ResumeThumbnail extends FileTemplate
         /** @var Resume $resume */
         $resume = $this->model;
 
-        $path = Storage::putFileAs('resume/' . $resume->id . '/thumbnail',
+        $path = Storage::putFileAs('public/resume/' . $resume->id . '/thumbnail',
             $uploadedFile, $name);
 
         /** @var File $file */
