@@ -64,6 +64,7 @@
                                 <p class="none-image-tip">(800px × 600px)</p>
                                 <span class="none-image-icon"></span>
                             </div>
+
                             <div class="image-hover">
                                 {{-- 1. profile-preview의 src값을 복구 --}}
                                 {{-- 2. ajax로 하는 것. --}}
@@ -71,9 +72,13 @@
                                        id="resume_image"
                                        class="resume-profile"
                                        name="resume_image"
-                                       accept="image/jpeg, image/png, image/gif" >
+                                       accept="image/jpeg, image/png, image/gif"
+                                       data-parsley-required="true"
+                                       data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                       data-parsley-errors-container=".thumbnail-error-container">
                                 <label for="resume_image" class="image-icon-common btn-plus"></label>
                             </div>
+                            <div class="thumbnail-error-container parsley-error-container"></div>
                             <!-- 썸네일 존재 할 경우 (등록 이미지)
                             <img class="resume-profile"
                                  id="profile-preview"

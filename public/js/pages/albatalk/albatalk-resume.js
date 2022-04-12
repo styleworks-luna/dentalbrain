@@ -22,6 +22,10 @@ $(function () {
         inputs: 'div, input, textarea, select, input[type=hidden], :hidden',
     });
 
+    // if($(".thumbnail-error-container parsley-error-container").text("※ 이력서 대표 사진을 업로드 해주세요.")){
+    //     alert("dd");
+    // }
+
     // select menu
     var select_menu = $('.select-menu');
     if (select_menu.length > 0) {
