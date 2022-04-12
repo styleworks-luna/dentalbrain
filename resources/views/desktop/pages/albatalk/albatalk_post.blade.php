@@ -48,10 +48,14 @@
                                         <span class="none-image-icon"></span>
                                     </div>
                                     <div class="image-hover-common image-hover-lg">
-                                        <input type="file" id="main_thumbnail_input">
+                                        <input type="file" id="main_thumbnail_input"
+                                               data-parsley-required="true"
+                                               data-parsley-required-message="※ 치과 대표 사진을 업로드 해주세요."
+                                               data-parsley-errors-container=".thumbnail-error-container">
                                         <label for="main_thumbnail"
                                                class="image-icon-common image-icon-lg btn-plus"></label>
                                     </div>
+                                    <div class="thumbnail-error-container parsley-error-container"></div>
                                     <!-- 썸네일 존재 할 경우 (등록 이미지) -->
                                     <!--<img class="main-thumbnail" src="" alt="치과 사진">
                                     <div class="image-hover-common image-hover-lg">
@@ -229,7 +233,8 @@
                                                    value="{{old('address')}}"
                                                    readonly
                                                    data-parsley-required="true"
-                                                   data-parsley-required-message="※ 주소를 입력해주세요.">
+                                                   data-parsley-required-message="※ 주소를 입력해주세요."
+                                                   data-parsley-errors-container=".address-error-container">
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
                                                    name="address_detail"
@@ -242,6 +247,7 @@
                                             <input type="hidden" class="address-hidden-longitude" name="longitude">
                                         </div>
                                         <div id="map" class="map"></div>
+                                        <div class="address-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -267,12 +273,14 @@
                                                            data-parsley-required="true"
                                                            data-parsley-multiple="mymultiplelink"
                                                            data-parsley-mincheck="1"
-                                                           data-parsley-required-message="※ 신청분야를 선택해주세요.">
+                                                           data-parsley-required-message="※ 신청분야를 선택해주세요."
+                                                           data-parsley-errors-container=".application-error-container">
                                                     <label
                                                             for="application_field_[{{$application->id}}]">{{$application->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="application-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -288,11 +296,13 @@
                                                                    checked
                                                             @endif
                                                            data-parsley-required="true"
-                                                           data-parsley-required-message="※ 근무형태를 선택해주세요.">
+                                                           data-parsley-required-message="※ 근무형태를 선택해주세요."
+                                                           data-parsley-errors-container=".work-type-error-container">
                                                     <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="work-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -304,11 +314,13 @@
                                                     <input type="radio" id="job_type_field_[{{$job->id}}]" name="job"
                                                            value={{$job->id}} @if(old('job') == $job->id) checked @endif
                                                            data-parsley-required="true"
-                                                           data-parsley-required-message="※ 직종을 선택해주세요.">
+                                                           data-parsley-required-message="※ 직종을 선택해주세요."
+                                                           data-parsley-errors-container=".job-type-error-container">
                                                     <label for="job_type_field_[{{$job->id}}]">{{$job->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="job-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -325,7 +337,8 @@
                                                                    checked
                                                             @endif
                                                            data-parsley-required="true"
-                                                           data-parsley-required-message="※ 급여를 선택해주세요.">
+                                                           data-parsley-required-message="※ 급여를 선택해주세요."
+                                                           data-parsley-errors-container=".salary-type-error-container">
                                                     <label
                                                             for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
@@ -338,6 +351,7 @@
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="salary-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -347,7 +361,10 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
-                                                       @if(old('is_study') == 1) checked @endif>
+                                                       @if(old('is_study') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 학력을 선택해주세요."
+                                                       data-parsley-errors-container=".study-type-error-container">
                                                 <select class="input-xs select-menu study-select"
                                                         @if(old('is_study') != 1) disabled @endif
                                                         name="study">
@@ -369,6 +386,7 @@
                                                 <label for="study_type_field_02">학력무관</label>
                                             </div>
                                         </div>
+                                        <div class="study-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -377,7 +395,10 @@
                                         <div class="radio-container">
                                             <div class="radio-wrap">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
-                                                       value="1" @if(old('is_career') == 1) checked @endif>
+                                                       value="1" @if(old('is_career') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 경력을 선택해주세요."
+                                                       data-parsley-errors-container=".career-error-container">
                                                 <label for="career_field_01">신입</label>
                                             </div>
                                             <div class="radio-wrap">
@@ -402,6 +423,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="career-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -414,7 +436,10 @@
                                                            id="day_type_field_[{{$day->id}}]"
                                                            name="day"
                                                            class="work-day"
-                                                           value={{$day->id}} @if(old('day') == $day->id) checked @endif>
+                                                           value={{$day->id}} @if(old('day') == $day->id) checked @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 근무요일을 선택해주세요."
+                                                           data-parsley-errors-container=".day-type-error-container">
                                                     <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
                                                     @if($day->id == 4)
                                                         <input type="text" name="day_value"
@@ -426,22 +451,29 @@
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="day-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>복리후생 *</th>
-                                    <td class="wrapper-lg">
+                                    <td class="wrapper-lg" style="height: 75px">
                                         <div class="checkbox-grid-container">
                                             @foreach($typeBenefit as $benefit)
                                                 <div class="checkbox-wrap">
                                                     <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
                                                            name="benefit[{{$benefit->id}}]"
-                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif>
+                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-mincheck="1"
+                                                           data-parsley-required-message="※ 복리후생을 선택해주세요."
+                                                           data-parsley-errors-container=".benefit-type-error-container">
                                                     <label
                                                             for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="benefit-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -451,7 +483,10 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_01" class="deadline"
                                                        name="deadline" value="1"
-                                                       @if(old('deadline') == 1) checked @endif>
+                                                       @if(old('deadline') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 모집마감일을 선택해주세요."
+                                                       data-parsley-errors-container=".deadline-error-container">
 
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
                                                        value="{{old("started_at_ymd")}}"
@@ -478,6 +513,7 @@
                                                 <label for="deadline_field_02">채용시까지</label>
                                             </div>
                                         </div>
+                                        <div class="deadline-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -511,7 +547,10 @@
                                                        id="pay_method_field_01"
                                                        class="pay-method"
                                                        name="pay_method"
-                                                       value="1">
+                                                       value="1"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 결제방식을 선택해주세요."
+                                                       data-parsley-errors-container=".pay-type-error-container">
                                                 <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
                                                 <select name="" id="" class="input-xs select-menu pay-method-select"
                                                         disabled="disabled">
@@ -526,6 +565,7 @@
                                                 <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
                                         </div>
+                                        <div class="pay-type-error-container"></div>
                                     </td>
                                 </tr>
                             </table>
