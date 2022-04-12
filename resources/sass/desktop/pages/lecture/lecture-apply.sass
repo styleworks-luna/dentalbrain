@@ -325,17 +325,14 @@ h3
                     font-weight: bold
                     color: $page-color
 
+                .radio-container
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+
                 .radio-wrap
                     +margin(right 40px)
-                    float: left
                     line-height: 48px
-
-                    input[type="radio"]
-                        +margin(top 30px)
-
-                        & + label
-                            +margin(top 13px)
-                            cursor: pointer
 
                 .payment-method,
                 .payment-method-virtual
