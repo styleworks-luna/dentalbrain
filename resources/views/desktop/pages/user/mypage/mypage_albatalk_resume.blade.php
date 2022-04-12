@@ -165,36 +165,48 @@
                                 </thead>
                                 <tbody>
                                 <!-- TODO::resume 없는 경우 table 삭제 필요 -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>{{ $resume->certificate_name_1 }}</td>
-                                    <td>{{ $resume->certificate_day_1 }}</td>
-                                    <td>{{ $resume->certificate_agency_1 }}</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>{{ $resume->certificate_name_2 }}</td>
-                                    <td>{{ $resume->certificate_day_2 }}</td>
-                                    <td>{{ $resume->certificate_agency_2 }}</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>{{ $resume->certificate_name_3 }}</td>
-                                    <td>{{ $resume->certificate_day_3 }}</td>
-                                    <td>{{ $resume->certificate_agency_3 }}</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>{{ $resume->certificate_name_4 }}</td>
-                                    <td>{{ $resume->certificate_day_4 }}</td>
-                                    <td>{{ $resume->certificate_agency_4 }}</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>{{ $resume->certificate_name_5 }}</td>
-                                    <td>{{ $resume->certificate_day_5 }}</td>
-                                    <td>{{ $resume->certificate_agency_5 }}</td>
-                                </tr>
+                                @php($i = 1)
+                                @if($resume->certificate_name_1 != null)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $resume->certificate_name_1 }}</td>
+                                        <td>{{ $resume->certificate_day_1 }}</td>
+                                        <td>{{ $resume->certificate_agency_1 }}</td>
+                                    </tr>
+                                @endif
+                                @if($resume->certificate_name_2 != null)
+
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $resume->certificate_name_2 }}</td>
+                                        <td>{{ $resume->certificate_day_2 }}</td>
+                                        <td>{{ $resume->certificate_agency_2 }}</td>
+                                    </tr>
+                                @endif
+                                @if($resume->certificate_name_3 != null)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $resume->certificate_name_3 }}</td>
+                                        <td>{{ $resume->certificate_day_3 }}</td>
+                                        <td>{{ $resume->certificate_agency_3 }}</td>
+                                    </tr>
+                                @endif
+                                @if($resume->certificate_name_4 != null)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $resume->certificate_name_4 }}</td>
+                                        <td>{{ $resume->certificate_day_4 }}</td>
+                                        <td>{{ $resume->certificate_agency_4 }}</td>
+                                    </tr>
+                                @endif
+                                @if($resume->certificate_name_5 != null)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $resume->certificate_name_5 }}</td>
+                                        <td>{{ $resume->certificate_day_5 }}</td>
+                                        <td>{{ $resume->certificate_agency_5 }}</td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
