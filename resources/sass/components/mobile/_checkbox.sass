@@ -16,16 +16,16 @@
         +border(.2777777vw solid $red)
 
 %checkbox-wrap-default
-    overflow: hidden
+    display: flex
+    justify-content: flex-start
+    align-items: center
     line-height: 3.8888888vw
 
     input[type="checkbox"]
         @extend %checkbox-default
-        +margin(0.2777777vw 2.2222222vw 0 0)
-        float: left
+        +margin(right 2.2222222vw)
 
     label
-        float: left
         font-size: 3.8888888vw
 
 @mixin checkbox()

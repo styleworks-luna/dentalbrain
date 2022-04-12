@@ -2,7 +2,18 @@
     <div class="albatalk-menu">
         <template v-if="mobile">
             <div class="albatalk-menu-list-wrap">
-                dd
+                <div class="menu-title">
+                    <p class="label">근무지역</p>
+                    <span class="btn-close-menu"></span>
+                </div>
+                <div class="menu-content">
+                <p>근무지역을 선택해주세요.</p>
+                <ul class="albatalk-menu-list">
+                    <li v-for="menuList in menuLists" :key="menuList.name">
+                        <a href="">{{ menuList.text }}</a>
+                    </li>
+                </ul>
+                </div>
             </div>
         </template>
         <template v-else>
@@ -10,7 +21,7 @@
                 <p class="label">근무지역</p>
                 <ul class="albatalk-menu-list">
                     <li v-for="menuList in menuLists" :key="menuList.name">
-                        <div class="input-wrap">
+                        <div class="checkbox-wrap">
                             <input type="checkbox" :id="menuList.name" name="menuList.name">
                             <label :for="menuList.name">{{ menuList.text }}</label>
                         </div>

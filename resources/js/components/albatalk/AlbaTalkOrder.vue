@@ -1,6 +1,7 @@
 <template>
     <div class="albatalk-order">
         <template v-if="mobile">
+            <a href="">근무지역</a>
             <select id="albatalk-order-select" class="albatalk-order-select">
                 <option value="newest" selected>등록일순</option>
                 <option value="newest">마감일순</option>
