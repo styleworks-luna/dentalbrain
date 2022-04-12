@@ -1,0 +1,61 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_checkbox.sass'
+
+.albatalk
+
+    .albatalk-navigation
+
+        .albatalk-order
+            +margin(top 3.8888888vw right 4.444444vw)
+            float: right
+
+            .albatalk-order-select
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
+                +padding(right 5vw)
+                +border(0)
+                float: right
+                background-size: 3.611111vw 1.944444vw
+                font-size: 3.8888888vw
+                text-align-last: right
+                text-align: right
+                -ms-text-align-last: right
+                -moz-text-align-last: right
+
+                &.select-focus-in
+                    +background('/images/mobile/lecture/icon_arrow_up.svg')
+
+    .albatalk-menu
+        display: none
+        +margin(top 18px)
+
+        input[type="checkbox"]
+            @extend %checkbox-default
+            +margin(1px 8px 0 0)
+            float: left
+
+            + label
+                float: left
+                font-size: 16px
+
+        .albatalk-menu-list-wrap
+            +margin(top 18px)
+            +size(100%)
+            +border(2px solid $gray-900, top)
+            +border(2px solid $border-color-base, bottom)
+            display: flex
+            justify-content: flex-start
+            align-items: center
+
+            .label
+                +padding(48px 65px)
+                background-color: $background-color-menu
+                font-size: 16px
+                line-height: 20px
+
+            .albatalk-menu-list
+                +margin(left 30px)
+                display: inline-grid
+                grid-template-columns: repeat(9, 1fr)
+                gap: 20px 40px

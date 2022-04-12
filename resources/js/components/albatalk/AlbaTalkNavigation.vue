@@ -1,19 +1,25 @@
 <template>
     <div class="albatalk-menu">
-        <div class="albatalk-menu-list-wrap">
-            <p class="label">근무지역</p>
-            <ul class="albatalk-menu-list">
-                <li v-for="menuList in menuLists" :key="menuList.name">
-                    <div class="input-wrap">
-                        <input type="checkbox" :id="menuList.name" name="menuList.name">
-                        <label :for="menuList.name">{{ menuList.text }}</label>
-                    </div>
-                </li>
-            </ul>
-        </div>
+        <template v-if="mobile">
+            <div class="albatalk-menu-list-wrap">
+                dd
+            </div>
+        </template>
+        <template v-else>
+            <div class="albatalk-menu-list-wrap">
+                <p class="label">근무지역</p>
+                <ul class="albatalk-menu-list">
+                    <li v-for="menuList in menuLists" :key="menuList.name">
+                        <div class="input-wrap">
+                            <input type="checkbox" :id="menuList.name" name="menuList.name">
+                            <label :for="menuList.name">{{ menuList.text }}</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </template>
     </div>
 </template>
-
 <script>
 export default {
     name: "AlbaTalkNavigation",
@@ -94,6 +100,9 @@ export default {
                 },
             ]
         }
+    },
+    props: {
+        'mobile': Boolean,
     },
 }
 </script>

@@ -4,9 +4,6 @@
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
 @endsection
 
-@section('script')
-@endsection
-
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
