@@ -185,13 +185,14 @@
 
                                     <th>담장자 이메일 *</th>
                                     <td>
-                                        <input type="text"
+                                        <input type="email"
                                                id="manager_email"
                                                class="input-s"
                                                name="manager_email"
                                                value="{{old('manager_email')}}"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 이메일을 입력해주세요.">
+                                               data-parsley-required-message="※ 이메일을 입력해주세요."
+                                               data-parsley-type-message="※ 이메일 형식에 맞게 입력하세요.">
                                     </td>
                                 </tr>
                                 <tr>
