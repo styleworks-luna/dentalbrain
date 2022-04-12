@@ -42,6 +42,7 @@ class RecruitController extends Controller
         $user = Auth::user();
         $hasMembership = $user ? $user->hasMembership : false;
 
+        // 회원 상태에 따른 결제 금액
         if($hasMembership) {
             $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_MEMBERSHIP);
             $this->price = $recruitPrice->price;
@@ -81,17 +82,17 @@ class RecruitController extends Controller
 
     public function create(Request $request)
     {
-//         구인 등록 유효성 검사
+        // 구인 등록 유효성 검사
         $data = $this->recruitTemplate->validateRecruit($request);
-
-//        ddd($data);
 
         // 검사한 데이터 세션에 저장
         session(['data' => $data]);
 
+        // 결제 폼으로 이동
         return redirect()->route('albatalk.recruit.payment.form');
     }
 
+    // 테스트 결제 페이지
     public function showPaymentForm()
     {
         return view('test');
@@ -130,12 +131,17 @@ class RecruitController extends Controller
             $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
 
+            // session 지우기
+            session()->forget('data');
+
             // 페이먼츠 인스턴스 생성
             $payment = Payment::createByTossSuccess($tossResponse);
 
             // 구인등록 페이먼츠 생성
             // 방금 만들어진 구인등록에 대한 처리가 필요!
             $recruitUpdate = Recruit::where("id", "=", $recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
+
+            // 결제 취소 됐을 때 처리도 필요함
 
             DB::commit();
         } catch (TossPaymentsException $exception) {

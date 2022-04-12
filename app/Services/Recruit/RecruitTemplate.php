@@ -32,7 +32,7 @@ class RecruitTemplate
             'manager_email' => ['required', 'string', 'email', 'max:255'],
             'homepage' => ['required', 'url'],
             'subway' => ['nullable', 'string', 'max:255'],
-//
+
             'address' => ['required', 'string',],
             'address_detail' => ['nullable', 'string',],
 
@@ -57,11 +57,12 @@ class RecruitTemplate
             'day_value' => ['nullable', Rule::requiredIf($request->day == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
 
-            'started_at_ymd' => ['required', 'date_format:Y-m-d'],
-            'ended_at_ymd' => ['required', 'date_format:Y-m-d', 'after:started_at_ymd'],
+            'deadline' => ['required', Rule::in(Recruit::$DEADLINE_RECRUIT, Recruit::$TIME_FOR_RECRUIT)],
+            'started_at_ymd' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
+            'ended_at_ymd' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
+            'started_at_hm' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
+            'ended_at_hm' => ['nullable', Rule::requiredIf($request->deadline == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
 
-            'started_at_hm' => ['required', 'date_format:H:i'],
-            'ended_at_hm' => ['required', 'date_format:H:i'],
             'content' => ['nullable'],
         ]);
 
@@ -91,14 +92,14 @@ class RecruitTemplate
             'latitude' => $data['latitude'],
             'longitude' => $data['longitude'],
 
+            'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
             'type_work_id' => $data['work'],
             'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
-            'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
 
-            'started_at' => $data['started_at_ymd']." ".$data['started_at_hm'].":00",
-            'ended_at' => $data['ended_at_ymd']." ".$data['ended_at_hm'].":00",
-            'content' => $data['content'],
+            'started_at' => $data['started_at_ymd']." ".$data['started_at_hm'].":00" ?? null,
+            'ended_at' => $data['ended_at_ymd']." ".$data['ended_at_hm'].":00" ?? null,
+            'content' => $data['content'] ?? null,
         ]);
 
         return $recruit;

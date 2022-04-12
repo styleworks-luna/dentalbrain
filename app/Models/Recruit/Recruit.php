@@ -19,6 +19,9 @@ class Recruit extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = [];
+    protected $dates = ['ended_at'];
+
     // 신입
     static $JUNIOR = 1;
     // 경력
@@ -29,9 +32,11 @@ class Recruit extends Model
     // 학력무관
     static $NO_ACADEMIC = 2;
 
-    protected $guarded = [];
+    // 모집 마감 일
+    static $DEADLINE_RECRUIT = 1;
+    // 채용 시까지
+    static $TIME_FOR_RECRUIT = 2;
 
-    protected $dates = ['ended_at'];
 
     public function payment()
     {
