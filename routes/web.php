@@ -64,6 +64,9 @@ if (env('APP_ENV') != 'production') {
             Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'createForm'])->name('store');
             Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
 
+            Route::get('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'edit'])->name('edit');
+            Route::post('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'update'])->name('update');
+
             Route::get('complete', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'complete'])->name('complete');
         });
 
