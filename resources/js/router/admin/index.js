@@ -9,6 +9,7 @@ import Community from '@/router/admin/community/community.js';
 import Dashboard from '@/router/admin/dashboard/dashboard.js';
 import Payment from '@/router/admin/payment/index.js';
 import Email from '@/router/admin/email/index.js';
+import Albatalk from '@/router/admin/albatalk/index.js';
 
 Vue.use(Router);
 
@@ -21,6 +22,7 @@ const routes = [
     ...Email,
     ...Community,
     ...Dashboard,
+    ...Albatalk,
 ];
 
 const router = new Router({
