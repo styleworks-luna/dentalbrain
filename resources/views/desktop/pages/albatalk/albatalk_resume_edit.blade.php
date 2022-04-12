@@ -419,60 +419,63 @@
                                     </thead>
                                     <tbody>
                                     @foreach($leftList as $abilityAnswer)
+                                        @php
+                                            /** @var mixed $abilityAnswer */
+                                        $ability = $abilityAnswer->ability;
+                                        @endphp
                                         <tr>
-                                            @if($loop->first)
-                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @if( $loop->index == $leftCategoryHeaders[$ability->category_id]['loopIndex'] )
+                                                <th rowspan="{{ $leftCategoryHeaders[$ability->category_id]['rowspan']  }}">{{ $leftCategoryHeaders[$ability->category_id]['name'] }}</th>
                                             @endif
-                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <td class="ability-cell">{{ $ability->name }}</td>
                                             <input type="hidden"
-                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
-                                                   value="{{ $abilityAnswer->ability->id }}">
-                                            {{$abilityAnswer->score}}
-                                            @if($abilityAnswer->ability->type == 'select')
+                                                   name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                   value="{{ $ability->id }}">
+                                            @if($ability->type == 'select')
                                                 <td class="select-cell">
                                                     <select class="select-menu"
-                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                            name="{{ 'abilities['.$ability->id.'][score]' }}">
                                                         <option
                                                             value="0">
                                                             선택
                                                         </option>
                                                         <option value="1"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 1 ) selected @endif>
                                                             경험없음
                                                         </option>
                                                         <option value="2"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 2) selected @endif>
                                                             미흡
                                                         </option>
                                                         <option value="3"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 3) selected @endif>
                                                             보통
                                                         </option>
                                                         <option value="4"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 4) selected @endif>
                                                             잘함
                                                         </option>
                                                         <option value="5"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 5) selected @endif>
                                                             매우잘함
                                                         </option>
                                                     </select>
                                                 </td>
                                                 <td class="checkbox-cell">
                                                     <input type="hidden"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
                                                            value="0">
                                                     <input type="checkbox"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
                                                            value="1"
-                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                           @if( old('abilities.'.$ability->id.'.can_learn', $abilityAnswer->can_learn) ) checked @endif
                                                     >
                                                 </td>
                                             @else
                                                 <td class="input-cell" colspan="2">
                                                     <input type="text"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
-                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                           value="{{ old('abilities.'.$ability->id.'.content', $abilityAnswer->content) }}"
                                                            placeholder="수기입력" style="width: 200px">
                                                 </td>
                                             @endif
@@ -492,59 +495,63 @@
                                     </thead>
                                     <tbody>
                                     @foreach($rightList as $abilityAnswer)
+                                        @php
+                                            /** @var mixed $abilityAnswer */
+                                        $ability = $abilityAnswer->ability;
+                                        @endphp
                                         <tr>
-                                            @if($loop->first)
-                                                <th rowspan="{{ $loop->count }}">{{ $abilityAnswer->name }}</th>
+                                            @if( $loop->index == $rightCategoryHeaders[$ability->category_id]['loopIndex'] )
+                                                <th rowspan="{{ $rightCategoryHeaders[$ability->category_id]['rowspan']  }}">{{ $rightCategoryHeaders[$ability->category_id]['name'] }}</th>
                                             @endif
-                                            <td class="ability-cell">{{ $abilityAnswer->ability->name }}</td>
+                                            <td class="ability-cell">{{ $ability->name }}</td>
                                             <input type="hidden"
-                                                   name="{{ 'abilities['.$abilityAnswer->ability->id.'][ability_id]' }}"
-                                                   value="{{ $abilityAnswer->ability->id }}">
-                                            @if($abilityAnswer->ability->type == 'select')
+                                                   name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                   value="{{ $ability->id }}">
+                                            @if($ability->type == 'select')
                                                 <td class="select-cell">
                                                     <select class="select-menu"
-                                                            name="{{ 'abilities['.$abilityAnswer->ability->id.'][score]' }}">
+                                                            name="{{ 'abilities['.$ability->id.'][score]' }}">
                                                         <option
                                                             value="0">
                                                             선택
                                                         </option>
                                                         <option value="1"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 1) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 1 ) selected @endif>
                                                             경험없음
                                                         </option>
                                                         <option value="2"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 2) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 2) selected @endif>
                                                             미흡
                                                         </option>
                                                         <option value="3"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 3) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 3) selected @endif>
                                                             보통
                                                         </option>
                                                         <option value="4"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 4) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 4) selected @endif>
                                                             잘함
                                                         </option>
                                                         <option value="5"
-                                                                @if((old('abilities')[$abilityAnswer->ability->id]['score'] ?? $abilityAnswer->score) == 5) selected @endif>
+                                                                @if( old('abilities.'.$ability->id.'.score', $abilityAnswer->score) == 5) selected @endif>
                                                             매우잘함
                                                         </option>
                                                     </select>
                                                 </td>
                                                 <td class="checkbox-cell">
                                                     <input type="hidden"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
                                                            value="0">
                                                     <input type="checkbox"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][can_learn]' }}"
+                                                           name="{{ 'abilities['.$ability->id.'][can_learn]' }}"
                                                            value="1"
-                                                           @if( (old('abilities')[$abilityAnswer->ability->id]['can_learn'] ?? $abilityAnswer->can_learn) ) checked @endif
+                                                           @if( old('abilities.'.$ability->id.'.can_learn', $abilityAnswer->can_learn) ) checked @endif
                                                     >
                                                 </td>
                                             @else
                                                 <td class="input-cell" colspan="2">
                                                     <input type="text"
-                                                           name="{{ 'abilities['.$abilityAnswer->ability->id.'][content]' }}"
-                                                           value="{{ old('abilities')[$abilityAnswer->ability->id]['content'] ?? $abilityAnswer->content }}"
+                                                           name="{{ 'abilities['.$ability->id.'][content]' }}"
+                                                           value="{{ old('abilities.'.$ability->id.'.content', $abilityAnswer->content) }}"
                                                            placeholder="수기입력" style="width: 200px">
                                                 </td>
                                             @endif

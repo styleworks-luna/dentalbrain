@@ -10,7 +10,7 @@ class AbilityCategory extends Model
 
     protected $guarded = ['*'];
 
-    public function abilities()
+    public function abilities(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Ability::class, 'category_id', 'id');
     }

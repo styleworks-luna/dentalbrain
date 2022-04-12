@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\Resume\Resume;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ResumeThumbnail extends FileTemplate
 {
@@ -23,13 +24,10 @@ class ResumeThumbnail extends FileTemplate
         return $path = 'public/resume/' . $resume->id . '/thumbnail/' . $fileName;
     }
 
-    public function saveFile($uploadedFile): File
+    public function saveFile($uploadedFile)
     {
         $name = $uploadedFile->getClientOriginalName();
-        $extension = $uploadedFile->extension();
         $size = $uploadedFile->getSize();
-
-        $prefix = Auth::id() ?? 'null';
 
         /** @var Resume $resume */
         $resume = $this->model;
@@ -38,16 +36,13 @@ class ResumeThumbnail extends FileTemplate
             $uploadedFile, $name);
 
         /** @var File $file */
-        $file = File::create([
+
+        return File::query()->create([
             'path' => $path,
             'name' => $name,
             'size' => $size,
+            'url' => $this->getDownloadUrl($path),
         ]);
-
-        $file->url = $this->getDownloadUrl($file, $file->path);
-        $file->save();
-
-        return $file;
     }
 
     /**

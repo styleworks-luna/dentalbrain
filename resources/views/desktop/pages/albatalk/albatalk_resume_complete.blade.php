@@ -205,7 +205,7 @@
                             </thead>
                             @foreach($leftList as $answer)
                                 <tr>
-                                    <td>{{ $answer->ability->category->name }}</td>
+                                    <td>{{ $categories[$answer->ability->category_id] }}</td>
                                     <td>{{ $answer->ability->name }}</td>
                                     <td>
                                         @switch($answer->score)
@@ -238,7 +238,7 @@
                             </thead>
                             @foreach($rightList as $answer)
                                 <tr>
-                                    <td>{{ $answer->ability->category->name }}</td>
+                                    <td>{{ $categories[$answer->ability->category_id] }}</td>
                                     <td>{{ $answer->ability->name }}</td>
                                     <td>
                                         @switch($answer->score)

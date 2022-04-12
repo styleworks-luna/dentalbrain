@@ -64,7 +64,7 @@ abstract class FileTemplate
             $file->path = $path;
             $file->save();
 
-            $file->url = $this->getDownloadUrl($file, $path);
+            $file->url = $this->getDownloadUrl($path);
 
             $file->save();
             DB::commit();
@@ -92,7 +92,7 @@ abstract class FileTemplate
      * @param $path
      * @return string|string[]
      */
-    protected function getDownloadUrl($file, $path)
+    protected function getDownloadUrl($path)
     {
         return str_replace('public', '/storage', $path);
     }
