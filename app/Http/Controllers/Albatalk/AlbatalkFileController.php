@@ -33,6 +33,7 @@ class AlbatalkFileController
         $file = ResumeThumbnail::saveFile($uploadedFile);
 
         return response()->json([
+            'id' => $file->id,
             'name' => $file->name,
             'size' => $file->size,
             'url' => $file->url,
