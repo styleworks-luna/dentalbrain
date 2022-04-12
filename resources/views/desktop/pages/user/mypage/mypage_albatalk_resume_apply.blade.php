@@ -5,7 +5,8 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/mypage-albatalk-resume.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/user/mypage-albatalk-resume-apply.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-list.css') }}">
 @endsection
 
 @section('content')
@@ -15,18 +16,17 @@
             <div class="mypage-content-wrap">
                 <div class="content-title">
                     <h2>구직정보</h2>
-                    <a href="">이력서 수정하기</a>
+                    <a href="">구직 신청하러가기</a>
                 </div>
                 <ul class="mypage-albatalk-navigation">
-                    <li class="navigation-list">
+                    <li class="navigation-list active">
                         <a href="/account/offer">신청내역</a>
                     </li>
-                    <li class="navigation-list active">
+                    <li class="navigation-list ">
                         <a href="/account/resume">이력서 정보</a>
                     </li>
                 </ul>
-                <div class="mypage-content">
-                </div>
+                <albatalk :is_offer="true"></albatalk>
             </div>
         </div>
     </section>

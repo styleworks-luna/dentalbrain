@@ -2,10 +2,6 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 
-@import '@sass/components/_button.sass'
-@import '@sass/components/_pagination.sass'
-@import '@sass/components/_selectbox.sass'
-@import '@sass/components/_input.sass'
 @import '@sass/desktop/layouts/navigation/account.sass'
 
 .mypage-albatalk-navigation
@@ -42,6 +38,7 @@
         h2
             font-size: 24px
             color: #222
+
         a
             +margin(top 10px)
             font-size: 14px
@@ -51,43 +48,3 @@
                 color: $page_color
                 font-weight: bold
                 text-decoration: underline
-
-    .albatalk-contents
-        +margin(top 20px)
-
-        .albatalk-additional-information
-            +margin(top 20px)
-            font-size: 16px
-            text-align: center
-
-            .refuse-state
-                color: $gray-700
-                line-height: 50px
-
-            .btn-wrap
-                +margin(0 auto)
-                +size(140px)
-
-                .btn-cancel
-                    +size(140px, 50px)
-                    +btn(null,1px solid $border-color-base, 25px)
-                    font-weight: bold
-                    font-size: 16px
-
-
-        .none
-            +margin(top 100px)
-
-            p
-                font-size: 20px
-                text-align: center
-
-            .btn-wrap
-                +size(200px)
-                +margin(100px auto 0 auto)
-
-                .btn-go-offer
-                    +size(200px, 50px)
-                    +btn(purple-fill)
-                    font-size: 16px
-                    line-height: 50px

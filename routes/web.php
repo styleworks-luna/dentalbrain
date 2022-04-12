@@ -88,8 +88,13 @@ if (env('APP_ENV') != 'production') {
 
         //구직 정보
         Route::get('offer', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
+            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
         })->name('offer');
+
+        //구직 이력서 정보
+        Route::get('resume', function () {
+            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
+        })->name('resume');
     });
 }
 
@@ -250,8 +255,13 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
 
     //구직 정보
     Route::get('offer', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
     })->name('offer');
+
+    //구직 이력서 정보
+    Route::get('resume', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume');
+    })->name('resume');
 
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');

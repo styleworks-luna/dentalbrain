@@ -92,7 +92,8 @@ mix.sass('resources/sass/desktop/pages/user/mypage/mypage-login.sass', 'public/c
     .sass('resources/sass/desktop/pages/user/mypage/mypage-secession.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/desktop/pages/user');
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume-apply.sass', 'public/css/desktop/pages/user');
 
 // 고객센터
 mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop/pages/service')
