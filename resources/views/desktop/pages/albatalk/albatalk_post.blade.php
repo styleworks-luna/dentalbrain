@@ -11,6 +11,146 @@
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
 @endsection
 
+@section('script')
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('.btn-submit').click(function (e) {
+                e.preventDefault();
+
+                let form = $('#albatalk_recruit_form')[0];
+                let data = new FormData(form);
+
+                console.log(data);
+
+                $.ajax({
+                    url: '/albatalk/recruit',
+                    type: 'post',
+                    data: data,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                    }, success: function (json) {
+                        console.log(json);
+                        Payment();
+                    }
+                });
+            });
+            function Payment() {
+
+            }
+            // select menu
+            var select_menu = $('.select-menu');
+            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
+            var tossPayments = TossPayments(clientKey);
+            var message = getParameter('message');
+            var paymentmethod = $('.payment-method:checked').val();
+
+            // 결제 실패시 오류 메세지 출력
+            paymentMessage(message);
+
+            if (select_menu.length > 0) {
+                select_menu.selectmenu();
+            }
+
+            $('.payment-method').change(function () {
+                paymentmethod = $('.payment-method:checked').val();
+            });
+
+            $('.btn-submit').click(function (e) {
+                if (paymentmethod == "계좌입금") {
+                    $('.dim').css('display', 'block');
+                    $('.payment-layer-wrapper .layer').css('display', 'block');
+                } else {
+                    var paymentObj;
+                    var cardCompany = $('.ui-selectmenu-text').text();
+
+                    const amount = 10000;
+                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                    const orderName = '구인 결제';
+                    const customerName = '{{ auth()->user()->name }}';
+                    const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
+                    const customerEmail = '{{ auth()->user()->email }}';
+                    const customerMobilePhone = '{{ auth()->user()->phone }}';
+
+                    if (paymentmethod === '가상계좌') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    } else if (paymentmethod === '카드') {
+                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+
+                            maxCardInstallmentPlan: maxCardInstallmentPlan,
+                            cardCompany: cardCompany,
+                        };
+                    } else if (paymentmethod === '계좌이체') {
+                        paymentObj = {
+                            amount: amount,
+                            orderId: orderId,
+                            orderName: orderName,
+                            customerName: customerName,
+                            successUrl: successUrl,
+                            failUrl: window.location.href,
+                            customerEmail: customerEmail,
+                            customerMobilePhone: customerMobilePhone,
+                        };
+                    }
+
+                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                        alert('취소');
+                    });
+                }
+            });
+
+            // 계좌입금 pop-up
+            $('.payment-layer-wrapper .btn-confirm').click(function (e) {
+                $('#separate_form').submit();
+            });
+
+            $('.payment-layer-wrapper .btn-cancel').click(function (e) {
+                $('.dim').css('display', 'none');
+                $('.payment-layer-wrapper .layer').css('display', 'none');
+            })
+
+        })
+        ;
+
+        function getParameter(param) {
+            var paramData = window.location.search.substr(1).split('&').filter(function (i) {
+                return i.split('=')[0] == param;
+            });
+
+            return paramData.length === 0 ? null : paramData[0].split('=')[1];
+        }
+
+        function paymentMessage(message) {
+            if (message) {
+                alert(decodeURI(message));
+            }
+        }
+    </script>
+@endsection
+
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-post.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">

@@ -13,29 +13,6 @@ $(function () {
         })
     }
 
-    $('.btn-submit').click(function (e) {
-        e.preventDefault();
-
-        let form = $('#albatalk_recruit_form')[0];
-        let data = new FormData(form);
-
-        console.log(data);
-
-        $.ajax({
-            url: '',
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            error: function (xhr, status, error) {
-                console.log(error);
-            }, success: function (json) {
-                console.log(json)
-            }
-        });
-    });
-
     // search address
     function DaumPostcode() {
         new daum.Postcode({
