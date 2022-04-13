@@ -92,6 +92,8 @@ if (env('APP_ENV') != 'production') {
 
     Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+            Route::get('search', [\App\Http\Controllers\Albatalk\Recruit\RecruitSearchController::class, 'search'])->name('search');
+
             Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
                 Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
             });
