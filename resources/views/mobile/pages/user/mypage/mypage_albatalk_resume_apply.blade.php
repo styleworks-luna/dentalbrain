@@ -14,16 +14,12 @@
         <a href="" class="menu-btn"></a>
     </div>
     <a href="" class="btn-back"></a>
-    <h1>구직정보</h1>
+    <h1>이력서 정보</h1>
 @endsection
 
 @section('content')
-    <section class="albatalk-wrap">
-        <div class="m-container">
-            <albatalk :is_offer="true" :mobile="true"></albatalk>
-        </div>
-        <div class="offer-btn-wrap">
-            <a href="{{ url('albatalk') }}" class="btn-go-offer">구직 신청하러가기</a>
+    <section class="content">
+        <div class="container">
         </div>
     </section>
 @endsection
