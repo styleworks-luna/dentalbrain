@@ -10,10 +10,8 @@ use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
-use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Auth;
 
 class Recruit extends Model
 {

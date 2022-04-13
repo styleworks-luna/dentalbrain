@@ -2,11 +2,9 @@
 
 namespace App\Mail;
 
-use App\Models\Program\Program;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class AdminCustomMail extends Mailable
 {

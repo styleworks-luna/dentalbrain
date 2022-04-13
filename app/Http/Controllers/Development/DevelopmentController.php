@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Development;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recruit\Recruit;
 use App\Models\User;
 use App\Services\Recruit\AbilityService;
 use Illuminate\Http\Request;

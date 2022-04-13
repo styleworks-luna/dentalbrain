@@ -7,7 +7,6 @@ use App\Models\Manage\Banner;
 use App\Models\Manage\BannerTitle;
 use App\Models\Manage\Faq;
 use App\Models\Manage\Notice;
-use App\Models\Program\Program;
 use Illuminate\Http\Request;
 
 class MainController extends Controller

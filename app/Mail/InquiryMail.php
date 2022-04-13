@@ -2,11 +2,10 @@
 
 namespace App\Mail;
 
+use App\Models\Manage\Inquiry;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Manage\Inquiry;
 
 class InquiryMail extends Mailable
 {

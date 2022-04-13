@@ -2,7 +2,6 @@
 
 namespace App\Models\Manage;
 
-use App\Models\Manage\Inquiry;
 use Illuminate\Database\Eloquent\Model;
 
 class InquiryCategory extends Model

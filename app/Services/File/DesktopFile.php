@@ -8,7 +8,6 @@
 
 namespace App\Services\File;
 
-use App\Models\File;
 use App\Models\Manage\Banner;
 
 class DesktopFile extends FileTemplate

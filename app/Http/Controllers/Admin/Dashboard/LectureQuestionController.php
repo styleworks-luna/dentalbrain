@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\LectureQuestion;
-use Illuminate\Http\Request;
 
 class LectureQuestionController extends Controller
 {

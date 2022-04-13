@@ -9,7 +9,6 @@ use App\Models\Payments\Payment;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPayments;
 use App\Traits\HasPayStatus;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 abstract class PaymentService

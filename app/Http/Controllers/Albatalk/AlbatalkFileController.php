@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Albatalk;
 
-use App\Models\File;
-use App\Models\Resume\Resume;
 use App\Services\File\ResumeThumbnail;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class AlbatalkFileController
 {

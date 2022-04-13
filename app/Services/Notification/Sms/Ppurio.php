@@ -3,7 +3,6 @@
 namespace App\Services\Notification\Sms;
 use App\Models\Notification\PhoneVerification;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
