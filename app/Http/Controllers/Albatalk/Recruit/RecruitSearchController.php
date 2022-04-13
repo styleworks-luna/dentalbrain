@@ -15,7 +15,7 @@ class RecruitSearchController extends Controller
     {
         $validated = $request->validate([
             'sido' => ['required', Rule::in(array_merge(RecruitSiDo::getArray(), ['all'])),],
-            'order' => ['nullable',],
+            'order' => ['nullable', Rule::in(['newest', 'closest'])],
         ]);
         $sido = $validated['sido'];
         $order = $validated['order'] ?? 'newest';
