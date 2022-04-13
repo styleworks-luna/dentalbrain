@@ -35,6 +35,62 @@ export default {
     data() {
         return {
             lists: [
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '0',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '1',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '0',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '1',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '0',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '1',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '0',
+                },
+                {
+                    title: "덴탈브레인 치과의원",
+                    location: "서울 강서구",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '1',
+                },
             ]
         }
     }
