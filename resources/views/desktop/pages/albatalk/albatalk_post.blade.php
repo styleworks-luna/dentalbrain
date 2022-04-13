@@ -136,12 +136,13 @@
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form id="albatalk_recruit_form" action={{route('albatalk.recruit.create')}} method="post">
+                    <form id="albatalk_recruit_form" action={{ route('albatalk.recruit.create') }} method="post">
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
                                 <div class="img-wrap">
-                                    <!-- TODO:: 썸네일 존재 여부 if문 작업 필요 -->
+                                    <input type="hidden" name="main_file_id">
+                                    <input type="hidden" name="main_file_src">
                                     <!-- 썸네일 존재하지 않을경우 -->
                                     <div class="main-thumbnail none-image">
                                         <h4 class="none-image-title">치과 대표 사진 *</h4>
@@ -169,6 +170,15 @@
                                         <span class="sub-thumbnail-tip">최대 3개까지 등록 가능 (800px × 600px)</span>
                                     </div>
                                     <div class="sub-thumbnail-content">
+                                        <input type="hidden" name="file_1_id">
+                                        <input type="hidden" name="file_1_src">
+
+                                        <input type="hidden" name="file_2_id">
+                                        <input type="hidden" name="file_2_src">
+
+                                        <input type="hidden" name="file_3_id">
+                                        <input type="hidden" name="file_3_src">
+
                                         <div class="img-wrap">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="sub-thumbnail none-image">
@@ -230,7 +240,7 @@
                                                id="dental_name"
                                                class="input-s"
                                                name="dental_name"
-                                               value="{{old('dental_name')}}"
+                                               value="{{ old('dental_name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
@@ -241,7 +251,7 @@
                                                id="manager_name"
                                                class="input-s"
                                                name="manager_name"
-                                               value="{{old('manager_name')}}"
+                                               value="{{ old('manager_name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
@@ -253,7 +263,7 @@
                                                id="ceo_name"
                                                class="input-s"
                                                name="ceo_name"
-                                               value="{{old('ceo_name')}}"
+                                               value="{{ old('ceo_name') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
@@ -265,7 +275,7 @@
                                                id="manager_phone"
                                                class="input-s"
                                                name="manager_phone"
-                                               value="{{old('manager_phone')}}"
+                                               value="{{ old('manager_phone') }}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -278,7 +288,7 @@
                                                id="num"
                                                class="input-s"
                                                name="num"
-                                               value="{{old('num')}}"
+                                               value="{{ old('num') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
@@ -290,7 +300,7 @@
                                                id="manager_email"
                                                class="input-s"
                                                name="manager_email"
-                                               value="{{old('manager_email')}}"
+                                               value="{{ old('manager_email') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 이메일을 입력해주세요."
                                                data-parsley-type-message="※ 이메일 형식에 맞게 입력하세요.">
@@ -303,7 +313,7 @@
                                                id="phone"
                                                class="input-s"
                                                name="phone"
-                                               value="{{old('phone')}}"
+                                               value="{{ old('phone') }}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -316,7 +326,7 @@
                                                id="homepage"
                                                class="input-xl"
                                                name="homepage"
-                                               value="{{old('homepage')}}">
+                                               value="{{ old('homepage') }}">
                                     </td>
                                 </tr>
                             </table>
@@ -332,7 +342,7 @@
                                             <input type="text" id="address"
                                                    class="address input-l"
                                                    name="address"
-                                                   value="{{old('address')}}"
+                                                   value="{{ old('address') }}"
                                                    readonly
                                                    data-parsley-required="true"
                                                    data-parsley-required-message="※ 주소를 입력해주세요."
@@ -340,7 +350,7 @@
                                             <input type="text" id="address_detail"
                                                    class="address-detail input-l"
                                                    name="address_detail"
-                                                   value="{{old('address_detail')}}"
+                                                   value="{{ old('address_detail') }}"
                                                    placeholder="상세주소를 입력">
                                             <input type="hidden" class="address-hidden-sido" name="sido">
                                             <input type="hidden" class="address-hidden-gugun" name="gugun">
@@ -359,7 +369,7 @@
                                                id="subway"
                                                class="input-xxl"
                                                name="subway"
-                                               value="{{old('subway')}}"
+                                               value="{{ old('subway') }}"
                                                placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)">
                                     </td>
                                 </tr>
@@ -369,8 +379,9 @@
                                         <div class="checkbox-container">
                                             @foreach($typeApplication as $application)
                                                 <div class="checkbox-wrap">
-                                                    <input type="checkbox" id="application_field_[{{$application->id}}]"
-                                                           name="application[{{$application->id}}]"
+                                                    <input type="checkbox"
+                                                           id="application_field_[{{ $application->id }}]"
+                                                           name="application[{{ $application->id }}]"
                                                            @if(old('application')[$application->id] ?? 'off' == 'on') checked
                                                            @endif
                                                            data-parsley-required="true"
@@ -379,7 +390,7 @@
                                                            data-parsley-required-message="※ 신청분야를 선택해주세요."
                                                            data-parsley-errors-container=".application-error-container">
                                                     <label
-                                                        for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                        for="application_field_[{{ $application->id }}]">{{ $application->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -392,16 +403,17 @@
                                         <div class="radio-container">
                                             @foreach($typeWork as $work)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="work_type_field_[{{$work->id}}]"
+                                                    <input type="radio" id="work_type_field_[{{ $work->id }}]"
                                                            name="work"
-                                                           value={{$work->id}}
+                                                           value={{ $work->id }}
                                                            @if(old('work') == $work->id)
                                                                checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무형태를 선택해주세요."
                                                            data-parsley-errors-container=".work-type-error-container">
-                                                    <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
+                                                    <label
+                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -414,12 +426,14 @@
                                         <div class="radio-container">
                                             @foreach($typeJob as $job)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="job_type_field_[{{$job->id}}]" name="job"
-                                                           value={{$job->id}} @if(old('job') == $job->id) checked @endif
+                                                    <input type="radio" id="job_type_field_[{{ $job->id }}]" name="job"
+                                                           value={{ $job->id }} @if(old('job') == $job->id) checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
-                                                    <label for="job_type_field_[{{$job->id}}]">{{$job->type}}</label>
+                                                    <label
+                                                        for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -432,10 +446,10 @@
                                         <div class="radio-container">
                                             @foreach($typeSalary as $salary)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="salary_type_field_[{{$salary->id}}]"
+                                                    <input type="radio" id="salary_type_field_[{{ $salary->id }}]"
                                                            name="salary"
                                                            class="salary"
-                                                           value={{$salary->id}}
+                                                           value={{ $salary->id }}
                                                            @if(old('salary') == $salary->id)
                                                                checked
                                                            @endif
@@ -443,11 +457,11 @@
                                                            data-parsley-required-message="※ 급여를 선택해주세요."
                                                            data-parsley-errors-container=".salary-type-error-container">
                                                     <label
-                                                        for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
+                                                        for="salary_type_field_[{{ $salary->id }}]">{{ $salary->type }}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m salary-input"
-                                                               value="{{old("salary_value")}}"
+                                                               value="{{ old("salary_value") }}"
                                                                placeholder="내용을 입력해주세요."
                                                                @if(old('salary') != 4) disabled @endif>
                                                     @endif
@@ -477,7 +491,7 @@
                                                             @break
                                                         @else
                                                             <option value="{{ $study->id }}"
-                                                                    @if(old('study') == $study->id) selected @endif>{{$study->type}}</option>
+                                                                    @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
@@ -514,12 +528,13 @@
                                                     <option value="">경력기간 선택</option>
                                                     @for ($i = 1; $i <= 30; $i++)
                                                         @if($i == 30)
-                                                            <option value="{{$i}}"
-                                                                    @if(old('career') == $i) selected @endif>{{$i}}년 이상
+                                                            <option value="{{ $i }}"
+                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
+                                                                이상
                                                             </option>
                                                         @else
-                                                            <option value="{{$i}}"
-                                                                    @if(old('career') == $i) selected @endif>{{$i}}년
+                                                            <option value="{{ $i }}"
+                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
                                                             </option>
                                                         @endif
                                                     @endfor
@@ -536,18 +551,20 @@
                                             @foreach($typeDay as $day)
                                                 <div class="radio-wrap">
                                                     <input type="radio"
-                                                           id="day_type_field_[{{$day->id}}]"
+                                                           id="day_type_field_[{{ $day->id }}]"
                                                            name="day"
                                                            class="work-day"
-                                                           value={{$day->id}} @if(old('day') == $day->id) checked @endif
+                                                           value={{ $day->id }} @if(old('day') == $day->id) checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무요일을 선택해주세요."
                                                            data-parsley-errors-container=".day-type-error-container">
-                                                    <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
+                                                    <label
+                                                        for="day_type_field_[{{ $day->id }}]">{{ $day->type }}</label>
                                                     @if($day->id == 4)
                                                         <input type="text" name="day_value"
                                                                class="radio-input input-m work-day-input"
-                                                               value="{{old("day_value")}}"
+                                                               value="{{ old("day_value") }}"
                                                                placeholder="내용을 입력해주세요."
                                                                @if(old('day') != 4) disabled @endif>
                                                     @endif
@@ -563,8 +580,8 @@
                                         <div class="checkbox-grid-container">
                                             @foreach($typeBenefit as $benefit)
                                                 <div class="checkbox-wrap">
-                                                    <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
-                                                           name="benefit[{{$benefit->id}}]"
+                                                    <input type="checkbox" id="benefit_type_field_[{{ $benefit->id }}]"
+                                                           name="benefit[{{ $benefit->id }}]"
                                                            @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked
                                                            @endif
                                                            data-parsley-required="true"
@@ -573,7 +590,7 @@
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
                                                     <label
-                                                        for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                        for="benefit_type_field_[{{ $benefit->id }}]">{{ $benefit->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -593,21 +610,21 @@
                                                        data-parsley-errors-container=".deadline-error-container">
 
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
-                                                       value="{{old("started_at_ymd")}}"
+                                                       value="{{ old("started_at_ymd") }}"
                                                        placeholder="시작일자 선택"
                                                        @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
                                                        name="started_at_hm"
-                                                       value="{{old("started_at_hm")}}"
+                                                       value="{{ old("started_at_hm") }}"
                                                        @if(old('deadline') != 1) disabled @endif>
                                                 <p class="time-from">부터</p>
                                                 <input type="text" class="input-xs end-date" name="ended_at_ymd"
-                                                       value="{{old("ended_at_ymd")}}"
+                                                       value="{{ old("ended_at_ymd") }}"
                                                        placeholder="마감일자 선택"
                                                        @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
                                                        name="ended_at_hm"
-                                                       value="{{old("ended_at_hm")}}"
+                                                       value="{{ old("ended_at_hm") }}"
                                                        @if(old('deadline') != 1) disabled @endif>
                                             </div>
                                             <div class="radio-wrap">
@@ -634,13 +651,13 @@
                                             </li>
                                         </ul>
                                         <textarea id="editor" class="editor" name="content"
-                                                  value="{{old('content')}}"></textarea>
+                                                  value="{{ old('content') }}"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{$price}}원</p>
+                                        <p class="money">{{ $price }}원</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -657,8 +674,9 @@
                                                        data-parsley-required-message="※ 결제방식을 선택해주세요."
                                                        data-parsley-errors-container=".pay-type-error-container">
                                                 <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
-                                                <select name="pay_method" id="" class="input-xs select-menu pay-method-select"
-                                                        @if(old('pay_method') != '카드') disabled @endif>
+                                                <select name="pay_method" id=""
+                                                        class="input-xs select-menu pay-method-select"
+                                                        @if( old('pay_method') != '카드' ) disabled @endif>
                                                     <option value="신한">신한</option>
                                                     <option value="현대">현대</option>
                                                     <option value="삼성">삼성</option>
@@ -686,13 +704,12 @@
                                                     <option value="디스커버">디스커버</option>
                                                 </select>
                                             </div>
-                                            {{--<div class="radio-wrap">--}}
-                                                {{--<input type="radio"--}}
-                                                       {{--id="pay_method_field_02"--}}
-                                                       {{--class="pay-method"--}}
-                                                       {{--name="pay_method" value="계좌이체">--}}
-                                                {{--<label for="pay_method_field_02">실시간 계좌이체</label>--}}
-                                            {{--</div>--}}
+                                            {{--
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <label for="pay_method_field_02">실시간 계좌이체</label>
+                                            </div>
+                                            --}}
                                         </div>
                                         <div class="pay-type-error-container"></div>
                                     </td>
