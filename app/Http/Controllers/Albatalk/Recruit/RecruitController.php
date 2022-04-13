@@ -85,11 +85,11 @@ class RecruitController extends Controller
                 return ['name' => $key, 'message' => $item[0]];
             });
 
-            return response()->json($collection->toArray());
+            return response()->json($collection->toArray(), 404);
         }
 
         // 검사한 데이터 세션에 저장
-        session(['recruit_create_data' => $validator->validated()]);
+        session([Recruit::SESSION_KEY => $validator->validated()]);
 
         // 결제 폼으로 이동
         return response()->json(['massage' => 'ok']);
@@ -97,23 +97,24 @@ class RecruitController extends Controller
 
     public function success(SuccessPayments $request)
     {
-        // validation : amount (금액) 확인
-//        $validator = Validator::make($request->all(), [
-//            'amount', ['required', 'numeric', 'min:100'],
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
-//        }
-
-        $realPrice = $program->getUserSpecificPrice();
+        $user = Auth::user();
+        $realPrice = RecruitPrice::getRecruitPrice($user);
 
         if ($realPrice != $request->get('amount')) {
-            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
+            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.']);
         }
 
         // 결제 승인 API
         try {
+            DB::beginTransaction();
+
+            // 구인등록 인스턴스 생성
+            $recruitData = $request->session()->get(Recruit::SESSION_KEY);
+            $recruit = $this->recruitTemplate->storeRecruit($recruitData);
+            $application = $this->recruitTemplate->storeRecruitApplication($recruit, $recruitData);
+            $salary = $this->recruitTemplate->storeRecruitSalary($recruit, $recruitData);
+            $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
+            $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
 
             // TossPayment 객체생성
             $tossPayments = new TossPayments($request['paymentKey']);
@@ -121,47 +122,35 @@ class RecruitController extends Controller
 
             // response 오류
             if (!$tossResponse) {
-                return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
+                return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
             }
 
-            DB::beginTransaction();
-
-            // 구인등록 인스턴스 생성
-            $recruitData = $request->session()->get('data');
-            $recruit = $this->recruitTemplate->storeRecruit($recruitData);
-            $application = $this->recruitTemplate->storeRecruitApplication($recruit, $recruitData);
-            $salary = $this->recruitTemplate->storeRecruitSalary($recruit, $recruitData);
-            $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
-            $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
-
             // session 지우기
-            session()->forget('data');
+            session()->forget(Recruit::SESSION_KEY);
 
             // 페이먼츠 인스턴스 생성
             $payment = Payment::createByTossSuccess($tossResponse);
 
             // 구인등록 페이먼츠 생성
             // 방금 만들어진 구인등록에 대한 처리가 필요!
-            $recruitUpdate = Recruit::where("id", "=", $recruit->id)->where('user_id', "=", Auth::id())->update(['payment_id' => $payment->id]);
+            $recruit->payment_id = $payment->id;
+            $recruit->save();
 
             // 결제 취소 됐을 때 처리도 필요함
-
             DB::commit();
+
         } catch (TossPaymentsException $exception) {
             DB::rollBack();
 
+            Log::error('RECRUIT TOSS SUCCESS ERROR : TOSS_EXCEPTION', [$exception]);
+            return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         } catch (\Exception $exception) {
             DB::rollBack();
 
-            Log::error('PROGRAM TOSS SUCCESS ERROR', [$exception]);
+            Log::error('RECRUIT TOSS SUCCESS ERROR : EXCEPTION', [$exception]);
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        return view('emails.content')->with(
-            [
-                "title" => "payments",
-                "content" => "success",
-            ]
-        );
+        return redirect()->route('albatalk.recruit.detail', $recruit->id);
     }
 }

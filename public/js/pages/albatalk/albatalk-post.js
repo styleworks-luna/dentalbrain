@@ -185,7 +185,7 @@ $(function () {
     });
 
     $('.pay-method').change(function () {
-        if ($(this).val() == '1') {
+        if ($(this).val() == '카드') {
             $('.pay-method-select').attr('disabled', false);
             $(".pay-method-select").selectmenu("enable");
         } else {

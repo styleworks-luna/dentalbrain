@@ -48,16 +48,17 @@
                 });
 
                 var paymentObj;
-                var cardCompany = $('.ui-selectmenu-text').text();
+                var cardCompany = $('.pay-method-select').val();
 
-                const amount = 10000;
+                const amount = {{ $price }};
                 const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                 const orderName = '구인 결제';
                 const customerName = '{{ auth()->user()->name }}';
                 const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
+                const failUrl = '{{ route('albatalk.recruit.create') }}';
                 const customerEmail = '{{ auth()->user()->email }}';
                 const customerMobilePhone = '{{ auth()->user()->phone }}';
-                if (paymentmethod === '1') {
+                if (paymentmethod === '카드') {
                     var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
                     paymentObj = {
@@ -66,21 +67,21 @@
                         orderName: orderName,
                         customerName: customerName,
                         successUrl: successUrl,
-                        failUrl: window.location.href,
+                        failUrl: failUrl,
                         customerEmail: customerEmail,
                         customerMobilePhone: customerMobilePhone,
 
                         maxCardInstallmentPlan: maxCardInstallmentPlan,
                         cardCompany: cardCompany,
                     };
-                } else if (paymentmethod === '2') {
+                } else if (paymentmethod === '계좌이체') {
                     paymentObj = {
                         amount: amount,
                         orderId: orderId,
                         orderName: orderName,
                         customerName: customerName,
                         successUrl: successUrl,
-                        failUrl: window.location.href,
+                        failUrl: failUrl,
                         customerEmail: customerEmail,
                         customerMobilePhone: customerMobilePhone,
                     };
@@ -651,23 +652,47 @@
                                                        id="pay_method_field_01"
                                                        class="pay-method"
                                                        name="pay_method"
-                                                       value="1"
+                                                       value="카드"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 결제방식을 선택해주세요."
                                                        data-parsley-errors-container=".pay-type-error-container">
                                                 <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
-                                                <select name="" id="" class="input-xs select-menu pay-method-select"
-                                                        disabled="disabled">
-                                                    <option value="">신한</option>
+                                                <select name="pay_method" id="" class="input-xs select-menu pay-method-select"
+                                                        @if(old('pay_method') != '카드') disabled @endif>
+                                                    <option value="신한">신한</option>
+                                                    <option value="현대">현대</option>
+                                                    <option value="삼성">삼성</option>
+                                                    <option value="우리">우리</option>
+                                                    <option value="BC">BC</option>
+                                                    <option value="국민">국민</option>
+                                                    <option value="롯데">롯데</option>
+                                                    <option value="농협">농협</option>
+                                                    <option value="하나">하나</option>
+                                                    <option value="씨티">씨티</option>
+                                                    <option value="카카오뱅크">카카오뱅크</option>
+                                                    <option value="수협">수협</option>
+                                                    <option value="전북">전북</option>
+                                                    <option value="우체국">우체국</option>
+                                                    <option value="새마을">새마을</option>
+                                                    <option value="저축">저축</option>
+                                                    <option value="제주">제주</option>
+                                                    <option value="광주">광주</option>
+                                                    <option value="신협">신협</option>
+                                                    <option value="JCB">JCB</option>
+                                                    <option value="유니온페이">유니온페이</option>
+                                                    <option value="마스터">마스터</option>
+                                                    <option value="비자">비자</option>
+                                                    <option value="다이너스">다이너스</option>
+                                                    <option value="디스커버">디스커버</option>
                                                 </select>
                                             </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio"
-                                                       id="pay_method_field_02"
-                                                       class="pay-method"
-                                                       name="pay_method" value="2">
-                                                <label for="pay_method_field_02">실시간 계좌이체</label>
-                                            </div>
+                                            {{--<div class="radio-wrap">--}}
+                                                {{--<input type="radio"--}}
+                                                       {{--id="pay_method_field_02"--}}
+                                                       {{--class="pay-method"--}}
+                                                       {{--name="pay_method" value="계좌이체">--}}
+                                                {{--<label for="pay_method_field_02">실시간 계좌이체</label>--}}
+                                            {{--</div>--}}
                                         </div>
                                         <div class="pay-type-error-container"></div>
                                     </td>
