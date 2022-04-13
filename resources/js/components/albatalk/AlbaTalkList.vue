@@ -1,5 +1,5 @@
 <template>
-    <div class="albatalk-contents">
+    <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-card" v-for="list in lists" :key="list.id">
                 <a href="">
@@ -23,6 +23,9 @@
 <script>
 export default {
     name: "AlbaTalkList",
+    props: {
+      mobile: Boolean,
+    },
     data() {
         return {
             lists: [
