@@ -6,17 +6,46 @@
 .albatalk
 
     .albatalk-navigation
-        +border(bottom 0.2777777vw solid black)
+        +padding(top 5.27777777vw bottom 3.05555555vw)
+        +border(0.27777777vw solid $border-color-base, bottom)
 
         .albatalk-order
-            +margin(top 3.8888888vw right 4.444444vw)
-            float: right
+            .order-list
+                display: flex
+                justify-content: flex-end
+                align-items: center
+
+                li
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+
+                    &::after
+                        +size(0.27777777vw, 3.33333333vw)
+                        +margin(0 4.444444445vw)
+                        background-color: $border-color-light
+                        display: inline-block
+                        content: ''
+
+                    &:last-child::after
+                        display: none
+
+            .btn-menu
+                +margin(right )
+                display: flex
+                justify-content: flex-start
+                align-items: center
+
+                .icon-filter
+                    +size(3.33333333vw, 3.33333333vw)
+                    +margin(left 1.388888888vw)
+                    +background('/images/mobile/global/icon_filter.svg', no-repeat, center center)
+                    background-size: 3.33333333vw 3.33333333vw
 
             .albatalk-order-select
                 +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
                 +padding(right 5vw)
                 +border(0)
-                float: right
                 background-size: 3.611111vw 1.944444vw
                 font-size: 3.8888888vw
                 text-align-last: right
@@ -29,3 +58,13 @@
 
     .albatalk-menu
         display: none
+
+    .albatalk-contents
+        +padding(bottom 11.11111111vw)
+
+        .none
+            +margin(top 27.777777778vw)
+
+            p
+                text-align: center
+                line-height: 9.44444445vw

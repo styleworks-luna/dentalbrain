@@ -108,22 +108,23 @@ class ResumeController extends Controller
                 ->withErrors($errorBag);
         }
 
-        try
-        {
+        try {
             /** @var Resume $resume */
             $resume = $this->resumeService->getLoginUsersResume();
-            $resumeThumbnail = new ResumeThumbnail($resume);
-            $resumeThumbnail->deleteFile();
-
             $resumeData = $resumeValidator->validated();
+
+            if ($resume->file == null || $resume->file->id != $resumeData['file_id'] ) {
+                $resumeThumbnail = new ResumeThumbnail($resume);
+                $resumeThumbnail->deleteFile();
+
+                $file = File::query()->find($resumeData['file_id']);
+                $resumeThumbnail->moveTempToPublic($file);
+            }
+
             $resume->update($resumeData);
 
             $resume->abilityAnswers()->delete();
             $resume->abilityAnswers()->createMany($abilityValidator->validated());
-
-
-            $file = File::query()->find($resumeData['file_id']);
-            $resumeThumbnail->moveTempToPublic($file);
 
             $resume->save();
         } catch (Exception $exception) {

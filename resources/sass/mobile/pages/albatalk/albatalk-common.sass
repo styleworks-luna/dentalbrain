@@ -10,16 +10,19 @@
     text-align: center
 
     .albatalk-navigation
+        +margin(top 29.533333vw right 4.444444vw)
         float: right
-        +padding(top 28.333333vw right 4.444444vw)
 
         a
             +border(0.2777777vw solid transparent)
+            +padding(1.666666vw 2.777777vw)
             +box-sizing(border-box)
+            display: flex
+            justify-content: space-between
+            align-items: center
             background-color: rgba(0, 0, 0, 0.4)
             border-radius: 0.2777777vw
             font-size: 3.888888vw
-            +padding(top 2.777777vw bottom 2.777777vw left 1.666666vw right 1.666666vw)
             text-align: center
             color: #fff
 
@@ -28,3 +31,12 @@
 
             &:last-child
                 +margin(right 0)
+
+            span
+                display: block
+
+            .navigation-icon
+                +size(3.33333333333vw, 3.33333333333vw)
+                +margin(left 1.3888888888vw)
+                +background('/images/mobile/global/icon_headhunting.svg',no-repeat, center center)
+                background-size: 3.33333333333vw 3.33333333333vw

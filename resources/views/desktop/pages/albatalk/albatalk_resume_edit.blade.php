@@ -58,9 +58,9 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
-                            <input type="hidden" class="image-src" value="{{ $resume->file->url }}">
+                            <input type="hidden" class="image-src" value="{{ $resume->file->url ?? '' }}">
                             <input type="hidden" class="image-file-id" name="file_id"
-                                   value="{{ $resume->file->id }}">
+                                   value="{{ $resume->file->id ?? '' }}">
                         {{--
 1. 이미지가 존재함
  * image_src, image_file_id가 있음.
@@ -91,7 +91,7 @@
                                 <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                 <img class="resume-profile"
                                      id="profile-preview"
-                                     src="{{ $resume->file->url }}" alt="이력서 사진"/>
+                                     src="{{ $resume->file->url ?? '' }}" alt="이력서 사진"/>
                                 <div class="image-hover">
                                     <span class="image-icon-common btn-delete-thumbnail"></span>
                                 </div>
@@ -410,8 +410,7 @@
                         <h3>자기소개</h3>
                         <textarea id="information"
                                   name="about_me"
-                                  placeholder="자기소개를 1,000자 이내로 입력해 주세요."
-                        >{{ old('about_me','') }}</textarea>
+                                  placeholder="자기소개를 1,000자 이내로 입력해 주세요.">{{ old('about_me',$resume->about_me) }}</textarea>
                     </div>
 
                     <div class="evaluation-form-wrap common-form-wrap">

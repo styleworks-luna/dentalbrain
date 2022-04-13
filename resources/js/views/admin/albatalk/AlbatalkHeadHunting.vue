@@ -7,7 +7,7 @@
                        placeholder="https:// 로 시작하는 url 입력"
                        v-model="url">
                 <span class="input-group-append">
-                    <button class="btn btn-primary" type="submit" @click.prevent="edit">수정</button>
+                    <button class="btn btn-primary" type="submit" @click.prevent="create">수정</button>
                 </span>
             </div>
         </template>
@@ -15,6 +15,10 @@
 </template>
 
 <script>
+
+// api
+import HeadHunting from '@/api/admin/albatalk/HeadHunting.js';
+
 export default {
     name: "AlbaTalkHeadHunting",
     data() {
@@ -22,10 +26,22 @@ export default {
             url: "",
         }
     },
+    mounted() {
+        this.init();
+    },
     methods: {
-        edit() {
-
-        }
+        init() {
+            HeadHunting.getData().then(res => {
+                this.url = res.data.url;
+            }).catch(err => {
+                this.url  = "";
+            });
+        },
+        create() {
+            HeadHunting.create(this.url).then(res => {
+                alert('변경되었습니다.');
+            })
+        },
     }
 }
 </script>

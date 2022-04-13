@@ -4,7 +4,7 @@
             <albatalk-order :mobile="mobile"></albatalk-order>
             <albatalk-navigation :mobile="mobile"></albatalk-navigation>
         </div>
-        <albatalk-list></albatalk-list>
+        <albatalk-list :mobile="mobile"></albatalk-list>
     </section>
 </template>
 
