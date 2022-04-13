@@ -64,6 +64,7 @@
                                    data-parsley-required="true"
                                    data-parsley-pattern="[Y]"
                                    data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-pattern-message="※ 이력서 대표 사진을 업로드 해주세요."
                                    data-parsley-errors-container=".thumbnail-error-container">
                         <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
