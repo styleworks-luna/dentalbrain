@@ -2,6 +2,7 @@
 
 namespace App\Services\Recruit;
 
+use App\Http\Controllers\Albatalk\Recruit\RecruitSiDo;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
@@ -37,7 +38,7 @@ class RecruitTemplate
             'address' => ['required', 'string',],
             'address_detail' => ['nullable', 'string',],
 
-            'sido' => ['required', 'string',],
+            'sido' => ['required', 'string', Rule::in(RecruitSiDo::getArray())],
             'gugun' => ['required', 'string',],
             'dong' => ['required', 'string', 'nullable'],
 
@@ -145,7 +146,7 @@ class RecruitTemplate
         if (!$day) {
             RecruitDay::create([
                 'type' => TypeDay::find($data['day'])['type'],
-                'value' => $data['day_value']  ?? null,
+                'value' => $data['day_value'] ?? null,
                 'recruit_id' => $recruit->id,
                 'type_day_id' => $data['day'],
             ]);
@@ -172,7 +173,8 @@ class RecruitTemplate
     }
 
 
-    public function validateFile(Request $request) {
+    public function validateFile(Request $request)
+    {
         $validator = Validator::make($request->file(),
             ['image' => ['required', 'image', 'max:2048',]],
             ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
