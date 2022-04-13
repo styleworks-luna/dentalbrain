@@ -13,9 +13,8 @@ $(function () {
         })
     }
 
-    console.log(nullCheck($('.image-src').val()));
-
-    if(nullCheck($('.image-src').val())) {
+    // thumbnail
+    if(nullCheck($('.image-file-id').val())) {
         $('.image-off').css('display','block');
         $('.image-on').css('display','none');
         $('.file-check').val('N');
@@ -33,7 +32,6 @@ $(function () {
         }
     }
 
-    // thumbnail
     $('#resume_image').change(function () {
         var formData = new FormData();
         formData.append("image", $("#resume_image")[0].files[0]);
@@ -48,7 +46,6 @@ $(function () {
         }).then(res => {
             $('.resume-profile').attr('src',res.url);
             $('.image-file-id').val(res.id);
-            $('.image-src').val(res.url);
 
             $('.image-off').css('display', 'none');
             $('.image-on').css('display','block');
@@ -68,7 +65,6 @@ $(function () {
         $('.file-check').parsley().validate();
 
         $('.image-file-id').val("");
-        $('.image-src').val("");
 
         $('.image-off').css('display', 'block');
         $('.image-on').css('display','none');

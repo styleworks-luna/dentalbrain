@@ -19,22 +19,22 @@
                 let form = $('#albatalk_recruit_form')[0];
                 let data = new FormData(form);
 
-                console.log(data);
-
-                $.ajax({
-                    url: '/albatalk/recruit',
-                    type: 'post',
-                    data: data,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    error: function (xhr, status, error) {
-                        console.log(error);
-                    }, success: function (json) {
-                        console.log(json);
-                        Payment();
-                    }
-                });
+                $('#albatalk_recruit_form').parsley().validate();
+                if ($('#albatalk_recruit_form').parsley().isValid()) {
+                    $.ajax({
+                        url: '/albatalk/recruit',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }, success: function (json) {
+                            Payment();
+                        }
+                    });
+                }
             });
 
             function Payment() {
@@ -140,92 +140,111 @@
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
-                                <div class="img-wrap">
-                                    <input type="hidden" name="main_file_id">
-                                    <input type="hidden" name="main_file_src">
+                                <div class="img-wrap main-thumbnail-wrap">
+                                    <input type="hidden" name="main_file_id" class="file-id">
+                                    <input type="hidden" class="thumbnail-check" value="N"
+                                           data-parsley-required="true"
+                                           data-parsley-pattern="[Y]"
+                                           data-parsley-required-message="※ 치과 대표 사진을 업로드 해주세요."
+                                           data-parsley-pattern-message="※ 치과 대표 사진을 업로드 해주세요."
+                                           data-parsley-errors-container=".thumbnail-error-container">
                                     <!-- 썸네일 존재하지 않을경우 -->
-                                    <div class="main-thumbnail none-image">
-                                        <h4 class="none-image-title">치과 대표 사진 *</h4>
-                                        <p class="none-image-tip">(800px × 600px)</p>
-                                        <span class="none-image-icon"></span>
+                                    <div class="image-off">
+                                        <div class="main-thumbnail none-image">
+                                            <h4 class="none-image-title">치과 대표 사진 *</h4>
+                                            <p class="none-image-tip">(800px × 600px)</p>
+                                            <span class="none-image-icon"></span>
+                                        </div>
+                                        <div class="image-hover-common image-hover-lg">
+                                            <input type="file" id="main_thumbnail_input" class="thumbnail-input">
+                                            <label for="main_thumbnail_input"
+                                                   class="image-icon-common image-icon-lg btn-plus"></label>
+                                        </div>
                                     </div>
-                                    <div class="image-hover-common image-hover-lg">
-                                        <input type="file" id="main_thumbnail_input"
-                                               data-parsley-required="false"
-                                               data-parsley-required-message="※ 치과 대표 사진을 업로드 해주세요."
-                                               data-parsley-errors-container=".thumbnail-error-container">
-                                        <label for="main_thumbnail"
-                                               class="image-icon-common image-icon-lg btn-plus"></label>
-                                    </div>
-                                    <div class="thumbnail-error-container parsley-error-container"></div>
                                     <!-- 썸네일 존재 할 경우 (등록 이미지) -->
-                                    <!--<img class="main-thumbnail" src="" alt="치과 사진">
-                                    <div class="image-hover-common image-hover-lg">
-                                        <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
-                                    </div>-->
+                                    <div class="image-on">
+                                        <img class="main-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                        <div class="image-hover-common image-hover-lg">
+                                            <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="thumbnail-error-container parsley-error-container"></div>
                                 <div class="sub-thumbnail-wrap">
                                     <div class="sub-thumbnail-title">
                                         <h3>기타 사진</h3>
                                         <span class="sub-thumbnail-tip">최대 3개까지 등록 가능 (800px × 600px)</span>
                                     </div>
                                     <div class="sub-thumbnail-content">
-                                        <input type="hidden" name="file_1_id">
-                                        <input type="hidden" name="file_1_src">
-
-                                        <input type="hidden" name="file_2_id">
-                                        <input type="hidden" name="file_2_src">
-
-                                        <input type="hidden" name="file_3_id">
-                                        <input type="hidden" name="file_3_src">
-
                                         <div class="img-wrap">
-                                            <!-- 썸네일 존재하지 않을경우-->
-                                            <div class="sub-thumbnail none-image">
-                                                <span class="none-image-icon"></span>
+                                            <input type="hidden" name="file_1_id" class="file-id">
+                                            <div class="image-off">
+                                                <!-- 썸네일 존재하지 않을경우-->
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_01"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_01"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
                                             </div>
-                                            <div class="image-hover-common image-hover-sm">
-                                                <input type="file" id="sub_thumbnail_input_01">
-                                                <label for="sub_thumbnail_input_01"
-                                                       class="image-icon-common image-icon-sm btn-plus"></label>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
                                             </div>
-                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                            <img class="sub-thumbnail" src="" alt="치과 사진">
-                                            <div class="image-hover-common image-hover-sm">
-                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
-                                            </div>-->
                                         </div>
                                         <div class="img-wrap">
+                                            <input type="hidden" name="file_2_id" class="file-id">
                                             <!-- 썸네일 존재하지 않을경우-->
-                                            <div class="sub-thumbnail none-image">
-                                                <span class="none-image-icon"></span>
+                                            <div class="image-off">
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_02"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_02"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
                                             </div>
-                                            <div class="image-hover-common image-hover-sm">
-                                                <input type="file" id="sub_thumbnail_input_02">
-                                                <label for="sub_thumbnail_input_02"
-                                                       class="image-icon-common image-icon-sm btn-plus"></label>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
                                             </div>
-                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                            <img class="sub-thumbnail" src="" alt="치과 사진">
-                                            <div class="image-hover-common image-hover-sm">
-                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
-                                            </div>-->
+
                                         </div>
                                         <div class="img-wrap">
+                                            <input type="hidden" name="file_3_id" class="file-id">
                                             <!-- 썸네일 존재하지 않을경우-->
-                                            <div class="sub-thumbnail none-image">
-                                                <span class="none-image-icon"></span>
+                                            <div class="image-off">
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_03"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_03"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
                                             </div>
-                                            <div class="image-hover-common image-hover-sm">
-                                                <input type="file" id="sub_thumbnail_input_03">
-                                                <label for="sub_thumbnail_input_03"
-                                                       class="image-icon-common image-icon-sm btn-plus"></label>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
                                             </div>
-                                            <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                            <img class="sub-thumbnail" src="" alt="치과 사진">
-                                            <div class="image-hover-common image-hover-sm">
-                                                <span class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
-                                            </div>-->
                                         </div>
                                     </div>
                                 </div>

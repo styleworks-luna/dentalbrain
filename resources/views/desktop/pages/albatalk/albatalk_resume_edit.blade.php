@@ -58,7 +58,6 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
-                            <input type="hidden" class="image-src" value="{{ $resume->file->url ?? '' }}">
                             <input type="hidden" class="image-file-id" name="file_id"
                                    value="{{ $resume->file->id ?? '' }}">
                             <input type="hidden" class="file-check" value="N"

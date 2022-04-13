@@ -58,7 +58,6 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
-                            <input type="hidden" class="image-src" name="image_src">
                             <input type="hidden" class="image-file-id" name="file_id">
                             <input type="hidden" class="file-check" value="N"
                                    data-parsley-required="true"
