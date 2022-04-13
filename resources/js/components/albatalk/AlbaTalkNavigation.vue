@@ -7,12 +7,12 @@
                     <span class="btn-close-menu"></span>
                 </div>
                 <div class="menu-content">
-                <p>근무지역을 선택해주세요.</p>
-                <ul class="albatalk-menu-list">
-                    <li v-for="menuList in menuLists" :key="menuList.name">
-                        <a href="">{{ menuList.text }}</a>
-                    </li>
-                </ul>
+                    <p>근무지역을 선택해주세요.</p>
+                    <ul class="albatalk-menu-list">
+                        <li v-for="menuList in menuLists" :key="menuList.name">
+                            <a href="">{{ menuList.text }}</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </template>
