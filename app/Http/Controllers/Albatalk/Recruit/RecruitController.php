@@ -30,7 +30,6 @@ use Illuminate\Support\Facades\Validator;
 class RecruitController extends Controller
 {
     protected $recruitTemplate;
-    protected $price;
 
     public function __construct()
     {
@@ -41,16 +40,9 @@ class RecruitController extends Controller
     {
         // 회원 상태 확인
         $user = Auth::user();
-        $hasMembership = $user ? $user->hasMembership : false;
 
         // 회원 상태에 따른 결제 금액
-        if ($hasMembership) {
-            $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_MEMBERSHIP);
-            $this->price = $recruitPrice->price;
-        } else {
-            $recruitPrice = RecruitPrice::find(RecruitPrice::$HAS_NOT_MEMBERSHIP);
-            $this->price = $recruitPrice->price;
-        }
+        $price = RecruitPrice::getRecruitPrice($user);
 
         return view(viewPrefix() . 'pages.albatalk.albatalk_post')->with([
             'typeApplication' => TypeApplication::all(),
@@ -60,7 +52,7 @@ class RecruitController extends Controller
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
-            'price' => $this->price,
+            'price' => $price,
         ]);
     }
 
