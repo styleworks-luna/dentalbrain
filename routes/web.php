@@ -95,6 +95,9 @@ if (env('APP_ENV') != 'production') {
             Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
                 Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
             });
+            Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
+                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruit'])->name('image-upload');
+            });
         });
 
         Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {

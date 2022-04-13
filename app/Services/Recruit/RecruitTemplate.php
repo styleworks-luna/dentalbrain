@@ -14,6 +14,7 @@ use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -170,4 +171,12 @@ class RecruitTemplate
         return $benefit;
     }
 
+
+    public function validateFile(Request $request) {
+        $validator = Validator::make($request->file(),
+            ['image' => ['required', 'image', 'max:2048',]],
+            ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+        $validator->validate();
+        return $validator->validated()['image'];
+    }
 }
