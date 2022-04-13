@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Albatalk;
 
+use App\Services\File\RecruitEditorFile;
+use App\Services\File\RecruitEditorImage;
 use App\Services\File\RecruitThumbnail;
 use App\Services\File\ResumeThumbnail;
 use App\Services\Recruit\RecruitTemplate;
@@ -20,7 +22,35 @@ class AlbatalkFileController
         $this->recruitService = $recruitService;
     }
 
-    public function uploadRecruit(Request $request): JsonResponse
+    public function uploadRecruitEditorImage(Request $request): JsonResponse
+    {
+        $uploadedFile = $this->recruitService->validateEditorImage($request);
+
+        $file = RecruitEditorImage::saveFile($uploadedFile);
+
+        return response()->json([
+            'id' => $file->id,
+            'name' => $file->name,
+            'size' => $file->size,
+            'url' => $file->url,
+        ]);
+    }
+
+    public function uploadRecruitEditorFile(Request $request): JsonResponse
+    {
+        $uploadedFile = $this->recruitService->validateEditorFile($request);
+
+        $file = RecruitEditorFile::saveFile($uploadedFile);
+
+        return response()->json([
+            'id' => $file->id,
+            'name' => $file->name,
+            'size' => $file->size,
+            'url' => $file->url,
+        ]);
+    }
+
+    public function uploadRecruitThumbnail(Request $request): JsonResponse
     {
         $uploadedFile = $this->recruitService->validateFile($request);
 

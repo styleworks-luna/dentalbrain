@@ -175,6 +175,29 @@ class RecruitTemplate
 
     public function validateFile(Request $request)
     {
+        return $this->validateImage($request);
+    }
+
+    public function validateEditorFile(Request $request)
+    {
+        $validator = Validator::make($request->file(),
+            ['file' => ['required', 'file', 'max:2048',]],
+            ['file.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+        $validator->validate();
+        return $validator->validated()['file'];
+    }
+
+    public function validateEditorImage(Request $request)
+    {
+        return $this->validateImage($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    private function validateImage(Request $request)
+    {
         $validator = Validator::make($request->file(),
             ['image' => ['required', 'image', 'max:2048',]],
             ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);

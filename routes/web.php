@@ -106,7 +106,9 @@ if (env('APP_ENV') != 'production') {
             });
             Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
                 // 구인공고 사진 업로드용
-                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruit'])->name('image-upload');
+                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitThumbnail'])->name('image-upload');
+                Route::post('editor/image', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorImage'])->name('editor.image-upload');
+                Route::post('editor/file', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorFile'])->name('editor.file-upload');
             });
         });
 
