@@ -1,5 +1,5 @@
 <template>
-    <div class="albatalk-contents">
+    <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
                 <a href="" class="albatalk-card">
@@ -15,7 +15,7 @@
                 <div class="albatalk-additional-information">
                     <p class="albatalk-period">게재 기간 : {{ list.period }}일 남음</p>
                     <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.state }}</em>건</p>
-                    <div class="btn-wrap">
+                    <div v-if="mobile == false" class="btn-wrap">
                         <button class="btn-edit">수정하기</button>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
             <li class="none" v-if="lists.length <= 0">
                 <p>등록 된 구인 정보가 없습니다.</p>
                 <div class="btn-wrap">
-                    <a href="" class="btn-go-recruit">구인 등록하기</a>
+                    <a v-if="mobile == false" href="" class="btn-go-recruit">구인 등록하기</a>
                 </div>
             </li>
         </ul>
@@ -33,6 +33,9 @@
 <script>
 export default {
     name: "AlbaTalkList",
+    props: {
+        mobile: Boolean,
+    },
     data() {
         return {
             lists: [
@@ -46,6 +49,30 @@ export default {
                 },
                 {
                     key: 2,
+                    title: "브레인스펙치과",
+                    location: "경기도 하남시",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '2',
+                },
+                {
+                    key: 2,
+                    title: "브레인스펙치과",
+                    location: "경기도 하남시",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '2',
+                },
+                {
+                    key: 3,
+                    title: "브레인스펙치과",
+                    location: "경기도 하남시",
+                    date: "채용시까지",
+                    period: '7',
+                    state: '2',
+                },
+                {
+                    key: 4,
                     title: "브레인스펙치과",
                     location: "경기도 하남시",
                     date: "채용시까지",
