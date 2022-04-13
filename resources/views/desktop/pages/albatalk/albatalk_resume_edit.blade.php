@@ -21,7 +21,7 @@
                     <h2>이력서 작성</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
-                <form action="{{ route('albatalk.resume.update') }}" method="post"
+                <form id="albatalk_resume_form" action="{{ route('albatalk.resume.update') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
@@ -58,18 +58,14 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
-                            <input type="hidden" class="image-src" value="{{ $resume->file->url ?? '' }}">
                             <input type="hidden" class="image-file-id" name="file_id"
                                    value="{{ $resume->file->id ?? '' }}">
-                        {{--
-1. 이미지가 존재함
- * image_src, image_file_id가 있음.
-2. 이미지가 존재하지 않음
- * image_src, image_file_id가 없음.
-
-+) 이미를 변경
- * image_src, image_file_id에 값을 넣음.
-                                                    --}}
+                            <input type="hidden" class="file-check" value="N"
+                                   data-parsley-required="true"
+                                   data-parsley-pattern="[Y]"
+                                   data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-pattern-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-errors-container=".thumbnail-error-container">
                         <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">
@@ -96,6 +92,7 @@
                                     <span class="image-icon-common btn-delete-thumbnail"></span>
                                 </div>
                             </div>
+                            <div class="thumbnail-error-container parsley-error-container"></div>
                         </div>
                         <table>
                             <tr>
@@ -160,13 +157,14 @@
 
                                 <th>이메일 *</th>
                                 <td>
-                                    <input type="text"
+                                    <input type="email"
                                            id="email"
                                            class="email"
                                            name="email"
                                            value="{{ old("email", $resume->email) }}"
                                            data-parsley-required="true"
-                                           data-parsley-required-message="※ 이메일을 입력해주세요."/>
+                                           data-parsley-required-message="※ 이메일을 입력해주세요."
+                                           data-parsley-type-message="※ 이메일 형식에 맞게 입력하세요."/>
                                 </td>
                             </tr>
                             <tr>

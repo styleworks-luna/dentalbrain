@@ -21,7 +21,7 @@
                 </div>
             </li>
             <li class="none" v-if="lists.length <= 0">
-                <p>등록 된 구인 정보가 없습니다.</p>
+                <p>등록한 구인정보가 없습니다.</p>
                 <div class="btn-wrap">
                     <a v-if="mobile == false" href="" class="btn-go-recruit">구인 등록하기</a>
                 </div>

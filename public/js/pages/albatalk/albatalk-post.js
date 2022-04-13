@@ -13,6 +13,70 @@ $(function () {
         })
     }
 
+    // thumbnail
+    $('.file-id').each( (idx,x) => {
+        if(nullCheck($(x).val())) {
+            $(x).parent().find('.image-off').css('display','block');
+            $(x).parent().find('.image-on').css('display','none');
+            $('.file-check').val('N');
+        } else {
+            $(x).parent().find('.image-off').css('display','none');
+            $(x).parent().find('.image-on').css('display','block');
+            $('.file-check').val('Y');
+        }
+    })
+
+    function thumbnailValidation() {
+        if(!$('.thumbnail-check').parsley().isValid()) {
+            $('.main-thumbnail').css('border-color', '#FF0000')
+        } else {
+            $('.main-thumbnail').css('border-color', '#d8d8d8')
+        }
+    }
+
+    $('.thumbnail-input').change(function () {
+        var formData = new FormData();
+        formData.append("image", $(this)[0].files[0]);
+
+        $.ajax({
+            url: '/api/albatalk/recruit/upload-thumbnail',
+            method: 'POST',
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            data: formData,
+        }).then(res => {
+            $(this).parents('.img-wrap').find('.thumbnail-image').attr('src',res.url);
+            $(this).parents('.img-wrap').find('.file-id').val(res.id);
+
+            $(this).parents('.img-wrap').find('.image-off').css('display', 'none');
+            $(this).parents('.img-wrap').find('.image-on').css('display','block');
+
+            if($(this).parents('.img-wrap').hasClass('main-thumbnail-wrap')) {
+                $('.thumbnail-check').val("Y");
+                $('.thumbnail-check').parsley().validate();
+                thumbnailValidation();
+            }
+        }).fail(err => {
+            alert('오류가 발생하였습니다.')
+        });
+    });
+
+    $('.btn-delete-thumbnail').click(function (){
+        $(this).parents('.img-wrap').find('.thumbnail-image').attr('src',"");
+        $(this).parents('.img-wrap').find('.thumbnail-input').val("");
+        $(this).parents('.img-wrap').find('.file-id').val("");
+
+        if($(this).parents('.img-wrap').hasClass('main-thumbnail-wrap')) {
+            $('.thumbnail-check').val("N");
+            $('.thumbnail-check').parsley().validate();
+            thumbnailValidation();
+        }
+
+        $(this).parents('.img-wrap').find('.image-off').css('display', 'block');
+        $(this).parents('.img-wrap').find('.image-on').css('display','none');
+    });
+
     // search address
     function DaumPostcode() {
         new daum.Postcode({
@@ -27,6 +91,7 @@ $(function () {
                 $('.address-hidden-gugun').val(data.sigungu);
                 $('.address-hidden-dong').val(data.bname);
 
+                addresses.parsley().validate();
             },
         }).open({
             autoClose: true
@@ -192,5 +257,10 @@ $(function () {
             $('.pay-method-select').attr('disabled', true);
             $(".pay-method-select").selectmenu("disable");
         }
+    });
+
+    $('.btn-submit').click(function() {
+        console.log(1);
+        thumbnailValidation();
     });
 });
