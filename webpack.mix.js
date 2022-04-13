@@ -144,6 +144,7 @@ mix.sass('resources/sass/mobile/pages/user/mypage/mypage-payment.sass', 'public/
     .sass('resources/sass/mobile/pages/user/mypage/mypage-login.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-edit.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-resume-apply.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-secession.sass', 'public/css/mobile/pages/user/mypage');
 
 // mobile service

@@ -1,0 +1,56 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_button.sass'
+
+.albatalk-contents
+    +padding(bottom 29.1666666vw)
+
+    .albatalk-additional-information
+        +padding(top 4.444444vw)
+        text-align: center
+        font-size: 3.333333vw
+
+        .refuse-state
+            color: $gray-700
+            font-size: 3.8888888vw
+            line-height: 11.666666vw
+
+        .btn-wrap
+            +margin(0 auto)
+            +size(33.333333vw)
+
+            .btn-cancel
+                +size(33.333333vw, 11.666666vw)
+                +btn(null, 0.277777vw solid $border-color-base, 6.9444444vw)
+                font-weight: bold
+                font-size: 3.888888vw
+
+    .albatalk-state
+        +padding(top 1.3888888vw)
+
+        em
+            color: $page-color
+    
+    .none
+        display: flex
+        align-items: center
+        justify-content: center
+        +padding(top 27.777777vw bottom 111.111111vw)
+        font-size: 3.888888vw
+    
+.offer-btn-wrap
+    +size(100%, 19.444444vw)
+    +border(0.2777777vw solid $border-color-light, top)
+    background-color: $white
+    position: fixed
+    bottom: 0
+
+    a
+        +size(91.111111vw, 13.888888vw)
+        +margin(top 2.777777vw left 4.444444vw)
+        +padding(top 4.1666666vw)
+        +btn(purple-fill)
+        font-weight: bold
+        font-size: 4.444444vw
