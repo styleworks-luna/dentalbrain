@@ -91,6 +91,7 @@ $(function () {
                 $('.address-hidden-gugun').val(data.sigungu);
                 $('.address-hidden-dong').val(data.bname);
 
+                addresses.parsley().validate();
             },
         }).open({
             autoClose: true
