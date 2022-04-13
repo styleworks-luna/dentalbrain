@@ -57,8 +57,11 @@ class ResumeThumbnail extends FileTemplate
     {
         /** @var Resume $resume */
         $resume = $this->model;
-        $path = $resume->file->path;
-        $resume->file->delete();
-        return $path;
+        if ($resume->file()->exists()) {
+            $path = $resume->file->path;
+            $resume->file->delete();
+            return $path;
+        }
+        return false;
     }
 }
