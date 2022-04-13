@@ -13,7 +13,9 @@
                             <div class="lecture-sort">
                                 <span class="lecture-type">{{ lecture.minor_category_name }}</span>
 
-                                <p class="lecture-date" v-if="lecture.minor_category_name!='스토어'">수강기간 {{ lecture.term }}일</p>
+                                <p class="lecture-date" v-if="lecture.minor_category_name!='스토어'">
+                                    <template v-if="lecture.is_online==true">수강기간 {{ lecture.term }}일</template>
+                                </p>
                             </div>
                             <h3 class="lecture-title">
                                 <a :href="'/lectures/' + lecture.id">{{ lecture.title }}</a>
