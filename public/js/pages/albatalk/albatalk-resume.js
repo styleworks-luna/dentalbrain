@@ -13,12 +13,22 @@ $(function () {
         })
     }
 
-    if($('.image-src').val() != null) {
-        $('.image-off').css('display','none');
-        $('.image-on').css('display','block');
-    } else {
+    console.log(nullCheck($('.image-src').val()));
+
+    if(nullCheck($('.image-src').val())) {
         $('.image-off').css('display','block');
         $('.image-on').css('display','none');
+    } else {
+        $('.image-off').css('display','none');
+        $('.image-on').css('display','block');
+    }
+
+    function thumbnailValidation() {
+        if(!$('#resume_image').parsley().isValid()) {
+            $('.resume-profile').css('border-color', '#FF0000')
+        } else {
+            $('.resume-profile').css('border-color', '#d8d8d8')
+        }
     }
 
     // thumbnail
@@ -42,6 +52,7 @@ $(function () {
             $('.image-on').css('display','block');
 
             $('#resume_image').parsley().validate();
+            thumbnailValidation();
         }).fail(err => {
             alert('오류가 발생하였습니다.')
         });
@@ -57,5 +68,10 @@ $(function () {
 
         $('.image-off').css('display', 'block');
         $('.image-on').css('display','none');
+        thumbnailValidation();
+    });
+
+    $('.btn-submit').click(function() {
+        thumbnailValidation();
     });
 })

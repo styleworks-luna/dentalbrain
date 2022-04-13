@@ -22,6 +22,10 @@ function email_box(email){
     }, 100);
 }
 
+function nullCheck(value) {
+    return value == '' || value == null || value == undefined || value == 'undefined';
+}
+
 function form_submit_check(element = 'form'){
     if(element == '' || element == null || element == 'undefined'){
         element = 'form';
