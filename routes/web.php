@@ -69,9 +69,7 @@ if (env('APP_ENV') != 'production') {
             Route::post('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'update'])->name('update');
         });
 
-        Route::get('head-hunting', function () {
-            return back()->with('alert', '헤드헌팅으로 리다이렉트');
-        })->name('head-hunting');
+        Route::get('head-hunting', [\App\Http\Controllers\Albatalk\HeadHuntingController::class, 'index'])->name('head-hunting');
 
         // 알바톡(임시)
         Route::get('/', function () {
