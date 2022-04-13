@@ -23,7 +23,7 @@
             <albatalk :is_offer="true" :mobile="true"></albatalk>
         </div>
         <div class="offer-btn-wrap">
-            <a href="" class="btn-go-offer">구직 신청하러가기</a>
+            <a href="{{ url('albatalk') }}" class="btn-go-offer">구직 신청하러가기</a>
         </div>
     </section>
 @endsection
