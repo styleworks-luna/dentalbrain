@@ -17,7 +17,7 @@
                             <strong>{{ auth()->user()->name }}</strong> 님
                         </div>
                         <div class="resume">
-                            <a href="{{ route('account.offer') }}">이력서</a>
+                            <a href="{{ route('account.resume') }}">이력서</a>
                         </div>
                         <div class="user-edit">
                             <a href="{{ route('account.modify') }}">회원정보 수정</a>
