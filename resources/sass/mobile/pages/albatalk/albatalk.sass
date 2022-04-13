@@ -1,0 +1,31 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+@import '@sass/components/_checkbox.sass'
+
+.albatalk
+
+    .albatalk-navigation
+        +border(bottom 1px solid black)
+
+        .albatalk-order
+            +margin(top 3.8888888vw right 4.444444vw)
+            float: right
+
+            .albatalk-order-select
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
+                +padding(right 5vw)
+                +border(0)
+                float: right
+                background-size: 3.611111vw 1.944444vw
+                font-size: 3.8888888vw
+                text-align-last: right
+                text-align: right
+                -ms-text-align-last: right
+                -moz-text-align-last: right
+
+                &.select-focus-in
+                    +background('/images/mobile/lecture/icon_arrow_up.svg')
+
+    .albatalk-menu
+        display: none

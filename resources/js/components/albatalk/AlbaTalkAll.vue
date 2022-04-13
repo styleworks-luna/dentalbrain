@@ -1,7 +1,9 @@
 <template>
     <section class="albatalk">
-        <albatalk-order></albatalk-order>
-        <albatalk-navigation></albatalk-navigation>
+        <div class="albatalk-navigation">
+            <albatalk-order :mobile="mobile"></albatalk-order>
+            <albatalk-navigation :mobile="mobile"></albatalk-navigation>
+        </div>
         <albatalk-list></albatalk-list>
     </section>
 </template>
@@ -21,6 +23,7 @@ export default {
     props: {
         'is_navigation': Boolean,
         'is_order': Boolean,
+        "mobile": Boolean,
     }
 }
 </script>

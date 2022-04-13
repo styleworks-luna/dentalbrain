@@ -42,14 +42,8 @@
     .albatalk-menu
         +margin(top 18px)
 
-        input[type="checkbox"]
-            @extend %checkbox-default
-            +margin(1px 8px 0 0)
-            float: left
-
-            + label
-                float: left
-                font-size: 16px
+        .checkbox-wrap
+            +checkbox-wrap()
 
         .albatalk-menu-list-wrap
             +margin(top 18px)

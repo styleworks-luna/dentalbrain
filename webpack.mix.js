@@ -125,6 +125,11 @@ mix.sass('resources/sass/mobile/pages/introduce/instructor.sass', 'public/css/mo
 // mobile membership
 mix.sass('resources/sass/mobile/pages/membership/membership.sass', 'public/css/mobile/pages/membership');
 
+// mobile albatalk
+mix.sass('resources/sass/mobile/pages/albatalk/albatalk.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-common.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-list.sass', 'public/css/mobile/pages/albatalk')
+
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
     .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture')
