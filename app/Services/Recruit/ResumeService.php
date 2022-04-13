@@ -6,6 +6,7 @@ use App\Models\Resume\Resume;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,7 @@ class ResumeService
             'work_area' => ['nullable', 'string', 'max:100',],
             'work_day' => ['nullable', 'string', 'max:100',],
             'work_time' => ['nullable', 'string', 'max:100',],
+            'file_id' => ['required', 'numeric', 'min:1'],
             'name' => ['required', 'string', 'max:100',],
             'english_name' => ['required', 'string', 'max:100',],
             'birthday' => ['required', 'string', 'max:100',],
@@ -67,13 +69,15 @@ class ResumeService
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return mixed|UploadedFile
      */
-    public function getFileValidator(Request $request): \Illuminate\Contracts\Validation\Validator
+    public function validateFile(Request $request)
     {
-        return Validator::make($request->file(),
+        $validator = Validator::make($request->file(),
             ['image' => ['required', 'image', 'max:2048',]],
             ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+        $validator->validate();
+        return $validator->validated()['image'];
     }
 
     /**

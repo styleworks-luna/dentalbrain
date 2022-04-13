@@ -59,7 +59,7 @@
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
                             <input type="hidden" class="image-src" name="image_src">
-                            <input type="hidden" class="image-file-id" name="image_file_id">
+                            <input type="hidden" class="image-file-id" name="file_id">
                             <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">

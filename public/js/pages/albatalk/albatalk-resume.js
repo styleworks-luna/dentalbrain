@@ -13,7 +13,7 @@ $(function () {
         })
     }
 
-    if($('.image_src').val() != null) {
+    if($('.image-src').val() != null) {
         $('.image-off').css('display','none');
         $('.image-on').css('display','block');
     } else {

@@ -58,8 +58,9 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
-                            <input type="hidden" class="image-src" name="image_src">
-                            <input type="hidden" class="image-file-id" name="image_file_id">
+                            <input type="hidden" class="image-src" value="{{ $resume->file->url }}">
+                            <input type="hidden" class="image-file-id" name="file_id"
+                                   value="{{ $resume->file->id }}">
                         {{--
 1. 이미지가 존재함
  * image_src, image_file_id가 있음.
@@ -69,7 +70,7 @@
 +) 이미를 변경
  * image_src, image_file_id에 값을 넣음.
                                                     --}}
-                            <!-- 썸네일 존재하지 않을경우-->
+                        <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">
                                     <h4 class="none-image-title">이력서 대표 사진 *</h4>
@@ -90,7 +91,7 @@
                                 <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                 <img class="resume-profile"
                                      id="profile-preview"
-                                     src="" alt="이력서 사진"/>
+                                     src="{{ $resume->file->url }}" alt="이력서 사진"/>
                                 <div class="image-hover">
                                     <span class="image-icon-common btn-delete-thumbnail"></span>
                                 </div>

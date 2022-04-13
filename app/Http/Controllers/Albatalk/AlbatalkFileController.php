@@ -24,11 +24,9 @@ class AlbatalkFileController
 
     }
 
-    public function uploadResume(Request $request)
+    public function uploadResume(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validator = $this->resumeService->getFileValidator($request);
-
-        $uploadedFile = $validator->validate()['image'];
+        $uploadedFile = $this->resumeService->validateFile($request);
 
         $file = ResumeThumbnail::saveFile($uploadedFile);
 

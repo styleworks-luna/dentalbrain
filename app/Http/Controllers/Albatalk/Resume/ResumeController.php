@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Albatalk\Resume;
 
 use App\Http\Controllers\Controller;
+use App\Models\File;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\Resume;
@@ -48,12 +49,10 @@ class ResumeController extends Controller
     {
         $abilityValidator = $this->abilityService->getDefaultRulesOfAbilityAnswers($request->input('abilities'));
         $resumeValidator = $this->resumeService->getResumeValidator($request->all());
-        $fileValidator = $this->resumeService->getFileValidator($request);
 
-        if ($abilityValidator->fails() || $resumeValidator->fails() || $fileValidator->fails()) {
+        if ($abilityValidator->fails() || $resumeValidator->fails()) {
             $errorBag = $abilityValidator->errors()
-                ->merge($resumeValidator->errors())
-                ->merge($fileValidator->errors());
+                ->merge($resumeValidator->errors());
 
             return \redirect(url()->previous())
                 ->withInput($request->input())
@@ -62,15 +61,18 @@ class ResumeController extends Controller
 
         try {
             /** @var Resume $resume */
-            $resume = Resume::query()->create($resumeValidator->validated());
-            $abilityAnswers = $resume->abilityAnswers()->createMany($abilityValidator->validated());
+            $resumeData = $resumeValidator->validated();
 
+            $resume = Resume::query()->create($resumeData);
+
+            $file = File::query()->find($resumeData['file_id']);
             $resumeThumbnail = new ResumeThumbnail($resume);
-            $resume->file_id = $resumeThumbnail->saveFile($fileValidator->validated()['resume_image'])->id;
+            $resumeThumbnail->moveTempToPublic($file);
 
             $resume->user_id = Auth::id();
-
             $resume->save();
+
+            $resume->abilityAnswers()->createMany($abilityValidator->validated());
         } catch (Exception $exception) {
             report($exception);
             return \redirect(url()->previous())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
@@ -79,7 +81,7 @@ class ResumeController extends Controller
         return \redirect()->route('albatalk.resume.index')->with('alert', '등록되었습니다.');
     }
 
-    public function edit(Request $request)
+    public function edit()
     {
         try {
             $editForm = $this->getEdit();
@@ -96,29 +98,32 @@ class ResumeController extends Controller
     {
         $abilityValidator = $this->abilityService->getDefaultRulesOfAbilityAnswers($request->input('abilities'));
         $resumeValidator = $this->resumeService->getResumeValidator($request->all());
-        $fileValidator = $this->resumeService->getFileValidator($request);
 
-        if ($abilityValidator->fails() || $resumeValidator->fails() || $fileValidator->fails()) {
+        if ($abilityValidator->fails() || $resumeValidator->fails()) {
             $errorBag = $abilityValidator->errors()
-                ->merge($resumeValidator->errors())
-                ->merge($fileValidator->errors());
+                ->merge($resumeValidator->errors());
 
             return \redirect(url()->previous())
                 ->withInput($request->input())
                 ->withErrors($errorBag);
         }
 
-        try {
-            $resume = $this->resumeService->getLoginUsersResume();
+        try
+        {
             /** @var Resume $resume */
-            $resume->update($resumeValidator->validated());
+            $resume = $this->resumeService->getLoginUsersResume();
+            $resumeThumbnail = new ResumeThumbnail($resume);
+            $resumeThumbnail->deleteFile();
+
+            $resumeData = $resumeValidator->validated();
+            $resume->update($resumeData);
 
             $resume->abilityAnswers()->delete();
             $resume->abilityAnswers()->createMany($abilityValidator->validated());
 
-            $resumeThumbnail = new ResumeThumbnail($resume);
-            $resumeThumbnail->deleteFile();
-            $resume->file_id = $resumeThumbnail->saveFile($fileValidator->validated()['resume_image'])->id;
+
+            $file = File::query()->find($resumeData['file_id']);
+            $resumeThumbnail->moveTempToPublic($file);
 
             $resume->save();
         } catch (Exception $exception) {
@@ -143,7 +148,8 @@ class ResumeController extends Controller
         return view(viewPrefix() . 'pages.albatalk.albatalk_resume_complete', $detail);
     }
 
-    public function testMyPage() {
+    public function testMyPage()
+    {
         try {
             $detail = $this->getDetail();
         } catch (ModelNotFoundException $exception) {
