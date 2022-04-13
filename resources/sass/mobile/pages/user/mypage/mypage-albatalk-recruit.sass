@@ -1,0 +1,73 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/_button.sass'
+
+.mypage-content-wrap
+    +margin(top 60px bottom 200px)
+
+    .content-title
+        +padding(bottom 18px)
+        +border(2px solid $gray-900, bottom)
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
+
+        h2
+            font-size: 24px
+            color: #222
+        a
+            +margin(top 10px)
+            font-size: 14px
+            color: #777
+
+            &:hover
+                color: $page_color
+                font-weight: bold
+                text-decoration: underline
+
+    .mypage-albatalk
+        +margin(top 20px)
+
+        .albatalk-additional-information
+            +size(296px)
+            +margin(top 12px)
+
+            p
+                font-size: 16px
+                text-align: center
+
+            .albatalk-state
+                +padding(top 8px)
+
+            em
+                font-weight: bold
+                color: $page-color
+
+            .btn-wrap
+                +size(140px)
+                +margin(20px auto 0 auto)
+
+                .btn-edit
+                    +size(140px, 50px)
+                    +btn(null,1px solid $border-color-base, 25px)
+                    font-weight: bold
+                    font-size: 16px
+
+        .none
+            +margin(top 100px)
+
+            p
+                font-size: 20px
+                text-align: center
+
+            .btn-wrap
+                +size(200px)
+                +margin(100px auto 0 auto)
+
+                .btn-go-recruit
+                    +size(200px, 50px)
+                    +btn(purple-fill)
+                    font-size: 16px
+                    line-height: 50px
