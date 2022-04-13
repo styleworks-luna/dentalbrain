@@ -18,13 +18,15 @@ $(function () {
     if(nullCheck($('.image-src').val())) {
         $('.image-off').css('display','block');
         $('.image-on').css('display','none');
+        $('.file-check').val('N');
     } else {
         $('.image-off').css('display','none');
         $('.image-on').css('display','block');
+        $('.file-check').val('Y');
     }
 
     function thumbnailValidation() {
-        if(!$('#resume_image').parsley().isValid()) {
+        if(!$('.file-check').parsley().isValid()) {
             $('.resume-profile').css('border-color', '#FF0000')
         } else {
             $('.resume-profile').css('border-color', '#d8d8d8')
@@ -51,7 +53,8 @@ $(function () {
             $('.image-off').css('display', 'none');
             $('.image-on').css('display','block');
 
-            $('#resume_image').parsley().validate();
+            $('.file-check').val("Y");
+            $('.file-check').parsley().validate();
             thumbnailValidation();
         }).fail(err => {
             alert('오류가 발생하였습니다.')
@@ -61,7 +64,8 @@ $(function () {
     $('.btn-delete-thumbnail').click(function (){
         $('.resume-profile').attr('src',"");
         $('#resume_image').val("");
-        $('#resume_image').parsley().validate();
+        $('.file-check').val("N");
+        $('.file-check').parsley().validate();
 
         $('.image-file-id').val("");
         $('.image-src').val("");

@@ -60,6 +60,11 @@
                         <div class="image-wrap">
                             <input type="hidden" class="image-src" name="image_src">
                             <input type="hidden" class="image-file-id" name="file_id">
+                            <input type="hidden" class="file-check" value="N"
+                                   data-parsley-required="true"
+                                   data-parsley-pattern="[Y]"
+                                   data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-errors-container=".thumbnail-error-container">
                             <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">
@@ -72,10 +77,7 @@
                                            id="resume_image"
                                            class="resume-profile"
                                            name="resume_image"
-                                           accept="image/jpeg, image/png, image/gif"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
-                                           data-parsley-errors-container=".thumbnail-error-container">
+                                           accept="image/jpeg, image/png, image/gif">
                                     <label for="resume_image" class="image-icon-common btn-plus"></label>
                                 </div>
                                 <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
