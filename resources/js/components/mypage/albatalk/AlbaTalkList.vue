@@ -21,7 +21,7 @@
                 </div>
             </li>
             <li class="none" v-if="lists.length <= 0">
-                <p>등록 된 구인 정보가 없습니다.</p>
+                <p>등록한 구인정보가 없습니다.</p>
                 <div class="btn-wrap">
                     <a v-if="mobile == false" href="" class="btn-go-recruit">구인 등록하기</a>
                 </div>
@@ -39,46 +39,6 @@ export default {
     data() {
         return {
             lists: [
-                {
-                    key: 1,
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    key: 2,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 2,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 3,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 4,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
             ]
         }
     }
