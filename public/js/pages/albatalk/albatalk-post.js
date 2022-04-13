@@ -13,6 +13,29 @@ $(function () {
         })
     }
 
+    $('.btn-submit').click(function (e) {
+        e.preventDefault();
+
+        let form = $('#albatalk_recruit_form')[0];
+        let data = new FormData(form);
+
+        console.log(data);
+
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            error: function (xhr, status, error) {
+                console.log(error);
+            }, success: function (json) {
+                console.log(json)
+            }
+        });
+    });
+
     // search address
     function DaumPostcode() {
         new daum.Postcode({
@@ -134,44 +157,44 @@ $(function () {
     });
 
     // radio event
-    $('.salary').change(function() {
-        if($(this).val() == '4') {
+    $('.salary').change(function () {
+        if ($(this).val() == '4') {
             $('.salary-input').attr('disabled', false);
         } else {
             $('.salary-input').attr('disabled', true);
         }
     });
 
-    $('.study').change(function() {
-        if($(this).val() == '1') {
+    $('.study').change(function () {
+        if ($(this).val() == '1') {
             $('.study-select').attr('disabled', false);
-            $( ".study-select" ).selectmenu( "enable" );
+            $(".study-select").selectmenu("enable");
         } else {
             $('.study-select').attr('disabled', true);
-            $( ".study-select" ).selectmenu( "disable" );
+            $(".study-select").selectmenu("disable");
         }
     });
 
-    $('.career').change(function() {
-        if($(this).val() == '2') {
+    $('.career').change(function () {
+        if ($(this).val() == '2') {
             $('.career-select').attr('disabled', false);
-            $( ".career-select" ).selectmenu( "enable" );
+            $(".career-select").selectmenu("enable");
         } else {
             $('.career-select').attr('disabled', true);
-            $( ".career-select" ).selectmenu( "disable" );
+            $(".career-select").selectmenu("disable");
         }
     });
 
-    $('.work-day').change(function() {
-        if($(this).val() == '4') {
+    $('.work-day').change(function () {
+        if ($(this).val() == '4') {
             $('.work-day-input').attr('disabled', false);
         } else {
             $('.work-day-input').attr('disabled', true);
         }
     });
 
-    $('.deadline').change(function() {
-        if($(this).val() == '1') {
+    $('.deadline').change(function () {
+        if ($(this).val() == '1') {
             $('.start-date').attr('disabled', false);
             $('.start-time').attr('disabled', false);
             $('.end-date').attr('disabled', false);
@@ -184,13 +207,13 @@ $(function () {
         }
     });
 
-    $('.pay-method').change(function() {
-        if($(this).val() == '1') {
+    $('.pay-method').change(function () {
+        if ($(this).val() == '1') {
             $('.pay-method-select').attr('disabled', false);
-            $( ".pay-method-select" ).selectmenu( "enable" );
+            $(".pay-method-select").selectmenu("enable");
         } else {
             $('.pay-method-select').attr('disabled', true);
-            $( ".pay-method-select" ).selectmenu( "disable" );
+            $(".pay-method-select").selectmenu("disable");
         }
     });
 });

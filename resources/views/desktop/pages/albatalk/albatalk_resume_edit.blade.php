@@ -21,7 +21,7 @@
                     <h2>이력서 작성</h2>
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
-                <form action="{{ route('albatalk.resume.store') }}" method="post"
+                <form action="{{ route('albatalk.resume.update') }}" method="post"
                       enctype="multipart/form-data">
                     @csrf
                     <div class="desire-form-wrap common-form-wrap">
@@ -58,30 +58,43 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
+                            <input type="hidden" class="image-src" name="image_src">
+                            <input type="hidden" class="image-file-id" name="image_file_id">
+                        {{--
+1. 이미지가 존재함
+ * image_src, image_file_id가 있음.
+2. 이미지가 존재하지 않음
+ * image_src, image_file_id가 없음.
+
++) 이미를 변경
+ * image_src, image_file_id에 값을 넣음.
+                                                    --}}
                             <!-- 썸네일 존재하지 않을경우-->
-                            <div class="resume-profile none-image">
-                                <h4 class="none-image-title">이력서 대표 사진 *</h4>
-                                <p class="none-image-tip">(800px × 600px)</p>
-                                <span class="none-image-icon"></span>
+                            <div class="image-off">
+                                <div class="resume-profile none-image">
+                                    <h4 class="none-image-title">이력서 대표 사진 *</h4>
+                                    <p class="none-image-tip">(800px × 600px)</p>
+                                    <span class="none-image-icon"></span>
+                                </div>
+                                <div class="image-hover">
+                                    <input type="file"
+                                           id="resume_image"
+                                           class="resume-profile"
+                                           name="resume_image"
+                                           accept="image/jpeg, image/png, image/gif">
+                                    <label for="resume_image" class="image-icon-common btn-plus"></label>
+                                </div>
+                                <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                             </div>
-                            <div class="image-hover">
-                                {{-- 1. profile-preview의 src값을 복구 --}}
-                                {{-- 2. ajax로 하는 것. --}}
-                                <input type="file"
-                                       id="resume_image"
-                                       class="resume-profile"
-                                       name="resume_image"
-                                       accept="image/jpeg, image/png, image/gif">
-                                <label for="resume_image" class="image-icon-common btn-plus"></label>
+                            <div class="image-on">
+                                <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                <img class="resume-profile"
+                                     id="profile-preview"
+                                     src="" alt="이력서 사진"/>
+                                <div class="image-hover">
+                                    <span class="image-icon-common btn-delete-thumbnail"></span>
+                                </div>
                             </div>
-                            <!-- 썸네일 존재 할 경우 (등록 이미지)
-                            <img class="resume-profile"
-                                 id="profile-preview"
-                                 src="" alt="이력서 사진"/>
-                            <div class="image-hover">
-                                <span class="image-icon-common btn-delete-thumbnail"></span>
-                            </div>-->
-                            <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                         </div>
                         <table>
                             <tr>

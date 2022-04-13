@@ -58,35 +58,39 @@
 
                     <div class="user-form-wrap common-form-wrap">
                         <div class="image-wrap">
+                            <input type="hidden" class="image-src" name="image_src">
+                            <input type="hidden" class="image-file-id" name="image_file_id">
                             <!-- 썸네일 존재하지 않을경우-->
-                            <div class="resume-profile none-image">
-                                <h4 class="none-image-title">이력서 대표 사진 *</h4>
-                                <p class="none-image-tip">(800px × 600px)</p>
-                                <span class="none-image-icon"></span>
+                            <div class="image-off">
+                                <div class="resume-profile none-image">
+                                    <h4 class="none-image-title">이력서 대표 사진 *</h4>
+                                    <p class="none-image-tip">(800px × 600px)</p>
+                                    <span class="none-image-icon"></span>
+                                </div>
+                                <div class="image-hover">
+                                    <input type="file"
+                                           id="resume_image"
+                                           class="resume-profile"
+                                           name="resume_image"
+                                           accept="image/jpeg, image/png, image/gif"
+                                           data-parsley-required="true"
+                                           data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                           data-parsley-errors-container=".thumbnail-error-container">
+                                    <label for="resume_image" class="image-icon-common btn-plus"></label>
+                                </div>
+                                <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                             </div>
 
-                            <div class="image-hover">
-                                {{-- 1. profile-preview의 src값을 복구 --}}
-                                {{-- 2. ajax로 하는 것. --}}
-                                <input type="file"
-                                       id="resume_image"
-                                       class="resume-profile"
-                                       name="resume_image"
-                                       accept="image/jpeg, image/png, image/gif"
-                                       data-parsley-required="false"
-                                       data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
-                                       data-parsley-errors-container=".thumbnail-error-container">
-                                <label for="resume_image" class="image-icon-common btn-plus"></label>
+                            <!-- 썸네일 존재할 경우-->
+                            <div class="image-on">
+                                <img class="resume-profile"
+                                     id="profile-preview"
+                                     src="" alt="이력서 사진"/>
+                                <div class="image-hover">
+                                    <span class="image-icon-common btn-delete-thumbnail"></span>
+                                </div>
                             </div>
                             <div class="thumbnail-error-container parsley-error-container"></div>
-                            <!-- 썸네일 존재 할 경우 (등록 이미지)
-                            <img class="resume-profile"
-                                 id="profile-preview"
-                                 src="" alt="이력서 사진"/>
-                            <div class="image-hover">
-                                <span class="image-icon-common btn-delete-thumbnail"></span>
-                            </div>-->
-                            <div class="image-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF</div>
                         </div>
                         <table>
                             <tr>

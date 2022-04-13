@@ -85,17 +85,13 @@
         +margin(top 60px)
 
         .study-information-content
-            +padding(top 30px left 40px)
+            +padding(top 30px left 40px right 40px)
             +border(2px solid $gray-900, top)
             display: flex
-            justify-content: flex-start
+            justify-content: space-between
             align-items: flex-start
 
             table
-                &:last-child
-                    +margin(left 110px)
-
-
                 tr
                     &:first-child td
                         +padding(top 0)
@@ -110,7 +106,6 @@
                     text-align: left
 
                 td
-                    +size(350px)
                     +padding(6px 0 6px 10px)
 
                     p

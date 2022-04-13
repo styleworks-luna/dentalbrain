@@ -258,7 +258,7 @@
                 </section>
 
                 <div class="btn-wrap">
-                    <a href="" class="btn-go-edit">이력서 수정</a>
+                    <a href="{{ route('albatalk.resume.edit') }}" class="btn-go-edit">이력서 수정</a>
                 </div>
 
             </div>
