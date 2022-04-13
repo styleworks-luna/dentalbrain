@@ -1,9 +1,9 @@
 <template>
     <section class="mypage-albatalk">
         <template v-if="is_offer">
-            <albatalk-offer-list></albatalk-offer-list>
+            <albatalk-offer-list :mobile="mobile"></albatalk-offer-list>
         </template>
-        <albatalk-list v-else></albatalk-list>
+        <albatalk-list v-else :mobile="mobile"></albatalk-list>
     </section>
 </template>
 
@@ -18,7 +18,8 @@ export default {
         'albatalk-offer-list': AlbaTalkOfferList,
     },
     props: {
-        'is_offer': Boolean
+        'is_offer': Boolean,
+        "mobile": Boolean,
     }
 }
 </script>
