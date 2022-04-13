@@ -49,8 +49,6 @@ if (env('APP_ENV') != 'production') {
             Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
             // 구인 등록
             Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
-            // 구인 등록 결제 폼
-            Route::get('/payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'showPaymentForm'])->name('payment.form');
             // 구인 등록 결제 성공
             Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
             // 구인 등록 결과
@@ -96,6 +94,9 @@ if (env('APP_ENV') != 'production') {
         Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
             Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
                 Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
+            });
+            Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
+                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruit'])->name('image-upload');
             });
         });
 

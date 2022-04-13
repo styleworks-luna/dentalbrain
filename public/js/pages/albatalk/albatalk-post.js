@@ -13,29 +13,6 @@ $(function () {
         })
     }
 
-    $('.btn-submit').click(function (e) {
-        e.preventDefault();
-
-        let form = $('#albatalk_recruit_form')[0];
-        let data = new FormData(form);
-
-        console.log(data);
-
-        $.ajax({
-            url: '',
-            type: 'post',
-            data: data,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            error: function (xhr, status, error) {
-                console.log(error);
-            }, success: function (json) {
-                console.log(json)
-            }
-        });
-    });
-
     // search address
     function DaumPostcode() {
         new daum.Postcode({
@@ -208,7 +185,7 @@ $(function () {
     });
 
     $('.pay-method').change(function () {
-        if ($(this).val() == '1') {
+        if ($(this).val() == '카드') {
             $('.pay-method-select').attr('disabled', false);
             $(".pay-method-select").selectmenu("enable");
         } else {

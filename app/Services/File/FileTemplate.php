@@ -114,7 +114,7 @@ abstract class FileTemplate
     /**
      * 모델에서 파일 접근하여 DB 상의 파일 삭제.
      *
-     * @return false|string 실패시 false 반환, 성공시 file 의 path 반환
+     * @return false|string|array 실패시 false 반환, 성공시 file 의 path 반환
      */
     protected abstract function deleteFileInDB();
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Recruit;
 
+use App\Models\File;
 use App\Models\Payments\Payment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
@@ -34,6 +35,8 @@ class Recruit extends Model
     static $DEADLINE_RECRUIT = 1;
     // 채용 시까지
     static $TIME_FOR_RECRUIT = 2;
+
+    const SESSION_KEY = 'recruit_create_data';
 
 
     public function payment()
@@ -76,4 +79,23 @@ class Recruit extends Model
         return $this->belongsTo(TypeStudy::class, 'type_study_id', 'id');
     }
 
+    public function file()
+    {
+        return $this->belongsTo(File::class, 'main_file_id', 'id');
+    }
+
+    public function file1()
+    {
+        return $this->belongsTo(File::class, 'file_1_id', 'id');
+    }
+
+    public function file2()
+    {
+        return $this->belongsTo(File::class, 'file_2_id', 'id');
+    }
+
+    public function file3()
+    {
+        return $this->belongsTo(File::class, 'file_3_id', 'id');
+    }
 }

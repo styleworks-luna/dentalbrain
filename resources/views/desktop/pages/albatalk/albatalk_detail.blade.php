@@ -32,7 +32,8 @@
                                 <span class="none-image-icon"></span>
                             </div>-->
                             <!-- 썸네일 존재 할 경우 (등록 이미지) -->
-                            <img class="main-thumbnail thumbnail-on" src="{{ asset('/images/dummy/test.png') }}" alt="치과 사진">
+                            <img class="main-thumbnail thumbnail-on" src="{{ asset('/images/dummy/test.png') }}"
+                                 alt="치과 사진">
                         </div>
                         <div class="sub-thumbnail-wrap">
                             <div class="img-wrap">
@@ -65,7 +66,7 @@
                     <div class="office-information">
                         <div class="office-title-wrap">
                             <h2>{{$recruit->company_name}}</h2>
-                            <span>모집마감일 : {{$recruit->ended_at->format('n월 d일까지')}}</span>
+                            <span>모집마감일 : {{ $recruit->ended_at == null? "채용시 까지" : $recruit->ended_at->format('n월 d일까지') }}</span>
                         </div>
                         <div class="office-content-wrap">
                             <table>
@@ -211,7 +212,7 @@
                 <a href="#" class="btn-popup-close"></a>
             </div>
             <div class="img-wrap">
-            <img src="" class="popup-img" alt="구인정보 이미지">
+                <img src="" class="popup-img" alt="구인정보 이미지">
             </div>
         </div>
     </section>
