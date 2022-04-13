@@ -100,6 +100,13 @@ if (env('APP_ENV') != 'production') {
                 Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
             });
         });
+
+        Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
+            Route::group(['prefix' => 'head-hunting', 'as' => 'head-hunting.'], function () {
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'index'])->name('index');
+                Route::post('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'create'])->name('create');
+            });
+        });
     });
 }
 
