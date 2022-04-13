@@ -9,11 +9,8 @@
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
-@endsection
-
-@section('script')
-    <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="https://js.tosspayments.com/v1"></script>
     <script>
         $(function () {
             $('.btn-submit').click(function (e) {
@@ -39,101 +36,64 @@
                     }
                 });
             });
+
             function Payment() {
+                var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
+                var tossPayments = TossPayments(clientKey);
+                var message = getParameter('message');
+                var paymentmethod = $('.pay-method:checked').val();
 
-            }
-            // select menu
-            var select_menu = $('.select-menu');
-            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
-            var tossPayments = TossPayments(clientKey);
-            var message = getParameter('message');
-            var paymentmethod = $('.payment-method:checked').val();
+                $('.pay-method').change(function () {
+                    paymentmethod = $('.pay-method:checked').val();
+                });
 
-            // 결제 실패시 오류 메세지 출력
-            paymentMessage(message);
+                var paymentObj;
+                var cardCompany = $('.ui-selectmenu-text').text();
 
-            if (select_menu.length > 0) {
-                select_menu.selectmenu();
-            }
+                const amount = 10000;
+                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                const orderName = '구인 결제';
+                const customerName = '{{ auth()->user()->name }}';
+                const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
+                const customerEmail = '{{ auth()->user()->email }}';
+                const customerMobilePhone = '{{ auth()->user()->phone }}';
+                if (paymentmethod === '1') {
+                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-            $('.payment-method').change(function () {
-                paymentmethod = $('.payment-method:checked').val();
-            });
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: window.location.href,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
 
-            $('.btn-submit').click(function (e) {
-                if (paymentmethod == "계좌입금") {
-                    $('.dim').css('display', 'block');
-                    $('.payment-layer-wrapper .layer').css('display', 'block');
-                } else {
-                    var paymentObj;
-                    var cardCompany = $('.ui-selectmenu-text').text();
-
-                    const amount = 10000;
-                    const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
-                    const orderName = '구인 결제';
-                    const customerName = '{{ auth()->user()->name }}';
-                    const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
-                    const customerEmail = '{{ auth()->user()->email }}';
-                    const customerMobilePhone = '{{ auth()->user()->phone }}';
-
-                    if (paymentmethod === '가상계좌') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
-                    } else if (paymentmethod === '카드') {
-                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
-
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-
-                            maxCardInstallmentPlan: maxCardInstallmentPlan,
-                            cardCompany: cardCompany,
-                        };
-                    } else if (paymentmethod === '계좌이체') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
-                    }
-
-                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                        alert('취소');
-                    });
+                        maxCardInstallmentPlan: maxCardInstallmentPlan,
+                        cardCompany: cardCompany,
+                    };
+                } else if (paymentmethod === '2') {
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: window.location.href,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
+                    };
                 }
-            });
 
-            // 계좌입금 pop-up
-            $('.payment-layer-wrapper .btn-confirm').click(function (e) {
-                $('#separate_form').submit();
-            });
+                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                    alert('취소');
+                });
 
-            $('.payment-layer-wrapper .btn-cancel').click(function (e) {
-                $('.dim').css('display', 'none');
-                $('.payment-layer-wrapper .layer').css('display', 'none');
-            })
-
-        })
-        ;
+                // 결제 실패시 오류 메세지 출력
+                paymentMessage(message);
+            }
+        });
 
         function getParameter(param) {
             var paramData = window.location.search.substr(1).split('&').filter(function (i) {
@@ -410,14 +370,15 @@
                                                 <div class="checkbox-wrap">
                                                     <input type="checkbox" id="application_field_[{{$application->id}}]"
                                                            name="application[{{$application->id}}]"
-                                                           @if(old('application')[$application->id] ?? 'off' == 'on') checked @endif
+                                                           @if(old('application')[$application->id] ?? 'off' == 'on') checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-multiple="mymultiplelink"
                                                            data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 신청분야를 선택해주세요."
                                                            data-parsley-errors-container=".application-error-container">
                                                     <label
-                                                            for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                        for="application_field_[{{$application->id}}]">{{$application->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -434,8 +395,8 @@
                                                            name="work"
                                                            value={{$work->id}}
                                                            @if(old('work') == $work->id)
-                                                                   checked
-                                                            @endif
+                                                               checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무형태를 선택해주세요."
                                                            data-parsley-errors-container=".work-type-error-container">
@@ -475,13 +436,13 @@
                                                            class="salary"
                                                            value={{$salary->id}}
                                                            @if(old('salary') == $salary->id)
-                                                                   checked
-                                                            @endif
+                                                               checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 급여를 선택해주세요."
                                                            data-parsley-errors-container=".salary-type-error-container">
                                                     <label
-                                                            for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
+                                                        for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m salary-input"
@@ -603,14 +564,15 @@
                                                 <div class="checkbox-wrap">
                                                     <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
                                                            name="benefit[{{$benefit->id}}]"
-                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked @endif
+                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked
+                                                           @endif
                                                            data-parsley-required="true"
                                                            data-parsley-multiple="mymultiplelink1"
                                                            data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
                                                     <label
-                                                            for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                        for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -670,7 +632,8 @@
                                                 <input type="file" id="file" class="btn-editor-file">
                                             </li>
                                         </ul>
-                                        <textarea id="editor" class="editor" name="content" value="{{old('content')}}"></textarea>
+                                        <textarea id="editor" class="editor" name="content"
+                                                  value="{{old('content')}}"></textarea>
                                     </td>
                                 </tr>
                                 <tr>
