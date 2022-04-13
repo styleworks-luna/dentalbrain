@@ -22,9 +22,7 @@
     <section class="albatalk-wrap">
         @include('mobile.layouts.navigation.albatalk')
         <div class="m-container">
-            <div class="m-row">
             <albatalk-all :mobile="true"></albatalk-all>
-            </div>
         </div>
     </section>
 @endsection

@@ -1,12 +1,22 @@
 <template>
     <div class="albatalk-order">
         <template v-if="mobile">
-            <a href="">근무지역</a>
-            <select id="albatalk-order-select" class="albatalk-order-select">
-                <option value="newest" selected>등록일순</option>
-                <option value="newest">마감일순</option>
-            </select>
-
+        <div class="m-row">
+            <ul class="order-list">
+                <li>
+                    <a href="" class="btn-menu">
+                        <span>근무지역</span>
+                        <span class="icon-filter"></span>
+                    </a>
+                </li>
+                <li>
+                    <select id="albatalk-order-select" class="albatalk-order-select">
+                        <option value="newest" selected>등록일순</option>
+                        <option value="newest">마감일순</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
         </template>
         <template v-else>
             <h2>구인정보</h2>
