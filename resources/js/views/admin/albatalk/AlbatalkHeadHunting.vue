@@ -30,16 +30,18 @@ export default {
         this.init();
     },
     methods: {
+        init() {
+            HeadHunting.getData().then(res => {
+                this.url = res.data.url;
+            }).catch(err => {
+                this.url  = "";
+            });
+        },
         create() {
             HeadHunting.create(this.url).then(res => {
                 alert('변경되었습니다.');
             })
         },
-        init() {
-            HeadHunting.getData().then(res => {
-                this.url = res.data.url;
-            });
-        }
     }
 }
 </script>
