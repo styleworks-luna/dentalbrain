@@ -150,7 +150,7 @@ class ResumeController extends Controller
                 throw new ModelNotFoundException('이력서를 생성해 주세요.');
             }
 
-            $abilityAnswers = $this->getAbilityAnswers($resume);
+            $abilityAnswers = AbilityAnswer::onResume($resume)->get();
 
             $categories = AbilityCategory::query()->orderBy('seq')
                 ->select(['id', 'seq', 'name'])
@@ -179,26 +179,6 @@ class ResumeController extends Controller
             'rightList' => $rightList,
             'categories' => $categories,
         ]);
-    }
-
-    public function mypageResume()
-    {
-        $resume = $this->resumeService->getLoginUsersResume();
-
-        if ($resume == null) {
-            throw new ModelNotFoundException('이력서를 생성해 주세요.');
-        }
-
-        return Agent::isMobile() ?
-            $this->myPageResumeMobile($resume) : $this->myPageResumeDesktop($resume);
-    }
-
-    private function getAbilityAnswers($resume)
-    {
-        return AbilityAnswer::query()
-            ->with('ability')
-            ->where('resume_id', '=', $resume->id)
-            ->get();
     }
 
     /**
@@ -266,69 +246,5 @@ class ResumeController extends Controller
                 ]
             ];
         };
-    }
-
-    /**
-     * @param $resume
-     * @return Application|Factory|View
-     */
-    private function myPageResumeMobile($resume)
-    {
-        $categories = AbilityCategory::query()->orderBy('seq')
-            ->select(['id', 'seq', 'name'])
-            ->with('abilities')
-            ->get();
-
-        $answers = $this->getAbilityAnswers($resume)
-            ->mapWithKeys(function ($answer) {
-                return [$answer['ability_id'] => [
-                    'content' => $answer['content'],
-                    'score' => $answer['score'],
-                    'can_learn' => $answer['can_learn'],
-                ]];
-            });
-
-        return view('mobile.pages.user.mypage.mypage_albatalk_resume', [
-            'resume' => $resume,
-            'categories' => $categories,
-            'answers' => $answers,
-        ]);
-    }
-
-    /**
-     * @param $resume
-     * @return Application|Factory|RedirectResponse|View
-     */
-    private function myPageResumeDesktop($resume)
-    {
-        try {
-            $categories = AbilityCategory::query()->orderBy('seq')
-                ->select(['id', 'seq', 'name'])
-                ->get()->mapWithKeys(function ($category) {
-                    return [$category['id'] => $category['name']];
-                });
-
-            $abilityAnswers = $this->getAbilityAnswers($resume);
-
-            $leftList = $abilityAnswers->filter(function ($answer) {
-                return $answer->ability->category_id <= 5;
-            });
-
-            $rightList = $abilityAnswers->filter(function ($answer) {
-                return $answer->ability->category_id > 5;
-            });
-
-        } catch (ModelNotFoundException $exception) {
-            return \redirect()->back()->with('alert', $exception->getMessage());
-        } catch (Exception $exception) {
-            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
-        }
-
-        return view('desktop.pages.user.mypage.mypage_albatalk_resume', [
-            'resume' => $resume,
-            'leftList' => $leftList,
-            'rightList' => $rightList,
-            'categories' => $categories,
-        ]);
     }
 }
