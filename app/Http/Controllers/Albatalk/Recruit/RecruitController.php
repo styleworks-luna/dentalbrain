@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\SuccessPayments;
+use App\Models\Recruit\Option\RecruitApplication;
+use App\Models\Recruit\Option\RecruitBenefit;
+use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
 use App\Models\Recruit\Option\TypeDay;
@@ -10,9 +15,11 @@ use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
+use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
+use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitService;
-use App\Services\Recruit\RecruitTemplate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RecruitController extends Controller
@@ -147,7 +154,7 @@ class RecruitController extends Controller
             return redirect()->back()->with(['alert' => '구인 등록한 유저가 아닙니다.']);
         }
 
-        $recruit = Recruit::query()->with(['file', 'typeWork', 'typeJob', 'typeStudy'])
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
         $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
@@ -173,8 +180,12 @@ class RecruitController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
-            'haerh' => ['required']
-        ]);
+        $validator = $this->recruitService->getValidatorRecruit($request->all());
+        if($validator->fails()) {
+            $errorBags = $validator->errors();
+
+            return redirect()->back()->withErrors($errorBags);
+        }
+        return alert('good');
     }
 }

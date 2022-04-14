@@ -41,7 +41,8 @@
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
                                 <div class="img-wrap main-thumbnail-wrap">
-                                    <input type="hidden" name="main_file_id" class="file-id">
+                                    <input type="hidden" name="main_file_id" class="file-id"
+                                           value="{{ $recruit->file->id ?? '' }}">
                                     <input type="hidden" class="thumbnail-check" value="N"
                                            data-parsley-required="true"
                                            data-parsley-pattern="[Y]"
@@ -77,7 +78,8 @@
                                     </div>
                                     <div class="sub-thumbnail-content">
                                         <div class="img-wrap">
-                                            <input type="hidden" name="file_1_id" class="file-id">
+                                            <input type="hidden" name="file_1_id" class="file-id"
+                                                   value="{{ $recruit->file1->id ?? '' }}">
                                             <div class="image-off">
                                                 <!-- 썸네일 존재하지 않을경우-->
                                                 <div class="sub-thumbnail none-image">
@@ -100,7 +102,8 @@
                                             </div>
                                         </div>
                                         <div class="img-wrap">
-                                            <input type="hidden" name="file_2_id" class="file-id">
+                                            <input type="hidden" name="file_2_id" class="file-id"
+                                                   value="{{ $recruit->file2->id ?? '' }}">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -124,7 +127,8 @@
 
                                         </div>
                                         <div class="img-wrap">
-                                            <input type="hidden" name="file_3_id" class="file-id">
+                                            <input type="hidden" name="file_3_id" class="file-id"
+                                                   value="{{ $recruit->file3->id ?? '' }}">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -271,11 +275,11 @@
                                                    name="address_detail"
                                                    value="{{old('address_detail', $recruit->address_detail)}}"
                                                    placeholder="상세주소를 입력">
-                                            <input type="hidden" class="address-hidden-sido" name="sido">
-                                            <input type="hidden" class="address-hidden-gugun" name="gugun">
-                                            <input type="hidden" class="address-hidden-dong" name="dong">
-                                            <input type="hidden" class="address-hidden-latitude" name="latitude">
-                                            <input type="hidden" class="address-hidden-longitude" name="longitude">
+                                            <input type="hidden" class="address-hidden-sido" name="sido" value="{{old($recruit->sido)}}">
+                                            <input type="hidden" class="address-hidden-gugun" name="gugun" value="{{old($recruit->gugun)}}">
+                                            <input type="hidden" class="address-hidden-dong" name="dong" value="{{old($recruit->dong)}}">
+                                            <input type="hidden" class="address-hidden-latitude" name="latitude" value="{{old($recruit->latitude)}}">
+                                            <input type="hidden" class="address-hidden-longitude" name="longitude" value="{{old($recruit->longitude)}}">
                                         </div>
                                         <div id="map" class="map"></div>
                                         <div class="address-error-container"></div>
@@ -533,20 +537,20 @@
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
                                                        value="{{old("started_at_ymd", $recruit->started_at->format('Y-m-d'))}}"
                                                        placeholder="시작일자 선택"
-                                                       @if(old('deadline') != 1) readonly disabled @endif>
+                                                       @if(old('deadline', $recruit->started_at != null) != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
                                                        name="started_at_hm"
                                                        value="{{old("started_at_hm", $recruit->started_at->format('H:i'))}}"
-                                                       @if(old('deadline') != 1) disabled @endif>
+                                                       @if(old('deadline', $recruit->started_at != null) != 1) disabled @endif>
                                                 <p class="time-from">부터</p>
                                                 <input type="text" class="input-xs end-date" name="ended_at_ymd"
                                                        value="{{old("ended_at_ymd", $recruit->ended_at->format('Y-m-d'))}}"
                                                        placeholder="마감일자 선택"
-                                                       @if(old('deadline') != 1) readonly disabled @endif>
+                                                       @if(old('deadline', $recruit->ended_at != null) != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
                                                        name="ended_at_hm"
                                                        value="{{old("ended_at_hm", $recruit->ended_at->format('H:i'))}}"
-                                                       @if(old('deadline') != 1) disabled @endif>
+                                                       @if(old('deadline', $recruit->ended_at != null) != 1) disabled @endif>
                                             </div>
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_02" class="deadline"
