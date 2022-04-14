@@ -162,7 +162,7 @@ class RecruitController extends Controller
             return redirect()->back()->with(['alert' => '구인 등록한 유저가 아닙니다.']);
         }
 
-        $recruit = Recruit::query()->with(['file', 'typeWork', 'typeJob', 'typeStudy'])
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
         $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
@@ -186,10 +186,39 @@ class RecruitController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Recruit $recruit, Request $request)
     {
-        $request->validate([
-            'haerh' => ['required']
-        ]);
+        $validator = $this->recruitService->getValidatorRecruit($request->all());
+        if($validator->fails()) {
+            $errorBags = $validator->errors();
+
+            return \redirect(url()->previous())
+                ->withInput($request->input())
+                ->withErrors($errorBags);
+        }
+
+        try {
+
+            $recruitData = $validator->validated();
+
+            $recruit = $this->recruitService->updateRecruit($recruit, $recruitData);
+            $recruit->save();
+
+            $recruit->recruitApplications()->delete();
+            $recruit->recruitSalaries()->delete();
+            $recruit->recruitDays()->delete();
+            $recruit->recruitBenefits()->delete();
+
+            $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
+            $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
+            $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
+
+        } catch (\Exception $exception) {
+            report($exception);
+            return redirect(url()->previous())->withInput($request->input())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
+        }
+
+        return redirect()->route('albatalk.recruit.detail', $recruit->id)->with('alert', '수정되었습니다.');
     }
 }

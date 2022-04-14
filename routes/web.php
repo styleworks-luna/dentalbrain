@@ -57,9 +57,10 @@ if (env('APP_ENV') != 'production') {
                 Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'detail'])->name('detail');
                 // 구인 데이터 불러오기
                 Route::get('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
+                // 구인 수정
+                Route::post('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
             });
-            // 구인 수정
-            Route::post('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
