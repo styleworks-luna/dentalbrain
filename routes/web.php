@@ -95,7 +95,7 @@ if (env('APP_ENV') != 'production') {
         })->name('offer');
 
         //구직 이력서 정보
-        Route::get('resume', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'testMyPage'])->name('resume');
+        Route::get('resume', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'mypageResume'])->name('resume');
     });
 
     Route::group(['prefix' => 'api', 'as' => 'api.'], function () {

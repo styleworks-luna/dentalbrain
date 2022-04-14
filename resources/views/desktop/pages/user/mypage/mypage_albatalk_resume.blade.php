@@ -247,12 +247,8 @@
                                         @endif
                                     </tr>
                                 @endforeach
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                {{--빈칸 채우기--}}
+                                <tr><td></td></tr>
                             </table>
                             <table>
                                 <thead>

@@ -24,7 +24,8 @@
                     <div class="m-row">
                         <section class="user-information-wrap">
                             <div class="user-main-wrap">
-                                <div class="img-wrap"><img src="{{ $resume->file->url ?? '' }}" class="user-image" alt="이력서 사진"></div>
+                                <div class="img-wrap"><img src="{{ $resume->file->url ?? '' }}" class="user-image"
+                                                           alt="이력서 사진"></div>
                                 <h2 class="user-name">{{ $resume->name }}</h2>
                             </div>
                             <div class="user-personal-information">
@@ -150,39 +151,68 @@
                                 <table class="certificate">
                                     <tbody>
                                     <!-- TODO::resume 없는 경우 table 삭제 필요 -->
-                                    @php($i = 1)
                                     @if($resume->certificate_name_1 != null)
-                                        <tr><td>{{ $resume->certificate_agency_1 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_1 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_1 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_1 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_1 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_1 }}</td>
+                                        </tr>
                                     </tbody>
                                     @endif
                                     <tbody>
                                     @if($resume->certificate_name_2 != null)
-                                        <tr><td>{{ $resume->certificate_agency_2 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_2 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_2 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_2 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_3 != null)
-                                        <tr><td>{{ $resume->certificate_agency_3 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_3 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_3 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_3 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_3 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_3 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_4 != null)
-                                        <tr><td>{{ $resume->certificate_agency_4 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_4 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_4 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_4 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_4 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_4 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_5 != null)
-                                        <tr><td>{{ $resume->certificate_agency_5 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_5 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_5 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_5 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_5 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_5 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                 </table>
@@ -195,46 +225,39 @@
                                 <h2>치과 업무 능력 자기 평가표</h2>
                             </div>
                             <div class="ability-information-content">
-                                <table>
-                                    <strong>교육가능</strong>
-                                    <div class="ability-information-middle-name">임플란트</div>
-                                    @foreach($leftList as $answer)
-                                        <tr>
-                                            <th>{{ $answer->ability->name }}</th>
-                                            @if($answer->ability->type == 'text')
-                                                <td colspan="2">{{ $answer->content }}</td>
-                                            @else
-                                                <td>
-                                                    @switch($answer->score)
-                                                        @case(1) 경험없음 @break
-                                                        @case(2) 미흡 @break
-                                                        @case(3) 보통 @break
-                                                        @case(4) 잘함 @break
-                                                        @case(5) 매우잘함 @break
-                                                        @default 보통
-                                                    @endswitch
-                                                </td>
-                                            @endif
-                                        </tr>
+                                <strong>교육가능</strong>
+                                <div>
+                                    @foreach($categories as $category)
+                                        <div>
+                                            <div
+                                                class="ability-information-middle-name">{{ $category->name ?? '' }}</div>
+                                            <table>
+                                                @foreach($category->abilities as $ability)
+                                                    <tr>
+
+                                                        <td class="{{ ($answers[$ability->id]['can_learn'] ?? false) ? 'can-learn' : '' }}">
+                                                            {{ $ability->name }}
+                                                        </td>
+                                                        @if( $ability->type == 'text' )
+                                                            <td>{{ $answers[$ability->id]['content'] ?? '' }}</td>
+                                                        @else
+                                                            <td>
+                                                                @switch($answers[$ability->id]['score'] ?? 1)
+                                                                    @case(1) 경험없음 @break
+                                                                    @case(2) 미흡 @break
+                                                                    @case(3) 보통 @break
+                                                                    @case(4) 잘함 @break
+                                                                    @case(5) 매우잘함 @break
+                                                                    @default 보통
+                                                                @endswitch
+                                                            </td>
+                                                        @endif
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </div>
                                     @endforeach
-                                </table>
-                                <table>
-                                    @foreach($rightList as $answer)
-                                        <tr>
-                                            <td>{{ $answer->ability->name }}</td>
-                                            <td>
-                                                @switch($answer->score)
-                                                    @case(1) 경험없음 @break
-                                                    @case(2) 미흡 @break
-                                                    @case(3) 보통 @break
-                                                    @case(4) 잘함 @break
-                                                    @case(5) 매우잘함 @break
-                                                    @default 보통
-                                                @endswitch
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </table>
+                                </div>
                             </div>
                         </section>
                     </div>
