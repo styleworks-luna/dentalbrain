@@ -19,7 +19,7 @@ class Recruit extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-    protected $dates = ['ended_at'];
+    protected $dates = ['started_at', 'ended_at'];
 
     // 신입
     static $JUNIOR = 1;

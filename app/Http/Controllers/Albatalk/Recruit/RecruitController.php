@@ -21,6 +21,7 @@ use App\Models\Recruit\RecruitPrice;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitTemplate;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,24 +53,6 @@ class RecruitController extends Controller
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
             'price' => $price,
-        ]);
-    }
-
-    public function detail(Recruit $recruit)
-    {
-        $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
-        $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
-        $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
-        $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
-
-        $recruit->with('typeWork', 'typeJob', 'typeStudy');
-
-        return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
-            'recruit' => $recruit,
-            'applications' => $applications,
-            'salaries' => $salaries,
-            'days' => $days,
-            'benefits' => $benefits,
         ]);
     }
 
@@ -151,5 +134,62 @@ class RecruitController extends Controller
         }
 
         return redirect()->route('albatalk.recruit.detail', $recruit->id);
+    }
+
+    public function detail(Recruit $recruit)
+    {
+        $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
+        $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
+        $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
+        $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
+
+        $recruit->with('typeWork', 'typeJob', 'typeStudy');
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
+            'recruit' => $recruit,
+            'applications' => $applications,
+            'salaries' => $salaries,
+            'days' => $days,
+            'benefits' => $benefits,
+        ]);
+    }
+
+    public function edit(Recruit $recruit)
+    {
+        $userId = Auth::id();
+
+        if ($recruit->user_id != $userId) {
+            return redirect()->back()->with(['alert' => '구인 등록한 유저가 아닙니다.']);
+        }
+
+        $recruit = Recruit::query()->with(['file', 'typeWork', 'typeJob', 'typeStudy'])
+            ->where('id', $recruit->id)->first();
+
+        $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
+        $recruitSalaries = RecruitSalary::query()->where('recruit_id', $recruit->id)->get(['type_salary_id', 'value']);
+        $recruitDays = RecruitDay::query()->where('recruit_id', $recruit->id)->get(['type_day_id', 'value']);
+        $recruitBenefits = RecruitBenefit::query()->where('recruit_id', $recruit->id)->pluck('type_benefit_id');
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_post_edit', [
+            'typeApplication' => TypeApplication::all(),
+            'typeWork' => TypeWork::all(),
+            'typeJob' => TypeJob::all(),
+            'typeSalary' => TypeSalary::all(),
+            'typeStudy' => TypeStudy::all(),
+            'typeDay' => TypeDay::all(),
+            'typeBenefit' => TypeBenefit::all(),
+            'recruit' => $recruit,
+            'recruitApplications' => $recruitApplications,
+            'recruitSalaries' => $recruitSalaries,
+            'recruitDays' => $recruitDays,
+            'recruitBenefits' => $recruitBenefits,
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'haerh' => ['required']
+        ]);
     }
 }
