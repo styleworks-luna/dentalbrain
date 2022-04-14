@@ -24,7 +24,8 @@
                     <div class="m-row">
                         <section class="user-information-wrap">
                             <div class="user-main-wrap">
-                                <div class="img-wrap"><img src="{{ $resume->file->url ?? '' }}" class="user-image" alt="이력서 사진"></div>
+                                <div class="img-wrap"><img src="{{ $resume->file->url ?? '' }}" class="user-image"
+                                                           alt="이력서 사진"></div>
                                 <h2 class="user-name">{{ $resume->name }}</h2>
                             </div>
                             <div class="user-personal-information">
@@ -152,37 +153,67 @@
                                     <!-- TODO::resume 없는 경우 table 삭제 필요 -->
                                     @php($i = 1)
                                     @if($resume->certificate_name_1 != null)
-                                        <tr><td>{{ $resume->certificate_agency_1 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_1 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_1 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_1 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_1 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_1 }}</td>
+                                        </tr>
                                     </tbody>
                                     @endif
                                     <tbody>
                                     @if($resume->certificate_name_2 != null)
-                                        <tr><td>{{ $resume->certificate_agency_2 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_2 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_2 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_2 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_3 != null)
-                                        <tr><td>{{ $resume->certificate_agency_3 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_3 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_3 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_3 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_3 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_3 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_4 != null)
-                                        <tr><td>{{ $resume->certificate_agency_4 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_4 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_4 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_4 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_4 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_4 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                     <tbody>
                                     @if($resume->certificate_name_5 != null)
-                                        <tr><td>{{ $resume->certificate_agency_5 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_name_5 }}</td></tr>
-                                        <tr><td>{{ $resume->certificate_day_5 }}</td></tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_agency_5 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_name_5 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ $resume->certificate_day_5 }}</td>
+                                        </tr>
                                     @endif
                                     </tbody>
                                 </table>
@@ -195,12 +226,12 @@
                                 <h2>치과 업무 능력 자기 평가표</h2>
                             </div>
                             <div class="ability-information-content">
+                                <p>교육가능</p>
+                                <div class="ability-information-middle-name">임플란트</div>
                                 <table>
-                                    <strong>교육가능</strong>
-                                    <div class="ability-information-middle-name">임플란트</div>
                                     @foreach($leftList as $answer)
                                         <tr>
-                                            <th>{{ $answer->ability->name }}</th>
+                                            <th><span @if($answer->can_learn)class="strong"@endif>{{ $answer->ability->name }}</span></th>
                                             @if($answer->ability->type == 'text')
                                                 <td colspan="2">{{ $answer->content }}</td>
                                             @else
