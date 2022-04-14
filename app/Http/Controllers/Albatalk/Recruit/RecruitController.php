@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
+use App\Models\Payments\Payment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
