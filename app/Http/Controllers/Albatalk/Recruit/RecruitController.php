@@ -182,14 +182,39 @@ class RecruitController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(Recruit $recruit, Request $request)
     {
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if($validator->fails()) {
             $errorBags = $validator->errors();
 
-            return redirect()->back()->withErrors($errorBags);
+            return \redirect(url()->previous())
+                ->withInput($request->input())
+                ->withErrors($errorBags);
         }
-        return alert('good');
+
+        try {
+
+            $recruitData = $validator->validated();
+
+            $recruit = $this->recruitService->updateRecruit($recruit, $recruitData);
+            $recruit->save();
+
+            $recruit->recruitApplications()->delete();
+            $recruit->recruitSalaries()->delete();
+            $recruit->recruitDays()->delete();
+            $recruit->recruitBenefits()->delete();
+
+            $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
+            $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
+            $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
+
+        } catch (\Exception $exception) {
+            report($exception);
+            return redirect(url()->previous())->withInput($request->input())->with('alert', '에러가 발생했습니다. 다시 작성해주세요.');
+        }
+
+        return redirect()->route('albatalk.recruit.detail', $recruit->id)->with('alert', '수정되었습니다.');
     }
 }

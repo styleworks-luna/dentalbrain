@@ -36,7 +36,7 @@
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form action="{{ route('albatalk.recruit.edit') }}" method="post">
+                    <form action="{{ route('albatalk.recruit.edit', $recruit) }}" method="post">
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
@@ -104,6 +104,7 @@
                                         <div class="img-wrap">
                                             <input type="hidden" name="file_2_id" class="file-id"
                                                    value="{{ $recruit->file2->id ?? '' }}">
+
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -275,11 +276,16 @@
                                                    name="address_detail"
                                                    value="{{old('address_detail', $recruit->address_detail)}}"
                                                    placeholder="상세주소를 입력">
-                                            <input type="hidden" class="address-hidden-sido" name="sido" value="{{old($recruit->sido)}}">
-                                            <input type="hidden" class="address-hidden-gugun" name="gugun" value="{{old($recruit->gugun)}}">
-                                            <input type="hidden" class="address-hidden-dong" name="dong" value="{{old($recruit->dong)}}">
-                                            <input type="hidden" class="address-hidden-latitude" name="latitude" value="{{old($recruit->latitude)}}">
-                                            <input type="hidden" class="address-hidden-longitude" name="longitude" value="{{old($recruit->longitude)}}">
+                                            <input type="hidden" class="address-hidden-sido" name="sido"
+                                                   value="{{old('sido', $recruit->sido)}}">
+                                            <input type="hidden" class="address-hidden-gugun" name="gugun"
+                                                   value="{{old('gugun', $recruit->gugun)}}">
+                                            <input type="hidden" class="address-hidden-dong" name="dong"
+                                                   value="{{old('dong', $recruit->dong)}}">
+                                            <input type="hidden" class="address-hidden-latitude" name="latitude"
+                                                   value="{{old('latitude', $recruit->latitude)}}">
+                                            <input type="hidden" class="address-hidden-longitude" name="longitude"
+                                                   value="{{old('longitude', $recruit->longitude)}}">
                                         </div>
                                         <div id="map" class="map"></div>
                                         <div class="address-error-container"></div>
@@ -305,7 +311,7 @@
                                                     <input type="hidden" name="application[{{$application->id}}]"
                                                            value="off">
                                                     <input type="checkbox" id="application_field_[{{$application->id}}]"
-                                                           name="application[{{$application->id}}]"
+                                                           {{--name="application[{{$application->id}}]"--}}
                                                            name="{{'application['.$application->id.']'}}"
                                                            @if(old('application.'.$application->id, $recruitApplications->contains($application->id) ? 'on' :'off') == 'on')
                                                            checked
@@ -402,12 +408,14 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
-                                                       @if(old('is_study', $recruit->typeStudy->id < 14) == 1) checked @endif
+                                                       @if(old('is_study', $recruit->typeStudy->id < 14) == 1) checked
+                                                       @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 학력을 선택해주세요."
                                                        data-parsley-errors-container=".study-type-error-container">
                                                 <select class="input-xs select-menu study-select"
-                                                        @if(old('is_study', $recruit->typeStudy->id < 14) != 1) disabled @endif
+                                                        @if(old('is_study', $recruit->typeStudy->id < 14) != 1) disabled
+                                                        @endif
                                                         name="study">
                                                     <option value="" selected>학력 선택</option>
                                                     @foreach($typeStudy as $study)
@@ -445,7 +453,8 @@
                                             </div>
                                             <div class="radio-wrap">
                                                 <input type="radio" id="career_field_02" class="career" name="is_career"
-                                                       value="2" @if(old('is_career', $recruit->career > 0) == 2) checked @endif>
+                                                       value="2"
+                                                       @if(old('is_career', $recruit->career > 0) == 2) checked @endif>
                                                 <label for="career_field_02" class="career-radio-label">경력</label>
                                                 <select name="career" id="career"
                                                         class="input-xs radio-input select-menu career-select"
@@ -459,7 +468,8 @@
                                                             </option>
                                                         @else
                                                             <option value="{{$i}}"
-                                                                    @if(old('career', $recruit->career) == $i) selected @endif>{{$i}}년
+                                                                    @if(old('career', $recruit->career) == $i) selected @endif>{{$i}}
+                                                                년
                                                             </option>
                                                         @endif
                                                     @endfor
@@ -530,26 +540,45 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_01" class="deadline"
                                                        name="deadline" value="1"
-                                                       @if(old('deadline', $recruit->started_at != null ) == 1) checked @endif
+                                                       @if(old('deadline', $recruit->started_at != null ) == 1) checked
+                                                       @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 모집마감일을 선택해주세요."
                                                        data-parsley-errors-container=".deadline-error-container">
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
+                                                       @if(!$recruit->started_at)
+                                                       value="{{old("started_at_ymd") ?? null}}"
+                                                       @else
                                                        value="{{old("started_at_ymd", $recruit->started_at->format('Y-m-d'))}}"
+                                                       @endif
                                                        placeholder="시작일자 선택"
-                                                       @if(old('deadline', $recruit->started_at != null) != 1) readonly disabled @endif>
+                                                       @if(old('deadline', $recruit->started_at != null) != 1) readonly
+                                                       disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
                                                        name="started_at_hm"
-                                                       value="{{old("started_at_hm", $recruit->started_at->format('H:i'))}}"
+                                                       @if(!$recruit->started_at)
+                                                       value="{{old("started_at_hm" ?? null)}}"
+                                                       @else
+                                                       value="{{old("started_at_hm", $recruit->started_at->format('H:i') ?? null)}}"
+                                                       @endif
                                                        @if(old('deadline', $recruit->started_at != null) != 1) disabled @endif>
                                                 <p class="time-from">부터</p>
                                                 <input type="text" class="input-xs end-date" name="ended_at_ymd"
-                                                       value="{{old("ended_at_ymd", $recruit->ended_at->format('Y-m-d'))}}"
+                                                       @if(!$recruit->started_at)
+                                                       value="{{old("ended_at_ymd" ?? null)}}"
+                                                       @else
+                                                       value="{{old("ended_at_ymd", $recruit->ended_at->format('Y-m-d') ?? null)}}"
+                                                       @endif
                                                        placeholder="마감일자 선택"
-                                                       @if(old('deadline', $recruit->ended_at != null) != 1) readonly disabled @endif>
+                                                       @if(old('deadline', $recruit->ended_at != null) != 1) readonly
+                                                       disabled @endif>
                                                 <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
                                                        name="ended_at_hm"
-                                                       value="{{old("ended_at_hm", $recruit->ended_at->format('H:i'))}}"
+                                                       @if(!$recruit->started_at)
+                                                       value="{{old("ended_at_hm" ?? null)}}"
+                                                       @else
+                                                       value="{{old("ended_at_hm", $recruit->ended_at->format('H:i') ?? null)}}"
+                                                       @endif
                                                        @if(old('deadline', $recruit->ended_at != null) != 1) disabled @endif>
                                             </div>
                                             <div class="radio-wrap">
