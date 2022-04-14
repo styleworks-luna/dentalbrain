@@ -2,9 +2,9 @@
     <section class="albatalk">
         <div class="albatalk-navigation">
             <albatalk-order :mobile="mobile"></albatalk-order>
-            <albatalk-navigation :mobile="mobile"></albatalk-navigation>
+            <albatalk-navigation :mobile="mobile" @menuEventEmit="menuListUpdate"></albatalk-navigation>
         </div>
-        <albatalk-list :mobile="mobile"></albatalk-list>
+        <albatalk-list :mobile="mobile" :lists="lists"></albatalk-list>
     </section>
 </template>
 
@@ -12,6 +12,9 @@
 import AlbaTalkList from '@/components/albatalk/AlbaTalkList.vue';
 import AlbaTalkNavigation from '@/components/albatalk/AlbaTalkNavigation.vue';
 import AlbaTalkOrder from '@/components/albatalk/AlbaTalkOrder.vue';
+
+// api
+import Albatalk from "@/api/albatalk/Albatalk.js"
 
 export default {
     name: "AlbaTalk",
@@ -24,6 +27,27 @@ export default {
         'is_navigation': Boolean,
         'is_order': Boolean,
         "mobile": Boolean,
+    },
+    data() {
+        return {
+            updatedMenuList: [],
+            lists: []
+        }
+    },
+    methods: {
+        getData() {
+            console.log(this.updatedMenuList);
+            let params = {
+                sido: this.updatedMenuList,
+            }
+            Albatalk.getData(params).then(res => {
+                this.lists = res.data;
+            })
+        },
+        menuListUpdate(menuList) {
+            this.updatedMenuList = menuList;
+            this.getData();
+        },
     }
 }
 </script>
