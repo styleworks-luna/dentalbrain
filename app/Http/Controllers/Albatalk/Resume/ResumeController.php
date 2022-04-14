@@ -12,9 +12,14 @@ use App\Services\Recruit\AbilityService;
 use App\Services\Recruit\ResumeService;
 use Closure;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Jenssegers\Agent\Facades\Agent;
 
 class ResumeController extends Controller
 {
@@ -113,7 +118,7 @@ class ResumeController extends Controller
             $resume = $this->resumeService->getLoginUsersResume();
             $resumeData = $resumeValidator->validated();
 
-            if ($resume->file == null || $resume->file->id != $resumeData['file_id'] ) {
+            if ($resume->file == null || $resume->file->id != $resumeData['file_id']) {
                 $resumeThumbnail = new ResumeThumbnail($resume);
                 $resumeThumbnail->deleteFile();
 
@@ -139,34 +144,44 @@ class ResumeController extends Controller
     private function completeForm()
     {
         try {
-            $detail = $this->getDetail();
+            $resume = $this->resumeService->getLoginUsersResume();
+
+            if ($resume == null) {
+                throw new ModelNotFoundException('이력서를 생성해 주세요.');
+            }
+
+            $abilityAnswers = $this->getAbilityAnswers($resume);
+
+            $categories = AbilityCategory::query()->orderBy('seq')
+                ->select(['id', 'seq', 'name'])
+                ->get()
+                ->mapWithKeys(function ($category) {
+                    return [$category['id'] => $category['name']];
+                });
+
+            $leftList = $abilityAnswers->filter(function ($answer) {
+                return $answer->ability->category_id <= 5;
+            });
+
+            $rightList = $abilityAnswers->filter(function ($answer) {
+                return $answer->ability->category_id > 5;
+            });
+
         } catch (ModelNotFoundException $exception) {
             return \redirect()->back()->with('alert', $exception->getMessage());
         } catch (Exception $exception) {
             return \redirect()->back()->with('alert', '오류가 발생했습니다.');
         }
 
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_complete', $detail);
+        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_complete', [
+            'resume' => $resume,
+            'leftList' => $leftList,
+            'rightList' => $rightList,
+            'categories' => $categories,
+        ]);
     }
 
-    public function testMyPage()
-    {
-        try {
-            $detail = $this->getDetail();
-        } catch (ModelNotFoundException $exception) {
-            return \redirect()->back()->with('alert', $exception->getMessage());
-        } catch (Exception $exception) {
-            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
-        }
-
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume', $detail);
-    }
-
-    /**
-     * @return array
-     * @throws ModelNotFoundException
-     */
-    public function getDetail(): array
+    public function mypageResume()
     {
         $resume = $this->resumeService->getLoginUsersResume();
 
@@ -174,31 +189,16 @@ class ResumeController extends Controller
             throw new ModelNotFoundException('이력서를 생성해 주세요.');
         }
 
-        $abilityAnswers = AbilityAnswer::query()
+        return Agent::isMobile() ?
+            $this->myPageResumeMobile($resume) : $this->myPageResumeDesktop($resume);
+    }
+
+    private function getAbilityAnswers($resume)
+    {
+        return AbilityAnswer::query()
             ->with('ability')
             ->where('resume_id', '=', $resume->id)
             ->get();
-
-        $categories = AbilityCategory::query()->orderBy('seq')
-            ->select(['id', 'seq', 'name'])
-            ->get()->mapWithKeys(function ($category) {
-                return [$category['id'] => $category['name']];
-            });
-
-        $leftList = $abilityAnswers->filter(function ($answer) {
-            return $answer->ability->category_id <= 5;
-        });
-
-        $rightList = $abilityAnswers->filter(function ($answer) {
-            return $answer->ability->category_id > 5;
-        });
-
-        return [
-            'resume' => $resume,
-            'leftList' => $leftList,
-            'rightList' => $rightList,
-            'categories' => $categories,
-        ];
     }
 
     /**
@@ -266,5 +266,69 @@ class ResumeController extends Controller
                 ]
             ];
         };
+    }
+
+    /**
+     * @param $resume
+     * @return Application|Factory|View
+     */
+    private function myPageResumeMobile($resume)
+    {
+        $categories = AbilityCategory::query()->orderBy('seq')
+            ->select(['id', 'seq', 'name'])
+            ->with('abilities')
+            ->get();
+
+        $answers = $this->getAbilityAnswers($resume)
+            ->mapWithKeys(function ($answer) {
+                return [$answer['ability_id'] => [
+                    'content' => $answer['content'],
+                    'score' => $answer['score'],
+                    'can_learn' => $answer['can_learn'],
+                ]];
+            });
+
+        return view('mobile.pages.user.mypage.mypage_albatalk_resume', [
+            'resume' => $resume,
+            'categories' => $categories,
+            'answers' => $answers,
+        ]);
+    }
+
+    /**
+     * @param $resume
+     * @return Application|Factory|RedirectResponse|View
+     */
+    private function myPageResumeDesktop($resume)
+    {
+        try {
+            $categories = AbilityCategory::query()->orderBy('seq')
+                ->select(['id', 'seq', 'name'])
+                ->get()->mapWithKeys(function ($category) {
+                    return [$category['id'] => $category['name']];
+                });
+
+            $abilityAnswers = $this->getAbilityAnswers($resume);
+
+            $leftList = $abilityAnswers->filter(function ($answer) {
+                return $answer->ability->category_id <= 5;
+            });
+
+            $rightList = $abilityAnswers->filter(function ($answer) {
+                return $answer->ability->category_id > 5;
+            });
+
+        } catch (ModelNotFoundException $exception) {
+            return \redirect()->back()->with('alert', $exception->getMessage());
+        } catch (Exception $exception) {
+            return \redirect()->back()->with('alert', '오류가 발생했습니다.');
+        }
+
+        return view('desktop.pages.user.mypage.mypage_albatalk_resume', [
+            'resume' => $resume,
+            'leftList' => $leftList,
+            'rightList' => $rightList,
+            'categories' => $categories,
+        ]);
     }
 }
