@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\SuccessPayments;
+use App\Models\Recruit\Option\RecruitApplication;
+use App\Models\Recruit\Option\RecruitBenefit;
+use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
 use App\Models\Recruit\Option\TypeDay;
@@ -10,9 +15,14 @@ use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
+use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
+use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RecruitController extends Controller
 {
@@ -62,7 +72,7 @@ class RecruitController extends Controller
         ]);
     }
 
-    public function saveRecruitDataToSession(Request $request): JsonResponse
+    public function saveRecruitDataToSession(Request $request): \Illuminate\Http\JsonResponse
     {
         // 구인 등록 유효성 검사
         $validator = $this->recruitService->getValidatorRecruit($request->all());
