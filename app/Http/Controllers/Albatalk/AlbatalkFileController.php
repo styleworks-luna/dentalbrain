@@ -6,7 +6,7 @@ use App\Services\File\RecruitEditorFile;
 use App\Services\File\RecruitEditorImage;
 use App\Services\File\RecruitThumbnail;
 use App\Services\File\ResumeThumbnail;
-use App\Services\Recruit\RecruitTemplate;
+use App\Services\Recruit\RecruitService;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class AlbatalkFileController
     private $resumeService;
     private $recruitService;
 
-    public function __construct(ResumeService $resumeService, RecruitTemplate $recruitService)
+    public function __construct(ResumeService $resumeService, RecruitService $recruitService)
     {
         $this->resumeService = $resumeService;
         $this->recruitService = $recruitService;

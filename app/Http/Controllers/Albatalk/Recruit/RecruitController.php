@@ -20,7 +20,7 @@ use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
-use App\Services\Recruit\RecruitTemplate;
+use App\Services\Recruit\RecruitService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,11 +28,11 @@ use Illuminate\Support\Facades\Log;
 
 class RecruitController extends Controller
 {
-    protected $recruitTemplate;
+    protected $recruitService;
 
     public function __construct()
     {
-        $this->recruitTemplate = new RecruitTemplate();
+        $this->recruitService = new RecruitService();
     }
 
     public function createForm()
@@ -76,7 +76,7 @@ class RecruitController extends Controller
     public function create(Request $request)
     {
         // 구인 등록 유효성 검사
-        $validator = $this->recruitTemplate->getValidatorRecruit($request->all());
+        $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
             $messageBag = $validator->errors();
 
@@ -109,11 +109,11 @@ class RecruitController extends Controller
 
             // 구인등록 인스턴스 생성
             $recruitData = $request->session()->get(Recruit::SESSION_KEY);
-            $recruit = $this->recruitTemplate->storeRecruit($recruitData);
-            $application = $this->recruitTemplate->storeRecruitApplication($recruit, $recruitData);
-            $salary = $this->recruitTemplate->storeRecruitSalary($recruit, $recruitData);
-            $day = $this->recruitTemplate->storeRecruitDay($recruit, $recruitData);
-            $benefit = $this->recruitTemplate->storeRecruitBenefit($recruit, $recruitData);
+            $recruit = $this->recruitService->storeRecruit($recruitData);
+            $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
+            $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
+            $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
 
             // TossPayment 객체생성
             $tossPayments = new TossPayments($request['paymentKey']);
