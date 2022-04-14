@@ -285,6 +285,8 @@
                                                value="{{ old('ceo_name') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
+                                               data-parsley-minlength="2"
+                                               data-parsley-minlength-message="※ 최소 2자 이상 입력해주세요."
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
@@ -297,6 +299,8 @@
                                                value="{{ old('manager_phone') }}"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
+                                               data-parsley-length="[9,11]"
+                                               data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     </td>
                                 </tr>
@@ -310,6 +314,8 @@
                                                value="{{ old('num') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
+                                               data-parsley-minlength="2"
+                                               data-parsley-minlength-message="※ 최소 2자 이상 입력해주세요."
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
 
@@ -345,6 +351,7 @@
                                                id="homepage"
                                                class="input-xl"
                                                name="homepage"
+
                                                value="{{ old('homepage') }}">
                                     </td>
                                 </tr>
