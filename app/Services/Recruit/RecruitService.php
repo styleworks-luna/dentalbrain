@@ -45,7 +45,7 @@ class RecruitService
             'address' => ['required', 'string',],
             'address_detail' => ['nullable', 'string',],
 
-            'sido' => ['required', 'string', Rule::in(RecruitSiDo::getArray())],
+            'sido' => ['required', 'string', Rule::in(RecruitSiDo::array())],
             'gugun' => ['nullable', 'string',],
             'dong' => ['required', 'string', 'nullable'],
 

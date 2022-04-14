@@ -12,19 +12,13 @@ class RecruitSearchController extends Controller
 {
     public function search(Request $request): JsonResponse
     {
-        $isAcceptableSido = function ($attribute, $value, $fail) {
-            $params = collect(explode(',', $value));
-            $matched = $params->intersect(RecruitSiDo::getArray())->count() == $params->count();
-            if (!$matched) {
-                $fail('잘못된 입력값입니다.');
-            }
-        };
-
         $validated = $request->validate([
-            'sido' => ['required', $isAcceptableSido,],
+            'sido' => ['required', 'array',],
+            'sido.*' => ['string', Rule::in(RecruitSiDo::array()),],
             'order' => ['nullable', Rule::in(['newest', 'closest'])],
         ]);
-        $sido = explode(',', $validated['sido']);
+
+        $sido = $validated['sido'];
         $order = $validated['order'] ?? 'newest';
 
         $builder = Recruit::query()->select('id', 'main_file_id', 'company_name', 'ended_at', 'sido', 'gugun')
@@ -37,7 +31,7 @@ class RecruitSearchController extends Controller
         if ($order == 'newest') {
             $builder->orderBy('created_at', 'desc');
         } else {
-            $builder->where('ended_at', '>=', now())
+            $builder->where('ended_at', ' >= ', now())
                 ->orderBy('ended_at', 'ASC');
         }
         return response()->json($builder->paginate(12)->items());
