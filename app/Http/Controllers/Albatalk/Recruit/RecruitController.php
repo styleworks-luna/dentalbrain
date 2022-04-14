@@ -21,6 +21,7 @@ use App\Models\Recruit\RecruitPrice;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitService;
+use App\Services\Recruit\ResumeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +30,13 @@ use Illuminate\Support\Facades\Log;
 class RecruitController extends Controller
 {
     protected $recruitService;
+    protected $resumeService;
 
-    public function __construct()
+    public function __construct(RecruitService $recruitService, ResumeService $resumeService)
     {
-        $this->recruitService = new RecruitService();
+        $this->recruitService = $recruitService;
+        $this->resumeService = $resumeService;
+
     }
 
     public function createForm()
