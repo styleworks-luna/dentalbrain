@@ -13,12 +13,12 @@ class RecruitSearchController extends Controller
     public function search(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'sido' => ['required', 'array',],
+            'sido' => ['nullable', 'array',],
             'sido.*' => ['string', Rule::in(RecruitSiDo::array()),],
             'order' => ['nullable', Rule::in(['newest', 'closest'])],
         ]);
 
-        $sido = $validated['sido'];
+        $sido = $validated['sido'] ?? RecruitSiDo::array();
         $order = $validated['order'] ?? 'newest';
 
         $builder = Recruit::query()->select('id', 'main_file_id', 'company_name', 'ended_at', 'sido', 'gugun')
