@@ -298,6 +298,7 @@
                                                name="manager_phone"
                                                value="{{ old('manager_phone') }}"
                                                placeholder="‘-‘ 없이 입력"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                data-parsley-required="true"
                                                data-parsley-length="[9,11]"
                                                data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
@@ -339,6 +340,7 @@
                                                class="input-s"
                                                name="phone"
                                                value="{{ old('phone') }}"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
