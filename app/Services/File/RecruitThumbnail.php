@@ -41,6 +41,16 @@ class RecruitThumbnail extends FileTemplate
         ]);
     }
 
+    public function moveTempFilesToPublic(?File ...$files)
+    {
+        foreach ($files as $file) {
+            if (!$file instanceof Model) {
+                continue;
+            }
+            $this->moveTempToPublic($file);
+        }
+    }
+
 
     /**
      * @inheritDoc

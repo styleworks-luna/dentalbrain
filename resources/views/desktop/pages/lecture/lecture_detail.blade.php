@@ -55,7 +55,9 @@
                         <div class="lecture-sort">
                             <span class="lecture-type">{{$program->minor_category_name}}</span>
                             @if($program->minor_category_name != '스토어')
-                            <p class="lecture-date">수강기간 {{number_format($program->term)}}일</p>
+                                @if($program->is_online == true)
+                                    <p class="lecture-date">수강기간 {{number_format($program->term)}}일</p>
+                                @endif
                             @endif
                         </div>
                         <h2 class="lecture-title">{{ $program->title }}</h2>

@@ -127,6 +127,7 @@ mix.sass('resources/sass/mobile/pages/membership/membership.sass', 'public/css/m
 
 // mobile albatalk
 mix.sass('resources/sass/mobile/pages/albatalk/albatalk.sass', 'public/css/mobile/pages/albatalk')
+mix.sass('resources/sass/mobile/pages/albatalk/albatalk-detail.sass', 'public/css/mobile/pages/albatalk')
     .sass('resources/sass/mobile/pages/albatalk/albatalk-common.sass', 'public/css/mobile/pages/albatalk')
     .sass('resources/sass/mobile/pages/albatalk/albatalk-list.sass', 'public/css/mobile/pages/albatalk')
 
@@ -144,6 +145,7 @@ mix.sass('resources/sass/mobile/pages/user/mypage/mypage-payment.sass', 'public/
     .sass('resources/sass/mobile/pages/user/mypage/mypage-login.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-edit.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-resume-apply.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-secession.sass', 'public/css/mobile/pages/user/mypage');
 

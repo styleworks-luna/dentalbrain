@@ -26,39 +26,39 @@
                 <section class="office-information-wrap">
                     <div class="thumbnail-wrap">
                         <div class="main-img-wrap">
-                            <!-- TODO:: 썸네일 존재 여부 if문 작업 필요 -->
-                            <!-- 썸네일 존재하지 않을경우
-                            <div class="main-thumbnail none-image">
-                                <span class="none-image-icon"></span>
-                            </div>-->
-                            <!-- 썸네일 존재 할 경우 (등록 이미지) -->
-                            <img class="main-thumbnail thumbnail-on" src="{{ asset('/images/dummy/test.png') }}"
+                            <img class="main-thumbnail thumbnail-on" src="{{ $recruit->file->url ?? '' }}"
                                  alt="치과 사진">
                         </div>
                         <div class="sub-thumbnail-wrap">
                             <div class="img-wrap">
-                                <!-- 썸네일 존재하지 않을경우-->
-                                <div class="sub-thumbnail none-image">
-                                    <span class="none-image-icon"></span>
-                                </div>
-                                <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
+                                @if($recruit->file1)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file1->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="img-wrap">
-                                <!-- 썸네일 존재하지 않을경우-->
-                                <div class="sub-thumbnail none-image">
-                                    <span class="none-image-icon"></span>
-                                </div>
-                                <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
+                                @if($recruit->file2)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file2->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
                             </div>
                             <div class="img-wrap">
-                                <!-- 썸네일 존재하지 않을경우-->
-                                <div class="sub-thumbnail none-image">
-                                    <span class="none-image-icon"></span>
-                                </div>
-                                <!-- 썸네일 존재 할 경우 (등록 이미지)
-                                <img class="sub-thumbnail thumbnail-on" src="" alt="치과 사진">-->
+                                @if($recruit->file3)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file3->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     <div class="office-information">
                         <div class="office-title-wrap">
                             <h2>{{$recruit->company_name}}</h2>
-                            <span>모집마감일 : {{ $recruit->ended_at == null? "채용시 까지" : $recruit->ended_at->format('n월 d일까지') }}</span>
+                            <span>모집마감일 : {{ $recruit->ended_at == null? "채용시까지" : $recruit->ended_at->format('n월 d일까지') }}</span>
                         </div>
                         <div class="office-content-wrap">
                             <table>

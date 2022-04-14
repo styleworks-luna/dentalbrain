@@ -2,6 +2,8 @@
 
 namespace App\Services\Recruit;
 
+use App\Http\Controllers\Albatalk\Recruit\RecruitSiDo;
+use App\Models\File;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
@@ -14,15 +16,21 @@ use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use App\Services\File\RecruitThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class RecruitTemplate
+class RecruitService
 {
     public function getValidatorRecruit($rawData)
     {
         return Validator::make($rawData, [
+            'main_file_id' => ['required', 'numeric', 'min:1',],
+            'file_1_id' => ['nullable', 'numeric', 'min:1',],
+            'file_2_id' => ['nullable', 'numeric', 'min:1',],
+            'file_3_id' => ['nullable', 'numeric', 'min:1',],
+
             'dental_name' => ['required', 'string', 'min:2', 'max:255'],
             'ceo_name' => ['required', 'string', 'max:255'],
             'num' => ['required', 'string', 'max:255'],
@@ -37,8 +45,8 @@ class RecruitTemplate
             'address' => ['required', 'string',],
             'address_detail' => ['nullable', 'string',],
 
-            'sido' => ['required', 'string',],
-            'gugun' => ['required', 'string',],
+            'sido' => ['required', 'string', Rule::in(RecruitSiDo::getArray())],
+            'gugun' => ['nullable', 'string',],
             'dong' => ['required', 'string', 'nullable'],
 
             'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
@@ -145,7 +153,7 @@ class RecruitTemplate
         if (!$day) {
             RecruitDay::create([
                 'type' => TypeDay::find($data['day'])['type'],
-                'value' => $data['day_value']  ?? null,
+                'value' => $data['day_value'] ?? null,
                 'recruit_id' => $recruit->id,
                 'type_day_id' => $data['day'],
             ]);
@@ -172,11 +180,53 @@ class RecruitTemplate
     }
 
 
-    public function validateFile(Request $request) {
+    public function validateFile(Request $request)
+    {
+        return $this->validateImage($request);
+    }
+
+    public function validateEditorFile(Request $request)
+    {
+        $validator = Validator::make($request->file(),
+            ['file' => ['required', 'file', 'max:2048',]],
+            ['file.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
+        $validator->validate();
+        return $validator->validated()['file'];
+    }
+
+    public function validateEditorImage(Request $request)
+    {
+        return $this->validateImage($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    private function validateImage(Request $request)
+    {
         $validator = Validator::make($request->file(),
             ['image' => ['required', 'image', 'max:2048',]],
             ['image.max' => '이력서 사진을 2MB 아래로 제출해 주세요',]);
         $validator->validate();
         return $validator->validated()['image'];
+    }
+
+    public function attachThumbnails(Recruit $recruit, array $validatedData)
+    {
+        $mainFile = File::query()->find($validatedData['main_file_id']);
+        $file1 = File::query()->find($validatedData['file_1_id']);
+        $file2 = File::query()->find($validatedData['file_2_id']);
+        $file3 = File::query()->find($validatedData['file_3_id']);
+
+        $recruitThumbnail = new RecruitThumbnail($recruit);
+        $recruitThumbnail->moveTempFilesToPublic($mainFile, $file1, $file2, $file3);
+
+        $recruit->main_file_id = $mainFile->id;
+        $recruit->file_1_id = $file1 != null ? $file1->id : null;
+        $recruit->file_2_id = $file2 != null ? $file2->id : null;
+        $recruit->file_3_id = $file3 != null ? $file3->id : null;
+
+        $recruit->save();
     }
 }

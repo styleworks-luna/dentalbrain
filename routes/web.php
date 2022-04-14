@@ -48,7 +48,7 @@ if (env('APP_ENV') != 'production') {
             // 구인 등록 폼
             Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
             // 구인 등록
-            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'saveRecruitDataToSession'])->name('create');
             // 구인 등록 결제 성공
             Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
 
@@ -63,13 +63,18 @@ if (env('APP_ENV') != 'production') {
         });
 
         Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+            // 이력서 생성 폼 or 자기 이력서 (= resume_complete.blade.php)
             Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'resumeIndex'])->name('index');
+            // 이력서 등록
             Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
 
+            // 이력서 수정 폼
             Route::get('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'edit'])->name('edit');
+            // 이력서 수정
             Route::post('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'update'])->name('update');
         });
 
+        // 헤드 헌팅 리다이렉트
         Route::get('head-hunting', [\App\Http\Controllers\Albatalk\HeadHuntingController::class, 'index'])->name('head-hunting');
 
         // 알바톡(임시)
@@ -95,11 +100,18 @@ if (env('APP_ENV') != 'production') {
 
     Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+            // 메인 구인공고 검색 API
+            Route::get('search', [\App\Http\Controllers\Albatalk\Recruit\RecruitSearchController::class, 'search'])->name('search');
+
             Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+                // 이력서 사진 업로드용
                 Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
             });
             Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
-                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruit'])->name('image-upload');
+                // 구인공고 사진 업로드용
+                Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitThumbnail'])->name('image-upload');
+                Route::post('editor/image', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorImage'])->name('editor.image-upload');
+                Route::post('editor/file', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorFile'])->name('editor.file-upload');
             });
         });
 
