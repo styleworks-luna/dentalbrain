@@ -54,7 +54,7 @@ if (env('APP_ENV') != 'production') {
 
             Route::group(['prefix' => '{recruit}'], function () {
                 // 구인 상세
-                Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'detail'])->name('detail');
+                Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'detail'])->name('detail');
                 // 구인 데이터 불러오기
                 Route::get('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
                 // 구인 수정
