@@ -39,7 +39,7 @@ class RecruitService
             'manager_name' => ['required', 'string', 'min:2', 'max:100'],
             'manager_phone' => ['required', 'numeric', 'digits_between:9,11'],
             'manager_email' => ['required', 'string', 'email', 'max:255'],
-            'homepage' => ['required', 'url'],
+            'homepage' => ['nullable', 'string', 'max:255'],
             'subway' => ['nullable', 'string', 'max:255'],
 
             'address' => ['required', 'string',],
@@ -119,11 +119,13 @@ class RecruitService
         $application = RecruitApplication::where('recruit_id', '=', $recruit->id)->first();
         if (!$application) {
             foreach ($data['application'] as $key => $value) {
-                RecruitApplication::create([
-                    'type' => TypeApplication::find($key)['type'],
-                    'recruit_id' => $recruit->id,
-                    'type_application_id' => $key,
-                ]);
+                if ($value == 'on') {
+                    RecruitApplication::create([
+                        'type' => TypeApplication::find($key)['type'],
+                        'recruit_id' => $recruit->id,
+                        'type_application_id' => $key,
+                    ]);
+                }
             }
         }
 
@@ -168,15 +170,53 @@ class RecruitService
         $benefit = RecruitBenefit::where('recruit_id', '=', $recruit->id)->first();
         if (!$benefit) {
             foreach ($data['benefit'] as $key => $value) {
-                RecruitBenefit::create([
-                    'type' => TypeBenefit::find($key)['type'],
-                    'recruit_id' => $recruit->id,
-                    'type_benefit_id' => $key,
-                ]);
+                if ($value == 'on') {
+                    RecruitBenefit::create([
+                        'type' => TypeBenefit::find($key)['type'],
+                        'recruit_id' => $recruit->id,
+                        'type_benefit_id' => $key,
+                    ]);
+                }
             }
         }
 
         return $benefit;
+    }
+
+    public function updateRecruit(Recruit $recruit, array $data)
+    {
+        $recruit->update([
+            'user_id' => auth()->id(),
+            'company_name' => $data['dental_name'],
+            'company_leader' => $data['ceo_name'],
+            'company_license' => $data['num'],
+            'company_phone' => $data['phone'],
+
+            'name' => $data['manager_name'],
+            'phone' => $data['manager_phone'],
+            'email' => $data['manager_email'],
+            'url' => $data['homepage'],
+            'subway' => $data['subway'],
+
+            'address' => $data['address'],
+            'address_detail' => $data['address_detail'],
+            'sido' => $data['sido'],
+            'gugun' => $data['gugun'],
+            'dong' => $data['dong'],
+            'latitude' => $data['latitude'],
+            'longitude' => $data['longitude'],
+
+            'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
+            'type_work_id' => $data['work'],
+            'type_job_id' => $data['job'],
+            'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
+
+            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
+            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
+            'content' => $data['content'] ?? null,
+        ]);
+
+        return $recruit;
     }
 
 
