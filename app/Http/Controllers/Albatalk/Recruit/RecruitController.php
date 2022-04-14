@@ -36,7 +36,6 @@ class RecruitController extends Controller
     {
         $this->recruitService = $recruitService;
         $this->resumeService = $resumeService;
-
     }
 
     public function createForm()
@@ -56,25 +55,6 @@ class RecruitController extends Controller
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
             'price' => $price,
-        ]);
-    }
-
-
-    public function detail(Recruit $recruit)
-    {
-        $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
-        $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
-        $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
-        $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
-
-        $recruit->with('typeWork', 'typeJob', 'typeStudy', 'file', 'file1', 'file2', 'file3');
-
-        return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
-            'recruit' => $recruit,
-            'applications' => $applications,
-            'salaries' => $salaries,
-            'days' => $days,
-            'benefits' => $benefits,
         ]);
     }
 
@@ -189,7 +169,7 @@ class RecruitController extends Controller
     public function update(Recruit $recruit, Request $request)
     {
         $validator = $this->recruitService->getValidatorRecruit($request->all());
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $errorBags = $validator->errors();
 
             return \redirect(url()->previous())
