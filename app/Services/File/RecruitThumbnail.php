@@ -58,7 +58,8 @@ class RecruitThumbnail extends FileTemplate
     protected function getSavePath(string $fileName)
     {
         $recruit = $this->model;
-        return 'public/recruit/' . $recruit->id . '/thumbnail/' . $fileName;
+        $randomName = Str::random('5');
+        return 'public/recruit/' . $recruit->id . '/thumbnail/' . $randomName . '/' . $fileName;
     }
 
     /**
