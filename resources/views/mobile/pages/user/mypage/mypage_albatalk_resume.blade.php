@@ -225,19 +225,17 @@
                                 <h2>치과 업무 능력 자기 평가표</h2>
                             </div>
                             <div class="ability-information-content">
-                                <strong>교육가능</strong>
+                                <p>교육가능</p>
                                 <div>
                                     @foreach($categories as $category)
-                                        <div>
-                                            <div
-                                                class="ability-information-middle-name">{{ $category->name ?? '' }}</div>
+                                        <div class="ability-information-middle">
+                                            <div class="ability-information-middle-name">{{ $category->name ?? '' }}</div>
                                             <table>
                                                 @foreach($category->abilities as $ability)
                                                     <tr>
-
-                                                        <td class="{{ ($answers[$ability->id]['can_learn'] ?? false) ? 'can-learn' : '' }}">
+                                                        <th class="{{ ($answers[$ability->id]['can_learn'] ?? false) ? 'strong' : '' }}">
                                                             {{ $ability->name }}
-                                                        </td>
+                                                        </th>
                                                         @if( $ability->type == 'text' )
                                                             <td>{{ $answers[$ability->id]['content'] ?? '' }}</td>
                                                         @else
@@ -263,7 +261,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom-banner">구인 등록 및 수정은 PC에서만 가능합니다.</div>
+            <div class="bottom-banner">이력서 수정은 PC에서만 가능합니다.</div>
         </div>
     </section>
 @endsection
