@@ -36,7 +36,6 @@ export default {
     },
     methods: {
         getData() {
-            console.log(this.updatedMenuList);
             let params = {
                 sido: this.updatedMenuList,
             }
