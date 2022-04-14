@@ -313,10 +313,7 @@
                                                class="input-s"
                                                name="num"
                                                value="{{ old('num') }}"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
-                                               data-parsley-minlength="2"
-                                               data-parsley-minlength-message="※ 최소 2자 이상 입력해주세요."
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
 
