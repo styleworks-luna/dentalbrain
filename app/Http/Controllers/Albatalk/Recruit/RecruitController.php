@@ -20,7 +20,9 @@ use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\File\RecruitThumbnail;
 use App\Services\Recruit\RecruitService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -62,7 +64,7 @@ class RecruitController extends Controller
         $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
         $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
 
-        $recruit->with('typeWork', 'typeJob', 'typeStudy');
+        $recruit->with('typeWork', 'typeJob', 'typeStudy', 'file', 'file1', 'file2', 'file3');
 
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
             'recruit' => $recruit,
@@ -73,7 +75,7 @@ class RecruitController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function saveRecruitDataToSession(Request $request): JsonResponse
     {
         // 구인 등록 유효성 검사
         $validator = $this->recruitService->getValidatorRecruit($request->all());
@@ -84,13 +86,12 @@ class RecruitController extends Controller
                 return ['name' => $key, 'message' => $item[0]];
             });
 
-            return response()->json($collection->toArray(), 404);
+            return response()->json($collection->toArray(), 400);
         }
 
         // 검사한 데이터 세션에 저장
         session([Recruit::SESSION_KEY => $validator->validated()]);
 
-        // 결제 폼으로 이동
         return response()->json(['massage' => 'ok']);
     }
 
@@ -103,7 +104,6 @@ class RecruitController extends Controller
             return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.']);
         }
 
-        // 결제 승인 API
         try {
             DB::beginTransaction();
 
@@ -115,11 +115,12 @@ class RecruitController extends Controller
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
 
-            // TossPayment 객체생성
+            $this->recruitService->attachThumbnails($recruit, $recruitData);
+
+            // 결제 승인 API
             $tossPayments = new TossPayments($request['paymentKey']);
             $tossResponse = $tossPayments->success($request['orderId'], $request['amount']);
 
-            // response 오류
             if (!$tossResponse) {
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
             }
@@ -130,12 +131,9 @@ class RecruitController extends Controller
             // 페이먼츠 인스턴스 생성
             $payment = Payment::createByTossSuccess($tossResponse);
 
-            // 구인등록 페이먼츠 생성
-            // 방금 만들어진 구인등록에 대한 처리가 필요!
             $recruit->payment_id = $payment->id;
             $recruit->save();
 
-            // 결제 취소 됐을 때 처리도 필요함
             DB::commit();
 
         } catch (TossPaymentsException $exception) {

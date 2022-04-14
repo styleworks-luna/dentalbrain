@@ -48,7 +48,7 @@ if (env('APP_ENV') != 'production') {
             // 구인 등록 폼
             Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
             // 구인 등록
-            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'create'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'saveRecruitDataToSession'])->name('create');
             // 구인 등록 결제 성공
             Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
             // 구인 등록 결과
