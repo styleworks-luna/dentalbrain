@@ -39,7 +39,7 @@ class RecruitService
             'manager_name' => ['required', 'string', 'min:2', 'max:100'],
             'manager_phone' => ['required', 'numeric', 'digits_between:9,11'],
             'manager_email' => ['required', 'string', 'email', 'max:255'],
-            'homepage' => ['required', 'url'],
+            'homepage' => ['nullable', 'string', 'max:255'],
             'subway' => ['nullable', 'string', 'max:255'],
 
             'address' => ['required', 'string',],
