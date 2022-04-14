@@ -15,7 +15,6 @@ class CreateAppliedResumes extends Migration
     {
         Schema::create('applied_resumes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('recruit_id')->nullable();
             $table->unsignedBigInteger('resume_id')->nullable();
             $table->integer('status')->default(1)->comment('신청 status');
@@ -23,7 +22,6 @@ class CreateAppliedResumes extends Migration
             $table->dateTime('canceled_at')->nullable()->comment('제출 취소 일자');
             $table->boolean('is_recommended')->default(false)->comment('관리차 추천 여부');
 
-            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('recruit_id')->references('id')->on('recruits');
             $table->foreign('resume_id')->references('id')->on('resumes');
 

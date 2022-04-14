@@ -20,11 +20,6 @@ class AppliedResume extends Model
     const STATUS_SUCCESS = 1;
     const STATUS_CANCELED = 2;
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
     public function recruit(): BelongsTo
     {
         return $this->belongsTo(Recruit::class, 'recruit_id', 'id');
