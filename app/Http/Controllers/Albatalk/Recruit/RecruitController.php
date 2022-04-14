@@ -12,7 +12,6 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\RecruitPrice;
 use App\Services\Recruit\RecruitService;
-use App\Services\Recruit\RecruitTemplate;
 use Illuminate\Support\Facades\Auth;
 
 class RecruitController extends Controller
