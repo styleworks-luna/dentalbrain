@@ -1,22 +1,27 @@
 <template>
-    <div class="albatalk-menu">
+    <div class="albatalk-menu" id="albatalk-menu">
         <template v-if="mobile">
             <div class="albatalk-menu-list-wrap">
-                <div class="menu-title">
-                    <p class="label">근무지역</p>
-                    <span class="btn-close-menu"></span>
-                </div>
-                <div class="menu-content">
-                    <p>근무지역을 선택해주세요.</p>
-                    <ul class="albatalk-menu-list">
-                        <li v-for="menuList in menuLists" :key="menuList.name">
-                            <a href="">{{ menuList.text }}</a>
-                        </li>
-                    </ul>
+                <div class="albatalk-middle">
+                    <div class="menu-title">
+                        <p class="label">근무지역</p>
+                        <span class="btn-close-menu" @click.prevent="exit()"></span>
+                    </div>
+                    <div class="m-row">
+                        <div class="menu-content">
+                            <p>근무지역을 선택해주세요.</p>
+                            <ul class="albatalk-menu-list">
+                                <li v-for="menuList in menuLists" :key="menuList.name">
+                                    <a :id="`menu_list_${menuList.name}`" class="menu-list active" :data-name="menuList.text"
+                                       @click="mobileMenuEvent($event, menuList.text)">{{ menuList.text }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
-        <template v-else>
+        <template v-else-if="!mobile && !show">
             <div class="albatalk-menu-list-wrap">
                 <p class="label">근무지역</p>
                 <ul class="albatalk-menu-list">
@@ -38,6 +43,7 @@ export default {
     name: "AlbaTalkNavigation",
     data() {
         return {
+            check: false,
             menuLists: [
                 {
                     name: 'all',
@@ -117,6 +123,7 @@ export default {
     },
     props: {
         'mobile': Boolean,
+        'show': Boolean,
     },
     mounted() {
         document.getElementsByName("menu_list").forEach(x => {
@@ -185,6 +192,70 @@ export default {
             const uniqueArr = [...set];
 
             this.$emit('menuEventEmit', uniqueArr);
+        },
+
+        mobileMenuEvent(e, name) {
+            if (!e.target.classList.contains('active')) {
+                if (name == '전체') {
+                    document.querySelectorAll(".menu-list").forEach(x => {
+                        x.classList.add('active');
+                        if (x.getAttribute('data-name') != '전체') {
+                            if (x.getAttribute('data-name') == '세종') {
+                                this.checkLists.push('세종특별자치시');
+                            } else if (x.getAttribute('data-name') == '제주') {
+                                this.checkLists.push('제주특별자치도');
+                            } else {
+                                this.checkLists.push(x.getAttribute('data-name'));
+                            }
+                        }
+                    });
+                } else if (name == '세종') {
+                    this.checkLists.push('세종특별자치시');
+                } else if (name == '제주') {
+                    this.checkLists.push('제주특별자치도');
+                } else {
+                    this.checkLists.push(name);
+                }
+                e.target.classList.add('active');
+            } else {
+                if (name == '전체') {
+                    this.checkLists = [];
+                    document.querySelectorAll(".menu-list").forEach(x => {
+                        x.classList.remove('active');
+                    });
+                } else if (name == '세종') {
+                    let index = this.checkLists.indexOf('세종특별자치시');
+                    this.checkLists.splice(index, 1);
+                } else if (name == '제주') {
+                    let index = this.checkLists.indexOf('제주특별자치도');
+                    this.checkLists.splice(index, 1);
+                } else {
+                    let index = this.checkLists.indexOf(name);
+                    this.checkLists.splice(index, 1);
+                }
+                e.target.classList.remove('active');
+            }
+
+            let check_all = true;
+            document.querySelectorAll(".menu-list").forEach(x => {
+                if (x.getAttribute('data-name') != '전체') {
+                    check_all = check_all && x.classList.contains('active');
+                }
+            });
+
+            if (check_all) {
+                document.getElementById("menu_list_all").classList.add('active');
+            } else {
+                document.getElementById("menu_list_all").classList.remove('active');
+            }
+
+            const set = new Set(this.checkLists);
+            const uniqueArr = [...set];
+
+            this.$emit('menuEventEmit', this.checkLists);
+        },
+        exit(){
+            document.getElementById("albatalk-menu").style.display='none';
         }
     }
 }

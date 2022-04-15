@@ -59,6 +59,66 @@
     .albatalk-menu
         display: none
 
+        .albatalk-menu-list-wrap
+            +size(100%, 100%)
+            position: fixed
+            bottom: 0
+            background-color: $gray-600
+
+            .albatalk-middle
+                +size(100%, 100%)
+                +margin(top 11.111111vw)
+                +border-radius(4.444444vw)
+                background-color: #ffffff
+
+                .menu-title
+                    +padding(left 15.555556vw)
+                    +border(0.277778vw solid $page-color, bottom)
+                    display: flex
+                    align-items: center
+
+                    p
+                        +size(68.888889vw)
+                        +padding(top 3.888889vw bottom 3.888889vw)
+                        text-align: center
+                        font-size: 5vw
+                        font-weight: bold
+                    
+                    .btn-close-menu
+                        +size(6.666667vw, 6.666667vw)
+                        +margin(left 1.388888888vw)
+                        +background('/images/mobile/global/icon_nav_close_grey.svg', no-repeat, center)
+
+                .menu-content
+                    p
+                        +padding(top 8.333333vw bottom 5.555556vw)
+                        text-align: center
+                        font-size: 3.333333vw
+
+                    .albatalk-menu-list
+                        +size(100%, 94.444444vw)
+                        display: flex
+                        flex-wrap: wrap
+                        justify-content: space-between
+
+                        li
+                            +size(28.888889vw, 13.888889vw)
+                            +border(0.277778vw solid $border-color-base)
+                            +border-radius(0.277778vw)
+                            //+margin(2.222222vw)
+                            display: flex
+                            align-items: center
+                            justify-content: center
+
+                            a
+                                +size(100%, 100%)
+                                display: block
+                                line-height: 13.888889vw
+                                text-align: center
+
+                                &.active
+                                    +border(0.277778vw solid $page-color)
+
     .albatalk-contents
         +padding(bottom 11.11111111vw)
 

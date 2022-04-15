@@ -2,7 +2,7 @@
     <section class="albatalk">
         <div class="albatalk-navigation">
             <albatalk-order :mobile="mobile"></albatalk-order>
-            <albatalk-navigation :mobile="mobile" @menuEventEmit="menuListUpdate"></albatalk-navigation>
+            <albatalk-navigation :mobile="mobile" :show="showNavigation" @menuEventEmit="menuListUpdate"></albatalk-navigation>
         </div>
         <albatalk-list :mobile="mobile" :lists="lists"></albatalk-list>
     </section>
@@ -31,7 +31,8 @@ export default {
     data() {
         return {
             updatedMenuList: [],
-            lists: []
+            lists: [],
+            showNavigation: false,
         }
     },
     methods: {

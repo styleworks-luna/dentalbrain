@@ -4,7 +4,7 @@
         <div class="m-row">
             <ul class="order-list">
                 <li>
-                    <a href="" class="btn-menu">
+                    <a href="" class="btn-menu" @click.prevent="show()">
                         <span>근무지역</span>
                         <span class="icon-filter"></span>
                     </a>
@@ -34,6 +34,11 @@ export default {
     props: {
         'mobile': Boolean,
     },
+    methods: {
+        show(){
+            document.getElementById("albatalk-menu").style.display='block';
+        }
+    }
 }
 
 </script>
