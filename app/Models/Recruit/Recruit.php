@@ -21,6 +21,9 @@ class Recruit extends Model
     protected $guarded = [];
     protected $dates = ['started_at', 'ended_at'];
 
+    // 구인 노출 기간
+    const TERM = 7;
+
     // 신입
     static $JUNIOR = 1;
     // 경력

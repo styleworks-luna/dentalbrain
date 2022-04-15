@@ -21,7 +21,7 @@
                 <section class="subtitle-wrap">
                     <h1>구인정보</h1>
                     @if( $authority->isOwner() )
-                        <a href="">구인정보 수정하기</a>
+                        <a href="/albatalk/recruit/{{$recruit->id}}/edit">구인정보 수정하기</a>
                     @endif
                 </section>
 
@@ -98,8 +98,10 @@
                                     <th>주소</th>
                                     <td colspan="3">
                                         <div class="address-wrap">
-                                            <p>서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
-                                            <a href="" class="btn-map">지도보기</a>
+                                            <input type="hidden" class="latitude" value="{{$recruit->latitude}}">
+                                            <input type="hidden" class="longitude" value="{{$recruit->longitude}}">
+                                            <p>{{$recruit->address}}</p>
+                                            <a href="" class="btn-map" >지도보기</a>
                                         </div>
                                     </td>
                                 </tr>

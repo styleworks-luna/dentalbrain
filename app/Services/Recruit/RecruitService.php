@@ -17,6 +17,7 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use App\Services\File\RecruitThumbnail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -211,6 +212,7 @@ class RecruitService
             'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
+            'term' => $data['term'] ?? Recruit::TERM,
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
@@ -267,6 +269,14 @@ class RecruitService
         $recruit->file_2_id = $file2 != null ? $file2->id : null;
         $recruit->file_3_id = $file3 != null ? $file3->id : null;
 
+        $recruit->save();
+    }
+
+    public function expiredRecruitTerm(Recruit $recruit)
+    {
+        $recruit = Recruit::query()->find($recruit->id);
+
+        $recruit->expired_at = Carbon::parse($recruit->created_at)->addDay($recruit->term);
         $recruit->save();
     }
 }
