@@ -10,6 +10,106 @@
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script>
+        $(function () {
+            $('.btn-submit').click(function (e) {
+                e.preventDefault();
+
+                let form = $('#albatalk_recruit_form')[0];
+                let data = new FormData(form);
+
+                $('#albatalk_recruit_form').parsley().validate();
+                if ($('#albatalk_recruit_form').parsley().isValid()) {
+                    $.ajax({
+                        url: '/albatalk/recruit',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }, success: function (json) {
+                            Payment();
+                        }
+                    });
+                }
+            });
+
+            function Payment() {
+                var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
+                var tossPayments = TossPayments(clientKey);
+                var message = getParameter('message');
+                var paymentmethod = $('.pay-method:checked').val();
+
+                $('.pay-method').change(function () {
+                    paymentmethod = $('.pay-method:checked').val();
+                });
+
+                var paymentObj;
+                var cardCompany = $('.pay-method-select').val();
+
+                const amount = {{ $price }};
+                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                const orderName = '구인 결제';
+                const customerName = '{{ auth()->user()->name }}';
+                const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
+                const failUrl = '{{ route('albatalk.recruit.create') }}';
+                const customerEmail = '{{ auth()->user()->email }}';
+                const customerMobilePhone = '{{ auth()->user()->phone }}';
+                if (paymentmethod === '카드') {
+                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: failUrl,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
+
+                        maxCardInstallmentPlan: maxCardInstallmentPlan,
+                        cardCompany: cardCompany,
+                    };
+                } else if (paymentmethod === '계좌이체') {
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: failUrl,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
+                    };
+                }
+
+                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                    alert('취소');
+                });
+
+                // 결제 실패시 오류 메세지 출력
+                paymentMessage(message);
+            }
+        });
+
+        function getParameter(param) {
+            var paramData = window.location.search.substr(1).split('&').filter(function (i) {
+                return i.split('=')[0] == param;
+            });
+
+            return paramData.length === 0 ? null : paramData[0].split('=')[1];
+        }
+
+        function paymentMessage(message) {
+            if (message) {
+                alert(decodeURI(message));
+            }
+        }
+    </script>
 @endsection
 
 @section('style')
@@ -36,7 +136,7 @@
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form action="{{ route('albatalk.recruit.edit', $recruit) }}" method="post">
+                    <form id="albatalk_recruit_form" action={{ route('albatalk.recruit.create') }} method="post">
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
@@ -97,14 +197,13 @@
                                                 <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="img-wrap">
                                             <input type="hidden" name="file_2_id" class="file-id"
-                                                   value="{{ $recruit->file2->id ?? '' }}">
-
+                                                   value="{{ $recruit->file3->id ?? '' }}">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -122,14 +221,13 @@
                                                 <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="img-wrap">
-                                            <input type="hidden" name="file_3_id" class="file-id"
-                                                   value="{{ $recruit->file3->id ?? '' }}">
+                                            <input type="hidden" name="file_3_id" class="file-id">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -147,7 +245,7 @@
                                                 <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -190,6 +288,8 @@
                                                value="{{old('ceo_name', $recruit->company_leader)}}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
+                                               data-parsley-minlength="2"
+                                               data-parsley-minlength-message="※ 최소 2자 이상 입력해주세요."
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
@@ -201,7 +301,10 @@
                                                name="manager_phone"
                                                value="{{old('manager_phone', $recruit->phone)}}"
                                                placeholder="‘-‘ 없이 입력"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                data-parsley-required="true"
+                                               data-parsley-length="[9,11]"
+                                               data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     </td>
                                 </tr>
@@ -213,7 +316,6 @@
                                                class="input-s"
                                                name="num"
                                                value="{{old('num', $recruit->company_license)}}"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
@@ -238,6 +340,7 @@
                                                class="input-s"
                                                name="phone"
                                                value="{{old('phone', $recruit->company_phone)}}"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -250,6 +353,7 @@
                                                id="homepage"
                                                class="input-xl"
                                                name="homepage"
+
                                                value="{{old('homepage', $recruit->url)}}">
                                     </td>
                                 </tr>
@@ -310,8 +414,7 @@
                                                 <div class="checkbox-wrap">
                                                     <input type="hidden" name="application[{{$application->id}}]"
                                                            value="off">
-                                                    <input type="checkbox" id="application_field_[{{$application->id}}]"
-                                                           {{--name="application[{{$application->id}}]"--}}
+                                                    <input type="checkbox" id="application_field_[{{ $application->id }}]"
                                                            name="{{'application['.$application->id.']'}}"
                                                            @if(old('application.'.$application->id, $recruitApplications->contains($application->id) ? 'on' :'off') == 'on')
                                                            checked
@@ -322,7 +425,7 @@
                                                            data-parsley-required-message="※ 신청분야를 선택해주세요."
                                                            data-parsley-errors-container=".application-error-container">
                                                     <label
-                                                            for="application_field_[{{$application->id}}]">{{$application->type}}</label>
+                                                        for="application_field_[{{ $application->id }}]">{{ $application->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -335,16 +438,17 @@
                                         <div class="radio-container">
                                             @foreach($typeWork as $work)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="work_type_field_[{{$work->id}}]"
+                                                    <input type="radio" id="work_type_field_[{{ $work->id }}]"
                                                            name="work"
-                                                           value={{$work->id}}
+                                                           value={{ $work->id }}
                                                            @if(old('work', $recruit->typeWork->id) == $work->id)
                                                                    checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무형태를 선택해주세요."
                                                            data-parsley-errors-container=".work-type-error-container">
-                                                    <label for="work_type_field_[{{$work->id}}]">{{$work->type}}</label>
+                                                    <label
+                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -357,13 +461,14 @@
                                         <div class="radio-container">
                                             @foreach($typeJob as $job)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="job_type_field_[{{$job->id}}]" name="job"
-                                                           value={{$job->id}} @if(old('job', $recruit->typeJob->id) == $job->id) checked
+                                                    <input type="radio" id="job_type_field_[{{ $job->id }}]" name="job"
+                                                           value={{ $job->id }} @if(old('job', $recruit->typeJob->id) == $job->id) checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
-                                                    <label for="job_type_field_[{{$job->id}}]">{{$job->type}}</label>
+                                                    <label
+                                                        for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -376,10 +481,10 @@
                                         <div class="radio-container">
                                             @foreach($typeSalary as $salary)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="salary_type_field_[{{$salary->id}}]"
+                                                    <input type="radio" id="salary_type_field_[{{ $salary->id }}]"
                                                            name="salary"
                                                            class="salary"
-                                                           value={{$salary->id}}
+                                                           value={{ $salary->id }}
                                                            @if(old('salary', $recruitSalaries[0]->type_salary_id) == $salary->id)
                                                                    checked
                                                            @endif
@@ -387,8 +492,8 @@
                                                            data-parsley-required-message="※ 급여를 선택해주세요."
                                                            data-parsley-errors-container=".salary-type-error-container">
                                                     <label
-                                                            for="salary_type_field_[{{$salary->id}}]">{{$salary->type}}</label>
-                                                    @if($salary->id == 4 )
+                                                        for="salary_type_field_[{{ $salary->id }}]">{{ $salary->type }}</label>
+                                                    @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m salary-input"
                                                                value="{{old('salary_value', $recruitSalaries[0]->value)}}"
@@ -444,8 +549,7 @@
                                         <div class="radio-container">
                                             <div class="radio-wrap">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
-                                                       value="1"
-                                                       @if(old('is_career', $recruit->career == 0) == 1) checked @endif
+                                                       value="1" @if(old('is_career') == 1) checked @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
@@ -486,16 +590,17 @@
                                             @foreach($typeDay as $day)
                                                 <div class="radio-wrap">
                                                     <input type="radio"
-                                                           id="day_type_field_[{{$day->id}}]"
+                                                           id="day_type_field_[{{ $day->id }}]"
                                                            name="day"
                                                            class="work-day"
-                                                           value={{$day->id}}
+                                                           value={{ $day->id }}
                                                            @if(old('day', $recruitDays[0]->type_day_id) == $day->id) checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무요일을 선택해주세요."
                                                            data-parsley-errors-container=".day-type-error-container">
-                                                    <label for="day_type_field_[{{$day->id}}]">{{$day->type}}</label>
+                                                    <label
+                                                        for="day_type_field_[{{ $day->id }}]">{{ $day->type }}</label>
                                                     @if($day->id == 4)
                                                         <input type="text" name="day_value"
                                                                class="radio-input input-m work-day-input"
@@ -516,7 +621,7 @@
                                             @foreach($typeBenefit as $benefit)
                                                 <div class="checkbox-wrap">
                                                     <input type="hidden" name="benefit[{{$benefit->id}}]" value="off">
-                                                    <input type="checkbox" id="benefit_type_field_[{{$benefit->id}}]"
+                                                    <input type="checkbox" id="benefit_type_field_[{{ $benefit->id }}]"
                                                            name="benefit[{{$benefit->id}}]"
                                                            @if(old('benefit.'.$benefit->id, $recruitBenefits->contains($benefit->id) ? 'on' :'off') == 'on')
                                                            checked
@@ -527,7 +632,7 @@
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
                                                     <label
-                                                            for="benefit_type_field_[{{$benefit->id}}]">{{$benefit->type}}</label>
+                                                        for="benefit_type_field_[{{ $benefit->id }}]">{{ $benefit->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -585,7 +690,7 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_02" class="deadline"
                                                        name="deadline" value="2"
-                                                       @if(old('deadline', $recruit->started_at == null) == 2) checked @endif>
+                                                       @if(old('deadline') == 2) checked @endif>
                                                 <label for="deadline_field_02">채용시까지</label>
                                             </div>
                                         </div>
@@ -609,10 +714,70 @@
                                                   name="content">{{old('content', $recruit->content)}}</textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>결제금액</th>
+                                    <td class="wrapper-lg">
+                                        <p class="money">{{ $price }}원</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>결제방식 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio"
+                                                       id="pay_method_field_01"
+                                                       class="pay-method"
+                                                       name="pay_method"
+                                                       value="카드"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 결제방식을 선택해주세요."
+                                                       data-parsley-errors-container=".pay-type-error-container">
+                                                <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
+                                                <select name="pay_method" id=""
+                                                        class="input-xs select-menu pay-method-select"
+                                                        @if( old('pay_method') != '카드' ) disabled @endif>
+                                                    <option value="신한">신한</option>
+                                                    <option value="현대">현대</option>
+                                                    <option value="삼성">삼성</option>
+                                                    <option value="우리">우리</option>
+                                                    <option value="BC">BC</option>
+                                                    <option value="국민">국민</option>
+                                                    <option value="롯데">롯데</option>
+                                                    <option value="농협">농협</option>
+                                                    <option value="하나">하나</option>
+                                                    <option value="씨티">씨티</option>
+                                                    <option value="카카오뱅크">카카오뱅크</option>
+                                                    <option value="수협">수협</option>
+                                                    <option value="전북">전북</option>
+                                                    <option value="우체국">우체국</option>
+                                                    <option value="새마을">새마을</option>
+                                                    <option value="저축">저축</option>
+                                                    <option value="제주">제주</option>
+                                                    <option value="광주">광주</option>
+                                                    <option value="신협">신협</option>
+                                                    <option value="JCB">JCB</option>
+                                                    <option value="유니온페이">유니온페이</option>
+                                                    <option value="마스터">마스터</option>
+                                                    <option value="비자">비자</option>
+                                                    <option value="다이너스">다이너스</option>
+                                                    <option value="디스커버">디스커버</option>
+                                                </select>
+                                            </div>
+                                            {{--
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <label for="pay_method_field_02">실시간 계좌이체</label>
+                                            </div>
+                                            --}}
+                                        </div>
+                                        <div class="pay-type-error-container"></div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                         <div class="btn-wrap">
-                            <button class="btn-submit" type="submit">구인공고 수정</button>
+                            <button class="btn-submit" type="submit">구인공고 등록</button>
                         </div>
                     </form>
                 </div>
