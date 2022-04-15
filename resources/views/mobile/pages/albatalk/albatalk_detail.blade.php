@@ -203,7 +203,7 @@
                         </div>
                     @endif
                     @if($authority->isAdmin() || $authority->isOwner())
-                        <ul>
+                        <ul class="resume-list">
                             @foreach($appliedResumes as $appliedResume)
                                 <li>
                                     @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
