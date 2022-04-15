@@ -21,7 +21,7 @@
     <section class="albatalk-wrap">
         <div class="m-container">
             <albatalk :mobile="true"></albatalk>
-            <div class="bottom-banner">구인 등록 및 수정은 PC에서만 가능합니다.</div>
         </div>
     </section>
+    <section class="bottom-banner">구인 등록 및 수정은 PC에서만 가능합니다.</section>
 @endsection
