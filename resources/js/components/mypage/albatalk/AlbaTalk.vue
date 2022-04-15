@@ -27,7 +27,7 @@ export default {
     },
     data() {
         return {
-            albaTalkList: {},
+            albaTalkList: [],
         }
     },
     mounted() {
