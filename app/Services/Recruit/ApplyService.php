@@ -6,8 +6,11 @@ use App\DTO\Recruit\RecruitAuthority;
 use App\Models\Recruit\Recruit;
 use App\Models\Resume\AppliedResume;
 use App\Models\Resume\Resume;
+use App\Models\User;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +24,9 @@ class ApplyService
     public function apply(Recruit $recruit, bool $isRecommended = false)
     {
         $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
+        if ($resume == null) {
+            throw new ModelNotFoundException();
+        }
 
         return AppliedResume::query()->updateOrCreate([
             'recruit_id' => $recruit->id,
@@ -45,5 +51,29 @@ class ApplyService
             ->where('recruit_id', '=', $recruit->id)
             ->where('status', '=', AppliedResume::STATUS_SUCCESS)
             ->exists();
+    }
+
+    /**
+     * @param Recruit $recruit
+     * @param Authenticatable|User|null $user
+     * @return Builder|Model|object|null AppliedResume
+     */
+    public function findApplied(Recruit $recruit, $user = null)
+    {
+        if ($user == null) {
+            $userId = Auth::user();
+        } else {
+            $userId = $user->id;
+        }
+        $resume = Resume::query()->where('user_id', '=', $userId)->first('id');
+        if ($resume == null) {
+            throw new ModelNotFoundException();
+        }
+        return AppliedResume::query()
+            ->with('resume')
+            ->where('resume_id', '=', $resume->id)
+            ->where('recruit_id', '=', $recruit->id)
+            ->where('status', '=', AppliedResume::STATUS_SUCCESS)
+            ->first();
     }
 }

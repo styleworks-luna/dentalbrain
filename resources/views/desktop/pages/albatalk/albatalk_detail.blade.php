@@ -260,7 +260,8 @@
                                             <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
                                         </td>
                                         <td>
-                                            <a href="" class="btn-resume">이력서 보기</a>
+                                            <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $appliedResume->resume->user->id]) }}"
+                                               class="btn-resume">이력서 보기</a>
                                         </td>
                                     @endif
                                 </tr>
