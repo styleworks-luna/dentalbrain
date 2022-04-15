@@ -9,6 +9,7 @@ use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Recruit;
+use App\Models\Resume\AppliedResume;
 use App\Services\Recruit\ApplyService;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Http\Request;
@@ -41,6 +42,17 @@ class RecruitDetailController extends Controller
             $authority = new RecruitAuthority(false, false);
         }
 
+        if ($authority->isAdmin() || $authority->isOwner()) {
+            $appliedResumes = AppliedResume::query()
+                ->where('recruit_id', '=', $recruit->id)
+                ->orderByDesc('applied_at')
+                ->with('resume.user')
+                ->get();
+        } else {
+            $appliedResumes = collect();
+        }
+
+
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
             'recruit' => $recruit,
             'applications' => $applications,
@@ -48,6 +60,7 @@ class RecruitDetailController extends Controller
             'days' => $days,
             'benefits' => $benefits,
             'authority' => $authority,
+            'appliedResumes' => $appliedResumes,
         ]);
     }
 

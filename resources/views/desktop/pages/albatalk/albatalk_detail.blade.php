@@ -206,11 +206,10 @@
                         @endauth
                     </form>
                 </section>
-                <!-- TODO:: 신청자본인(본인 제출 내역만 확인), 등록자(제출 내역 전체 확인), 관리자(전체 확인) -->
                 <section class="applied-resume-status">
                     @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
                         <div class="information-title">
-                            <h2>이력서 접수 상태 <em>0</em>건</h2>
+                            <h2>이력서 접수 상태 <em>{{ $appliedResumes->count() }}</em>건</h2>
                         </div>
                     @endif
                     @if($authority->isAdmin() || $authority->isOwner())
@@ -224,49 +223,42 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <!-- 관리자 추천일 경우 -->
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <div class="recommend-person">
-                                        <span class="badge-recommend">관리자 추천</span>
-                                        <p>홍길동</p>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p>2022년 02월 23일 18:05:00</p>
-                                </td>
-                                <td>
-                                    <a href="" class="btn-resume">이력서 보기</a>
-                                </td>
-                            </tr>
-                            <!-- 일반적 경우 -->
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <p>구직자</p>
-                                </td>
-                                <td>
-                                    <p>2022년 02월 23일 18:05:00</p>
-                                </td>
-                                <td>
-                                    <a href="" class="btn-resume">이력서 보기</a>
-                                </td>
-                            </tr>
-                            <!-- 제출 취소 경우 -->
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <p class="cancel-status">취소자</p>
-                                </td>
-                                <td>
-                                    <p class="cancel-status">2022년 02월 23일 18:05:00</p>
-                                </td>
-                                <td>
-                                    <p class="status-cancel">제출취소</p>
-                                    <p class="cancel-date">2022년 02월 28일 18:05:00</p>
-                                </td>
-                            </tr>
+                            @foreach($appliedResumes as $appliedResume)
+                                <tr>
+                                    <td>{{ $loop->count - $loop->index }}</td>
+                                    @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
+                                        <td>
+                                            <p class="cancel-status">취소자</p>
+                                        </td>
+                                        <td>
+                                            <p class="cancel-status">{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="status-cancel">제출취소</p>
+                                            <p class="cancel-date">{{ $appliedResume->canceled_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </td>
+                                    @else
+                                        <td>
+                                            @if($appliedResume->is_recommended)
+                                                <div class="recommend-person">
+                                                    <span class="badge-recommend">관리자 추천</span>
+                                                    <p>{{ $appliedResume->resume->user->name }}</p>
+                                                </div>
+                                            @else
+                                                <div>
+                                                    <p>{{ $appliedResume->resume->user->name }}</p>
+                                                </div>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </td>
+                                        <td>
+                                            <a href="" class="btn-resume">이력서 보기</a>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                 @endif
