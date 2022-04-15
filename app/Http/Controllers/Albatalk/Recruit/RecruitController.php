@@ -171,14 +171,12 @@ class RecruitController extends Controller
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
             $errorBags = $validator->errors();
-
+            
             return \redirect(url()->previous())
                 ->withInput($request->input())
                 ->withErrors($errorBags);
         }
-
         try {
-
             $recruitData = $validator->validated();
 
             $recruit = $this->recruitService->updateRecruit($recruit, $recruitData);
@@ -200,5 +198,38 @@ class RecruitController extends Controller
         }
 
         return redirect()->route('albatalk.recruit.detail', $recruit->id)->with('alert', '수정되었습니다.');
+    }
+
+    public function duplicateForm(Recruit $recruit)
+    {
+        // 회원 상태 확인
+        $user = Auth::user();
+
+        // 회원 상태에 따른 결제 금액
+        $price = RecruitPrice::getRecruitPrice($user);
+
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
+            ->where('id', $recruit->id)->first();
+
+        $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
+        $recruitSalaries = RecruitSalary::query()->where('recruit_id', $recruit->id)->get(['type_salary_id', 'value']);
+        $recruitDays = RecruitDay::query()->where('recruit_id', $recruit->id)->get(['type_day_id', 'value']);
+        $recruitBenefits = RecruitBenefit::query()->where('recruit_id', $recruit->id)->pluck('type_benefit_id');
+
+        return view(viewPrefix() . 'pages.albatalk.albatalk_post_duplicate')->with([
+            'typeApplication' => TypeApplication::all(),
+            'typeWork' => TypeWork::all(),
+            'typeJob' => TypeJob::all(),
+            'typeSalary' => TypeSalary::all(),
+            'typeStudy' => TypeStudy::all(),
+            'typeDay' => TypeDay::all(),
+            'typeBenefit' => TypeBenefit::all(),
+            'price' => $price,
+            'recruit' => $recruit,
+            'recruitApplications' => $recruitApplications,
+            'recruitSalaries' => $recruitSalaries,
+            'recruitDays' => $recruitDays,
+            'recruitBenefits' => $recruitBenefits,
+        ]);
     }
 }

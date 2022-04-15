@@ -61,6 +61,8 @@ if (env('APP_ENV') != 'production') {
                 Route::get('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
                 // 구인 수정
                 Route::post('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+                // 구인 등록 복사
+                Route::get('/duplicate', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'duplicateForm'])->name('duplicate');
             });
 
         });
