@@ -5,9 +5,11 @@ namespace App\Models\Resume;
 use App\Models\File;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 
 class Resume extends Model
