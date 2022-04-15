@@ -20,7 +20,9 @@
             <div class="row">
                 <section class="subtitle-wrap">
                     <h1>구인정보</h1>
-                    <a href="">구인정보 수정하기</a>
+                    @if( $authority->isOwner() )
+                        <a href="">구인정보 수정하기</a>
+                    @endif
                 </section>
 
                 <section class="office-information-wrap">
@@ -187,10 +189,43 @@
                         {!! $recruit->content  !!}
                     </div>
                 </section>
-                <section class="btn-wrap">
-                    <button type="submit" class="btn-submit">이력서 제출</button>
-                </section>
+                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                    @csrf
+                    <section class="btn-wrap">
+                        @auth
+                            @if(!$authority->isOwner())
+                                @if($authority->isApplied())
+                                    <button type="submit" class="btn-submit">제출 취소</button>
+                                @else
+                                    <button type="submit" class="btn-submit">이력서 제출</button>
+                                @endif
+                            @endif
+                        @else
+                            <button type="submit" class="btn-submit">이력서 제출</button>
+                        @endauth
+                    </section>
+                </form>
             </div>
+            @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                30명 신청
+            @endif
+            @if($authority->isAdmin() || $authority->isOwner())
+                <table>
+                    <tr>
+                        <th>구분</th>
+                        <th>이름</th>
+                        <th>접수 일시</th>
+                        <th>이력서 확인</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                </table>
+            @endif
         </div>
     </section>
     <section class="popup-area">
