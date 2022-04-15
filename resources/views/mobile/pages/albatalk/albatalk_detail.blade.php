@@ -194,12 +194,75 @@
                     </div>
                 </div>
             </section>
+            <section class="applied-resume-status">
+                <div class="m-row">
+                    @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                        <div class="information-title">
+                            <h3>이력서 접수 상태</h3>
+                            <em>{{ $appliedResumes->count() }}건</em>
+                        </div>
+                    @endif
+                    @if($authority->isAdmin() || $authority->isOwner())
+                        <ul>
+                            @foreach($appliedResumes as $appliedResume)
+                                <li>
+                                    @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
+                                        <div class="resume-user-wrap">
+                                            <p class="cancel-status">취소자</p>
+                                            <p class="status-cancel">제출취소</p>
+                                        </div>
+                                        <div class="resume-date-wrap">
+                                            <p class="cancel-status">{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                            <p class="cancel-date">{{ $appliedResume->canceled_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </div>
+                                    @else
+                                        <div class="resume-user-wrap">
+                                            @if($appliedResume->is_recommended)
+                                                <div class="recommend-person">
+                                                    <p>{{ $appliedResume->resume->user->name }}</p>
+                                                    <span class="badge-recommend">관리자 추천</span>
+                                                </div>
+                                            @else
+                                                <div class="none-recommend">
+                                                    <p>{{ $appliedResume->resume->user->name }}</p>
+                                                </div>
+                                            @endif
+                                            <a href="" class="btn-resume">이력서 보기</a>
+                                        </div>
+                                        <div class="resume-date-wrap">
+                                            <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </div>
+                                    @endif
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                <p class="none-resume">접수 된 이력서가 없습니다.</p>
+                </div>
+            </section>
         </div>
-        <div class="btn-wrap">
+        <section class="btn-wrap">
             <div class="m-row">
-                <button type="submit" class="btn-submit">이력서 제출</button>
+                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                    @csrf
+                    @auth
+                        @if(!$authority->isOwner())
+                            @if($authority->hasResume())
+                                @if($authority->isApplied())
+                                    <button type="submit" class="btn-cancel">제출 취소</button>
+                                @else
+                                    <button type="submit" class="btn-submit">이력서 제출</button>
+                                @endif
+                            @else
+                                <button type="submit" class="btn-submit">이력서 제출</button>
+                            @endif
+                        @endif
+                    @else
+                        <button type="submit" class="btn-submit">이력서 제출</button>
+                    @endauth
+                </form>
             </div>
-        </div>
+        </section>
     </section>
     <section class="popup-area">
         <div class="dim"></div>

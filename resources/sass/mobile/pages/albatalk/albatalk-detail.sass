@@ -193,16 +193,88 @@
                 list-style-type: disc
                 padding: 0 11.111111vw
 
+    .applied-resume-status
+        +margin(top 2.777778vw)
+        +padding(top 5.555556vw bottom 5.555556vw)
+        background-color: $white
+
+        .information-title
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            em
+                font-weight: bold
+
+        .resume-list
+            li
+                +padding(top 20px)
+
+                .cancel-status
+                    text-decoration: line-through
+
+            .resume-user-wrap
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                .status-cancel
+                    font-size: 11px
+                    line-height: 14px
+                    color: $gray-700
+
+                .btn-resume
+                    font-size: 11px
+                    line-height: 14px
+                    text-decoration: underline
+                    color: $gray-700
+
+            .resume-date-wrap
+                +margin(top 7px)
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                p
+                    font-size: 11px
+                    color: $gray-700
+
+            .recommend-person
+                display: flex
+                justify-content: flex-start
+                align-items: center
+
+                .badge-recommend
+                    +margin(left 6px)
+                    +size(61px, 20px)
+                    +border-radius(1px)
+                    background-color: $gray-200
+                    font-size: 10px
+                    line-height: 20px
+                    text-align: center
+                    color: $white
+
+        .none-resume
+            +padding(top 63px bottom 43px)
+            text-align: center
 
     .btn-wrap
-        +margin(top 3.055556vw)
         +padding(3.055556vw 0)
+        +border(1px solid $border-color-light, top)
         background-color: $white
 
         .btn-submit
             +btn(purple-fill)
             +size(91.111111vw, 13.888889vw)
             font-size: 4.444444vw
+
+        .btn-cancel
+            +btn()
+            +size(91.111111vw, 13.888889vw)
+            background-color: $gray-700
+            color: $white
+            font-size: 4.444444vw
+
 .popup-area
     .dim
         +size(100%, 100%)
