@@ -14,7 +14,7 @@
 
 @section('content')
     @include('desktop.layouts.navigation.albatalk')
-    <section class="albatalk-recruit-detail-wrap">
+    <div class="albatalk-recruit-detail-wrap">
         @csrf
         <div class="container">
             <div class="row">
@@ -181,6 +181,7 @@
                         </table>
                     </div>
                 </section>
+
                 <section class="recruit-writing">
                     <div class="information-title">
                         <h2>상세정보</h2>
@@ -189,13 +190,13 @@
                         {!! $recruit->content  !!}
                     </div>
                 </section>
-                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
-                    @csrf
-                    <section class="btn-wrap">
+                <section class="btn-wrap">
+                    <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                        @csrf
                         @auth
                             @if(!$authority->isOwner())
                                 @if($authority->isApplied())
-                                    <button type="submit" class="btn-submit">제출 취소</button>
+                                    <button type="submit" class="btn-cancel">제출 취소</button>
                                 @else
                                     <button type="submit" class="btn-submit">이력서 제출</button>
                                 @endif
@@ -203,53 +204,99 @@
                         @else
                             <button type="submit" class="btn-submit">이력서 제출</button>
                         @endauth
-                    </section>
-                </form>
-            </div>
-            @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
-                30명 신청
-            @endif
-            @if($authority->isAdmin() || $authority->isOwner())
-                <table>
-                    <tr>
-                        <th>구분</th>
-                        <th>이름</th>
-                        <th>접수 일시</th>
-                        <th>이력서 확인</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                </table>
-            @endif
-        </div>
-    </section>
-    <section class="popup-area">
-        <div class="dim"></div>
-        <div class="map-popup-wrap popup-wrap">
-            <div class="popup-header">
-                <h3>지도보기</h3>
-                <a href="#" class="btn-popup-close"></a>
-            </div>
+                    </form>
+                </section>
+                <!-- TODO:: 신청자본인(본인 제출 내역만 확인), 등록자(제출 내역 전체 확인), 관리자(전체 확인) -->
+                <section class="applied-resume-status">
+                    @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                        <div class="information-title">
+                            <h2>이력서 접수 상태 <em>0</em>건</h2>
+                        </div>
+                    @endif
+                    @if($authority->isAdmin() || $authority->isOwner())
+                        <table>
+                            <thead>
+                            <tr>
+                                <th style="width: 100px">구분</th>
+                                <th style="width: 250px">이름</th>
+                                <th style="width: 250px">접수일시</th>
+                                <th style="width: 250px">이력서 확인</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- 관리자 추천일 경우 -->
+                            <tr>
+                                <td>3</td>
+                                <td>
+                                    <div class="recommend-person">
+                                        <span class="badge-recommend">관리자 추천</span>
+                                        <p>홍길동</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p>2022년 02월 23일 18:05:00</p>
+                                </td>
+                                <td>
+                                    <a href="" class="btn-resume">이력서 보기</a>
+                                </td>
+                            </tr>
+                            <!-- 일반적 경우 -->
+                            <tr>
+                                <td>2</td>
+                                <td>
+                                    <p>구직자</p>
+                                </td>
+                                <td>
+                                    <p>2022년 02월 23일 18:05:00</p>
+                                </td>
+                                <td>
+                                    <a href="" class="btn-resume">이력서 보기</a>
+                                </td>
+                            </tr>
+                            <!-- 제출 취소 경우 -->
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <p class="cancel-status">취소자</p>
+                                </td>
+                                <td>
+                                    <p class="cancel-status">2022년 02월 23일 18:05:00</p>
+                                </td>
+                                <td>
+                                    <p class="status-cancel">제출취소</p>
+                                    <p class="cancel-date">2022년 02월 28일 18:05:00</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                @endif
+                <!--<p class="none-resume">접수 된 이력서가 없습니다.</p>-->
+                </section>
+                <section class="popup-area">
+                    <div class="dim"></div>
+                    <div class="map-popup-wrap popup-wrap">
+                        <div class="popup-header">
+                            <h3>지도보기</h3>
+                            <a href="#" class="btn-popup-close"></a>
+                        </div>
 
-            <input type="hidden" class="map_x" value="127.105399">
-            <input type="hidden" class="map_y" value="37.3595704">
-            <div id="mapzone" class="map"></div>
+                        <input type="hidden" class="map_x" value="127.105399">
+                        <input type="hidden" class="map_y" value="37.3595704">
+                        <div id="mapzone" class="map"></div>
 
-            <p class="address">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
-        </div>
-        <div class="image-popup-wrap popup-wrap">
-            <div class="popup-header">
-                <a href="#" class="btn-popup-close"></a>
+                        <p class="address">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
+                    </div>
+                    <div class="image-popup-wrap popup-wrap">
+                        <div class="popup-header">
+                            <a href="#" class="btn-popup-close"></a>
+                        </div>
+                        <div class="img-wrap">
+                            <img src="" class="popup-img" alt="구인정보 이미지">
+                        </div>
+                    </div>
+                </section>
             </div>
-            <div class="img-wrap">
-                <img src="" class="popup-img" alt="구인정보 이미지">
-            </div>
         </div>
-    </section>
+    </div>
 @endsection
 
