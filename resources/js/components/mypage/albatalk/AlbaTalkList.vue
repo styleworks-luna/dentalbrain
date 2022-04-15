@@ -3,7 +3,7 @@
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
                 <a href="" class="albatalk-card">
-                    <img src="/images/dummy/test2.jpg">
+                    <img :src='list.file.url'>
                     <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.company_name }}</p>
                         <div class="albatalk-description">
