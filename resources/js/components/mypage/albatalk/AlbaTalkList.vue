@@ -2,7 +2,7 @@
     <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
-                <a href="" class="albatalk-card">
+                <a :href="'/albatalk/recruit/' + list.id" class="albatalk-card">
                     <img :src='list.file.url'>
                     <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.company_name }}</p>
