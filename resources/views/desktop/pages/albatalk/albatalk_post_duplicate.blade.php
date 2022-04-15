@@ -690,7 +690,7 @@
                                             <div class="radio-wrap">
                                                 <input type="radio" id="deadline_field_02" class="deadline"
                                                        name="deadline" value="2"
-                                                       @if(old('deadline') == 2) checked @endif>
+                                                       @if(old('deadline', $recruit->started_at == null) == 2) checked @endif>
                                                 <label for="deadline_field_02">채용시까지</label>
                                             </div>
                                         </div>
