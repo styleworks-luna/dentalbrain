@@ -101,6 +101,8 @@ if (env('APP_ENV') != 'production') {
 
         //구직 이력서 정보
         Route::get('resume', [\App\Http\Controllers\Account\ResumeController::class, 'mypageResume'])->name('resume');
+
+        Route::get('recruit', [\App\Http\Controllers\Account\RecruitController::class, 'mypageRecruit'])->name('recruit');
     });
 
     Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
@@ -125,6 +127,11 @@ if (env('APP_ENV') != 'production') {
                 Route::get('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'index'])->name('index');
                 Route::post('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'create'])->name('create');
             });
+        });
+
+        Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
+            // 구인 등록 보기
+            Route::get('recruit', [\App\Http\Controllers\Account\RecruitController::class, 'index'])->name('recruit');
         });
     });
 }
