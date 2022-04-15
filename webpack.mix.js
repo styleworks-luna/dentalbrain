@@ -127,7 +127,7 @@ mix.sass('resources/sass/mobile/pages/membership/membership.sass', 'public/css/m
 
 // mobile albatalk
 mix.sass('resources/sass/mobile/pages/albatalk/albatalk.sass', 'public/css/mobile/pages/albatalk')
-mix.sass('resources/sass/mobile/pages/albatalk/albatalk-detail.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-detail.sass', 'public/css/mobile/pages/albatalk')
     .sass('resources/sass/mobile/pages/albatalk/albatalk-common.sass', 'public/css/mobile/pages/albatalk')
     .sass('resources/sass/mobile/pages/albatalk/albatalk-list.sass', 'public/css/mobile/pages/albatalk')
 

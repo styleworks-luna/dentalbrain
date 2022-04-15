@@ -1,4 +1,4 @@
-@extends('mobile.layouts.frames.except_frame')
+@extends('mobile.layouts.frames.basic_frame')
 
 @section('vue')
     <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>

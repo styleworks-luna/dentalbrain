@@ -12,8 +12,8 @@ class RecruitController extends Controller
     {
         $userId = Auth::id();
         $recruits = Recruit::query()->where('user_id', $userId)
-            ->with('file')
-            ->select('id', 'company_name', 'sido', 'gugun', 'started_at', 'ended_at', 'expired_at')
+            ->select('id', 'company_name', 'sido', 'gugun', 'started_at', 'ended_at', 'expired_at', 'main_file_id')
+            ->with('file:id,url')
             ->orderByDesc('expired_at')
             ->get();
 

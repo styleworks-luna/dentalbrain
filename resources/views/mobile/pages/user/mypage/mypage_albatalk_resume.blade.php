@@ -261,7 +261,7 @@
                     </div>
                 </div>
             </div>
-            <div class="bottom-banner">이력서 수정은 PC에서만 가능합니다.</div>
         </div>
     </section>
+    <section class="bottom-banner">이력서 수정은 PC에서만 가능합니다.</section>
 @endsection

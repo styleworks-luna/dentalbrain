@@ -99,7 +99,7 @@
                                     <th>주소</th>
                                     <td>
                                         <div class="address-wrap">
-                                            <p class="address">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
+                                            <p class="address">{{$recruit->address}}</p>
                                             <a href="" class="btn-map">지도보기</a>
                                         </div>
                                     </td>
@@ -272,11 +272,11 @@
                 <a href="#" class="btn-popup-close"></a>
             </div>
 
-            <input type="hidden" class="map_x" value="127.105399">
-            <input type="hidden" class="map_y" value="37.3595704">
+            <input type="hidden" class="map_x" value="{{$recruit->latitude}}">
+            <input type="hidden" class="map_y" value="{{$recruit->longitude}}">
             <div id="mapzone" class="map"></div>
 
-            <p class="address">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p>
+            <p class="address">{{$recruit->address}}</p>
         </div>
     </section>
 @endsection
