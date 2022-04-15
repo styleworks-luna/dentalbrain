@@ -37,9 +37,9 @@ class RecruitDetailController extends Controller
         $recruit->with('typeWork', 'typeJob', 'typeStudy', 'file', 'file1', 'file2', 'file3');
 
         if (Auth::check()) {
-            $authority = new RecruitAuthority($recruit->user_id == Auth::id(), $this->applyService->applied($recruit), Auth::user()->is_admin);
+            $authority = new RecruitAuthority($recruit, $this->applyService->applied($recruit));
         } else {
-            $authority = new RecruitAuthority(false, false);
+            $authority = new RecruitAuthority($recruit, false);
         }
 
         if ($authority->isAdmin() || $authority->isOwner()) {
@@ -51,7 +51,6 @@ class RecruitDetailController extends Controller
         } else {
             $appliedResumes = collect();
         }
-
 
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
             'recruit' => $recruit,

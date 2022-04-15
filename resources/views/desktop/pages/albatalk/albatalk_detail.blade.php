@@ -101,7 +101,7 @@
                                             <input type="hidden" class="latitude" value="{{$recruit->latitude}}">
                                             <input type="hidden" class="longitude" value="{{$recruit->longitude}}">
                                             <p>{{$recruit->address}}</p>
-                                            <a href="" class="btn-map" >지도보기</a>
+                                            <a href="" class="btn-map">지도보기</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -197,8 +197,12 @@
                         @csrf
                         @auth
                             @if(!$authority->isOwner())
-                                @if($authority->isApplied())
-                                    <button type="submit" class="btn-cancel">제출 취소</button>
+                                @if($authority->hasResume())
+                                    @if($authority->isApplied())
+                                        <button type="submit" class="btn-cancel">제출 취소</button>
+                                    @else
+                                        <button type="submit" class="btn-submit">이력서 제출</button>
+                                    @endif
                                 @else
                                     <button type="submit" class="btn-submit">이력서 제출</button>
                                 @endif

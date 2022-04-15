@@ -37,17 +37,13 @@ class ApplyService
     {
         $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
         if ($resume == null) {
-            return true;
+            return false;
         }
 
-        $exists = AppliedResume::query()
+        return AppliedResume::query()
             ->where('resume_id', '=', $resume->id)
             ->where('recruit_id', '=', $recruit->id)
             ->where('status', '=', AppliedResume::STATUS_SUCCESS)
             ->exists();
-        if ($exists) {
-            return true;
-        }
-        return false;
     }
 }
