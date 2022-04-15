@@ -1,14 +1,14 @@
 <template>
     <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul :class="albatalks.length > 0 ? 'albatalk-content-list' : ''">
-            <li class="albatalk-card" v-for="list in albatalks" :key="list.id">
-                <a href="">
-                    <img src="/images/dummy/test2.jpg">
+            <li class="albatalk-card" v-for="item in albatalks" :key="item.id">
+                <a :href="`/albatalk/recruit/${item.id}`">
+                    <img :src="item.file">
                     <div class="albatalk-information">
-                        <p class="albatalk-name">{{ list.company_name }}</p>
+                        <p class="albatalk-name">{{ item.company_name }}</p>
                         <div class="albatalk-description">
-                            <p class="albatalk-place">{{ list.sido }} {{ list.gugun }}</p>
-                            <p class="albatalk-date">~ {{ Helper.dateFormatDMW(list.ended_at) }}</p>
+                            <p class="albatalk-place">{{ item.sido }} {{ item.gugun }}</p>
+                            <p class="albatalk-date">~ {{ Helper.dateFormatDMW(item.ended_at) }}</p>
                         </div>
                     </div>
                 </a>
