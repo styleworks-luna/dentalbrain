@@ -2,6 +2,9 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 
+.content
+    +padding(bottom 30px)
+    
 .mypage-content-wrap
 
     .mypage-content
@@ -138,6 +141,8 @@
     display: flex
     align-items: center
     justify-content: center
+    position: absolute
+    bottom: 0
     background-color: $background-color-file
     font-size: 3.0555555vw
     color: $gray-700

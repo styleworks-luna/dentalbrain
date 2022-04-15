@@ -58,9 +58,11 @@ if (env('APP_ENV') != 'production') {
                 // 이력서 제출
                 Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply')->middleware('auth');
                 // 구인 데이터 불러오기
-                Route::get('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
+                Route::get('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
                 // 구인 수정
-                Route::post('/edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+                Route::post('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+
+                Route::get('applied/{user}', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'pdf'])->name('pdf');
                 // 구인 등록 복사
                 Route::get('/duplicate', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'duplicateForm'])->name('duplicate');
             });
