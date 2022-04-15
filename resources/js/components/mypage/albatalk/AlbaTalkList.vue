@@ -5,10 +5,10 @@
                 <a href="" class="albatalk-card">
                     <img src="/images/dummy/test2.jpg">
                     <div class="albatalk-information">
-                        <p class="albatalk-name">{{ list.title }}</p>
+                        <p class="albatalk-name">{{ list.company_name }}</p>
                         <div class="albatalk-description">
-                            <p class="albatalk-place">{{ list.location }}</p>
-                            <p class="albatalk-date">{{ list.date }}</p>
+                            <p class="albatalk-place">{{ list.sido }} {{ list.gugun }}</p>
+                            <p class="albatalk-date">~ {{ Helper.dateFormatDMW(list.ended_at) }}</p>
                         </div>
                     </div>
                 </a>
@@ -34,52 +34,17 @@
 export default {
     name: "AlbaTalkList",
     props: {
+        'listData': Array,
         mobile: Boolean,
     },
     data() {
         return {
-            lists: [
-                {
-                    key: 1,
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    key: 2,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 2,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 3,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-                {
-                    key: 4,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-            ]
+            lists: [],
+        }
+    },
+    watch: {
+        listData(){
+            this.lists = this.listData
         }
     }
 }

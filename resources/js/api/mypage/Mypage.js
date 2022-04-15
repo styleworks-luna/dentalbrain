@@ -29,5 +29,11 @@ export default {
             params: params,
         });
 
+    },
+    getAlbaTalk(){
+        return Send({
+            url: '/api/account/recruit',
+            method: 'get',
+        });
     }
 }
