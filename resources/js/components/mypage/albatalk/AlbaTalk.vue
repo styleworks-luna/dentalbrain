@@ -36,7 +36,7 @@ export default {
     methods: {
       getAlbaTalk() {
           Mypage.getAlbaTalk().then(res => {
-              this.albaTalkList = res.data.$recruits;
+              this.albaTalkList = res.data.recruits;
           }).catch(err => {
               this.albaTalkList = [];
           });

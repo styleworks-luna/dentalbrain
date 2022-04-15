@@ -13,6 +13,13 @@ $(function () {
         })
     }
 
+    $('.study-select').on("selectmenuchange", function(event, ui) {
+        console.log(event , ui);
+        if(event.target.value == "0") {
+
+        }
+    })
+
     // thumbnail
     $('.file-id').each( (idx,x) => {
         if(nullCheck($(x).val())) {

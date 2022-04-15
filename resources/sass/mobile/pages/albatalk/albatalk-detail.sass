@@ -79,10 +79,13 @@
                     line-height: 4.444444vw
 
                 td
+                    +size(58.888889vw)
                     +padding(left 4.444444vw)
 
                     p
+                        +size(58.888889vw)
                         line-height: 4.444444vw
+                        word-break: break-all
 
                     .address-wrap
                         display: flex
@@ -117,6 +120,9 @@
         +padding(5.555556vw 0)
         background-color: $white
 
+        .recruit-detail-information-content
+            +margin(top 10px)
+
         table
             th
                 +size(27.777778vw)
@@ -126,7 +132,13 @@
                 line-height: 4.444444vw
 
             td
+                +size(58.888889vw)
                 +padding(left 4.444444vw)
+                word-break: break-all
+
+                p
+                    +size(58.888889vw)
+                    word-break: break-all
 
     .recruit-writing
         +margin(top 2.777778vw)

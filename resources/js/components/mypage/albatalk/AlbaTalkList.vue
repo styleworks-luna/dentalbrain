@@ -2,7 +2,7 @@
     <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
-                <a :href="'/albatalk/recruit/' + list.id" class="albatalk-card">
+                <a :href="`/albatalk/recruit/${list.id}`" class="albatalk-card">
                     <img :src='list.file ? list.file.url : ""'>
                     <div class="albatalk-information">
                         <p class="albatalk-name">{{ list.company_name }}</p>
@@ -13,10 +13,10 @@
                     </div>
                 </a>
                 <div class="albatalk-additional-information">
-                    <p class="albatalk-period">게재 기간 : {{ list.period }}일 남음</p>
+                    <p class="albatalk-period">게재 기간 : {{ list.remain_day }}일 남음</p>
                     <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.state }}</em>건</p>
                     <div v-if="mobile == false" class="btn-wrap">
-                        <button class="btn-edit">수정하기</button>
+                        <a :href="`/albatalk/recruit/${list.id}/edit`" class="btn-edit">수정하기</a>
                     </div>
                 </div>
             </li>

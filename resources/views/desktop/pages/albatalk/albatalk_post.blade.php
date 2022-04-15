@@ -501,6 +501,7 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden" class="study-select-check" >
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
                                                        @if(old('is_study') == 1) checked @endif
@@ -510,7 +511,7 @@
                                                 <select class="input-xs select-menu study-select"
                                                         @if(old('is_study') != 1) disabled @endif
                                                         name="study">
-                                                    <option value="" selected>학력 선택</option>
+                                                    <option value="0" selected>학력 선택</option>
                                                     @foreach($typeStudy as $study)
                                                         @if($study->id == 14)
                                                             @break
