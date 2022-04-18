@@ -46,11 +46,11 @@ if (env('APP_ENV') != 'production') {
 
         Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
             // 구인 등록 폼
-            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create');
+            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create')->middleware('auth');
             // 구인 등록
-            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'saveRecruitDataToSession'])->name('create');
+            Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'saveRecruitDataToSession'])->name('create')->middleware('auth');
             // 구인 등록 결제 성공
-            Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success');
+            Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success')->middleware('auth');
 
             Route::group(['prefix' => '{recruit}'], function () {
                 // 구인 상세
@@ -60,9 +60,9 @@ if (env('APP_ENV') != 'production') {
                     // 구인 제출자들의 이력서 pdf
                     Route::get('applied/{user}', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'pdf'])->name('pdf');
                     // 이력서 제출
-                    Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply')->middleware('auth');
+                    Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply');
                     // 이력서 취소
-                    Route::post('/cancel', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'cancel'])->name('cancel')->middleware('auth');
+                    Route::post('/cancel', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'cancel'])->name('cancel');
                     // 구인 수정 폼
                     Route::get('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
                     // 구인 수정
