@@ -61,7 +61,7 @@ class ApplyService
     public function findApplied(Recruit $recruit, $user = null)
     {
         if ($user == null) {
-            $userId = Auth::user();
+            $userId = Auth::id();
         } else {
             $userId = $user->id;
         }
