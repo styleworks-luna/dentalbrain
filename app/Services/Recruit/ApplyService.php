@@ -90,6 +90,7 @@ class ApplyService
         }
         $appliedResume = AppliedResume::query()->where('resume_id', '=', $resume->id)
             ->where('recruit_id', '=', $recruit->id)->firstOrFail();
+
         $appliedResume->status = AppliedResume::STATUS_CANCELED;
         $appliedResume->canceled_at = now();
 
