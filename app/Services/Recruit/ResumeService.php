@@ -2,9 +2,14 @@
 
 namespace App\Services\Recruit;
 
+use App\Models\Resume\Ability\AbilityAnswer;
+use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\Resume;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -104,5 +109,40 @@ class ResumeService
         return Resume::query()
             ->where('user_id', '=', $userId)
             ->exists();
+    }
+
+    public function listForAdmin()
+    {
+        return Resume::query()
+            ->select('id', 'user_id', 'name', 'phone', 'email')
+            ->orderByDesc('created_at')
+            ->paginate();
+    }
+
+    public function getPdf(Resume $resume): \Barryvdh\DomPDF\PDF
+    {
+        $abilityAnswers = AbilityAnswer::onResume($resume)->get();
+
+        $categories = AbilityCategory::query()->orderBy('seq')
+            ->select(['id', 'seq', 'name'])
+            ->get()
+            ->mapWithKeys(function ($category) {
+                return [$category['id'] => $category['name']];
+            });
+
+        $leftList = $abilityAnswers->filter(function ($answer) {
+            return $answer->ability->category_id <= 5;
+        });
+
+        $rightList = $abilityAnswers->filter(function ($answer) {
+            return $answer->ability->category_id > 5;
+        });
+
+        return Pdf::loadView('pdfs.resume_pdf', [
+            'resume' => $resume,
+            'leftList' => $leftList,
+            'rightList' => $rightList,
+            'categories' => $categories,
+        ]);
     }
 }

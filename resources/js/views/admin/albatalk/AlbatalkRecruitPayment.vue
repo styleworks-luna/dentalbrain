@@ -24,7 +24,7 @@
                        placeholder="유료 회원가 입력"
                        v-model="membership_price">
                 <span class="input-group-append">
-                    <button class="btn btn-primary" type="submit" @click.prevent="changeMembershipPrice">수정</button>
+                    <button class="btn btn-primary" type="submit" @click.prevent="changeMembershipPrice" >수정</button>
                 </span>
             </div>
         </template>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import RecruitPayment from '@/api/admin/albatalk/RecruitPayment.js';
+
 export default {
     name: "AlbaTalkRecruitPayment",
     data() {
@@ -40,12 +42,30 @@ export default {
             membership_price: "",
         }
     },
+    mounted() {
+        this.init();
+    },
     methods: {
+        init() {
+            RecruitPayment.getData().then(res => {
+                this.price = res.data.price;
+                this.membership_price = res.data.membership_price
+            }).catch(err => {
+                this.price = "오류가 발생했습니다. 다시 시도해주세요";
+                this.membership_price = "오류가 발생했습니다. 다시 시도해주세요";
+            });
+        },
         changePrice() {
-
+            RecruitPayment.updatePrice(this.price).then(res => {
+                alert(res.data.msg);
+            }).catch(err => {
+            });
         },
         changeMembershipPrice() {
-
+            RecruitPayment.updateMembershipPrice(this.membership_price).then(res => {
+                alert(res.data.msg);
+            }).catch(err => {
+            });
         }
     }
 }
