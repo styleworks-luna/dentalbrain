@@ -116,7 +116,7 @@ class ResumeController extends Controller
                     ->select(['id', 'main_file_id', 'company_name', 'sido', 'gugun', 'dong', 'ended_at']);
             }])
             ->orderByDesc('applied_at')
-            ->paginate();
+            ->get();
         return response()->json($appliedResumes->toArray());
     }
 }
