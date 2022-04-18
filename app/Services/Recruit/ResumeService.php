@@ -3,6 +3,7 @@
 namespace App\Services\Recruit;
 
 use App\Models\Resume\Resume;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -104,5 +105,13 @@ class ResumeService
         return Resume::query()
             ->where('user_id', '=', $userId)
             ->exists();
+    }
+
+    public function listForAdmin()
+    {
+        return Resume::query()
+            ->select('id', 'user_id', 'name', 'phone', 'email')
+            ->orderByDesc('created_at')
+            ->paginate();
     }
 }

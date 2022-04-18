@@ -134,6 +134,9 @@ if (env('APP_ENV') != 'production') {
                 Route::post('normal', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateNormal'])->name('update.normal');
                 Route::post('membership', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateMembership'])->name('update.membership');
             });
+            Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'index'])->name('index');
+            });
         });
 
         Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
