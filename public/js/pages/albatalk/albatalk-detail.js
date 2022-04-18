@@ -4,16 +4,18 @@ $(function() {
         $('.dim').css('display', 'block');
         $('.map-popup-wrap').slideDown();
     });
+    let mobileCheck = mobile_check();
+    if(!mobileCheck) {
+        $('.thumbnail-on').click(function (e) {
+            e.preventDefault();
+            let source = $(this).attr('src');
 
-    $('.thumbnail-on').click(function (e) {
-        e.preventDefault();
-        let source = $(this).attr('src');
+            $('.dim').css('display', 'block');
+            $('.image-popup-wrap').slideDown();
 
-        $('.dim').css('display', 'block');
-        $('.image-popup-wrap').slideDown();
-
-        $('.popup-img').attr('src', source);
-    });
+            $('.popup-img').attr('src', source);
+        });
+    }
 
     $('.btn-popup-close, .dim').click(function (e) {
         e.preventDefault();
@@ -45,7 +47,6 @@ $(function() {
     });
 
     // mobile swiper
-    let mobileCheck = mobile_check();
     if(mobileCheck) {
         function numFormat(variable) {
             variable = Number(variable).toString();
