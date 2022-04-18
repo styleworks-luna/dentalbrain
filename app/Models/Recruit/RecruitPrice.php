@@ -11,6 +11,8 @@ class RecruitPrice extends Model
     const HAS_NOT_MEMBERSHIP = 1;
     const HAS_MEMBERSHIP = 2;
 
+    public $timestamps = false;
+
     public static function getRecruitPrice($user)
     {
         if ($user->hasMembership) {

@@ -129,6 +129,11 @@ if (env('APP_ENV') != 'production') {
                 Route::get('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'index'])->name('index');
                 Route::post('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'create'])->name('create');
             });
+            Route::group(['prefix' => 'recruit-price', 'as' => 'recruit-price.'], function () {
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'index'])->name('index');
+                Route::post('normal', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateNormal'])->name('update.normal');
+                Route::post('membership', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateMembership'])->name('update.membership');
+            });
         });
 
         Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
