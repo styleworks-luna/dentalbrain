@@ -136,6 +136,10 @@ if (env('APP_ENV') != 'production') {
             });
             Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
                 Route::get('', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'index'])->name('index');
+                Route::group(['prefix' => '{resume}'], function () {
+                    Route::get('pdf', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'detailPdf'])->name('detail');
+                });
+
             });
         });
 

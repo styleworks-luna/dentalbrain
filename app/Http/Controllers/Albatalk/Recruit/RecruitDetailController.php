@@ -92,35 +92,13 @@ class RecruitDetailController extends Controller
                 throw new ModelNotFoundException('이력서를 생성해 주세요.');
             }
 
-            $abilityAnswers = AbilityAnswer::onResume($appliedResume->resume)->get();
-
-            $categories = AbilityCategory::query()->orderBy('seq')
-                ->select(['id', 'seq', 'name'])
-                ->get()
-                ->mapWithKeys(function ($category) {
-                    return [$category['id'] => $category['name']];
-                });
-
-            $leftList = $abilityAnswers->filter(function ($answer) {
-                return $answer->ability->category_id <= 5;
-            });
-
-            $rightList = $abilityAnswers->filter(function ($answer) {
-                return $answer->ability->category_id > 5;
-            });
+            $pdf = $this->resumeService->getPdf($appliedResume->resume);
+            return $pdf->stream('resume.pdf');
 
         } catch (ModelNotFoundException $exception) {
             return \redirect()->back()->with('alert', $exception->getMessage());
         } catch (\Exception $exception) {
             return \redirect()->back()->with('alert', '오류가 발생했습니다.');
         }
-
-        $PDF = Pdf::loadView('pdfs.resume_pdf', [
-            'resume' => $appliedResume->resume,
-            'leftList' => $leftList,
-            'rightList' => $rightList,
-            'categories' => $categories,
-        ]);
-        return $PDF->stream('resume.pdf');
     }
 }
