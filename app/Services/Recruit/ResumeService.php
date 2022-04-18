@@ -111,9 +111,22 @@ class ResumeService
             ->exists();
     }
 
-    public function listForAdmin()
+    public function searchForAdmin(?string $keyword)
     {
-        return Resume::query()
+        $builder = Resume::query()->with('user:id,login_id');
+        if ($keyword != null) {
+            $builder->where(function ($query) use ($keyword) {
+                $queryKey = "%${keyword}%";
+                $query->orWhere('email', 'LIKE', $queryKey)
+                    ->orWhere('name', 'LIKE', $queryKey)
+                    ->orWhere('phone', 'LIKE', $queryKey)
+                    ->orWhereHas('user', function (Builder $query) use ($queryKey) {
+                        $query->where('login_id', 'LIKE', $queryKey);
+                    });
+            });
+        }
+        // 아이디 이메일 이름 전화번호
+        return $builder
             ->select('id', 'user_id', 'name', 'phone', 'email')
             ->orderByDesc('created_at')
             ->paginate();

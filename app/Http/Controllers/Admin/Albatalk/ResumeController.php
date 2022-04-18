@@ -10,14 +10,25 @@ use Illuminate\Pagination\Paginator;
 
 class ResumeController extends Controller
 {
-    public function index(ResumeService $resumeService)
+    private $resumeService;
+
+    public function __construct(ResumeService $resumeService)
     {
-        $listForAdmin = $resumeService->listForAdmin();
+        $this->resumeService = $resumeService;
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'keyword' => ['nullable', 'string'],
+        ]);
+
+        $listForAdmin = $this->resumeService->searchForAdmin($request->get('keyword', null));
         return response()->json($listForAdmin);
     }
 
-    public function detailPdf(ResumeService $resumeService, Resume $resume)
+    public function detailPdf(Resume $resume)
     {
-        return $resumeService->getPdf($resume)->stream('이력서.pdf');
+        return $this->resumeService->getPdf($resume)->stream('이력서.pdf');
     }
 }
