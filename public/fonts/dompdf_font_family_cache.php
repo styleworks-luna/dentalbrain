@@ -78,10 +78,9 @@ return array (
     'italic' => $rootDir . '/lib/fonts/DejaVuSerif-Italic',
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
-  'gmarketsans' => array(
-    '300' => $fontDir . '/gmarketsans_300_92a1f08a50ff2d9de67720c30f698cbd',
-    'normal' => $fontDir . '/gmarketsans_normal_334986b71e24467b9fc13a45ed803956',
-    'bold' => $fontDir . '/gmarketsans_bold_3d115de26e5b17fb3b0e237e7f2e9c9d',
+  'sourcehansanskr' => array(
+    'normal' => $fontDir . '/sourcehansanskr_normal_5cc9ed0c1a6a9ccbe6b8224fec09c7da',
+    'bold' => $fontDir . '/sourcehansanskr_bold_0045fde3ee6dc192a2b2eaff1015aa3f',
   ),
 );
 }; ?>
