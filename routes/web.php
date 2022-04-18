@@ -55,16 +55,21 @@ if (env('APP_ENV') != 'production') {
             Route::group(['prefix' => '{recruit}'], function () {
                 // 구인 상세
                 Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'detail'])->name('detail');
-                // 이력서 제출
-                Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply')->middleware('auth');
-                // 구인 데이터 불러오기
-                Route::get('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
-                // 구인 수정
-                Route::post('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
 
-                Route::get('applied/{user}', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'pdf'])->name('pdf');
-                // 구인 등록 복사
-                Route::get('/duplicate', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'duplicateForm'])->name('duplicate');
+                Route::group(['middleware' => 'auth'], function () {
+                    // 구인 제출자들의 이력서 pdf
+                    Route::get('applied/{user}', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'pdf'])->name('pdf');
+                    // 이력서 제출
+                    Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply')->middleware('auth');
+                    // 이력서 취소
+                    Route::post('/cancel', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'cancel'])->name('cancel')->middleware('auth');
+                    // 구인 수정 폼
+                    Route::get('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
+                    // 구인 수정
+                    Route::post('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+                    // 구인 복사
+                    Route::get('/duplicate', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'duplicateForm'])->name('duplicate');
+                });
             });
 
         });

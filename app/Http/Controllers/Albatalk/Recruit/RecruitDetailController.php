@@ -9,16 +9,14 @@ use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Recruit;
-use App\Models\Resume\Ability\AbilityAnswer;
-use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\AppliedResume;
 use App\Models\Resume\Resume;
 use App\Models\User;
 use App\Services\Recruit\ApplyService;
 use App\Services\Recruit\ResumeService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RecruitDetailController extends Controller
 {
@@ -94,6 +92,21 @@ class RecruitDetailController extends Controller
             ->with('alert', '제출되었습니다.');
     }
 
+    public function cancel(Recruit $recruit)
+    {
+        try {
+            $this->applyService->cancel($recruit);
+        } catch (ModelNotFoundException $exception) {
+            report($exception);
+            return back()
+                ->with('alert', '이력서가 없습니다.');
+        }
+
+        return redirect()
+            ->route('albatalk.recruit.detail', $recruit->id)
+            ->with('alert', '제출 취소되었습니다.');
+    }
+
     public function pdf(Recruit $recruit, User $user)
     {
         try {
@@ -109,6 +122,7 @@ class RecruitDetailController extends Controller
         } catch (ModelNotFoundException $exception) {
             return \redirect()->back()->with('alert', $exception->getMessage());
         } catch (\Exception $exception) {
+            Log::error('APPLIED RESUME PDF EXPORT ERROR', [$exception]);
             return \redirect()->back()->with('alert', '오류가 발생했습니다.');
         }
     }

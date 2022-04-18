@@ -76,4 +76,23 @@ class ApplyService
             ->where('status', '=', AppliedResume::STATUS_SUCCESS)
             ->first();
     }
+
+    /**
+     * @param Recruit $recruit
+     * @return bool
+     * @throws ModelNotFoundException
+     */
+    public function cancel(Recruit $recruit): bool
+    {
+        $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
+        if ($resume == null) {
+            throw new ModelNotFoundException();
+        }
+        $appliedResume = AppliedResume::query()->where('resume_id', '=', $resume->id)
+            ->where('recruit_id', '=', $recruit->id)->firstOrFail();
+        $appliedResume->status = AppliedResume::STATUS_CANCELED;
+        $appliedResume->canceled_at = now();
+
+        return $appliedResume->save();
+    }
 }
