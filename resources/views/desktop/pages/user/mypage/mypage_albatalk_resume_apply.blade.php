@@ -16,7 +16,7 @@
             <div class="mypage-content-wrap">
                 <div class="content-title">
                     <h2>구직정보</h2>
-                    <a href="">구직 신청하러가기</a>
+                    <a href="/albatalk">구직 신청하러가기</a>
                 </div>
                 <ul class="mypage-albatalk-navigation">
                     <li class="navigation-list active">
