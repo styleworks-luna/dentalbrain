@@ -45,7 +45,7 @@ export default {
       },
       getMyRecruit() {
           Mypage.getMyRecruit().then(res => {
-              this.myRecruitList = res.data.data;
+              this.myRecruitList = res.data;
           }).catch(err => {
               this.myRecruitList = [];
           });
