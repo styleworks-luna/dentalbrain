@@ -12,6 +12,7 @@
 @endsection
 
 @section('style')
+    <link rel="stylesheet" href="{{ asset('css/swiper-bundle.css') }}">
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/albatalk/albatalk-detail.css') }}">
     <link rel="stylesheet" href="{{ mix('css/mobile/pages/albatalk/albatalk-common.css') }}">
 @endsection
@@ -227,7 +228,7 @@
                                                     <p>{{ $appliedResume->resume->user->name }}</p>
                                                 </div>
                                             @endif
-                                            <a href="" class="btn-resume">이력서 보기</a>
+                                            <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $appliedResume->resume->user->id]) }}" class="btn-resume">이력서 보기</a>
                                         </div>
                                         <div class="resume-date-wrap">
                                             <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
