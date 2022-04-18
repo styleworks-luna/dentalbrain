@@ -12,6 +12,7 @@ use App\Models\Recruit\Recruit;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\AppliedResume;
+use App\Models\Resume\Resume;
 use App\Models\User;
 use App\Services\Recruit\ApplyService;
 use App\Services\Recruit\ResumeService;
@@ -46,7 +47,7 @@ class RecruitDetailController extends Controller
             $authority = new RecruitAuthority($recruit, false);
         }
 
-        if ($authority->isAdmin() || $authority->isOwner()) {
+        if ($authority->isAdmin() || $authority->isOwner() || $authority->isApplied()) {
             $appliedResumes = AppliedResume::query()
                 ->where('recruit_id', '=', $recruit->id)
                 ->orderByDesc('applied_at')
@@ -54,6 +55,16 @@ class RecruitDetailController extends Controller
                 ->get();
         } else {
             $appliedResumes = collect();
+        }
+
+        if ($authority->isApplied()) {
+            try {
+                $usersResume = $this->applyService->findApplied($recruit);
+            } catch (ModelNotFoundException $exception) {
+                $usersResume = null;
+            }
+        } else {
+            $usersResume = null;
         }
 
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
@@ -64,6 +75,7 @@ class RecruitDetailController extends Controller
             'benefits' => $benefits,
             'authority' => $authority,
             'appliedResumes' => $appliedResumes,
+            'usersResume' => $usersResume,
         ]);
     }
 
@@ -76,7 +88,6 @@ class RecruitDetailController extends Controller
             return back()
                 ->with('alert', '이력서가 없습니다.');
         }
-
 
         return redirect()
             ->route('albatalk.recruit.detail', $recruit->id)
