@@ -194,20 +194,20 @@
                     <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
                         @csrf
                         @auth
-                            @if(!$authority->isOwner())
-                                @if($authority->hasResume())
-                                    @if($authority->isApplied())
-                                        <button type="submit" class="btn-cancel">제출 취소</button>
-                                    @else
-                                        <button type="submit" class="btn-submit">이력서 제출</button>
-                                    @endif
+                        @if(!$authority->isOwner())
+                            @if($authority->hasResume())
+                                @if($authority->isApplied())
+                                    <button type="submit" class="btn-cancel">제출 취소</button>
                                 @else
                                     <button type="submit" class="btn-submit">이력서 제출</button>
                                 @endif
+                            @else
+                                <button type="submit" class="btn-submit">이력서 제출</button>
                             @endif
+                        @endif
                         @else
                             <button type="submit" class="btn-submit">이력서 제출</button>
-                        @endauth
+                            @endauth
                     </form>
                 </section>
                 <section class="applied-resume-status">
@@ -266,8 +266,29 @@
                             @endforeach
                             </tbody>
                         </table>
-                @endif
-                <!--<p class="none-resume">접수 된 이력서가 없습니다.</p>-->
+                    @endif
+                    @if($usersResume)
+                        <table>
+                            <thead>
+                            <tr>
+                                <th style="width: 100px">구분</th>
+                                <th style="width: 250px">이름</th>
+                                <th style="width: 250px">접수일시</th>
+                                <th style="width: 250px">이력서 확인</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>1</td>
+                                <td>{{ auth()->user()->name }}</td>
+                                <td>{{ $usersResume->applied_at->format('Y년 n월 j일 G:i:s') }}</td>
+                                <td>
+                                    <a href="{{ route('account.resume') }}"
+                                       class="btn-resume">이력서 보기</a>
+                                </td>
+                            </tr>
+                        </table>
+                        @endif
+                                <!--<p class="none-resume">접수 된 이력서가 없습니다.</p>-->
                 </section>
                 <section class="popup-area">
                     <div class="dim"></div>
