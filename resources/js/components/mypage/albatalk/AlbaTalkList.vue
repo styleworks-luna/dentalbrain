@@ -16,7 +16,7 @@
                 <div class="albatalk-additional-information">
                     <p v-if="(list.remain_day>0)" class="albatalk-period">게재 기간 : {{ list.remain_day }}일 남음</p>
                     <p v-else class="albatalk-period">게재 기간 : 종료</p>
-                    <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.state }}</em>건</p>
+                    <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.applied_resumes_count }}</em>건</p>
                     <div v-if="(mobile == false)" class="btn-wrap">
                         <a v-if="(list.remain_day>0)" :href="`/albatalk/recruit/${list.id}/edit`" class="btn-edit">수정하기</a>
                         <a v-else :href="`/albatalk/recruit/${list.id}/duplicate`" class="btn-edit">복사하기</a>
