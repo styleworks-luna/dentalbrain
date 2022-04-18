@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
+use App\Models\Resume\AppliedResume;
 use App\Models\Resume\Resume;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Contracts\Foundation\Application;
@@ -115,6 +116,7 @@ class ResumeController extends Controller
                 $query->with('file:id,url')
                     ->select(['id', 'main_file_id', 'company_name', 'sido', 'gugun', 'dong', 'ended_at']);
             }])
+            ->where('status', '=', AppliedResume::STATUS_SUCCESS)
             ->orderByDesc('applied_at')
             ->get();
         return response()->json($appliedResumes->toArray());

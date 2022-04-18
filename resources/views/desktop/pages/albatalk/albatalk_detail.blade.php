@@ -287,7 +287,7 @@
                             </tr>
                             </thead>
                             <tr>
-                                <td>1</td>
+                                <td>본인</td>
                                 <td>{{ auth()->user()->name }}</td>
                                 <td>{{ $usersResume->applied_at->format('Y년 n월 j일 G:i:s') }}</td>
                                 <td>
