@@ -21,6 +21,9 @@
             </li>
             <li class="none" v-if="lists.length <= 0">
                 <p>신청한 구직 내역이 없습니다.</p>
+                <div class="btn-wrap">
+                    <a v-if="mobile == false" href="/albatalk" class="btn-go-offer">구직 신청하러가기</a>
+                </div>
             </li>
         </ul>
     </div>
