@@ -64,7 +64,7 @@
                                     </div>
                                     <!-- 썸네일 존재 할 경우 (등록 이미지) -->
                                     <div class="image-on">
-                                        <img class="main-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                        <img class="main-thumbnail thumbnail-image" src="{{ $recruit->file->url ?? '' }}" alt="치과 사진">
                                         <div class="image-hover-common image-hover-lg">
                                             <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
                                         </div>
@@ -94,7 +94,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image" src="{{ $recruit->file1->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                             class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
@@ -119,7 +119,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image" src="{{ $recruit->file2->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                             class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
@@ -144,7 +144,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image" src="{{ $recruit->file3->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                             class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>

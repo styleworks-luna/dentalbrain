@@ -19,6 +19,7 @@ use App\Models\Recruit\Recruit;
 use App\Services\File\RecruitThumbnail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -256,20 +257,48 @@ class RecruitService
 
     public function attachThumbnails(Recruit $recruit, array $validatedData)
     {
+
         $mainFile = File::query()->find($validatedData['main_file_id']);
         $file1 = File::query()->find($validatedData['file_1_id']);
         $file2 = File::query()->find($validatedData['file_2_id']);
         $file3 = File::query()->find($validatedData['file_3_id']);
 
         $recruitThumbnail = new RecruitThumbnail($recruit);
-        $recruitThumbnail->moveTempFilesToPublic($mainFile, $file1, $file2, $file3);
 
-        $recruit->main_file_id = $mainFile->id;
-        $recruit->file_1_id = $file1 != null ? $file1->id : null;
-        $recruit->file_2_id = $file2 != null ? $file2->id : null;
-        $recruit->file_3_id = $file3 != null ? $file3->id : null;
-
+        if ($mainFile != null && $mainFile->id != $recruit->main_file_id) {
+            $this->deleteFile($recruit->main_file_id);
+            $recruit->main_file_id = $mainFile->id;
+            $recruitThumbnail->moveTempToPublic($mainFile);
+        }
+        if ($file1 != null && $file1->id != $recruit->file_1_id) {
+            $this->deleteFile($recruit->file_1_id);
+            $recruit->file_1_id = $file1->id;
+            $recruitThumbnail->moveTempToPublic($file1);
+        }
+        if ($file2 != null && $file2->id != $recruit->file_2_id) {
+            $this->deleteFile($recruit->file_2_id);
+            $recruit->file_2_id = $file2->id;
+            $recruitThumbnail->moveTempToPublic($file2);
+        }
+        if ($file3 != null && $file3->id != $recruit->file_3_id) {
+            $this->deleteFile($recruit->file_3_id);
+            $recruit->file_3_id = $file3->id;
+            $recruitThumbnail->moveTempToPublic($file3);
+        }
         $recruit->save();
+    }
+
+    private function deleteFile($fileId)
+    {
+        $file = File::query()->find($fileId);
+        try {
+            if ($file != null) {
+                $path = $file->path;
+                $file->delete();
+                Storage::delete($path);
+            }
+        } catch (\Exception $ignored) {
+        }
     }
 
     public function expiredRecruitTerm(Recruit $recruit)

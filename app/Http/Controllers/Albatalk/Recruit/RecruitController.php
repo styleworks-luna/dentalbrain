@@ -171,7 +171,7 @@ class RecruitController extends Controller
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
             $errorBags = $validator->errors();
-            
+
             return \redirect(url()->previous())
                 ->withInput($request->input())
                 ->withErrors($errorBags);
@@ -191,6 +191,8 @@ class RecruitController extends Controller
             $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
+
+            $this->recruitService->attachThumbnails($recruit, $recruitData);
 
         } catch (\Exception $exception) {
             report($exception);
