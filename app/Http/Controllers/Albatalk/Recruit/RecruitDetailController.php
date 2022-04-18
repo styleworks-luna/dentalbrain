@@ -115,6 +115,12 @@ class RecruitDetailController extends Controller
             return \redirect()->back()->with('alert', '오류가 발생했습니다.');
         }
 
+//        return view('pdfs.resume_pdf', [
+//            'resume' => $appliedResume->resume,
+//            'leftList' => $leftList,
+//            'rightList' => $rightList,
+//            'categories' => $categories,
+//        ]);
         $PDF = Pdf::loadView('pdfs.resume_pdf', [
             'resume' => $appliedResume->resume,
             'leftList' => $leftList,
