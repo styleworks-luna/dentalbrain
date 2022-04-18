@@ -11,6 +11,7 @@ use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
+use App\Models\Resume\AppliedResume;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -41,6 +42,11 @@ class Recruit extends Model
 
     const SESSION_KEY = 'recruit_create_data';
 
+
+    public function appliedResumes()
+    {
+        return $this->hasMany(AppliedResume::class, 'recruit_id', 'id');
+    }
 
     public function payment()
     {
