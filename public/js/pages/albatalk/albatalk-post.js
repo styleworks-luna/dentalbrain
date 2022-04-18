@@ -65,7 +65,12 @@ $(function () {
                 thumbnailValidation();
             }
         }).fail(err => {
-            alert('오류가 발생하였습니다.')
+            if (err.status === 422) {
+                alert('이미지가 너무 큽니다.')
+            } else {
+                alert('오류가 발생하였습니다.')
+            }
+
         });
     });
 

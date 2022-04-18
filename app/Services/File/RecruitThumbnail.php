@@ -41,17 +41,6 @@ class RecruitThumbnail extends FileTemplate
         ]);
     }
 
-    public function moveTempFilesToPublic(?File ...$files)
-    {
-        foreach ($files as $file) {
-            if (!$file instanceof Model) {
-                continue;
-            }
-            $this->moveTempToPublic($file);
-        }
-    }
-
-
     /**
      * @inheritDoc
      */
@@ -67,34 +56,11 @@ class RecruitThumbnail extends FileTemplate
      */
     protected function deleteFileInDB()
     {
-        /** @var Recruit $recruit */
-        $recruit = $this->model;
-        $paths = collect();
+        throw new \Exception("이 구현체는 이 함수를 쓰지 않음.");
+    }
 
-        if ($recruit->file()->exists()) {
-            $path = $recruit->file->path;
-            $recruit->file->delete();
-            $paths->add($path);
-        }
-        if ($recruit->file1()->exists()) {
-            $path = $recruit->file1->path;
-            $recruit->file1->delete();
-            $paths->add($path);
-        }
-        if ($recruit->file2()->exists()) {
-            $path = $recruit->file2->path;
-            $recruit->file2->delete();
-            $paths->add($path);
-        }
-        if ($recruit->file3()->exists()) {
-            $path = $recruit->file3->path;
-            $recruit->file3->delete();
-            $paths->add($path);
-        }
-        if ($paths->isEmpty()) {
-            return false;
-        }
-
-        return $paths->toArray();
+    public function deleteFile()
+    {
+        throw new \Exception("이 구현체는 이 함수를 쓰지 않음.");
     }
 }
