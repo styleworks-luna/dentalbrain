@@ -113,7 +113,7 @@ class ResumeService
 
     public function searchForAdmin(?string $keyword)
     {
-        $builder = Resume::query()->with('user:id,login_id');
+        $builder = Resume::query()->with('user:id,login_id,job_id');
         if ($keyword != null) {
             $builder->where(function ($query) use ($keyword) {
                 $queryKey = "%${keyword}%";
