@@ -98,7 +98,6 @@ class RecruitController extends Controller
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
 
-            $this->recruitService->expiredRecruitTerm($recruit);
             $this->recruitService->attachThumbnails($recruit, $recruitData);
 
             // 결제 승인 API

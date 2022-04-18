@@ -106,6 +106,9 @@ class RecruitService
             'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
+            'term' => Recruit::TERM,
+            'expired_at' => now()->addDays(Recruit::TERM),
+
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
@@ -299,13 +302,5 @@ class RecruitService
             }
         } catch (\Exception $ignored) {
         }
-    }
-
-    public function expiredRecruitTerm(Recruit $recruit)
-    {
-        $recruit = Recruit::query()->find($recruit->id);
-
-        $recruit->expired_at = Carbon::parse($recruit->created_at)->addDay($recruit->term);
-        $recruit->save();
     }
 }
