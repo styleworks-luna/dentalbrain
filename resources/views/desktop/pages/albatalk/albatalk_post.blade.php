@@ -664,7 +664,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>상세정보</th>
+                                    <th class="unique-label">상세정보</th>
                                     <td class="wrapper-s">
                                         <ul class="editor-extra-toolbar">
                                             <li>
