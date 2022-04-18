@@ -1,7 +1,7 @@
 <template>
     <section class="mypage-albatalk">
         <template v-if="is_offer">
-            <albatalk-offer-list :mobile="mobile"></albatalk-offer-list>
+            <albatalk-offer-list :listData=myRecruitList :mobile="mobile"></albatalk-offer-list>
         </template>
         <template v-else>
             <albatalk-list :listData=albaTalkList :mobile="mobile"></albatalk-list>
@@ -28,10 +28,12 @@ export default {
     data() {
         return {
             albaTalkList: [],
+            myRecruitList: [],
         }
     },
     mounted() {
         this.getAlbaTalk();
+        this.getMyRecruit();
     },
     methods: {
       getAlbaTalk() {
@@ -40,7 +42,14 @@ export default {
           }).catch(err => {
               this.albaTalkList = [];
           });
-      }
+      },
+      getMyRecruit() {
+          Mypage.getMyRecruit().then(res => {
+              this.myRecruitList = res.data.data;
+          }).catch(err => {
+              this.myRecruitList = [];
+          });
+      },
     }
 }
 </script>

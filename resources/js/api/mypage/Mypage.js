@@ -35,5 +35,11 @@ export default {
             url: '/api/account/recruit',
             method: 'get',
         });
+    },
+    getMyRecruit(){
+        return Send({
+            url: '/api/account/applied-resume',
+            method: 'get',
+        });
     }
 }

@@ -2,18 +2,19 @@
     <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
         <ul  :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
-                <a class="albatalk-card" href="">
+                <a class="albatalk-card" :href="`/albatalk/recruit/${list.id}`">
                     <img src="/images/dummy/test2.jpg">
                     <div class="albatalk-information">
-                        <p class="albatalk-name">{{ list.title }}</p>
+                        <p class="albatalk-name">{{ list.recruit.company_name }}</p>
                         <div class="albatalk-description">
-                            <p class="albatalk-place">{{ list.location }}</p>
-                            <p class="albatalk-date">{{ list.date }}</p>
+                            <p class="albatalk-place">{{ list.recruit.sido }} {{ list.recruit.gugun }}</p>
+                            <p v-if="(list.recruit.ended_at==null)" class="albatalk-date">채용시까지</p>
+                            <p v-else class="albatalk-date">~ {{ Helper.dateFormatDMW(list.recruit.ended_at) }}</p>
                         </div>
                     </div>
                 </a>
                 <div class="albatalk-additional-information">
-                    <p class="refuse-state" v-if="list.state == '1'">모집마감</p>
+                    <p v-if="(Helper.dateCompareWithNow(list.recruit.ended_at) < 0) && (list.recruit.ended_at!=null)" class="refuse-state">모집마감</p>
                     <div class="btn-wrap" v-else>
                     <button class="btn-cancel">제출취소</button>
                     </div>
@@ -33,68 +34,17 @@
 export default {
     name: "AlbaTalkOfferList",
     props: {
+        listData: Array,
         mobile: Boolean,
     },
     data() {
         return {
-            lists: [
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-            ]
+            lists: []
+        }
+    },
+    watch: {
+        listData(){
+            this.lists = this.listData
         }
     }
 }
