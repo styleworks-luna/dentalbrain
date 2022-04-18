@@ -164,7 +164,8 @@
                                     </div>
                                     <!-- 썸네일 존재 할 경우 (등록 이미지) -->
                                     <div class="image-on">
-                                        <img class="main-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                        <img class="main-thumbnail thumbnail-image"
+                                             src="{{ $recruit->file->url ?? '' }}" alt="치과 사진">
                                         <div class="image-hover-common image-hover-lg">
                                             <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
                                         </div>
@@ -194,7 +195,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file1->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                         class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
@@ -203,7 +204,7 @@
                                         </div>
                                         <div class="img-wrap">
                                             <input type="hidden" name="file_2_id" class="file-id"
-                                                   value="{{ $recruit->file3->id ?? '' }}">
+                                                   value="{{ $recruit->file2->id ?? '' }}">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -218,7 +219,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file2->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                         class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
@@ -227,7 +228,8 @@
 
                                         </div>
                                         <div class="img-wrap">
-                                            <input type="hidden" name="file_3_id" class="file-id">
+                                            <input type="hidden" name="file_3_id" class="file-id"
+                                                   value="{{ $recruit->file3->id ?? '' }}">
                                             <!-- 썸네일 존재하지 않을경우-->
                                             <div class="image-off">
                                                 <div class="sub-thumbnail none-image">
@@ -242,7 +244,7 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file3->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
                                                         class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
@@ -354,7 +356,7 @@
                                                class="input-xl"
                                                name="homepage"
 
-                                               value="{{old('homepage', $recruit->url)}}">
+                                               value="{{ old('homepage', $recruit->url) }}">
                                     </td>
                                 </tr>
                             </table>
@@ -414,7 +416,8 @@
                                                 <div class="checkbox-wrap">
                                                     <input type="hidden" name="application[{{$application->id}}]"
                                                            value="off">
-                                                    <input type="checkbox" id="application_field_[{{ $application->id }}]"
+                                                    <input type="checkbox"
+                                                           id="application_field_[{{ $application->id }}]"
                                                            name="{{'application['.$application->id.']'}}"
                                                            @if(old('application.'.$application->id, $recruitApplications->contains($application->id) ? 'on' :'off') == 'on')
                                                            checked
@@ -442,7 +445,7 @@
                                                            name="work"
                                                            value={{ $work->id }}
                                                            @if(old('work', $recruit->typeWork->id) == $work->id)
-                                                                   checked
+                                                               checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무형태를 선택해주세요."
@@ -486,7 +489,7 @@
                                                            class="salary"
                                                            value={{ $salary->id }}
                                                            @if(old('salary', $recruitSalaries[0]->type_salary_id) == $salary->id)
-                                                                   checked
+                                                               checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 급여를 선택해주세요."
