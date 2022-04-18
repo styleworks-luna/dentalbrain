@@ -16,7 +16,7 @@
             <div class="mypage-content-wrap">
                 <div class="content-title">
                     <h2>구인정보</h2>
-                    <a href="">구인 등록하기</a>
+                    <a href="/albatalk/recruit">구인 등록하기</a>
                 </div>
                 <albatalk></albatalk>
             </div>

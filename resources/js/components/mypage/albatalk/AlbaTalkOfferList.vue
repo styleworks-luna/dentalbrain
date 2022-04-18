@@ -21,6 +21,9 @@
             </li>
             <li class="none" v-if="lists.length <= 0">
                 <p>신청한 구직 내역이 없습니다.</p>
+                <div class="btn-wrap">
+                    <a v-if="mobile == false" href="/albatalk" class="btn-go-offer">구직 신청하러가기</a>
+                </div>
             </li>
         </ul>
     </div>
@@ -35,62 +38,6 @@ export default {
     data() {
         return {
             lists: [
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '1',
-                },
             ]
         }
     }
