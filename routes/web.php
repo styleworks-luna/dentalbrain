@@ -146,6 +146,7 @@ if (env('APP_ENV') != 'production') {
         Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
             // 구인 등록 보기
             Route::get('recruit', [\App\Http\Controllers\Account\RecruitController::class, 'index'])->name('recruit');
+            Route::get('applied-resume', [\App\Http\Controllers\Account\ResumeController::class, 'appliedResumeList'])->name('applied-resume');
         });
     });
 }

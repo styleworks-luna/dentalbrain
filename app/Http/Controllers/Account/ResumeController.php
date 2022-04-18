@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Account;
 use App\Http\Controllers\Controller;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
+use App\Models\Resume\Resume;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Jenssegers\Agent\Facades\Agent;
 
@@ -98,5 +100,23 @@ class ResumeController extends Controller
             'rightList' => $rightList,
             'categories' => $categories,
         ]);
+    }
+
+    public function appliedResumeList(Request $request)
+    {
+        /** @var Resume $resume */
+        $resume = Resume::query()->where('user_id', '=', Auth::id())->first();
+        if ($resume == null) {
+            return response()->json([], 400);
+        }
+        $appliedResumes = $resume->appliedResumes()
+            ->select(['id', 'recruit_id', 'resume_id', 'status', 'applied_at', 'is_recommended'])
+            ->with(['recruit' => function ($query) {
+                $query->with('file:id,url')
+                    ->select(['id', 'main_file_id', 'company_name', 'sido', 'gugun', 'dong', 'ended_at']);
+            }])
+            ->orderByDesc('applied_at')
+            ->paginate();
+        return response()->json($appliedResumes->toArray());
     }
 }
