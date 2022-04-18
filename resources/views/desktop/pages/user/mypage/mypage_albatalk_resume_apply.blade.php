@@ -22,7 +22,7 @@
                     <li class="navigation-list active">
                         <a href="/account/offer">신청내역</a>
                     </li>
-                    <li class="navigation-list ">
+                    <li class="navigation-list">
                         <a href="/account/resume">이력서 정보</a>
                     </li>
                 </ul>
