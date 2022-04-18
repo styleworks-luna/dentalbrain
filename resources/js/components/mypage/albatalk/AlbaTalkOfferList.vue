@@ -1,6 +1,6 @@
 <template>
     <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
-        <ul  :class="lists.length > 0 ? 'albatalk-content-list' : ''">
+        <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
             <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
                 <a class="albatalk-card" :href="`/albatalk/recruit/${list.id}`">
                     <img src="/images/dummy/test2.jpg">
