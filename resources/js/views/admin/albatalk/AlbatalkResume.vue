@@ -2,9 +2,9 @@
     <layout title="구직 정보">
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">구직 정보 [ 전체 0개 ]</p>
+                <p class="mb-0" style="font-size: 12px">구직 정보 [ 전체 {{ total }}개 ]</p>
                 <div>
-                    <form @submit.prevent="">
+                    <form @submit.prevent="getData">
                         <div class="input-group">
                             <input class="form-control"
                                    type="text"
@@ -21,12 +21,12 @@
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="resumeList">
+                        :data="resumeList.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">
-                            {{ slotProps.row.user_id }}
+                            {{ slotProps.row.user.login_id }}
                         </router-link>
                     </td>
                     <td>
@@ -37,33 +37,37 @@
                         <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.email }}
                         </router-link>
                     </td>
-                    <td>{{ slotProps.row.email }}</td>
-                    <td>{{ slotProps.row.job }}</td>
+                    <td>{{ slotProps.row.phone }}</td>
+                    <td>{{ slotProps.row.user.job_name }}</td>
                     <td>
-                        <a :href="`/albatalk/resume/${slotProps.row.id}`"
-                           class="btn btn-info float-left mr-2">
+                        <a :href="`/api/admin/resume/${slotProps.row.id}/pdf`"
+                           class="btn btn-info mr-2" target="_blank">
                             보기
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-danger float-left" @click="">추천</button>
+                        <button class="btn btn-danger" @click="">추천</button>
                     </td>
                 </template>
             </table-grid>
 
-            <!--<div class="paging-wrap text-center">
+            <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
                     <pagination :data="resumeList" :limit=3 @pagination-change-page="" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
                 </nav>
-            </div>-->
+            </div>
         </template>
     </layout>
 </template>
 
 <script>
+// api
+import Resume from "@/api/admin/albatalk/Resume.js"
+
+// component
 import Table from '@/components/admin/grid/Table.vue';
 
 export default {
@@ -119,10 +123,28 @@ export default {
     },
     data() {
         return {
-            resumeList: [],
+            resumeList: {
+                data: [],
+            },
             keyword: "",
+            total: 0,
         }
     },
-    methods: {}
+    mounted() {
+        this.getData();
+    },
+    methods: {
+        getData() {
+            let params = {
+                keyword: this.keyword
+            }
+            Resume.getData(params).then(res => {
+                this.resumeList = res.data;
+                this.total = res.data.total;
+            }).catch(err => {
+                this.resumeList = {};
+            })
+        }
+    }
 }
 </script>
