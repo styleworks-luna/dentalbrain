@@ -109,7 +109,7 @@ class RecruitDetailController extends Controller
         }
 
         return redirect()
-            ->route('albatalk.recruit.detail', $recruit->id)
+            ->back()
             ->with('alert', '제출 취소되었습니다.');
     }
 

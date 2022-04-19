@@ -88,7 +88,7 @@ class ApplyService
      * @return bool
      * @throws ModelNotFoundException
      */
-    public function cancel($recruit, $givenResume): bool
+    public function cancel($recruit, $givenResume = null): bool
     {
         if ($givenResume == null) {
             $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
