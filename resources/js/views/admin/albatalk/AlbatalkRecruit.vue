@@ -47,7 +47,7 @@
                     </td>
                     <td>{{ slotProps.row.created_at }}</td>
                     <td>{{ slotProps.row.expired_at }}</td>
-                    <td>{{ slotProps.row.banner_date }}</td>
+                    <td>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
                     <td>
                         <a :href="`/albatalk/recruit/${slotProps.row.id}`"
                            class="btn btn-info float-left mr-2">
@@ -173,7 +173,7 @@ export default {
         this.getData();
     },
     methods: {
-        getData(){
+        getData() {
             let params = {
                 keyword: this.keyword,
                 ongoing: this.category_id
