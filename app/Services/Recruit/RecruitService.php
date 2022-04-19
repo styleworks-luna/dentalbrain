@@ -16,8 +16,11 @@ use App\Models\Recruit\Option\TypeSalary;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
+use App\Models\Resume\AppliedResume;
+use App\Models\Resume\Resume;
 use App\Services\File\RecruitThumbnail;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -302,5 +305,42 @@ class RecruitService
             }
         } catch (\Exception $ignored) {
         }
+    }
+
+    /**
+     * @param null|Recruit $keyword
+     * @param null|bool $ongoing
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function searchForAdmin($keyword, $ongoing)
+    {
+        $builder = Recruit::query()->with('user:id,login_id,name,email')
+            ->select('id', 'is_open', 'user_id', 'company_name', 'created_at', 'expired_at')
+            ->withCount(['appliedResumes' => function ($query) {
+                $query->where('status', AppliedResume::STATUS_SUCCESS);
+            }]);
+
+        if ($keyword != null) {
+            $builder->where(function ($query) use ($keyword) {
+                $queryKey = "%${keyword}%";
+                $query->orWhere('company_name', 'LIKE', $queryKey)
+                    ->orWhereHas('user', function (Builder $query) use ($queryKey) {
+                        $query->where('login_id', 'LIKE', $queryKey)
+                            ->orWhere('name', 'LIKE', $queryKey)
+                            ->orWhere('phone', 'LIKE', $queryKey);
+                    });
+            });
+        }
+
+        if ($ongoing != null) {
+            if ($ongoing) {
+                $builder->where('expired_at', '>=', now());
+            } else {
+                $builder->where('expired_at', '<', now());
+            }
+        }
+
+        return $builder->orderByDesc('created_at')
+            ->paginate(10);
     }
 }
