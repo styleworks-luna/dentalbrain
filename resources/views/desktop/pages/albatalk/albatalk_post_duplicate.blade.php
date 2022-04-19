@@ -55,7 +55,7 @@
                 const orderName = '구인 결제';
                 const customerName = '{{ auth()->user()->name }}';
                 const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
-                const failUrl = '{{ route('albatalk.recruit.create') }}';
+                const failUrl = '{{ route('albatalk.recruit.duplicate',[$recruit->id]) }}';
                 const customerEmail = '{{ auth()->user()->email }}';
                 const customerMobilePhone = '{{ auth()->user()->phone }}';
                 if (paymentmethod === '카드') {
@@ -195,10 +195,11 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file1->url ?? '' }}" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"
+                                                     src="{{ $recruit->file1->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -219,10 +220,11 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file2->url ?? '' }}" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"
+                                                     src="{{ $recruit->file2->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
 
@@ -244,10 +246,11 @@
                                             </div>
                                             <!-- 썸네일 존재 할 경우 (등록 이미지)-->
                                             <div class="image-on">
-                                                <img class="sub-thumbnail thumbnail-image"  src="{{ $recruit->file3->url ?? '' }}" alt="치과 사진">
+                                                <img class="sub-thumbnail thumbnail-image"
+                                                     src="{{ $recruit->file3->url ?? '' }}" alt="치과 사진">
                                                 <div class="image-hover-common image-hover-sm">
                                                     <span
-                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                            class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -428,7 +431,7 @@
                                                            data-parsley-required-message="※ 신청분야를 선택해주세요."
                                                            data-parsley-errors-container=".application-error-container">
                                                     <label
-                                                        for="application_field_[{{ $application->id }}]">{{ $application->type }}</label>
+                                                            for="application_field_[{{ $application->id }}]">{{ $application->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -445,13 +448,13 @@
                                                            name="work"
                                                            value={{ $work->id }}
                                                            @if(old('work', $recruit->typeWork->id) == $work->id)
-                                                               checked
+                                                                   checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 근무형태를 선택해주세요."
                                                            data-parsley-errors-container=".work-type-error-container">
                                                     <label
-                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
+                                                            for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -471,7 +474,7 @@
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
                                                     <label
-                                                        for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
+                                                            for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -489,13 +492,13 @@
                                                            class="salary"
                                                            value={{ $salary->id }}
                                                            @if(old('salary', $recruitSalaries[0]->type_salary_id) == $salary->id)
-                                                               checked
+                                                                   checked
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 급여를 선택해주세요."
                                                            data-parsley-errors-container=".salary-type-error-container">
                                                     <label
-                                                        for="salary_type_field_[{{ $salary->id }}]">{{ $salary->type }}</label>
+                                                            for="salary_type_field_[{{ $salary->id }}]">{{ $salary->type }}</label>
                                                     @if($salary->id == 4)
                                                         <input type="text" name="salary_value"
                                                                class="radio-input input-m salary-input"
@@ -610,7 +613,7 @@
                                                            data-parsley-required-message="※ 근무요일을 선택해주세요."
                                                            data-parsley-errors-container=".day-type-error-container">
                                                     <label
-                                                        for="day_type_field_[{{ $day->id }}]">{{ $day->type }}</label>
+                                                            for="day_type_field_[{{ $day->id }}]">{{ $day->type }}</label>
                                                     @if($day->id == 4)
                                                         <input type="text" name="day_value"
                                                                class="radio-input input-m work-day-input"
@@ -642,7 +645,7 @@
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
                                                     <label
-                                                        for="benefit_type_field_[{{ $benefit->id }}]">{{ $benefit->type }}</label>
+                                                            for="benefit_type_field_[{{ $benefit->id }}]">{{ $benefit->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -774,12 +777,13 @@
                                                     <option value="디스커버">디스커버</option>
                                                 </select>
                                             </div>
-                                            {{--
+
                                             <div class="radio-wrap">
-                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method"
+                                                       name="pay_method" value="계좌이체">
                                                 <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
-                                            --}}
+
                                         </div>
                                         <div class="pay-type-error-container"></div>
                                     </td>
