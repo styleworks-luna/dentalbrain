@@ -23,10 +23,15 @@ class PaymentController extends Controller
             ->with(['membership' => function ($query) {
                 $query->select('id', 'payment_id', 'user_id', 'applied_days');
             }])
+            ->with(['recruit' => function ($query) {
+                $query->select('id', 'payment_id', 'user_id', 'company_name');
+            }])
             ->where(function ($query) {
                 $query->whereHas('student', function ($query) {
                     $query->where('user_id', Auth::id());
                 })->orWhereHas('membership', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })->orWhereHas('recruit', function ($query) {
                     $query->where('user_id', Auth::id());
                 });
             })
