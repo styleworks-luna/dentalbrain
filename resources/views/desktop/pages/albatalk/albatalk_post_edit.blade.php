@@ -36,12 +36,12 @@
                     <span class="tip">* 필수 입력 항목입니다.</span>
                 </div>
                 <div class="albatalk-post-content">
-                    <form action="{{ route('albatalk.recruit.edit', $recruit) }}" method="post">
+                    <form id="albatalk_recruit_form" action="{{ route('albatalk.recruit.edit', $recruit) }}" method="post">
                         @csrf
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
                                 <div class="img-wrap main-thumbnail-wrap">
-                                    <input type="hidden" name="main_file_id" class="file-id"
+                                    <input type="hidden" name="main_file_id" class="file-id main-file-id"
                                            value="{{ $recruit->file->id ?? '' }}">
                                     <input type="hidden" class="thumbnail-check" value="N"
                                            data-parsley-required="true"
@@ -201,7 +201,10 @@
                                                name="manager_phone"
                                                value="{{old('manager_phone', $recruit->phone)}}"
                                                placeholder="‘-‘ 없이 입력"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                data-parsley-required="true"
+                                               data-parsley-length="[9,11]"
+                                               data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     </td>
                                 </tr>
@@ -406,6 +409,9 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="study-select-check"
+                                                       value="N">
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
                                                        @if(old('is_study', $recruit->typeStudy->id < 14) == 1) checked
@@ -443,6 +449,9 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="career-select-check"
+                                                       value="N">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
                                                        value="1"
                                                        @if(old('is_career', $recruit->career == 0) == 1) checked @endif

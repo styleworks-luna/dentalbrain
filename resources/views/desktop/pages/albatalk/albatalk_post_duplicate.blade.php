@@ -141,7 +141,7 @@
                         <div class="dental-form-wrap">
                             <div class="thumbnail-wrap">
                                 <div class="img-wrap main-thumbnail-wrap">
-                                    <input type="hidden" name="main_file_id" class="file-id"
+                                    <input type="hidden" name="main_file_id" class="file-id main-file-id"
                                            value="{{ $recruit->file->id ?? '' }}">
                                     <input type="hidden" class="thumbnail-check" value="N"
                                            data-parsley-required="true"
@@ -514,6 +514,9 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="study-select-check"
+                                                       value="N">
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
                                                        @if(old('is_study', $recruit->typeStudy->id < 14) == 1) checked
@@ -551,8 +554,12 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="career-select-check"
+                                                       value="N">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
-                                                       value="1" @if(old('is_career') == 1) checked @endif
+                                                       value="1"
+                                                       @if(old('is_career', $recruit->career == 0) == 1) checked @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
