@@ -17,6 +17,17 @@ class RecruitController extends Controller
         $this->recruitService = $recruitService;
     }
 
+    public function search(Request $request)
+    {
+        $request->validate([
+            'keyword' => ['nullable', 'string'],
+            'ongoing' => ['nullable', 'boolean'],
+        ]);
+
+        $listForAdmin = $this->recruitService->searchForAdmin($request->get('keyword', null),$request->get('ongoing', null));
+        return response()->json($listForAdmin);
+    }
+
     public function statusChange(Recruit $recruit)
     {
         $statusChange = new StatusChangeImpl();
