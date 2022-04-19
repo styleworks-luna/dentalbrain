@@ -222,7 +222,7 @@
                 <section class="applied-resume-status">
                     @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
                         <div class="information-title">
-                            <h2>이력서 접수 상태 <em>{{ $appliedResumes->count() }}</em>건</h2>
+                            <h2>이력서 접수 상태 <em>{{ number_format($applyCount) }}</em>건</h2>
                         </div>
                     @endif
                     @if($authority->isAdmin() || $authority->isOwner())

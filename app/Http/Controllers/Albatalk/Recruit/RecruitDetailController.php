@@ -10,7 +10,6 @@ use App\Models\Recruit\Option\RecruitDay;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Recruit;
 use App\Models\Resume\AppliedResume;
-use App\Models\Resume\Resume;
 use App\Models\User;
 use App\Services\Recruit\ApplyService;
 use App\Services\Recruit\ResumeService;
@@ -45,24 +44,30 @@ class RecruitDetailController extends Controller
             $authority = new RecruitAuthority($recruit, false);
         }
 
+        $applyCount = 0;
+        if ($authority->isAdmin() || $authority->isOwner() || $authority->isApplied()) {
+            $applyCount = AppliedResume::query()
+                ->where('recruit_id', '=', $recruit->id)
+                ->where('status', '=', AppliedResume::STATUS_SUCCESS)
+                ->count();
+        }
+
+        $appliedResumes = collect();
         if ($authority->isAdmin() || $authority->isOwner() || $authority->isApplied()) {
             $appliedResumes = AppliedResume::query()
                 ->where('recruit_id', '=', $recruit->id)
                 ->orderByDesc('applied_at')
                 ->with('resume.user')
                 ->get();
-        } else {
-            $appliedResumes = collect();
         }
 
+        $usersResume = null;
         if ($authority->isApplied()) {
             try {
                 $usersResume = $this->applyService->findApplied($recruit);
             } catch (ModelNotFoundException $exception) {
                 $usersResume = null;
             }
-        } else {
-            $usersResume = null;
         }
 
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
@@ -74,6 +79,7 @@ class RecruitDetailController extends Controller
             'authority' => $authority,
             'appliedResumes' => $appliedResumes,
             'usersResume' => $usersResume,
+            'applyCount' => $applyCount,
         ]);
     }
 
