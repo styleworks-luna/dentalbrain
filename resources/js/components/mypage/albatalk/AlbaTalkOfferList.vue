@@ -14,9 +14,13 @@
                     </div>
                 </a>
                 <div class="albatalk-additional-information">
-                    <p v-if="(Helper.dateCompareWithNow(list.recruit.ended_at) < 0) && (list.recruit.ended_at!=null)" class="refuse-state">모집마감</p>
+                    <p v-if="(Helper.dateCompareWithNow(list.recruit.ended_at) < 0) && (list.recruit.ended_at!=null)"
+                       class="refuse-state">모집마감</p>
                     <div class="btn-wrap" v-else>
-                    <button class="btn-cancel">제출취소</button>
+                        <form :action="`/albatalk/recruit/${list.recruit.id}/cancel`" method="post">
+                            <input type="hidden" name="_token" :value="token">
+                            <button class="btn-cancel">제출취소</button>
+                        </form>
                     </div>
                 </div>
             </li>
@@ -37,16 +41,21 @@ export default {
         listData: Array,
         mobile: Boolean,
     },
+    computed: {
+      token() {
+          return document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+    },
     data() {
         return {
-            lists: []
+            lists: [],
         }
     },
     watch: {
-        listData(){
+        listData() {
             this.lists = this.listData
         }
-    }
+    },
 }
 </script>
 
