@@ -9,17 +9,35 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recruit\Recruit;
 use App\Models\UserJobName;
+use App\Services\Recruit\ApplyService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 
 class TestController extends Controller
 {
-    public function showRegistrationForm()
+
+
+    public function ndsrhkd()
     {
-        return view('desktop.pages.dev.devRegister', [
-            'jobs' => UserJobName::query()->orderBy('id')->get()
+        $recruits = Recruit::all();
+        return view('test.test-recommend', [
+            'recruits' => $recruits
         ]);
+    }
+
+    public function ndsrhkdPost(Request $request, ApplyService $applyService)
+    {
+        $idList = $request->get('recruits', []);
+        foreach ($idList as $recruitId) {
+            try {
+                $applyService->apply(Recruit::query()->findOrFail($recruitId), true);
+            } catch (ModelNotFoundException $exception) {
+                ddd();
+            }
+        }
     }
 }

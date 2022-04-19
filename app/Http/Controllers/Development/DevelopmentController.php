@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Development;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserJobName;
 use App\Services\Recruit\AbilityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,5 +38,12 @@ class DevelopmentController extends Controller
                 "content" => json_encode($data)
             ]
         );
+    }
+
+    public function showRegistrationForm()
+    {
+        return view('desktop.pages.dev.devRegister', [
+            'jobs' => UserJobName::query()->orderBy('id')->get()
+        ]);
     }
 }

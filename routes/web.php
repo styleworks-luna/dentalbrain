@@ -32,7 +32,9 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
-        Route::get('register', [\App\Http\Controllers\Test\TestController::class, 'showRegistrationForm']);
+        Route::get('register', [\App\Http\Controllers\Development\DevelopmentController::class, 'showRegistrationForm']);
+        Route::get('ndsrhkd', [\App\Http\Controllers\Test\TestController::class, 'ndsrhkd']);
+        Route::post('ndsrhkd', [\App\Http\Controllers\Test\TestController::class, 'ndsrhkdPost']);
     });
 
     Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
