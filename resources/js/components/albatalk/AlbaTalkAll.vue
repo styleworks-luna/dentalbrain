@@ -1,7 +1,7 @@
 <template>
     <section class="albatalk">
         <div class="albatalk-navigation">
-            <albatalk-order :mobile="mobile"></albatalk-order>
+            <albatalk-order :mobile="mobile" @orderEmit="orderUpdate"></albatalk-order>
             <albatalk-navigation :mobile="mobile" :show="showNavigation" @menuEventEmit="menuListUpdate"></albatalk-navigation>
         </div>
         <albatalk-list :mobile="mobile" :lists="lists"></albatalk-list>
@@ -31,6 +31,7 @@ export default {
     data() {
         return {
             updatedMenuList: [],
+            updateOrder: 'newest',
             lists: [],
             showNavigation: false,
         }
@@ -39,6 +40,7 @@ export default {
         getData() {
             let params = {
                 sido: this.updatedMenuList,
+                order: this.updateOrder,
             }
             Albatalk.getData(params).then(res => {
                 this.lists = res.data;
@@ -48,6 +50,10 @@ export default {
             this.updatedMenuList = menuList;
             this.getData();
         },
+        orderUpdate(order) {
+            this.updateOrder = order;
+            this.getData();
+        }
     }
 }
 </script>

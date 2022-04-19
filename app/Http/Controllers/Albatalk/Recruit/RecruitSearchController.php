@@ -33,8 +33,7 @@ class RecruitSearchController extends Controller
         if ($order == 'newest') {
             $builder->orderBy('created_at', 'desc');
         } else {
-            $builder->where('ended_at', ' >= ', now())
-                ->orderBy('ended_at');
+            $builder->orderBy('ended_at');
         }
         return response()->json($builder->get());
     }
