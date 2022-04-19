@@ -42,6 +42,12 @@ class Recruit extends Model
     // 채용 시까지
     static $TIME_FOR_RECRUIT = 2;
 
+    // 공개
+    const IS_OPEN = 1;
+    // 비공개
+    const IS_NOT_OPEN = 0;
+
+    // 구인 세션
     const SESSION_KEY = 'recruit_create_data';
 
     public function user(): BelongsTo

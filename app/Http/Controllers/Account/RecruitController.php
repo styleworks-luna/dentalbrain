@@ -16,7 +16,7 @@ class RecruitController extends Controller
             ->select('id', 'company_name', 'sido', 'gugun', 'started_at', 'ended_at', 'main_file_id', 'expired_at')
             ->with('file:id,url')
             ->withCount(['appliedResumes' => function($query) {
-                $query->where('status', 1);
+                $query->where('status', AppliedResume::STATUS_SUCCESS);
             }])
             ->orderByDesc('expired_at')
             ->get()->map(function ($item, $key) {
