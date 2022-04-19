@@ -265,7 +265,7 @@
                 </div>
             @else
                 <div class="none">
-                            <p>등록된 이력서가 없습니다.</p>
+                    <p>등록된 이력서가 없습니다.</p>
                 </div>
             @endif
 
