@@ -10,6 +10,7 @@ use App\Models\Resume\Resume;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -30,20 +31,21 @@ class ResumeController extends Controller
     {
         $resume = $this->resumeService->getLoginUsersResume();
 
-        if ($resume == null) {
-            throw new ModelNotFoundException('이력서를 생성해 주세요.');
-        }
-
         return Agent::isMobile() ?
             $this->myPageResumeMobile($resume) : $this->myPageResumeDesktop($resume);
     }
 
     /**
-     * @param $resume
+     * @param null|Resume|Model $resume
      * @return Application|Factory|View
      */
-    private function myPageResumeMobile($resume)
+    private function myPageResumeMobile($resume = null)
     {
+        if ($resume == null) {
+            return view('mobile.pages.user.mypage.mypage_albatalk_resume', [
+                'resume' => null,
+            ]);
+        }
         $categories = AbilityCategory::query()->orderBy('seq')
             ->select(['id', 'seq', 'name'])
             ->with('abilities')
@@ -67,11 +69,17 @@ class ResumeController extends Controller
     }
 
     /**
-     * @param $resume
+     * @param null|Model|Resume $resume
      * @return Application|Factory|RedirectResponse|View
      */
-    private function myPageResumeDesktop($resume)
+    private function myPageResumeDesktop($resume = null)
     {
+        if ($resume == null) {
+            return view('desktop.pages.user.mypage.mypage_albatalk_resume', [
+                'resume' => null,
+            ]);
+        }
+
         try {
             $categories = AbilityCategory::query()->orderBy('seq')
                 ->select(['id', 'seq', 'name'])
@@ -108,7 +116,7 @@ class ResumeController extends Controller
         /** @var Resume $resume */
         $resume = Resume::query()->where('user_id', '=', Auth::id())->first();
         if ($resume == null) {
-            return response()->json([], 400);
+            return response()->json([]);
         }
         $appliedResumes = $resume->appliedResumes()
             ->select(['id', 'recruit_id', 'resume_id', 'status', 'applied_at', 'is_recommended'])

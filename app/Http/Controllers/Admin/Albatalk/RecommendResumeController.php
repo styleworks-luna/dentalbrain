@@ -14,9 +14,6 @@ class RecommendResumeController extends Controller
 {
     private $applyService;
 
-    /**
-     * @param $applyService
-     */
     public function __construct(ApplyService $applyService)
     {
         $this->applyService = $applyService;

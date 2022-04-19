@@ -46,7 +46,7 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-danger" @click="">추천</button>
+                        <button class="btn btn-danger" @click="popupControl(slotProps.row.id)">추천</button>
                     </td>
                 </template>
             </table-grid>
@@ -59,6 +59,7 @@
                     </pagination>
                 </nav>
             </div>
+            <recommend-popup v-if="showPopup" :id="popupId" @close="popupClose"></recommend-popup>
         </template>
     </layout>
 </template>
@@ -69,11 +70,13 @@ import Resume from "@/api/admin/albatalk/Resume.js"
 
 // component
 import Table from '@/components/admin/grid/Table.vue';
+import Recommend from '@/views/admin/albatalk/ResumeRecommendPopup.vue';
 
 export default {
     name: "AlbaTalkResume",
     components: {
         'table-grid': Table,
+        'recommend-popup': Recommend,
     },
     computed: {
         tableCol() {
@@ -127,6 +130,8 @@ export default {
                 data: [],
             },
             keyword: "",
+            showPopup: false,
+            popupId: 0,
             total: 0,
         }
     },
@@ -144,7 +149,14 @@ export default {
             }).catch(err => {
                 this.resumeList = {};
             })
-        }
+        },
+        popupControl(id) {
+            this.popupId = id;
+            this.showPopup = true;
+        },
+        popupClose(show) {
+            this.showPopup = show;
+        },
     }
 }
 </script>
