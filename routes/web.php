@@ -151,7 +151,9 @@ if (env('APP_ENV') != 'production') {
             });
             Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
                 // 구인 검색
-                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'search'])->name('index');
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'search'])->name('search');
+                // 구인 정보
+                Route::get('stats', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'stats'])->name('stats');
                 // 구인 상태 변경 함수
                 Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
 
