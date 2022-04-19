@@ -13,13 +13,6 @@ $(function () {
         })
     }
 
-    $('.study-select').on("selectmenuchange", function(event, ui) {
-        console.log(event , ui);
-        if(event.target.value == "0") {
-
-        }
-    })
-
     // thumbnail
     $('.file-id').each( (idx,x) => {
         if(nullCheck($(x).val())) {
@@ -147,6 +140,77 @@ $(function () {
         });
     }
 
+    // validation
+    let studyValue
+
+    $('.study').change(function () {
+        studyValue = $('.study:checked').val();
+        if(studyValue == "1") {
+            $('.study-select-check').attr({
+                'data-parsley-pattern':"[Y]",
+                "data-parsley-pattern-message":"※ 학력을 선택해주세요.",
+                "data-parsley-errors-container":".study-type-error-container"
+            });
+            $('.study-select').on("selectmenuselect", function(event, ui) {
+                if(event.target.value == "0") {
+                    $('.study-select-check').val("N");
+                    $('.study-select-check').parsley().validate();
+                } else {
+                    $('.study-select-check').val("Y");
+                    $('.study-select-check').parsley().validate();
+                }
+            })
+        } else {
+            $('.study-select-check').parsley().destroy();
+        }
+    })
+
+    let careerValue
+
+    $('.career').change(function () {
+        careerValue = $('.career:checked').val();
+        if(careerValue == "2") {
+            $('.career-select-check').attr({
+                'data-parsley-pattern':"[Y]",
+                "data-parsley-pattern-message":"※ 경력을 선택해주세요.",
+                "data-parsley-errors-container":".career-error-container"
+            });
+            $('.career-select').on("selectmenuselect", function(event, ui) {
+                if(event.target.value == "0") {
+                    $('.career-select-check').val("N");
+                    $('.career-select-check').parsley().validate();
+                } else {
+                    $('.career-select-check').val("Y");
+                    $('.career-select-check').parsley().validate();
+                }
+            });
+        } else {
+            $('.career-select-check').parsley().destroy();
+        }
+    });
+
+    let startDate = '';
+    let endDate = '';
+
+    let deadlineValue;
+    let dateCompareCheck;
+
+    function dateCompareValidate() {
+        let startTime = $('.start-time').val();
+        let startFullDate = `${startDate} ${startTime}`;
+        let endTime =  $('.end-time').val();
+        let endFullDate = `${endDate} ${endTime}`;
+        dateCompareCheck = dateCompare(startFullDate, endFullDate);
+
+        if(dateCompareCheck < 0) {
+            $('.date-compare-check').val("N");
+            $('.date-compare-check').parsley().validate();
+        } else {
+            $('.date-compare-check').val("Y");
+            $('.date-compare-check').parsley().validate();
+        }
+    }
+
     //editor
     CKEDITOR.replace('editor', {
         height: 370,
@@ -163,6 +227,11 @@ $(function () {
                     left: $('.start-date').offset().left
                 });
             }, 0);
+        },
+        onSelect: function(s, e) {
+            startDate = s;
+            $('.start-date').parsley().validate();
+            dateCompareValidate();
         },
         showMonthAfterYear: true,
         nextText: "",
@@ -193,6 +262,11 @@ $(function () {
                 });
             }, 0);
         },
+        onSelect: function(s, e) {
+            endDate = s;
+            $('.end-date').parsley().validate();
+            dateCompareValidate();
+        },
         nextText: "",
         prevText: "",
         numberOfMonths: 1,
@@ -209,6 +283,53 @@ $(function () {
     $('.end-date').blur(function () {
         $(this).removeClass('on-show');
     });
+
+    $('.start-time').on("input change paste", function () {
+        dateCompareValidate();
+    });
+
+    $('.end-time').on("input change paste", function () {
+        dateCompareValidate();
+    });
+
+    $('.deadline').change(function() {
+        deadlineValue = $('.deadline:checked').val();
+
+        if(deadlineValue == '1') {
+            $('.start-date').attr({
+                'data-parsley-required':"true",
+                "data-parsley-required-message":"※ 시작일자를 선택해주세요.",
+                "data-parsley-errors-container":".deadline-error-container"
+            });
+            $('.start-time').attr({
+                'data-parsley-required':"true",
+                "data-parsley-required-message":"※ 시작시간을 입력해주세요.",
+                "data-parsley-errors-container":".deadline-error-container"
+            });
+            $('.end-date').attr({
+                'data-parsley-required':"true",
+                "data-parsley-required-message":"※ 마감일자를 선택해주세요.",
+                "data-parsley-errors-container":".deadline-error-container"
+            });
+            $('.end-time').attr({
+                'data-parsley-required':"true",
+                "data-parsley-required-message":"※ 마감시간을 입력해주세요.",
+                "data-parsley-errors-container":".deadline-error-container"
+            });
+            $('.date-compare-check').attr({
+                'data-parsley-pattern':"[Y]",
+                "data-parsley-pattern-message":"※ 시작 날짜를 마감 날짜보다 이르게 입력해주세요.",
+                "data-parsley-errors-container":".deadline-error-container"
+            });
+            dateCompareValidate();
+        } else {
+            $('.start-date').parsley().destroy();
+            $('.start-time').parsley().destroy();
+            $('.end-date').parsley().destroy();
+            $('.end-time').parsley().destroy();
+            $('.date-compare-check').parsley().destroy();
+        }
+    })
 
     // radio event
     $('.salary').change(function () {
@@ -252,12 +373,12 @@ $(function () {
             $('.start-date').attr('disabled', false);
             $('.start-time').attr('disabled', false);
             $('.end-date').attr('disabled', false);
-            $('.end-tme').attr('disabled', false);
+            $('.end-time').attr('disabled', false);
         } else {
             $('.start-date').attr('disabled', true);
             $('.start-time').attr('disabled', true);
             $('.end-date').attr('disabled', true);
-            $('.end-tme').attr('disabled', true);
+            $('.end-time').attr('disabled', true);
         }
     });
 
@@ -272,7 +393,15 @@ $(function () {
     });
 
     $('.btn-submit').click(function() {
-        console.log(1);
         thumbnailValidation();
     });
 });
+
+function dateCompare(start, end) {
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+
+    console.log(startDate, endDate);
+
+    return endDate.getTime() - startDate.getTime();
+}
