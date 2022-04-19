@@ -501,7 +501,9 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
-                                                <input type="hidden" class="study-select-check" >
+                                                <input type="hidden"
+                                                       class="study-select-check"
+                                                       value="N">
                                                 <input type="radio" id="study_type_field_01" class="study"
                                                        name="is_study" value="1"
                                                        @if(old('is_study') == 1) checked @endif
@@ -537,6 +539,9 @@
                                     <td class="wrapper-s">
                                         <div class="radio-container">
                                             <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="career-select-check"
+                                                       value="N">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
                                                        value="1" @if(old('is_career') == 1) checked @endif
                                                        data-parsley-required="true"
@@ -551,7 +556,7 @@
                                                 <select name="career" id="career"
                                                         class="input-xs radio-input select-menu career-select"
                                                         @if(old('is_career') != 2) disabled @endif>
-                                                    <option value="">경력기간 선택</option>
+                                                    <option value="0">경력기간 선택</option>
                                                     @for ($i = 1; $i <= 30; $i++)
                                                         @if($i == 30)
                                                             <option value="{{ $i }}"
@@ -635,6 +640,8 @@
                                                        data-parsley-required-message="※ 모집마감일을 선택해주세요."
                                                        data-parsley-errors-container=".deadline-error-container">
 
+                                                <input type="hidden" class="date-compare-check" value="N">
+
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
                                                        value="{{ old("started_at_ymd") }}"
                                                        placeholder="시작일자 선택"
@@ -648,7 +655,7 @@
                                                        value="{{ old("ended_at_ymd") }}"
                                                        placeholder="마감일자 선택"
                                                        @if(old('deadline') != 1) readonly disabled @endif>
-                                                <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
+                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"
                                                        name="ended_at_hm"
                                                        value="{{ old("ended_at_hm") }}"
                                                        @if(old('deadline') != 1) disabled @endif>
