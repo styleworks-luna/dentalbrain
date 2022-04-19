@@ -48,6 +48,11 @@
                             유료회원
                         </td>
                     </template>
+                    <template v-else-if="slotProps.row.recruit_id">
+                        <td>
+                            알바톡
+                        </td>
+                    </template>
                     <template v-else>
                         <td>
                             {{ slotProps.row.is_online ? '온라인' : '오프라인' }}
@@ -55,7 +60,15 @@
                     </template>
                     <template v-if="slotProps.row.membership_id">
                         <td>
-                            {{slotProps.row.applied_days}}일 유료회원 결제
+                            {{ slotProps.row.applied_days }}일 유료회원 결제
+                        </td>
+                    </template>
+                    <template v-else-if="slotProps.row.recruit_id">
+                        <td>
+                            <a :href="Helper.urlFormat(`/albatalk/recruit/${slotProps.row.recruit_id}`)"
+                               target="_blank">
+                                {{ slotProps.row.recruit_company_name }}
+                            </a>
                         </td>
                     </template>
                     <template v-else>
@@ -324,7 +337,11 @@ export default {
                 {
                     id: '유료회원',
                     name: '유료회원'
-                }
+                },
+                {
+                    id: '알바톡',
+                    name: '알바톡'
+                },
             ]
         },
         orderStatusOptions() {
