@@ -168,11 +168,11 @@
                             </tr>
                             <tr>
                                 <th>복리후생</th>
-                                <td><p>@foreach($applications as $application)
+                                <td><p>@foreach($benefits as $benefit)
                                             @if($loop->last)
-                                                {{$application->type}}
+                                                {{$benefit->type}}
                                             @else
-                                                {{$application->type}},
+                                                {{$benefit->type}},
                                             @endif
                                         @endforeach
                                     </p>
