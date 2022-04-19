@@ -14,15 +14,19 @@ $(function () {
     }
 
     // thumbnail
+    if(nullCheck($('.main-file-id').val())) {
+        $('.thumbnail-check').val('N');
+    } else {
+        $('.thumbnail-check').val('Y');
+    }
+
     $('.file-id').each( (idx,x) => {
         if(nullCheck($(x).val())) {
             $(x).parent().find('.image-off').css('display','block');
             $(x).parent().find('.image-on').css('display','none');
-            $('.file-check').val('N');
         } else {
             $(x).parent().find('.image-off').css('display','none');
             $(x).parent().find('.image-on').css('display','block');
-            $('.file-check').val('Y');
         }
     })
 
