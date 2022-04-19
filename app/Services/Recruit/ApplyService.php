@@ -17,15 +17,20 @@ use Illuminate\Support\Facades\DB;
 class ApplyService
 {
     /**
-     * @param Recruit $recruit
+     * @param Recruit|Model $recruit
      * @param bool $isRecommended
+     * @param null|Resume|Model $givenResume
      * @return Builder|Model
      */
-    public function apply(Recruit $recruit, bool $isRecommended = false)
+    public function apply($recruit, bool $isRecommended = false, $givenResume = null)
     {
-        $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
-        if ($resume == null) {
-            throw new ModelNotFoundException();
+        if ($givenResume == null) {
+            $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
+            if ($resume == null) {
+                throw new ModelNotFoundException();
+            }
+        } else {
+            $resume = $givenResume;
         }
 
         return AppliedResume::query()->updateOrCreate([
@@ -78,16 +83,22 @@ class ApplyService
     }
 
     /**
-     * @param Recruit $recruit
+     * @param Recruit|Model $recruit
+     * @param null|Resume|Model $givenResume
      * @return bool
      * @throws ModelNotFoundException
      */
-    public function cancel(Recruit $recruit): bool
+    public function cancel($recruit, $givenResume): bool
     {
-        $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
-        if ($resume == null) {
-            throw new ModelNotFoundException();
+        if ($givenResume == null) {
+            $resume = Resume::query()->where('user_id', '=', Auth::id())->first('id');
+            if ($resume == null) {
+                throw new ModelNotFoundException();
+            }
+        } else {
+            $resume = $givenResume;
         }
+
         $appliedResume = AppliedResume::query()->where('resume_id', '=', $resume->id)
             ->where('recruit_id', '=', $recruit->id)->firstOrFail();
 

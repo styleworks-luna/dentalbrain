@@ -33,8 +33,6 @@ if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
         Route::get('register', [\App\Http\Controllers\Development\DevelopmentController::class, 'showRegistrationForm']);
-        Route::get('ndsrhkd', [\App\Http\Controllers\Test\TestController::class, 'ndsrhkd']);
-        Route::post('ndsrhkd', [\App\Http\Controllers\Test\TestController::class, 'ndsrhkdPost']);
     });
 
     Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
@@ -145,6 +143,9 @@ if (env('APP_ENV') != 'production') {
                 Route::get('', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'search'])->name('search');
                 Route::group(['prefix' => '{resume}'], function () {
                     Route::get('pdf', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'detailPdf'])->name('detail');
+                    Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'index'])->name('index');
+                    Route::post('apply', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'apply']);
+                    Route::post('cancel', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'cancel']);
                 });
 
             });

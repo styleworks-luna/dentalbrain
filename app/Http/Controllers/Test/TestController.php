@@ -19,25 +19,4 @@ use Illuminate\Support\Carbon;
 
 class TestController extends Controller
 {
-
-
-    public function ndsrhkd()
-    {
-        $recruits = Recruit::all();
-        return view('test.test-recommend', [
-            'recruits' => $recruits
-        ]);
-    }
-
-    public function ndsrhkdPost(Request $request, ApplyService $applyService)
-    {
-        $idList = $request->get('recruits', []);
-        foreach ($idList as $recruitId) {
-            try {
-                $applyService->apply(Recruit::query()->findOrFail($recruitId), true);
-            } catch (ModelNotFoundException $exception) {
-                ddd();
-            }
-        }
-    }
 }
