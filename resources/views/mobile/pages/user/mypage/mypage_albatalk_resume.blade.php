@@ -264,12 +264,8 @@
                     </div>
                 </div>
             @else
-                <div class="mypage-content-wrap">
-                    <div class="mypage-content">
-                        <div class="m-row">
-                            등록된 이력서가 없습니다.
-                        </div>
-                    </div>
+                <div class="none">
+                    <p>등록된 이력서가 없습니다.</p>
                 </div>
             @endif
 

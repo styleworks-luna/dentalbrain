@@ -27,14 +27,14 @@ class RecruitSearchController extends Controller
                     $query->select('id', 'url', 'name');
                 }
             ])->whereIn('sido', $sido)
+            ->where('expired_at', '>=', now())
             ->where('is_open', Recruit::IS_OPEN);
 
         if ($order == 'newest') {
             $builder->orderBy('created_at', 'desc');
         } else {
-            $builder->where('ended_at', ' >= ', now())
-                ->orderBy('ended_at', 'ASC');
+            $builder->orderBy('ended_at');
         }
-        return response()->json($builder->paginate(12)->items());
+        return response()->json($builder->get());
     }
 }

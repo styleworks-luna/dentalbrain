@@ -10,7 +10,7 @@ $(function () {
             headers: {
                 'X-CSRF-Token': token,
             },
-            url: '',
+            url: '/api/albatalk/recruit/editor/image',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -18,8 +18,8 @@ $(function () {
             type: 'POST',
         }).then(res => {
             console.log(res);
-            let path = res.link;
-            var name = res.originalFileName;
+            let path = res.url;
+            var name = res.name;
 
             CKEDITOR.instances.editor.insertHtml(`<img src="${path}" alt="${name}">`)
         }).fail(err => {
@@ -36,7 +36,7 @@ $(function () {
             headers: {
                 'X-CSRF-Token': token,
             },
-            url: '',
+            url: '/api/albatalk/recruit/editor/file',
             enctype: 'multipart/form-data',
             processData: false,
             contentType: false,
@@ -44,8 +44,8 @@ $(function () {
             type: 'POST',
         }).then(res => {
             console.log(res);
-            var path = res.link;
-            var name = res.originalFileName;
+            var path = res.url;
+            var name = res.name;
             CKEDITOR.instances.editor.insertHtml(`<a href="${path}" download>${name}</a>`)
         }).fail(err => {
             alert('오류가 발생하였습니다.');

@@ -12,20 +12,20 @@
     <section class="content">
         <div class="container">
             @include('desktop.layouts.navigation.account')
-            @if($resume != null)
-                <div class="mypage-content-wrap">
-                    <div class="content-title">
-                        <h2>구직정보</h2>
-                        <a href="{{ route('albatalk.resume.edit') }}">이력서 수정하기</a>
-                    </div>
-                    <ul class="mypage-albatalk-navigation">
-                        <li class="navigation-list">
-                            <a href="{{ route('account.offer') }}">신청내역</a>
-                        </li>
-                        <li class="navigation-list active">
-                            <a href="{{ route('account.resume') }}">이력서 정보</a>
-                        </li>
-                    </ul>
+            <div class="mypage-content-wrap">
+                <div class="content-title">
+                    <h2>구직정보</h2>
+                    <a href="{{ route('albatalk.resume.edit') }}">이력서 수정하기</a>
+                </div>
+                <ul class="mypage-albatalk-navigation">
+                    <li class="navigation-list">
+                        <a href="{{ route('account.offer') }}">신청내역</a>
+                    </li>
+                    <li class="navigation-list active">
+                        <a href="{{ route('account.resume') }}">이력서 정보</a>
+                    </li>
+                </ul>
+                @if($resume != null)
                     <div class="mypage-content">
                         <section class="user-information-wrap">
                             <div class="user-image-wrap">
@@ -283,32 +283,17 @@
                             </div>
                         </section>
                     </div>
-                </div>
-            @else
-                <div class="mypage-content-wrap">
-                    <div class="content-title">
-                        <h2>구직정보</h2>
-                    </div>
-                    <ul class="mypage-albatalk-navigation">
-                        <li class="navigation-list">
-                            <a href="{{ route('account.offer') }}">신청내역</a>
-                        </li>
-                        <li class="navigation-list active">
-                            <a href="{{ route('account.resume') }}">이력서 정보</a>
-                        </li>
-                    </ul>
-                    <div class="mypage-content">
-                        등록 된 이력서 정보가 없습니다.
+                @else
+                    <div class="none">
+                        <p>등록 된 이력서 정보가 없습니다.</p>
+                        <div class="btn-wrap">
                         <a href="{{ route('albatalk.resume.index') }}">
-                            <button>
-                                등록하기
-                            </button>
+                            등록하기
                         </a>
-
+                        </div>
                     </div>
-                </div>
-            @endif
-
+                @endif
+            </div>
         </div>
     </section>
 @endsection

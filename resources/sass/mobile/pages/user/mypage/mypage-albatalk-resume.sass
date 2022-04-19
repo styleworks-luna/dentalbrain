@@ -4,7 +4,7 @@
 
 .content
     +padding(bottom 30px)
-    
+
 .mypage-content-wrap
 
     .mypage-content
@@ -12,7 +12,7 @@
             +border(2.777778vw solid $background-color-file, bottom)
             &:last-child
                 +border(0)
-        
+
         .information-title
             +border(0.277778vw solid $border-color-base, bottom)
 
@@ -21,14 +21,14 @@
                 color: $page-color
                 font-size: 4.444444vw
                 font-weight: bold
-        
+
         table
             tr
                 font-size: 3.888889vw
                 &:last-child
                     td
                         +padding(bottom 0)
-                
+
             th
                 +size(27.777778vw)
                 color: $gray-700
@@ -50,10 +50,10 @@
                 .img-wrap
                     +border-radius(50%)
                     overflow: hidden
-                
+
                     .user-image
                         +size(16.666667vw, 16.666667vw)
-                
+
                 .user-name
                     +padding(left 5.555556vw)
                     font-size: 5.555556vw
@@ -112,10 +112,10 @@
                     text-align: right
                     font-size: 3.333333vw
                     font-weight: bold
-                
+
                 .ability-information-middle
                     +padding(bottom 8.333333vw)
-                    
+
                     .ability-information-middle-name
                         +padding(bottom 2.777778vw)
                         color: $gray-700
@@ -124,17 +124,23 @@
                     table
                         tr
                             +size(91.111111vw)
-                                
+
                         th
                             +size(47.222222vw)
                             +padding(0)
                             color: black
                         .strong
                             font-weight: bold
-                
+
                         td
                             +size(36.111111vw)
                             +padding(bottom 1.111111vw left 5.555556vw)
+
+.none
+    +margin(top 200px)
+
+    p
+        text-align: center
 
 .bottom-banner
     +size(100%, 8.888888vw)
