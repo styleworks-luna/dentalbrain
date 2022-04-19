@@ -27,6 +27,7 @@ class RecruitSearchController extends Controller
                     $query->select('id', 'url', 'name');
                 }
             ])->whereIn('sido', $sido)
+            ->where('expired_at', '>=', now())
             ->where('is_open', Recruit::IS_OPEN);
 
         if ($order == 'newest') {
