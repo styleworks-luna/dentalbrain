@@ -146,6 +146,14 @@ if (env('APP_ENV') != 'production') {
                 });
 
             });
+            Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+                // 구인 검색
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'search'])->name('index');
+                // 구인 상태 변경 함수
+                Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
+
+            });
+
         });
 
         Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {

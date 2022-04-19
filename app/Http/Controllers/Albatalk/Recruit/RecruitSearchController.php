@@ -26,7 +26,7 @@ class RecruitSearchController extends Controller
                 'file' => function ($query) {
                     $query->select('id', 'url', 'name');
                 }
-            ])->whereIn('sido', $sido);
+            ])->whereIn('sido', $sido)->where('is_open', 1);
 
         if ($order == 'newest') {
             $builder->orderBy('created_at', 'desc');
