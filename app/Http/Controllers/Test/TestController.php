@@ -22,16 +22,4 @@ class TestController extends Controller
             'jobs' => UserJobName::query()->orderBy('id')->get()
         ]);
     }
-
-    public function showMembershipJoinForm(Request $request)
-    {
-        return view('desktop.pages.test.testMembershipForm');
-    }
-
-    public function joinMembership(Request $request)
-    {
-        $days = $request->get('days');
-        $expired_at = Carbon::today()->addDays($days)->subSecond();
-        return view('desktop.pages.test.testMembershipForm', ['expired_at' => $expired_at]);
-    }
 }

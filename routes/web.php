@@ -32,7 +32,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
-        Route::get('register', 'Test\TestController@showRegistrationForm');
+        Route::get('register', [\App\Http\Controllers\Test\TestController::class, 'showRegistrationForm']);
     });
 
     Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
@@ -146,6 +146,14 @@ if (env('APP_ENV') != 'production') {
                 });
 
             });
+            Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+                // 구인 검색
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'search'])->name('index');
+                // 구인 상태 변경 함수
+                Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
+
+            });
+
         });
 
         Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
