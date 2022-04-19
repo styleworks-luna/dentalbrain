@@ -12,7 +12,9 @@ use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Resume\AppliedResume;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Recruit extends Model
@@ -42,6 +44,10 @@ class Recruit extends Model
 
     const SESSION_KEY = 'recruit_create_data';
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     public function appliedResumes()
     {
