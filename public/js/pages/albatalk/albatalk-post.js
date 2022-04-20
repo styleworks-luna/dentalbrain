@@ -32,9 +32,10 @@ $(function () {
 
     function thumbnailValidation() {
         if (!$('.thumbnail-check').parsley().isValid()) {
-            $('.main-thumbnail').css('border-color', '#FF0000')
+            $('.main-thumbnail').css('border-color', '#FF0000');
+            scrollTo(0,$('.main-thumbnail').offset().top - 500);
         } else {
-            $('.main-thumbnail').css('border-color', '#d8d8d8')
+            $('.main-thumbnail').css('border-color', '#d8d8d8');
         }
     }
 
@@ -433,6 +434,11 @@ $(function () {
     });
 
     $('.btn-submit').click(function () {
+        if($('.career-select-check').parsley().isValid() == false) {
+            scrollTo(0, $('.career').offset().top - 500);
+        } else if($('.study-select-check').parsley().isValid() == false) {
+            scrollTo(0, $('.career').offset().top - 500);
+        }
         thumbnailValidation();
     });
 });

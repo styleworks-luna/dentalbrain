@@ -534,7 +534,7 @@
                                                         @if(old('is_study', $recruit->typeStudy->id < 14) != 1) disabled
                                                         @endif
                                                         name="study">
-                                                    <option value="" selected>학력 선택</option>
+                                                    <option value="0" selected>학력 선택</option>
                                                     @foreach($typeStudy as $study)
                                                         @if($study->id == 14)
                                                             @break
@@ -579,7 +579,7 @@
                                                 <select name="career" id="career"
                                                         class="input-xs radio-input select-menu career-select"
                                                         @if(old('is_career', $recruit->career > 0) != 2) disabled @endif>
-                                                    <option value="">경력기간 선택</option>
+                                                    <option value="0">경력기간 선택</option>
                                                     @for ($i = 1; $i <= 30; $i++)
                                                         @if($i == 30)
                                                             <option value="{{$i}}"
