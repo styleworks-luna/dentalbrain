@@ -89,6 +89,7 @@ $(function () {
         $('.ability-check').each( (idx,x) => {
             if($(x).parsley().isValid() == false) {
                 $(x).parents('tr').find('.ui-selectmenu-button').css('border-color','#ff0000')
+                scrollTo(0, $('.left-content-wrap').offset().top);
             }
         })
     });
