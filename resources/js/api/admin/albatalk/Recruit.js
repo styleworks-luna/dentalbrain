@@ -13,5 +13,11 @@ export default {
             url: `/api/admin/recruit/${id}/status`,
             method: 'patch'
         });
-    }
+    },
+    getStats() {
+        return Send({
+            url: 'api/admin/recruit/stats',
+            method: 'get',
+        });
+    },
 }

@@ -2,7 +2,7 @@
     <layout title="구인 정보">
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">구인등록 정보 [전체 0개 (진행중 0건 | 종료 0건) ]</p>
+                <p class="mb-0" style="font-size: 12px">구인등록 정보 [전체 {{ stats.recruitTotal }}개 (진행중 {{ stats.recruitIsOpen }}건 | 종료 {{ stats.recruitIsNotOpen }}건) ]</p>
                 <div>
                     <form @submit.prevent="getData">
                         <select-box class="form-control"
@@ -165,12 +165,14 @@ export default {
             recruitList: {
                 data: [],
             },
+            stats: [],
             keyword: "",
             category_id: "",
         }
     },
     mounted() {
         this.getData();
+        this.getStats();
     },
     methods: {
         getData() {
@@ -193,6 +195,11 @@ export default {
                 alert('수정되었습니다.');
             })
         },
+        getStats(){
+            Recruit.getStats().then(res => {
+                this.stats = res.data;
+            })
+        }
     }
 }
 </script>
