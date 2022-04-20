@@ -138,7 +138,10 @@
                                            name="phone"
                                            value="{{ old("phone", $resume->phone) }}"
                                            placeholder="‘-‘ 없이 입력"
+                                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                            data-parsley-required="true"
+                                           data-parsley-length="[9,11]"
+                                           data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
                                            data-parsley-required-message="※ 휴대폰 번호를 입력해주세요."/>
                                 </td>
                             </tr>
