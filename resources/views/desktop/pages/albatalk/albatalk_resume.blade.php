@@ -417,7 +417,7 @@
                     <div class="evaluation-form-wrap common-form-wrap">
                         <div class="evaluation-title-wrap">
                             <h3>
-                                치과 업무 능력 자기 평가표
+                                치과 업무 능력 자기 평가표 *
                             </h3>
                             <span>생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.</span>
                         </div>
@@ -438,12 +438,17 @@
                                                 @if($loop->first)
                                                     <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
                                                 @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
                                                 @if($ability->type == 'select')
+                                                    <td class="ability-cell">
+                                                        {{ $ability->name }}
+                                                        <input type="hidden" class="ability-check" value="N"
+                                                               data-parsley-pattern="Y"
+                                                               data-parsley-pattern-message="※ 능력표를 선택해주세요.">
+                                                    </td>
                                                     <td class="select-cell">
+                                                        <input type="hidden"
+                                                               name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                               value="{{ $ability->id }}">
                                                         <select class="select-menu"
                                                                 name="{{ 'abilities['.$ability->id.'][score]' }}">
                                                             <option
@@ -483,11 +488,19 @@
                                                         >
                                                     </td>
                                                 @else
+                                                    <td class="ability-cell">
+                                                        {{ $ability->name }}
+                                                        <div
+                                                            class="ability-input-error-container parsley-errors-container"></div>
+                                                    </td>
                                                     <td class="input-cell" colspan="2">
                                                         <input type="text"
                                                                name="{{ 'abilities['.$ability->id.'][content]' }}"
                                                                value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
+                                                               placeholder="수기입력" style="width: 200px"
+                                                               data-parsley-required="true"
+                                                               data-parsley-required-message="※ 종류를 입력해주세요."
+                                                               data-parsley-errors-container=".ability-input-error-container">
                                                     </td>
                                                 @endif
                                             </tr>
@@ -512,12 +525,18 @@
                                                 @if($loop->first)
                                                     <th rowspan="{{ $loop->count }}">{{ $category->name }}</th>
                                                 @endif
-                                                <td class="ability-cell">{{ $ability->name }}</td>
-                                                <input type="hidden"
-                                                       name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
-                                                       value="{{ $ability->id }}">
                                                 @if($ability->type == 'select')
+                                                    <td class="ability-cell">
+                                                        {{ $ability->name }}
+                                                        <input type="hidden" class="ability-check" value="N"
+                                                               data-parsley-pattern="Y"
+                                                               data-parsley-pattern-message="※ 능력표를 선택해주세요.">
+                                                    </td>
+
                                                     <td class="select-cell">
+                                                        <input type="hidden"
+                                                               name="{{ 'abilities['.$ability->id.'][ability_id]' }}"
+                                                               value="{{ $ability->id }}">
                                                         <select class="select-menu"
                                                                 name="{{ 'abilities['.$ability->id.'][score]' }}">
                                                             <option
@@ -557,11 +576,19 @@
                                                         >
                                                     </td>
                                                 @else
+                                                    <td class="ability-cell">
+                                                        {{ $ability->name }}
+                                                        <div
+                                                            class="ability-right-input-error-container parsley-errors-container"></div>
+                                                    </td>
                                                     <td class="input-cell" colspan="2">
                                                         <input type="text"
                                                                name="{{ 'abilities['.$ability->id.'][content]' }}"
                                                                value="{{ old('abilities')[$ability->id]['content'] ?? '' }}"
-                                                               placeholder="수기입력" style="width: 200px">
+                                                               placeholder="수기입력" style="width: 200px"
+                                                               data-parsley-required="true"
+                                                               data-parsley-required-message="※ 종류를 입력해주세요."
+                                                               data-parsley-errors-container=".ability-right-input-error-container">
                                                     </td>
                                                 @endif
                                             </tr>
