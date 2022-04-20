@@ -74,6 +74,7 @@
                         <h2>학력 사항 및 희망순위</h2>
                     </div>
                     <div class="study-information-content">
+                        <div class="study-information-left-content">
                         <table>
                             <tr>
                                 <th>학위취득년월</th>
@@ -96,6 +97,8 @@
                                 <td><p>{{ $resume->graduation_type }}</p></td>
                             </tr>
                         </table>
+                        </div>
+                        <div class="study-information-right-content">
                         <table>
                             <tr>
                                 <th>희망 진료과</th>
@@ -124,6 +127,7 @@
                                 </td>
                             </tr>
                         </table>
+                        </div>
                     </div>
                 </section>
 
