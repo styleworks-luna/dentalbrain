@@ -1,4 +1,4 @@
-Banner2Create.vue<template>
+<template>
     <layout title="배너2등록" class="banner">
         <template v-slot:body>
             <!-- 중요도 -->
@@ -77,7 +77,7 @@ Banner2Create.vue<template>
 import Banner2 from '@/api/admin/banner/Banner2.js';
 
 // mixins
-import { BannerMixin, BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
+import {BannerMixin, BannerCategoryMixin} from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminBannerCreate',
@@ -94,9 +94,6 @@ export default {
                 title: this.title,
                 program_id: this.program_id,
 
-                desktop_file_id: this.desktop_file.id,
-                mobile_file_id: this.mobile_file.id,
-
                 started_at: this.Helper.dateFormatYDM(this.started_at),
                 ended_at: this.Helper.dateFormatYDM(this.ended_at),
 
@@ -106,7 +103,8 @@ export default {
             Banner2.create(data).then(res => {
                 alert(res.data.msg);
                 this.$router.push('/admin/banner2/1');
-            })
+            }).catch(function (xhr) {
+            });
         },
         handleSetStartTime(time) {
             this.started_at = time;

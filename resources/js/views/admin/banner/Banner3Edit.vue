@@ -65,7 +65,8 @@
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">저장</button>
                 <router-link :to="`/admin/banner3/${page}`"
-                             class="btn btn-dark">취소</router-link>
+                             class="btn btn-dark">취소
+                </router-link>
             </div>
         </template>
     </layout>
@@ -74,13 +75,13 @@
 <script>
 // components
 import Datepicker from 'vuejs-datepicker';
-import { ko } from 'vuejs-datepicker/dist/locale';
+import {ko} from 'vuejs-datepicker/dist/locale';
 
 // api
 import Banner3 from '@/api/admin/banner/Banner3.js';
 
 // mixins
-import { BannerMixin, BannerCategoryMixin } from '@/mixins/admin/banner/Banner.js';
+import {BannerMixin, BannerCategoryMixin} from '@/mixins/admin/banner/Banner.js';
 
 export default {
     name: 'AdminBanner3Create',
@@ -92,7 +93,7 @@ export default {
         Datepicker,
     },
     data() {
-        return{
+        return {
             id: '',
             data: {},
             ko: ko,
@@ -124,21 +125,22 @@ export default {
         },
         update() {
             let data = {
-                category_id : 6,
-                order : this.order,
+                category_id: 6,
+                order: this.order,
 
-                title : this.title,
-                program_id : this.program_id,
+                title: this.title,
+                program_id: this.program_id,
 
                 started_at: this.Helper.dateFormatYDM(this.started_at),
                 ended_at: this.Helper.dateFormatYDM(this.ended_at),
 
-                is_open : this.is_open,
+                is_open: this.is_open,
             };
 
             Banner3.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.push(`/admin/banner3/${this.page}`);
+            }).catch(function (xhr) {
             })
         },
         handleSetStartTime(time) {
