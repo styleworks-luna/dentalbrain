@@ -2,8 +2,9 @@
     <div class="popup-container">
         <div class="layer" @click="controlPopup"></div>
         <article class="popup-wrap">
-            <header class="popup-header border-bottom">
+            <header class="popup-header border-bottom d-flex justify-content-between">
                 <h2 class="popup-title">추천하기</h2>
+                <button class="btn btn-secondary mb-2" @click="controlPopup">닫기</button>
             </header>
 
             <section class="popup-content">
@@ -19,6 +20,9 @@
                                            :for="`inlineCheckbox_${item.id}`">{{ item.company_name }}</label>
                                 </div>
                             </li>
+                            <li v-if="recommendList.length <= 0">
+                                <p>추천할 내역이 없습니다.</p>
+                            </li>
                         </ul>
 
                     </div>
@@ -32,6 +36,9 @@
                                     <label class="form-check-label"
                                            :for="`inlineCheckbox_${item.id}`">{{ item.company_name }}</label>
                                 </div>
+                            </li>
+                            <li v-if="cancelList.length <= 0">
+                                <p>취소할 내역이 없습니다.</p>
                             </li>
                         </ul>
 
@@ -80,26 +87,45 @@ export default {
             });
         },
         apply() {
-            let data = {
-                recruits: this.applies,
+            if(this.recommendList.length <= 0) {
+                alert('추천할 내역이 없습니다.');
+            } else {
+                if(this.applies.length <= 0) {
+                    alert('추천할 구인정보를 선택해주세요.');
+                }
+                else {
+                    let data = {
+                        recruits: this.applies,
+                    }
+                    RecommendData.recommendApply(this.id, data).then(res => {
+                        alert(res.data.msg);
+                        this.$emit('close', false);
+                    }).catch(err => {
+                        alert('오류가 발생하였습니다.');
+                    });
+                }
             }
-            RecommendData.recommendApply(this.id, data).then(res => {
-                alert(res.data.msg);
-                this.$emit('close', false);
-            }).catch(err => {
-                alert('오류가 발생하였습니다.');
-            });
+
         },
         cancel() {
-            let data = {
-                recruits: this.cancels,
+            if(this.cancelList.length <= 0) {
+                alert('취소할 내역이 없습니다.');
+            } else {
+                if(this.cancels.length <= 0) {
+                    alert('취소할 구인정보를 선택해주세요.');
+                }
+                else {
+                    let data = {
+                        recruits: this.cancels,
+                    }
+                    RecommendData.recommendCancel(this.id, data).then(res => {
+                        alert(res.data.msg);
+                        this.$emit('close', false);
+                    }).catch(err => {
+                        alert('오류가 발생하였습니다.');
+                    });
+                }
             }
-            RecommendData.recommendCancel(this.id, data).then(res => {
-                alert(res.data.msg);
-                this.$emit('close', false);
-            }).catch(err => {
-                alert('오류가 발생하였습니다.');
-            });
         },
         controlPopup() {
             this.$emit('close', false);
