@@ -39,6 +39,7 @@ $(function () {
     function thumbnailValidation() {
         if (!$('.file-check').parsley().isValid()) {
             $('.resume-profile').css('border-color', '#FF0000')
+            scrollTo(0,$('.resume-profile').offset().top - 500);
         } else {
             $('.resume-profile').css('border-color', '#d8d8d8')
         }
