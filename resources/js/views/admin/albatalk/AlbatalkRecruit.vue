@@ -150,11 +150,11 @@ export default {
         CategoryOptions() {
             return [
                 {
-                    id: '0',
+                    id: '1',
                     name: '진행중'
                 },
                 {
-                    id: '1',
+                    id: '0',
                     name: '종료'
                 }
             ]
