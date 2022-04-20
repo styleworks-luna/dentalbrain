@@ -255,7 +255,6 @@
                                     <th>치과명 *</th>
                                     <td>
                                         <input type="text"
-
                                                id="dental_name"
                                                class="input-s"
                                                name="dental_name"
