@@ -83,59 +83,63 @@
                                 <h2>학력 사항 및 희망순위</h2>
                             </div>
                             <div class="study-information-content">
-                                <table>
-                                    <tr>
-                                        <th>학위취득년월</th>
-                                        <td><p>{{ $resume->graduated_at }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>출신학교</th>
-                                        <td><p>{{ $resume->school }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>학과(세부전공)</th>
-                                        <td><p>{{ $resume->major }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>학위</th>
-                                        <td><p>{{ $resume->degree }}</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>졸업구분</th>
-                                        <td><p>{{ $resume->graduation_type }}</p></td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <tr>
-                                        <th>희망 진료과</th>
-                                        <td>
-                                            <div class="ranking-wrap">
-                                                @if($resume->treatment_1)
-                                                    <p>{{ '1순위 ' . $resume->treatment_1 }}</p>
-                                                @endif
-                                                @if($resume->treatment_2)
-                                                    <p>{{ '2순위 ' . $resume->treatment_2 }}</p>
-                                                @endif
-                                                @if($resume->treatment_3)
-                                                    <p>{{ '3순위 ' . $resume->treatment_3 }}</p>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>희망 부서</th>
-                                        <td>
-                                            <div class="ranking-wrap">
-                                                @if($resume->department_1)
-                                                    <p>{{ '1순위 ' . $resume->department_1 }}</p> @endif
-                                                @if($resume->department_2)
-                                                    <p>{{ '2순위 ' . $resume->department_2 }}</p> @endif
-                                                @if($resume->department_3)
-                                                    <p>{{ '3순위 ' . $resume->department_3 }}</p> @endif
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                                <div class="study-information-left-content">
+                                    <table>
+                                        <tr>
+                                            <th>학위취득년월</th>
+                                            <td><p>{{ $resume->graduated_at }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>출신학교</th>
+                                            <td><p>{{ $resume->school }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>학과(세부전공)</th>
+                                            <td><p>{{ $resume->major }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>학위</th>
+                                            <td><p>{{ $resume->degree }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>졸업구분</th>
+                                            <td><p>{{ $resume->graduation_type }}</p></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="study-information-right-content">
+                                    <table>
+                                        <tr>
+                                            <th>희망 진료과</th>
+                                            <td>
+                                                <div class="ranking-wrap">
+                                                    @if($resume->treatment_1)
+                                                        <p>{{ '1순위 ' . $resume->treatment_1 }}</p>
+                                                    @endif
+                                                    @if($resume->treatment_2)
+                                                        <p>{{ '2순위 ' . $resume->treatment_2 }}</p>
+                                                    @endif
+                                                    @if($resume->treatment_3)
+                                                        <p>{{ '3순위 ' . $resume->treatment_3 }}</p>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 부서</th>
+                                            <td>
+                                                <div class="ranking-wrap">
+                                                    @if($resume->department_1)
+                                                        <p>{{ '1순위 ' . $resume->department_1 }}</p> @endif
+                                                    @if($resume->department_2)
+                                                        <p>{{ '2순위 ' . $resume->department_2 }}</p> @endif
+                                                    @if($resume->department_3)
+                                                        <p>{{ '3순위 ' . $resume->department_3 }}</p> @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </section>
 
@@ -287,9 +291,9 @@
                     <div class="none">
                         <p>등록 된 이력서 정보가 없습니다.</p>
                         <div class="btn-wrap">
-                        <a href="{{ route('albatalk.resume.index') }}">
-                            등록하기
-                        </a>
+                            <a href="{{ route('albatalk.resume.index') }}">
+                                등록하기
+                            </a>
                         </div>
                     </div>
                 @endif

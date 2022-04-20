@@ -64,13 +64,7 @@
                     color: $gray-700
                     text-align: left
                     line-height: 24px
-
-                tr
-                    &:first-child td
-                        +padding(top 0)
-
-                    &:last-child td
-                        +padding(bottom 0)
+                    vertical-align: middle
 
                 td
                     +size(245px)
@@ -79,6 +73,7 @@
                     p
                         font-size: 16px
                         line-height: 23px
+                        min-height: 23px
 
             .user-image-wrap
                 +border(1px solid $border-color-base)
@@ -87,15 +82,15 @@
                     +size(218px, 291px)
 
             .user-personal-information
-                +padding(bottom 15px left 50px)
+                +padding(bottom 9px left 50px)
 
                 .user-name
-                    +padding(bottom 30px)
+                    +padding(bottom 24px)
                     font-weight: bold
                     font-size: 24px
 
             .user-hope-information
-                +padding(left 80px bottom 15px)
+                +padding(left 80px bottom 9px)
 
         .information-title
             +margin(bottom 18px)
@@ -108,32 +103,34 @@
             +margin(top 60px)
 
             .study-information-content
-                +padding(top 30px left 40px right 40px)
+                +padding(top 24px left 40px right 40px)
                 +border(2px solid $gray-900, top)
                 display: flex
-                justify-content: space-between
+                justify-content: flex-start
                 align-items: flex-start
 
+                .study-information-right-content
+                    +margin(left 110px)
+
                 table
-                    tr
-                        &:first-child td
-                            +padding(top 0)
-
-                        &:last-child td
-                            +padding(bottom 0)
-
                     th
                         +size(100px)
                         line-height: 24px
                         color: $gray-700
                         text-align: left
+                        vertical-align: middle
 
                     td
                         +padding(6px 0 6px 10px)
+                        min-width: 350px
 
                         p
                             font-size: 16px
                             line-height: 24px
+                            min-height: 24px
+
+                        .ranking-wrap
+                            min-height: 24px
 
                     .ranking-wrap
                         display: flex
@@ -157,7 +154,7 @@
                                 display: none
 
         .self-information-wrap
-            +margin(top 65px)
+            +margin(top 59px)
 
             .self-information-content
                 +padding(top 40px)
