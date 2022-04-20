@@ -683,8 +683,7 @@
                                                 <input type="file" id="file" class="btn-editor-file">
                                             </li>
                                         </ul>
-                                        <textarea id="editor" class="editor" name="content"
-                                                  value="{{ old('content') }}"></textarea>
+                                        <textarea id="editor" class="editor" name="content">{{ old('content') }}</textarea>
                                     </td>
                                 </tr>
                                 <tr>
