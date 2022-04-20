@@ -10,6 +10,7 @@
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/timepicker.min.js') }}"></script>
 @endsection
 
 @section('style')
@@ -566,7 +567,7 @@
                                                        @if(old('deadline', $recruit->started_at != null) != 1) readonly
                                                        disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
-                                                       name="started_at_hm"
+                                                       name="started_at_hm" id="start_time"
                                                        @if(!$recruit->started_at)
                                                        value="{{old("started_at_hm" ?? null)}}"
                                                        @else
@@ -584,7 +585,7 @@
                                                        @if(old('deadline', $recruit->ended_at != null) != 1) readonly
                                                        disabled @endif>
                                                 <input type="text" class="input-xxs end-time" placeholder="HH:mm"
-                                                       name="ended_at_hm"
+                                                       name="ended_at_hm" id="end_time"
                                                        @if(!$recruit->started_at)
                                                        value="{{old("ended_at_hm" ?? null)}}"
                                                        @else

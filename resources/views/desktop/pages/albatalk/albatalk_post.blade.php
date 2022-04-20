@@ -10,6 +10,7 @@
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/timepicker.min.js') }}"></script>
     <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript">
         $(function () {
@@ -649,7 +650,7 @@
                                                        placeholder="시작일자 선택"
                                                        @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs start-time" placeholder="HH:mm"
-                                                       name="started_at_hm"
+                                                       name="started_at_hm" id="start_time"
                                                        value="{{ old("started_at_hm") }}"
                                                        @if(old('deadline') != 1) disabled @endif>
                                                 <p class="time-from">부터</p>
@@ -658,7 +659,7 @@
                                                        placeholder="마감일자 선택"
                                                        @if(old('deadline') != 1) readonly disabled @endif>
                                                 <input type="text" class="input-xxs end-time" placeholder="HH:mm"
-                                                       name="ended_at_hm"
+                                                       name="ended_at_hm" id="end_time"
                                                        value="{{ old("ended_at_hm") }}"
                                                        @if(old('deadline') != 1) disabled @endif>
                                             </div>

@@ -207,7 +207,7 @@ $(function () {
     let startDate = '';
     let endDate = '';
 
-    let deadlineValue;
+    let deadlineValue = $('.deadline:checked').val();;
     let dateCompareCheck;
 
     function dateCompareValidate() {
@@ -291,6 +291,24 @@ $(function () {
         yearSuffix: '.',
     });
 
+    $('#start_time').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 1,
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+
+    $('#end_time').timepicker({
+        timeFormat: 'HH:mm',
+        interval: 1,
+        startTime: '00:00',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true
+    });
+
     $('.end-date').focus(function (e) {
         $(this).addClass('on-show');
     });
@@ -307,9 +325,7 @@ $(function () {
         dateCompareValidate();
     });
 
-    $('.deadline').change(function () {
-        deadlineValue = $('.deadline:checked').val();
-
+    function timeValidation() {
         if (deadlineValue == '1') {
             $('.start-date').attr({
                 'data-parsley-required': "true",
@@ -370,6 +386,14 @@ $(function () {
                 "data-parsley-errors-container"
             );
         }
+    }
+
+    timeValidation();
+
+    $('.deadline').change(function () {
+        deadlineValue = $('.deadline:checked').val();
+        timeValidation();
+
     })
 
     // radio event
