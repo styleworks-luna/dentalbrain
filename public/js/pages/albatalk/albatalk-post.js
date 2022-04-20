@@ -253,7 +253,7 @@ $(function () {
         numberOfMonths: 1,
         monthNames: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-        minDate: 0,
+        minDate: null,
         yearSuffix: '.',
     });
 
@@ -440,8 +440,6 @@ $(function () {
 function dateCompare(start, end) {
     let startDate = new Date(start);
     let endDate = new Date(end);
-
-    console.log(startDate, endDate);
 
     return endDate.getTime() - startDate.getTime();
 }

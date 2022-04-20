@@ -555,6 +555,7 @@
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 모집마감일을 선택해주세요."
                                                        data-parsley-errors-container=".deadline-error-container">
+                                                <input type="hidden" class="date-compare-check" value="N">
                                                 <input type="text" class="input-xs start-date" name="started_at_ymd"
                                                        @if(!$recruit->started_at)
                                                        value="{{old("started_at_ymd") ?? null}}"
@@ -582,7 +583,7 @@
                                                        placeholder="마감일자 선택"
                                                        @if(old('deadline', $recruit->ended_at != null) != 1) readonly
                                                        disabled @endif>
-                                                <input type="text" class="input-xxs end-tme" placeholder="HH:mm"
+                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"
                                                        name="ended_at_hm"
                                                        @if(!$recruit->started_at)
                                                        value="{{old("ended_at_hm" ?? null)}}"
