@@ -6,18 +6,21 @@
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script src="https://js.tosspayments.com/v1"></script>
-    <script>
+    <script type="text/javascript">
         $(function () {
             $('.btn-submit').click(function (e) {
                 e.preventDefault();
 
                 let form = $('#albatalk_recruit_form')[0];
                 let data = new FormData(form);
+                let editorContent = CKEDITOR.instances.editor.getData();
+
+                data.append('content',editorContent);
 
                 $('#albatalk_recruit_form').parsley().validate();
                 if ($('#albatalk_recruit_form').parsley().isValid()) {
@@ -682,7 +685,7 @@
                                                 <input type="file" id="file" class="btn-editor-file">
                                             </li>
                                         </ul>
-                                        <textarea id="editor" class="editor" name="content">{{ old('content') }}</textarea>
+                                        <textarea id="editor" class="editor">{{ old('content') }}</textarea>
                                     </td>
                                 </tr>
                                 <tr>
