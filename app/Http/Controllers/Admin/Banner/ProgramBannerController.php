@@ -10,7 +10,9 @@ use App\Services\Search\SearchService;
 use App\Services\StatusChange\StatusChangeImpl;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ProgramBannerController extends Controller
 {
@@ -53,42 +55,11 @@ class ProgramBannerController extends Controller
 
 
     // 배너 만들기
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validatedData = $request->validate([
-            'category_id' => ['required', Rule::in([Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])],
-            'order' => ['required', 'numeric'],
-            'title' => ['string', 'nullable'],
-            'link' => ['string', 'nullable'],
-            'program_id' => ['required', 'numeric'],
-            'started_at' => ['required', 'date_format:Y-m-d'],
-            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
-            'is_open' => ['required', 'boolean']
-        ]);
+        $validatedData = $this->validateProgramBanner($request);
 
-        $program = Program::find($validatedData['program_id']);
-
-        if (!$program) {
-            return response()->json([
-                'success' => false,
-                'msg' => '강의가 존재하지 않습니다.',
-            ]);
-        }
-
-        $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
-            ->where('category_id', '=', $validatedData['category_id'])->exists();
-
-        if ($isDuplicated) {
-            return response()->json([
-                'success' => false,
-                'msg' => '배너가 이미 존재합니다.',
-            ]);
-        }
-
-        $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
-
-        $validatedData['user_id'] = auth()->id();
-        Banner::firstOrCreate($validatedData);
+        Banner::query()->create($validatedData);
 
         return response()->json([
             'success' => true,
@@ -105,28 +76,10 @@ class ProgramBannerController extends Controller
     }
 
     // 배너 수정
-    public function update(Request $request, Banner $banner)
+    public function update(Request $request, Banner $banner): \Illuminate\Http\JsonResponse
     {
-        $validatedData = $request->validate([
-            'category_id' => ['required', Rule::in([Banner::$POSITION_AREA3, Banner::$POSITION_AREA2])],
-            'order' => ['required', 'numeric'],
-            'title' => ['string', 'nullable'],
-            'program_id' => ['required', 'numeric'],
-            'started_at' => ['required', 'date_format:Y-m-d'],
-            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
-            'is_open' => ['required', 'boolean']
-        ]);
+        $validatedData = $this->validateProgramBanner($request);
 
-        $program = Program::find($validatedData['program_id']);
-
-        if (!$program) {
-            return response()->json([
-                'success' => false,
-                'msg' => '강의가 존재하지 않습니다.',
-            ]);
-        }
-
-        $validatedData['user_id'] = auth()->id();
         $banner->update($validatedData);
 
         return response()->json([
@@ -160,5 +113,45 @@ class ProgramBannerController extends Controller
         return response()->json([
             'category' => $banners->only([Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     * @throws ValidationException
+     */
+    private function validateProgramBanner(Request $request): array
+    {
+        $validator = Validator::make($request->all(), [
+            'category_id' => ['required', Rule::in([Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])],
+            'order' => ['required', 'numeric'],
+            'title' => ['string', 'nullable'],
+            'program_id' => ['required', 'numeric'],
+            'started_at' => ['required', 'date_format:Y-m-d'],
+            'ended_at' => ['required', 'date_format:Y-m-d', 'after:started_at'],
+            'is_open' => ['required', 'boolean']
+        ]);
+
+        $validatedData = $validator->validate();
+
+        $program = Program::find($validatedData['program_id']);
+
+        if (!$program) {
+            $validator->getMessageBag()->add('program_id.exists', '해당하는 강의가 존재하지 않습니다.');
+            throw new ValidationException($validator);
+        }
+
+        $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
+            ->where('category_id', '=', $validatedData['category_id'])->exists();
+
+        if ($isDuplicated) {
+            $validator->getMessageBag()->add('program_id.duplicated', '배너가 이미 존재합니다.');
+            throw new ValidationException($validator);
+        }
+
+        $validatedData['user_id'] = auth()->id();
+        $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
+
+        return $validatedData;
     }
 }

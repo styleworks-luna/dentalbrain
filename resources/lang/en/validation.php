@@ -181,6 +181,7 @@ return [
     */
 
     'attributes' => [
+        'program_id' => '강의 번호',
         'content' => '내용',
         'title' => '제목',
         'running_time' => '강의 시간',
