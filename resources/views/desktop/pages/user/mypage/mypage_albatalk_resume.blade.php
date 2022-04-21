@@ -148,9 +148,7 @@
                                 <h2>자기소개</h2>
                             </div>
                             <div class="self-information-content">
-                                <p class="self-information-text">
-                                    {{ $resume->about_me }}
-                                </p>
+                                <pre class="self-information-text">{{ $resume->about_me }}</pre>
                             </div>
                         </section>
 

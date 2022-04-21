@@ -622,7 +622,7 @@
                         </div>
                     @endif
                     <div class="btn-wrap">
-                        <button class="btn-submit" type="submit">이력서 등록</button>
+                        <button class="btn-submit" type="submit">이력서 수정</button>
                     </div>
                 </form>
             </section>
