@@ -34,7 +34,7 @@
                     <td>{{ slotProps.row.applied_resumes_count }}</td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">
-                            {{ slotProps.row.user_id }}
+                            {{ slotProps.row.user.login_id }}
                         </router-link>
                     </td>
                     <td>
