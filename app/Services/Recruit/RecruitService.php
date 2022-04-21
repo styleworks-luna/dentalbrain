@@ -315,7 +315,7 @@ class RecruitService
     public function searchForAdmin($keyword, $ongoing)
     {
         $builder = Recruit::query()->with('user:id,login_id,name,email')
-            ->select('id', 'is_open', 'user_id', 'company_name', 'created_at', 'expired_at')
+            ->select('id', 'is_open', 'user_id', 'company_name', 'created_at', 'started_at', 'ended_at','expired_at')
             ->withCount(['appliedResumes' => function ($query) {
                 $query->where('status', AppliedResume::STATUS_SUCCESS);
             }]);
