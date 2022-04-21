@@ -48,7 +48,8 @@
                     <td>{{ slotProps.row.created_at }}</td>
                     <td v-if="(slotProps.row.ended_at)==null">채용시까지</td>
                     <td v-else>{{ slotProps.row.ended_at }}</td>
-                    <td>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
+                    <td v-if="(Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)))<0">마감</td>
+                    <td v-else>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
                     <td>
                         <a :href="`/albatalk/recruit/${slotProps.row.id}`"
                            class="btn btn-info float-left mr-2">
