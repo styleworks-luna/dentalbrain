@@ -243,7 +243,7 @@
                                     </ul>
                                 @endif
                             @endif
-                            @if($usersResume)
+                            @if($usersResume && !$authority->isAdmin())
                                 <ul class="resume-list">
                                     <li>
                                         <div class="resume-user-wrap">
