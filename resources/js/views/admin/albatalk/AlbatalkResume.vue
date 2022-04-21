@@ -41,7 +41,7 @@
                     <td>{{ slotProps.row.user.job_name }}</td>
                     <td>
                         <a :href="`/api/admin/resume/${slotProps.row.id}/pdf`"
-                           class="btn btn-info mr-2" target="_blank">
+                           class="btn btn-info" target="_blank">
                             보기
                         </a>
                     </td>

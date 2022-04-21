@@ -52,13 +52,13 @@
                     <td v-else>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
                     <td>
                         <a :href="`/albatalk/recruit/${slotProps.row.id}`"
-                           class="btn btn-info float-left mr-2">
+                           class="btn btn-info">
                             보기
                         </a>
                     </td>
                     <td>
                         <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger text-white border-danger float-left mr-2"
+                                     class="btn btn-danger text-white border-danger"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
