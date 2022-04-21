@@ -20,7 +20,7 @@
             <div class="row">
                 <section class="subtitle-wrap">
                     <h1>구인정보</h1>
-                    @if( $authority->isOwner() )
+                    @if( $authority->isOwner() || $authority->isAdmin())
                         <a href="/albatalk/recruit/{{$recruit->id}}/edit">구인정보 수정하기</a>
                     @endif
                 </section>
