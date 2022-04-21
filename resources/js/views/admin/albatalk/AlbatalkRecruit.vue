@@ -46,7 +46,8 @@
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.created_at }}</td>
-                    <td>{{ slotProps.row.expired_at }}</td>
+                    <td v-if="(slotProps.row.ended_at)==null">채용시까지</td>
+                    <td v-else>{{ slotProps.row.ended_at }}</td>
                     <td>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
                     <td>
                         <a :href="`/albatalk/recruit/${slotProps.row.id}`"
