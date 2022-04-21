@@ -244,24 +244,33 @@
         </div>
         <section class="btn-wrap">
             <div class="m-row">
-                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
-                    @csrf
-                    @auth
-                        @if(!$authority->isOwner())
-                            @if($authority->hasResume())
-                                @if($authority->isApplied())
+                @auth
+                    @if(!$authority->isOwner())
+                        @if($authority->hasResume())
+                            @if($authority->isApplied())
+                                <form action="{{ route('albatalk.recruit.cancel', $recruit->id) }}" method="post">
+                                    @csrf
                                     <button type="submit" class="btn-cancel">제출 취소</button>
-                                @else
-                                    <button type="submit" class="btn-submit">이력서 제출</button>
-                                @endif
+                                </form>
                             @else
-                                <button type="submit" class="btn-submit">이력서 제출</button>
+                                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn-submit">이력서 제출</button>
+                                </form>
                             @endif
+                        @else
+                            <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn-submit">이력서 제출</button>
+                            </form>
                         @endif
-                    @else
+                    @endif
+                @else
+                    <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                        @csrf
                         <button type="submit" class="btn-submit">이력서 제출</button>
-                    @endauth
-                </form>
+                    </form>
+                @endauth
             </div>
         </section>
     </section>
