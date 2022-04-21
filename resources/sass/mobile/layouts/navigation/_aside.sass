@@ -43,7 +43,7 @@
             .name
                 float: left
                 font-size: 4.4444444vw
-            
+
             .resume
                 +size(11.111111vw, 3.888888vw)
                 +margin(left 1.666666vw)
@@ -57,7 +57,7 @@
 
                 a
                     font-weight: bold
-                    color: $page-color       
+                    color: $page-color
 
             .user-edit
                 overflow: hidden
@@ -82,18 +82,13 @@
             +margin(top 6.666666vw)
 
             ul
-                overflow: hidden
+                display: grid
+                grid-template-columns: 1fr 1fr 1fr
+                gap: 5.555555vw 11.9444444vw
+
             li
                 +size(16.1111111vw)
-                +margin(right 11.9444444vw bottom 5.555555vw)
                 +box-sizing(border-box)
-                float: left
-
-                &:nth-child(3), &:nth-child(6)
-                    +margin(right 0)
-
-                &:nth-child(4), &:nth-child(5),  &:nth-child(6)
-                    +margin(bottom 0)
 
                 a
                     display: block
@@ -124,11 +119,11 @@
                 &:nth-child(4)
                     a::before
                         +background('/images/mobile/navigation/icon_nav_inquiry.svg', no-repeat, center center)
-                
+
                 &:nth-child(5)
                     a::before
                         +background('/images/mobile/navigation/icon_nav_work.svg', no-repeat, center center)
-                
+
                 &:last-child
                     a::before
                         +background('/images/mobile/navigation/icon_nav_worker.svg', no-repeat, center center)
