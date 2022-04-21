@@ -196,79 +196,79 @@
                 </div>
             </section>
             @auth
-                <section class="applied-resume-status">
-                    <div class="m-row">
-                        @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                    <section class="applied-resume-status">
+                        <div class="m-row">
                             <div class="information-title">
                                 <h3>이력서 접수 상태</h3>
                                 <em>{{ number_format($applyCount) }}건</em>
                             </div>
-                        @endif
-                        @if($authority->isAdmin() || $authority->isOwner())
-                            @if(number_format($applyCount) == 0)
-                                <p class="none-resume">접수 된 이력서가 없습니다.</p>
-                            @else
+                            @if($authority->isAdmin() || $authority->isOwner())
+                                @if(number_format($applyCount) == 0)
+                                    <p class="none-resume">접수 된 이력서가 없습니다.</p>
+                                @else
+                                    <ul class="resume-list">
+                                        @foreach($appliedResumes as $appliedResume)
+                                            <li>
+                                                @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
+                                                    <div class="resume-user-wrap">
+                                                        <p class="cancel-status">취소자</p>
+                                                        <p class="status-cancel">제출취소</p>
+                                                    </div>
+                                                    <div class="resume-date-wrap">
+                                                        <p class="cancel-status">{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                                        <p class="cancel-date">{{ $appliedResume->canceled_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                                    </div>
+                                                @else
+                                                    <div class="resume-user-wrap">
+                                                        @if($appliedResume->is_recommended)
+                                                            <div class="recommend-person">
+                                                                <p>{{ $appliedResume->resume->user->name }}</p>
+                                                                <span class="badge-recommend">관리자 추천</span>
+                                                            </div>
+                                                        @else
+                                                            <div class="none-recommend">
+                                                                <p>{{ $appliedResume->resume->user->name }}</p>
+                                                            </div>
+                                                        @endif
+                                                        <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $appliedResume->resume->user->id]) }}"
+                                                           class="btn-resume">이력서 보기</a>
+                                                    </div>
+                                                    <div class="resume-date-wrap">
+                                                        <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                                    </div>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            @endif
+                            @if($usersResume)
                                 <ul class="resume-list">
-                                    @foreach($appliedResumes as $appliedResume)
-                                        <li>
-                                            @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
-                                                <div class="resume-user-wrap">
-                                                    <p class="cancel-status">취소자</p>
-                                                    <p class="status-cancel">제출취소</p>
-                                                </div>
-                                                <div class="resume-date-wrap">
-                                                    <p class="cancel-status">{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
-                                                    <p class="cancel-date">{{ $appliedResume->canceled_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                    <li>
+                                        <div class="resume-user-wrap">
+                                            @if($usersResume->is_recommended)
+                                                <div class="recommend-person">
+                                                    <p>{{ $usersResume->resume->user->name }}</p>
+                                                    <span class="badge-recommend">관리자 추천</span>
                                                 </div>
                                             @else
-                                                <div class="resume-user-wrap">
-                                                    @if($appliedResume->is_recommended)
-                                                        <div class="recommend-person">
-                                                            <p>{{ $appliedResume->resume->user->name }}</p>
-                                                            <span class="badge-recommend">관리자 추천</span>
-                                                        </div>
-                                                    @else
-                                                        <div class="none-recommend">
-                                                            <p>{{ $appliedResume->resume->user->name }}</p>
-                                                        </div>
-                                                    @endif
-                                                    <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $appliedResume->resume->user->id]) }}"
-                                                       class="btn-resume">이력서 보기</a>
-                                                </div>
-                                                <div class="resume-date-wrap">
-                                                    <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                                <div class="none-recommend">
+                                                    <p>{{ $usersResume->resume->user->name }}</p>
                                                 </div>
                                             @endif
-                                        </li>
-                                    @endforeach
+                                            <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $usersResume->resume->user->id]) }}"
+                                               class="btn-resume">이력서 보기</a>
+                                        </div>
+                                        <div class="resume-date-wrap">
+                                            <p>{{ $usersResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                        </div>
+                                    </li>
                                 </ul>
                             @endif
-                        @endif
-                        @if($usersResume)
-                            <ul class="resume-list">
-                                <li>
-                                    <div class="resume-user-wrap">
-                                        @if($usersResume->is_recommended)
-                                            <div class="recommend-person">
-                                                <p>{{ $usersResume->resume->user->name }}</p>
-                                                <span class="badge-recommend">관리자 추천</span>
-                                            </div>
-                                        @else
-                                            <div class="none-recommend">
-                                                <p>{{ $usersResume->resume->user->name }}</p>
-                                            </div>
-                                        @endif
-                                        <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $usersResume->resume->user->id]) }}"
-                                           class="btn-resume">이력서 보기</a>
-                                    </div>
-                                    <div class="resume-date-wrap">
-                                        <p>{{ $usersResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        @endif
-                    </div>
-                </section>
+                        </div>
+                    </section>
+                @endif
                 @if(!$authority->isOwner())
                     @if($authority->hasResume())
                         @if($authority->isApplied())
