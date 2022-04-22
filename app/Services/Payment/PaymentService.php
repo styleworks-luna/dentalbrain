@@ -7,7 +7,7 @@ namespace App\Services\Payment;
 use App\DTO\Payment\CancelPaymentDto;
 use App\Models\Payments\Payment;
 use App\Models\Program\ProgramStudent;
-use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsService;
 use App\Traits\HasPayStatus;
 use Illuminate\Support\Facades\Log;
 
@@ -25,7 +25,7 @@ abstract class PaymentService
     {
         if ($pay_status == ProgramStudent::$PAY_PAID || $pay_status == ProgramStudent::$PAY_IN_REFUND_PROCESS) {
             // PG 사 통한 결제
-            $tossPayment = new TossPayments($payment->paymentKey);
+            $tossPayment = new TossPaymentsService($payment->paymentKey);
             switch ($payment->method) {
                 case '계좌이체':
                     $response = $tossPayment->cancelTransfer($dto->getReason());

@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Log;
 
-class TossPayments
+class TossPaymentsService
 {
     private $paymentKey;
     private $response = null;

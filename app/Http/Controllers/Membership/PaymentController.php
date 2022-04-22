@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Membership;
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
-use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsService;
 use App\Payments\TossPayments\TossPaymentsException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +34,7 @@ class PaymentController extends Controller
 
             $days = $v->validated()['days'];
 
-            $toss = new TossPayments($request->get('paymentKey'));
+            $toss = new TossPaymentsService($request->get('paymentKey'));
             $response = $toss->success($request->get('orderId'), $request->get('amount'));
 
             if ($response === false) {

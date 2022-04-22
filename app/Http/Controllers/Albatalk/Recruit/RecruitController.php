@@ -18,7 +18,7 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
-use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsService;
 use App\Payments\TossPayments\TossPaymentsException;
 use App\Services\Recruit\RecruitService;
 use App\Services\Recruit\ResumeService;
@@ -101,7 +101,7 @@ class RecruitController extends Controller
             $this->recruitService->attachThumbnails($recruit, $recruitData);
 
             // 결제 승인 API
-            $tossPayments = new TossPayments($request['paymentKey']);
+            $tossPayments = new TossPaymentsService($request['paymentKey']);
             $tossResponse = $tossPayments->success($request['orderId'], $request['amount']);
 
             if (!$tossResponse) {

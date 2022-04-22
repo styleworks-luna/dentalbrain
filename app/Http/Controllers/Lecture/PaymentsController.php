@@ -9,7 +9,7 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use App\Payments\TossPayments\TossPayments;
+use App\Payments\TossPayments\TossPaymentsService;
 use App\Payments\TossPayments\TossPaymentsException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -46,7 +46,7 @@ class PaymentsController extends Controller
         try {
             DB::beginTransaction();
 
-            $toss = new TossPayments($request->get('paymentKey'));
+            $toss = new TossPaymentsService($request->get('paymentKey'));
             $response = $toss->success($request->get('orderId'), $request->get('amount'));
 
             if ($response === false) {
