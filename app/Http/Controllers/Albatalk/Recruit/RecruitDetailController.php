@@ -17,6 +17,7 @@ use App\Services\Recruit\ResumeService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Jenssegers\Agent\Facades\Agent;
 
 class RecruitDetailController extends Controller
 {
@@ -90,16 +91,27 @@ class RecruitDetailController extends Controller
             $this->applyService->apply($recruit);
         } catch (ModelNotFoundException $exception) {
             report($exception);
-            return back()
-                ->with('albatalk_popup', AlbatalkPopup::createRedirect(
-                    route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
-                );
+            if (Agent::isMobile()) {
+                return back()
+                    ->with('alert', '등록된 이력서가 없습니다.\nPC에서 이력서를 작성해 주세요.');
+            } else {
+                return back()
+                    ->with('albatalk_popup', AlbatalkPopup::createRedirect(
+                        route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
+                    );
+            }
         }
 
-        return redirect()
-            ->route('albatalk.recruit.detail', $recruit->id)
-            ->with('albatalk_popup', AlbatalkPopup::createAlert('제출되었습니다.')
-            );
+        if (Agent::isMobile()) {
+            return redirect()
+                ->route('albatalk.recruit.detail', $recruit->id)
+                ->with('alert', '제출되었습니다.');
+        } else {
+            return redirect()
+                ->route('albatalk.recruit.detail', $recruit->id)
+                ->with('albatalk_popup', AlbatalkPopup::createAlert('제출되었습니다.')
+                );
+        }
     }
 
     public function cancel(Recruit $recruit)
@@ -108,17 +120,29 @@ class RecruitDetailController extends Controller
             $this->applyService->cancel($recruit);
         } catch (ModelNotFoundException $exception) {
             report($exception);
-            return back()
-                ->with('albatalk_popup', AlbatalkPopup::createRedirect(
-                    route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
-                );
+            if (Agent::isMobile()) {
+                return back()
+                    ->with('alert', '등록된 이력서가 없습니다.\nPC에서 이력서를 작성해 주세요.');
+            } else {
+                return back()
+                    ->with('albatalk_popup', AlbatalkPopup::createRedirect(
+                        route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
+                    );
+            }
         }
 
-        return redirect()
-            ->back()
-            ->with('albatalk_popup', AlbatalkPopup::createAlert(
-                '취소되었습니다.')
-            );
+
+        if (Agent::isMobile()) {
+            return redirect()
+                ->back()
+                ->with('alert', '취소되었습니다.');
+        } else {
+            return redirect()
+                ->back()
+                ->with('albatalk_popup', AlbatalkPopup::createAlert(
+                    '취소되었습니다.')
+                );
+        }
     }
 
     public function pdf(Recruit $recruit, User $user)
