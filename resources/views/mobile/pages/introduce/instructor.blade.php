@@ -193,13 +193,16 @@
                         </div>
                         <div class="instructor-description">
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
-                                <li>충청대학교 치위생과 겸임교수</li>
-                                <li>보건학 박사</li>
-                                <li>SDA(SWISS DENTAL ACADEMY) 교육수료</li>
-                                <li>분야 : 치과방사선, 고객응대, 고객상담,<br>
-                                    임플란트,치과방사선,조직관리
-                                </li>
+                                <li>(주)브레인스펙병원교육개발원 전문강사</li>
+                                <li>강동대학교 치위생과 교수</li>
+                                <li>(사)미래교실네트워크 교원연수/캠프 전문강사</li>
+                                <li>에듀니티 행복한 연수원 원격연수강사/튜터</li>
+                                <li>(사)대한치과위생사협회 충청북도회 학술이사</li>
+                                <li>대한치과경영관리협회 인증이사</li>
+                                <li>치과위생사 실기시험 평가자교육 수료</li>
+                                <li>포괄치위생관리과정(CDHC)교육수료</li>
+                                <li>SDA(SWISS DENTAL ACADEMY)교육수료</li>
+                                <li>분야: 치과방사선, 고객응대, 고객상담, 임플란트, 치과용어, ZOOM 온라인연수, 조직관리, 치과임상분야</li>
                             </ul>
                         </div>
                     </li>
