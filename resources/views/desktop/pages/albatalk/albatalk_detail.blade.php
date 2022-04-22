@@ -328,7 +328,7 @@
                         <div class="alert-popup-wrap popup-wrap">
                             <div>
                                 <h3>{{ session()->get('popup_alert') }}</h3>
-                                <button>확인</button>
+                                <button class="btn-popup-close">확인</button>
                             </div>
                         </div>
                     @endif
