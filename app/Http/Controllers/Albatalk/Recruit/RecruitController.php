@@ -137,7 +137,7 @@ class RecruitController extends Controller
     {
         $userId = Auth::id();
 
-        if ($recruit->user_id != $userId) {
+        if (!Auth::user()->isAdmin() && $recruit->user_id != $userId) {
             return redirect()->back()->with(['alert' => '구인 등록한 유저가 아닙니다.']);
         }
 
