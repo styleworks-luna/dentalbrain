@@ -12,7 +12,7 @@
                             <p>근무지역을 선택해주세요.</p>
                             <ul class="albatalk-menu-list">
                                 <li v-for="menuList in menuLists" :key="menuList.name">
-                                    <a :id="`menu_list_${menuList.name}`" class="menu-list active" :data-name="menuList.text"
+                                    <a :id="`menu_list_${menuList.name}`" class="menu-list" :data-name="menuList.text"
                                        @click="mobileMenuEvent($event, menuList.text)">{{ menuList.text }}</a>
                                 </li>
                             </ul>
@@ -28,8 +28,7 @@
                     <li v-for="menuList in menuLists" :key="menuList.name">
                         <div class="checkbox-wrap">
                             <input type="checkbox" :id="'menu_list_' + menuList.name" name="menu_list"
-                                   :value="menuList.text" @change="menuEvent($event, menuList.text)"
-                                   checked>
+                                   :value="menuList.text" @change="menuEvent($event, menuList.text)">
                             <label :for="'menu_list_' + menuList.name">{{ menuList.text }}</label>
                         </div>
                     </li>
@@ -127,14 +126,15 @@ export default {
     },
     mounted() {
         document.getElementsByName("menu_list").forEach(x => {
-            if (x.value != '전체') {
-                x.checked = true;
-                if (x.value == '세종') {
-                    this.checkLists.push('세종특별자치시');
-                } else if (x.value == '제주') {
-                    this.checkLists.push('제주특별자치도');
-                } else {
-                    this.checkLists.push(x.value);
+            if(x.checked) {
+                if (x.value != '전체') {
+                    if (x.value == '세종') {
+                        this.checkLists.push('세종특별자치시');
+                    } else if (x.value == '제주') {
+                        this.checkLists.push('제주특별자치도');
+                    } else {
+                        this.checkLists.push(x.value);
+                    }
                 }
             }
         });
