@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Albatalk\Recruit;
 
+use App\DTO\Recruit\AlbatalkPopup;
 use App\DTO\Recruit\RecruitAuthority;
 use App\Http\Controllers\Controller;
 use App\Models\Recruit\Option\RecruitApplication;
@@ -90,12 +91,15 @@ class RecruitDetailController extends Controller
         } catch (ModelNotFoundException $exception) {
             report($exception);
             return back()
-                ->with('popup_alert', '이력서가 없습니다.');
+                ->with('albatalk_popup', AlbatalkPopup::createRedirect(
+                    route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
+                );
         }
 
         return redirect()
             ->route('albatalk.recruit.detail', $recruit->id)
-            ->with('popup_alert', '제출되었습니다.');
+            ->with('albatalk_popup', AlbatalkPopup::createAlert('제출되었습니다.')
+            );
     }
 
     public function cancel(Recruit $recruit)
@@ -105,12 +109,16 @@ class RecruitDetailController extends Controller
         } catch (ModelNotFoundException $exception) {
             report($exception);
             return back()
-                ->with('popup_alert', '이력서가 없습니다.');
+                ->with('albatalk_popup', AlbatalkPopup::createRedirect(
+                    route('albatalk.resume.index'), '등록된 이력서가 없습니다.', '이력서 등록하러 가기')
+                );
         }
 
         return redirect()
             ->back()
-            ->with('popup_alert', '취소되었습니다.');
+            ->with('albatalk_popup', AlbatalkPopup::createAlert(
+                '취소되었습니다.')
+            );
     }
 
     public function pdf(Recruit $recruit, User $user)

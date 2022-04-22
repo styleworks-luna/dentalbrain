@@ -324,13 +324,27 @@
                             <img src="" class="popup-img" alt="구인정보 이미지">
                         </div>
                     </div>
-                    @if( session()->has('popup_alert') )
-                        <div class="alert-popup-wrap popup-wrap">
-                            <div>
-                                <h3>{{ session()->get('popup_alert') }}</h3>
-                                <button class="btn-popup-close">확인</button>
+                    @if( session()->has('albatalk_popup') )
+                        @if( session('albatalk_popup')->isAlert() )
+                            <div class="alert-popup-wrap popup-wrap">
+                                <div>
+                                    <h3>{{ session('albatalk_popup')->getMessage() }}</h3>
+                                    <button class="btn-popup-close">{{ session('albatalk_popup')->getButtonText() }}</button>
+                                </div>
                             </div>
-                        </div>
+                        @elseif( session('albatalk_popup')->isRedirect() )
+                            <div class="alert-popup-wrap popup-wrap">
+                                <div class="popup-header">
+                                    <a href="#" class="btn-popup-close"></a>
+                                </div>
+                                <div>
+                                    <h3>{{ session('albatalk_popup')->getMessage() }}</h3>
+                                    <a href="{{ session('albatalk_popup')->getLink() }}">
+                                        <button>{{ session('albatalk_popup')->getButtonText() }}</button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
                     @endif
                 </section>
             </div>
