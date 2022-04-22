@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -53,7 +53,7 @@ class PaymentsController extends Controller
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
             }
 
-            $payment = Payment::createByTossSuccess($response);
+            $payment = TossPayment::createByTossSuccess($response);
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
@@ -125,12 +125,12 @@ class PaymentsController extends Controller
         try {
             DB::beginTransaction();
             if (env('APP_ENV') == 'production') {
-                $payment = Payment::query()
+                $payment = TossPayment::query()
                     ->where('secret', 'LIKE', $body['secret'])
                     ->where('orderId', 'LIKE', $body['orderId'])
                     ->first();
             } else {
-                $payment = Payment::query()
+                $payment = TossPayment::query()
                     ->where('orderId', 'LIKE', $body['orderId'])
                     ->first();
             }

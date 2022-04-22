@@ -3,7 +3,7 @@
 namespace App\Models\Recruit;
 
 use App\Models\File;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
@@ -62,7 +62,7 @@ class Recruit extends Model
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+        return $this->belongsTo(TossPayment::class, 'payment_id', 'id');
     }
 
     public function recruitApplications()

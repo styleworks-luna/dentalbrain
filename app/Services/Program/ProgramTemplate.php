@@ -5,7 +5,7 @@ namespace App\Services\Program;
 
 
 use App\Models\File;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\Lecture;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramMajorCategory;
@@ -551,7 +551,7 @@ abstract class ProgramTemplate
             $student->updateWhenConfirmAnotherPay($program, $expired_at);
 
             // payment 업데이트
-            /** @var Payment $payment */
+            /** @var TossPayment $payment */
             $payment = $student->payment()->first();
             $payment->updateWhenConfirmAnotherPay();
         } catch (Exception $exception) {

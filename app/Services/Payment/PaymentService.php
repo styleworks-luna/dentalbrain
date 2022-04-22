@@ -5,7 +5,7 @@ namespace App\Services\Payment;
 
 
 use App\DTO\Payment\CancelPaymentDto;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPaymentsService;
 use App\Traits\HasPayStatus;
@@ -16,12 +16,12 @@ abstract class PaymentService
     use HasPayStatus;
 
     /**
-     * @param Payment $payment
+     * @param TossPayment $payment
      * @param int $pay_status From HasPayStatus trait
      * @param CancelPaymentDto $dto
      * @return bool
      */
-    public static function cancelPaid(Payment $payment, $pay_status, CancelPaymentDto $dto): bool
+    public static function cancelPaid(TossPayment $payment, $pay_status, CancelPaymentDto $dto): bool
     {
         if ($pay_status == ProgramStudent::$PAY_PAID || $pay_status == ProgramStudent::$PAY_IN_REFUND_PROCESS) {
             // PG 사 통한 결제

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     public function index()
     {
-        $payments = Payment::query()
+        $payments = TossPayment::query()
             //->select('id', DB::raw("JSON_UNQUOTE(JSON_EXTRACT(full_response, '$.cancels[0]')) as cancel"), DB::raw("JSON_UNQUOTE(JSON_EXTRACT(full_response, '$.cancels[0].canceledAt')) as canceledAt"),'totalAmount', 'status', 'method', 'receiptUrl', 'requestedAt', 'va_accountNumber', 'va_bank', 'va_customerName', 'va_dueDate')
             ->select('id', 'full_response', 'totalAmount', 'status', 'method', 'receiptUrl', 'requestedAt', 'va_accountNumber', 'va_bank', 'va_customerName', 'va_dueDate')
             ->with(['student' => function ($query) {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Membership;
 
 use App\Http\Controllers\Controller;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Services\Membership\MembershipService;
@@ -21,7 +21,7 @@ class MembershipDetailController extends Controller
     public function edit(User $user): JsonResponse
     {
         $memberships = $user->memberships()->with('payment:id,method,status')->orderByDesc('last_applied_at')->get();
-        $payment = Payment::query()->whereHas('membership', function ($query) use ($memberships) {
+        $payment = TossPayment::query()->whereHas('membership', function ($query) use ($memberships) {
             $query->whereIn("id", $memberships->pluck('id'));
         })->sum('totalAmount');
 
@@ -56,7 +56,7 @@ class MembershipDetailController extends Controller
             ->whereIn('pay_status', ProgramStudent::$USER_PAID_STATUS)
             ->where('expired_at', '<', Carbon::now())->count();
 
-        $paid = Payment::query()->whereHas('student', function ($query) use ($user) {
+        $paid = TossPayment::query()->whereHas('student', function ($query) use ($user) {
             $query->where('pay_status', ProgramStudent::$PAY_PAID)->whereIn('id', $user->students()->pluck('id'));
         })->sum('totalAmount');
 

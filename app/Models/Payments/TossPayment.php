@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-class Payment extends Model
+class TossPayment extends Model
 {
     use SoftDeletes;
 
@@ -23,7 +23,7 @@ class Payment extends Model
     static $CANCELED = 'CANCELED';
     static $DONE = 'DONE';
 
-    protected $table = 'payments';
+    protected $table = 'payments_toss';
     protected $casts = [
         'requestedAt' => 'datetime',
         'va_dueDate' => 'datetime'
@@ -34,11 +34,11 @@ class Payment extends Model
      * 토스 DTO를 통해 생성
      *
      * @param TossPaymentsResponse $response
-     * @return Builder|Model|Payment
+     * @return Builder|Model|TossPayment
      */
     static function createByTossSuccess(TossPaymentsResponse $response)
     {
-        return Payment::query()->create(self::getPaymentData($response));
+        return TossPayment::query()->create(self::getPaymentData($response));
     }
 
     /**
@@ -128,7 +128,7 @@ class Payment extends Model
         $paymentKey = 'another_' . Str::random('5');
         $orderId = 'another_' . Str::random('5');
 
-        return Payment::query()->create([
+        return TossPayment::query()->create([
             'paymentKey' => $paymentKey,
             'orderId' => $orderId,
             'totalAmount' => $price,

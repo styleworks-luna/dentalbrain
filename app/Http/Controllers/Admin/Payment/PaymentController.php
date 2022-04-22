@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Payment;
 
 use App\Exports\PaymentExport;
 use App\Http\Controllers\Controller;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
@@ -38,7 +38,7 @@ class PaymentController extends Controller
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
-        $payments = Payment::query()
+        $payments = TossPayment::query()
             ->select(
                 'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
 
@@ -72,16 +72,16 @@ class PaymentController extends Controller
             $payments->whereHas('recruit');
         }
 
-        if ($status == Payment::$DONE) {
+        if ($status == TossPayment::$DONE) {
             $payments->where(/* @param Builder $query */ function ($query) use ($status) {
-                $query->orWhere('payments.status', '=', Payment::$DONE)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+                $query->orWhere('payments.status', '=', TossPayment::$DONE)
+                    ->orWhere('payments.status', '=', TossPayment::$ANOTHER_DONE);
             });
 
-        } elseif ($status == Payment::$CANCELED) {
+        } elseif ($status == TossPayment::$CANCELED) {
             $payments->where(/* @param Builder $query */ function ($query) use ($status) {
-                $query->orWhere('payments.status', '=', Payment::$CANCELED)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+                $query->orWhere('payments.status', '=', TossPayment::$CANCELED)
+                    ->orWhere('payments.status', '=', TossPayment::$ANOTHER_REJECTED);
             });
         }
 

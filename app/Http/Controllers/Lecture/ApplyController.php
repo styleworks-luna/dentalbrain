@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApplyLecture;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
@@ -113,7 +113,7 @@ class ApplyController extends Controller
         $programStudent = ProgramStudent::updateWhenAnotherPayProcess($program);
 
         /** @var ProgramStudent $programStudent */
-        $payment = Payment::createWhenAnotherPayProcess($program, $programStudent);
+        $payment = TossPayment::createWhenAnotherPayProcess($program, $programStudent);
 
         $programStudent->payment_id = $payment->id;
 

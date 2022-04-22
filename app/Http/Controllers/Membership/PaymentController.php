@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Membership;
 
 use App\Http\Controllers\Controller;
 use App\Models\Membership\Membership;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Payments\TossPayments\TossPaymentsService;
 use App\Payments\TossPayments\TossPaymentsException;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class PaymentController extends Controller
             }
 
             // 멤버십 & 결제정보 생성
-            $payment = Payment::createByTossSuccess($response);
+            $payment = TossPayment::createByTossSuccess($response);
             $membership = Membership::createWhenTossSuccess($response, $payment, $days);
 
             // 메일
@@ -77,7 +77,7 @@ class PaymentController extends Controller
             DB::beginTransaction();
 
             // 멤버십 & 결제정보 생성
-            $payment = Payment::createWhenMembershipAnotherPay($request->get('days'));
+            $payment = TossPayment::createWhenMembershipAnotherPay($request->get('days'));
             $membership = Membership::createWhenAnotherPay($payment, $request->get('days'));
 
             DB::commit();

@@ -2,7 +2,7 @@
 
 namespace App\Models\Membership;
 
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
@@ -35,11 +35,11 @@ class Membership extends Model
 
     /**
      * @param TossPaymentsResponse $response
-     * @param Payment $payment
+     * @param TossPayment $payment
      * @param $days
      * @return \Illuminate\Database\Eloquent\Builder|Model
      */
-    static function createWhenTossSuccess(TossPaymentsResponse $response, Payment $payment, $days)
+    static function createWhenTossSuccess(TossPaymentsResponse $response, TossPayment $payment, $days)
     {
         /** @var User $user */
         $user = Auth::user();
@@ -71,7 +71,7 @@ class Membership extends Model
         return $membership;
     }
 
-    static function createWhenAnotherPay(Payment $payment, $days)
+    static function createWhenAnotherPay(TossPayment $payment, $days)
     {
         $membership = Membership::query()->create([
             'user_id' => Auth::id(),
@@ -144,7 +144,7 @@ class Membership extends Model
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+        return $this->belongsTo(TossPayment::class, 'payment_id', 'id');
     }
 
     public function updateWhenConfirmAnotherPay($user)

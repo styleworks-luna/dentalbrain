@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Albatalk\Recruit;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
@@ -112,7 +112,7 @@ class RecruitController extends Controller
             session()->forget(Recruit::SESSION_KEY);
 
             // 페이먼츠 인스턴스 생성
-            $payment = Payment::createByTossSuccess($tossResponse);
+            $payment = TossPayment::createByTossSuccess($tossResponse);
 
             $recruit->payment_id = $payment->id;
             $recruit->save();

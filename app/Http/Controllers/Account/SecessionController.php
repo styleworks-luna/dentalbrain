@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Mail\Secession;
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Models\UserSecession;
@@ -55,7 +55,7 @@ class SecessionController extends Controller
                     $programStudent = ProgramStudent::query()->where('user_id', Auth::id());
                     foreach ($programStudent->get() as $student) {
                         if ($student->payment_id) {
-                            Payment::find($student->payment_id)->delete();
+                            TossPayment::find($student->payment_id)->delete();
                         }
                     }
                     $programStudent->delete();

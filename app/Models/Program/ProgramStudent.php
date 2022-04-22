@@ -2,7 +2,7 @@
 
 namespace App\Models\Program;
 
-use App\Models\Payments\Payment;
+use App\Models\Payments\TossPayment;
 use App\Models\User;
 use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
@@ -43,10 +43,10 @@ class ProgramStudent extends Model
      *
      * @param TossPaymentsResponse $response
      * @param Program $program
-     * @param Payment $payment
+     * @param TossPayment $payment
      * @return ProgramStudent|Model
      */
-    public static function updateWhenTossSuccess(TossPaymentsResponse $response, Program $program, Payment $payment)
+    public static function updateWhenTossSuccess(TossPaymentsResponse $response, Program $program, TossPayment $payment)
     {
         $programStudent = ProgramStudent::query()->where('user_id', '=', Auth::id())
             ->where('program_id', '=', $program->id)->first();
@@ -211,7 +211,7 @@ class ProgramStudent extends Model
 
     public function payment()
     {
-        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+        return $this->belongsTo(TossPayment::class, 'payment_id', 'id');
     }
 
     public function program()
