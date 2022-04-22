@@ -192,32 +192,32 @@
                 </section>
                 <section class="btn-wrap">
                     @auth
-                    @if(!$authority->isOwner())
-                        @if($authority->hasResume())
-                            @if($authority->isApplied())
-                                <form action="{{ route('albatalk.recruit.cancel', $recruit->id) }}" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn-cancel">제출 취소</button>
-                                </form>
+                        @if(!$authority->isOwner())
+                            @if($authority->hasResume())
+                                @if($authority->isApplied())
+                                    <form action="{{ route('albatalk.recruit.cancel', $recruit->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn-cancel">제출 취소</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn-submit">이력서 제출</button>
+                                    </form>
+                                @endif
                             @else
                                 <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
                                     @csrf
                                     <button type="submit" class="btn-submit">이력서 제출</button>
                                 </form>
                             @endif
-                        @else
-                            <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn-submit">이력서 제출</button>
-                            </form>
                         @endif
-                    @endif
                     @else
                         <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
                             @csrf
                             <button type="submit" class="btn-submit">이력서 제출</button>
                         </form>
-                        @endauth
+                    @endauth
                 </section>
                 <section class="applied-resume-status">
                     @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
@@ -310,8 +310,8 @@
                             <a href="#" class="btn-popup-close"></a>
                         </div>
 
-                        <input type="hidden" class="map_x" value="{{$recruit->latitude}}">
-                        <input type="hidden" class="map_y" value="{{$recruit->longitude}}">
+                        <input type="hidden" class="map_x" value="{{ $recruit->latitude }}">
+                        <input type="hidden" class="map_y" value="{{ $recruit->longitude }}">
                         <div id="mapzone" class="map"></div>
 
                         <p class="address">{{$recruit->address}}</p>
@@ -324,6 +324,14 @@
                             <img src="" class="popup-img" alt="구인정보 이미지">
                         </div>
                     </div>
+                    @if( session()->has('popup_alert') )
+                        <div class="alert-popup-wrap popup-wrap">
+                            <div>
+                                <h3>{{ session()->get('popup_alert') }}</h3>
+                                <button>확인</button>
+                            </div>
+                        </div>
+                    @endif
                 </section>
             </div>
         </div>

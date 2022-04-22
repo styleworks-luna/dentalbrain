@@ -1,11 +1,11 @@
-$(function() {
+$(function () {
     $('.btn-map').click(function (e) {
         e.preventDefault();
         $('.dim').css('display', 'block');
         $('.map-popup-wrap').slideDown();
     });
     let mobileCheck = mobile_check();
-    if(!mobileCheck) {
+    if (!mobileCheck) {
         $('.thumbnail-on').click(function (e) {
             e.preventDefault();
             let source = $(this).attr('src');
@@ -46,8 +46,14 @@ $(function() {
         });
     });
 
+    let alertPopup = $('.alert-popup-wrap');
+    if (alertPopup[0]) {
+        $('.dim').css('display', 'block');
+        alertPopup.slideDown();
+    }
+
     // mobile swiper
-    if(mobileCheck) {
+    if (mobileCheck) {
         function numFormat(variable) {
             variable = Number(variable).toString();
             if (Number(variable) < 10 && variable.length == 1) variable = "0" + variable;

@@ -62,7 +62,7 @@
 
                     .none-image-icon
                         +size(100px, 100px)
-                        +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                        +background('/images/desktop/global/icon_default_thumbnail.svg', no-repeat, center center)
                         display: block
 
             .sub-thumbnail-wrap
@@ -84,7 +84,7 @@
 
                         .none-image-icon
                             +size(30px, 30px)
-                            +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                            +background('/images/desktop/global/icon_default_thumbnail.svg', no-repeat, center center)
                             display: block
                             background-size: 30px 30px
 
@@ -311,7 +311,7 @@
                     color: $white
 
                 .btn-resume
-                    +btn(null,null, 1px)
+                    +btn(null, null, 1px)
                     +size(82px, 30px)
                     +border(1px solid $border-color-base)
                     display: inline-block
@@ -338,7 +338,7 @@
 .popup-area
     .dim
         +size(100%, 100%)
-        background-color: rgba(0,0,0,0.8)
+        background-color: rgba(0, 0, 0, 0.8)
         position: fixed
         top: 0
         left: 0
@@ -347,7 +347,7 @@
 
     .popup-wrap
         +border(2px solid $page-color)
-        +background(null,null,null, $white)
+        +background(null, null, null, $white)
         +padding(22px)
         +box-sizing(border-box)
         position: fixed
@@ -406,3 +406,6 @@
 
             .popup-img
                 +size(798px, 598px)
+
+    .alert-popup-wrap
+        +size(800px)

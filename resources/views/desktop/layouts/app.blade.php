@@ -20,8 +20,8 @@
     <script>
         window.onpageshow = function (event) {
             if (!(event.persisted || (window.performance && window.performance.navigation.type === 2))) {
-                var msg = '{{Session::get('alert')}}';
-                var exist = '{{Session::has('alert')}}';
+                var msg = '{{ Session::get('alert') }}';
+                var exist = '{{ Session::has('alert') }}';
                 if (exist) {
                     alert(msg);
                 }

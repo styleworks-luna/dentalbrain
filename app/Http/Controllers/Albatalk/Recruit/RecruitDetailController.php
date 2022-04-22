@@ -90,12 +90,12 @@ class RecruitDetailController extends Controller
         } catch (ModelNotFoundException $exception) {
             report($exception);
             return back()
-                ->with('alert', '이력서가 없습니다.');
+                ->with('popup_alert', '이력서가 없습니다.');
         }
 
         return redirect()
             ->route('albatalk.recruit.detail', $recruit->id)
-            ->with('alert', '제출되었습니다.');
+            ->with('popup_alert', '제출되었습니다.');
     }
 
     public function cancel(Recruit $recruit)
@@ -105,12 +105,12 @@ class RecruitDetailController extends Controller
         } catch (ModelNotFoundException $exception) {
             report($exception);
             return back()
-                ->with('alert', '이력서가 없습니다.');
+                ->with('popup_alert', '이력서가 없습니다.');
         }
 
         return redirect()
             ->back()
-            ->with('alert', '제출 취소되었습니다.');
+            ->with('popup_alert', '취소되었습니다.');
     }
 
     public function pdf(Recruit $recruit, User $user)
