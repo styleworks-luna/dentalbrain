@@ -315,7 +315,6 @@
                                                     <input type="hidden" name="application[{{$application->id}}]"
                                                            value="off">
                                                     <input type="checkbox" id="application_field_[{{$application->id}}]"
-                                                           {{--name="application[{{$application->id}}]"--}}
                                                            name="{{'application['.$application->id.']'}}"
                                                            @if(old('application.'.$application->id, $recruitApplications->contains($application->id) ? 'on' :'off') == 'on')
                                                            checked
@@ -358,12 +357,18 @@
                                 <tr>
                                     <th>직종 *</th>
                                     <td class="wrapper-lg">
-                                        <div class="radio-container">
+                                        <div class="checkbox-container">
                                             @foreach($typeJob as $job)
-                                                <div class="radio-wrap">
-                                                    <input type="radio" id="job_type_field_[{{$job->id}}]" name="job"
-                                                           value={{$job->id}} @if(old('job', $recruit->typeJob->id) == $job->id) checked
+                                                <div class="checkbox-wrap">
+                                                    <input type="hidden" name="job[{{$job->id}}]"
+                                                           value="off">
+                                                    <input type="checkbox" id="job_type_field_[{{$job->id}}]"
+                                                           name="{{'job['.$job->id.']'}}"
+                                                           @if(old('job.'.$job->id, $recruitJobs->contains($job->id) ? 'on' :'off') == 'on')
+                                                           checked
                                                            @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink"
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">

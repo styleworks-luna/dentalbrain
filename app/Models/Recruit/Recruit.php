@@ -7,6 +7,7 @@ use App\Models\Payments\Payment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
@@ -73,6 +74,11 @@ class Recruit extends Model
     public function recruitBenefits()
     {
         return $this->hasMany(RecruitBenefit::class, 'recruit_id', 'id');
+    }
+
+    public function recruitJobs()
+    {
+        return $this->hasMany(RecruitJob::class, 'recruit_id', 'id');
     }
 
     public function recruitDays()
