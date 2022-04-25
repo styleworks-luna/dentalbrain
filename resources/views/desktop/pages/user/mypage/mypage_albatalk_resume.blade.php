@@ -15,7 +15,9 @@
             <div class="mypage-content-wrap">
                 <div class="content-title">
                     <h2>구직정보</h2>
-                    <a href="{{ route('albatalk.resume.edit') }}">이력서 수정하기</a>
+                    @if($resume)
+                        <a href="{{ route('albatalk.resume.edit') }}">이력서 수정하기</a>
+                    @endif
                 </div>
                 <ul class="mypage-albatalk-navigation">
                     <li class="navigation-list">
