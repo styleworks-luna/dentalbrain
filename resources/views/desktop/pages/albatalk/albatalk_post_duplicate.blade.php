@@ -732,6 +732,12 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>공고 기간</th>
+                                    <td class="wrapper-lg">
+                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
                                         <p class="money">{{ $price }}원</p>
