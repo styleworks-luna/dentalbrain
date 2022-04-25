@@ -216,7 +216,8 @@
                                         <input type="text"
                                                id="degree"
                                                name="degree"
-                                               value="{{ old("degree", $resume->degree) }}">
+                                               value="{{ old("degree", $resume->degree) }}"
+                                               placeholder="ex. 학사 or 석사">
                                     </td>
                                 </tr>
                                 <tr>
@@ -225,7 +226,8 @@
                                         <input type="text"
                                                id="graduated"
                                                name="graduation_type"
-                                               value="{{ old("graduation_type", $resume->graduation_type) }}">
+                                               value="{{ old("graduation_type", $resume->graduation_type) }}"
+                                               placeholder="ex. 재학 중 or 졸업">
                                     </td>
                                 </tr>
                             </table>
