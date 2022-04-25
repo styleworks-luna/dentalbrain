@@ -302,7 +302,7 @@
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
-                                    <th>담장자 전화번호 *</th>
+                                    <th>담당자 전화번호 *</th>
                                     <td>
                                         <input type="text"
                                                id="manager_phone"
@@ -329,7 +329,7 @@
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
 
-                                    <th>담장자 이메일 *</th>
+                                    <th>담당자 이메일 *</th>
                                     <td>
                                         <input type="email"
                                                id="manager_email"
