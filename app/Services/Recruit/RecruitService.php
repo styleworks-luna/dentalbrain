@@ -235,7 +235,6 @@ class RecruitService
 
             'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
             'type_work_id' => $data['work'],
-            'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
             'term' => $data['term'] ?? Recruit::TERM,
