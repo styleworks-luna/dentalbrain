@@ -94,6 +94,7 @@ class RecruitController extends Controller
             $recruitData = $request->session()->get(Recruit::SESSION_KEY);
             $recruit = $this->recruitService->storeRecruit($recruitData);
             $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $benefit = $this->recruitService->storeRecruitJob($recruit, $recruitData);
             $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);

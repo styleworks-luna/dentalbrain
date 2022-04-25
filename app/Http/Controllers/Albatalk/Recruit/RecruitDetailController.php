@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Recruit;
 use App\Models\Resume\AppliedResume;
@@ -34,11 +35,12 @@ class RecruitDetailController extends Controller
     public function detail(Recruit $recruit)
     {
         $applications = RecruitApplication::query()->where('recruit_id', '=', $recruit->id)->get();
+        $job = RecruitJob::query()->where('recruit_id', '=', $recruit->id)->get();
         $salaries = RecruitSalary::query()->where('recruit_id', '=', $recruit->id)->get();
         $days = RecruitDay::query()->where('recruit_id', '=', $recruit->id)->get();
         $benefits = RecruitBenefit::query()->where('recruit_id', '=', $recruit->id)->get();
 
-        $recruit->with('typeWork', 'typeJob', 'typeStudy', 'file', 'file1', 'file2', 'file3');
+        $recruit->with('typeWork', 'typeStudy', 'file', 'file1', 'file2', 'file3');
 
         if (Auth::check()) {
             $authority = new RecruitAuthority($recruit, $this->applyService->applied($recruit));
@@ -75,6 +77,7 @@ class RecruitDetailController extends Controller
         return view(viewPrefix() . 'pages.albatalk.albatalk_detail', [
             'recruit' => $recruit,
             'applications' => $applications,
+            'jobs' => $job,
             'salaries' => $salaries,
             'days' => $days,
             'benefits' => $benefits,
