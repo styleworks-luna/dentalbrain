@@ -740,7 +740,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{ $price }}원</p>
+                                        <p class="money">{{ number_format($price) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>
