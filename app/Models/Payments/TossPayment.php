@@ -248,4 +248,9 @@ class TossPayment extends Model
     {
         return $query->whereIn('status', [self::$ANOTHER_DONE, self::$DONE]);
     }
+
+    public function payment()
+    {
+        return $this->morphOne(Payment::class, 'pg', 'toss');
+    }
 }

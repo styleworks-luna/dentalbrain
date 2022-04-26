@@ -32,13 +32,13 @@ class DropForeignAboutPayment extends Migration
     public function down()
     {
         Schema::table('recruits', function (Blueprint $table) {
-            $table->foreign(['payment_id'])->references('id')->on('payments');
+            $table->foreign(['payment_id'])->references('id')->on('payments_toss');
         });
         Schema::table('memberships', function (Blueprint $table) {
-            $table->foreign(['payment_id'])->references('id')->on('payments');
+            $table->foreign(['payment_id'])->references('id')->on('payments_toss');
         });
         Schema::table('program_students', function (Blueprint $table) {
-            $table->foreign(['payment_id'])->references('id')->on('payments');
+            $table->foreign(['payment_id'])->references('id')->on('payments_toss');
         });
     }
 }
