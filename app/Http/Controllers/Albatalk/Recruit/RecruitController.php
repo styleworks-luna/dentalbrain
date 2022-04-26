@@ -216,10 +216,11 @@ class RecruitController extends Controller
         // 회원 상태에 따른 결제 금액
         $price = RecruitPrice::getRecruitPrice($user);
 
-        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
         $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
+        $recruitJobs = RecruitJob::query()->where('recruit_id', $recruit->id)->pluck('type_job_id');
         $recruitSalaries = RecruitSalary::query()->where('recruit_id', $recruit->id)->get(['type_salary_id', 'value']);
         $recruitDays = RecruitDay::query()->where('recruit_id', $recruit->id)->get(['type_day_id', 'value']);
         $recruitBenefits = RecruitBenefit::query()->where('recruit_id', $recruit->id)->pluck('type_benefit_id');
@@ -235,6 +236,7 @@ class RecruitController extends Controller
             'price' => $price,
             'recruit' => $recruit,
             'recruitApplications' => $recruitApplications,
+            'recruitJobs' => $recruitJobs,
             'recruitSalaries' => $recruitSalaries,
             'recruitDays' => $recruitDays,
             'recruitBenefits' => $recruitBenefits,
