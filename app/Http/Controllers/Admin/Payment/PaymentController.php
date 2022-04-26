@@ -47,7 +47,7 @@ class PaymentController extends Controller
 
                 'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
 
-                'recruits.id as recruit_id', 'recruits.company_name as recruit_company_name',
+                'recruits.id as recruit_id', 'recruits.company_name as recruit_company_name', 'recruits.pay_status as recruit_pay_status',
 
                 'users.name', 'users.email', 'users.phone'
             )
