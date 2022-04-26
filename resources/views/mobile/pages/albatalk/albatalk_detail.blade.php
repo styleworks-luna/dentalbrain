@@ -140,7 +140,13 @@
                             </tr>
                             <tr>
                                 <th>직종</th>
-                                <td><p>{{$recruit->typeJob->type}}</p></td>
+                                <td><p>@foreach($jobs as $job)
+                                            @if($loop->last)
+                                                {{$job->type}}
+                                            @else
+                                                {{$job->type}},
+                                            @endif
+                                        @endforeach</p></td>
                             </tr>
                             <tr>
                                 <th>급여</th>
