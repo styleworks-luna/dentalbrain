@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Lecture;
 
+use App\Exceptions\TossPaymentsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
@@ -9,8 +10,7 @@ use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
-use App\Payments\TossPayments\TossPaymentsService;
-use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\Payment\TossPaymentsService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;

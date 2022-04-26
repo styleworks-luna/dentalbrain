@@ -2,9 +2,9 @@
 
 namespace App\Models\Program;
 
+use App\DTO\Payment\TossPaymentsResponse;
 use App\Models\Payments\TossPayment;
 use App\Models\User;
-use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

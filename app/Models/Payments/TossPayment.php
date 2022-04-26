@@ -2,15 +2,16 @@
 
 namespace App\Models\Payments;
 
+use App\DTO\Payment\TossPaymentsResponse;
 use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Recruit\Recruit;
-use App\Payments\TossPayments\TossPaymentsResponse;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class TossPayment extends Model
@@ -35,6 +36,7 @@ class TossPayment extends Model
      *
      * @param TossPaymentsResponse $response
      * @return Builder|Model|TossPayment
+     * @throws \Exception
      */
     static function createByTossSuccess(TossPaymentsResponse $response)
     {
@@ -46,6 +48,7 @@ class TossPayment extends Model
      *
      * @param TossPaymentsResponse $response
      * @return array
+     * @throws \Exception
      */
     private static function getPaymentData(TossPaymentsResponse $response): array
     {
@@ -85,6 +88,7 @@ class TossPayment extends Model
      *
      * @param TossPaymentsResponse $response
      * @return array|null[]
+     * @throws \Exception
      */
     private static function getPaymentsAdditionalData(TossPaymentsResponse $response): array
     {
@@ -109,6 +113,8 @@ class TossPayment extends Model
                 'trans_settlementStatus' => $response['transfer']['settlementStatus'],
             ];
         }
+        Log::error('unknown pay method');
+        throw new \Exception('입력 정보가 잘못되었습니다.');
     }
 
     /**
@@ -164,6 +170,7 @@ class TossPayment extends Model
      *
      * @param TossPaymentsResponse $response
      * @return bool
+     * @throws \Exception
      */
     public function updateByToss(TossPaymentsResponse $response)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Albatalk\Recruit;
 
+use App\Exceptions\TossPaymentsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Models\Payments\TossPayment;
@@ -19,8 +20,7 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
-use App\Payments\TossPayments\TossPaymentsService;
-use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\Payment\TossPaymentsService;
 use App\Services\Recruit\RecruitService;
 use App\Services\Recruit\ResumeService;
 use Illuminate\Http\Request;

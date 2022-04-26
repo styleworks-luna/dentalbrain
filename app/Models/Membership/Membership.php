@@ -2,9 +2,9 @@
 
 namespace App\Models\Membership;
 
+use App\DTO\Payment\TossPaymentsResponse;
 use App\Models\Payments\TossPayment;
 use App\Models\User;
-use App\Payments\TossPayments\TossPaymentsResponse;
 use App\Traits\HasPayStatus;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,7 +37,7 @@ class Membership extends Model
      * @param TossPaymentsResponse $response
      * @param TossPayment $payment
      * @param $days
-     * @return \Illuminate\Database\Eloquent\Builder|Model
+     * @return Builder|Model
      */
     static function createWhenTossSuccess(TossPaymentsResponse $response, TossPayment $payment, $days)
     {
@@ -90,7 +90,7 @@ class Membership extends Model
      * @param Authenticatable|User $user
      * @param $started_at
      * @param $expired_at
-     * @return \Illuminate\Database\Eloquent\Builder|Model
+     * @return Builder|Model
      */
     static function createByAdmin($user, $started_at, $expired_at)
     {

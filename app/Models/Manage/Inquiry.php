@@ -3,7 +3,6 @@
 namespace App\Models\Manage;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 
 class Inquiry extends Model
 {

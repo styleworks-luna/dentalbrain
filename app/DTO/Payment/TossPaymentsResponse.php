@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Payments\TossPayments;
+namespace App\DTO\Payment;
 
 
 class TossPaymentsResponse implements \ArrayAccess
@@ -62,7 +62,7 @@ class TossPaymentsResponse implements \ArrayAccess
 
     public function offsetGet($offset)
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        return $this->data[$offset] ?? null;
     }
 
     public function offsetSet($offset, $value)

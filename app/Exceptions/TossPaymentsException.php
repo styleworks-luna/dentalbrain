@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payments\TossPayments;
+namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;

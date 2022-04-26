@@ -1,9 +1,11 @@
 <?php
 
 
-namespace App\Payments\TossPayments;
+namespace App\Services\Payment;
 
 
+use App\DTO\Payment\TossPaymentsResponse;
+use App\Exceptions\TossPaymentsException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -64,7 +66,7 @@ class TossPaymentsService
      *
      * @return string
      */
-    protected function getAcceptUrl()
+    protected function getAcceptUrl(): string
     {
         return 'https://api.tosspayments.com/v1/payments/' . $this->paymentKey;
     }
