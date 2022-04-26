@@ -459,9 +459,9 @@
                                                            name="job[{{ $job->id }}]"
                                                            @if(old('job')[$job->id] ?? 'off' == 'on') checked
                                                            @endif
-                                                            data-parsley-required="true"
-                                                            data-parsley-multiple="mymultiplelink"
                                                            data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
                                                     <label
@@ -623,7 +623,7 @@
                                                            @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked
                                                            @endif
                                                            data-parsley-required="true"
-                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-multiple="mymultiplelink2"
                                                            data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
