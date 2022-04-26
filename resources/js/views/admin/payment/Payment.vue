@@ -96,7 +96,7 @@
                     </td>
                     <td>{{ slotProps.row.approvedAt || '결제 대기중' }}</td>
                     <!-- 유료회원 결제 -->
-                    <template v-if="slotProps.row.membership_pay_status">
+                    <template v-if="slotProps.row.membership_id">
                         <td>
                             <template v-if="slotProps.row.membership_pay_status == 0">
                                 결제 전
@@ -132,6 +132,31 @@
                             <template v-else-if="slotProps.row.membership_pay_status === 6">
                                 <a href="#" class="btn btn-danger text-white"
                                    @click.prevent="[getCancelId(slotProps.row.membership_id,true),cancelMembershipAnotherPayment()]">
+                                    결제 취소
+                                </a>
+                            </template>
+                        </td>
+                    </template>
+                    <template v-else-if="slotProps.row.recruit_id">
+                        <td>
+                            <template v-if="slotProps.row.recruit_pay_status == 0">
+                                결제 전
+                            </template>
+                            <template v-else-if="slotProps.row.recruit_pay_status === 1">
+                                입금 대기
+                            </template>
+                            <template v-else-if="slotProps.row.recruit_pay_status === 2">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.recruit_id, slotProps.row.method), getRecruitCancelId(slotProps.row.recruit_id,true)]">
+                                    결제 취소
+                                </a>
+                            </template>
+                            <template v-else-if="slotProps.row.recruit_pay_status === 3">
+                                취소 완료
+                            </template>
+                            <template v-else-if="slotProps.row.recruit_pay_status === 4">
+                                <a href="#" class="btn btn-danger text-white"
+                                   @click.prevent="[handleSetCancelLayer(slotProps.row.recruit_id, slotProps.row.method), getRecruitCancelId(slotProps.row.recruit_id,true)]">
                                     결제 취소
                                 </a>
                             </template>
@@ -222,6 +247,11 @@
                                   @setCancelLayer="handleSetCancelLayer"
                                   @cancelPayment="cancelMembershipPayment"></payment-cancel-layer>
 
+            <payment-cancel-layer v-if="cancelLayer && is_recruit"
+                                  :paymentMethod="paymentMethod"
+                                  @setCancelLayer="handleSetCancelLayer"
+                                  @cancelPayment="cancelRecruitPayment"></payment-cancel-layer>
+
             <payment-confirm-layer v-if="confirmLayer"
                                    :is_online="is_onlineTo"
                                    @setConfirmLayer="handleSetConfirmLayer"
@@ -269,6 +299,7 @@ export default {
             count: 0,
             sum: '',
             is_membership: false,
+            is_recruit: false,
         }
     },
     mounted() {
@@ -424,6 +455,10 @@ export default {
                 case 'ANOTHER_DONE' :
                     return '결제 완료';
             }
+        },
+        getRecruitCancelId(data, boolean) {
+            this.is_recruit = boolean
+            this.id = data;
         },
         getCancelId(data, boolean) {
             this.is_membership = boolean

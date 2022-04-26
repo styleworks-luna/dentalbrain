@@ -69,6 +69,15 @@ const revertConfirm = (id, studentId) => {
     });
 };
 
+// 알바톡 결제 취소
+const cancelRecruitPayment = (id,params) => {
+    return Send({
+        url: `api/admin/recruit/${id}/cancel`,
+        method: 'delete',
+        params: params
+    });
+};
+
 export {
     getData,
     cancelPayment,
@@ -78,4 +87,5 @@ export {
     confirmOfflinePayment,
     revertConfirm,
     cancelMembershipPayment,
+    cancelRecruitPayment,
 }

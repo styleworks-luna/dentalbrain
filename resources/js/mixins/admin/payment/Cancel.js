@@ -3,6 +3,7 @@ import { cancelPayment } from '@/api/admin/payment/Payment.js';
 import { revertConfirm } from '@/api/admin/payment/Payment.js';
 import { cancelOfflinePayment } from '@/api/admin/payment/Payment.js';
 import { cancelMembershipPayment } from '@/api/admin/payment/Payment.js';
+import { cancelRecruitPayment } from '@/api/admin/payment/Payment.js';
 
 export const PaymentCancelMixin = {
     components: {
@@ -63,6 +64,12 @@ export const PaymentCancelMixin = {
                 alert(res.data.message);
                 this.getData();
             })
+        },
+        cancelRecruitPayment(params) {
+            cancelRecruitPayment(this.id, params).then(res => {
+                alert(res.data.message);
+                this.getData();
+            });
         }
     }
 };
