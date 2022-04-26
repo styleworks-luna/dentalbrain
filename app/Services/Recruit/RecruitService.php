@@ -29,7 +29,7 @@ use Illuminate\Validation\Rule;
 
 class RecruitService
 {
-    public function getValidatorRecruit($rawData)
+    public function getValidatorRecruit($rawData): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($rawData, [
             'main_file_id' => ['required', 'numeric', 'min:1',],
@@ -84,7 +84,7 @@ class RecruitService
 
     public function storeRecruit(array $data)
     {
-        $recruit = Recruit::create([
+        return Recruit::create([
             'user_id' => auth()->id(),
             'company_name' => $data['dental_name'],
             'company_leader' => $data['ceo_name'],
@@ -116,8 +116,6 @@ class RecruitService
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
         ]);
-
-        return $recruit;
 
     }
 

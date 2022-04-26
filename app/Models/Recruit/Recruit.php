@@ -16,6 +16,7 @@ use App\Models\Resume\AppliedResume;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Recruit extends Model
@@ -56,72 +57,72 @@ class Recruit extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function appliedResumes()
+    public function appliedResumes(): HasMany
     {
         return $this->hasMany(AppliedResume::class, 'recruit_id', 'id');
     }
 
-    public function payment()
+    public function payment(): BelongsTo
     {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
     }
 
-    public function recruitApplications()
+    public function recruitApplications(): HasMany
     {
         return $this->hasMany(RecruitApplication::class, 'recruit_id', 'id');
     }
 
-    public function recruitBenefits()
+    public function recruitBenefits(): HasMany
     {
         return $this->hasMany(RecruitBenefit::class, 'recruit_id', 'id');
     }
 
-    public function recruitJobs()
+    public function recruitJobs(): HasMany
     {
         return $this->hasMany(RecruitJob::class, 'recruit_id', 'id');
     }
 
-    public function recruitDays()
+    public function recruitDays(): HasMany
     {
         return $this->hasMany(RecruitDay::class, 'recruit_id', 'id');
     }
 
-    public function recruitSalaries()
+    public function recruitSalaries(): HasMany
     {
         return $this->hasMany(RecruitSalary::class, 'recruit_id', 'id');
     }
 
-    public function typeWork()
+    public function typeWork(): BelongsTo
     {
         return $this->belongsTo(TypeWork::class, 'type_work_id', 'id');
     }
 
-    public function typeJob()
+    public function typeJob(): BelongsTo
     {
         return $this->belongsTo(TypeJob::class, 'type_job_id', 'id');
     }
 
-    public function typeStudy()
+    public function typeStudy(): BelongsTo
     {
         return $this->belongsTo(TypeStudy::class, 'type_study_id', 'id');
     }
 
-    public function file()
+    public function file(): BelongsTo
     {
         return $this->belongsTo(File::class, 'main_file_id', 'id');
     }
 
-    public function file1()
+    public function file1(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_1_id', 'id');
     }
 
-    public function file2()
+    public function file2(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_2_id', 'id');
     }
 
-    public function file3()
+    public function file3(): BelongsTo
     {
         return $this->belongsTo(File::class, 'file_3_id', 'id');
     }
