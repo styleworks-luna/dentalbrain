@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Albatalk;
 
 use App\Http\Controllers\Controller;
 use App\Services\Recruit\HeadHuntingService;
-use Illuminate\Http\Request;
 
 class HeadHuntingController extends Controller
 {

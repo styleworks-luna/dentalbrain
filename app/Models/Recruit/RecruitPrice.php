@@ -3,7 +3,6 @@
 namespace App\Models\Recruit;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
 class RecruitPrice extends Model
 {

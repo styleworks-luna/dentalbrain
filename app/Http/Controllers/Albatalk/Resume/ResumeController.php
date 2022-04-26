@@ -12,14 +12,9 @@ use App\Services\Recruit\AbilityService;
 use App\Services\Recruit\ResumeService;
 use Closure;
 use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
-use Jenssegers\Agent\Facades\Agent;
 
 class ResumeController extends Controller
 {

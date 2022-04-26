@@ -2,7 +2,6 @@
 
 namespace App\Services\Recruit;
 
-use App\DTO\Recruit\RecruitAuthority;
 use App\Models\Recruit\Recruit;
 use App\Models\Resume\AppliedResume;
 use App\Models\Resume\Resume;
@@ -12,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ApplyService
 {

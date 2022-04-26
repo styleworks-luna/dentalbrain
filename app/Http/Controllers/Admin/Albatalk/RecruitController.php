@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Albatalk;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recruit\Recruit;
-use App\Models\Resume\AppliedResume;
 use App\Services\Recruit\RecruitService;
 use App\Services\StatusChange\StatusChangeImpl;
 use Illuminate\Http\Request;
