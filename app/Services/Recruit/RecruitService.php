@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
@@ -28,7 +29,7 @@ use Illuminate\Validation\Rule;
 
 class RecruitService
 {
-    public function getValidatorRecruit($rawData)
+    public function getValidatorRecruit($rawData): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($rawData, [
             'main_file_id' => ['required', 'numeric', 'min:1',],
@@ -59,7 +60,7 @@ class RecruitService
 
             'application' => ['required'],
             'work' => ['required', Rule::in([TypeWork::$TYPE_WORK_1, TypeWork::$TYPE_WORK_2, TypeWork::$TYPE_WORK_3])],
-            'job' => ['required', Rule::in([TypeJob::$TYPE_JOB_1, TypeJob::$TYPE_JOB_2, TypeJob::$TYPE_JOB_3, TypeJob::$TYPE_JOB_4, TypeJob::$TYPE_JOB_5])],
+            'job' => ['required'],
             'salary' => ['required', Rule::in([TypeSalary::$TYPE_SALARY_1, TypeSalary::$TYPE_SALARY_2, TypeSalary::$TYPE_SALARY_3, TypeSalary::$TYPE_SALARY_4])],
             'salary_value' => ['nullable', Rule::requiredIf(($rawData['salary'] ?? 0) == TypeSalary::$TYPE_SALARY_4)],
             'is_study' => ['required', Rule::in(Recruit::$ACADEMIC, Recruit::$NO_ACADEMIC)],
@@ -83,7 +84,7 @@ class RecruitService
 
     public function storeRecruit(array $data)
     {
-        $recruit = Recruit::create([
+        return Recruit::create([
             'user_id' => auth()->id(),
             'company_name' => $data['dental_name'],
             'company_leader' => $data['ceo_name'],
@@ -106,7 +107,6 @@ class RecruitService
 
             'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
             'type_work_id' => $data['work'],
-            'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
             'term' => Recruit::TERM,
@@ -116,8 +116,6 @@ class RecruitService
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
         ]);
-
-        return $recruit;
 
     }
 
@@ -191,6 +189,25 @@ class RecruitService
         return $benefit;
     }
 
+    public function storeRecruitJob(Recruit $recruit, array $data)
+    {
+        // 복리후생 다중 선택값 넣기
+        $job = RecruitJob::where('recruit_id', '=', $recruit->id)->first();
+        if (!$job) {
+            foreach ($data['job'] as $key => $value) {
+                if ($value == 'on') {
+                    RecruitJob::create([
+                        'type' => TypeJob::find($key)['type'],
+                        'recruit_id' => $recruit->id,
+                        'type_job_id' => $key,
+                    ]);
+                }
+            }
+        }
+
+        return $job;
+    }
+
     public function updateRecruit(Recruit $recruit, array $data)
     {
         $recruit->update([
@@ -216,7 +233,6 @@ class RecruitService
 
             'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
             'type_work_id' => $data['work'],
-            'type_job_id' => $data['job'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
             'term' => $data['term'] ?? Recruit::TERM,

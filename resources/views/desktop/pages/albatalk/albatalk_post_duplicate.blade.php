@@ -302,7 +302,7 @@
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
-                                    <th>담장자 전화번호 *</th>
+                                    <th>담당자 전화번호 *</th>
                                     <td>
                                         <input type="text"
                                                id="manager_phone"
@@ -329,7 +329,7 @@
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
 
-                                    <th>담장자 이메일 *</th>
+                                    <th>담당자 이메일 *</th>
                                     <td>
                                         <input type="email"
                                                id="manager_email"
@@ -468,17 +468,21 @@
                                 <tr>
                                     <th>직종 *</th>
                                     <td class="wrapper-lg">
-                                        <div class="radio-container">
+                                        <div class="checkbox-container">
                                             @foreach($typeJob as $job)
-                                                <div class="radio-wrap">
-                                                    <input type="radio" id="job_type_field_[{{ $job->id }}]" name="job"
-                                                           value={{ $job->id }} @if(old('job', $recruit->typeJob->id) == $job->id) checked
+                                                <div class="checkbox-wrap">
+                                                    <input type="hidden" name="job[{{$job->id}}]" value="off">
+                                                    <input type="checkbox" id="job_type_field_[{{ $job->id }}]"
+                                                           name="{{'job['.$job->id.']'}}"
+                                                           @if(old('job.'.$job->id, $recruitJobs->contains($job->id) ? 'on' :'off') == 'on')
+                                                           checked
                                                            @endif
                                                            data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
-                                                    <label
-                                                            for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
+                                                    <label for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -644,7 +648,7 @@
                                                            checked
                                                            @endif
                                                            data-parsley-required="true"
-                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-multiple="mymultiplelink2"
                                                            data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 복리후생을 선택해주세요."
                                                            data-parsley-errors-container=".benefit-type-error-container">
@@ -732,9 +736,15 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>공고 기간</th>
+                                    <td class="wrapper-lg">
+                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{ $price }}원</p>
+                                        <p class="money">{{ number_format($price) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>

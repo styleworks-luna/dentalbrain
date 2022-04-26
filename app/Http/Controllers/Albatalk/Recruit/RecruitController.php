@@ -8,6 +8,7 @@ use App\Models\Payments\TossPayment;
 use App\Models\Recruit\Option\RecruitApplication;
 use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
+use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
@@ -94,6 +95,7 @@ class RecruitController extends Controller
             $recruitData = $request->session()->get(Recruit::SESSION_KEY);
             $recruit = $this->recruitService->storeRecruit($recruitData);
             $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $job = $this->recruitService->storeRecruitJob($recruit, $recruitData);
             $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
@@ -141,10 +143,11 @@ class RecruitController extends Controller
             return redirect()->back()->with(['alert' => '구인 등록한 유저가 아닙니다.']);
         }
 
-        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
         $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
+        $recruitJobs = RecruitJob::query()->where('recruit_id', $recruit->id)->pluck('type_job_id');
         $recruitSalaries = RecruitSalary::query()->where('recruit_id', $recruit->id)->get(['type_salary_id', 'value']);
         $recruitDays = RecruitDay::query()->where('recruit_id', $recruit->id)->get(['type_day_id', 'value']);
         $recruitBenefits = RecruitBenefit::query()->where('recruit_id', $recruit->id)->pluck('type_benefit_id');
@@ -159,6 +162,7 @@ class RecruitController extends Controller
             'typeBenefit' => TypeBenefit::all(),
             'recruit' => $recruit,
             'recruitApplications' => $recruitApplications,
+            'recruitJobs' => $recruitJobs,
             'recruitSalaries' => $recruitSalaries,
             'recruitDays' => $recruitDays,
             'recruitBenefits' => $recruitBenefits,
@@ -167,6 +171,7 @@ class RecruitController extends Controller
 
     public function update(Recruit $recruit, Request $request)
     {
+        logger($request);
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
             $errorBags = $validator->errors();
@@ -182,11 +187,13 @@ class RecruitController extends Controller
             $recruit->save();
 
             $recruit->recruitApplications()->delete();
+            $recruit->recruitJobs()->delete();
             $recruit->recruitSalaries()->delete();
             $recruit->recruitDays()->delete();
             $recruit->recruitBenefits()->delete();
 
             $application = $this->recruitService->storeRecruitApplication($recruit, $recruitData);
+            $job = $this->recruitService->storeRecruitJob($recruit, $recruitData);
             $salary = $this->recruitService->storeRecruitSalary($recruit, $recruitData);
             $day = $this->recruitService->storeRecruitDay($recruit, $recruitData);
             $benefit = $this->recruitService->storeRecruitBenefit($recruit, $recruitData);
@@ -209,10 +216,11 @@ class RecruitController extends Controller
         // 회원 상태에 따른 결제 금액
         $price = RecruitPrice::getRecruitPrice($user);
 
-        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeJob', 'typeStudy'])
+        $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
         $recruitApplications = RecruitApplication::query()->where('recruit_id', $recruit->id)->pluck('type_application_id');
+        $recruitJobs = RecruitJob::query()->where('recruit_id', $recruit->id)->pluck('type_job_id');
         $recruitSalaries = RecruitSalary::query()->where('recruit_id', $recruit->id)->get(['type_salary_id', 'value']);
         $recruitDays = RecruitDay::query()->where('recruit_id', $recruit->id)->get(['type_day_id', 'value']);
         $recruitBenefits = RecruitBenefit::query()->where('recruit_id', $recruit->id)->pluck('type_benefit_id');
@@ -228,6 +236,7 @@ class RecruitController extends Controller
             'price' => $price,
             'recruit' => $recruit,
             'recruitApplications' => $recruitApplications,
+            'recruitJobs' => $recruitJobs,
             'recruitSalaries' => $recruitSalaries,
             'recruitDays' => $recruitDays,
             'recruitBenefits' => $recruitBenefits,
