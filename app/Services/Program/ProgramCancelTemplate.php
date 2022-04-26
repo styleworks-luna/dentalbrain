@@ -9,6 +9,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Services\Payment\PaymentService;
+use App\Services\Payment\TossPaymentsService;
 use App\Services\Survey\SurveyAnswerService;
 use Exception;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ abstract class ProgramCancelTemplate extends ProgramTemplate
 
             // 결제 취소 진행.
             if ($student->payment()->exists()) {
-                PaymentService::cancelPaid($student->payment, $student->pay_status, $dto);
+                TossPaymentsService::cancelPaid($student->payment, $student->pay_status, $dto);
             }
 
             $student->updateWhenCancel($program->getUserSpecificFree($student->user));

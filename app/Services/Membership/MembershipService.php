@@ -7,7 +7,7 @@ namespace App\Services\Membership;
 use App\DTO\Payment\CancelPaymentDto;
 use App\Models\Membership\Membership;
 use App\Models\User;
-use App\Services\Payment\PaymentService;
+use App\Services\Payment\TossPaymentsService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -96,7 +96,7 @@ class MembershipService
             DB::beginTransaction();
 
             if ($membership->payment != null) {
-                PaymentService::cancelPaid($membership->payment, $membership->pay_status, $dto);
+                TossPaymentsService::cancelPaid($membership->payment, $membership->pay_status, $dto);
             }
             $membership->updateWhenMembershipCancel();
 

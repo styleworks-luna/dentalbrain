@@ -4,8 +4,11 @@
 namespace App\Services\Payment;
 
 
+use App\DTO\Payment\CancelPaymentDto;
 use App\DTO\Payment\TossPaymentsResponse;
 use App\Exceptions\TossPaymentsException;
+use App\Models\Payments\TossPayment;
+use App\Traits\HasPayStatus;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -13,6 +16,8 @@ use Illuminate\Support\Facades\Log;
 
 class TossPaymentsService
 {
+    use HasPayStatus;
+
     private $paymentKey;
     private $response = null;
 
@@ -218,5 +223,49 @@ class TossPaymentsService
     public function cancelTransfer(string $reason, $cancelAmount = null, $taxAmount = null)
     {
         return $this->cancel($reason, null, null, null, $cancelAmount, $taxAmount);
+    }
+
+    /**
+     * @param TossPayment $payment
+     * @param int $pay_status From HasPayStatus trait
+     * @param CancelPaymentDto $dto
+     * @return bool
+     * @throws \Exception
+     */
+    public static function cancelPaid(TossPayment $payment, $pay_status, CancelPaymentDto $dto): bool
+    {
+        if ($pay_status == self::$PAY_PAID || $pay_status == self::$PAY_IN_REFUND_PROCESS) {
+            // PG 사 통한 결제
+            $tossPayment = new TossPaymentsService($payment->paymentKey);
+            switch ($payment->method) {
+                case '계좌이체':
+                    $response = $tossPayment->cancelTransfer($dto->getReason());
+                    break;
+                case '카드':
+                    $response = $tossPayment->cancelCard($dto->getReason());
+                    break;
+                case '가상계좌':
+                    $response = $tossPayment->cancelVirtualAccount(
+                        $dto->getReason(), $dto->getBank(), $dto->getBank(), $dto->getHolderName()
+                    );
+                    break;
+                //case '휴대폰':
+                default:
+                    $response = false;
+                    Log::error('INVALID METHOD', $dto->getData());
+                    break;
+            }
+            if ($response === false) {
+                return false;
+            }
+
+            $payment->updateByToss($response);
+
+        } elseif ($pay_status == self::$PAY_ANOTHER_IN_PROCESS
+            || $pay_status == self::$PAY_ANOTHER_PAID) {
+            $payment->cancelAnotherPay();
+        }
+
+        return true;
     }
 }
