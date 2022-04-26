@@ -479,7 +479,7 @@
                                                            @endif
                                                            data-parsley-required="true"
                                                            data-parsley-multiple="mymultiplelink1"
-                                                           data-parsley-required="1"
+                                                           data-parsley-mincheck="1"
                                                            data-parsley-required-message="※ 직종을 선택해주세요."
                                                            data-parsley-errors-container=".job-type-error-container">
                                                     <label for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
