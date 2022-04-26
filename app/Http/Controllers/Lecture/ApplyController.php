@@ -8,6 +8,7 @@ use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Services\Payment\TossPaymentFactory;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Survey\SurveyAnswerService;
@@ -113,7 +114,7 @@ class ApplyController extends Controller
         $programStudent = ProgramStudent::updateWhenAnotherPayProcess($program);
 
         /** @var ProgramStudent $programStudent */
-        $payment = TossPayment::createWhenAnotherPayProcess($program, $programStudent);
+        $payment = TossPaymentFactory::createWhenAnotherPayProcess($program, $programStudent);
 
         $programStudent->payment_id = $payment->id;
 

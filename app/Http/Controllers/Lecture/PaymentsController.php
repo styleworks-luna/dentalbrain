@@ -10,6 +10,7 @@ use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Services\Payment\TossPaymentFactory;
 use App\Services\Payment\TossPaymentsService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -53,7 +54,7 @@ class PaymentsController extends Controller
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
             }
 
-            $payment = TossPayment::createByTossSuccess($response);
+            $payment = TossPaymentFactory::createByTossSuccess($response);
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 

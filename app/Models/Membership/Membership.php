@@ -71,6 +71,11 @@ class Membership extends Model
         return $membership;
     }
 
+    /**
+     * @param TossPayment|Model $payment
+     * @param $days
+     * @return Builder|Model
+     */
     static function createWhenAnotherPay(TossPayment $payment, $days)
     {
         $membership = Membership::query()->create([

@@ -20,6 +20,7 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use App\Models\Recruit\RecruitPrice;
+use App\Services\Payment\TossPaymentFactory;
 use App\Services\Payment\TossPaymentsService;
 use App\Services\Recruit\RecruitService;
 use App\Services\Recruit\ResumeService;
@@ -114,7 +115,7 @@ class RecruitController extends Controller
             session()->forget(Recruit::SESSION_KEY);
 
             // 페이먼츠 인스턴스 생성
-            $payment = TossPayment::createByTossSuccess($tossResponse);
+            $payment = TossPaymentFactory::createByTossSuccess($tossResponse);
 
             $recruit->payment_id = $payment->id;
             $recruit->save();
