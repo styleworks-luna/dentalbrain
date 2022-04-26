@@ -40,12 +40,8 @@ abstract class PaymentService
                     break;
                 //case '휴대폰':
                 default:
-                    $response = false;
                     Log::error('INVALID METHOD', $dto->getData());
-                    break;
-            }
-            if ($response === false) {
-                return false;
+                    return false;
             }
 
             $payment->updateByToss($response);
