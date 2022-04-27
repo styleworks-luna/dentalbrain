@@ -30,6 +30,7 @@ class TossPayment extends Model
         'va_dueDate' => 'datetime'
     ];
     protected $guarded = [];
+
     /**
      * 토스 DTO를 통해 업데이트
      *
@@ -82,16 +83,6 @@ class TossPayment extends Model
         ]);
     }
 
-    public function student()
-    {
-        return $this->hasOne(ProgramStudent::class, 'payment_id', 'id');
-    }
-
-    public function recruit()
-    {
-        return $this->hasOne(Recruit::class, 'payment_id', 'id');
-    }
-
     public function isCard()
     {
         return $this->attributes['method'] == '카드';
@@ -109,7 +100,22 @@ class TossPayment extends Model
 
     public function membership()
     {
-        return $this->hasOne(Membership::class, 'payment_id', 'id');
+        return $this->hasOneThrough(Membership::class, Payment::class, 'pg_id', 'payment_id');
+    }
+
+    public function student()
+    {
+        return $this->hasOneThrough(ProgramStudent::class, Payment::class, 'pg_id', 'payment_id');
+    }
+
+    public function recruit()
+    {
+        return $this->hasOneThrough(Recruit::class, Payment::class, 'pg_id', 'payment_id');
+    }
+
+    public function payment()
+    {
+        return $this->morphOne(Payment::class, 'pg', 'toss');
     }
 
     /**
@@ -119,10 +125,5 @@ class TossPayment extends Model
     public function scopePaid($query)
     {
         return $query->whereIn('status', [self::$ANOTHER_DONE, self::$DONE]);
-    }
-
-    public function payment()
-    {
-        return $this->morphOne(Payment::class, 'pg', 'toss');
     }
 }
