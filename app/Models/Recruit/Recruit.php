@@ -60,33 +60,11 @@ class Recruit extends Model
     // 구인 세션
     const SESSION_KEY = 'recruit_create_data';
 
-
-
-    /**
-     *  토스 결제 승인 시에 업데이트 하는 쿼리
-     *
-     * @param TossPaymentsResponse $response
-     * @param Recruit $recruit
-     * @param Payment $payment
-     */
-    public static function updateWhenTossSuccess(TossPaymentsResponse $response, Recruit $recruit, Payment $payment)
-    {
-        $recruit = Recruit::query()->where('user_id', Auth::id())
-            ->where('recruit_id', $recruit->id)->first();
-
-        if ($response->isCard() || $response->isTransfer()) {
-            $recruit->update([
-                'payment_id' => $payment->id,
-                'pay_status' => Recruit::$PAY_PAID,
-            ]);
-        }
-        $recruit->save();
-    }
-
     public function updateWhenRecruitCancel(): bool
     {
         return $this->update([
-            'pay_status' => Recruit::$PAY_REFUNDED
+            'pay_status' => Recruit::$PAY_REFUNDED,
+            'is_open' => Recruit::IS_NOT_OPEN,
         ]);
     }
 
