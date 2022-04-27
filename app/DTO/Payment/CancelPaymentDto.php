@@ -7,6 +7,7 @@ namespace App\DTO\Payment;
 use App\Models\Membership\Membership;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Models\Recruit\Recruit;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
@@ -176,6 +177,32 @@ class CancelPaymentDto
         }
 
         return self::validateAndGetInstancePaidByToss($request, $membership);
+    }
+
+    public static function createWhenRecruitCancelAdmin(Request $request, Recruit $recruit): ?CancelPaymentDto
+    {
+        if (!in_array($recruit->pay_status, Recruit::$USER_CANCEL_AVAILABLE_STATUSES)) {
+            Log::error('취소할수 있는 결제상태가 아닙니다.');
+            return null;
+        }
+
+        return self::getRecruitCancelInstance($request, $recruit);
+    }
+
+    private static function getRecruitCancelInstance(Request $request, Recruit $recruit): ?CancelPaymentDto
+    {
+        if ($recruit->pay_status == Recruit::$PAY_ANOTHER_PAID
+            || $recruit->pay_status == Recruit::$PAY_ANOTHER_IN_PROCESS) {
+            // 별도 결제의 경우 reason 및 다른 params 필요없음
+            // 더미 값
+            return new CancelPaymentDto('별도 결제 취소 신청');
+        }
+
+        if ($recruit->pay_status == Recruit::$PAY_PAID && $recruit->payment == null) {
+            return new CancelPaymentDto('관리자가 생성한 유료회원 취소 신청');
+        }
+
+        return self::validateAndGetInstancePaidByToss($request, $recruit);
     }
 
     /**

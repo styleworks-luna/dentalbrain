@@ -6,7 +6,7 @@
                 <li>
                     <a href="" class="btn-menu" @click.prevent="show()">
                         <span>근무지역</span>
-                        <span class="icon-filter"></span>
+                        <span id="icon_filter" class="icon-filter"></span>
                     </a>
                 </li>
                 <li>

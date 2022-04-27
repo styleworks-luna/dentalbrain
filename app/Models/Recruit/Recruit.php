@@ -14,14 +14,22 @@ use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
 use App\Models\Resume\AppliedResume;
 use App\Models\User;
+use App\Payments\TossPayments\TossPaymentsResponse;
+use App\Traits\HasPayStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
+
+/**
+ *
+ * @property int pay_status
+ */
 
 class Recruit extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasPayStatus;
 
     protected $guarded = [];
     protected $dates = ['started_at', 'ended_at'];
@@ -51,6 +59,18 @@ class Recruit extends Model
 
     // 구인 세션
     const SESSION_KEY = 'recruit_create_data';
+
+    public function updateWhenRecruitCancel(): bool
+    {
+        return $this->update([
+            'pay_status' => Recruit::$PAY_REFUNDED,
+            'is_open' => Recruit::IS_NOT_OPEN,
+        ]);
+    }
+
+    /*
+     * ====================================== Relations ===============================
+     */
 
     public function user(): BelongsTo
     {

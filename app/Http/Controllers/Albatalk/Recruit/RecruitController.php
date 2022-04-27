@@ -110,14 +110,18 @@ class RecruitController extends Controller
             if (!$tossResponse) {
                 return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
             }
-
             // session 지우기
             session()->forget(Recruit::SESSION_KEY);
 
             // 페이먼츠 인스턴스 생성
             $payment = TossPaymentFactory::createByTossSuccess($tossResponse);
 
-            $recruit->payment_id = $payment->id;
+            if ($tossResponse->isCard() || $tossResponse->isTransfer()) {
+                $recruit->payment_id = $payment->id;
+                $recruit->pay_status = Recruit::$PAY_PAID;
+            } else {
+                return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
+            }
             $recruit->save();
 
             DB::commit();
@@ -133,7 +137,7 @@ class RecruitController extends Controller
             return redirect()->back()->with(['alert' => '오류가 발생했습니다.']);
         }
 
-        return redirect()->route('albatalk.recruit.detail', $recruit->id);
+        return redirect()->route('albatalk.recruit.detail', $recruit->id)->with(['alert' => '구인공고 게시물이 등록되었습니다.']);
     }
 
     public function edit(Recruit $recruit)
@@ -172,7 +176,6 @@ class RecruitController extends Controller
 
     public function update(Recruit $recruit, Request $request)
     {
-        logger($request);
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
             $errorBags = $validator->errors();

@@ -2,6 +2,7 @@
 
 namespace App\Services\Recruit;
 
+use App\DTO\Payment\CancelPaymentDto;
 use App\Http\Controllers\Albatalk\Recruit\RecruitSiDo;
 use App\Models\File;
 use App\Models\Recruit\Option\RecruitApplication;
@@ -19,8 +20,11 @@ use App\Models\Recruit\Option\TypeWork;
 use App\Models\Recruit\Recruit;
 use App\Models\Resume\AppliedResume;
 use App\Services\File\RecruitThumbnail;
+use App\Services\Payment\TossPaymentsService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -206,7 +210,7 @@ class RecruitService
         return $job;
     }
 
-    public function updateRecruit(Recruit $recruit, array $data)
+    public function updateRecruit(Recruit $recruit, array $data): Recruit
     {
         $recruit->update([
             'user_id' => auth()->id(),
@@ -236,7 +240,8 @@ class RecruitService
             'term' => $data['term'] ?? Recruit::TERM,
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
-            'content' => $data['content'] ?? null,
+            'content' => $data['pay_status'] ?? null,
+            'pay_status' => $data['pay_status'] ?? Recruit::$PAY_BEFORE,
         ]);
 
         return $recruit;
@@ -356,5 +361,30 @@ class RecruitService
 
         return $builder->orderByDesc('created_at')
             ->paginate(10);
+    }
+
+    public function validateAdminCancel(Request $request, Recruit $recruit): ?CancelPaymentDto
+    {
+        return CancelPaymentDto::createWhenRecruitCancelAdmin($request, $recruit);
+    }
+
+    public function cancel(Recruit $recruit, CancelPaymentDto $dto): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            if ($recruit->payment != null) {
+                TossPaymentsService::cancelPaid($recruit->payment, $recruit->pay_status, $dto);
+            }
+            $recruit->updateWhenRecruitCancel();
+
+            DB::commit();
+            return true;
+
+        } catch (\Exception $exception) {
+            Log::error('CANCEL ERROR', [$exception]);
+            DB::rollBack();
+            return false;
+        }
     }
 }

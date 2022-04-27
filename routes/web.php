@@ -674,6 +674,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 구인 상태 변경 함수
             Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
 
+            Route::delete('{recruit}/cancel', [\App\Http\Controllers\Admin\Payment\RecruitCancelController::class, 'cancel'])->name('cancel');
         });
     });
 });
