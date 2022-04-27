@@ -3,18 +3,11 @@
 namespace App\Models\Payments;
 
 use App\DTO\Payment\TossPaymentsResponse;
-use App\Models\Membership\Membership;
-use App\Models\Program\Program;
-use App\Models\Program\ProgramStudent;
-use App\Models\Recruit\Recruit;
+use App\Services\Payment\TossPaymentFactory;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
-class TossPayment extends Model
+class TossPayment extends PaymentGatewayModel
 {
     use SoftDeletes;
 
@@ -38,9 +31,9 @@ class TossPayment extends Model
      * @return bool
      * @throws \Exception
      */
-    public function updateByToss(TossPaymentsResponse $response)
+    public function updateByToss(TossPaymentsResponse $response): bool
     {
-        return $this->update(self::getPaymentData($response));
+        return $this->update(TossPaymentFactory::getPaymentData($response));
     }
 
     /**
@@ -98,26 +91,6 @@ class TossPayment extends Model
         return $this->attributes['method'] == '계좌이체';
     }
 
-    public function membership()
-    {
-        return $this->hasOneThrough(Membership::class, Payment::class, 'pg_id', 'payment_id');
-    }
-
-    public function student()
-    {
-        return $this->hasOneThrough(ProgramStudent::class, Payment::class, 'pg_id', 'payment_id');
-    }
-
-    public function recruit()
-    {
-        return $this->hasOneThrough(Recruit::class, Payment::class, 'pg_id', 'payment_id');
-    }
-
-    public function payment()
-    {
-        return $this->morphOne(Payment::class, 'pg', 'toss');
-    }
-
     /**
      * @param Builder $query
      * @return mixed
@@ -125,5 +98,10 @@ class TossPayment extends Model
     public function scopePaid($query)
     {
         return $query->whereIn('status', [self::$ANOTHER_DONE, self::$DONE]);
+    }
+
+    function getPgType(): string
+    {
+        return "toss";
     }
 }

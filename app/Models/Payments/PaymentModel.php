@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $pg_id
  * @property string $pg_type
  */
-class Payment extends Model
+class PaymentModel extends Model
 {
-    public function pg() {
+    protected $table = 'payments';
+
+    public function pg()
+    {
         $this->morphTo();
     }
 }

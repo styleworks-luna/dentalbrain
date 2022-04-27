@@ -23,7 +23,7 @@ class TossPaymentFactory
      * 토스 DTO를 통해 생성
      *
      * @param TossPaymentsResponse $response
-     * @return Builder|Model|TossPayment
+     * @return Builder|Model
      * @throws \Exception
      */
     static function createByTossSuccess(TossPaymentsResponse $response)
@@ -38,7 +38,7 @@ class TossPaymentFactory
      * @return array
      * @throws \Exception
      */
-    private static function getPaymentData(TossPaymentsResponse $response): array
+    public static function getPaymentData(TossPaymentsResponse $response): array
     {
         return array_merge(self::getPaymentBasicData($response), self::getPaymentsAdditionalData($response));
     }

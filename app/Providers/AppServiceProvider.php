@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Iamport\RestClient\Iamport;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
          */
         Validator::extend('without_spaces', function ($attr, $value) {
             return preg_match('/^\S*$/u', $value);
+        });
+
+        $this->app->singleton(Iamport::class, function ($app) {
+            return new Iamport('impKey', 'impSecret');
         });
     }
 }
