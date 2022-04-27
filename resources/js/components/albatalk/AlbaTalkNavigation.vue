@@ -10,7 +10,7 @@
                     <div class="m-row">
                         <div class="menu-content">
                             <p>근무지역을 선택해주세요.</p>
-                            <ul class="albatalk-menu-list">
+                            <ul id="albatalk_menu_list" class="albatalk-menu-list">
                                 <li v-for="menuList in menuLists" :key="menuList.name">
                                     <a :id="`menu_list_${menuList.name}`" class="menu-list" :data-name="menuList.text"
                                        @click="mobileMenuEvent($event, menuList.text)">{{ menuList.text }}</a>
@@ -256,6 +256,12 @@ export default {
         },
         exit(){
             document.getElementById("albatalk-menu").style.display='none';
+
+            if (document.querySelectorAll('ul > li > .menu-list.active').length) {
+                document.getElementById("icon_filter").classList.add('purple')
+            } else {
+                document.getElementById("icon_filter").classList.remove('purple')
+            };
         }
     }
 }
