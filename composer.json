@@ -7,12 +7,6 @@
         "laravel"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "git",
-            "url": "http://bitbucket.onoffmix.kr:7990/scm/mice/iamport-for-mice.git"
-        }
-    ],
     "require": {
         "php": "^7.2",
         "ext-curl": "*",
@@ -28,8 +22,7 @@
         "laravel/ui": "^1.2",
         "maatwebsite/excel": "^3.1",
         "symfony/psr-http-message-bridge": "^2.0",
-        "zendframework/zend-diactoros": "^2.2",
-        "zz3n/iamport-rest-client": "*"
+        "zendframework/zend-diactoros": "^2.2"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -41,8 +34,7 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true,
-        "secure-http": false
+        "sort-packages": true
     },
     "extra": {
         "laravel": {
