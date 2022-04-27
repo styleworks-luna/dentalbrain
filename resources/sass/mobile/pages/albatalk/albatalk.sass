@@ -2,6 +2,8 @@
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
 
+@import '@sass/components/mobile/_button.sass'
+
 .albatalk
 
     .albatalk-navigation
@@ -64,7 +66,7 @@
 
         .albatalk-menu-list-wrap
             +size(100%, 100%)
-            z-index: 1
+            z-index: 1001
             position: fixed
             bottom: 0
             background-color: $gray-600
@@ -122,6 +124,25 @@
 
                                 &.active
                                     +border(0.277778vw solid $page-color)
+            
+            .btn-wrap
+                +padding(3.055556vw 0)
+                +border(0.277778vw solid $border-color-light, top)
+                position: fixed
+                bottom: 0
+                background-color: $white
+
+                .btn-submit
+                    +btn(purple-fill)
+                    +size(91.111111vw, 13.888889vw)
+                    font-size: 4.444444vw
+
+                .btn-cancel
+                    +btn()
+                    +size(91.111111vw, 13.888889vw)
+                    background-color: $gray-700
+                    color: $white
+                    font-size: 4.444444vw
 
     .albatalk-contents
         +padding(bottom 47.916667vw)

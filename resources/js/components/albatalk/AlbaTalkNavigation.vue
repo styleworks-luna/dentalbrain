@@ -18,6 +18,11 @@
                             </ul>
                         </div>
                     </div>
+                    <section class="btn-wrap">
+                        <div class="m-row">
+                            <button type="submit" class="btn-submit" @click.prevent="exit()">선택 완료</button>
+                        </div>
+                    </section>
                 </div>
             </div>
         </template>
