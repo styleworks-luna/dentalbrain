@@ -62,7 +62,7 @@
                         <a class="btn-lecture"><em>자격증 보기</em></a>
                     </div>
                 </li>
-                <li class="content-none" v-if="lectures.length == 0">찜한 강의가 없습니다.</li>
+                <div class="content-none" v-if="lectures.length == 0">발급 된 증명서가 없습니다.</div>
             </ul>
 
         </div>
