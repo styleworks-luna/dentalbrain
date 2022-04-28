@@ -62,6 +62,7 @@
                 .content-image
                     +size(300px)
                     display: block
+                    position: relative
                     float: left
 
                     img
@@ -69,6 +70,22 @@
                         +border(1px solid rgba(0, 0, 0, 0.1))
                         +border-radius(8px)
                         display: block
+
+                    .certificate-mark
+                        +size(71px, 22px)
+                        +border(1px solid rgba(255, 255, 255, 0.8))
+                        +border-radius(12px)
+                        +margin(right 12px bottom 12px)
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        background-color: rgba(0, 0, 0, 0.6)
+                        position: absolute
+                        bottom: 0
+                        right: 0
+                        font-size: 11px
+                        font-weight: bold
+                        color: #fff
 
 .content-information
     +size(500px)

@@ -7,6 +7,7 @@
                         <a :href="'/lectures/' + lecture.program.id">
                             <img :src="lecture.program.thumbnail.url" alt="강의사진">
                         </a>
+                        <div class="certificate-mark">수료/자격증</div>
                     </figure>
                     <div class="content-information">
                         <div class="lecture-sort">
