@@ -70,7 +70,7 @@
                 </single-group>
             </div>
 
-            <single-group name="상세 정보 입력(가로사이즈 1140px)" :isRequired="true" :size="12"">
+            <single-group name="상세 정보 입력(가로사이즈 1140px)" :isRequired="true" :size="12">
                 <template v-slot:content>
                     <editor :content="content" :uploadImageUrl="`/api/admin/lecture/upload`"
                             @setEditor="handleSetEditor"></editor>

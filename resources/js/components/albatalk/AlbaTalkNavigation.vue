@@ -1,95 +1,274 @@
 <template>
-    <div class="albatalk-menu">
-        <section class="wanted">
-            <h2>구인정보</h2>
-            <form>
-                <div class="inquire-form-wrap">
-                    <table>
-                        <tr>
-                            <th>근무지역</th>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="all" name="all">
-                                <label for="all">전체</label>
-                                <div class="second">
-                                    <input type="checkbox" id="ulsan" name="ulsan">
-                                    <label for="ulsan">울산</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Seoul" name="Seoul">
-                                <label for="Seoul">서울</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Gangwon" name="Gangwon">
-                                    <label for="Gangwon">강원</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Gyeonggi" name="Gyeonggi">
-                                <label for="Gyeonggi">경기</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Gyeongnam" name="Gyeongnam">
-                                    <label for="Gyeongnam">경남</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Incheon" name="Incheon">
-                                <label for="Incheon">인천</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Gyeongbuk" name="Gyeongbuk">
-                                    <label for="Gyeongbuk">경북</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Busan" name="Busan">
-                                <label for="Busan">부산</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Jeonnam" name="Jeonnam">
-                                    <label for="Jeonnam">전남</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Daegu" name="Daegu">
-                                <label for="Daegu">대구</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Jeonbuk" name="Jeonbuk">
-                                    <label for="Jeonbuk">전북</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Daejeon" name="Daejeon">
-                                <label for="Daejeon">대전</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Chungnam" name="Chungnam">
-                                    <label for="Chungnam">충남</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Sejong" name="Sejong">
-                                <label for="Sejong">세종</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Chungbuk" name="Chungbuk">
-                                    <label for="Chungbuk">충북</label>
-                                </div>
-                            </td>
-                            <td class="all-wrap">
-                                <input type="checkbox" id="Gwangju" name="Gwangju">
-                                <label for="Gwangju">광주</label>
-                                <div class="second">
-                                    <input type="checkbox" id="Jeju" name="Jeju">
-                                    <label for="Jeju">제주</label>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+    <div class="albatalk-menu" id="albatalk-menu">
+        <template v-if="mobile">
+            <div class="albatalk-menu-list-wrap">
+                <div class="albatalk-middle">
+                    <div class="menu-title">
+                        <p class="label">근무지역</p>
+                        <span class="btn-close-menu" @click.prevent="exit()"></span>
+                    </div>
+                    <div class="m-row">
+                        <div class="menu-content">
+                            <p>근무지역을 선택해주세요.</p>
+                            <ul id="albatalk_menu_list" class="albatalk-menu-list">
+                                <li v-for="menuList in menuLists" :key="menuList.name">
+                                    <a :id="`menu_list_${menuList.name}`" class="menu-list" :data-name="menuList.text"
+                                       @click="mobileMenuEvent($event, menuList.text)">{{ menuList.text }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <section class="btn-wrap">
+                        <div class="m-row">
+                            <button type="submit" class="btn-submit" @click.prevent="exit()">선택 완료</button>
+                        </div>
+                    </section>
                 </div>
-            </form>
-        </section>
+            </div>
+        </template>
+        <template v-else-if="!mobile && !show">
+            <div class="albatalk-menu-list-wrap">
+                <p class="label">근무지역</p>
+                <ul class="albatalk-menu-list">
+                    <li v-for="menuList in menuLists" :key="menuList.name">
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" :id="'menu_list_' + menuList.name" name="menu_list"
+                                   :value="menuList.text" @change="menuEvent($event, menuList.text)">
+                            <label :for="'menu_list_' + menuList.name">{{ menuList.text }}</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </template>
     </div>
 </template>
-
 <script>
 export default {
     name: "AlbaTalkNavigation",
+    data() {
+        return {
+            check: false,
+            menuLists: [
+                {
+                    name: 'all',
+                    text: '전체'
+                },
+                {
+                    name: 'seoul',
+                    text: '서울'
+                },
+                {
+                    name: 'gyeonggi',
+                    text: '경기'
+                },
+                {
+                    name: 'incheon',
+                    text: '인천'
+                },
+                {
+                    name: 'busan',
+                    text: '부산'
+                },
+                {
+                    name: 'daegu',
+                    text: '대구'
+                },
+                {
+                    name: 'daejeon',
+                    text: '대전'
+                },
+                {
+                    name: 'sejong',
+                    text: '세종'
+                },
+                {
+                    name: 'gwangju',
+                    text: '광주'
+                },
+                {
+                    name: 'ulsan',
+                    text: '울산'
+                },
+                {
+                    name: 'gangwon',
+                    text: '강원'
+                },
+                {
+                    name: 'geong_south',
+                    text: '경남'
+                },
+                {
+                    name: 'geong_north',
+                    text: '경북'
+                },
+                {
+                    name: 'jeon_south',
+                    text: '전남'
+                },
+                {
+                    name: 'jeon_north',
+                    text: '전북'
+                },
+                {
+                    name: 'chung_south',
+                    text: '충남'
+                },
+                {
+                    name: 'chung_north',
+                    text: '충북'
+                },
+                {
+                    name: 'jeju',
+                    text: '제주'
+                },
+            ],
+            checkLists: [],
+        }
+    },
+    props: {
+        'mobile': Boolean,
+        'show': Boolean,
+    },
+    mounted() {
+        document.getElementsByName("menu_list").forEach(x => {
+            if(x.checked) {
+                if (x.value != '전체') {
+                    if (x.value == '세종') {
+                        this.checkLists.push('세종특별자치시');
+                    } else if (x.value == '제주') {
+                        this.checkLists.push('제주특별자치도');
+                    } else {
+                        this.checkLists.push(x.value);
+                    }
+                }
+            }
+        });
+        this.$emit('menuEventEmit', this.checkLists);
+    },
+    methods: {
+        menuEvent(e, name) {
+            if (e.target.checked) {
+                if (name == '전체') {
+                    document.getElementsByName("menu_list").forEach(x => {
+                        if (x.value != '전체') {
+                            x.checked = true;
+                            if (x.value == '세종') {
+                                this.checkLists.push('세종특별자치시');
+                            } else if (x.value == '제주') {
+                                this.checkLists.push('제주특별자치도');
+                            } else {
+                                this.checkLists.push(x.value);
+                            }
+                        }
+                    });
+                } else if (name == '세종') {
+                    this.checkLists.push('세종특별자치시');
+                } else if (name == '제주') {
+                    this.checkLists.push('제주특별자치도');
+                } else {
+                    this.checkLists.push(name);
+                }
+            } else {
+                if (name == '전체') {
+                    this.checkLists = [];
+                    document.getElementsByName("menu_list").forEach(x => {
+                        x.checked = false;
+                    });
+                } else if (name == '세종') {
+                    let index = this.checkLists.indexOf('세종특별자치시');
+                    this.checkLists.splice(index, 1);
+                } else if (name == '제주') {
+                    let index = this.checkLists.indexOf('제주특별자치도');
+                    this.checkLists.splice(index, 1);
+                } else {
+                    let index = this.checkLists.indexOf(name);
+                    this.checkLists.splice(index, 1);
+                }
+            }
+            let check_all = true;
+            document.getElementsByName("menu_list").forEach(x => {
+                if (x.value != '전체') {
+                    check_all = check_all && x.checked;
+                }
+            });
+            document.getElementById("menu_list_all").checked = check_all;
+
+            const set = new Set(this.checkLists);
+            const uniqueArr = [...set];
+
+            this.$emit('menuEventEmit', uniqueArr);
+        },
+
+        mobileMenuEvent(e, name) {
+            if (!e.target.classList.contains('active')) {
+                if (name == '전체') {
+                    document.querySelectorAll(".menu-list").forEach(x => {
+                        x.classList.add('active');
+                        if (x.getAttribute('data-name') != '전체') {
+                            if (x.getAttribute('data-name') == '세종') {
+                                this.checkLists.push('세종특별자치시');
+                            } else if (x.getAttribute('data-name') == '제주') {
+                                this.checkLists.push('제주특별자치도');
+                            } else {
+                                this.checkLists.push(x.getAttribute('data-name'));
+                            }
+                        }
+                    });
+                } else if (name == '세종') {
+                    this.checkLists.push('세종특별자치시');
+                } else if (name == '제주') {
+                    this.checkLists.push('제주특별자치도');
+                } else {
+                    this.checkLists.push(name);
+                }
+                e.target.classList.add('active');
+            } else {
+                if (name == '전체') {
+                    this.checkLists = [];
+                    document.querySelectorAll(".menu-list").forEach(x => {
+                        x.classList.remove('active');
+                    });
+                } else if (name == '세종') {
+                    let index = this.checkLists.indexOf('세종특별자치시');
+                    this.checkLists.splice(index, 1);
+                } else if (name == '제주') {
+                    let index = this.checkLists.indexOf('제주특별자치도');
+                    this.checkLists.splice(index, 1);
+                } else {
+                    let index = this.checkLists.indexOf(name);
+                    this.checkLists.splice(index, 1);
+                }
+                e.target.classList.remove('active');
+            }
+
+            let check_all = true;
+            document.querySelectorAll(".menu-list").forEach(x => {
+                if (x.getAttribute('data-name') != '전체') {
+                    check_all = check_all && x.classList.contains('active');
+                }
+            });
+
+            if (check_all) {
+                document.getElementById("menu_list_all").classList.add('active');
+            } else {
+                document.getElementById("menu_list_all").classList.remove('active');
+            }
+
+            const set = new Set(this.checkLists);
+            const uniqueArr = [...set];
+
+            this.$emit('menuEventEmit', this.checkLists);
+        },
+        exit(){
+            document.getElementById("albatalk-menu").style.display='none';
+
+            if (document.querySelectorAll('ul > li > .menu-list.active').length) {
+                document.getElementById("icon_filter").classList.add('purple')
+            } else {
+                document.getElementById("icon_filter").classList.remove('purple')
+            };
+        }
+    }
 }
 </script>
 

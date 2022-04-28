@@ -3,259 +3,436 @@
 @import '@sass/helpers/_mixins.scss'
 @import '@sass/components/_button.sass'
 
-@import '@sass/desktop/pages/agreement/agreement.sass'
-@import '@sass/desktop/pages/agreement/payment.sass'
-
-.albatalk-detail-wrap
-    .title-wrap
-        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
-        min-width: 1280px
-        height: 300px
-
-        h1
-            +size(240px)
-            +margin(0 auto)
-            +padding(125px 0 0 63px)
-            font-weight: bold
-            font-size: 48px
-        
-        a
-            +border(1px solid transparent)
-            +size(102px, 36px)
-            float: right
-            +margin(top 244px right 20px)
-            background-color: rgba(0, 0, 0, 0.4)
-            border-radius: 1px
-            display: flex
-            align-items: center
-            justify-content: center
-            color: #fff
-            font-size: 16px
-
-
-    +background(null, null, null, #f5f4f5)
+.albatalk-recruit-detail-wrap
+    background-color: #f5f4f5
     min-width: 1280px
     overflow: hidden
 
     .container
-        +margin(20px auto)
-        +border(1px solid $border-color-light)
-        +border-radius(10px)
+        +margin(top 20px bottom 20px)
         +background(null, null, null, $white)
-
-        .row
-            +margin(50px auto 80px)
-
-
-        + .ui-selectmenu-button
-            +margin(left 13px top 12px bottom 12px)
-            float: left
-
-
-.albatalk-detail-title
-    +padding(bottom 20px)
-    +border(1px solid $border-color-base, bottom)
-    overflow: hidden
-
-    h1
-        float: left
-        font-size: 30px
-
-    a
-        float: right
-        font-size: 13px
-        color: $gray-700
-        transform: translateY(15px)
-
-        &:hover
-            color: $page-color
-            font-weight: bold
-            text-decoration: revert
-
-
-
-.albatalk-information-wrap
-    +padding(top 20px)
-    overflow: hidden
-    min-height: 225px
-
-    .albatalk-image
-        +size(280px, 290px)
-        float: left
-
-        img
-            +size(280px, 210px)
-
-        .frist-detail, .second-detail, .third-detail
-            +size(80px, 60px)
-            +margin(top 20px right 20px)
-
-    .albatalk-information
-        +size(790px)
-        +padding(top 20px left 50px)
-        float: left
-
-
-        .lecture-sort
-            overflow: hidden
-
-            .lecture-type
-                +padding(6px 8px)
-                +background(null, null, null, $page-color)
-                float: left
-                font-size: 11px
-                color: $white
-
-            .lecture-date
-                +padding(6px 0 0 10px)
-                float: left
-                font-size: 12px
-                color: $gray-700
-
-        .albatalk-title
-            +padding(top 13px bottom 12px)
-            font-weight: bold
-            font-size: 24px
-            line-height: 1.21
-            span
-                float: right
-                color: #777
-                font-size: 13px
-                font-weight: normal
-                +padding(top 5px)
-
-        .first-card, .second-card
-            width: 390px
-            height: 102px
-            //table-layout: fixed
-            //+padding(top 16px)
-            display: block
-
-            tr
-                +padding(top 18px)
-                display: block
-
-                th
-                    +size(100px)
-                    font-size: 14px
-                    color: $gray-700
-                    vertical-align: middle
-                    text-align: left
-
-                td
-                    +size(245px)
-                    +padding(left 10px)
-                    font-size: 16px
-                    vertical-align: middle
-                    &:nth-child(5)
-
-        .third-card
-            width: 800px
-            height: 102px
-            //table-layout: fixed
-            //+padding(top 16px)
-            display: block
-
-            tr
-                +padding(top 18px)
-                display: block
-
-                th
-                    +size(100px)
-                    font-size: 14px
-                    color: $gray-700
-                    vertical-align: middle
-                    text-align: left
-
-                td
-                    +size(500px)
-                    +padding(left 10px)
-                    font-size: 16px
-                    vertical-align: middle
-                    &:nth-child(5)
-
-                        
-
-h3
-    font-size: 24px
-
-.detail-information
-    +padding(top 60px)
-
-    .detail-title
+        +border-radius(10px)
         overflow: hidden
 
-        h3
-            float: left
+        .row
+            +size(1140px)
+            +margin(50px auto 80px auto)
 
-    table
-        +margin(top 19px)
-        +padding(top 8px)
-        +border(2px solid $gray-900, top)
-        width: 1140px
-        height: 300px
-        display: block
-        line-height: 1.88
-        //table-layout: fixed
+    .subtitle-wrap
+        +margin(bottom 20px)
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
 
-        tr
-    
+        h1
+            font-size: 30px
+
+        a
+            line-height: 16px
+            color: $gray-700
+
+            &:hover
+                font-weight: bold
+                color: $page-color
+                text-decoration: underline
+
+    .office-information-wrap
+        +padding(top 20px)
+        +border(1px solid $border-color-base, top)
+        display: flex
+        justify-content: space-between
+        align-items: flex-start
+
+        .thumbnail-wrap
+            .thumbnail-on
+                cursor: pointer
+
+            .main-img-wrap
+                +size(280px, 210px)
+                +border(1px solid $border-color-base)
+                background-color: $white-light
+
+            .main-thumbnail
+                +size(280px, 210px)
+
+                &.none-image
+                    display: flex
+                    justify-content: center
+                    align-items: center
+
+                    .none-image-icon
+                        +size(100px, 100px)
+                        +background('/images/desktop/global/icon_default_thumbnail.svg', no-repeat, center center)
+                        display: block
+
+            .sub-thumbnail-wrap
+                +margin(top 20px)
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                .img-wrap
+                    +size(80px, 60px)
+                    +border(1px solid $border-color-base)
+                    background-color: $white-light
+
+                    .none-image
+                        +size(80px, 60px)
+                        display: flex
+                        justify-content: center
+                        align-items: center
+
+                        .none-image-icon
+                            +size(30px, 30px)
+                            +background('/images/desktop/global/icon_default_thumbnail.svg', no-repeat, center center)
+                            display: block
+                            background-size: 30px 30px
+
+                    .sub-thumbnail
+                        +size(80px, 60px)
+
+        .office-information
+            +padding(top 20px)
+            +size(810px)
+
+            .office-title-wrap
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                h2
+                    font-weight: bold
+                    font-size: 24px
+
+                span
+                    font-size: 13px
+                    color: $gray-700
+                    line-height: 15px
+
+            .office-content-wrap
+                +margin(top 18px)
+
+                table
+                    th
+                        +size(100px)
+                        color: $gray-700
+                        text-align: left
+                        vertical-align: middle
+
+                    td
+                        +padding(6px 50px 6px 10px)
+                        min-width: 245px
+                        font-size: 16px
+                        line-height: 24px
+
+                        p
+                            min-height: 24px
+
+                    .address-wrap
+                        display: flex
+                        justify-content: flex-start
+                        align-items: center
+
+                        .btn-map
+                            +size(69px, 30px)
+                            +margin(left 10px)
+                            +border(1px solid $border-color-base)
+                            +border-radius(1px)
+                            +box-sizing(border-box)
+                            font-size: 12px
+                            color: $gray-700
+                            text-align: center
+                            line-height: 30px
+
+    .information-title
+        +margin(bottom 18px)
+
+        h2
+            font-size: 24px
+            line-height: 26px
+
+    .recruit-detail-information-wrap
+        +margin(top 60px)
+
+        .recruit-detail-information-content
+            +padding(top 30px left 40px)
+            +border(2px solid $gray-900, top)
+            display: flex
+            justify-content: flex-start
+            align-items: flex-start
+
+            table
+                th
+                    +size(100px)
+                    color: $gray-700
+                    text-align: left
+
+                td
+                    +size(350px)
+                    +padding(6px 0 6px 10px)
+                    font-size: 16px
+                    line-height: 24px
+
+                    p
+                        min-height: 24px
+
+                &:last-child
+                    +margin(left 110px)
+
+    .recruit-writing
+        +margin(top 60px)
+
+        .recruit-writing-content
+            +padding(30px 45px 0 45px)
+            +border(2px solid $gray-900, top)
+            min-height: 200px
+
+            p
+                line-height: 2
+                word-break: break-all
+
+            img
+                max-width: 100%
+                display: inline-block
+
+            a
+                color: $blue
+
+                &:hover
+                    text-decoration: underline
+
+            strong
+                font-weight: bold
+
+            em
+                font-style: italic
+
+            sup
+                vertical-align: super
+                font-size: smaller
+
+            sub
+                vertical-align: sub
+                font-size: smaller
+
+            blockquote
+                padding-left: 20px
+                padding-right: 8px
+                border-left-width: 5px
+                font-style: italic
+                border-style: solid
+                border-color: #ccc
+                display: block
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 40px
+                margin-inline-end: 40px
+
+            ol
+                display: block
+                list-style-type: decimal
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 0
+                margin-inline-end: 0
+                padding-inline-start: 40px
+                padding: 0 40px
+
+            li
+                display: list-item
+                text-align: -webkit-match-parent
+
+            ul
+                display: block
+                list-style-type: disc
+                padding: 0 40px
+
+    .btn-wrap
+        +size(200px)
+        +margin(50px auto 0 auto)
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(200px, 50px)
+            font-size: 16px
+
+        .btn-cancel
+            +btn()
+            +size(200px, 50px)
+            background-color: $gray-700
+            font-size: 16px
+            color: $white
+
+    .applied-resume-status
+        +margin(top 80px)
+
+        .information-title
+            em
+                color: $page-color
+                font-weight: bold
+
+        table
+            +size(100%)
+            +border(2px solid $gray-900, top)
 
             th
-                +padding(top 12px left 40px)
-                &:nth-child(1)
-                    +padding(top 12px left 40px)
-                +size(100px)
-                font-size: 14px
+                +padding(14px 40px)
+                +border(1px solid $border-color-light, bottom)
+                background-color: $background-color-menu
                 color: $gray-700
-                vertical-align: middle
-                text-align: left
+
+                &:first-child
+                    +padding(right 10px)
 
             td
-                +size(350px)
-                +padding(top 12px right 10px)
+                +padding(22px 40px)
+                +border(1px solid $border-color-light, bottom)
+                text-align: center
                 font-size: 16px
                 vertical-align: middle
-    .second
-        +margin(top 19px)
-        +border(2px solid $gray-900, top)
-        width: 1140px
-        height: 300px
-        .text
-            +padding(top 40px left 45px right 45px)
+
+                &:first-child
+                    +padding(right 10px)
+
+                .recommend-person
+                    display: flex
+                    justify-content: center
+                    align-items: center
+
+                .badge-recommend
+                    +size(74px, 24px)
+                    +margin(right 10px)
+                    +border-radius(1px)
+                    +box-sizing(border-box)
+                    display: block
+                    background-color: $gray-200
+                    font-size: 12px
+                    line-height: 24px
+                    color: $white
+
+                .btn-resume
+                    +btn(null, null, 1px)
+                    +size(82px, 30px)
+                    +border(1px solid $border-color-base)
+                    display: inline-block
+                    font-size: 12px
+                    line-height: 30px
+                    color: $gray-700
+
+                    &:hover
+                        color: $page-color
+
+                .cancel-status
+                    text-decoration: line-through
+
+                .cancel-date
+                    +margin(top 5px)
+                    color: $gray-700
+
+        .none-resume
+            +padding(top 80px)
+            +border(2px solid $gray-900, top)
+            font-size: 20px
+            text-align: center
+
+.popup-area
+    .dim
+        +size(100%, 100%)
+        background-color: rgba(0, 0, 0, 0.8)
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 210
+        display: none
+
+    .popup-wrap
+        +border(2px solid $page-color)
+        +background(null, null, null, $white)
+        +padding(22px)
+        +box-sizing(border-box)
+        position: fixed
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        z-index: 1000
+        display: none
+
+    .map-popup-wrap
+        +size(750px)
+
+        .popup-header
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            h3
+                font-weight: bold
+                font-size: 18px
+
+            .btn-popup-close
+                +size(18px, 18px)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                background-size: 18px 18px
+
+        .map
+            +size(706px, 428px)
+            +margin(top 10px)
+            +border(1px solid $border-color-base)
+            +box-sizing(border-box)
+
+        .address
+            +margin(top 10px)
             font-size: 16px
-            line-height: 1.88
-.submit
-    +margin(50px 0px 0px 470px)
-    width: 200px
-    height: 50px
-    border-radius: 27px
-    background-color: #8816b5
-    font-size: 15px
-    color: #ffffff
+            line-height: 24px
 
-.btn-wrap
-    +size(330px)
-    +margin(50px auto 0)
-    overflow: hidden
+    .image-popup-wrap
+        +size(844px)
 
-    *[class^="btn-"]
-        +size(160px, 50px)
-        float: left
-        font-size: 16px
-        line-height: 50px
+        .popup-header
+            display: flex
+            justify-content: flex-end
+            align-items: center
 
-        &:last-child
-            +margin(right 0)
+            .btn-popup-close
+                +size(18px, 18px)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                background-size: 18px 18px
 
-    .btn-confirm
-        +btn(purple-fill)
-        +margin(right 10px)
-        float: left
-        color: $white
+        .img-wrap
+            +size(800px, 600px)
+            +margin(top 10px)
+            +border(1px solid $border-color-base)
+            +box-sizing(border-box)
 
-    .btn-cancel
-        +btn()
-        +background(null, null, null, $gray-700)
-        float: right
-        color: $white
+            .popup-img
+                +size(798px, 598px)
+
+    .alert-popup-wrap
+        +size(600px, 280px)
+        +border-radius(1px)
+
+        .popup-header
+            display: flex
+            justify-content: flex-end
+            align-items: center
+
+            .btn-popup-close
+                +size(18px, 18px)
+                +background('/images/desktop/global/icon_layer_close.png', no-repeat, center center)
+                background-size: 18px 18px
+
+        h3
+            +size(300px, 50px)
+            +padding(top 30px left 128px)
+            display: flex
+            align-items: center
+            justify-content: center
+            font-size: 18px
+            font-weight: bold
+
+        button
+            +btn(purple-fill)
+            +size(200px, 50px)
+            +margin(top 70px left 178px)
+            font-size: 16px
+            font-weight: bold

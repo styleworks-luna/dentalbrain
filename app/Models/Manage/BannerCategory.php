@@ -2,7 +2,6 @@
 
 namespace App\Models\Manage;
 
-use App\Models\Manage\Banner;
 use Illuminate\Database\Eloquent\Model;
 
 class BannerCategory extends Model

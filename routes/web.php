@@ -16,6 +16,7 @@
 // 회원가입
 use App\Http\Controllers\Admin\Banner\ProgramBannerController;
 use App\Http\Controllers\Admin\Banner\TitleController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Route;
 
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
@@ -31,56 +32,14 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 if (env('APP_ENV') != 'production') {
     Route::group(['prefix' => 'test', 'as' => 'test.'], function () {
         // 테스팅 계정 생성 // !! 삭제하지 말것 !!
-        Route::get('register', 'Test\TestController@showRegistrationForm');
+        Route::get('register', [\App\Http\Controllers\Development\DevelopmentController::class, 'showRegistrationForm']);
     });
 
     Route::group(['prefix' => 'dev', 'as' => 'dev.'], function () {
         Route::get('pretend/{user}', [\App\Http\Controllers\Development\DevelopmentController::class, 'pretend']);
     });
 
-    Route::get("dlstjd", [\App\Http\Controllers\Development\DevelopmentController::class, 'dlstjd']);
-
-    Route::get("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'getAbilities']);
-    Route::post("test/abilities", [\App\Http\Controllers\Development\DevelopmentController::class, 'postAbilities'])->name('postAbilities');
-
-    // 알바톡(임시)
-    Route::get('albatalk', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk');
-    });
-
-    Route::get('albatalk/post', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_post');
-    });
-
-    Route::get('albatalk/detail', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_detail');
-    });
-
-    Route::get('albatalk/resume/detail', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume_detail');
-    });
-
-    Route::get('albatalk/resume', function () {
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume');
-    });
-
-    Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
-        Route::get('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'payment'])->name('payment');
-
-        Route::post('payment', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'store'])->name('store');
-    });
-
-    Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
-        //구인 정보
-        Route::get('albatalk', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
-        })->name('albatalk');
-
-        //구직 정보
-        Route::get('offer', function () {
-            return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
-        })->name('offer');
-    });
+    Route::get("show", [\App\Http\Controllers\Development\DevelopmentController::class, 'show']);
 }
 
 /*============================ PAGES ============================*/
@@ -135,6 +94,60 @@ Route::get('privacy', function () {
 Route::get('refund', function () {
     return view('desktop.pages.term.refund');
 })->name('refund');
+
+// 알바톡 관련 라우트
+Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+
+    Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+        // 구인 등록 폼
+        Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'createForm'])->name('create')->middleware('auth');
+        // 구인 등록
+        Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'saveRecruitDataToSession'])->name('create')->middleware('auth');
+        // 구인 등록 결제 성공
+        Route::get('/payment/success', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'success'])->name('payment.success')->middleware('auth');
+
+        Route::group(['prefix' => '{recruit}'], function () {
+            // 구인 상세
+            Route::get('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'detail'])->name('detail');
+
+            Route::group(['middleware' => 'auth'], function () {
+                // 구인 제출자들의 이력서 pdf
+                Route::get('applied/{user}', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'pdf'])->name('pdf');
+                // 이력서 제출
+                Route::post('/', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'apply'])->name('apply');
+                // 이력서 취소
+                Route::post('/cancel', [\App\Http\Controllers\Albatalk\Recruit\RecruitDetailController::class, 'cancel'])->name('cancel');
+                // 구인 수정 폼
+                Route::get('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'edit'])->name('edit');
+                // 구인 수정
+                Route::post('edit', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'update'])->name('edit');
+                // 구인 복사
+                Route::get('/duplicate', [\App\Http\Controllers\Albatalk\Recruit\RecruitController::class, 'duplicateForm'])->name('duplicate');
+            });
+        });
+
+    });
+
+    Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+        // 이력서 생성 폼 or 자기 이력서 (= resume_complete.blade.php)
+        Route::get('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'resumeIndex'])->name('index');
+        // 이력서 등록
+        Route::post('/', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'create'])->name('store');
+
+        // 이력서 수정 폼
+        Route::get('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'edit'])->name('edit');
+        // 이력서 수정
+        Route::post('edit', [\App\Http\Controllers\Albatalk\Resume\ResumeController::class, 'update'])->name('update');
+    });
+
+    // 헤드 헌팅 리다이렉트
+    Route::get('head-hunting', [\App\Http\Controllers\Albatalk\HeadHuntingController::class, 'index'])->name('head-hunting');
+
+    // 알바톡(임시)
+    Route::get('/', function () {
+        return view(viewPrefix() . 'pages.albatalk.albatalk');
+    });
+});
 
 // 배너 연결 링크
 Route::get('banner-redirect/{banner}/', 'Main\BannerController@redirectToLink')->name('banner-redirect');
@@ -233,16 +246,6 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         Route::post('/{lecture}', 'Account\QuestionController@store')->name('store');
     });
 
-    //구인 정보
-    Route::get('albatalk', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk');
-    })->name('albatalk');
-
-    //구직 정보
-    Route::get('offer', function () {
-        return view(viewPrefix() . 'pages.user.mypage.mypage_offer');
-    })->name('offer');
-
     // 회원정보 수정
     Route::get('modify', 'Account\UserController@modify')->name('modify');
     Route::post('update', 'Account\UserController@update')->name('update');
@@ -254,6 +257,21 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
     Route::get('secession', 'Account\SecessionController@secessionForm')->name('secession');
     //마이페이지 회원탈퇴 함수
     Route::post('userSecession', 'Account\SecessionController@userSecession')->name('userSecession');
+
+    //구인 정보
+    Route::get('albatalk', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_recruit');
+    })->name('albatalk');
+
+    //구직 정보
+    Route::get('offer', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
+    })->name('offer');
+
+    //구직 이력서 정보
+    Route::get('resume', [\App\Http\Controllers\Account\ResumeController::class, 'mypageResume'])->name('resume');
+
+    Route::get('recruit', [\App\Http\Controllers\Account\RecruitController::class, 'mypageRecruit'])->name('recruit');
 });
 
 // 관리자
@@ -319,6 +337,28 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
         Route::get('categories', 'ArticleController@categories')->name('categories');
         Route::get('{article}', 'ArticleController@view')->name('view');
         Route::post('{article}', 'ArticleController@like')->name('like');
+    });
+
+    Route::group(['prefix' => 'albatalk', 'as' => 'albatalk.'], function () {
+        // 메인 구인공고 검색 API
+        Route::get('search', [\App\Http\Controllers\Albatalk\Recruit\RecruitSearchController::class, 'search'])->name('search');
+
+        Route::group(['prefix' => 'resume', 'as' => 'resume.', 'middleware' => 'auth'], function () {
+            // 이력서 사진 업로드용
+            Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
+        });
+        Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
+            // 구인공고 사진 업로드용
+            Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitThumbnail'])->name('image-upload');
+            Route::post('editor/image', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorImage'])->name('editor.image-upload');
+            Route::post('editor/file', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorFile'])->name('editor.file-upload');
+        });
+    });
+
+    Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth'], function () {
+        // 구인 등록 보기
+        Route::get('recruit', [\App\Http\Controllers\Account\RecruitController::class, 'index'])->name('recruit');
+        Route::get('applied-resume', [\App\Http\Controllers\Account\ResumeController::class, 'appliedResumeList'])->name('applied-resume');
     });
 
     Route::get('map/geocode', 'MapController@naver_map');
@@ -602,8 +642,39 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::get('question', [\App\Http\Controllers\Admin\Dashboard\LectureQuestionController::class, 'index'])->name('question');
             // 고객센터 문의 내역 데이터
             Route::get('inquiries', [\App\Http\Controllers\Admin\Dashboard\InquiryController::class, 'index'])->name('inquiries');
+        });
 
+        Route::group(['prefix' => 'head-hunting', 'as' => 'head-hunting.'], function () {
+            Route::get('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'index'])->name('index');
+            Route::post('', [\App\Http\Controllers\Admin\Albatalk\HeadHuntingController::class, 'create'])->name('create');
+        });
 
+        Route::group(['prefix' => 'recruit-price', 'as' => 'recruit-price.'], function () {
+            Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'index'])->name('index');
+            Route::post('normal', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateNormal'])->name('update.normal');
+            Route::post('membership', [\App\Http\Controllers\Admin\Albatalk\RecruitPriceController::class, 'updateMembership'])->name('update.membership');
+        });
+
+        Route::group(['prefix' => 'resume', 'as' => 'resume.'], function () {
+            Route::get('', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'search'])->name('search');
+            Route::group(['prefix' => '{resume}'], function () {
+                Route::get('pdf', [\App\Http\Controllers\Admin\Albatalk\ResumeController::class, 'detailPdf'])->name('detail');
+                Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'index'])->name('index');
+                Route::post('apply', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'apply']);
+                Route::post('cancel', [\App\Http\Controllers\Admin\Albatalk\RecommendResumeController::class, 'cancel']);
+            });
+
+        });
+
+        Route::group(['prefix' => 'recruit', 'as' => 'recruit.'], function () {
+            // 구인 검색
+            Route::get('', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'search'])->name('search');
+            // 구인 정보
+            Route::get('stats', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'stats'])->name('stats');
+            // 구인 상태 변경 함수
+            Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
+
+            Route::delete('{recruit}/cancel', [\App\Http\Controllers\Admin\Payment\RecruitCancelController::class, 'cancel'])->name('cancel');
         });
     });
 });

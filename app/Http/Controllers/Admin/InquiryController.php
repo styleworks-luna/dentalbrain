@@ -8,12 +8,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Mail\InquiryMail;
 use App\Models\Manage\Inquiry;
 use App\Models\Manage\InquiryCategory;
 use App\Services\Search\SearchService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class InquiryController
 {

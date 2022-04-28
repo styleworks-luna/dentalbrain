@@ -33,13 +33,13 @@ class SurveyFile extends FileTemplate
             'size' => $size,
         ]);
 
-        $file->url = $this->getDownloadUrl($file, $file->path);
+        $file->url = $this->getDownloadUrl($file->path);
         $file->save();
 
         return $file;
     }
 
-    protected function getDownloadUrl($file, $path)
+    protected function getDownloadUrl($path)
     {
         return route('api.surveys.answers.download',
             [$this->model->survey->id, $this->model->id]);

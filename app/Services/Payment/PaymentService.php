@@ -9,7 +9,6 @@ use App\Models\Payments\Payment;
 use App\Models\Program\ProgramStudent;
 use App\Payments\TossPayments\TossPayments;
 use App\Traits\HasPayStatus;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 abstract class PaymentService
@@ -41,12 +40,8 @@ abstract class PaymentService
                     break;
                 //case '휴대폰':
                 default:
-                    $response = false;
                     Log::error('INVALID METHOD', $dto->getData());
-                    break;
-            }
-            if ($response === false) {
-                return false;
+                    return false;
             }
 
             $payment->updateByToss($response);

@@ -47,14 +47,18 @@ class PaymentController extends Controller
 
                 'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
 
+                'recruits.id as recruit_id', 'recruits.company_name as recruit_company_name', 'recruits.pay_status as recruit_pay_status',
+
                 'users.name', 'users.email', 'users.phone'
             )
             ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
             ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
+            ->leftJoin('recruits', 'recruits.payment_id', '=', 'payments.id')
             ->leftJoin('users', function (JoinClause $join) {
                 $join->on('users.id', '=', 'program_students.user_id')
-                    ->orOn('users.id', '=', 'memberships.user_id');
+                    ->orOn('users.id', '=', 'memberships.user_id')
+                    ->orOn('users.id', '=', 'recruits.user_id');
             });
 
 
@@ -64,6 +68,8 @@ class PaymentController extends Controller
             $payments->where('programs.is_online', '=', 0);
         } elseif ($category == '유료회원') {
             $payments->whereHas('membership');
+        } elseif ($category == '알바톡') {
+            $payments->whereHas('recruit');
         }
 
         if ($status == Payment::$DONE) {

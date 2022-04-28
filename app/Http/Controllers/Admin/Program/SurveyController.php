@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Models\Program\Survey\Survey;
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class SurveyController extends Controller
 {

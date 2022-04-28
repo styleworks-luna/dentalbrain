@@ -2,7 +2,6 @@
 
 namespace App\Models\Program;
 
-use App\Models\Program\LectureQuestion;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

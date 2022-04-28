@@ -123,7 +123,7 @@ export default {
                     width: '8%'
                 },
                 {
-                    name: 'order',
+                    name: 'title',
                     text: '제목',
                     width: '20%'
                 },

@@ -159,6 +159,9 @@ export const Helper = {
     // View
     numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    msToDate(data){
+        let dates =  Math.floor((data)/(1000*60*60*24));
+        return dates;
     }
-
 };

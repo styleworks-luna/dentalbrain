@@ -1,294 +1,339 @@
 @import '@sass/helpers/_variables.sass'
 @import '@sass/helpers/_extends.sass'
 @import '@sass/helpers/_mixins.scss'
-@import '@sass/desktop/layouts/navigation/service.sass'
+
 @import '@sass/components/_button.sass'
 @import '@sass/components/_input.sass'
-@import '@sass/components/_emailbox.sass'
 @import '@sass/components/_textarea.sass'
 @import '@sass/components/_selectbox.sass'
 @import '@sass/components/_checkbox.sass'
 @import '@sass/components/_radio.sass'
+@import '@sass/components/_datepicker.sass'
+@import '@sass/components/_editor.sass'
 
-.albatalk-post-wrap
-    .title-wrap
-        +background('/images/desktop/global/article-top-image.png',no-repeat, center center)
-        min-width: 1280px
-        height: 300px
+.albatalk-post
+    +margin(top 80px bottom 80px)
 
-        h1
-            +size(240px)
-            +margin(0 auto)
-            +padding(125px 0 0 63px)
-            font-weight: bold
-            font-size: 48px
-        
-        a
-            +border(1px solid transparent)
-            +size(102px, 36px)
-            float: right
-            +margin(top 244px right 20px)
-            background-color: rgba(0, 0, 0, 0.4)
-            border-radius: 1px
-            display: flex
-            align-items: center
-            justify-content: center
-            color: #fff
-            font-size: 16px
-
-.wanted
-    +margin(top 60px bottom 80px)
-
-    input[type="text"],
-    input[type="password"],
-    input[type="email"],
-    input[type="number"]
+    input[type="text"], input[type="email"]
         +input(white-light-fill)
-        +size(240px, 50px)
-        +margin(right 5px)
         font-size: 14px
 
-    select
-        +selectbox(240px, 50px)
+    .input-xxs
+        +size(100px, 50px)
+
+    .input-xs
+        +size(240px, 50px)
+
+    .input-s
+        +size(260px, 50px)
+
+    .input-m
+        +size(400px, 50px)
+
+    .input-l
+        +size(520px, 50px)
+
+    .input-xl
+        +size(750px, 50px)
+
+    .input-xxl
+        +size(1050px, 50px)
 
     input[type="radio"]
         @extend %radio-default
         +margin(1px 8px 0 0)
-        float: left
+
+        + label
+            font-size: 16px
 
     input[type="checkbox"]
         @extend %checkbox-default
         +margin(1px 8px 0 0)
-        float: left
-    label
-        float: left
-        font-size: 16px
 
-    textarea
-        +textarea()
-        +size(1058px, 150px)
-        +padding(top 13px)
+        + label
+            font-size: 16px
 
-    .ui-emailbox
-        +emailbox()
-        float: left
+    .sub-title-wrap
+        display: flex
+        justify-content: space-between
+        align-items: flex-end
 
-        .ui-emailbox-button .ui-icon
-            +margin(top 22px)
+        h2
+            font-size: 24px
+            line-height: 26px
 
-        .at
-            +margin(0 8px)
+        .tip
+            font-size: 12px
+            color: $red
 
-    select
-        +selectbox(240px, 50px)
+    table
+        th
+            +size(190px)
+            +padding(left 40px)
+            +border(1px solid $border-color-base, bottom)
+            +box-sizing(border-box)
+            background-color: $background-color-menu
+            font-size: 16px
+            line-height: 20px
+            text-align: left
 
-        + .ui-selectmenu-button
-            +margin(right 10px)
-            float: left
-
-    h2
-        font-size: 24px
-
-    
-    .imgcard
-        +size(200px, 210px)
-
-    .inquire-form-wrap
-        +margin(top 18px)
-
-        table
-            table-layout: fixed
-            +size(1280px)
-            &:nth-child(1)
-                +border(2px solid $gray-900, top)
-
-        .top
-            +size(980px)
-
-        tr
-            +size(1280px, 72px)
+        td
             +border(1px solid $border-color-base, bottom)
 
-            th
-                +size(182px)
-                +padding(left 40px top 26px)
-                +background(null, null, null, $background-color-menu)
+    .parsley-errors-list li
+        +padding(left 0)
+
+.albatalk-post-content
+    +margin(top 18px)
+
+    .dental-form-wrap
+        +border(2px solid $gray-900, top)
+        display: grid
+        grid-template-columns: 300px 980px
+
+        .thumbnail-wrap
+            +padding(20px 20px 20px 0)
+            +border(1px solid $border-color-base, bottom)
+
+            .img-wrap
+                position: relative
+
+                &:hover .image-hover-common
+                    display: block
+
+                .image-hover-common
+                    display: none
+                    background-color: rgba(0,0,0,0.4)
+                    position: absolute
+                    top: 0
+                    left: 0
+
+                    input[type="file"]
+                        display: none
+
+                    .image-icon-common
+                        display: block
+                        position: absolute
+                        top: 50%
+                        left: 50%
+                        transform: translate(-50%, -50%)
+                        cursor: pointer
+
+                    .btn-plus
+                        +background('/images/desktop/global/icon_plus.svg', no-repeat, center center)
+
+                    .btn-delete-thumbnail
+                        +background('/images/desktop/global/icon_delete_img.svg', no-repeat, center center)
+
+                .image-hover-lg
+                    +size(280px, 210px)
+
+                    .image-icon-lg
+                        +size(100%, 100%)
+                        background-size: 60px 60px
+
+                .image-hover-sm
+                    +size(80px, 60px)
+
+                    .image-icon-sm
+                        +size(100%, 100%)
+                        background-size: 20px 20px
+
+            .main-thumbnail
+                +size(280px,210px)
+                +border(1px dashed $border-color-base)
                 +box-sizing(border-box)
-                font-size: 16px
-                text-align: left
+
+                &.none-image
+                    background-color: $white-light
+
+                    .none-image-title
+                        +padding(top 32px)
+                        font-size: 16px
+                        text-align: center
+                        line-height: 20px
+
+                    .none-image-tip
+                        +padding(top 5px)
+                        font-size: 12px
+                        color: $gray-700
+                        text-align: center
+
+                    .none-image-icon
+                        +size(100px, 100px)
+                        +margin(10px auto 0 auto)
+                        +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                        display: block
+
+            .sub-thumbnail-wrap
+                .sub-thumbnail-title
+                    +margin(top 8px)
+                    display: flex
+                    justify-content: space-between
+                    align-items: center
+
+                    h3
+                        font-size: 16px
+                        line-height: 20px
+
+                    .sub-thumbnail-tip
+                        font-size: 12px
+                        color: $gray-700
+
+                .sub-thumbnail-content
+                    +margin(top 5px)
+                    display: grid
+                    grid-template-columns: repeat(3, 80px)
+                    column-gap: 20px
+
+                    .sub-thumbnail
+                        +size(80px, 60px)
+                        +border(1px dashed $border-color-base)
+                        +box-sizing(border-box)
+
+                        &.none-image
+                            +background('/images/desktop/global/icon_default_thumbnail.svg',no-repeat, center center)
+                            background-color: $white-light
+                            background-size: 30px 30px
+
+            .thumbnail-tip
+                +padding(top 10px)
+                font-size: 12px
+                color: $gray-700
+
+        table
+            td
+                +padding(11px 0 11px 20px)
+
+    .dental-additional-form-wrap
+        table
+            .wrapper-s
+                +padding(top 11px bottom 11px)
+
+            .wrapper-lg
+                height: 43px
+                +padding(top 27px)
+                .parsley-required
+                    +padding(bottom 11px)
+
+            .unique-label
+                +padding(top 36px)
                 vertical-align: top
 
             td
-                +padding(left 20px top 11px bottom 11px)
-                +box-sizing(border-box)
+                +padding(left 20px)
 
-            .name-wrap
+                select
+                    +selectbox(240px, 50px)
 
-            .manager-wrap
+                    + .ui-selectmenu-button
+                        +margin(right 10px)
+                        float: left
 
-            .ceo-wrap
+                .address-wrap
+                    display: flex
+                    align-items: center
+                    position: relative
 
-            .manager-phone-wrap
+                    .btn-address
+                        +size(86px, 50px)
+                        +btn(null, 1px solid $border-color-base)
+                        background-color: $white
+                        font-weight: bold
+                        position: absolute
+                        top: 0
+                        left: 0
 
-            .num-wrap
+                    .address
+                        +margin(right 10px)
+                        +padding(left 96px)
 
-            .manager-email-wrap
-
-            .phone-wrap
-
-
-            .page-wrap
-                +size(1096px)
-                input[type="text"]
-                    +size(750px, 50px)
-
-            .address-wrap
-                overflow: hidden
-
-                p
-                    +padding(left 20px top 18px)
-                    float: left
-                    color: $gray-700
-
-                .btn-address
-                    +btn()
-                    +size(86px, 50px)
-                    +background(null, null, null, $white)
-                    +border(1px solid $border-color-base)
+                .map
+                    +size(1050px, 240px)
+                    +margin(top 10px)
                     +border-radius(25px)
-                    position: absolute
+                    +border(1px solid $border-color-base)
+                    background-color: $white-light
+
+                .radio-container
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+
+                    .radio-wrap
+                        +radio-wrap()
+                        +margin(right 40px)
+                        float: left
+
+                        &:last-child
+                            +margin(right 0)
+
+                        .radio-input
+                            +margin(left 20px)
+
+                        .career-radio-label
+                            +margin(right 20px)
+
+                        .card-radio-label
+                            +margin(right 10px)
+
+                        .start-date
+                            +margin(right 10px)
+                            transition: all 0.2s ease-in-out
+
+                            &.on-show
+                                border-bottom-left-radius: 0
+                                border-bottom-right-radius: 0
+
+                        .time-from
+                            +margin(0 20px)
+                            font-size: 16px
+
+                        .end-date
+                            +margin(right 10px)
+                            transition: all 0.2s ease-in-out
+
+                            &.on-show
+                                border-bottom-left-radius: 0
+                                border-bottom-right-radius: 0
+
+                .checkbox-container
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+
+                    .checkbox-wrap
+                        +checkbox-wrap()
+                        +margin(right 40px)
+
+                        &:last-child
+                            +margin(right 0)
+
+                .checkbox-grid-container
+                    display: inline-grid
+                    grid-template-columns: repeat(6, 1fr)
+                    gap: 20px 40px
+
+                    .checkbox-wrap
+                        +checkbox-wrap()
+
+                .term
+                    font-size: 16px
+
+                .money
                     font-weight: bold
-                    font-size: 14px
-
-            .subway-wrap
-                +size(1096px)
-                input[type="text"]
-                    +size(1050px, 50px)
-
-            .field-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .work-type-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .job-wrap
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-
-            .pay-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                input[type="text"]
-                    +size(400px)
-
-            .school-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                input[type="text"]
-                    +size(240px)
-                    float: left
-                    +margin(right 40px)
-
-            .career-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                .last
-                    +padding(right 20px)
-                input[type="text"]
-                    +size(240px)
-                    +margin(right 40px)
-
-            .payday-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 40px)
-                    &:nth-child(8)
-                        +padding(right 20px)
-                input[type="text"]
-                    +size(400px)
-
-            .title-wrap
-                +size(1096px)
-
-                input[name="title"]
-                    +size(810px)
-
-            .welfare-wrap
-                +size(770px)
-                +padding(left 20px top 28px bottom 11px)
-                label
-                    +padding(right 40px)
-                .last
-                    +padding(right 380px bottom 20px)
-
-            .deadline-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 20px left 10px)
-                label[name="until-hiring"]
-                    +padding(right 0 left 0)
-                input[type="text"]
-                    +size(240px)
-                    float: left
-                    +margin(right 10px)
-                input[class="time"], input[class="time2"]
-                    +size(100px)
-                input[id="until-hiring"]
-                    +margin(left 40px)
-
-
-            .inquire-content-wrap
-                +size(1096px)
-
-            .payment-wrap
-            
-            .paydeail-wrap
-                input[type="radio"]
-                    +margin(top 17px bottom 11px)
-                label
-                    +padding(top 17px right 10px)
-                input[type="text"]
-                    +size(240px)
-                    +margin(right 40px)
-                span
-                    float: left
-
-    .submit
-        +margin(50px 0px 0px 540px)
-        width: 200px
-        height: 50px
-        border-radius: 27px
-        background-color: #8816b5
-        font-size: 15px
-        color: #ffffff
+                    font-size: 16px
+                    line-height: 18px
+                    color: $page-color
 
     .btn-wrap
-        +size(200px)
         +margin(50px auto 0 auto)
+        +size(200px)
 
         .btn-submit
             +btn(purple-fill)
             +size(200px, 50px)
             font-size: 16px
 
-.title-error-wrap
-    +margin(left 250px)
+.ui-datepicker
+    +size(240px)

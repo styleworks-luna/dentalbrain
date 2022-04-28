@@ -1,0 +1,155 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_button.sass'
+
+.albatalk
+
+    .albatalk-navigation
+        +padding(top 5.27777777vw bottom 3.05555555vw)
+        +border(0.27777777vw solid $border-color-base, bottom)
+
+        .albatalk-order
+            .order-list
+                display: flex
+                justify-content: flex-end
+                align-items: center
+
+                li
+                    display: flex
+                    justify-content: flex-start
+                    align-items: center
+
+                    &::after
+                        +size(0.27777777vw, 3.33333333vw)
+                        +margin(0 4.444444445vw)
+                        background-color: $border-color-light
+                        display: inline-block
+                        content: ''
+
+                    &:last-child::after
+                        display: none
+
+            .btn-menu
+                +margin(right )
+                display: flex
+                justify-content: flex-start
+                align-items: center
+
+                .icon-filter
+                    +size(3.33333333vw, 3.33333333vw)
+                    +margin(left 1.388888888vw)
+                    +background('/images/mobile/global/icon_filter.svg', no-repeat, center center)
+                    background-size: 3.33333333vw 3.33333333vw
+                
+                .purple
+                    +background('/images/mobile/global/icon_filter_purple.svg', no-repeat, center center)
+                    
+
+            .albatalk-order-select
+                +background('/images/mobile/lecture/icon_arrow_down.svg', no-repeat, 100% center, white)
+                +padding(right 5vw)
+                +border(0)
+                background-size: 3.611111vw 1.944444vw
+                font-size: 3.8888888vw
+                text-align-last: right
+                text-align: right
+                -ms-text-align-last: right
+                -moz-text-align-last: right
+
+                &.select-focus-in
+                    +background('/images/mobile/lecture/icon_arrow_up.svg')
+
+    .albatalk-menu
+        display: none
+
+        .albatalk-menu-list-wrap
+            +size(100%, 100%)
+            z-index: 1001
+            position: fixed
+            bottom: 0
+            background-color: $gray-600
+
+            .albatalk-middle
+                +size(100%, 100%)
+                +margin(top 11.111111vw)
+                +border-radius(4.444444vw)
+                background-color: #ffffff
+
+                .menu-title
+                    +padding(left 15.555556vw)
+                    +border(0.277778vw solid $page-color, bottom)
+                    display: flex
+                    align-items: center
+
+                    p
+                        +size(68.888889vw)
+                        +padding(top 3.888889vw bottom 3.888889vw)
+                        text-align: center
+                        font-size: 5vw
+                        font-weight: bold
+                    
+                    .btn-close-menu
+                        +size(6.666667vw, 6.666667vw)
+                        +margin(left 1.388888888vw)
+                        +background('/images/mobile/global/icon_nav_close_grey.svg', no-repeat, center)
+
+                .menu-content
+                    p
+                        +padding(top 8.333333vw bottom 5.555556vw)
+                        text-align: center
+                        font-size: 3.333333vw
+
+                    .albatalk-menu-list
+                        +size(100%, 94.444444vw)
+                        display: flex
+                        flex-wrap: wrap
+                        justify-content: space-between
+
+                        li
+                            +size(28.888889vw, 13.888889vw)
+                            +border(0.277778vw solid $border-color-base)
+                            +border-radius(0.277778vw)
+                            //+margin(2.222222vw)
+                            display: flex
+                            align-items: center
+                            justify-content: center
+
+                            a
+                                +size(100%, 100%)
+                                display: block
+                                line-height: 13.888889vw
+                                text-align: center
+
+                                &.active
+                                    +border(0.277778vw solid $page-color)
+            
+            .btn-wrap
+                +padding(3.055556vw 0)
+                +border(0.277778vw solid $border-color-light, top)
+                position: fixed
+                bottom: 0
+                background-color: $white
+
+                .btn-submit
+                    +btn(purple-fill)
+                    +size(91.111111vw, 13.888889vw)
+                    font-size: 4.444444vw
+
+                .btn-cancel
+                    +btn()
+                    +size(91.111111vw, 13.888889vw)
+                    background-color: $gray-700
+                    color: $white
+                    font-size: 4.444444vw
+
+    .albatalk-contents
+        +padding(bottom 47.916667vw)
+
+        .none
+            +margin(top 27.777777778vw)
+
+            p
+                text-align: center
+                line-height: 9.44444445vw

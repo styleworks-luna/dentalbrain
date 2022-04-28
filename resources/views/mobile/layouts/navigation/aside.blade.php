@@ -16,6 +16,9 @@
                         <div class="name">
                             <strong>{{ auth()->user()->name }}</strong> 님
                         </div>
+                        <div class="resume">
+                            <a href="{{ route('account.resume') }}">이력서</a>
+                        </div>
                         <div class="user-edit">
                             <a href="{{ route('account.modify') }}">회원정보 수정</a>
                         </div>
@@ -26,6 +29,8 @@
                             <li><a href="{{ route('account.like') }}">찜 내역</a></li>
                             <li><a href="{{ route('account.payments') }}">결제내역</a></li>
                             <li><a href="{{ route('account.questions.index') }}">질문내역</a></li>
+                            <li><a href="{{ route('account.albatalk') }}">구인정보</a></li>
+                            <li><a href="{{ route('account.offer') }}">구직정보</a></li>
                         </ul>
                     </div>
                 @else
@@ -43,6 +48,7 @@
                     <li><a href="{{ url('community') }}">커뮤니티</a></li>
                     <li><a href="{{ url('lectures') }}">전체강의</a></li>
                     <li><a href="{{ url('membership') }}">유료회원</a></li>
+                    <li><a href="{{ url('albatalk') }}">구인구직 알바톡</a></li>
                 </ul>
                 <div class="menu-title">
                     <h3>고객센터</h3>

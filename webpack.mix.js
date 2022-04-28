@@ -63,11 +63,13 @@ mix.sass('resources/sass/desktop/pages/introduce/about-us.sass', 'public/css/des
 mix.sass('resources/sass/desktop/pages/membership/membership.sass', 'public/css/desktop/pages/membership');
 
 // 알바톡
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-all.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk');
-mix.sass('resources/sass/desktop/pages/albatalk/albatalk-resume_detail.sass', 'public/css/desktop/pages/albatalk');
+mix.sass('resources/sass/desktop/pages/albatalk/albatalk.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-common.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-post.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-list.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-detail.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-resume.sass', 'public/css/desktop/pages/albatalk')
+    .sass('resources/sass/desktop/pages/albatalk/albatalk-resume-detail.sass', 'public/css/desktop/pages/albatalk');
 
 // 강의 페이지
 mix.sass('resources/sass/desktop/pages/lecture/lecture-detail.sass', 'public/css/desktop/pages/lecture')
@@ -85,12 +87,13 @@ mix.sass('resources/sass/desktop/pages/user/register.sass', 'public/css/desktop/
 // 마이페이지
 mix.sass('resources/sass/desktop/pages/user/mypage/mypage-login.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-lecture.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-offer.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-payment.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-question.sass', 'public/css/desktop/pages/user')
     .sass('resources/sass/desktop/pages/user/mypage/mypage-secession.sass', 'public/css/desktop/pages/user')
-    .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user');
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-edit.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/desktop/pages/user')
+    .sass('resources/sass/desktop/pages/user/mypage/mypage-albatalk-resume-apply.sass', 'public/css/desktop/pages/user');
 
 // 고객센터
 mix.sass('resources/sass/desktop/pages/service/notice.sass', 'public/css/desktop/pages/service')
@@ -122,6 +125,12 @@ mix.sass('resources/sass/mobile/pages/introduce/instructor.sass', 'public/css/mo
 // mobile membership
 mix.sass('resources/sass/mobile/pages/membership/membership.sass', 'public/css/mobile/pages/membership');
 
+// mobile albatalk
+mix.sass('resources/sass/mobile/pages/albatalk/albatalk.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-detail.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-common.sass', 'public/css/mobile/pages/albatalk')
+    .sass('resources/sass/mobile/pages/albatalk/albatalk-list.sass', 'public/css/mobile/pages/albatalk')
+
 // mobile lecture
 mix.sass('resources/sass/mobile/pages/lecture/lecture-all.sass', 'public/css/mobile/pages/lecture')
     .sass('resources/sass/mobile/pages/lecture/lecture-detail.sass', 'public/css/mobile/pages/lecture')
@@ -135,6 +144,9 @@ mix.sass('resources/sass/mobile/pages/user/mypage/mypage-payment.sass', 'public/
     .sass('resources/sass/mobile/pages/user/mypage/mypage-lecture.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-login.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-edit.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-recruit.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-resume.sass', 'public/css/mobile/pages/user/mypage')
+    .sass('resources/sass/mobile/pages/user/mypage/mypage-albatalk-resume-apply.sass', 'public/css/mobile/pages/user/mypage')
     .sass('resources/sass/mobile/pages/user/mypage/mypage-secession.sass', 'public/css/mobile/pages/user/mypage');
 
 // mobile service

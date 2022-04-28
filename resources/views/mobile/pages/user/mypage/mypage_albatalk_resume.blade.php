@@ -1,0 +1,275 @@
+@extends('mobile.layouts.frames.except_frame')
+
+@section('vue')
+    <script type="text/javascript" src="{{ asset('js/app/app.js')}}"></script>
+@endsection
+
+@section('style')
+    <link rel="stylesheet" href="{{ mix('css/mobile/pages/user/mypage/mypage-albatalk-resume.css') }}">
+@endsection
+
+@section('title')
+    <div class="menu-btn-wrap">
+        <a href="" class="menu-btn"></a>
+    </div>
+    <a href="" class="btn-back"></a>
+    <h1>이력서 정보</h1>
+@endsection
+
+@section('content')
+    <section class="content">
+        <div class="m-container">
+            @if($resume != null)
+                <div class="mypage-content-wrap">
+                    <div class="mypage-content">
+                        <div class="m-row">
+                            <section class="user-information-wrap">
+                                <div class="user-main-wrap">
+                                    <div class="img-wrap"><img src="{{ $resume->file->url ?? '' }}" class="user-image"
+                                                               alt="이력서 사진"></div>
+                                    <h2 class="user-name">{{ $resume->name }}</h2>
+                                </div>
+                                <div class="user-personal-information">
+                                    <table>
+                                        <tr>
+                                            <th>영문 이름</th>
+                                            <td><p>{{ $resume->english_name }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>생년 월일</th>
+                                            <td><p>{{ $resume->birthday }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>휴대폰 번호</th>
+                                            <td><p>{{ $resume->phone }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>비상연락처</th>
+                                            <td><p>{{ $resume->emergency_phone }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>이메일</th>
+                                            <td><p>{{ $resume->email }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>주소</th>
+                                            <td><p>{{ $resume->address }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 근무 지역</th>
+                                            <td><p>{{ $resume->work_area }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 근무 요일</th>
+                                            <td><p>{{ $resume->work_day }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 근무 시간</th>
+                                            <td><p>{{ $resume->work_time }}</p></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
+                            <section class="study-information-wrap">
+                                <div class="information-title">
+                                    <h2>학력 사항 및 희망순위</h2>
+                                </div>
+                                <div class="study-information-content">
+                                    <table>
+                                        <tr>
+                                            <th>학위취득년월</th>
+                                            <td><p>{{ $resume->graduated_at }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>출신학교</th>
+                                            <td><p>{{ $resume->school }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>학과(세부전공)</th>
+                                            <td><p>{{ $resume->major }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>학위</th>
+                                            <td><p>{{ $resume->degree }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>졸업구분</th>
+                                            <td><p>{{ $resume->graduation_type }}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 진료과</th>
+                                            <td>
+                                                <div class="ranking-wrap">
+                                                    @if($resume->treatment_1)
+                                                        <p>{{ '1순위 ' . $resume->treatment_1 }}</p>
+                                                    @endif
+                                                    @if($resume->treatment_2)
+                                                        <p>{{ '2순위 ' . $resume->treatment_2 }}</p>
+                                                    @endif
+                                                    @if($resume->treatment_3)
+                                                        <p>{{ '3순위 ' . $resume->treatment_3 }}</p>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>희망 부서</th>
+                                            <td>
+                                                <div class="ranking-wrap">
+                                                    @if($resume->department_1)
+                                                        <p>{{ '1순위 ' . $resume->department_1 }}</p> @endif
+                                                    @if($resume->department_2)
+                                                        <p>{{ '2순위 ' . $resume->department_2 }}</p> @endif
+                                                    @if($resume->department_3)
+                                                        <p>{{ '3순위 ' . $resume->department_3 }}</p> @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
+                            <section class="self-information-wrap">
+                                <div class="information-title">
+                                    <h2>자기소개</h2>
+                                </div>
+                                <div class="self-information-content">
+                                    <p class="self-information-text">
+                                        {{ $resume->about_me }}
+                                    </p>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
+                            <section class="certification-information-wrap">
+                                <div class="information-title">
+                                    <h2>면허/자격증 보유 현황</h2>
+                                </div>
+                                <div class="certification-information-content">
+                                    <table class="certificate">
+                                        <tbody>
+                                        <!-- TODO::resume 없는 경우 table 삭제 필요 -->
+                                        @if($resume->certificate_name_1 != null)
+                                            <tr>
+                                                <td>{{ $resume->certificate_agency_1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_name_1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_day_1 }}</td>
+                                            </tr>
+                                        </tbody>
+                                        @endif
+                                        <tbody>
+                                        @if($resume->certificate_name_2 != null)
+                                            <tr>
+                                                <td>{{ $resume->certificate_agency_2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_name_2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_day_2 }}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->certificate_name_3 != null)
+                                            <tr>
+                                                <td>{{ $resume->certificate_agency_3 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_name_3 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_day_3 }}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->certificate_name_4 != null)
+                                            <tr>
+                                                <td>{{ $resume->certificate_agency_4 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_name_4 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_day_4 }}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->certificate_name_5 != null)
+                                            <tr>
+                                                <td>{{ $resume->certificate_agency_5 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_name_5 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $resume->certificate_day_5 }}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
+                            <section class="ability-information-wrap">
+                                <div class="information-title">
+                                    <h2>치과 업무 능력 자기 평가표</h2>
+                                </div>
+                                <div class="ability-information-content">
+                                    <p>교육가능</p>
+                                    <div>
+                                        @foreach($categories as $category)
+                                            <div class="ability-information-middle">
+                                                <div
+                                                    class="ability-information-middle-name">{{ $category->name ?? '' }}</div>
+                                                <table>
+                                                    @foreach($category->abilities as $ability)
+                                                        <tr>
+                                                            <th class="{{ ($answers[$ability->id]['can_learn'] ?? false) ? 'strong' : '' }}">
+                                                                {{ $ability->name }}
+                                                            </th>
+                                                            @if( $ability->type == 'text' )
+                                                                <td>{{ $answers[$ability->id]['content'] ?? '' }}</td>
+                                                            @else
+                                                                <td>
+                                                                    @switch($answers[$ability->id]['score'] ?? 1)
+                                                                        @case(1) 경험없음 @break
+                                                                        @case(2) 미흡 @break
+                                                                        @case(3) 보통 @break
+                                                                        @case(4) 잘함 @break
+                                                                        @case(5) 매우잘함 @break
+                                                                        @default 보통
+                                                                    @endswitch
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+                                                </table>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="none">
+                    <p>등록된 이력서가 없습니다.</p>
+                </div>
+            @endif
+
+        </div>
+    </section>
+    <section class="bottom-banner">이력서 수정은 PC에서만 가능합니다.</section>
+@endsection

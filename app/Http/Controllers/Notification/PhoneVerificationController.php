@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Notification;
 
-use App\Models\Notification\PhoneVerification;
-use Illuminate\Http\Request;
-use App\Services\Notification\Sms\Ppurio;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Models\Notification\PhoneVerification;
+use App\Services\Notification\Sms\Ppurio;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PhoneVerificationController extends Controller
 {

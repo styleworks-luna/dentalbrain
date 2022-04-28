@@ -1,0 +1,340 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+@import '@sass/components/mobile/_button.sass'
+
+
+.albatalk-recruit-detail-wrap
+    background-color: #f0f0f0
+
+    .thumbnail-wrap
+        background-color: $white
+        +border(0.277778vw solid rgba(0, 0, 0, 0.1))
+
+        .swiper-container
+            position: relative
+
+        .swiper-slide
+            +size(100%, 75vw)
+            +box-sizing(border-box)
+
+            img
+                +size(100%, 75vw)
+
+        .swiper-controller-wrap
+            position: absolute
+            bottom: 1.466667vw
+            right: 20.944444vw
+            z-index: 100
+
+            .swiper-pagination-fraction
+                +size(16.666667vw, 6.666667vw)
+                +padding(1.666667vw 2.777778vw)
+                +border-radius(4.166667vw)
+                +background(null,null,null,rgba(0,0,0,0.2))
+                +box-sizing(border-box)
+                display: flex
+                justify-content: center
+                align-items: center
+                font-size: 3.333333vw
+                color: $white
+
+                .swiper-pagination-current
+                    display: block
+                    font-weight: normal
+
+                .pagination-bar
+                    +size(0.277778vw, 2.777778vw)
+                    +margin(1.111111vw)
+                    +background(null,null,null,rgba(255,255,255,0.5))
+                    display: block
+                    content: ''
+
+    .office-information-wrap
+        +padding(5.555556vw 0)
+        background-color: $white
+
+        .ended-date
+            font-size: 3.055556vw
+            color: $gray-700
+            line-height: 3.333333vw
+
+        h2
+            +margin(top 2.777778vw)
+            font-weight: bold
+            font-size: 5.555556vw
+
+        .office-content-wrap
+            +margin(top 5.555556vw)
+            +padding(top 2.777778vw)
+            +border(0.277778vw solid $border-color-light, top)
+
+            table
+                th
+                    +size(27.777778vw)
+                    +padding(2.777778vw 0)
+                    text-align: left
+                    color: $gray-700
+                    line-height: 4.444444vw
+
+                td
+                    +size(58.888889vw)
+                    +padding(left 4.444444vw)
+
+                    p
+                        +size(58.888889vw)
+                        line-height: 4.444444vw
+                        word-break: break-all
+
+                    .address-wrap
+                        display: flex
+                        justify-content: flex-start
+                        align-items: center
+
+                        .address
+                            +size(43.611111vw)
+                            +ellipse()
+
+                        .btn-map
+                            +btn(null, null, 0)
+                            +size(12.5vw, 5.555556vw)
+                            +margin(left 2.777778vw)
+                            +border(0.277778vw solid $border-color-base)
+                            +box-sizing(border-box)
+                            font-size: 2.777778vw
+                            line-height: 5.555556vw
+                            color: $gray-700
+
+    .information-title
+        +padding(bottom 4.444444vw)
+        +border(0.277778vw solid $border-color-light, bottom)
+
+        h3
+            font-weight: bold
+            font-size: 4.444444vw
+            color: $page-color
+
+    .recruit-detail-information-wrap
+        +margin(top 2.777778vw)
+        +padding(5.555556vw 0)
+        background-color: $white
+
+        .recruit-detail-information-content
+            +margin(top 10px)
+
+        table
+            th
+                +size(27.777778vw)
+                +padding(2.777778vw 0)
+                text-align: left
+                color: $gray-700
+                line-height: 4.444444vw
+
+            td
+                +size(58.888889vw)
+                +padding(left 4.444444vw)
+                word-break: break-all
+
+                p
+                    +size(58.888889vw)
+                    word-break: break-all
+
+    .recruit-writing
+        +margin(top 2.777778vw)
+        +padding(top 5.555556vw bottom 8.333333vw)
+        background-color: $white
+
+        .recruit-writing-content
+            +margin(top 5.555556vw)
+            min-height: 50vw
+
+            p
+                line-height: 2
+                word-break: break-all
+
+            img
+                max-width: 100%
+                display: inline-block
+
+            a
+                color: $blue
+
+                &:hover
+                    text-decoration: underline
+
+            strong
+                font-weight: bold
+
+            em
+                font-style: italic
+
+            sup
+                vertical-align: super
+                font-size: smaller
+
+            sub
+                vertical-align: sub
+                font-size: smaller
+
+            blockquote
+                padding-left: 5.555556vw
+                padding-right: 2.222222vw
+                border-left-width: 1.388889vw
+                font-style: italic
+                border-style: solid
+                border-color: #ccc
+                display: block
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 11.111111vw
+                margin-inline-end: 11.111111vw
+
+            ol
+                display: block
+                list-style-type: decimal
+                margin-block-start: 1em
+                margin-block-end: 1em
+                margin-inline-start: 0
+                margin-inline-end: 0
+                padding-inline-start: 11.111111vw
+                padding: 0 11.111111vw
+
+            li
+                display: list-item
+                text-align: -webkit-match-parent
+
+            ul
+                display: block
+                list-style-type: disc
+                padding: 0 11.111111vw
+
+    .applied-resume-status
+        +margin(top 2.777778vw)
+        +padding(top 5.555556vw bottom 5.555556vw)
+        background-color: $white
+
+        .information-title
+            display: flex
+            justify-content: space-between
+            align-items: center
+
+            em
+                font-weight: bold
+
+        .resume-list
+            li
+                +padding(top 5.555556vw)
+
+                .cancel-status
+                    text-decoration: line-through
+
+            .resume-user-wrap
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                .status-cancel
+                    font-size: 3.055556vw
+                    line-height: 3.888889vw
+                    color: $gray-700
+
+                .btn-resume
+                    font-size: 3.055556vw
+                    line-height: 3.888889vw
+                    text-decoration: underline
+                    color: $gray-700
+
+            .resume-date-wrap
+                +margin(top 1.944444vw)
+                display: flex
+                justify-content: space-between
+                align-items: center
+
+                p
+                    font-size: 3.055556vw
+                    color: $gray-700
+
+            .recommend-person
+                display: flex
+                justify-content: flex-start
+                align-items: center
+
+                .badge-recommend
+                    +margin(left 1.666667vw)
+                    +size(16.944444vw, 5.555556vw)
+                    +border-radius(0.277778vw)
+                    background-color: $gray-200
+                    font-size: 2.777778vw
+                    line-height: 5.555556vw
+                    text-align: center
+                    color: $white
+
+        .none-resume
+            +padding(top 17.5vw bottom 11.944444vw)
+            text-align: center
+
+    .btn-wrap
+        +padding(3.055556vw 0)
+        +border(0.277778vw solid $border-color-light, top)
+        background-color: $white
+
+        .btn-submit
+            +btn(purple-fill)
+            +size(91.111111vw, 13.888889vw)
+            font-size: 4.444444vw
+
+        .btn-cancel
+            +btn()
+            +size(91.111111vw, 13.888889vw)
+            background-color: $gray-700
+            color: $white
+            font-size: 4.444444vw
+
+.popup-area
+    .dim
+        +size(100%, 100%)
+        background-color: rgba(0,0,0,0.8)
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 210
+        display: none
+
+    .popup-wrap
+        +size(91.111111vw, 113.888889vw)
+        +border(0.555556vw solid $page-color)
+        +background(null,null,null, $white)
+        +padding(4.444444vw)
+        +box-sizing(border-box)
+        position: fixed
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        z-index: 1000
+        display: none
+
+        .popup-header
+            display: flex
+            justify-content: flex-end
+            align-items: center
+
+            h4
+                +margin(right 29.166667vw)
+                font-weight: bold
+                font-size: 5vw
+
+            .btn-popup-close
+                +size(6.666667vw, 6.666667vw)
+                +background('/images/mobile/global/icon_nav_close_grey.svg', no-repeat, center center)
+                background-size: 6.666667vw 6.666667vw
+
+        .map
+            +size(82.222222vw, 82.222222vw)
+            +margin(top 3.888889vw)
+            +border(0.277778vw solid $border-color-base)
+            +box-sizing(border-box)
+
+        .address
+            +margin(top 4.444444vw)
+            line-height: 1.5

@@ -1,21 +1,32 @@
 <template>
-    <div class="albatalk-contents">
-        <ul>
-            <li v-for="list in list" :key="list.id">
-                <a class="albatalk-card" href="">
-                    <img src="/images/dummy/test2.jpg">
-                    <div class="albatak-information">
-                        <p class="albatalk-name">{{ list.title }}</p>
+    <div class="albatalk-contents" :class="mobile ? 'm-row': ''">
+        <ul :class="lists.length > 0 ? 'albatalk-content-list' : ''">
+            <li class="albatalk-content-item" v-for="list in lists" :key="list.id">
+                <a :href="`/albatalk/recruit/${list.id}`" class="albatalk-card">
+                    <img :src='list.file ? list.file.url : ""'>
+                    <div class="albatalk-information">
+                        <p class="albatalk-name">{{ list.company_name }}</p>
                         <div class="albatalk-description">
-                            <p class="albatalk-place">{{ list.location }}</p>
-                            <p class="albatalk-date">{{ list.date }}</p>
+                            <p class="albatalk-place">{{ list.sido }} {{ list.gugun }}</p>
+                            <p v-if="(list.ended_at==null)" class="albatalk-date">채용시까지</p>
+                            <p v-else class="albatalk-date">~ {{ Helper.dateFormatDMW(list.ended_at) }}</p>
                         </div>
                     </div>
                 </a>
-                <div class="albatalk-bottom">
-                    <div class="albatalk-period">게재 기간 : {{ list.period }}일 남음</div>
-                    <div class="albatalk-state">이력서 제출 현황 : <strong>{{ list.state }}</strong>건</div>
-                    <button class="btn">수정하기</button>
+                <div class="albatalk-additional-information">
+                    <p v-if="(list.remain_day > 0)" class="albatalk-period">게재 기간 : {{ list.remain_day }}일 남음</p>
+                    <p v-else class="albatalk-period">게재 기간 : 종료</p>
+                    <p class="albatalk-state">이력서 제출 현황 : <em>{{ list.applied_resumes_count }}</em>건</p>
+                    <div v-if="(mobile == false)" class="btn-wrap">
+                        <a v-if="(list.remain_day > 0)" :href="`/albatalk/recruit/${list.id}/edit`" class="btn-edit">수정하기</a>
+                        <a v-else :href="`/albatalk/recruit/${list.id}/duplicate`" class="btn-edit">복사하기</a>
+                    </div>
+                </div>
+            </li>
+            <li class="none" v-if="lists.length <= 0">
+                <p>등록한 구인정보가 없습니다.</p>
+                <div class="btn-wrap">
+                    <a v-if="mobile == false" href="/albatalk/recruit" class="btn-go-recruit">구인 등록하기</a>
                 </div>
             </li>
         </ul>
@@ -25,26 +36,18 @@
 <script>
 export default {
     name: "AlbaTalkList",
+    props: {
+        listData: Array,
+        mobile: Boolean,
+    },
     data() {
         return {
-            list: [
-                {
-                    key: 1,
-                    title: "덴탈브레인 치과의원",
-                    location: "서울 강서구",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '0',
-                },
-                {
-                    key: 2,
-                    title: "브레인스펙치과",
-                    location: "경기도 하남시",
-                    date: "채용시까지",
-                    period: '7',
-                    state: '2',
-                },
-            ]
+            lists: [],
+        }
+    },
+    watch: {
+        listData(){
+            this.lists = this.listData
         }
     }
 }

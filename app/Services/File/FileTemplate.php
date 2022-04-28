@@ -64,7 +64,7 @@ abstract class FileTemplate
             $file->path = $path;
             $file->save();
 
-            $file->url = $this->getDownloadUrl($file, $path);
+            $file->url = $this->getDownloadUrl($path);
 
             $file->save();
             DB::commit();
@@ -92,7 +92,7 @@ abstract class FileTemplate
      * @param $path
      * @return string|string[]
      */
-    protected function getDownloadUrl($file, $path)
+    protected function getDownloadUrl($path)
     {
         return str_replace('public', '/storage', $path);
     }
@@ -114,7 +114,7 @@ abstract class FileTemplate
     /**
      * 모델에서 파일 접근하여 DB 상의 파일 삭제.
      *
-     * @return false|string 실패시 false 반환, 성공시 file 의 path 반환
+     * @return false|string|array 실패시 false 반환, 성공시 file 의 path 반환
      */
     protected abstract function deleteFileInDB();
 }

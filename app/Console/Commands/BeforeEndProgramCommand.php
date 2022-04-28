@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\BeforeEndProgram;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\BeforeEndProgram;
 
 class BeforeEndProgramCommand extends Command
 {

@@ -2,157 +2,359 @@
 
 @section('script')
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-detail.js') }}"></script>
 @endsection
 
 @section('style')
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
 
 @section('content')
-    <section class="albatalk-detail-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
-            </div>
-        </div>
+    @include('desktop.layouts.navigation.albatalk')
+    <div class="albatalk-recruit-detail-wrap">
+        @csrf
         <div class="container">
-            <form id="albatalk-detail-form">
-                <div class="row">
-                    @csrf
-                    <section class="albatalk-detail-title">
-                        <h1>구인정보</h1>
-                        <a href="http://dbv2020.onoffmix.test/albatalk/detail">구인정보 수정하기</a>
-                    </section>
+            <div class="row">
+                <section class="subtitle-wrap">
+                    <h1>구인정보</h1>
+                    @if( $authority->isOwner() || $authority->isAdmin())
+                        <a href="/albatalk/recruit/{{$recruit->id}}/edit">구인정보 수정하기</a>
+                    @endif
+                </section>
 
-                    <section class="albatalk-information-wrap">
-                        <div class="albatalk-image">
-                            <img src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                            <div style="display: flex">
-                                <img class="frist-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                                <img class="second-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
-                                <img class="third-detail"src="http://dbv2020.onoffmix.test/storage/program/11/thumbnail/dasd.PNG" alt="강의 사진">
+                <section class="office-information-wrap">
+                    <div class="thumbnail-wrap">
+                        <div class="main-img-wrap">
+                            <img class="main-thumbnail thumbnail-on" src="{{ $recruit->file->url ?? '' }}"
+                                 alt="치과 사진">
+                        </div>
+                        <div class="sub-thumbnail-wrap">
+                            <div class="img-wrap">
+                                @if($recruit->file1)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file1->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="img-wrap">
+                                @if($recruit->file2)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file2->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="img-wrap">
+                                @if($recruit->file3)
+                                    <img class="sub-thumbnail thumbnail-on" src="{{ $recruit->file3->url }}"
+                                         alt="치과 사진">
+                                @else
+                                    <div class="sub-thumbnail none-image">
+                                        <span class="none-image-icon"></span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                        <div class="albatalk-information">
-                            <h2 class="albatalk-title">서초 온오프믹스 치과<span>모집마감일 :  2월 17일까지</span></h2>
-                            <div class="albatalk-card" style="display: flex; flex-wrap: wrap;">
-                                <table class="first-card">
-                                    <tr>
-                                        <th>대표자명</th>
-                                        <td><p class="albatalk-length">홍길동</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>사업자등록번호</th>
-                                        <td><p class="albatalk-length">123-123-12345</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>전화번호</th>
-                                        <td><p class="albatalk-length">02-123-12345</p></td>
-                                    </tr>
+                    </div>
 
-                                </table>
-                                <table class="second-card">
-                                    <tr>
-                                        <th>담당자명</th>
-                                        <td><p class="albatalk-length">홍길순</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>담당자 전화번호</th>
-                                        <td><p class="albatalk-length">123-123-12345</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>담당자 이메일</th>
-                                        <td><p class="albatalk-length">hongildong@test.com</p></td>
-                                    </tr>
-                                </table>
-                                <table class="third-card">
-                                    <tr>
-                                        <th>홈페이지 주소</th>
-                                        <td><p class="albatalk-length">http://dbv2020.onoffmix.test</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>주소</th>
-                                        <td><p class="albatalk-length">서울시 서초구 강남대로79길 59 새로나빌딩 3층</p></td>
-                                    </tr>
-                                    <tr>
-                                        <th>인근 지하철역</th>
-                                        <td><p class="albatalk-length">7호선 논현역 1번 출구 도보 5분</p></td>
-                                    </tr>
-                                </table>
-                            </div>
-
+                    <div class="office-information">
+                        <div class="office-title-wrap">
+                            <h2>{{$recruit->company_name}}</h2>
+                            <span>모집마감일 : {{ $recruit->ended_at == null? "채용시까지" : $recruit->ended_at->format('n월 d일까지') }}</span>
                         </div>
-                    </section>
-
-                    <section class="detail-information">
-                        <div class="detail-title">
-                            <h3>채용 정보</h3>
-                        </div>
-                        <div style="display: flex">
-                            <table style="padding-top: 18px">
+                        <div class="office-content-wrap">
+                            <table>
                                 <tr>
-                                    <th>신청분야</th>
-                                    <td><p class="albatalk-length">진료전반, 상담/데스크, 교정, 보철, 예방</p></td>
+                                    <th>대표자명</th>
+                                    <td><p>{{$recruit->company_leader}}</p></td>
+                                    <th>담당자명</th>
+                                    <td><p>{{$recruit->name}}</p></td>
                                 </tr>
                                 <tr>
-                                    <th>근무형태</th>
-                                    <td><p class="albatalk-length">정규직</p></td>
+                                    <th>사업자등록번호</th>
+                                    <td><p>{{$recruit->company_license}}</p></td>
+                                    <th>담당자 전화번호</th>
+                                    <td><p>{{$recruit->phone}}</p></td>
                                 </tr>
                                 <tr>
-                                    <th>직종</th>
-                                    <td><p class="albatalk-length">치과위생사</p></td>
+                                    <th>전화번호</th>
+                                    <td><p>{{$recruit->company_phone}}</p></td>
+                                    <th>담당자 이메일</th>
+                                    <td><p>{{$recruit->email}}</p></td>
                                 </tr>
                                 <tr>
-                                    <th>급여</th>
-                                    <td><p class="albatalk-length">협의 후 결정</p></td>
+                                    <th>홈페이지 주소</th>
+                                    <td colspan="3"><p>{{$recruit->url}}</p></td>
                                 </tr>
                                 <tr>
-                                    <th>학력</th>
-                                    <td><p class="albatalk-length">대학교 졸업(학사)</p></td>
-                                </tr>
-                            </table>
-                            <table style="padding-top: 18px">
-                                <tr>
-                                    <th>경력</th>
-                                    <td><p class="albatalk-length">신입</p></td>
-                                </tr>
-                                <tr>
-                                    <th>근무요일</th>
-                                    <td><p class="albatalk-length">월~금(주5일)</p></td>
+                                    <th>주소</th>
+                                    <td colspan="3">
+                                        <div class="address-wrap">
+                                            <p>{{$recruit->address}}</p>
+                                            <a href="" class="btn-map">지도보기</a>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th>복리후생</th>
-                                    <td><p class="albatalk-length">점심식자 제공, 유니폼, 주차, 자기계발비, 연월차지원, 휴가비지원, 4대보험지원, 연봉제, 인센티브제, 퇴직금 지원, 야근수당지원</p></td>
+                                    <th>인근 지하철역</th>
+                                    <td colspan="3"><p>{{$recruit->subway}}</p></td>
                                 </tr>
                             </table>
                         </div>
-                        <div class="detail-title">
-                            <h3>상세정보</h3>
+                    </div>
+                </section>
+
+                <section class="recruit-detail-information-wrap">
+                    <div class="information-title">
+                        <h2>채용 정보</h2>
+                    </div>
+                    <div class="recruit-detail-information-content">
+                        <table>
+                            <tr>
+                                <th>신청분야</th>
+                                <td><p>
+                                        @foreach($applications as $application)
+                                            @if($loop->last)
+                                                {{$application->type}}
+                                            @else
+                                                {{$application->type}},
+                                            @endif
+                                        @endforeach
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>근무형태</th>
+                                <td><p>{{$recruit->typeWork->type}}</p></td>
+                            </tr>
+                            <tr>
+                                <th>직종</th>
+                                <td><p>@foreach($jobs as $job)
+                                            @if($loop->last)
+                                                {{$job->type}}
+                                            @else
+                                                {{$job->type}},
+                                            @endif
+                                        @endforeach</p></td>
+                            </tr>
+                            <tr>
+                                <th>급여</th>
+                                @if($salaries[0]->type_salary_id == 4)
+                                    <td><p>{{$salaries[0]->value}}</p></td>
+                                @else
+                                    <td><p>{{$salaries[0]->type}}</p></td>
+                                @endif
+
+                            </tr>
+                            <tr>
+                                <th>학력</th>
+                                <td><p>{{$recruit->typeStudy->type}}</p></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>경력</th>
+                                <td><p>신입</p></td>
+                            </tr>
+                            <tr>
+                                <th>근무요일</th>
+                                @if($days[0]->type_day_id == 4)
+                                    <td><p>{{$days[0]->value}}</p></td>
+                                @else
+                                    <td><p>{{$days[0]->type}}</p></td>
+                                @endif
+                            </tr>
+                            <tr>
+                                <th>복리후생</th>
+                                <td><p>@foreach($benefits as $benefit)
+                                            @if($loop->last)
+                                                {{$benefit->type}}
+                                            @else
+                                                {{$benefit->type}},
+                                            @endif
+                                        @endforeach
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="recruit-writing">
+                    <div class="information-title">
+                        <h2>상세정보</h2>
+                    </div>
+                    <div class="recruit-writing-content">
+                        {!! $recruit->content  !!}
+                    </div>
+                </section>
+                <section class="btn-wrap">
+                    @auth
+                        @if(!$authority->isOwner())
+                            @if($authority->hasResume())
+                                @if($authority->isApplied())
+                                    <form action="{{ route('albatalk.recruit.cancel', $recruit->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn-cancel">제출 취소</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn-submit">이력서 제출</button>
+                                    </form>
+                                @endif
+                            @else
+                                <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn-submit">이력서 제출</button>
+                                </form>
+                            @endif
+                        @endif
+                    @else
+                        <form action="{{ route('albatalk.recruit.apply',$recruit->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn-submit">이력서 제출</button>
+                        </form>
+                    @endauth
+                </section>
+                <section class="applied-resume-status">
+                    @if($authority->isAdmin() || $authority->isOwner() || $authority->isApplied())
+                        <div class="information-title">
+                            <h2>이력서 접수 상태 <em>{{ number_format($applyCount) }}</em>건</h2>
                         </div>
-                        <div class="second">
-                            <div class="text">
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
-                                안녕하세요 덴탈브레인 치과에서 사람을 구하고 있습니다. 많은 지원 부탁드립니다. 감사합니다.
+                    @endif
+                    @if($authority->isAdmin() || $authority->isOwner())
+                        @if(number_format($applyCount) == 0)
+                            <p class="none-resume">접수 된 이력서가 없습니다.</p>
+                        @else
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th style="width: 100px">구분</th>
+                                    <th style="width: 250px">이름</th>
+                                    <th style="width: 250px">접수일시</th>
+                                    <th style="width: 250px">이력서 확인</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($appliedResumes as $appliedResume)
+                                    <tr>
+                                        <td>{{ $loop->count - $loop->index }}</td>
+                                        @if($appliedResume->status == \App\Models\Resume\AppliedResume::STATUS_CANCELED)
+                                            <td>
+                                                <p class="cancel-status">취소자</p>
+                                            </td>
+                                            <td>
+                                                <p class="cancel-status">{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="status-cancel">제출취소</p>
+                                                <p class="cancel-date">{{ $appliedResume->canceled_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                            </td>
+                                        @else
+                                            <td>
+                                                @if($appliedResume->is_recommended)
+                                                    <div class="recommend-person">
+                                                        <span class="badge-recommend">관리자 추천</span>
+                                                        <p>{{ $appliedResume->resume->user->name }}</p>
+                                                    </div>
+                                                @else
+                                                    <div>
+                                                        <p>{{ $appliedResume->resume->user->name }}</p>
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <p>{{ $appliedResume->applied_at->format('Y년 n월 j일 G:i:s') }}</p>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('albatalk.recruit.pdf',[$recruit->id, $appliedResume->resume->user->id]) }}"
+                                                   class="btn-resume">이력서 보기</a>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    @endif
+                    @if($usersResume && !$authority->isAdmin())
+                        <table>
+                            <thead>
+                            <tr>
+                                <th style="width: 100px">구분</th>
+                                <th style="width: 250px">이름</th>
+                                <th style="width: 250px">접수일시</th>
+                                <th style="width: 250px">이력서 확인</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>본인</td>
+                                <td>{{ auth()->user()->name }}</td>
+                                <td>{{ $usersResume->applied_at->format('Y년 n월 j일 G:i:s') }}</td>
+                                <td>
+                                    <a href="{{ route('account.resume') }}"
+                                       class="btn-resume">이력서 보기</a>
+                                </td>
+                            </tr>
+                        </table>
+                    @endif
+                </section>
+                <section class="popup-area">
+                    <div class="dim"></div>
+                    <div class="map-popup-wrap popup-wrap">
+                        <div class="popup-header">
+                            <h3>지도보기</h3>
+                            <a href="#" class="btn-popup-close"></a>
+                        </div>
+
+                        <input type="hidden" class="map_x" value="{{ $recruit->latitude }}">
+                        <input type="hidden" class="map_y" value="{{ $recruit->longitude }}">
+                        <div id="mapzone" class="map"></div>
+
+                        <p class="address">{{$recruit->address}}</p>
+                    </div>
+                    <div class="image-popup-wrap popup-wrap">
+                        <div class="popup-header">
+                            <a href="#" class="btn-popup-close"></a>
+                        </div>
+                        <div class="img-wrap">
+                            <img src="" class="popup-img" alt="구인정보 이미지">
+                        </div>
+                    </div>
+                    @if( session()->has('albatalk_popup') )
+                        @if( session('albatalk_popup')->isAlert() )
+                            <div class="alert-popup-wrap popup-wrap">
+                                <div>
+                                    <h3>{{ session('albatalk_popup')->getMessage() }}</h3>
+                                    <button class="btn-popup-close">{{ session('albatalk_popup')->getButtonText() }}</button>
+                                </div>
                             </div>
-                        </div>
-                    </section>
-
-                    <button type="submit" class="submit">이력서 제출</button>
-
-                </div>
-            </form>
-            <div class="dim"></div>
-            <div class="popup-control">
-                @include('desktop.component.popup.agreement.privacy_to_third')
-                @include('desktop.component.popup.agreement.refund')
+                        @elseif( session('albatalk_popup')->isRedirect() )
+                            <div class="alert-popup-wrap popup-wrap">
+                                <div class="popup-header">
+                                    <a href="#" class="btn-popup-close"></a>
+                                </div>
+                                <div>
+                                    <h3>{{ session('albatalk_popup')->getMessage() }}</h3>
+                                    <a href="{{ session('albatalk_popup')->getLink() }}">
+                                        <button>{{ session('albatalk_popup')->getButtonText() }}</button>
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+                    @endif
+                </section>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
 

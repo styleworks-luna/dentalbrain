@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RecruitApplication extends Model
 {
+
+    protected $guarded = [];
+
     public function recruit()
     {
         return $this->belongsTo(Recruit::class, 'recruit_id', 'id');

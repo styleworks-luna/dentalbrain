@@ -1,0 +1,36 @@
+@import '@sass/helpers/_variables.sass'
+@import '@sass/helpers/_extends.sass'
+@import '@sass/helpers/_mixins.scss'
+
+.title-wrap
+    +background('/images/mobile/albatalk/albatalk_top_image.png',no-repeat, center center)
+    +size(100%, 41.66666vw)
+    background-size : cover
+    min-width: 100%
+    text-align: center
+
+    .albatalk-navigation
+        +margin(top 29.533333vw right 4.444444vw)
+        float: right
+
+        a
+            +border(0.2777777vw solid transparent)
+            +padding(1.666666vw 2.777777vw)
+            +box-sizing(border-box)
+            display: flex
+            justify-content: space-between
+            align-items: center
+            background-color: rgba(0, 0, 0, 0.4)
+            border-radius: 0.2777777vw
+            font-size: 3.888888vw
+            text-align: center
+            color: #fff
+
+            &:hover
+                background-color: rgba(0, 0, 0, 0.7)
+
+            &:last-child
+                +margin(right 0)
+
+            span
+                display: block

@@ -1,104 +1,346 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
+    <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-post.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('ckeditor/ckeditor.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/timepicker.min.js') }}"></script>
+    <script src="https://js.tosspayments.com/v1"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.btn-submit').click(function (e) {
+                e.preventDefault();
+
+                let form = $('#albatalk_recruit_form')[0];
+                let data = new FormData(form);
+                let editorContent = CKEDITOR.instances.editor.getData();
+
+                data.append('content',editorContent);
+
+                $('#albatalk_recruit_form').parsley().validate();
+                if ($('#albatalk_recruit_form').parsley().isValid()) {
+                    $.ajax({
+                        url: '/albatalk/recruit',
+                        type: 'post',
+                        data: data,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                        }, success: function (json) {
+                            Payment();
+                        }
+                    });
+                }
+            });
+
+            function Payment() {
+                var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
+                var tossPayments = TossPayments(clientKey);
+                var message = getParameter('message');
+                var paymentmethod = $('.pay-method:checked').val();
+
+                $('.pay-method').change(function () {
+                    paymentmethod = $('.pay-method:checked').val();
+                });
+
+                var paymentObj;
+                var cardCompany = $('.pay-method-select').val();
+
+                const amount = {{ $price }};
+                const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
+                const orderName = '구인 결제';
+                const customerName = '{{ auth()->user()->name }}';
+                const successUrl = '{{ route('albatalk.recruit.payment.success') }}';
+                const failUrl = '{{ route('albatalk.recruit.create') }}';
+                const customerEmail = '{{ auth()->user()->email }}';
+                const customerMobilePhone = '{{ auth()->user()->phone }}';
+                if (paymentmethod === '카드') {
+                    var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: failUrl,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
+
+                        maxCardInstallmentPlan: maxCardInstallmentPlan,
+                        cardCompany: cardCompany,
+                    };
+                } else if (paymentmethod === '계좌이체') {
+                    paymentObj = {
+                        amount: amount,
+                        orderId: orderId,
+                        orderName: orderName,
+                        customerName: customerName,
+                        successUrl: successUrl,
+                        failUrl: failUrl,
+                        customerEmail: customerEmail,
+                        customerMobilePhone: customerMobilePhone,
+                    };
+                }
+
+                tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
+                    alert('취소');
+                });
+
+                // 결제 실패시 오류 메세지 출력
+                paymentMessage(message);
+            }
+        });
+
+        function getParameter(param) {
+            var paramData = window.location.search.substr(1).split('&').filter(function (i) {
+                return i.split('=')[0] == param;
+            });
+
+            return paramData.length === 0 ? null : paramData[0].split('=')[1];
+        }
+
+        function paymentMessage(message) {
+            if (message) {
+                alert(decodeURI(message));
+            }
+        }
+    </script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-post.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
 @endsection
 
 @section('content')
     <section class="albatalk-post-wrap">
-        <div class="title-wrap">
-            <div class="container">
-                <a>이력서 등록</a>
-                <a>구인등록</a>
-                <a>헤드헌팅</a>
-            </div>
-        </div>
+        @include('desktop.layouts.navigation.albatalk')
         <div class="container">
-            <section class="wanted">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                <h2>구인 등록</h2>
-                <form>
-                    <div style="display: flex; float: right;">
-                        <div class="inquire-form-wrap">
-                            <table class="top">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <section class="albatalk-post">
+                <div class="sub-title-wrap">
+                    <h2>구인 등록</h2>
+                    <span class="tip">* 필수 입력 항목입니다.</span>
+                </div>
+                <div class="albatalk-post-content">
+                    <form id="albatalk_recruit_form" action={{ route('albatalk.recruit.create') }} method="post">
+                        @csrf
+                        <div class="dental-form-wrap">
+                            <div class="thumbnail-wrap">
+                                <div class="img-wrap main-thumbnail-wrap">
+                                    <input type="hidden" name="main_file_id" class="file-id">
+                                    <input type="hidden" class="thumbnail-check" value="N"
+                                           data-parsley-required="true"
+                                           data-parsley-pattern="[Y]"
+                                           data-parsley-required-message="※ 치과 대표 사진을 업로드 해주세요."
+                                           data-parsley-pattern-message="※ 치과 대표 사진을 업로드 해주세요."
+                                           data-parsley-errors-container=".thumbnail-error-container">
+                                    <!-- 썸네일 존재하지 않을경우 -->
+                                    <div class="image-off">
+                                        <div class="main-thumbnail none-image">
+                                            <h4 class="none-image-title">치과 대표 사진 *</h4>
+                                            <p class="none-image-tip">(800px × 600px)</p>
+                                            <span class="none-image-icon"></span>
+                                        </div>
+                                        <div class="image-hover-common image-hover-lg">
+                                            <input type="file" id="main_thumbnail_input" class="thumbnail-input">
+                                            <label for="main_thumbnail_input"
+                                                   class="image-icon-common image-icon-lg btn-plus"></label>
+                                        </div>
+                                    </div>
+                                    <!-- 썸네일 존재 할 경우 (등록 이미지) -->
+                                    <div class="image-on">
+                                        <img class="main-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                        <div class="image-hover-common image-hover-lg">
+                                            <span class="image-icon-common image-icon-lg btn-delete-thumbnail"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="thumbnail-error-container parsley-error-container"></div>
+                                <div class="sub-thumbnail-wrap">
+                                    <div class="sub-thumbnail-title">
+                                        <h3>기타 사진</h3>
+                                        <span class="sub-thumbnail-tip">최대 3개까지 등록 가능 (800px × 600px)</span>
+                                    </div>
+                                    <div class="sub-thumbnail-content">
+                                        <div class="img-wrap">
+                                            <input type="hidden" name="file_1_id" class="file-id">
+                                            <div class="image-off">
+                                                <!-- 썸네일 존재하지 않을경우-->
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_01"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_01"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="img-wrap">
+                                            <input type="hidden" name="file_2_id" class="file-id">
+                                            <!-- 썸네일 존재하지 않을경우-->
+                                            <div class="image-off">
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_02"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_02"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="img-wrap">
+                                            <input type="hidden" name="file_3_id" class="file-id">
+                                            <!-- 썸네일 존재하지 않을경우-->
+                                            <div class="image-off">
+                                                <div class="sub-thumbnail none-image">
+                                                    <span class="none-image-icon"></span>
+                                                </div>
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <input type="file" id="sub_thumbnail_input_03"
+                                                           class="thumbnail-input">
+                                                    <label for="sub_thumbnail_input_03"
+                                                           class="image-icon-common image-icon-sm btn-plus"></label>
+                                                </div>
+                                            </div>
+                                            <!-- 썸네일 존재 할 경우 (등록 이미지)-->
+                                            <div class="image-on">
+                                                <img class="sub-thumbnail thumbnail-image" src="" alt="치과 사진">
+                                                <div class="image-hover-common image-hover-sm">
+                                                    <span
+                                                        class="image-icon-common image-icon-sm btn-delete-thumbnail"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="thumbnail-tip">※ 2MB 이내의 JPG, JPEG, PNG, GIF </p>
+                            </div>
+                            <table>
                                 <tr>
                                     <th>치과명 *</th>
-                                    <td class="name-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="name"
-                                               name="name"
+                                               id="dental_name"
+                                               class="input-s"
+                                               name="dental_name"
+                                               value="{{ old('dental_name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
 
                                     <th>담당자명 *</th>
-                                    <td class="manager-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="manager"
-                                               name="manager"
+                                               id="manager_name"
+                                               class="input-s"
+                                               name="manager_name"
+                                               value="{{ old('manager_name') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>대표자명 *</th>
-                                    <td class="ceo-wrap">
+                                    <td>
                                         <input type="text"
-                                               id="ceo"
-                                               name="ceo"
+                                               id="ceo_name"
+                                               class="input-s"
+                                               name="ceo_name"
+                                               value="{{ old('ceo_name') }}"
                                                placeholder="대표자명 입력(최소 2자 이상)"
                                                data-parsley-required="true"
+                                               data-parsley-minlength="2"
+                                               data-parsley-minlength-message="※ 최소 2자 이상 입력해주세요."
                                                data-parsley-required-message="※ 대표자명을 입력해주세요">
                                     </td>
 
-                                    <th>담장자 전화번호 *</th>
-                                    <td class="manager-phone-wrap">
+                                    <th>담당자 전화번호 *</th>
+                                    <td>
                                         <input type="text"
-                                               id="manager-phone"
-                                               name="manager-phone"
+                                               id="manager_phone"
+                                               class="input-s"
+                                               name="manager_phone"
+                                               value="{{ old('manager_phone') }}"
                                                placeholder="‘-‘ 없이 입력"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                data-parsley-required="true"
+                                               data-parsley-length="[9,11]"
+                                               data-parsley-length-message="※ 9자 ~ 11자로 입력해주세요."
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>사업자등록번호 *</th>
-                                    <td class="num-wrap">
+                                    <td>
                                         <input type="text"
                                                id="num"
+                                               class="input-s"
                                                name="num"
-                                               placeholder="대표자명 입력(최소 2자 이상)"
+                                               value="{{ old('num') }}"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 사업자등록번호를 입력해주세요.">
                                     </td>
 
-                                    <th>담장자 이메일 *</th>
-                                    <td class="manager-email-wrap">
-                                        <input type="text"
-                                               id="manager-email"
-                                               name="manager-email"
+                                    <th>담당자 이메일 *</th>
+                                    <td>
+                                        <input type="email"
+                                               id="manager_email"
+                                               class="input-s"
+                                               name="manager_email"
+                                               value="{{ old('manager_email') }}"
                                                data-parsley-required="true"
-                                               data-parsley-required-message="※ 이메일을 입력해주세요.">
+                                               data-parsley-required-message="※ 이메일을 입력해주세요."
+                                               data-parsley-type-message="※ 이메일 형식에 맞게 입력하세요.">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>전화번호 *</th>
-                                    <td class="phone-wrap">
+                                    <td colspan="3">
                                         <input type="text"
                                                id="phone"
+                                               class="input-s"
                                                name="phone"
+                                               value="{{ old('phone') }}"
+                                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                placeholder="‘-‘ 없이 입력"
                                                data-parsley-required="true"
                                                data-parsley-required-message="※ 전화번호을 입력해주세요">
@@ -106,283 +348,424 @@
                                 </tr>
                                 <tr>
                                     <th>홈페이지 주소</th>
-                                    <td class="page-wrap">
+                                    <td colspan="3">
                                         <input type="text"
-                                               id="page"
-                                               name="page"
-                                               data-parsley-required="false">
+                                               id="homepage"
+                                               class="input-xl"
+                                               name="homepage"
+
+                                               value="{{ old('homepage') }}">
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                    </div>
-                    <div class="inquire-form-wrap">
-                        <table style="border-top: 0">
-                            <tr>
-                                <th>주소입력 *</th>
-                                <td class="address-wrap">
-                                    <input type="button" class="btn-address" value="주소검색"
-                                           data-index="test">
-                                    <input type="text" id="address" name="surveys[test][address]"
-                                           class="address"
-                                           data-index="test"
-                                           readonly="readonly"
-                                           data-parsley-required-message="※ 주소를 입력해주세요.">
-                                    <input type="text" id="address-detail"
-                                           name="surveys[test][address_detail]"
-                                           class="address-detail"
-                                           placeholder="상세주소를 입력"
-                                           data-parsley-required-message="상세주소를 입력하세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>인근 지하철역</th>
-                                <td class="subway-wrap">
-                                    <input type="text"
-                                           id="subway"
-                                           name="subway"
-                                           value="{{ old('subway') }}"
-                                           placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>신청분야 *</th>
-                                <td class="field-wrap">
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">진료전반</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">상담/데스크</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">교정</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">보철</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">예방</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">구강외과</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">소아</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
 
-                                    <label id="field">스케일링</label>
-                                    <input type="checkbox" id="field" name="type_application"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">실장</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>근무형태 *</th>
-                                <td class="work-type-wrap">
-                                    <input type="radio" id="field" name="type_work" value="1"
-                                           @if(old('type_work') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">정규직</label>
-                                    <input type="radio" id="field" name="type_work" value="2"
-                                           @if(old('type_work') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">계약직</label>
-                                    <input type="radio" id="field" name="type_work" value="3"
-                                           @if(old('type_work') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">아르바이트</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>직종 *</th>
-                                <td class="job-wrap">
-                                    <input type="radio" id="field" name="type_job" value="1"
-                                           @if(old('type_job') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">치과위생사</label>
-                                    <input type="radio" id="field" name="type_job" value="2"
-                                           @if(old('type_job') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">간호조무사</label>
-                                    <input type="radio" id="field" name="type_job" value="3"
-                                           @if(old('type_job') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">관리 및 경영지원</label>
-                                    <input type="radio" id="field" name="type_job" value="4"
-                                           @if(old('type_job') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">코디네이터/리셉션</label>
-                                    <input type="radio" id="field" name="type_job" value="5"
-                                           @if(old('type_job') == 5) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">무관</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>급여 *</th>
-                                <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_salary" value="1"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">협의 후 결정</label>
-                                    <input type="radio" id="field" name="type_salary" value="2"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">내규에 따름</label>
-                                    <input type="radio" id="field" name="type_salary" value="3"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">연봉제</label>
-                                    <input type="radio" id="field" name="type_salary" value="4"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>학력 *</th>
-                                <td class="school-wrap">
-                                    <input type="radio" id="field" name="type_study"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" placeholder="학력선택">
-                                    <input type="radio" id="field" name="type_study"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>경력 *</th>
-                                <td class="career-wrap">
-                                    <input type="radio" id="field" name="career"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">신입</label>
-                                    <input type="radio" id="field" name="career"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field" class="last">경력</label>
-                                    <input type="text" name="career" value="{{ old('career') }}"
-                                           placeholder="경력기간 선택">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>근무요일 *</th>
-                                <td class="pay-wrap">
-                                    <input type="radio" id="field" name="type_day" value="1"
-                                           @if(old('type_day') == 1) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~금(주 5일)</label>
-                                    <input type="radio" id="field" name="type_day" value="2"
-                                           @if(old('type_day') == 2) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토(토요일 격주 휴무)</label>
-                                    <input type="radio" id="field" name="type_day" value="3"
-                                           @if(old('type_day') == 3) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">월~토</label>
-                                    <input type="radio" id="field" name="type_day" value="4"
-                                           @if(old('type_day') == 4) checked @endif
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">기타</label>
-                                    <input type="text" placeholder="내용을 입력해주세요.">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>복리후생 *</th>
-                                <td class="welfare-wrap">
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="1" @if(old('type_benefit[]')) checked @endif>
-                                    <label>점심식자</label>
-                                    <input type="checkbox" id="all" name="type_benefit[]" value="124135"><label>유니폼</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>주차</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>자기계발비</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연월차지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">휴가비지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>4대보험지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>연봉제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>인센티브제</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label>퇴직금지원</label>
-                                    <input type="checkbox" id="all" name="type_benefit"><label
-                                        class="last">야근수당지원</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>모집마감일 *</th>
-                                <td class="deadline-wrap">
-                                    <input type="radio" id="field" name="deadline"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <input type="text" name="started_at" value="{{old('started_at')}}"
-                                           placeholder="시작일자 선택">
-                                    <input class="time" type="text" placeholder="HH:mm">
-                                    <label id="field">부터</label>
-                                    <input type="text" name="ended_at" value="{{old('ended_at')}}" placeholder="마감일자 선택">
-                                    <input class="time2" type="text" placeholder="HH:mm">
-                                    <input type="radio" id="until-hiring" name="deadline">
-                                    <label name="until-hiring" for="until-hiring">채용시까지</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>상세정보</th>
-                                <td class="Detail-wrap">
-                                    <input type="textarea" id="field" name="content" value="{{old('content')}}">
+                        <div class="dental-additional-form-wrap">
+                            <table>
+                                <tr>
+                                    <th>주소입력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="address-wrap">
+                                            <input type="button" class="btn-address" value="주소검색">
+                                            <input type="text" id="address"
+                                                   class="address input-l"
+                                                   name="address"
+                                                   value="{{ old('address') }}"
+                                                   readonly
+                                                   data-parsley-required="true"
+                                                   data-parsley-required-message="※ 주소를 입력해주세요."
+                                                   data-parsley-errors-container=".address-error-container">
+                                            <input type="text" id="address_detail"
+                                                   class="address-detail input-l"
+                                                   name="address_detail"
+                                                   value="{{ old('address_detail') }}"
+                                                   placeholder="상세주소를 입력">
+                                            <input type="hidden" class="address-hidden-sido" name="sido">
+                                            <input type="hidden" class="address-hidden-gugun" name="gugun">
+                                            <input type="hidden" class="address-hidden-dong" name="dong">
+                                            <input type="hidden" class="address-hidden-latitude" name="latitude">
+                                            <input type="hidden" class="address-hidden-longitude" name="longitude">
+                                        </div>
+                                        <div id="map" class="map"></div>
+                                        <div class="address-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>인근 지하철역</th>
+                                    <td class="wrapper-s">
+                                        <input type="text"
+                                               id="subway"
+                                               class="input-xxl"
+                                               name="subway"
+                                               value="{{ old('subway') }}"
+                                               placeholder="인근 지하철역을 입력해주세요.(ex: 7호선 신논현 도보 5분)">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>신청분야 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="checkbox-container">
+                                            @foreach($typeApplication as $application)
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox"
+                                                           id="application_field_[{{ $application->id }}]"
+                                                           name="application[{{ $application->id }}]"
+                                                           @if(old('application')[$application->id] ?? 'off' == 'on') checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink"
+                                                           data-parsley-mincheck="1"
+                                                           data-parsley-required-message="※ 신청분야를 선택해주세요."
+                                                           data-parsley-errors-container=".application-error-container">
+                                                    <label
+                                                        for="application_field_[{{ $application->id }}]">{{ $application->type }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="application-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>근무형태 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="radio-container">
+                                            @foreach($typeWork as $work)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="work_type_field_[{{ $work->id }}]"
+                                                           name="work"
+                                                           value={{ $work->id }}
+                                                           @if(old('work') == $work->id)
+                                                               checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 근무형태를 선택해주세요."
+                                                           data-parsley-errors-container=".work-type-error-container">
+                                                    <label
+                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="work-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>직종 *</th>
+                                    <td class="wrapper-lg">
+                                        <div class="checkbox-container">
+                                            @foreach($typeJob as $job)
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox"
+                                                           id="job_type_field_[{{ $job->id }}]"
+                                                           name="job[{{ $job->id }}]"
+                                                           @if(old('job')[$job->id] ?? 'off' == 'on') checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink1"
+                                                           data-parsley-mincheck="1"
+                                                           data-parsley-required-message="※ 직종을 선택해주세요."
+                                                           data-parsley-errors-container=".job-type-error-container">
+                                                    <label
+                                                        for="job_type_field_[{{ $job->id }}]">{{ $job->type }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="job-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>급여 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            @foreach($typeSalary as $salary)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="salary_type_field_[{{ $salary->id }}]"
+                                                           name="salary"
+                                                           class="salary"
+                                                           value={{ $salary->id }}
+                                                           @if(old('salary') == $salary->id)
+                                                               checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 급여를 선택해주세요."
+                                                           data-parsley-errors-container=".salary-type-error-container">
+                                                    <label
+                                                        for="salary_type_field_[{{ $salary->id }}]">{{ $salary->type }}</label>
+                                                    @if($salary->id == 4)
+                                                        <input type="text" name="salary_value"
+                                                               class="radio-input input-m salary-input"
+                                                               value="{{ old("salary_value") }}"
+                                                               placeholder="내용을 입력해주세요."
+                                                               @if(old('salary') != 4) disabled @endif>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="salary-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>학력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="study-select-check"
+                                                       value="N">
+                                                <input type="radio" id="study_type_field_01" class="study"
+                                                       name="is_study" value="1"
+                                                       @if(old('is_study') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 학력을 선택해주세요."
+                                                       data-parsley-errors-container=".study-type-error-container">
+                                                <select class="input-xs select-menu study-select"
+                                                        @if(old('is_study') != 1) disabled @endif
+                                                        name="study">
+                                                    <option value="0" selected>학력 선택</option>
+                                                    @foreach($typeStudy as $study)
+                                                        @if($study->id == 14)
+                                                            @break
+                                                        @else
+                                                            <option value="{{ $study->id }}"
+                                                                    @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="study_type_field_02" class="study"
+                                                       name="is_study" value="2"
+                                                       @if(old('is_study') == 2) checked @endif>
+                                                <label for="study_type_field_02">학력무관</label>
+                                            </div>
+                                        </div>
+                                        <div class="study-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>경력 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="hidden"
+                                                       class="career-select-check"
+                                                       value="N">
+                                                <input type="radio" id="career_field_01" class="career" name="is_career"
+                                                       value="1" @if(old('is_career') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 경력을 선택해주세요."
+                                                       data-parsley-errors-container=".career-error-container">
+                                                <label for="career_field_01">신입</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="career_field_02" class="career" name="is_career"
+                                                       value="2" @if(old('is_career') == 2) checked @endif>
+                                                <label for="career_field_02" class="career-radio-label">경력</label>
+                                                <select name="career" id="career"
+                                                        class="input-xs radio-input select-menu career-select"
+                                                        @if(old('is_career') != 2) disabled @endif>
+                                                    <option value="0">경력기간 선택</option>
+                                                    @for ($i = 1; $i <= 30; $i++)
+                                                        @if($i == 30)
+                                                            <option value="{{ $i }}"
+                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
+                                                                이상
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $i }}"
+                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
+                                                            </option>
+                                                        @endif
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="career-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>근무요일 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            @foreach($typeDay as $day)
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="day_type_field_[{{ $day->id }}]"
+                                                           name="day"
+                                                           class="work-day"
+                                                           value={{ $day->id }} @if(old('day') == $day->id) checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 근무요일을 선택해주세요."
+                                                           data-parsley-errors-container=".day-type-error-container">
+                                                    <label
+                                                        for="day_type_field_[{{ $day->id }}]">{{ $day->type }}</label>
+                                                    @if($day->id == 4)
+                                                        <input type="text" name="day_value"
+                                                               class="radio-input input-m work-day-input"
+                                                               value="{{ old("day_value") }}"
+                                                               placeholder="내용을 입력해주세요."
+                                                               @if(old('day') != 4) disabled @endif>
+                                                    @endif
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="day-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>복리후생 *</th>
+                                    <td class="wrapper-lg" style="height: 75px">
+                                        <div class="checkbox-grid-container">
+                                            @foreach($typeBenefit as $benefit)
+                                                <div class="checkbox-wrap">
+                                                    <input type="checkbox" id="benefit_type_field_[{{ $benefit->id }}]"
+                                                           name="benefit[{{ $benefit->id }}]"
+                                                           @if(old('benefit')[$benefit->id] ?? 'off' == 'on') checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-multiple="mymultiplelink2"
+                                                           data-parsley-mincheck="1"
+                                                           data-parsley-required-message="※ 복리후생을 선택해주세요."
+                                                           data-parsley-errors-container=".benefit-type-error-container">
+                                                    <label
+                                                        for="benefit_type_field_[{{ $benefit->id }}]">{{ $benefit->type }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="benefit-type-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>모집마감일 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="deadline_field_01" class="deadline"
+                                                       name="deadline" value="1"
+                                                       @if(old('deadline') == 1) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 모집마감일을 선택해주세요."
+                                                       data-parsley-errors-container=".deadline-error-container">
 
-                                    </input>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>결제금액</th>
-                                <td class="payment-wrap">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>결제방식 *</th>
-                                <td class="paydeail-wrap">
-                                    <span>
-                                        <input type="radio" id="field" name="paydeail"
-                                               data-parsley-required="true"
-                                               data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                        <label id="field">신용카드</label>
-                                        <input type="text" placeholder="신한">
-                                    </span>
-                                    <input class="last" type="radio" id="field" name="paydeail"
-                                           data-parsley-required="true"
-                                           data-parsley-required-message="※ 전화번호을 입력해주세요">
-                                    <label id="field">실시간 계좌이체</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <button class="submit" type="submit">구인공고 등록</button>
-                </form>
+                                                <input type="hidden" class="date-compare-check" value="N">
+
+                                                <input type="text" class="input-xs start-date" name="started_at_ymd"
+                                                       value="{{ old("started_at_ymd") }}"
+                                                       placeholder="시작일자 선택"
+                                                       @if(old('deadline') != 1) readonly disabled @endif>
+                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm"
+                                                       name="started_at_hm" id="start_time"
+                                                       value="{{ old("started_at_hm") }}"
+                                                       @if(old('deadline') != 1) disabled @endif>
+                                                <p class="time-from">부터</p>
+                                                <input type="text" class="input-xs end-date" name="ended_at_ymd"
+                                                       value="{{ old("ended_at_ymd") }}"
+                                                       placeholder="마감일자 선택"
+                                                       @if(old('deadline') != 1) readonly disabled @endif>
+                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"
+                                                       name="ended_at_hm" id="end_time"
+                                                       value="{{ old("ended_at_hm") }}"
+                                                       @if(old('deadline') != 1) disabled @endif>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="deadline_field_02" class="deadline"
+                                                       name="deadline" value="2"
+                                                       @if(old('deadline') == 2) checked @endif>
+                                                <label for="deadline_field_02">채용시까지</label>
+                                            </div>
+                                        </div>
+                                        <div class="deadline-error-container"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="unique-label">상세정보</th>
+                                    <td class="wrapper-s">
+                                        <ul class="editor-extra-toolbar">
+                                            <li>
+                                                <label for="image" class="ir_pm">사진</label>
+                                                <input type="file" id="image" class="btn-editor-image" accept="image/*">
+                                            </li>
+                                            <li>
+                                                <label for="file" class="ir_pm">파일</label>
+                                                <input type="file" id="file" class="btn-editor-file">
+                                            </li>
+                                        </ul>
+                                        <textarea id="editor" class="editor">{{ old('content') }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>공고 기간</th>
+                                    <td class="wrapper-lg">
+                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>결제금액</th>
+                                    <td class="wrapper-lg">
+                                        <p class="money">{{ number_format($price) }}원</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>결제방식 *</th>
+                                    <td class="wrapper-s">
+                                        <div class="radio-container">
+                                            <div class="radio-wrap">
+                                                <input type="radio"
+                                                       id="pay_method_field_01"
+                                                       class="pay-method"
+                                                       name="pay_method"
+                                                       value="카드"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 결제방식을 선택해주세요."
+                                                       data-parsley-errors-container=".pay-type-error-container">
+                                                <label for="pay_method_field_01" class="card-radio-label">신용카드</label>
+                                                <select name="pay_method" id=""
+                                                        class="input-xs select-menu pay-method-select"
+                                                        @if( old('pay_method') != '카드' ) disabled @endif>
+                                                    <option value="신한">신한</option>
+                                                    <option value="현대">현대</option>
+                                                    <option value="삼성">삼성</option>
+                                                    <option value="우리">우리</option>
+                                                    <option value="BC">BC</option>
+                                                    <option value="국민">국민</option>
+                                                    <option value="롯데">롯데</option>
+                                                    <option value="농협">농협</option>
+                                                    <option value="하나">하나</option>
+                                                    <option value="씨티">씨티</option>
+                                                    <option value="카카오뱅크">카카오뱅크</option>
+                                                    <option value="수협">수협</option>
+                                                    <option value="전북">전북</option>
+                                                    <option value="우체국">우체국</option>
+                                                    <option value="새마을">새마을</option>
+                                                    <option value="저축">저축</option>
+                                                    <option value="제주">제주</option>
+                                                    <option value="광주">광주</option>
+                                                    <option value="신협">신협</option>
+                                                    <option value="JCB">JCB</option>
+                                                    <option value="유니온페이">유니온페이</option>
+                                                    <option value="마스터">마스터</option>
+                                                    <option value="비자">비자</option>
+                                                    <option value="다이너스">다이너스</option>
+                                                    <option value="디스커버">디스커버</option>
+                                                </select>
+                                            </div>
+                                            {{--
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <label for="pay_method_field_02">실시간 계좌이체</label>
+                                            </div>
+                                            --}}
+                                        </div>
+                                        <div class="pay-type-error-container"></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btn-wrap">
+                            <button class="btn-submit" type="submit">구인공고 등록</button>
+                        </div>
+                    </form>
+                </div>
             </section>
         </div>
     </section>

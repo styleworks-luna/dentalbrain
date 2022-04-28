@@ -3,22 +3,17 @@
 namespace App\Http\Controllers\Admin\Membership;
 
 use App\Http\Controllers\Controller;
-use App\Models\Membership\Membership;
 use App\Models\Payments\Payment;
-use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\User;
 use App\Services\Membership\MembershipService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class MembershipDetailController extends Controller

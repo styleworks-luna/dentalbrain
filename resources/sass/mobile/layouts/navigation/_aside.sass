@@ -44,11 +44,27 @@
                 float: left
                 font-size: 4.4444444vw
 
+            .resume
+                +size(11.111111vw, 3.888888vw)
+                +margin(left 1.666666vw)
+                +border(.2777777vw solid $page-color)
+                display: flex
+                align-items: center
+                justify-content: center
+                float: left
+                border-radius: 2.222222vw
+                font-size: 2.777777vw
+
+                a
+                    font-weight: bold
+                    color: $page-color
+
             .user-edit
                 overflow: hidden
                 float: right
 
                 a
+                    display: block
                     float: left
                     font-size: 3.3333333vw
                     color: $gray-900
@@ -66,15 +82,13 @@
             +margin(top 6.666666vw)
 
             ul
-                overflow: hidden
+                display: grid
+                grid-template-columns: 1fr 1fr 1fr
+                gap: 5.555555vw 11.9444444vw
+
             li
                 +size(16.1111111vw)
-                +margin(right 2.577777vw)
                 +box-sizing(border-box)
-                float: left
-
-                &:last-child
-                    +margin(right 0)
 
                 a
                     display: block
@@ -102,9 +116,17 @@
                     a::before
                         +background('/images/mobile/navigation/icon_nav_payment.svg', no-repeat, center center)
 
-                &:last-child
+                &:nth-child(4)
                     a::before
                         +background('/images/mobile/navigation/icon_nav_inquiry.svg', no-repeat, center center)
+
+                &:nth-child(5)
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_work.svg', no-repeat, center center)
+
+                &:last-child
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_worker.svg', no-repeat, center center)
 
         .user-no-login
             h2
