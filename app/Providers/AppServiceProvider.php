@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(Iamport::class, function ($app) {
-            return new Iamport('impKey', 'impSecret');
+            return new Iamport(env("IAMPORT_PAYMENTS_CLIENT_KEY"), env("IAMPORT_PAYMENTS_SECRET"));
         });
     }
 }

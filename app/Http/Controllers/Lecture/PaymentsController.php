@@ -10,6 +10,7 @@ use App\Models\Payments\TossPayment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Services\Payment\IamportService;
 use App\Services\Payment\TossPaymentFactory;
 use App\Services\Payment\TossPaymentsService;
 use Illuminate\Contracts\Foundation\Application;
@@ -30,6 +31,16 @@ use Symfony\Component\HttpFoundation\Response as ResponseCode;
 class PaymentsController extends Controller
 {
     /**
+     * @var IamportService
+     */
+    private $iamportFactory;
+
+    public function __construct(IamportService $iamportFactory)
+    {
+        $this->iamportFactory = $iamportFactory;
+    }
+
+    /**
      * 결제 승인 플로우.
      *
      * @param SuccessPayments $request
@@ -38,23 +49,19 @@ class PaymentsController extends Controller
      */
     public function success(SuccessPayments $request, Program $program)
     {
-        $realPrice = $program->getUserSpecificPrice();
+        logger('aerhaerherthrthrth');
+//        $realPrice = $program->getUserSpecificPrice();
+//
+//        if ($realPrice != $request->get('amount')) {
+//            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
+//        }
 
-        if ($realPrice != $request->get('amount')) {
-            return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.', 'fromApply' => true]);
-        }
+
 
         try {
             DB::beginTransaction();
 
-            $toss = new TossPaymentsService($request->get('paymentKey'));
-            $response = $toss->success($request->get('orderId'), $request->get('amount'));
-
-            if ($response === false) {
-                return redirect()->back()->with(['alert' => '오류가 발생했습니다.', 'fromApply' => true]);
-            }
-
-            $payment = TossPaymentFactory::createByTossSuccess($response);
+            $iamportPayment = $this->iamportFactory->createBySuccess($request);
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
@@ -64,6 +71,8 @@ class PaymentsController extends Controller
             DB::commit();
         } catch (TossPaymentsException $exception) {
             DB::rollBack();
+            Log::error("TEST", [$exception]);
+
             session()->flash('fromApply', true);
 
             return $exception->render($request);

@@ -1,14 +1,17 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
-    <script src="https://js.tosspayments.com/v1"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script>
         $(function () {
+
+            var iamport_id = '{{ env('IAMPORT_PAYMENTS_ID') }}';
+            var iamport = window.IMP;
+            iamport.init(iamport_id);
+
             // select menu
             var select_menu = $('.select-menu');
-            var clientKey = '{{ env('TOSS_PAYMENTS_CLIENT_KEY') }}';
-            var tossPayments = TossPayments(clientKey);
             var message = getParameter('message');
             var paymentmethod = $('.payment-method:checked').val();
 
@@ -28,7 +31,21 @@
                     $('.dim').css('display', 'block');
                     $('.payment-layer-wrapper .layer').css('display', 'block');
                 } else {
-                    var paymentObj;
+                    const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
+
+                    var paymentObj = {
+                        pg: "kcp.A52CY",
+                        pay_method: paymentmethod,
+                        merchant_uid: '{{ \Illuminate\Support\Str::random(3) . time() }}',
+                        name: '{{$program->title . ', ' . $program->description}}',
+                        amount: {{ $price }},
+                        buyer_email: '{{ auth()->user()->email }}',
+                        buyer_name: '{{ auth()->user()->name }}',
+                        buyer_tel: '{{ auth()->user()->phone }}',
+                        m_redirect_url: successUrl,
+                    }
+
+                    {{--
                     var cardCompany = $('.ui-selectmenu-text').text();
 
                     const amount = {{ $price }};
@@ -38,49 +55,58 @@
                     const successUrl = '{{ route('lectures.payment.success',$program->id) }}';
                     const customerEmail = '{{ auth()->user()->email }}';
                     const customerMobilePhone = '{{ auth()->user()->phone }}';
+                    --}}
 
-                    if (paymentmethod === '가상계좌') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
-                    } else if (paymentmethod === '카드') {
-                        var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
+                    /*
+                    // TossPayment
+                                        if (paymentmethod === '가상계좌') {
+                                            paymentObj = {
+                                                amount: amount,
+                                                orderId: orderId,
+                                                orderName: orderName,
+                                                customerName: customerName,
+                                                successUrl: successUrl,
+                                                failUrl: window.location.href,
+                                                customerEmail: customerEmail,
+                                                customerMobilePhone: customerMobilePhone,
+                                            };
+                                        } else if (paymentmethod === '카드') {
+                                            var maxCardInstallmentPlan = (cardCompany === 'BC' ? 3 : 12);
 
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
+                                            paymentObj = {
+                                                amount: amount,
+                                                orderId: orderId,
+                                                orderName: orderName,
+                                                customerName: customerName,
+                                                successUrl: successUrl,
+                                                failUrl: window.location.href,
+                                                customerEmail: customerEmail,
+                                                customerMobilePhone: customerMobilePhone,
 
-                            maxCardInstallmentPlan: maxCardInstallmentPlan,
-                            cardCompany: cardCompany,
-                        };
-                    } else if (paymentmethod === '계좌이체') {
-                        paymentObj = {
-                            amount: amount,
-                            orderId: orderId,
-                            orderName: orderName,
-                            customerName: customerName,
-                            successUrl: successUrl,
-                            failUrl: window.location.href,
-                            customerEmail: customerEmail,
-                            customerMobilePhone: customerMobilePhone,
-                        };
-                    }
-
-                    tossPayments.requestPayment(paymentmethod, paymentObj).catch(function (err) {
-                        alert('취소');
+                                                maxCardInstallmentPlan: maxCardInstallmentPlan,
+                                                cardCompany: cardCompany,
+                                            };
+                                        } else if (paymentmethod === '계좌이체') {
+                                            paymentObj = {
+                                                amount: amount,
+                                                orderId: orderId,
+                                                orderName: orderName,
+                                                customerName: customerName,
+                                                successUrl: successUrl,
+                                                failUrl: window.location.href,
+                                                customerEmail: customerEmail,
+                                                customerMobilePhone: customerMobilePhone,
+                                            };
+                                        }
+                    */
+                    iamport.request_pay(paymentObj, function (rsp) {
+                        if (rsp.success) {
+                            alert('성공');
+                            console.log(rsp);
+                            location.href = successUrl + '?imp_uid=' + rsp.imp_uid + '&merchant_uid=' + rsp.merchant_uid;
+                        } else {
+                            alert('취소');
+                        }
                     });
                 }
             });
@@ -325,9 +351,9 @@
                                         <input type="radio" id="separate" name="payment-method"
                                                class="payment-method" value="계좌입금">
                                         <div>
-                                        <label for="separate"
-                                               class="transfer-label">계좌입금</label>
-                                        <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
+                                            <label for="separate"
+                                                   class="transfer-label">계좌입금</label>
+                                            <p class="separate-tip">신한은행 140-010-094358 예금주 : ㈜브레인스펙병원교육개발원</p>
                                         </div>
                                     </div>
                                     {{--<div class="radio-wrap">

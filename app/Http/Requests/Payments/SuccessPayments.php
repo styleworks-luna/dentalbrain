@@ -24,9 +24,32 @@ class SuccessPayments extends FormRequest
     public function rules()
     {
         return [
-            'paymentKey' => ['required', 'string'],
-            'orderId' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'imp_uid' => ['required', 'string'],
+            'merchant_uid' => ['required', 'string'],
         ];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImpUid(): ?string
+    {
+        $var = $this->get('imp_uid');
+        if (!is_string($var)) {
+            return null;
+        }
+        return $var;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMerchantUid(): ?string
+    {
+        $var = $this->get('merchant_uid');
+        if (!is_string($var)) {
+            return null;
+        }
+        return $var;
     }
 }

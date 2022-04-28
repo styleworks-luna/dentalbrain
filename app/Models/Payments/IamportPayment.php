@@ -7,13 +7,12 @@ use Iamport\RestClient\Request\Payment;
 
 class IamportPayment extends PaymentGatewayModel
 {
+    protected $table ='payments_iamport';
+
+    protected $guarded = [];
+
     function getPgType(): string
     {
         return "iamport";
-    }
-
-    public function test(Iamport $iamport)
-    {
-        $result = $iamport->callApi(Payment::withMerchantUid("merchant_uid"));
     }
 }
