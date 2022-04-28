@@ -3,7 +3,10 @@
         <ul class="swiper-slide" v-for="banner in banners">
             <li class="lecture-card" :key="banner.id">
                 <a :href="'/banner-redirect/' + banner.id">
-                    <img :src="banner.program.thumbnail.url" alt="">
+                    <div class="lecture-image-box">
+                        <img :src="banner.program.thumbnail.url" alt="">
+                        <div class="certificate-mark">수료/자격증</div>
+                    </div>
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{banner.program.minor_category_name}}</span>
