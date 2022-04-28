@@ -1,15 +1,14 @@
 <template>
     <div>
         <div>
-            <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
-            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
-            <template v-else>
-                <lecture-like-list :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
-            </template>
+            <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like" :certificate="certificate"></lecture-order>
+            <lecture-list v-if="!like && !certificate" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
+            <lecture-certificate-list v-else-if="certificate" :listData="mobile ? mobileCertificateList : certificateList.data" :mobile="mobile"></lecture-certificate-list>
+            <lecture-like-list v-else :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
         </div>
 
         <template v-if="!mobile">
-            <template v-if="!like">
+            <template v-if="!like && !certificate">
                 <div class="paging-wrap">
                     <nav>
                         <pagination :data="list" :limit=3 @pagination-change-page="getData">
@@ -55,6 +54,7 @@
 <script>
 import LectureList from '@/components/mypage/lecture/LectureList.vue';
 import LectureLikeList from '@/components/mypage/lecture/LectureLikeList.vue';
+import LectureCertificateList from '@/components/mypage/lecture/LectureCertificateList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
 import InfiniteLoading from 'vue-infinite-loading';
 
@@ -67,20 +67,24 @@ export default {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
         LectureLikeList,
+        LectureCertificateList,
         InfiniteLoading,
     },
     props: {
         'mobile': Boolean,
         'like': Boolean,
+        'certificate': Boolean,
     },
     data() {
         return {
             list: {},
             likeList: {},
+            certificateList: {},
             order: 'newest',
             page: 1,
             mobileList: [],
             mobileLikeList: [],
+            mobileCertificateList: [],
             infiniteId: +new Date(),
             infiniteLikeId: +new Date(),
         }

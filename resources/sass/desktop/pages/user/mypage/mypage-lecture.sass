@@ -241,6 +241,32 @@
             font-weight: bold
             line-height: 50px
 
+.mypage-certificateList
+    .mypage-content li .content-information-wrap
+        +size(1040px)
+
+    .btn-zone
+        +size(240px, 265px)
+        display: flex
+        align-content: center
+        justify-content: center
+        flex-wrap: wrap
+        gap: 8px
+
+        .btn-lecture
+            +size(140px, 50px)
+            +btn(null,1px solid $border-color-base, 25px)
+            font-size: 16px
+            font-weight: bold
+            line-height: 50px
+
+            em
+                color: $page-color
+        
+        .fail
+            background-color: #f0f0f0
+            color: $gray-900
+
 
 .content-button-full
         a

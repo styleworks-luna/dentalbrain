@@ -268,6 +268,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
     })->name('offer');
 
+    //증명서 정보
+    Route::get('certificate', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_certificate');
+    })->name('certificate');
+
     //구직 이력서 정보
     Route::get('resume', [\App\Http\Controllers\Account\ResumeController::class, 'mypageResume'])->name('resume');
 
