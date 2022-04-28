@@ -17,8 +17,9 @@
             <div class="row">
                 <section class="lecture-information-wrap">
                     <input type="hidden" id="program_is_online" value="{{$program->is_open}}">
-                    <div class="lecture-test">
+                    <div class="lecture-image-box">
                         <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
+                        <div class="certificate-mark">자격증</div>
                         @auth()
                             @if(auth()->user()->isAdmin())
                                 <div class="admin-menu">

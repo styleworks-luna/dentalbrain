@@ -62,6 +62,7 @@
                 .content-image
                     +size(300px)
                     display: block
+                    position: relative
                     float: left
 
                     img
@@ -69,6 +70,22 @@
                         +border(1px solid rgba(0, 0, 0, 0.1))
                         +border-radius(8px)
                         display: block
+
+                    .certificate-mark
+                        +size(71px, 22px)
+                        +border(1px solid rgba(255, 255, 255, 0.8))
+                        +border-radius(12px)
+                        +margin(right 12px bottom 12px)
+                        display: flex
+                        align-items: center
+                        justify-content: center
+                        background-color: rgba(0, 0, 0, 0.6)
+                        position: absolute
+                        bottom: 0
+                        right: 0
+                        font-size: 11px
+                        font-weight: bold
+                        color: #fff
 
 .content-information
     +size(500px)
@@ -224,14 +241,41 @@
             font-weight: bold
             line-height: 50px
 
+.mypage-certificateList
+    .mypage-content li .content-information-wrap
+        +size(1040px)
+
+    .btn-zone
+        +size(240px, 265px)
+        display: flex
+        align-content: center
+        justify-content: center
+        flex-wrap: wrap
+        gap: 8px
+
+        .btn-lecture
+            +size(140px, 50px)
+            +btn(null,1px solid $border-color-base, 25px)
+            font-size: 16px
+            font-weight: bold
+            line-height: 50px
+
+            em
+                color: $page-color
+        
+        .fail
+            background-color: #f0f0f0
+            color: $gray-900
+
 
 .content-button-full
         a
             +margin(top 88px left 28px)
 
 .content-none
-    +padding(left 20px top 26px bottom 26px)
-    font-size: 16px
+    +padding(top 100px bottom 370px)
+    text-align: center
+    font-size: 20px
 
 .dim
     +background(null,null,null,$white)
