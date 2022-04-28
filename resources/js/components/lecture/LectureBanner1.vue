@@ -1,6 +1,6 @@
 <template>
     <div class="swiper-wrapper">
-        <ul class="swiper-slide" v-for="banner in banners">
+        <ul class="swiper-slide" v-for="banner in banners" :key="banner.id">
             <li class="lecture-card" :key="banner.id">
                 <a :href="'/banner-redirect/' + banner.id">
                     <div class="lecture-image-box">

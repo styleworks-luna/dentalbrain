@@ -45,7 +45,7 @@
                             </template>
                             <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.is_free == 0 && lecture.discount_rate == 0">
                                 {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                            <p style="padding-top: 5vw"class="lecture-price" v-if="lecture.is_free != 0">무료</p>
+                            <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.is_free != 0">무료</p>
                         </div>
 
                     </div>
