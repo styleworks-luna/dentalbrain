@@ -62,14 +62,14 @@
                             <input type="hidden" class="file-check" value="N"
                                    data-parsley-required="true"
                                    data-parsley-pattern="[Y]"
-                                   data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
-                                   data-parsley-pattern-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-required-message="※ 이력서 사진을 업로드 해주세요."
+                                   data-parsley-pattern-message="※ 이력서 사진을 업로드 해주세요."
                                    data-parsley-errors-container=".thumbnail-error-container">
                             <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">
-                                    <h4 class="none-image-title">이력서 대표 사진 *</h4>
-                                    <p class="none-image-tip">(800px × 600px)</p>
+                                    <h4 class="none-image-title">이력서 사진 *</h4>
+                                    <p class="none-image-tip">(220px × 293px)</p>
                                     <span class="none-image-icon"></span>
                                 </div>
                                 <div class="image-hover">
@@ -419,9 +419,9 @@
                     <div class="evaluation-form-wrap common-form-wrap">
                         <div class="evaluation-title-wrap">
                             <h3>
-                                치과 업무 능력 자기 평가표 *
+                                치과 업무 능력 자기 평가표
                             </h3>
-                            <span>생각하는 업무 능력을 평가해주세요. 본 정보는 인재 능력을 평가 지표로 사용되며 추후 교육자료로 활용됩니다.</span>
+                            <span>자신이 생각하는 업무 능력을 평가해주세요. *평가표는 치과 직역 공통 항목이므로, 자신의 법적 업무 범위가 아니면 해당 없음으로 기재해주세요.</span>
                         </div>
                         <div class="evaluation-content-wrap">
                             <div class="left-content-wrap">

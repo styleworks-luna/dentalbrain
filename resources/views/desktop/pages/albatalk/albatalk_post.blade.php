@@ -749,12 +749,10 @@
                                                     <option value="디스커버">디스커버</option>
                                                 </select>
                                             </div>
-                                            {{--
                                             <div class="radio-wrap">
                                                 <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
                                                 <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
-                                            --}}
                                         </div>
                                         <div class="pay-type-error-container"></div>
                                     </td>
