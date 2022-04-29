@@ -57,9 +57,13 @@
                             </table>
                         </div>
                     </div>
-                    <div class="btn-zone">
-                        <a class="btn-lecture">수료증 보기</a>
-                        <a class="btn-lecture"><em>자격증 보기</em></a>
+                    <div class="lecture-under">
+                        <div class="btn-zone">
+                            <a class="btn-lecture"><em>자격증 보기</em></a>
+                            <a class="btn-lecture">수료증 보기</a>
+                            <!-- <a class="btn-lecture fail">불합격</a> -->
+                            <!-- 대기중 -->
+                        </div>
                     </div>
                 </li>
                 <div class="content-none" v-if="lectures.length == 0">발급 된 증명서가 없습니다.</div>

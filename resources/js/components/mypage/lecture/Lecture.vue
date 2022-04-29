@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <lecture-order v-if="!certificate" @setOrder="handleSetOrder" :mobile="mobile" :like="like" :certificate="certificate"></lecture-order>
+            <lecture-order v-if="!(mobile&&certificate)" @setOrder="handleSetOrder" :mobile="mobile" :like="like" :certificate="certificate"></lecture-order>
             <lecture-list v-if="!like && !certificate" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
             <lecture-certificate-list v-else-if="certificate" :listData="mobile ? mobileCertificateList : certificateList.data" :mobile="mobile"></lecture-certificate-list>
             <lecture-like-list v-else :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
