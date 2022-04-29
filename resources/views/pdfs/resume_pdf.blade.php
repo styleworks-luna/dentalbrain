@@ -341,7 +341,7 @@
 
             <section class="user-information-wrap">
                 <div class="user-image-wrap">
-                    <img src="{{ url($resume->file->url) ?? '' }}" class="user-image" alt="이력서 사진">
+                    <img src="{{ $thumbnail }}" class="user-image" alt="이력서 사진">
                 </div>
                 <div class="user-personal-information">
                     <h2 class="user-name">{{ $resume->name }}</h2>
@@ -518,7 +518,6 @@
                     </p>
                 </div>
             </section>
-
 
 
             <div class="page-break"></div>
