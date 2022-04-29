@@ -15,10 +15,12 @@ class InsertRowsToTypeCareersTable extends Migration
     public function up()
     {
         DB::table('type_careers')->insert([
+            ['type' => '신입'],
             ['type' => '1 ~ 9년'],
             ['type' => '10 ~ 19년'],
             ['type' => '20 ~ 29년'],
             ['type' => '30년 이상'],
+            ['type' => '경력무관'],
         ]);
     }
 
