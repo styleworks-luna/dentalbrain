@@ -5,11 +5,13 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-resume.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-resume.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -421,7 +423,7 @@
                             <h3>
                                 치과 업무 능력 자기 평가표
                             </h3>
-                            <span>자신이 생각하는 업무 능력을 평가해주세요. *평가표는 치과 직역 공통 항목이므로, 자신의 법적 업무 범위가 아니면 해당 없음으로 기재해주세요.</span>
+                            <span>자신이 생각하는 업무 능력을 평가해주세요. *평가표는 모든 치과 직역의 공통 항목으로 작성된 것입니다.</span>
                         </div>
                         <div class="evaluation-content-wrap">
                             <div class="left-content-wrap">
@@ -624,4 +626,5 @@
             </section>
         </div>
     </section>
+    @include('.desktop.component.popup.IE.ie_popup')
 @endsection

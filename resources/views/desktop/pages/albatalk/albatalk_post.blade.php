@@ -11,6 +11,7 @@
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/timepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
     <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript">
         $(function () {
@@ -21,7 +22,7 @@
                 let data = new FormData(form);
                 let editorContent = CKEDITOR.instances.editor.getData();
 
-                data.append('content',editorContent);
+                data.append('content', editorContent);
 
                 $('#albatalk_recruit_form').parsley().validate();
                 if ($('#albatalk_recruit_form').parsley().isValid()) {
@@ -119,6 +120,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-post.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -755,7 +757,8 @@
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method"
+                                                       name="pay_method" value="계좌이체">
                                                 <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
                                         </div>
@@ -772,4 +775,5 @@
             </section>
         </div>
     </section>
+    @include('.desktop.component.popup.IE.ie_popup')
 @endsection
