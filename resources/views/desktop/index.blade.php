@@ -1,9 +1,9 @@
 @extends('desktop.layouts.frames.basic_frame')
 
 @section('script')
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/swiper-bundle.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/index.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
 @endsection
 
 @section('vue')
@@ -20,8 +20,8 @@
 @section('content')
     <article class="header-banner active">
         <a href="https://dentalbrain.co.kr/customer/notices/35">
-        <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너" />
-        {{--<a href="" class="btn-close-banner">닫기</a>--}}
+            <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너"/>
+            {{--<a href="" class="btn-close-banner">닫기</a>--}}
         </a>
     </article>
     <section class="content">
@@ -32,13 +32,13 @@
                         @forelse($slides as $slide)
                             <div class="swiper-slide">
                                 <a href="{{ route('banner-redirect',$slide->id) }}">
-                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드" />
+                                    <img src="{{ $slide->desktopFile->url }}" alt="최상단 슬라이드"/>
                                 </a>
                             </div>
                         @empty
                             <div class="swiper-slide">
                                 <a href="">
-                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드" />
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="최상단 슬라이드"/>
                                 </a>
                             </div>
                         @endforelse
@@ -57,42 +57,42 @@
                 <div class="middle-swiper-container">
                     <div class="swiper-wrapper">
                         @forelse($recommends as $recommend)
-                        <div class="swiper-slide">
-                            <a href="{{ route('banner-redirect',$recommend->id) }}">
-                                <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
-                            </a>
-                        </div>
+                            <div class="swiper-slide">
+                                <a href="{{ route('banner-redirect',$recommend->id) }}">
+                                    <img src="{{ $recommend->desktopFile->url }}" alt="추천배너">
+                                </a>
+                            </div>
                         @empty
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
-                        <div class="swiper-slide">
-                            <a href="">
-                                <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
-                            </a>
-                        </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
+                            <div class="swiper-slide">
+                                <a href="">
+                                    <img src="{{ asset('images/dummy/test2.jpg') }}" alt="추천배너">
+                                </a>
+                            </div>
                         @endforelse
                     </div>
                 </div>
@@ -194,6 +194,6 @@
                 </div>
             </div>
         </section>
-        @include('.desktop.component.popup.IE.ie_popup')
     </section>
+    @include('.desktop.component.popup.IE.ie_popup')
 @endsection

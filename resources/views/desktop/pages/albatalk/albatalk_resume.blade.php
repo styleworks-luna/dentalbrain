@@ -5,11 +5,13 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/ko.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/pages/albatalk/albatalk-resume.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-resume.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -624,4 +626,5 @@
             </section>
         </div>
     </section>
+    @include('.desktop.component.popup.IE.ie_popup')
 @endsection
