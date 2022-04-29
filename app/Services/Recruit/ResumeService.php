@@ -2,6 +2,7 @@
 
 namespace App\Services\Recruit;
 
+use App\Models\File;
 use App\Models\Resume\Ability\AbilityAnswer;
 use App\Models\Resume\Ability\AbilityCategory;
 use App\Models\Resume\Resume;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ResumeService
@@ -156,6 +158,15 @@ class ResumeService
             'leftList' => $leftList,
             'rightList' => $rightList,
             'categories' => $categories,
+            'thumbnail' => $resume->file != null ? $this->encodeToBase64($resume->file) : '',
         ]);
+    }
+
+    private function encodeToBase64(File $file): string
+    {
+        $path = storage_path('app/' . $file->path);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 }
