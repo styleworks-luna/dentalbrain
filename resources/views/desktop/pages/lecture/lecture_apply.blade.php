@@ -155,6 +155,20 @@
                             <div class="short_answer_error_wrap"></div>
                         </div>
                         <div class="short-answer">
+                            <h4>학번</h4>
+                            <input type="hidden" name="surveys[][survey_id]"
+                                   value="">
+                            <div class="answers">
+                                <input type="text" id="short-answer-response"
+                                       name="surveys[][answer]"
+                                       class="short-answer-response"
+                                       placeholder="대학생일 경우 기입해주세요."
+                                       data-parsley-errors-container=".short_answer_error_wrap"
+                                       data-parsley-required-message="답변을 입력하세요.">
+                            </div>
+                            <div class="short_answer_error_wrap"></div>
+                        </div>
+                        <div class="short-answer">
                             <h4>생년월일 <em>(필수)</em>
                             </h4>
                             <input type="hidden" name="surveys[][survey_id]"
