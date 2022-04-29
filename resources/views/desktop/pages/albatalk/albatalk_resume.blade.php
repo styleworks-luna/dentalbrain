@@ -62,14 +62,14 @@
                             <input type="hidden" class="file-check" value="N"
                                    data-parsley-required="true"
                                    data-parsley-pattern="[Y]"
-                                   data-parsley-required-message="※ 이력서 대표 사진을 업로드 해주세요."
-                                   data-parsley-pattern-message="※ 이력서 대표 사진을 업로드 해주세요."
+                                   data-parsley-required-message="※ 이력서 사진을 업로드 해주세요."
+                                   data-parsley-pattern-message="※ 이력서 사진을 업로드 해주세요."
                                    data-parsley-errors-container=".thumbnail-error-container">
                             <!-- 썸네일 존재하지 않을경우-->
                             <div class="image-off">
                                 <div class="resume-profile none-image">
-                                    <h4 class="none-image-title">이력서 대표 사진 *</h4>
-                                    <p class="none-image-tip">(800px × 600px)</p>
+                                    <h4 class="none-image-title">이력서 사진 *</h4>
+                                    <p class="none-image-tip">(220px × 293px)</p>
                                     <span class="none-image-icon"></span>
                                 </div>
                                 <div class="image-hover">
