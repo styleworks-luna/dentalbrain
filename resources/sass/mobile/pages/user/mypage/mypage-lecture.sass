@@ -64,6 +64,7 @@ body
                 overflow: hidden
 
             .content-image
+                position: relative
                 float: left
 
                 img
@@ -71,6 +72,22 @@ body
                     +border-radius(1.666666vw)
                     +border(0.2777777vw solid rgba(0, 0, 0, 0.1))
                     +box-sizing(border-box)
+
+                .certificate-mark
+                    +border(0.277778vw solid rgba(255, 255, 255, 0.8))
+                    +border-radius(2.777778vw)
+                    +margin(right 1.111111vw bottom 1.111111vw)
+                    +padding(1.388889vw 1.666667vw)
+                    display: flex
+                    align-items: center
+                    justify-content: center
+                    background-color: rgba(0, 0, 0, 0.6)
+                    position: absolute
+                    bottom: 0
+                    right: 0
+                    font-size: 2.777778vw
+                    font-weight: bold
+                    color: #fff
 
             .content-information
                 +size(55.5555555vw)
@@ -80,8 +97,8 @@ body
                 .lecture-sort
                     overflow: hidden
                     position: absolute
-                    top: 8px
-                    left: 16px
+                    top: 2.222222vw
+                    left: 4.444444vw
 
                     .lecture-type
                         +padding(1.3888888vw 1.666666vw)
@@ -154,7 +171,7 @@ body
 
         .btn-zone
             a
-                +btn(null, 1px solid $border-color-base)
+                +btn(null, 0.277778vw solid $border-color-base)
                 +size(33.3333333vw, 11.6666666vw)
                 font-weight: bold
                 float: right
@@ -200,7 +217,7 @@ body
                 float: right
 
         .content-text
-            +padding(top 14px bottom 14px)
+            +padding(top 3.888889vw bottom 3.888889vw)
             text-align: center
 
             p
