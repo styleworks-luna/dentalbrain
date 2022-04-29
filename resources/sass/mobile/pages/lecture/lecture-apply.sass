@@ -23,6 +23,7 @@ body
     // 공통 레이아웃
     .lecture-information,
     .applicant-information,
+    .certificate-information,
     .payment-information,
     .additional-information,
     .additional-information-list,
@@ -111,6 +112,62 @@ body
             font-weight: bold
 
     // 추가정보 입력
+    .certificate-information
+        h3
+            +padding(bottom 4.4444444vw)
+            +border(.2777777vw solid $border-color-light, bottom)
+        
+        // 공통 작업
+        h4
+            font-weight: bold
+            line-height: 1.5
+
+            em
+                font-weight: normal
+                color: $red
+        
+        .short-answer,
+        .file-question
+            +padding(5.5555555vw 0)
+
+            label
+                font-size: 3.8888888888vw
+        
+        .short-answer
+            .short-answer-response
+                +margin(top 3.33333333vw)
+
+        .file-question
+            position: relative
+
+            +padding(bottom 2.2222222vw)
+
+            .upload-hidden
+                display: none
+
+            .file-name
+                +margin(top 3.3333333vw)
+                +background(null, null, null, $background-color-file)
+                font-size: 3.888889vw
+                color: $gray-900
+
+            .btn-file-upload
+                +btn(null, 1px solid $border-color-base)
+                +background(null, null, null, $white)
+                +size(22.2222222vw, 11.666666666vw)
+                position: absolute
+                top: 14.7222222vw
+                right: 1.0666666vw
+                font-weight: bold
+                font-size: 3.88888888vw
+                line-height: 11.666666666vw
+
+            .tips
+                +margin(top 2.7777777vw)
+                font-size: 3.05555555vw
+                color: $gray-900
+                line-height: 1.5
+    
     .additional-information
         h3
             +padding(bottom 4.4444444vw)
