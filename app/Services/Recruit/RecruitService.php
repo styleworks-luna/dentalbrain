@@ -12,6 +12,7 @@ use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
+use App\Models\Recruit\Option\TypeCareer;
 use App\Models\Recruit\Option\TypeDay;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
@@ -70,8 +71,8 @@ class RecruitService
             'is_study' => ['required', Rule::in(Recruit::$ACADEMIC, Recruit::$NO_ACADEMIC)],
             'study' => ['nullable', Rule::requiredIf(($rawData['is_study'] ?? 0) == Recruit::$ACADEMIC), 'digits_between:1, 14'],
 
-            'is_career' => ['required', Rule::in(Recruit::$JUNIOR, Recruit::$SENIOR)],
-            'career' => ['nullable', Rule::requiredIf(($rawData['is_career'] ?? 0) == Recruit::$SENIOR), 'digits_between:1, 30'],
+            'is_career' => ['required', Rule::in(Recruit::JUNIOR, Recruit::SENIOR, Recruit::NO_CAREER)],
+            'career' => ['nullable', Rule::requiredIf(($rawData['is_career'] == Recruit::SENIOR)), Rule::in(Recruit::SENIOR_SELECT_VALUE)],
             'day' => ['required', Rule::in([TypeDay::$TYPE_DAY_1, TypeDay::$TYPE_DAY_2, TypeDay::$TYPE_DAY_3, TypeDay::$TYPE_DAY_4])],
             'day_value' => ['nullable', Rule::requiredIf(($rawData['day'] ?? 0) == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
@@ -109,7 +110,7 @@ class RecruitService
             'latitude' => $data['latitude'],
             'longitude' => $data['longitude'],
 
-            'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
+            'type_career_id' => $data['career'] ?? ( $data['is_career'] == Recruit::NO_CAREER ? TypeCareer::TYPE_CAREER_6 : TypeCareer::TYPE_CAREER_1),
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
@@ -235,7 +236,7 @@ class RecruitService
             'latitude' => $data['latitude'],
             'longitude' => $data['longitude'],
 
-            'career' => $data['is_career'] == Recruit::$JUNIOR ? 0 : $data['career'],
+            'type_career_id' => $data['career'] ?? ( $data['is_career'] == Recruit::NO_CAREER ? TypeCareer::TYPE_CAREER_6 : TypeCareer::TYPE_CAREER_1),
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 

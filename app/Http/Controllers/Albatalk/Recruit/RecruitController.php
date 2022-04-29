@@ -12,6 +12,7 @@ use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
 use App\Models\Recruit\Option\TypeApplication;
 use App\Models\Recruit\Option\TypeBenefit;
+use App\Models\Recruit\Option\TypeCareer;
 use App\Models\Recruit\Option\TypeDay;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeSalary;
@@ -52,6 +53,7 @@ class RecruitController extends Controller
             'typeWork' => TypeWork::all(),
             'typeJob' => TypeJob::all(),
             'typeSalary' => TypeSalary::all(),
+            'typeCareer' => TypeCareer::all(),
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
@@ -61,6 +63,7 @@ class RecruitController extends Controller
 
     public function saveRecruitDataToSession(Request $request): \Illuminate\Http\JsonResponse
     {
+        logger($request);
         // 구인 등록 유효성 검사
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
