@@ -11,6 +11,7 @@
     <script type="text/javascript" src="{{ asset('js/editor.js')  }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/timepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pages/popup/ie-popup.js') }}"></script>
     <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript">
         $(function () {
@@ -21,7 +22,7 @@
                 let data = new FormData(form);
                 let editorContent = CKEDITOR.instances.editor.getData();
 
-                data.append('content',editorContent);
+                data.append('content', editorContent);
 
                 $('#albatalk_recruit_form').parsley().validate();
                 if ($('#albatalk_recruit_form').parsley().isValid()) {
@@ -119,6 +120,7 @@
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-post.css') }}">
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/albatalk/albatalk-common.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/desktop/pages/popup/ie-popup.css') }}">
 @endsection
 
 @section('content')
@@ -526,7 +528,7 @@
                                                             @break
                                                         @else
                                                             <option value="{{ $study->id }}"
-                                                                    @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
+                                                                @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
@@ -550,7 +552,8 @@
                                                        class="career-select-check"
                                                        value="N">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
-                                                       value="1" @if(old('is_career') == 1) checked @endif
+                                                       value={{\App\Models\Recruit\Recruit::JUNIOR}}
+                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::JUNIOR) checked @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
@@ -558,25 +561,36 @@
                                             </div>
                                             <div class="radio-wrap">
                                                 <input type="radio" id="career_field_02" class="career" name="is_career"
-                                                       value="2" @if(old('is_career') == 2) checked @endif>
+                                                       value={{\App\Models\Recruit\Recruit::SENIOR}}
+                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::SENIOR) checked @endif>
                                                 <label for="career_field_02" class="career-radio-label">경력</label>
-                                                <select name="career" id="career"
-                                                        class="input-xs radio-input select-menu career-select"
-                                                        @if(old('is_career') != 2) disabled @endif>
+                                                <select class="input-xs radio-input select-menu career-select"
+                                                        name="career"
+                                                        @if(old('is_career') != \App\Models\Recruit\Recruit::SENIOR) disabled @endif>
                                                     <option value="0">경력기간 선택</option>
-                                                    @for ($i = 1; $i <= 30; $i++)
-                                                        @if($i == 30)
-                                                            <option value="{{ $i }}"
-                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
-                                                                이상
-                                                            </option>
-                                                        @else
-                                                            <option value="{{ $i }}"
-                                                                    @if(old('career') == $i) selected @endif>{{ $i }}년
-                                                            </option>
-                                                        @endif
-                                                    @endfor
+                                                        @foreach($typeCareer as $career)
+                                                            @if($career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_2 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_3 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_4 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_5 )
+                                                            <option value="{{ $career->id }}"
+                                                                    @if(old('$career') == $career->id) selected @endif>{{ $career->type }}</option>
+                                                            @endif
+                                                        @endforeach
                                                 </select>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio" id="career_field_03" class="career" name="is_career"
+                                                       value={{\App\Models\Recruit\Recruit::NO_CAREER}}
+                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::NO_CAREER) checked @endif
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 경력을 선택해주세요."
+                                                       data-parsley-errors-container=".career-error-container">
+                                                <label for="career_field_03">경력무관</label>
                                             </div>
                                         </div>
                                         <div class="career-error-container"></div>
@@ -750,7 +764,8 @@
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
-                                                <input type="radio" id="pay_method_field_02" class="pay-method" name="pay_method" value="계좌이체">
+                                                <input type="radio" id="pay_method_field_02" class="pay-method"
+                                                       name="pay_method" value="계좌이체">
                                                 <label for="pay_method_field_02">실시간 계좌이체</label>
                                             </div>
                                         </div>
@@ -767,4 +782,5 @@
             </section>
         </div>
     </section>
+    @include('.desktop.component.popup.IE.ie_popup')
 @endsection
