@@ -63,7 +63,6 @@ class RecruitController extends Controller
 
     public function saveRecruitDataToSession(Request $request): \Illuminate\Http\JsonResponse
     {
-        logger($request);
         // 구인 등록 유효성 검사
         $validator = $this->recruitService->getValidatorRecruit($request->all());
         if ($validator->fails()) {
@@ -163,6 +162,7 @@ class RecruitController extends Controller
             'typeWork' => TypeWork::all(),
             'typeJob' => TypeJob::all(),
             'typeSalary' => TypeSalary::all(),
+            'typeCareer' => TypeCareer::all(),
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
@@ -235,6 +235,7 @@ class RecruitController extends Controller
             'typeWork' => TypeWork::all(),
             'typeJob' => TypeJob::all(),
             'typeSalary' => TypeSalary::all(),
+            'typeCareer' => TypeCareer::all(),
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),

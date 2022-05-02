@@ -569,7 +569,11 @@
                                                         @if(old('is_career') != \App\Models\Recruit\Recruit::SENIOR) disabled @endif>
                                                     <option value="0">경력기간 선택</option>
                                                         @foreach($typeCareer as $career)
-                                                            @if($career->id == 2 || $career->id == 3 || $career->id == 4 || $career->id == 5)
+                                                            @if($career->id !=
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_1 ||
+                                                                    $career->id !=
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_6
+                                                                )
                                                             <option value="{{ $career->id }}"
                                                                     @if(old('$career') == $career->id) selected @endif>{{ $career->type }}</option>
                                                             @endif
@@ -583,7 +587,7 @@
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
-                                                <label for="career_field_03">경력무관<label>
+                                                <label for="career_field_03">경력무관</label>
                                             </div>
                                         </div>
                                         <div class="career-error-container"></div>
