@@ -569,11 +569,14 @@
                                                         @if(old('is_career') != \App\Models\Recruit\Recruit::SENIOR) disabled @endif>
                                                     <option value="0">경력기간 선택</option>
                                                         @foreach($typeCareer as $career)
-                                                            @if($career->id !=
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_1 ||
-                                                                    $career->id !=
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_6
-                                                                )
+                                                            @if($career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_2 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_3 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_4 ||
+                                                                    $career->id ==
+                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_5 )
                                                             <option value="{{ $career->id }}"
                                                                     @if(old('$career') == $career->id) selected @endif>{{ $career->type }}</option>
                                                             @endif
