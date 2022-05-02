@@ -79,6 +79,7 @@
                 </ul>
             </li>
 
+            <!-- 알바톡 메뉴 -->
             <li class="c-sidebar-nav-dropdown"
                 :class="{ showClass: checkUrl('/admin/albatalk') }">
                 <a href="#" class="c-sidebar-nav-dropdown-toggle">알바톡</a>
@@ -106,6 +107,27 @@
                         <a href="#" class="c-sidebar-nav-link"
                            :class="{ activeClass: checkUrl('/admin/albatalk/recruit/payment') }">
                             구인등록 결제 금액
+                        </a>
+                    </router-link>
+                </ul>
+            </li>
+
+            <!-- 증명서 메뉴 -->
+            <li class="c-sidebar-nav-dropdown"
+                :class="{ showClass: checkUrl('/admin/certificate') }">
+                <a href="#" class="c-sidebar-nav-dropdown-toggle">증명서</a>
+
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <router-link to="/admin/certificate/information" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/albatalk/information') }">
+                            등록 정보
+                        </a>
+                    </router-link>
+                    <router-link to="/admin/certificate/history" tag="li" class="c-sidebar-nav-item">
+                        <a href="#" class="c-sidebar-nav-link"
+                           :class="{ activeClass: checkUrl('/admin/albatalk/history') }">
+                            발급 내역
                         </a>
                     </router-link>
                 </ul>
