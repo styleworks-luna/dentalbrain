@@ -1,5 +1,15 @@
 <template>
     <layout title="등록 정보">
+        <template v-slot:button>
+            <router-link to="/admin/certificate/create/certificate/"
+                         class="btn btn-lg btn-info">
+                자격증 생성
+            </router-link>
+            <router-link to="/admin/certificate/create/completion/"
+                         class="btn btn-lg btn-info">
+                수료증 생성
+            </router-link>
+        </template>
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
                 <p class="mb-0" style="font-size: 12px">증명서 등록 정보 (자격증 {{ stats.recruitIsOpen }}건 | 수료증 {{ stats.recruitIsNotOpen }}건) ]</p>
@@ -33,9 +43,9 @@
                     <td>{{ slotProps.row.company_name }}</td>
                     <td>{{ slotProps.row.applied_resumes_count }}</td>
                     <td>
-                        <a :href="`/albatalk/recruit/${slotProps.row.id}`"
+                        <a :href="`/certificate/certificate/${slotProps.row.id}`"
                            class="btn btn-info">
-                            보기
+                            수정
                         </a>
                     </td>
                 </template>

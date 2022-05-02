@@ -1,8 +1,8 @@
 <template>
-    <layout title="등록 정보">
+    <layout title="발급 내역">
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">증명서 등록 정보 (자격증 {{ stats.recruitIsOpen }}건 | 수료증 {{ stats.recruitIsNotOpen }}건) ]</p>
+                <p class="mb-0" style="font-size: 12px">발급내역 (자격증 {{ stats.recruitIsOpen }}건 | 수료증 {{ stats.recruitIsNotOpen }}건) ]</p>
                 <div>
                     <form @submit.prevent="getData">
                         <select-box class="form-control"
@@ -32,34 +32,16 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>{{ slotProps.row.company_name }}</td>
                     <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.applied_resumes_count }}</td>
                     <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">
-                            {{ slotProps.row.user.login_id }}
-                        </router-link>
-                    </td>
-                    <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.user.name }}
-                        </router-link>
-                    </td>
-                    <td>
-                        <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">{{ slotProps.row.user.email }}
-                        </router-link>
-                    </td>
-                    <td>{{ slotProps.row.created_at }}</td>
-                    <td v-if="(slotProps.row.ended_at)==null">채용시까지</td>
-                    <td v-else>{{ slotProps.row.ended_at }}</td>
-                    <td v-if="(Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)))<0">게재만료</td>
-                    <td v-else>{{ Helper.msToDate(Helper.dateCompareWithNow(slotProps.row.expired_at)) }}일</td>
-                    <td>
-                        <a :href="`/albatalk/recruit/${slotProps.row.id}`"
+                        <a :href="`/certificate/certificate/${slotProps.row.id}`"
                            class="btn btn-info">
-                            보기
+                            수정
                         </a>
-                    </td>
-                    <td>
-                        <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn btn-danger text-white border-danger"
-                                     @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                     </td>
                 </template>
             </table-grid>
@@ -95,23 +77,48 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '10%'
+                    width: '5%'
                 },
                 {
                     name: 'category',
                     text: '구분',
-                    width: '10%'
+                    width: '6%'
                 },
                 {
                     name: 'title',
-                    text: '제목',
-                    width: '30%'
+                    text: '증명서제목',
+                    width: '10%'
                 },
                 {
-                    name: 'edit',
-                    text: '수정',
-                    width: '20%'
-                }
+                    name: 'lecture_name',
+                    text: '강의명',
+                    width: '10%'
+                },
+                {
+                    name: 'user_id',
+                    text: 'ID',
+                    width: '5%'
+                },
+                {
+                    name: 'name',
+                    text: '이름',
+                    width: '8%'
+                },
+                {
+                    name: 'email',
+                    text: '이메일',
+                    width: '8%'
+                },
+                {
+                    name: 'phone',
+                    text: '연락처',
+                    width: '8%'
+                },
+                {
+                    name: 'public',
+                    text: '보기',
+                    width: '5%'
+                },
             ]
         },
         CategoryOptions() {
