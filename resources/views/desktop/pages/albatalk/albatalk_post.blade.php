@@ -708,9 +708,27 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>공고 기간</th>
+                                    <th>게재기간 *</th>
                                     <td class="wrapper-lg">
-                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                        <div class="radio-container">
+                                            @foreach($typeWork as $work)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="work_type_field_[{{ $work->id }}]"
+                                                           name="work"
+                                                           value={{ $work->id }}
+                                                           @if(old('work') == $work->id)
+                                                               checked
+                                                           @endif
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label
+                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
+                                                </div>
+                                            @endforeach
+                                            <span class="tail">결제시점부터 선택하신 일정으로 구인 공고가 게재됩니다.</span>
+                                        </div>
+                                        <div class="period-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
