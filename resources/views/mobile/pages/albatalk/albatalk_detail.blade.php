@@ -163,7 +163,7 @@
                             </tr>
                             <tr>
                                 <th>경력</th>
-                                <td><p>신입</p></td>
+                                <td><p>{{$recruit->typeCareer->type}}</p></td>
                             </tr>
                             <tr>
                                 <th>근무요일</th>

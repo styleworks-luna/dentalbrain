@@ -9,6 +9,7 @@ use App\Models\Recruit\Option\RecruitBenefit;
 use App\Models\Recruit\Option\RecruitDay;
 use App\Models\Recruit\Option\RecruitJob;
 use App\Models\Recruit\Option\RecruitSalary;
+use App\Models\Recruit\Option\TypeCareer;
 use App\Models\Recruit\Option\TypeJob;
 use App\Models\Recruit\Option\TypeStudy;
 use App\Models\Recruit\Option\TypeWork;
@@ -38,9 +39,13 @@ class Recruit extends Model
     const TERM = 7;
 
     // 신입
-    static $JUNIOR = 1;
+    const JUNIOR = 1;
     // 경력
-    static $SENIOR = 2;
+    const SENIOR = 2;
+    // 경력무관
+    const NO_CAREER = 3;
+    // 경력 선택 값
+    const SENIOR_SELECT_VALUE = [2, 3, 4, 5];
 
     // 학력
     static $ACADEMIC = 1;
@@ -125,6 +130,11 @@ class Recruit extends Model
     public function typeStudy(): BelongsTo
     {
         return $this->belongsTo(TypeStudy::class, 'type_study_id', 'id');
+    }
+
+    public function typeCareer(): BelongsTo
+    {
+        return $this->belongsTo(TypeCareer::class, 'type_career_id', 'id');
     }
 
     public function file(): BelongsTo
