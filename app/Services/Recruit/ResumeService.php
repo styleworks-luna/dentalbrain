@@ -68,7 +68,26 @@ class ResumeService
             'department_3' => ['nullable', 'string', 'max:100',],
         ];
 
-        return Validator::make($data, array_merge($privacyRules, $certificateRules, $jobPositionRules), [
+        $careerRules = [
+            'career_started_at_1' => ['nullable', 'string', 'max:100'],
+            'career_ended_at_1' => ['nullable', 'string', 'max:100'],
+            'career_company_1' => ['nullable', 'string', 'max:100'],
+            'career_task_1' => ['nullable', 'string', 'max:100'],
+            'career_started_at_2' => ['nullable', 'string', 'max:100'],
+            'career_ended_at_2' => ['nullable', 'string', 'max:100'],
+            'career_company_2' => ['nullable', 'string', 'max:100'],
+            'career_task_2' => ['nullable', 'string', 'max:100'],
+            'career_started_at_3' => ['nullable', 'string', 'max:100'],
+            'career_ended_at_3' => ['nullable', 'string', 'max:100'],
+            'career_company_3' => ['nullable', 'string', 'max:100'],
+            'career_task_3' => ['nullable', 'string', 'max:100'],
+            'career_started_at_4' => ['nullable', 'string', 'max:100'],
+            'career_ended_at_4' => ['nullable', 'string', 'max:100'],
+            'career_company_4' => ['nullable', 'string', 'max:100'],
+            'career_task_4' => ['nullable', 'string', 'max:100'],
+        ];
+
+        return Validator::make($data, array_merge($privacyRules, $certificateRules, $jobPositionRules, $careerRules), [
             'required' => '필수로 작성하셔야 합니다.',
             'max' => ':max 자 이내로 입력해 주세요.'
         ]);
