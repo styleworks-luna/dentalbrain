@@ -35,8 +35,6 @@ class ResumeService
             'address' => ['required', 'string', 'max:100',],
             'graduated_at' => ['nullable', 'string', 'max:100',],
             'school' => ['nullable', 'string', 'max:100',],
-            'major' => ['nullable', 'string', 'max:100',],
-            'degree' => ['nullable', 'string', 'max:100',],
             'graduation_type' => ['nullable', 'string', 'max:100',],
             'about_me' => ['nullable', 'string', 'max:1000'],
         ];
