@@ -132,6 +132,50 @@
                             </section>
                         </div>
                         <div class="m-row">
+                            <section class="career-information-wrap">
+                                <div class="information-title">
+                                    <h2>경력사항</h2>
+                                </div>
+                                <div class="career-information-content">
+                                    <table class="career">
+                                        <tbody>
+                                            <tr>
+                                                <td>2020년 3월 ~ 2021년 2월</td>
+                                            </tr>
+                                            <tr>
+                                                <td>덴탈브레인치과</td>
+                                            </tr>
+                                            <tr>
+                                                <td>임플란트</td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td>2020년 3월 ~ 2021년 2월</td>
+                                            </tr>
+                                            <tr>
+                                                <td>덴탈브레인치과</td>
+                                            </tr>
+                                            <tr>
+                                                <td>임플란트</td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td>2020년 3월 ~ 2021년 2월</td>
+                                            </tr>
+                                            <tr>
+                                                <td>덴탈브레인치과</td>
+                                            </tr>
+                                            <tr>
+                                                <td>임플란트</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
                             <section class="self-information-wrap">
                                 <div class="information-title">
                                     <h2>자기소개</h2>
