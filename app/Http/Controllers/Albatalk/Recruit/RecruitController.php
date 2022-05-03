@@ -48,6 +48,9 @@ class RecruitController extends Controller
         // 회원 상태에 따른 결제 금액
         $price = RecruitPrice::getRecruitPrice($user);
 
+        // 게재일 별 금액 처리
+        $termPrice = RecruitPrice::getTermPrice($price);
+
         return view(viewPrefix() . 'pages.albatalk.albatalk_post')->with([
             'typeApplication' => TypeApplication::all(),
             'typeWork' => TypeWork::all(),
@@ -57,21 +60,23 @@ class RecruitController extends Controller
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
-            'price' => $price,
+            'termPrice' => $termPrice,
         ]);
     }
 
     public function saveRecruitDataToSession(Request $request): \Illuminate\Http\JsonResponse
     {
+        logger($request);
         // 구인 등록 유효성 검사
-        $validator = $this->recruitService->getValidatorRecruit($request->all());
+        $validator = $this->recruitService->getValidatorRecruit($request->all(), [
+            'term' => ['required', 'numeric'],
+        ]);
         if ($validator->fails()) {
             $messageBag = $validator->errors();
 
             $collection = collect($messageBag)->map(function ($item, $key) {
                 return ['name' => $key, 'message' => $item[0]];
             });
-
             return response()->json($collection->toArray(), 400);
         }
 
@@ -81,12 +86,19 @@ class RecruitController extends Controller
         return response()->json(['massage' => 'ok']);
     }
 
-    public function success(SuccessPayments $request)
+    public function success(SuccessPayments $request): \Illuminate\Http\RedirectResponse
     {
         $user = Auth::user();
+
+        // 회원 별 구인 등록 가격
         $realPrice = RecruitPrice::getRecruitPrice($user);
 
-        if ($realPrice != $request->get('amount')) {
+        // 게재기간 별 구인 등록 가격
+        $term = $request->session()->get(Recruit::SESSION_KEY)['term'];
+        $termPrice = RecruitPrice::getTermPrice($realPrice);
+
+        // 구인 등록 가격 확인
+        if ($termPrice[$term] != $request->get('amount')) {
             return redirect()->back()->with(['alert' => '결제 금액이 맞지 않습니다.']);
         }
 
@@ -177,7 +189,9 @@ class RecruitController extends Controller
 
     public function update(Recruit $recruit, Request $request)
     {
-        $validator = $this->recruitService->getValidatorRecruit($request->all());
+        $validator = $this->recruitService->getValidatorRecruit($request->all(), [
+            'term' => ['nullable', 'numeric'],
+        ]);
         if ($validator->fails()) {
             $errorBags = $validator->errors();
 
@@ -221,6 +235,9 @@ class RecruitController extends Controller
         // 회원 상태에 따른 결제 금액
         $price = RecruitPrice::getRecruitPrice($user);
 
+        // 게재일 별 금액 처리
+        $termPrice = RecruitPrice::getTermPrice($price);
+
         $recruit = Recruit::query()->with(['file', 'file1', 'file2', 'file3', 'typeWork', 'typeStudy'])
             ->where('id', $recruit->id)->first();
 
@@ -239,7 +256,7 @@ class RecruitController extends Controller
             'typeStudy' => TypeStudy::all(),
             'typeDay' => TypeDay::all(),
             'typeBenefit' => TypeBenefit::all(),
-            'price' => $price,
+            'termPrice' => $termPrice,
             'recruit' => $recruit,
             'recruitApplications' => $recruitApplications,
             'recruitJobs' => $recruitJobs,

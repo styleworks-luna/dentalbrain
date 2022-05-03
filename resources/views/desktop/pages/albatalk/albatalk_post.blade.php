@@ -55,7 +55,7 @@
                 var paymentObj;
                 var cardCompany = $('.pay-method-select').val();
 
-                const amount = {{ $price }};
+                const amount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }};
                 const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                 const orderName = '구인 결제';
                 const customerName = '{{ auth()->user()->name }}';
@@ -711,21 +711,36 @@
                                     <th>게재기간 *</th>
                                     <td class="wrapper-lg">
                                         <div class="radio-container">
-                                            @foreach($typeWork as $work)
                                                 <div class="radio-wrap">
-                                                    <input type="radio" id="work_type_field_[{{ $work->id }}]"
-                                                           name="work"
-                                                           value={{ $work->id }}
-                                                           @if(old('work') == $work->id)
-                                                               checked
-                                                           @endif
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
                                                            data-parsley-required="true"
                                                            data-parsley-required-message="※ 게재기간을 선택해주세요."
                                                            data-parsley-errors-container=".period-type-error-container">
-                                                    <label
-                                                        for="work_type_field_[{{ $work->id }}]">{{ $work->type }}</label>
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}일</label>
                                                 </div>
-                                            @endforeach
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}일</label>
+                                                </div>
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}일</label>
+                                                </div>
                                             <span class="tail">결제시점부터 선택하신 일정으로 구인 공고가 게재됩니다.</span>
                                         </div>
                                         <div class="period-type-error-container"></div>
@@ -734,7 +749,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{ number_format($price) }}원</p>
+                                        <p class="money">{{ number_format($termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7]) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>
