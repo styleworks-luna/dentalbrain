@@ -192,33 +192,15 @@
                             <h3>학력사항</h3>
                             <table>
                                 <tr>
-                                    <th>학위취득년월</th>
+                                    <th>졸업년월</th>
                                     <td>
                                         <input type="text" name="graduated_at" value="{{ old("graduated_at") }}">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>출신학교</th>
+                                    <th>출신학교 및 학과</th>
                                     <td>
                                         <input type="text" name="school" value="{{ old("school") }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>학과(세부전공)</th>
-                                    <td>
-                                        <input type="text"
-                                               id="major"
-                                               name="major" value="{{ old("major") }}">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>학위</th>
-                                    <td>
-                                        <input type="text"
-                                               id="degree"
-                                               name="degree"
-                                               value="{{ old("degree") }}"
-                                               placeholder="ex. 학사 or 석사">
                                     </td>
                                 </tr>
                                 <tr>
@@ -286,6 +268,129 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    <div class="career-form-wrap common-form-wrap">
+                        <h3>경력사항</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>근무기간</th>
+                                <th>치과명</th>
+                                <th>담당업무</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                           id="first_career_term_start"
+                                           class="term"
+                                           name="certificate_name_1"
+                                           value="{{ old('certificate_name_1') }}">
+                                    <span>~</span>
+                                    <input type="text"
+                                            id="first_career_term_start"
+                                            class="term"
+                                            name="certificate_name_1"
+                                            value="{{ old('certificate_name_1') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="first_certificate_day"
+                                           name="certificate_day_1"
+                                           value="{{ old('certificate_day_1') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="first_certificate_agency"
+                                           name="certificate_agency_1"
+                                           value="{{ old('certificate_agency_1') }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                            id="second_certificate_name"
+                                            class="term"
+                                            name="certificate_name_2"
+                                            value="{{ old('certificate_name_2') }}">
+                                    <span>~</span>
+                                    <input type="text"
+                                            id="second_career_term"
+                                            class="term"
+                                            name="certificate_name_1"
+                                            value="{{ old('certificate_name_1') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="second_certificate_day"
+                                           name="certificate_day_2"
+                                           value="{{ old('certificate_agency_2') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="second_certificate_agency"
+                                           name="certificate_agency_2"
+                                           value="{{ old('certificate_agency_2') }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                           id="third_certificate_name"
+                                           class="term"
+                                           name="certificate_name_3"
+                                           value="{{ old('certificate_name_3') }}">
+                                    <span>~</span>
+                                    <input type="text"
+                                           id="second_certificate_agency"
+                                           class="term"
+                                           name="certificate_agency_2"
+                                           value="{{ old('certificate_agency_2') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="third_certificate_day"
+                                           name="certificate_day_3"
+                                           value="{{ old('certificate_day_3') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="third_certificate_agency"
+                                           name="certificate_agency_3"
+                                           value="{{ old('certificate_agency_3') }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text"
+                                            id="second_certificate_name"
+                                            class="term"
+                                            name="certificate_name_2"
+                                            value="{{ old('certificate_name_2') }}">
+                                    <span>~</span>
+                                    <input type="text"
+                                            id="second_career_term"
+                                            class="term"
+                                            name="certificate_name_1"
+                                            value="{{ old('certificate_name_1') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="fourth_certificate_day"
+                                           name="certificate_day_4"
+                                           value="{{ old('certificate_day_4') }}">
+                                </td>
+                                <td>
+                                    <input type="text"
+                                           id="fourth_certificate_agency"
+                                           name="certificate_agency_4"
+                                           value="{{ old('certificate_agency_4') }}">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="certification-form-wrap common-form-wrap">
