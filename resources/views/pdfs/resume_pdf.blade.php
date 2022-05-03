@@ -267,22 +267,22 @@
         font-size: 16px;
     }
 
-    .resume-pdf .certification-information-wrap {
+    .resume-pdf .career-information-wrap .certification-information-wrap {
         margin-top: 100px;
     }
 
-    .certification-information-wrap .certificate {
+    .career-information-wrap .certification-information-wrap .certificate {
         width: 100%;
     }
 
-    .certification-information-wrap .certificate th {
+    .career-information-wrap .certification-information-wrap .certificate th {
         padding: 14px 0;
         background-color: #f7f7f7;
         border-bottom: 1px solid #d8d8d8;
         color: #777;
     }
 
-    .certification-information-wrap .certificate td {
+    .career-information-wrap .certification-information-wrap .certificate td {
         height: 62px;
         border-bottom: 1px solid #d8d8d8;
         font-size: 16px;
@@ -290,7 +290,7 @@
         text-align: center;
     }
 
-    .certification-information-wrap .certificate tr:last-child td {
+    .career-information-wrap .certification-information-wrap .certificate tr:last-child td {
         border-bottom: 2px solid #d8d8d8;
     }
 
@@ -442,6 +442,39 @@
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                </div>
+            </section>
+            <section class="career-information-wrap">
+                <div class="information-title">
+                    <h2>경력사항</h2>
+                </div>
+                <div class="career-information-content">
+                    <table class="career">
+                        <thead>
+                        <tr>
+                            <th style="width: 250px">근무기간</th>
+                            <th style="width: 250px">치과명</th>
+                            <th style="width: 250px">담당업무</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </section>
