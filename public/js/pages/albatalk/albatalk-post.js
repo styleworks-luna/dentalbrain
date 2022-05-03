@@ -168,9 +168,7 @@ $(function () {
         } else {
             $('.study-select-check').parsley().destroy();
             $('.study-select-check').removeAttr(
-                'data-parsley-pattern',
-                "data-parsley-pattern-message",
-                "data-parsley-errors-container"
+                'data-parsley-pattern data-parsley-pattern-message data-parsley-errors-container'
             );
         }
     })
@@ -197,9 +195,41 @@ $(function () {
         } else {
             $('.career-select-check').parsley().destroy();
             $('.career-select-check').removeAttr(
-                'data-parsley-pattern',
-                "data-parsley-pattern-message",
-                "data-parsley-errors-container"
+                'data-parsley-pattern data-parsley-pattern-message data-parsley-errors-container'
+            );
+        }
+    });
+
+    $('.salary').change(function () {
+        salaryValue = $('.salary:checked').val();
+        if (salaryValue == "4") {
+            $('.salary-input').attr({
+                'data-parsley-required': "[Y]",
+                "data-parsley-required-message": "※ 내용을 입력해주세요.",
+                "data-parsley-errors-container": ".salary-type-error-container"
+            });
+            $('.salary-input').parsley().validate();
+        } else {
+            $('.salary-input').parsley().destroy();
+            $('.salary-input').removeAttr(
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+            );
+        }
+    });
+
+    $('.work-day').change(function () {
+        salaryValue = $('.work-day:checked').val();
+        if (salaryValue == "4") {
+            $('.work-day-input').attr({
+                'data-parsley-required': "[Y]",
+                "data-parsley-required-message": "※ 내용을 입력해주세요.",
+                "data-parsley-errors-container": ".day-type-error-container"
+            });
+            $('.work-day-input').parsley().validate();
+        } else {
+            $('.work-day-input').parsley().destroy();
+            $('.work-day-input').removeAttr(
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
         }
     });
@@ -361,29 +391,19 @@ $(function () {
             $('.date-compare-check').parsley().destroy();
 
             $('.start-date').removeAttr(
-                'data-parsley-required',
-                "data-parsley-required-message",
-                "data-parsley-errors-container"
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
             $('.start-time').removeAttr(
-                'data-parsley-required',
-                "data-parsley-required-message",
-                "data-parsley-errors-container"
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
             $('.end-date').removeAttr(
-                'data-parsley-required',
-                "data-parsley-required-message",
-                "data-parsley-errors-container"
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
             $('.end-time').removeAttr(
-                'data-parsley-required',
-                "data-parsley-required-message",
-                "data-parsley-errors-container"
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
             $('.date-compare-check').removeAttr(
-                'data-parsley-pattern',
-                "data-parsley-pattern-message",
-                "data-parsley-errors-container"
+                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
             );
         }
     }
