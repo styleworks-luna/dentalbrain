@@ -759,9 +759,23 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>공고 기간</th>
+                                    <th>게재기간 *</th>
                                     <td class="wrapper-lg">
-                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                        <div class="radio-container">
+                                            @for ($i = 1; $i <= 3; $i++)
+                                                <div class="radio-wrap">
+                                                    <input type="radio" id="term_type_field_[{{$i}}]"
+                                                           name="term"
+                                                           value={{$i * 7}}
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{$i}}]">{{$i * 7}}일</label>
+                                                </div>
+                                            @endfor
+                                            <span class="tail">결제시점부터 선택하신 일정으로 구인 공고가 게재됩니다.</span>
+                                        </div>
+                                        <div class="period-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>

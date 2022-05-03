@@ -15,6 +15,25 @@
     <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript">
         $(function () {
+            let term, baseMoney, userAmount
+
+            $('.term').change(function() {
+                term = $('.term:checked').val();
+                baseMoney = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
+                if(term == 7) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+                if(term == 14) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_14] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+                if(term == 21) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_21] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+            })
+
             $('.btn-submit').click(function (e) {
                 e.preventDefault();
 
@@ -55,7 +74,7 @@
                 var paymentObj;
                 var cardCompany = $('.pay-method-select').val();
 
-                const amount = {{ $price }};
+                const amount = userAmount;
                 const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                 const orderName = '구인 결제';
                 const customerName = '{{ auth()->user()->name }}';
@@ -708,15 +727,51 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>공고 기간</th>
+                                    <th>게재기간 *</th>
                                     <td class="wrapper-lg">
-                                        <p class="term">결제시점으로부터 7일간 구인 공고가 게시됩니다.</p>
+                                        <div class="radio-container">
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
+                                                           class="term"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}일</label>
+                                                </div>
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
+                                                           class="term"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}일</label>
+                                                </div>
+                                                <div class="radio-wrap">
+                                                    <input type="radio"
+                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
+                                                           class="term"
+                                                           name="term"
+                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
+                                                           data-parsley-required="true"
+                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                           data-parsley-errors-container=".period-type-error-container">
+                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}일</label>
+                                                </div>
+                                            <span class="tail">결제시점부터 선택하신 일정으로 구인 공고가 게재됩니다.</span>
+                                        </div>
+                                        <div class="period-type-error-container"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{ number_format($price) }}원</p>
+                                        <p class="money">{{ number_format($termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7]) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>

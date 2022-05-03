@@ -34,7 +34,7 @@ use Illuminate\Validation\Rule;
 
 class RecruitService
 {
-    public function getValidatorRecruit($rawData): \Illuminate\Contracts\Validation\Validator
+    public function getValidatorRecruit($rawData, array $additionalRules = []): \Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($rawData, [
             'main_file_id' => ['required', 'numeric', 'min:1',],
@@ -84,7 +84,8 @@ class RecruitService
             'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
 
             'content' => ['nullable'],
-        ]);
+            'term' => ['nullable', 'numeric']
+        ], $additionalRules);
     }
 
     public function storeRecruit(array $data)
@@ -114,12 +115,12 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-            'term' => Recruit::TERM,
-            'expired_at' => now()->addDays(Recruit::TERM),
+            'expired_at' => now()->addDays($data['term']),
 
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
+            'term' => $data['term'],
         ]);
 
     }
@@ -240,11 +241,10 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-            'term' => $data['term'] ?? Recruit::TERM,
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['pay_status'] ?? null,
-            'pay_status' => $data['pay_status'] ?? Recruit::$PAY_BEFORE,
+            'pay_status' => $data['pay_status'] ?? Recruit::$PAY_PAID,
         ]);
 
         return $recruit;
