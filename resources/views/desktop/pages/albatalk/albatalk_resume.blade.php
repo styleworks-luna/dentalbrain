@@ -286,26 +286,26 @@
                                     <input type="text"
                                            id="first_career_term_start"
                                            class="term"
-                                           name="certificate_name_1"
-                                           value="{{ old('certificate_name_1') }}">
+                                           name="career_started_at_1"
+                                           value="{{ old('career_started_at_1') }}">
                                     <span>~</span>
                                     <input type="text"
                                             id="first_career_term_start"
                                             class="term"
-                                            name="certificate_name_1"
-                                            value="{{ old('certificate_name_1') }}">
+                                            name="career_ended_at_1"
+                                            value="{{ old('career_ended_at_1') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="first_certificate_day"
-                                           name="certificate_day_1"
-                                           value="{{ old('certificate_day_1') }}">
+                                           name="career_company_1"
+                                           value="{{ old('career_company_1') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="first_certificate_agency"
-                                           name="certificate_agency_1"
-                                           value="{{ old('certificate_agency_1') }}">
+                                           name="career_task_1"
+                                           value="{{ old('career_task_1') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -313,26 +313,26 @@
                                     <input type="text"
                                             id="second_certificate_name"
                                             class="term"
-                                            name="certificate_name_2"
-                                            value="{{ old('certificate_name_2') }}">
+                                            name="career_started_at_2"
+                                            value="{{ old('career_started_at_2') }}">
                                     <span>~</span>
                                     <input type="text"
                                             id="second_career_term"
                                             class="term"
-                                            name="certificate_name_1"
-                                            value="{{ old('certificate_name_1') }}">
+                                            name="career_ended_at_2"
+                                            value="{{ old('career_ended_at_2') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_day"
-                                           name="certificate_day_2"
-                                           value="{{ old('certificate_agency_2') }}">
+                                           name="career_company_2"
+                                           value="{{ old('career_company_2') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="second_certificate_agency"
-                                           name="certificate_agency_2"
-                                           value="{{ old('certificate_agency_2') }}">
+                                           name="career_task_2"
+                                           value="{{ old('career_task_2') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -340,26 +340,26 @@
                                     <input type="text"
                                            id="third_certificate_name"
                                            class="term"
-                                           name="certificate_name_3"
-                                           value="{{ old('certificate_name_3') }}">
+                                           name="career_started_at_3"
+                                           value="{{ old('career_started_at_3') }}">
                                     <span>~</span>
                                     <input type="text"
                                            id="second_certificate_agency"
                                            class="term"
-                                           name="certificate_agency_2"
-                                           value="{{ old('certificate_agency_2') }}">
+                                           name="career_ended_at_3"
+                                           value="{{ old('career_ended_at_3') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_day"
-                                           name="certificate_day_3"
-                                           value="{{ old('certificate_day_3') }}">
+                                           name="career_company_3"
+                                           value="{{ old('career_company_3') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="third_certificate_agency"
-                                           name="certificate_agency_3"
-                                           value="{{ old('certificate_agency_3') }}">
+                                           name="career_task_3"
+                                           value="{{ old('career_task_3') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -367,26 +367,26 @@
                                     <input type="text"
                                             id="second_certificate_name"
                                             class="term"
-                                            name="certificate_name_2"
-                                            value="{{ old('certificate_name_2') }}">
+                                            name="career_started_at_4"
+                                            value="{{ old('career_started_at_4') }}">
                                     <span>~</span>
                                     <input type="text"
                                             id="second_career_term"
                                             class="term"
-                                            name="certificate_name_1"
-                                            value="{{ old('certificate_name_1') }}">
+                                            name="career_ended_at_4"
+                                            value="{{ old('career_ended_at_4') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_day"
-                                           name="certificate_day_4"
-                                           value="{{ old('certificate_day_4') }}">
+                                           name="career_company_4"
+                                           value="{{ old('career_company_4') }}">
                                 </td>
                                 <td>
                                     <input type="text"
                                            id="fourth_certificate_agency"
-                                           name="certificate_agency_4"
-                                           value="{{ old('certificate_agency_4') }}">
+                                           name="career_task_4"
+                                           value="{{ old('career_task_4') }}">
                                 </td>
                             </tr>
                             </tbody>
