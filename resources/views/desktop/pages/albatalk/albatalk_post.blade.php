@@ -15,6 +15,25 @@
     <script src="https://js.tosspayments.com/v1"></script>
     <script type="text/javascript">
         $(function () {
+            let term, baseMoney, userAmount
+
+            $('.term').change(function() {
+                term = $('.term:checked').val();
+                baseMoney = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
+                if(term == 7) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+                if(term == 14) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_14] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+                if(term == 21) {
+                    userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_21] }}
+                    $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
+                }
+            })
+
             $('.btn-submit').click(function (e) {
                 e.preventDefault();
 
@@ -55,7 +74,7 @@
                 var paymentObj;
                 var cardCompany = $('.pay-method-select').val();
 
-                const amount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }};
+                const amount = userAmount;
                 const orderId = '{{ \Illuminate\Support\Str::random(3) . time() }}';
                 const orderName = '구인 결제';
                 const customerName = '{{ auth()->user()->name }}';
@@ -714,6 +733,7 @@
                                                 <div class="radio-wrap">
                                                     <input type="radio"
                                                            id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
+                                                           class="term"
                                                            name="term"
                                                            value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
                                                            data-parsley-required="true"
@@ -724,6 +744,7 @@
                                                 <div class="radio-wrap">
                                                     <input type="radio"
                                                            id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
+                                                           class="term"
                                                            name="term"
                                                            value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
                                                            data-parsley-required="true"
@@ -734,6 +755,7 @@
                                                 <div class="radio-wrap">
                                                     <input type="radio"
                                                            id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
+                                                           class="term"
                                                            name="term"
                                                            value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
                                                            data-parsley-required="true"
