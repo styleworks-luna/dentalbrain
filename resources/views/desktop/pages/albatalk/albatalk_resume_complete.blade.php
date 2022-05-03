@@ -131,6 +131,40 @@
                     </div>
                 </section>
 
+                <section class="career-information-wrap">
+                    <div class="information-title">
+                        <h2>경력사항</h2>
+                    </div>
+                    <div class="career-information-content">
+                        <table class="certificate">
+                            <thead>
+                                <tr>
+                                    <th>근무기간</th>
+                                    <th>치과명</th>
+                                    <th>담당업무</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2020년 3월 ~ 2021년 2월</td>
+                                    <td>온오프믹스치과</td>
+                                    <td>충치치료</td>
+                                </tr>
+                                <tr>
+                                    <td>2020년 3월 ~ 2021년 2월</td>
+                                    <td>온오프믹스치과</td>
+                                    <td>충치치료</td>
+                                </tr>
+                                <tr>
+                                    <td>2020년 3월 ~ 2021년 2월</td>
+                                    <td>온오프믹스치과</td>
+                                    <td>충치치료</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
                 <section class="self-information-wrap">
                     <div class="information-title">
                         <h2>자기소개</h2>

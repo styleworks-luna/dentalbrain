@@ -152,6 +152,50 @@
 
                             &:last-child::after
                                 display: none
+        
+        .career-information-wrap
+            +margin(top 60px)
+
+            .career-information-content
+                +border(2px solid $gray-900, top)
+
+                table
+                    +size(100%)
+                    +border(2px solid $border-color-base, bottom)
+
+                    thead
+                        +border(1px solid $border-color-base, bottom)
+
+                        th
+                            +size(250px)
+                            +padding(14px 40px)
+                            background-color: $background-color-menu
+                            color: $gray-700
+                            line-height: 16px
+                            &:first-child
+                                +padding(right 115px)
+                            &:nth-child(3)
+                                +padding(left 115px)
+                                
+                                
+
+                    tbody
+                        tr
+                            +border(1px solid $border-color-base, bottom)
+
+                            &:last-child
+                                +border(0, bottom)
+
+                        td
+                            +padding(22px 40px)
+                            font-size: 16px
+                            line-height: 18px
+                            text-align: center
+
+                            &:first-child
+                                +padding(right 115px)
+                            &:nth-child(3)
+                                +padding(left 115px)
 
         .self-information-wrap
             +margin(top 59px)
