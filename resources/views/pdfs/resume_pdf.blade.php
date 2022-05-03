@@ -267,22 +267,37 @@
         font-size: 16px;
     }
 
-    .resume-pdf .career-information-wrap .certification-information-wrap {
+    .resume-pdf .career-information-wrap {
         margin-top: 100px;
     }
 
-    .career-information-wrap .certification-information-wrap .certificate {
+    .resume-pdf .certification-information-wrap {
+        margin-top: 100px;
+    }
+
+    .career-information-wrap .career {
         width: 100%;
     }
 
-    .career-information-wrap .certification-information-wrap .certificate th {
+    .certification-information-wrap .certificate {
+        width: 100%;
+    }
+
+    .career-information-wrap .career th {
         padding: 14px 0;
         background-color: #f7f7f7;
         border-bottom: 1px solid #d8d8d8;
         color: #777;
     }
 
-    .career-information-wrap .certification-information-wrap .certificate td {
+    .certification-information-wrap .certificate th {
+        padding: 14px 0;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #d8d8d8;
+        color: #777;
+    }
+
+    .career-information-wrap .career td {
         height: 62px;
         border-bottom: 1px solid #d8d8d8;
         font-size: 16px;
@@ -290,7 +305,19 @@
         text-align: center;
     }
 
-    .career-information-wrap .certification-information-wrap .certificate tr:last-child td {
+    .certification-information-wrap .certificate td {
+        height: 62px;
+        border-bottom: 1px solid #d8d8d8;
+        font-size: 16px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .career-information-wrap .career tr:last-child td {
+        border-bottom: 2px solid #d8d8d8;
+    }
+
+    .certification-information-wrap .certificate tr:last-child td {
         border-bottom: 2px solid #d8d8d8;
     }
 
