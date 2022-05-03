@@ -480,26 +480,26 @@
                     <table class="career">
                         <thead>
                         <tr>
-                            <th style="width: 250px; padding: 14px 40px; padding-right: 115px">근무기간</th>
-                            <th style="width: 250px; padding: 14px 40px;">치과명</th>
-                            <th style="width: 250px; padding: 14px 40px; padding-left: 115px">담당업무</th>
+                            <th style="width: 250px; padding: 14px 0; padding-right: 115px">근무기간</th>
+                            <th style="width: 250px; padding: 14px 0;">치과명</th>
+                            <th style="width: 250px; padding: 14px 0; padding-left: 115px">담당업무</th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="padding: 14px 40px; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
-                                <td style="padding: 14px 40px;">온오프믹스치과</td>
-                                <td style="padding: 14px 40px; padding-left: 115px">충치치료</td>
+                                <td style="padding: 14px 0; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
+                                <td style="padding: 14px 0;">온오프믹스치과</td>
+                                <td style="padding: 14px 0; padding-left: 115px">충치치료</td>
                             </tr>
                             <tr>
-                                <td style="padding: 14px 40px; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
-                                <td style="padding: 14px 40px;">온오프믹스치과</td>
-                                <td style="padding: 14px 40px; padding-left: 115px">충치치료</td>
+                                <td style="padding: 14px 0; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
+                                <td style="padding: 14px 0;">온오프믹스치과</td>
+                                <td style="padding: 14px 0; padding-left: 115px">충치치료</td>
                             </tr>
                             <tr>
-                                <td style="padding: 14px 40px; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
-                                <td style="padding: 14px 40px;">온오프믹스치과</td>
-                                <td style="padding: 14px 40px; padding-left: 115px">충치치료</td>
+                                <td style="padding: 14px 0; padding-right: 115px">2020년 3월 ~ 2021년 2월</td>
+                                <td style="padding: 14px 0;">온오프믹스치과</td>
+                                <td style="padding: 14px 0; padding-left: 115px">충치치료</td>
                             </tr>
                         </tbody>
                     </table>
