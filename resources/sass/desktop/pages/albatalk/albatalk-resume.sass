@@ -211,6 +211,49 @@
                     th
                         +size(156px)
 
+    .career-form-wrap
+        +margin(top 40px)
+
+        input[type="text"]
+            +size(386px, 50px)
+            +margin(0 auto)
+        
+        table
+            +margin(top 10px)
+            +border(1px solid $border-color-base, top)
+
+        thead
+            th
+                +border(1px solid $border-color-base, right)
+                line-height: 20px
+                text-align: center
+
+                &:last-child
+                    +border(0, right)
+
+        tbody
+            th
+                +padding(0)
+                +border(1px solid $border-color-base, right)
+                text-align: center
+
+            td
+                +border(1px solid $border-color-base, right)
+                +size(428px)
+                &:first-child
+                    +padding(right 0)
+                    display: flex
+                    align-items: center
+                    span
+                        font-size: 16px
+
+                &:last-child
+                    +border(0, right)
+                
+                .term
+                    +size(166px, 50px)
+
+
     .certification-form-wrap
         +margin(top 40px)
 
