@@ -17,7 +17,7 @@
         $(function () {
             let term, baseMoney, userAmount
 
-            $('.term').change(function () {
+            function termCheck() {
                 term = $('.term:checked').val();
                 baseMoney = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
                 if(term == 7)
@@ -33,6 +33,12 @@
                     userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_21] }}
                     $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
                 }
+            }
+
+            termCheck();
+
+            $('.term').change(function () {
+                termCheck();
             })
 
             $('.btn-submit').click(function (e) {

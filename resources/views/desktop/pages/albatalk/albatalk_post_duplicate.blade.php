@@ -16,7 +16,7 @@
         $(function () {
             let term, baseMoney, userAmount
 
-            $('.term').change(function () {
+            function termCheck() {
                 term = $('.term:checked').val();
                 baseMoney = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
                 if(term == 7)
@@ -32,6 +32,12 @@
                     userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_21] }}
                     $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
                 }
+            }
+
+            termCheck();
+
+            $('.term').change(function () {
+                termCheck();
             })
 
             $('.btn-submit').click(function (e) {
@@ -791,6 +797,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term', \App\Models\Recruit\RecruitPrice::TERM_DAY_7) == \App\Models\Recruit\RecruitPrice::TERM_DAY_7) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
@@ -804,6 +811,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_14) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
@@ -817,6 +825,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_21) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
@@ -832,7 +841,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money"></p>
+                                        <p class="money">{{ number_format($termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7]) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>

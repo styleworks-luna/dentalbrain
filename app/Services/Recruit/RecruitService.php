@@ -34,9 +34,9 @@ use Illuminate\Validation\Rule;
 
 class RecruitService
 {
-    public function getValidatorRecruit($rawData, array $additionalRules = []): \Illuminate\Contracts\Validation\Validator
+    public function getValidatorRecruit(Request $rawData, array $additionalRules = []): \Illuminate\Contracts\Validation\Validator
     {
-        return Validator::make($rawData, [
+        return Validator::make($rawData->all(), array_merge([
             'main_file_id' => ['required', 'numeric', 'min:1',],
             'file_1_id' => ['nullable', 'numeric', 'min:1',],
             'file_2_id' => ['nullable', 'numeric', 'min:1',],
@@ -77,14 +77,8 @@ class RecruitService
             'day_value' => ['nullable', Rule::requiredIf(($rawData['day'] ?? 0) == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
 
-//            'deadline' => ['required', Rule::in(Recruit::$DEADLINE_RECRUIT, Recruit::$TIME_FOR_RECRUIT)],
-//            'started_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
-//            'ended_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
-//            'started_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
-//            'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
-
             'content' => ['nullable'],
-        ], $additionalRules);
+        ], $additionalRules));
     }
 
     public function storeRecruit(array $data)
@@ -115,9 +109,6 @@ class RecruitService
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
             'expired_at' => now()->addDays($data['term']),
-
-//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
             'term' => $data['term'],
         ]);
@@ -240,8 +231,6 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['pay_status'] ?? null,
             'pay_status' => $data['pay_status'] ?? Recruit::$PAY_PAID,
         ]);
