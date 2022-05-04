@@ -77,11 +77,11 @@ class RecruitService
             'day_value' => ['nullable', Rule::requiredIf(($rawData['day'] ?? 0) == TypeDay::$TYPE_DAY_4)],
             'benefit' => ['required'],
 
-            'deadline' => ['required', Rule::in(Recruit::$DEADLINE_RECRUIT, Recruit::$TIME_FOR_RECRUIT)],
-            'started_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
-            'ended_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
-            'started_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
-            'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
+//            'deadline' => ['required', Rule::in(Recruit::$DEADLINE_RECRUIT, Recruit::$TIME_FOR_RECRUIT)],
+//            'started_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d'],
+//            'ended_at_ymd' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:Y-m-d', 'after:started_at_ymd'],
+//            'started_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
+//            'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
 
             'content' => ['nullable'],
             'term' => ['nullable', 'numeric']
@@ -117,8 +117,8 @@ class RecruitService
 
             'expired_at' => now()->addDays($data['term']),
 
-            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
+//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
+//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
             'term' => $data['term'],
         ]);
@@ -241,8 +241,8 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
+//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
+//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['pay_status'] ?? null,
             'pay_status' => $data['pay_status'] ?? Recruit::$PAY_PAID,
         ]);
@@ -337,7 +337,7 @@ class RecruitService
     public function searchForAdmin($keyword, $ongoing)
     {
         $builder = Recruit::query()->with('user:id,login_id,name,email')
-            ->select('id', 'is_open', 'user_id', 'company_name', 'created_at', 'started_at', 'ended_at','expired_at')
+            ->select('id', 'is_open', 'user_id', 'company_name', 'created_at', 'expired_at')
             ->withCount(['appliedResumes' => function ($query) {
                 $query->where('status', AppliedResume::STATUS_SUCCESS);
             }]);
