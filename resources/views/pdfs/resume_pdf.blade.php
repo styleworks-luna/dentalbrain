@@ -267,12 +267,27 @@
         font-size: 16px;
     }
 
+    .resume-pdf .career-information-wrap {
+        margin-top: 100px;
+    }
+
     .resume-pdf .certification-information-wrap {
         margin-top: 100px;
     }
 
+    .career-information-wrap .career {
+        width: 100%;
+    }
+
     .certification-information-wrap .certificate {
         width: 100%;
+    }
+
+    .career-information-wrap .career th {
+        padding: 14px 0;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #d8d8d8;
+        color: #777;
     }
 
     .certification-information-wrap .certificate th {
@@ -282,12 +297,24 @@
         color: #777;
     }
 
+    .career-information-wrap .career td {
+        height: 62px;
+        border-bottom: 1px solid #d8d8d8;
+        font-size: 16px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
     .certification-information-wrap .certificate td {
         height: 62px;
         border-bottom: 1px solid #d8d8d8;
         font-size: 16px;
         vertical-align: middle;
         text-align: center;
+    }
+
+    .career-information-wrap .career tr:last-child td {
+        border-bottom: 2px solid #d8d8d8;
     }
 
     .certification-information-wrap .certificate tr:last-child td {
@@ -387,20 +414,12 @@
                 <div class="study-information-content">
                     <table class="study-information-left">
                         <tr>
-                            <th>학위취득년월</th>
+                            <th>졸업년월</th>
                             <td><p>{{ $resume->graduated_at }}</p></td>
                         </tr>
                         <tr>
-                            <th>출신학교</th>
+                            <th>출신학교 및 학과</th>
                             <td><p>{{ $resume->school }}</p></td>
-                        </tr>
-                        <tr>
-                            <th>학과(세부전공)</th>
-                            <td><p>{{ $resume->major }}</p></td>
-                        </tr>
-                        <tr>
-                            <th>학위</th>
-                            <td><p>{{ $resume->degree }}</p></td>
                         </tr>
                         <tr>
                             <th>졸업구분</th>
@@ -442,6 +461,39 @@
                                 </div>
                             </td>
                         </tr>
+                    </table>
+                </div>
+            </section>
+            <section class="career-information-wrap">
+                <div class="information-title">
+                    <h2>경력사항</h2>
+                </div>
+                <div class="career-information-content">
+                    <table class="career">
+                        <thead>
+                        <tr>
+                            <th style="width: 250px;">근무기간</th>
+                            <th style="width: 250px;">치과명</th>
+                            <th style="width: 250px;">담당업무</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                            <tr>
+                                <td>2020년 3월 ~ 2021년 2월</td>
+                                <td>온오프믹스치과</td>
+                                <td>충치치료</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </section>

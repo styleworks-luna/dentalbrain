@@ -79,20 +79,12 @@
                                 <div class="study-information-content">
                                     <table>
                                         <tr>
-                                            <th>학위취득년월</th>
+                                            <th>졸업년월</th>
                                             <td><p>{{ $resume->graduated_at }}</p></td>
                                         </tr>
                                         <tr>
-                                            <th>출신학교</th>
+                                            <th>출신학교 및 학과</th>
                                             <td><p>{{ $resume->school }}</p></td>
-                                        </tr>
-                                        <tr>
-                                            <th>학과(세부전공)</th>
-                                            <td><p>{{ $resume->major }}</p></td>
-                                        </tr>
-                                        <tr>
-                                            <th>학위</th>
-                                            <td><p>{{ $resume->degree }}</p></td>
                                         </tr>
                                         <tr>
                                             <th>졸업구분</th>
@@ -127,6 +119,69 @@
                                                 </div>
                                             </td>
                                         </tr>
+                                    </table>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="m-row">
+                            <section class="career-information-wrap">
+                                <div class="information-title">
+                                    <h2>경력사항</h2>
+                                </div>
+                                <div class="career-information-content">
+                                    <table class="career">
+                                        <tbody>
+                                        @if($resume->career_started_at_1 != null)
+                                            <tr>
+                                                <td>{{$resume->career_started_at_1}} ~ {{$resume->career_ended_at_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_company_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_task_1}}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->career_started_at_2 != null)
+                                            <tr>
+                                                <td>{{$resume->career_started_at_2}} ~ {{$resume->career_ended_at_2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_company_2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_task_2}}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->career_started_at_3 != null)
+                                            <tr>
+                                                <td>{{$resume->career_started_at_3}} ~ {{$resume->career_ended_at_3}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_company_3}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_task_3}}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                        <tbody>
+                                        @if($resume->career_started_at_4 != null)
+                                            <tr>
+                                                <td>{{$resume->career_started_at_4}} ~ {{$resume->career_ended_at_4}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_company_4}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{{$resume->career_task_4}}</td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
                                     </table>
                                 </div>
                             </section>

@@ -12,7 +12,7 @@
                 <li>
                     <select id="albatalk-order-select" class="albatalk-order-select" v-model="order" @change="orderMobileHandle">
                         <option value="newest" selected>등록일순</option>
-                        <option value="closest">마감일순</option>
+                        <option value="closest">게재기간일순</option>
                     </select>
                 </li>
             </ul>
@@ -22,7 +22,7 @@
             <h2>구인정보</h2>
             <ul>
                 <li><a href="" :class="{ 'active': is_active == 1}" @click.prevent="orderHandle('newest',1)">등록일순</a></li>
-                <li><a href="" :class="{ 'active': is_active == 2}" @click.prevent="orderHandle('closest',2)">마감일순</a></li>
+                <li><a href="" :class="{ 'active': is_active == 2}" @click.prevent="orderHandle('closest',2)">게재기간일순</a></li>
             </ul>
         </template>
     </div>

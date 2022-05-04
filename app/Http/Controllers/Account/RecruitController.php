@@ -13,7 +13,7 @@ class RecruitController extends Controller
     {
         $userId = Auth::id();
         $recruits = Recruit::query()->where('user_id', $userId)
-            ->select('id', 'company_name', 'sido', 'gugun', 'started_at', 'ended_at', 'main_file_id', 'expired_at')
+            ->select('id', 'company_name', 'sido', 'gugun', 'main_file_id', 'expired_at')
             ->with('file:id,url')
             ->withCount(['appliedResumes' => function($query) {
                 $query->where('status', AppliedResume::STATUS_SUCCESS);

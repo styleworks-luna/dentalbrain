@@ -8,8 +8,7 @@
                         <p class="albatalk-name">{{ list.recruit.company_name }}</p>
                         <div class="albatalk-description">
                             <p class="albatalk-place">{{ list.recruit.sido }} {{ list.recruit.gugun }}</p>
-                            <p v-if="(list.recruit.ended_at==null)" class="albatalk-date">채용시까지</p>
-                            <p v-else class="albatalk-date">~ {{ Helper.dateFormatDMW(list.recruit.ended_at) }}</p>
+                            <p class="albatalk-date">~ {{ Helper.dateFormatDMW(list.applied_at) }}</p>
                         </div>
                     </div>
                 </a>
