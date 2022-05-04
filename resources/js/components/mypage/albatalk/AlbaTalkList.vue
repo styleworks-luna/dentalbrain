@@ -8,8 +8,7 @@
                         <p class="albatalk-name">{{ list.company_name }}</p>
                         <div class="albatalk-description">
                             <p class="albatalk-place">{{ list.sido }} {{ list.gugun }}</p>
-                            <p v-if="(list.expired_at==null)" class="albatalk-date">채용시까지</p>
-                            <p v-else class="albatalk-date">~ {{ Helper.dateFormatDMW(list.expired_at) }}</p>
+                            <p class="albatalk-date">~ {{ Helper.dateFormatDMW(list.expired_at) }}</p>
                         </div>
                     </div>
                 </a>
