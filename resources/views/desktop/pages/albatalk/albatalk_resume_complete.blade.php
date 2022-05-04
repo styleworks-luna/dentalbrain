@@ -77,20 +77,12 @@
                         <div class="study-information-left-content">
                         <table>
                             <tr>
-                                <th>학위취득년월</th>
+                                <th>졸업년월</th>
                                 <td><p>{{ $resume->graduated_at }}</p></td>
                             </tr>
                             <tr>
-                                <th>출신학교</th>
+                                <th>출신학교 및 학과</th>
                                 <td><p>{{ $resume->school }}</p></td>
-                            </tr>
-                            <tr>
-                                <th>학과(세부전공)</th>
-                                <td><p>{{ $resume->major }}</p></td>
-                            </tr>
-                            <tr>
-                                <th>학위</th>
-                                <td><p>{{ $resume->degree }}</p></td>
                             </tr>
                             <tr>
                                 <th>졸업구분</th>
