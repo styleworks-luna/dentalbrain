@@ -243,8 +243,10 @@ class RecruitService
             'term' => $data['term'] ?? Recruit::TERM,
             'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
             'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
-            'content' => $data['pay_status'] ?? null,
+
             'pay_status' => $data['pay_status'] ?? Recruit::$PAY_BEFORE,
+
+            'content' => $data['content'] ?? null,
         ]);
 
         return $recruit;
