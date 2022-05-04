@@ -109,9 +109,6 @@ class RecruitService
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
             'expired_at' => now()->addDays($data['term']),
-
-//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['content'] ?? null,
             'term' => $data['term'],
         ]);
@@ -234,8 +231,6 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-//            'started_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['started_at_ymd'] . " " . $data['started_at_hm'] . ":00",
-//            'ended_at' => $data['deadline'] == Recruit::$TIME_FOR_RECRUIT ? null : $data['ended_at_ymd'] . " " . $data['ended_at_hm'] . ":00",
             'content' => $data['pay_status'] ?? null,
             'pay_status' => $data['pay_status'] ?? Recruit::$PAY_PAID,
         ]);
