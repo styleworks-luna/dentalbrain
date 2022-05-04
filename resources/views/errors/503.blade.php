@@ -30,7 +30,7 @@
             서비스 점검중입니다.
         </div>
         <div class="error-sub-text" style="text-align: center; font-size: 25px;">
-            13:30 ~ 14:00
+            13:00 ~ 14:00
         </div>
     </div>
 </div>

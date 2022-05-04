@@ -231,8 +231,9 @@ class RecruitService
             'type_work_id' => $data['work'],
             'type_study_id' => $data['is_study'] == Recruit::$NO_ACADEMIC ? TypeStudy::$TYPE_STUDY_14 : $data['study'],
 
-            'content' => $data['pay_status'] ?? null,
+            'content' => $data['content'] ?? null,
             'pay_status' => $data['pay_status'] ?? Recruit::$PAY_PAID,
+
         ]);
 
         return $recruit;
