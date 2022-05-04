@@ -738,6 +738,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term',\App\Models\Recruit\RecruitPrice::TERM_DAY_7) == \App\Models\Recruit\RecruitPrice::TERM_DAY_7) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
@@ -751,6 +752,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_14) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
@@ -764,6 +766,7 @@
                                                        id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
                                                        class="term"
                                                        name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_21) checked @endif
                                                        value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 게재기간을 선택해주세요."
