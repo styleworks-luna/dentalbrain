@@ -123,6 +123,69 @@
                         </section>
                     </div>
                     <div class="m-row">
+                        <section class="career-information-wrap">
+                            <div class="information-title">
+                                <h2>경력사항</h2>
+                            </div>
+                            <div class="career-information-content">
+                                <table class="career">
+                                    <tbody>
+                                    @if($resume->career_started_at_1 != null)
+                                        <tr>
+                                            <td>{{$resume->career_started_at_1}} ~ {{$resume->career_ended_at_1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_company_1}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_task_1}}</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                    <tbody>
+                                    @if($resume->career_started_at_2 != null)
+                                        <tr>
+                                            <td>{{$resume->career_started_at_2}} ~ {{$resume->career_ended_at_2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_company_2}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_task_2}}</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                    <tbody>
+                                    @if($resume->career_started_at_3 != null)
+                                        <tr>
+                                            <td>{{$resume->career_started_at_3}} ~ {{$resume->career_ended_at_3}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_company_3}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_task_3}}</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                    <tbody>
+                                    @if($resume->career_started_at_4 != null)
+                                        <tr>
+                                            <td>{{$resume->career_started_at_4}} ~ {{$resume->career_ended_at_4}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_company_4}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>{{$resume->career_task_4}}</td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="m-row">
                         <section class="self-information-wrap">
                             <div class="information-title">
                                 <h2>자기소개</h2>
