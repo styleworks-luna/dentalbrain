@@ -84,7 +84,6 @@ class RecruitService
 //            'ended_at_hm' => ['nullable', Rule::requiredIf(($rawData['deadline'] ?? 0) == Recruit::$DEADLINE_RECRUIT), 'date_format:H:i'],
 
             'content' => ['nullable'],
-            'term' => ['nullable', 'numeric']
         ], $additionalRules);
     }
 

@@ -780,8 +780,7 @@
                                 <tr>
                                     <th>결제금액</th>
                                     <td class="wrapper-lg">
-                                        <p class="money">{{ number_format($termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7]) }}
-                                            원</p>
+                                        <p class="money">{{ number_format($termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7]) }}원</p>
                                     </td>
                                 </tr>
                                 <tr>
