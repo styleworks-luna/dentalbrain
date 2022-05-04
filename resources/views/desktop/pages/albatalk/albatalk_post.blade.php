@@ -671,7 +671,7 @@
                                         <div class="benefit-type-error-container"></div>
                                     </td>
                                 </tr>
-                                <tr>
+{{--                                <tr>--}}
 {{--                                    <th>모집마감일 *</th>--}}
 {{--                                    <td class="wrapper-s">--}}
 {{--                                        <div class="radio-container">--}}
@@ -712,7 +712,7 @@
 {{--                                        </div>--}}
 {{--                                        <div class="deadline-error-container"></div>--}}
 {{--                                    </td>--}}
-                                </tr>
+{{--                                </tr>--}}
                                 <tr>
                                     <th class="unique-label">상세정보</th>
                                     <td class="wrapper-s">
