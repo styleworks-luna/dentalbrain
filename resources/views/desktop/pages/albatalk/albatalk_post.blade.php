@@ -59,8 +59,10 @@
                         dataType: 'json',
                         processData: false,
                         contentType: false,
-                        error: function (xhr, status, error) {
-                            console.log(error);
+                        error: function (err) {
+                            if(err.status == 400) {
+                                alert('오류가 발생하였습니다. 다시 시도해 주세요.');
+                            }
                         }, success: function (json) {
                             Payment();
                         }
@@ -291,7 +293,7 @@
                                                class="input-s"
                                                name="dental_name"
                                                value="{{ old('dental_name') }}"
-                                               data-parsley-required="true"
+                                               data-parsley-required="false"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
 
@@ -302,7 +304,7 @@
                                                class="input-s"
                                                name="manager_name"
                                                value="{{ old('manager_name') }}"
-                                               data-parsley-required="true"
+                                               data-parsley-required="false"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
                                 </tr>
