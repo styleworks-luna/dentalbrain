@@ -12,7 +12,7 @@
                 <li>
                     <select id="albatalk-order-select" class="albatalk-order-select" v-model="order" @change="orderMobileHandle">
                         <option value="newest" selected>등록일순</option>
-                        <option value="closest">마감일순</option>
+                        <option value="closest">게재기간일순</option>
                     </select>
                 </li>
             </ul>
