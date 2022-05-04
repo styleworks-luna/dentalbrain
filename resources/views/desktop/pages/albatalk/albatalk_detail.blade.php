@@ -64,11 +64,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="office-information">
                         <div class="office-title-wrap">
                             <h2>{{$recruit->company_name}}</h2>
-                            <span>게재기간일 : {{ $recruit->ended_at == null? "채용시까지" : $recruit->ended_at->format('n월 d일까지') }}</span>
+                            <span>게재기간일 : {{ date('n월 d일 까지', strtotime($recruit->expired_at)) }}</span>
                         </div>
                         <div class="office-content-wrap">
                             <table>

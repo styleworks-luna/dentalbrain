@@ -122,7 +122,7 @@ class ResumeController extends Controller
             ->select(['id', 'recruit_id', 'resume_id', 'status', 'applied_at', 'is_recommended'])
             ->with(['recruit' => function ($query) {
                 $query->with('file:id,url')
-                    ->select(['id', 'main_file_id', 'company_name', 'sido', 'gugun', 'dong', 'ended_at']);
+                    ->select(['id', 'main_file_id', 'company_name', 'sido', 'gugun', 'dong']);
             }])
             ->where('status', '=', AppliedResume::STATUS_SUCCESS)
             ->orderByDesc('applied_at')

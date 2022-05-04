@@ -17,18 +17,19 @@
         $(function () {
             let term, baseMoney, userAmount
 
-            $('.term').change(function() {
+            $('.term').change(function () {
                 term = $('.term:checked').val();
                 baseMoney = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
-                if(term == 7) {
+                if(term == 7)
+                {
                     userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_7] }}
                     $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
                 }
-                if(term == 14) {
+                if (term == 14) {
                     userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_14] }}
                     $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
                 }
-                if(term == 21) {
+                if (term == 21) {
                     userAmount = {{ $termPrice[\App\Models\Recruit\RecruitPrice::TERM_DAY_21] }}
                     $('.money').text(userAmount.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + '원')
                 }
@@ -547,7 +548,7 @@
                                                             @break
                                                         @else
                                                             <option value="{{ $study->id }}"
-                                                                @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
+                                                                    @if(old('study') == $study->id) selected @endif>{{ $study->type }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
@@ -572,7 +573,8 @@
                                                        value="N">
                                                 <input type="radio" id="career_field_01" class="career" name="is_career"
                                                        value={{\App\Models\Recruit\Recruit::JUNIOR}}
-                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::JUNIOR) checked @endif
+                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::JUNIOR) checked
+                                                       @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
@@ -587,25 +589,26 @@
                                                         name="career"
                                                         @if(old('is_career') != \App\Models\Recruit\Recruit::SENIOR) disabled @endif>
                                                     <option value="0">경력기간 선택</option>
-                                                        @foreach($typeCareer as $career)
-                                                            @if($career->id ==
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_2 ||
-                                                                    $career->id ==
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_3 ||
-                                                                    $career->id ==
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_4 ||
-                                                                    $career->id ==
-                                                                    \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_5 )
+                                                    @foreach($typeCareer as $career)
+                                                        @if($career->id ==
+                                                                \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_2 ||
+                                                                $career->id ==
+                                                                \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_3 ||
+                                                                $career->id ==
+                                                                \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_4 ||
+                                                                $career->id ==
+                                                                \App\Models\Recruit\Option\TypeCareer::TYPE_CAREER_5 )
                                                             <option value="{{ $career->id }}"
                                                                     @if(old('$career') == $career->id) selected @endif>{{ $career->type }}</option>
-                                                            @endif
-                                                        @endforeach
+                                                        @endif
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="radio-wrap">
                                                 <input type="radio" id="career_field_03" class="career" name="is_career"
                                                        value={{\App\Models\Recruit\Recruit::NO_CAREER}}
-                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::NO_CAREER) checked @endif
+                                                       @if(old('is_career') == \App\Models\Recruit\Recruit::NO_CAREER) checked
+                                                       @endif
                                                        data-parsley-required="true"
                                                        data-parsley-required-message="※ 경력을 선택해주세요."
                                                        data-parsley-errors-container=".career-error-container">
@@ -668,48 +671,48 @@
                                         <div class="benefit-type-error-container"></div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>모집마감일 *</th>
-                                    <td class="wrapper-s">
-                                        <div class="radio-container">
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="deadline_field_01" class="deadline"
-                                                       name="deadline" value="1"
-                                                       @if(old('deadline') == 1) checked @endif
-                                                       data-parsley-required="true"
-                                                       data-parsley-required-message="※ 모집마감일을 선택해주세요."
-                                                       data-parsley-errors-container=".deadline-error-container">
+{{--                                <tr>--}}
+{{--                                    <th>모집마감일 *</th>--}}
+{{--                                    <td class="wrapper-s">--}}
+{{--                                        <div class="radio-container">--}}
+{{--                                            <div class="radio-wrap">--}}
+{{--                                                <input type="radio" id="deadline_field_01" class="deadline"--}}
+{{--                                                       name="deadline" value="1"--}}
+{{--                                                       @if(old('deadline') == 1) checked @endif--}}
+{{--                                                       data-parsley-required="true"--}}
+{{--                                                       data-parsley-required-message="※ 모집마감일을 선택해주세요."--}}
+{{--                                                       data-parsley-errors-container=".deadline-error-container">--}}
 
-                                                <input type="hidden" class="date-compare-check" value="N">
+{{--                                                <input type="hidden" class="date-compare-check" value="N">--}}
 
-                                                <input type="text" class="input-xs start-date" name="started_at_ymd"
-                                                       value="{{ old("started_at_ymd") }}"
-                                                       placeholder="시작일자 선택"
-                                                       @if(old('deadline') != 1) readonly disabled @endif>
-                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm"
-                                                       name="started_at_hm" id="start_time"
-                                                       value="{{ old("started_at_hm") }}"
-                                                       @if(old('deadline') != 1) disabled @endif>
-                                                <p class="time-from">부터</p>
-                                                <input type="text" class="input-xs end-date" name="ended_at_ymd"
-                                                       value="{{ old("ended_at_ymd") }}"
-                                                       placeholder="마감일자 선택"
-                                                       @if(old('deadline') != 1) readonly disabled @endif>
-                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"
-                                                       name="ended_at_hm" id="end_time"
-                                                       value="{{ old("ended_at_hm") }}"
-                                                       @if(old('deadline') != 1) disabled @endif>
-                                            </div>
-                                            <div class="radio-wrap">
-                                                <input type="radio" id="deadline_field_02" class="deadline"
-                                                       name="deadline" value="2"
-                                                       @if(old('deadline') == 2) checked @endif>
-                                                <label for="deadline_field_02">채용시까지</label>
-                                            </div>
-                                        </div>
-                                        <div class="deadline-error-container"></div>
-                                    </td>
-                                </tr>
+{{--                                                <input type="text" class="input-xs start-date" name="started_at_ymd"--}}
+{{--                                                       value="{{ old("started_at_ymd") }}"--}}
+{{--                                                       placeholder="시작일자 선택"--}}
+{{--                                                       @if(old('deadline') != 1) readonly disabled @endif>--}}
+{{--                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm"--}}
+{{--                                                       name="started_at_hm" id="start_time"--}}
+{{--                                                       value="{{ old("started_at_hm") }}"--}}
+{{--                                                       @if(old('deadline') != 1) disabled @endif>--}}
+{{--                                                <p class="time-from">부터</p>--}}
+{{--                                                <input type="text" class="input-xs end-date" name="ended_at_ymd"--}}
+{{--                                                       value="{{ old("ended_at_ymd") }}"--}}
+{{--                                                       placeholder="마감일자 선택"--}}
+{{--                                                       @if(old('deadline') != 1) readonly disabled @endif>--}}
+{{--                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"--}}
+{{--                                                       name="ended_at_hm" id="end_time"--}}
+{{--                                                       value="{{ old("ended_at_hm") }}"--}}
+{{--                                                       @if(old('deadline') != 1) disabled @endif>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="radio-wrap">--}}
+{{--                                                <input type="radio" id="deadline_field_02" class="deadline"--}}
+{{--                                                       name="deadline" value="2"--}}
+{{--                                                       @if(old('deadline') == 2) checked @endif>--}}
+{{--                                                <label for="deadline_field_02">채용시까지</label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="deadline-error-container"></div>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
                                 <tr>
                                     <th class="unique-label">상세정보</th>
                                     <td class="wrapper-s">
@@ -730,39 +733,48 @@
                                     <th>게재기간 *</th>
                                     <td class="wrapper-lg">
                                         <div class="radio-container">
-                                                <div class="radio-wrap">
-                                                    <input type="radio"
-                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
-                                                           class="term"
-                                                           name="term"
-                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
-                                                           data-parsley-required="true"
-                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
-                                                           data-parsley-errors-container=".period-type-error-container">
-                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}일</label>
-                                                </div>
-                                                <div class="radio-wrap">
-                                                    <input type="radio"
-                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
-                                                           class="term"
-                                                           name="term"
-                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
-                                                           data-parsley-required="true"
-                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
-                                                           data-parsley-errors-container=".period-type-error-container">
-                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}일</label>
-                                                </div>
-                                                <div class="radio-wrap">
-                                                    <input type="radio"
-                                                           id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
-                                                           class="term"
-                                                           name="term"
-                                                           value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
-                                                           data-parsley-required="true"
-                                                           data-parsley-required-message="※ 게재기간을 선택해주세요."
-                                                           data-parsley-errors-container=".period-type-error-container">
-                                                    <label for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}일</label>
-                                                </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio"
+                                                       id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]"
+                                                       class="term"
+                                                       name="term"
+                                                       @if(old('term',\App\Models\Recruit\RecruitPrice::TERM_DAY_7) == \App\Models\Recruit\RecruitPrice::TERM_DAY_7) checked @endif
+                                                       value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                       data-parsley-errors-container=".period-type-error-container">
+                                                <label
+                                                    for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_7}}
+                                                    일</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio"
+                                                       id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]"
+                                                       class="term"
+                                                       name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_14) checked @endif
+                                                       value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                       data-parsley-errors-container=".period-type-error-container">
+                                                <label
+                                                    for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_14}}
+                                                    일</label>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <input type="radio"
+                                                       id="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]"
+                                                       class="term"
+                                                       name="term"
+                                                       @if(old('term') == \App\Models\Recruit\RecruitPrice::TERM_DAY_21) checked @endif
+                                                       value="{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}"
+                                                       data-parsley-required="true"
+                                                       data-parsley-required-message="※ 게재기간을 선택해주세요."
+                                                       data-parsley-errors-container=".period-type-error-container">
+                                                <label
+                                                    for="term_type_field_[{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}]">{{\App\Models\Recruit\RecruitPrice::TERM_DAY_21}}
+                                                    일</label>
+                                            </div>
                                             <span class="tail">결제시점부터 선택하신 일정으로 구인 공고가 게재됩니다.</span>
                                         </div>
                                         <div class="period-type-error-container"></div>

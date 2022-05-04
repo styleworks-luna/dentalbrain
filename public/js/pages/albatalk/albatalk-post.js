@@ -356,56 +356,56 @@ $(function () {
     });
 
     function timeValidation() {
-        if (deadlineValue == '1') {
-            $('.start-date').attr({
-                'data-parsley-required': "true",
-                "data-parsley-required-message": "※ 시작일자를 선택해주세요.",
-                "data-parsley-errors-container": ".deadline-error-container"
-            });
-            $('.start-time').attr({
-                'data-parsley-required': "true",
-                "data-parsley-required-message": "※ 시작시간을 입력해주세요.",
-                "data-parsley-errors-container": ".deadline-error-container"
-            });
-            $('.end-date').attr({
-                'data-parsley-required': "true",
-                "data-parsley-required-message": "※ 마감일자를 선택해주세요.",
-                "data-parsley-errors-container": ".deadline-error-container"
-            });
-            $('.end-time').attr({
-                'data-parsley-required': "true",
-                "data-parsley-required-message": "※ 마감시간을 입력해주세요.",
-                "data-parsley-errors-container": ".deadline-error-container"
-            });
-            $('.date-compare-check').attr({
-                'data-parsley-pattern': "[Y]",
-                "data-parsley-pattern-message": "※ 시작 날짜를 마감 날짜보다 이르게 입력해주세요.",
-                "data-parsley-errors-container": ".deadline-error-container"
-            });
-            dateCompareValidate();
-        } else {
-            $('.start-date').parsley().destroy();
-            $('.start-time').parsley().destroy();
-            $('.end-date').parsley().destroy();
-            $('.end-time').parsley().destroy();
-            $('.date-compare-check').parsley().destroy();
-
-            $('.start-date').removeAttr(
-                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
-            );
-            $('.start-time').removeAttr(
-                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
-            );
-            $('.end-date').removeAttr(
-                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
-            );
-            $('.end-time').removeAttr(
-                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
-            );
-            $('.date-compare-check').removeAttr(
-                'data-parsley-required data-parsley-required-message data-parsley-errors-container'
-            );
-        }
+        // if (deadlineValue == '1') {
+        //     $('.start-date').attr({
+        //         'data-parsley-required': "true",
+        //         "data-parsley-required-message": "※ 시작일자를 선택해주세요.",
+        //         "data-parsley-errors-container": ".deadline-error-container"
+        //     });
+        //     $('.start-time').attr({
+        //         'data-parsley-required': "true",
+        //         "data-parsley-required-message": "※ 시작시간을 입력해주세요.",
+        //         "data-parsley-errors-container": ".deadline-error-container"
+        //     });
+        //     $('.end-date').attr({
+        //         'data-parsley-required': "true",
+        //         "data-parsley-required-message": "※ 마감일자를 선택해주세요.",
+        //         "data-parsley-errors-container": ".deadline-error-container"
+        //     });
+        //     $('.end-time').attr({
+        //         'data-parsley-required': "true",
+        //         "data-parsley-required-message": "※ 마감시간을 입력해주세요.",
+        //         "data-parsley-errors-container": ".deadline-error-container"
+        //     });
+        //     $('.date-compare-check').attr({
+        //         'data-parsley-pattern': "[Y]",
+        //         "data-parsley-pattern-message": "※ 시작 날짜를 마감 날짜보다 이르게 입력해주세요.",
+        //         "data-parsley-errors-container": ".deadline-error-container"
+        //     });
+        //     dateCompareValidate();
+        // } else {
+        //     $('.start-date').parsley().destroy();
+        //     $('.start-time').parsley().destroy();
+        //     $('.end-date').parsley().destroy();
+        //     $('.end-time').parsley().destroy();
+        //     $('.date-compare-check').parsley().destroy();
+        //
+        //     $('.start-date').removeAttr(
+        //         'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+        //     );
+        //     $('.start-time').removeAttr(
+        //         'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+        //     );
+        //     $('.end-date').removeAttr(
+        //         'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+        //     );
+        //     $('.end-time').removeAttr(
+        //         'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+        //     );
+        //     $('.date-compare-check').removeAttr(
+        //         'data-parsley-required data-parsley-required-message data-parsley-errors-container'
+        //     );
+        // }
     }
 
     timeValidation();
