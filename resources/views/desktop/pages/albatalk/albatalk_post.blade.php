@@ -293,7 +293,7 @@
                                                class="input-s"
                                                name="dental_name"
                                                value="{{ old('dental_name') }}"
-                                               data-parsley-required="false"
+                                               data-parsley-required="true"
                                                data-parsley-required-message="※ 치과명을 입력해주세요">
                                     </td>
 
@@ -304,7 +304,7 @@
                                                class="input-s"
                                                name="manager_name"
                                                value="{{ old('manager_name') }}"
-                                               data-parsley-required="false"
+                                               data-parsley-required="true"
                                                data-parsley-required-message="※ 담당자명을 입력해주세요">
                                     </td>
                                 </tr>
