@@ -63,7 +63,7 @@
                 <div class="m-row">
                     <div class="office-information">
                         <p class="ended-date">
-                            모집마감일 : {{ $recruit->ended_at == null? "채용시까지" : $recruit->ended_at->format('n월 d일까지') }}
+                            게재기간일 : {{ date('n월 d일 까지', strtotime($recruit->expired_at)) }}
                         </p>
                         <h2>{{$recruit->company_name}}</h2>
                         <div class="office-content-wrap">

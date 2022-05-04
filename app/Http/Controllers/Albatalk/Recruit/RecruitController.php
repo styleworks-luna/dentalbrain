@@ -66,7 +66,6 @@ class RecruitController extends Controller
 
     public function saveRecruitDataToSession(Request $request): \Illuminate\Http\JsonResponse
     {
-        logger($request);
         // 구인 등록 유효성 검사
         $validator = $this->recruitService->getValidatorRecruit($request->all(), [
             'term' => ['required', 'numeric'],

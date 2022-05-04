@@ -21,7 +21,7 @@ class RecruitSearchController extends Controller
         $sido = $validated['sido'] ?? RecruitSiDo::array();
         $order = $validated['order'] ?? 'newest';
 
-        $builder = Recruit::query()->select('id', 'main_file_id', 'company_name', 'ended_at', 'sido', 'gugun')
+        $builder = Recruit::query()->select('id', 'main_file_id', 'company_name', 'expired_at', 'sido', 'gugun')
             ->with([
                 'file' => function ($query) {
                     $query->select('id', 'url', 'name');
@@ -33,7 +33,7 @@ class RecruitSearchController extends Controller
         if ($order == 'newest') {
             $builder->orderBy('created_at', 'desc');
         } else {
-            $builder->orderBy('ended_at');
+            $builder->orderBy('expired_at', 'desc');
         }
         return response()->json($builder->get());
     }
