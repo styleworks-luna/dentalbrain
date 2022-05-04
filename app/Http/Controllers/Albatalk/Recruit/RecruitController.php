@@ -72,12 +72,7 @@ class RecruitController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $messageBag = $validator->errors();
-
-            $collection = collect($messageBag)->map(function ($item, $key) {
-                return ['name' => $key, 'message' => $item[0]];
-            });
-            return response()->json($collection->toArray(), 400);
+            return response()->json([], 400);
         }
 
         // 검사한 데이터 세션에 저장
