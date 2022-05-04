@@ -45,7 +45,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="create">등록</button>
-                <router-link to="/admin/customer/faq/1"
+                <router-link to="/admin/certificate/information"
                              class="btn btn-dark">취소</router-link>
             </div>
         </template>

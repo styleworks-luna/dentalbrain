@@ -14,7 +14,7 @@
                         <div class="input-group">
                             <input class="form-control"
                                    type="text"
-                                   placeholder="제목"
+                                   placeholder="제목,강의명,ID,이름 검색"
                                    v-model="keyword">
                             <span class="input-group-append">
                             <button class="btn btn-primary" type="submit">검색</button>
@@ -40,7 +40,7 @@
                     <td>
                         <a :href="`/certificate/certificate/${slotProps.row.id}`"
                            class="btn btn-info">
-                            수정
+                            보기
                         </a>
                     </td>
                 </template>

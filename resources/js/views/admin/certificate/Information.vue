@@ -43,10 +43,10 @@
                     <td>{{ slotProps.row.company_name }}</td>
                     <td>{{ slotProps.row.applied_resumes_count }}</td>
                     <td>
-                        <a :href="`/certificate/certificate/${slotProps.row.id}`"
+                        <router-link :to="`certificate/${slotProps.row.id}`"
                            class="btn btn-info">
                             수정
-                        </a>
+                        </router-link>
                     </td>
                 </template>
             </table-grid>

@@ -1,7 +1,27 @@
 <template>
-    <layout title="교육수료증 생성" class="faq">
+    <layout title="자격증 수정" class="faq">
         <template v-slot:body>
-            <single-group name="수료증 제목 입력"
+            <single-group name="자격증 제목 입력"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
+                <template v-slot:content>
+                    <input type="text" class="form-control"
+                           v-model="question">
+                </template>
+            </single-group>
+
+            <single-group name="자격번호(입력된 수치부터 순차적으로 카운팅 됩니다.)"
+                               :isRow="true"
+                               :isRequired="true"
+                               :size="9">
+                <template v-slot:content>
+                    <input type="text" class="form-control"
+                           v-model="question">
+                </template>
+            </single-group>
+
+            <single-group name="자격등급"
                                :isRow="true"
                                :isRequired="true"
                                :size="9">
@@ -17,16 +37,6 @@
                                :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="최대 3줄 / 80자 이내"
-                              v-model="answer"></textarea>
-                </template>
-            </single-group>
-
-            <single-group name="하단 내용 입력"
-                               :isRow="true"
-                               :isRequired="true"
-                               :size="9">
-                <template v-slot:content>
-                    <textarea class="form-control" rows="5" placeholder="최대 25자 이내"
                               v-model="answer"></textarea>
                 </template>
             </single-group>
@@ -50,7 +60,7 @@
     import { FaqMixin } from '@/mixins/admin/customer/Faq.js';
 
     export default {
-        name: 'CompletionCreate',
+        name: 'CertificateEdit',
         mixins: [
             FaqMixin
         ],

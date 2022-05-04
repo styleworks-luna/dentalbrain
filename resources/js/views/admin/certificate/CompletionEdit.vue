@@ -1,5 +1,5 @@
 <template>
-    <layout title="교육수료증 생성" class="faq">
+    <layout title="교육수료증 수정" class="faq">
         <template v-slot:body>
             <single-group name="수료증 제목 입력"
                                :isRow="true"
@@ -50,7 +50,7 @@
     import { FaqMixin } from '@/mixins/admin/customer/Faq.js';
 
     export default {
-        name: 'CompletionCreate',
+        name: 'CompletionEdit',
         mixins: [
             FaqMixin
         ],
