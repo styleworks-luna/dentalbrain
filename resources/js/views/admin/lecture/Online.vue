@@ -50,7 +50,7 @@
                     </td>
                     <td>ABC자격증</td>
                     <td>0명
-                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
+                        <router-link :to="`/admin/certificate/lecture/${slotProps.row.id}`"
                                      class="btn btn-info ml-2">
                             보기
                         </router-link></td>

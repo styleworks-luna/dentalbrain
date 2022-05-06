@@ -4,6 +4,7 @@ import CertificateCreate from '@/views/admin/certificate/CertificateCreate.vue';
 import CompletionCreate from '@/views/admin/certificate/CompletionCreate.vue';
 import CertificateEdit from '@/views/admin/certificate/CertificateEdit.vue';
 import CompletionEdit from '@/views/admin/certificate/CompletionEdit.vue';
+import LectureCertificate from '@/views/admin/certificate/LectureCertificate.vue';
 
 const routes = [
     {
@@ -35,6 +36,11 @@ const routes = [
         path: '/admin/certificate/completion/:id',
         name: 'CompletionEdit',
         component: CompletionEdit
+    },
+    {
+        path: '/admin/certificate/lecture/:id',
+        name: 'LectureCertificate',
+        component: LectureCertificate
     },
 
 ];
