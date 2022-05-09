@@ -7,7 +7,7 @@
                                :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control"
-                           v-model="question">
+                           v-model="title">
                 </template>
             </single-group>
 
@@ -17,7 +17,7 @@
                                :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control"
-                           v-model="question">
+                           v-model="certificateNumber">
                 </template>
             </single-group>
 
@@ -27,7 +27,7 @@
                                :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control"
-                           v-model="question">
+                           v-model="certificateRate">
                 </template>
             </single-group>
 
@@ -37,7 +37,7 @@
                                :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="최대 3줄 / 80자 이내"
-                              v-model="answer"></textarea>
+                              v-model="content"></textarea>
                 </template>
             </single-group>
         </template>
@@ -53,30 +53,24 @@
 </template>
 
 <script>
-    // api
-    import Faq from '@/api/admin/customer/Faq.js';
-
-    // mixins
-    import { FaqMixin } from '@/mixins/admin/customer/Faq.js';
-
     export default {
         name: 'CertificateEdit',
-        mixins: [
-            FaqMixin
-        ],
+        data() {
+            return {
+                title: '',
+                certificateNumber: '',
+                certificateRate: '',
+                content: '',
+            }
+        },
         methods: {
             create() {
                 let data = {
-                    question: this.question,
-                    answer: this.answer,
-                    category_id: this.category_id,
-                    is_open: this.is_open
+                    title: this.title,
+                    certificateNumber: this.certificateNumber,
+                    certificateRate: this.certificateRate,
+                    content: this.content
                 };
-
-                Faq.create(data).then(res => {
-                    alert(res.data.msg);
-                    this.$router.push('/admin/customer/faq/1');
-                })
             }
         }
     }

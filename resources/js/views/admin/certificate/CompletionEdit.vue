@@ -7,7 +7,7 @@
                                :size="9">
                 <template v-slot:content>
                     <input type="text" class="form-control"
-                           v-model="question">
+                           v-model="title">
                 </template>
             </single-group>
 
@@ -17,7 +17,7 @@
                                :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="9" placeholder="최대 3줄 / 80자 이내"
-                              v-model="answer"></textarea>
+                              v-model="content"></textarea>
                 </template>
             </single-group>
 
@@ -27,7 +27,7 @@
                                :size="9">
                 <template v-slot:content>
                     <textarea class="form-control" rows="5" placeholder="최대 25자 이내"
-                              v-model="answer"></textarea>
+                              v-model="subContent"></textarea>
                 </template>
             </single-group>
         </template>
@@ -43,30 +43,22 @@
 </template>
 
 <script>
-    // api
-    import Faq from '@/api/admin/customer/Faq.js';
-
-    // mixins
-    import { FaqMixin } from '@/mixins/admin/customer/Faq.js';
-
     export default {
         name: 'CompletionEdit',
-        mixins: [
-            FaqMixin
-        ],
+        data() {
+            return {
+                title: '',
+                content: '',
+                subContent: '',
+            }
+        },
         methods: {
             create() {
                 let data = {
-                    question: this.question,
-                    answer: this.answer,
-                    category_id: this.category_id,
-                    is_open: this.is_open
+                    title: this.title,
+                    content: this.content,
+                    subContent: this.subContent,
                 };
-
-                Faq.create(data).then(res => {
-                    alert(res.data.msg);
-                    this.$router.push('/admin/customer/faq/1');
-                })
             }
         }
     }

@@ -2,7 +2,7 @@
     <layout title="발급 내역">
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">발급내역 (자격증 {{ stats.recruitIsOpen }}건 | 수료증 {{ stats.recruitIsNotOpen }}건) ]</p>
+                <p class="mb-0" style="font-size: 12px">발급내역 (자격증 {{  }}건 | 수료증 {{  }}건) ]</p>
                 <div>
                     <form @submit.prevent="getData">
                         <select-box class="form-control"
@@ -27,16 +27,16 @@
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="recruitList.data">
+                        :data="completion.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.company_name }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
-                    <td>{{ slotProps.row.applied_resumes_count }}</td>
+                    <td>{{ slotProps.row.status }}</td>
+                    <td>{{ slotProps.row.title }}</td>
+                    <td>{{ slotProps.row.lecture_title }}</td>
+                    <td>{{ slotProps.row.user_id }}</td>
+                    <td>{{ slotProps.row.user_name }}</td>
+                    <td>{{ slotProps.row.user_email }}</td>
+                    <td>{{ slotProps.row.user_phone }}</td>
                     <td>
                         <a :href="`/certificate/certificate/${slotProps.row.id}`"
                            class="btn btn-info">
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import Recruit from '@/api/admin/albatalk/Recruit.js';
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
@@ -125,19 +124,30 @@ export default {
             return [
                 {
                     id: '1',
-                    name: '진행중'
+                    name: '자격증'
                 },
                 {
                     id: '0',
-                    name: '종료'
+                    name: '수료증'
                 }
             ]
         }
     },
     data() {
         return {
-            recruitList: {
-                data: [],
+            completion: {
+                data: [
+                    {
+                        id: 11,
+                        status: '자격증',
+                        title: '증명서 제목',
+                        lecture_title: '강의 제목',
+                        user_id: 'test',
+                        user_name: '홍길동',
+                        user_email: 'test@example.com',
+                        user_phone: '01093737194',
+                    }
+                ],
             },
             stats: [],
             keyword: "",
@@ -154,26 +164,10 @@ export default {
                 keyword: this.keyword,
                 ongoing: this.category_id
             }
-            Recruit.getData(params).then(res => {
-                this.recruitList = res.data;
-            }).catch(err => {
-                this.recruitList = {};
-            });
         },
         handleSetCategoryId(id) {
             this.category_id = id;
         },
-        handleSetStatus(id) {
-            Recruit.setStatus(id).then(res => {
-                this.getData();
-                alert('수정되었습니다.');
-            })
-        },
-        getStats(){
-            Recruit.getStats().then(res => {
-                this.stats = res.data;
-            })
-        }
     }
 }
 </script>
