@@ -12,6 +12,9 @@
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
+                                text="증명서 구분"></select-box>
+
+                    <select-box class="form-control"
                                 text="대분류 선택"
                                 :value="major_category_id"
                                 :options="majorCategoryOptions"
