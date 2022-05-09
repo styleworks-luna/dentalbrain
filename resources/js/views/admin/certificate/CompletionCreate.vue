@@ -43,8 +43,12 @@
 </template>
 
 <script>
+import SingleGroup from '@/components/admin/form/SingleGroup.vue';
     export default {
         name: 'CompletionCreate',
+        components: {
+            'single-group': SingleGroup,
+        },
         data() {
             return {
                 title: '',
