@@ -3,128 +3,103 @@
         <div class="layer" @click="controlPopup"></div>
         <article class="popup-wrap">
             <header class="popup-header border-bottom d-flex justify-content-between">
-                <h2 class="popup-title">추천하기</h2>
-                <button class="btn btn-secondary mb-2" @click="controlPopup">닫기</button>
+                <h2 class="popup-title">내용 수정</h2>
             </header>
 
             <section class="popup-content">
-                <div class="d-flex justify-content-start">
-                    <div class="w-50 border-right">
-                        <h5 class="text-center">추천하기</h5>
-                        <ul class="pl-4 pt-2 pb-5" style="list-style: none;">
-                            <li v-for="item in recommendList" :key="item.id">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" :id="`inlineCheckbox_${item.id}`"
-                                           :value="item.id" v-model="applies">
-                                    <label class="form-check-label"
-                                           :for="`inlineCheckbox_${item.id}`">{{ item.company_name }}</label>
-                                </div>
-                            </li>
-                            <li v-if="recommendList.length <= 0">
-                                <p>추천할 내역이 없습니다.</p>
-                            </li>
-                        </ul>
-
+                <div class="d-flex justify-content-start mb-3">
+                    <div class="pr-3">
+                        <p>사진 변경</p>
+                        <div style="text-align: left">285x380</div>
                     </div>
-                    <div class="w-50">
-                        <h5 class="text-center">추천 취소하기</h5>
-                        <ul class="pl-4  pt-2 pb-5" style="list-style: none;">
-                            <li v-for="item in cancelList" :key="item.id">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" :id="`inlineCheckbox_${item.id}`"
-                                           :value="item.id" v-model="cancels">
-                                    <label class="form-check-label"
-                                           :for="`inlineCheckbox_${item.id}`">{{ item.company_name }}</label>
-                                </div>
-                            </li>
-                            <li v-if="cancelList.length <= 0">
-                                <p>취소할 내역이 없습니다.</p>
-                            </li>
-                        </ul>
+                    <div class="pl-3">
+                    <thumbnail :id="'thumbnail'"
+                               :file="thumbnail"
+                               @setFile="handleSetThumbnail"></thumbnail>
                     </div>
                 </div>
+                <single-group name="이름"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="name">
+                    </template>
+                </single-group>
+                <single-group name="생년월일"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="birth">
+                    </template>
+                </single-group>
+                <single-group name="대학교"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="universe">
+                    </template>
+                </single-group>
+                <single-group name="학번"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="st_num">
+                    </template>
+                </single-group>
+                <single-group name="점수"
+                              :isRow="true"
+                              :isRequired="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="score">
+                    </template>
+                </single-group>
             </section>
-            <article class="btn-area d-flex justify-content-center">
-                <div class="btn-wrap w-50 text-center">
-                    <button class="btn btn-info " @click.prevent="apply">제출</button>
-                </div>
-                <div class="btn-wrap w-50 text-center">
-                    <button class="btn btn-danger" @click.prevent="cancel">취소</button>
-                </div>
-            </article>
+            <footer class="popup-footer border-top pt-3 d-flex justify-content-center">
+                <button class="btn btn-info mr-3">저장</button>
+                <button class="btn btn-secondary" @click="controlPopup">취소</button>
+            </footer>
         </article>
     </div>
 </template>
 
 <script>
-// api
-import RecommendData from "@/api/admin/albatalk/Resume.js"
+import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+import Thumbnail from '@/components/admin/form/Thumbnail.vue';
 
 export default {
     name: "LectureCertificatePopup",
     props: {
         id: Number,
     },
+    components: {
+        'single-group': SingleGroup,
+        Thumbnail,
+    },
     mounted() {
-        this.getRecommendData();
     },
     data() {
         return {
-            recommendList: [],
-            cancelList: [],
-            applies: [],
-            cancels: []
+            name: '',
+            birth: '',
+            universe: '',
+            st_num: '',
+            score: '',
+            thumbnail: {},
         }
     },
     methods: {
-        getRecommendData() {
-            RecommendData.getRecommendData(this.id).then(res => {
-                this.recommendList = res.data.applyList;
-                this.cancelList = res.data.cancelList;
-            }).catch(err => {
-                alert('오류가 발생하였습니다.');
-            });
-        },
-        apply() {
-            if(this.recommendList.length <= 0) {
-                alert('추천할 내역이 없습니다.');
-            } else {
-                if(this.applies.length <= 0) {
-                    alert('추천할 구인정보를 선택해주세요.');
-                }
-                else {
-                    let data = {
-                        recruits: this.applies,
-                    }
-                    RecommendData.recommendApply(this.id, data).then(res => {
-                        alert(res.data.msg);
-                        this.$emit('close', false);
-                    }).catch(err => {
-                        alert('오류가 발생하였습니다.');
-                    });
-                }
-            }
-
-        },
-        cancel() {
-            if(this.cancelList.length <= 0) {
-                alert('취소할 내역이 없습니다.');
-            } else {
-                if(this.cancels.length <= 0) {
-                    alert('취소할 구인정보를 선택해주세요.');
-                }
-                else {
-                    let data = {
-                        recruits: this.cancels,
-                    }
-                    RecommendData.recommendCancel(this.id, data).then(res => {
-                        alert(res.data.msg);
-                        this.$emit('close', false);
-                    }).catch(err => {
-                        alert('오류가 발생하였습니다.');
-                    });
-                }
-            }
+        handleSetThumbnail(file) {
+            this.thumbnail = file;
         },
         controlPopup() {
             this.$emit('close', false);

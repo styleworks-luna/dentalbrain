@@ -326,6 +326,22 @@
             .btn
                 +margin(0 5px)
 
+        .thumbnail-wrap
+            +size(114px, 152px)
+            +border(1px solid $border-color-base)
+            +background(null, no-repeat, center center)
+            +box-sizing(border-box)
+            background-size: cover
+
+            &:hover
+                label
+                    display: block
+
+            label
+                display: none
+                +size(100%)
+                +margin(54px auto 0)
+
 // 학생 추가정보 보기 페이지
 .student-additional
     .question-list

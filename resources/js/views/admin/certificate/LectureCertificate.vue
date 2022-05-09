@@ -85,6 +85,10 @@
                 </nav>
             </div>-->
         </template>
+
+        <template v-slot:footer>
+            <LectureCertificatePopup v-if="showPopup" :id="popupId" @close="popupClose"/>
+        </template>
     </layout>
 </template>
 
@@ -92,6 +96,7 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+import LectureCertificatePopup from '@/views/admin/certificate/LectureCertificatePopup.vue';
 
 export default {
     name: "LectureCertificate",
@@ -99,6 +104,7 @@ export default {
         'table-grid': Table,
         'button-open': ButtonOpen,
         'select-box': SelectBox,
+        LectureCertificatePopup,
     },
     computed: {
         tableCol() {
@@ -209,6 +215,8 @@ export default {
             },
             keyword: "",
             category_id: "",
+            showPopup: false,
+            popupId: 0,
         }
     },
     mounted() {
@@ -224,6 +232,13 @@ export default {
         handleSetCategoryId(id) {
             this.category_id = id;
         },
+        popupControl(id) {
+            this.popupId = id;
+            this.showPopup = true;
+        },
+        popupClose(show) {
+            this.showPopup = show;
+        }
     }
 }
 </script>
