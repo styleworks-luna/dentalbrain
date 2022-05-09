@@ -149,20 +149,18 @@ export default {
                     }
                 ],
             },
-            stats: [],
             keyword: "",
             category_id: "",
         }
     },
     mounted() {
         this.getData();
-        this.getStats();
     },
     methods: {
         getData() {
             let params = {
                 keyword: this.keyword,
-                ongoing: this.category_id
+                category: this.category_id
             }
         },
         handleSetCategoryId(id) {
