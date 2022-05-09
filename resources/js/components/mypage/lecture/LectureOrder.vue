@@ -14,7 +14,7 @@
                 <li :class="{'active': is_active == 3}" @click.prevent="handleSetOrder('offline',3)">
                     <a href="">오프라인</a>
                 </li>
-                <li>
+                <li :class="{'active': is_active == 4}" @click.prevent="handleSetOrder('certificate',4)">
                     <a href="">수료/자격증</a>
                 </li>
             </ul>
@@ -54,6 +54,10 @@ export default {
               {
                   id: 'offline',
                   name: '오프라인'
+              },
+              {
+                  id: 'certificate',
+                  name: '수료/자격증'
               },
           ],
           order: 'newest',
