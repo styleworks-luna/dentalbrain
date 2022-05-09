@@ -57,7 +57,7 @@ class ProgramBannerController extends Controller
     // 배너 만들기
     public function store(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validatedData = $this->validateProgramBanner($request);
+        $validatedData = $this->validateStoreProgramBanner($request);
 
         Banner::query()->create($validatedData);
 
@@ -78,7 +78,7 @@ class ProgramBannerController extends Controller
     // 배너 수정
     public function update(Request $request, Banner $banner): \Illuminate\Http\JsonResponse
     {
-        $validatedData = $this->validateProgramBanner($request);
+        $validatedData = $this->validateUpdateProgramBanner($request);
 
         $banner->update($validatedData);
 
@@ -117,10 +117,11 @@ class ProgramBannerController extends Controller
 
     /**
      * @param Request $request
+     * @param bool $isNew
      * @return array
      * @throws ValidationException
      */
-    private function validateProgramBanner(Request $request): array
+    private function validateProgramBanner(Request $request, bool $isNew): array
     {
         $validator = Validator::make($request->all(), [
             'category_id' => ['required', Rule::in([Banner::$POSITION_AREA2, Banner::$POSITION_AREA3])],
@@ -141,17 +142,29 @@ class ProgramBannerController extends Controller
             throw new ValidationException($validator);
         }
 
-        $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
-            ->where('category_id', '=', $validatedData['category_id'])->exists();
+        if ($isNew) {
+            $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
+                ->where('category_id', '=', $validatedData['category_id'])->exists();
 
-        if ($isDuplicated) {
-            $validator->getMessageBag()->add('program_id.duplicated', '배너가 이미 존재합니다.');
-            throw new ValidationException($validator);
+            if ($isDuplicated) {
+                $validator->getMessageBag()->add('program_id.duplicated', '배너가 이미 존재합니다.');
+                throw new ValidationException($validator);
+            }
         }
 
         $validatedData['user_id'] = auth()->id();
         $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
 
         return $validatedData;
+    }
+
+    private function validateStoreProgramBanner(Request $request): array
+    {
+        return $this->validateProgramBanner($request, true);
+    }
+
+    private function validateUpdateProgramBanner(Request $request): array
+    {
+        return $this->validateProgramBanner($request, false);
     }
 }
