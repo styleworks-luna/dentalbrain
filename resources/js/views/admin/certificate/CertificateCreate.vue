@@ -54,9 +54,12 @@
 </template>
 
 <script>
-
+import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 export default {
     name: 'CertificateCreate',
+    components: {
+        'single-group': SingleGroup,
+    },
     data() {
         return {
             title: '',
