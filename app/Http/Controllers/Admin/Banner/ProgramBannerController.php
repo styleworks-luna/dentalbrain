@@ -142,16 +142,6 @@ class ProgramBannerController extends Controller
             throw new ValidationException($validator);
         }
 
-        if ($isNew) {
-            $isDuplicated = Banner::query()->where('program_id', "=", $validatedData['program_id'])
-                ->where('category_id', '=', $validatedData['category_id'])->exists();
-
-            if ($isDuplicated) {
-                $validator->getMessageBag()->add('program_id.duplicated', '배너가 이미 존재합니다.');
-                throw new ValidationException($validator);
-            }
-        }
-
         $validatedData['user_id'] = auth()->id();
         $validatedData['link'] = "/lectures/" . $validatedData['program_id'];
 
