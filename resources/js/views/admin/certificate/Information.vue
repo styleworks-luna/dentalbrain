@@ -40,7 +40,7 @@
                         :data="certificationList.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.category }}</td>
+                    <td>{{ slotProps.row.type }}</td>
                     <td>{{ slotProps.row.title }}</td>
                     <td>
                         <router-link :to="`certificate/${slotProps.row.id}`"
@@ -67,6 +67,8 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+
+import Certificate from '@/api/admin/certificate/Certificate.js'
 
 export default {
     name: "History",
@@ -116,13 +118,7 @@ export default {
     data() {
         return {
             certificationList: {
-                data: [
-                    {
-                        id: 11,
-                        category: '자격증',
-                        title: '자격증 제목',
-                    }
-                ],
+                data: [],
             },
             keyword: "",
             category_id: "",
@@ -137,6 +133,9 @@ export default {
                 keyword: this.keyword,
                 category: this.category_id
             }
+            Certificate.getData(params).then(res => {
+                this.certificationList.data = res.data;
+            })
         },
         handleSetCategoryId(id) {
             this.category_id = id;
