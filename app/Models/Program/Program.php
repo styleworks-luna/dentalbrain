@@ -2,6 +2,7 @@
 
 namespace App\Models\Program;
 
+use App\Models\Certificate\CertificateProfile;
 use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Models\Program\Survey\Survey;
@@ -322,6 +323,11 @@ class Program extends Model
         return $this->hasManyThrough(SurveyAnswer::class, Survey::class,
             'program_id', 'survey_id',
             'id', 'id');
+    }
+
+    public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CertificateProfile::class, 'program_id', 'id');
     }
 
     public function getMajorCategoryNameAttribute()

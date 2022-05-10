@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Certificate\CertificateProfile;
 use App\Models\Membership\Membership;
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
@@ -100,6 +101,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Program::class, 'user_likes')
             ->using(UserLike::class);
+    }
+
+    public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CertificateProfile::class, 'user_id', 'id');
     }
 
     /*  ==============================================================================
