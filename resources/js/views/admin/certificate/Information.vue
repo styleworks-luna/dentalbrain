@@ -105,11 +105,11 @@ export default {
         CategoryOptions() {
             return [
                 {
-                    id: '1',
+                    id: 'qualification',
                     name: '자격증'
                 },
                 {
-                    id: '0',
+                    id: 'completion',
                     name: '수료증'
                 }
             ]
