@@ -5,7 +5,15 @@
                 <a :href="'/lectures/' + lecture.id">
                     <div class="lecture-image-box">
                         <img :src="lecture.thumbnail.url" alt="">
-                        <div class="certificate-mark">수료/자격증</div>
+                        <template v-if="lecture.completion_id && lecture.qualification_id">
+                            <div class="certificate-mark">수료/자격증</div>
+                        </template>
+                        <template v-else-if="lecture.completion_id">
+                            <div class="certificate-mark">수료증</div>
+                        </template>
+                        <template v-else-if="lecture.qualification_id">
+                            <div class="certificate-mark">자격증</div>
+                        </template>
                     </div>
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
