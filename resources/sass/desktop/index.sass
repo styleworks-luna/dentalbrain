@@ -55,6 +55,26 @@
         +border-radius(8px)
         +box-sizing(border-box)
 
+    .lecture-image-box
+        position: relative
+        
+        .certificate-mark
+            +border(1px solid rgba(255, 255, 255, 0.8))
+            +border-radius(12px)
+            +margin(right 12px bottom 12px)
+            +padding(6px 9px)
+            display: flex
+            align-items: center
+            justify-content: center
+            background-color: rgba(0, 0, 0, 0.6)
+            position: absolute
+            bottom: 0
+            right: 0
+            font-size: 11px
+            font-weight: bold
+            color: #fff
+
+
 @mixin lecture-description
     +size(296px)
 

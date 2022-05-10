@@ -21,7 +21,10 @@
         <div class="m-container">
 
             <section class="lecture-information-wrap">
-                <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
+                <div class="lecture-image-box">
+                    <img src="{{ $program->thumbnail->url }}" alt="강의 사진" class="lecture-image">
+                    <div class="certificate-mark">수료/자격증</div>
+                </div>
                 <div class="lecture-information">
                     <div class="m-row">
                         <div class="lecture-sort">

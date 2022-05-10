@@ -3,7 +3,10 @@
         <ul>
             <li class="lecture-card" v-for="lecture in lectures" :key="lecture.id">
                 <a :href="'/lectures/' + lecture.id">
-                    <img :src="lecture.thumbnail.url" alt="">
+                    <div class="lecture-image-box">
+                        <img :src="lecture.thumbnail.url" alt="">
+                        <div class="certificate-mark">수료/자격증</div>
+                    </div>
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{ lecture.minor_category_name }}</span>
@@ -42,7 +45,7 @@
                             </template>
                             <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.is_free == 0 && lecture.discount_rate == 0">
                                 {{ Helper.numberWithCommas(lecture.price) }}원</p>
-                            <p style="padding-top: 5vw"class="lecture-price" v-if="lecture.is_free != 0">무료</p>
+                            <p style="padding-top: 5vw" class="lecture-price" v-if="lecture.is_free != 0">무료</p>
                         </div>
 
                     </div>

@@ -12,6 +12,9 @@
             <div class="float-right">
                 <form @submit.prevent="getData">
                     <select-box class="form-control"
+                                text="증명서 구분"></select-box>
+
+                    <select-box class="form-control"
                                 text="대분류 선택"
                                 :value="major_category_id"
                                 :options="majorCategoryOptions"
@@ -48,6 +51,12 @@
                             {{ slotProps.row.title }}
                         </a>
                     </td>
+                    <td>ABC자격증</td>
+                    <td>0명
+                        <router-link :to="`/admin/certificate/lecture/${slotProps.row.id}`"
+                                     class="btn btn-info ml-2">
+                            보기
+                        </router-link></td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
@@ -57,17 +66,17 @@
                     </td>
                     <td>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/${page}`"
-                                     class="btn btn-warning text-white float-left mr-2">
+                                     class="btn btn-warning text-white mr-2">
                             수정
                         </router-link>
                         <button-open :isOpen="slotProps.row.is_open"
-                                     class="btn-danger text-white border-danger float-left mr-2"
+                                     class="btn-danger text-white border-danger mr-2"
                                      @setStatus="handleSetStatus(slotProps.row.id)"></button-open>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/duplicate/${page}`"
-                                     class="btn btn-success text-white float-left mr-2">
+                                     class="btn btn-success text-white mr-2">
                             복사
                         </router-link>
-                        <button class="btn btn-danger float-left" @click="destroy(slotProps.row.id)">삭제</button>
+                        <button class="btn btn-danger" @click="destroy(slotProps.row.id)">삭제</button>
                     </td>
                 </template>
             </table-grid>
@@ -126,22 +135,32 @@
                     {
                         name: 'id',
                         text: '번호',
-                        width: '7%'
+                        width: '5%'
                     },
                     {
                         name: 'category',
                         text: '대분류',
-                        width: '10%'
+                        width: '6%'
                     },
                     {
                         name: 'subclass',
                         text: '소분류',
-                        width: '8%'
+                        width: '6%'
                     },
                     {
                         name: 'title',
                         text: '강의 제목',
-                        width: '43%'
+                        width: '30%'
+                    },
+                    {
+                        name: 'certificate_title',
+                        text: '증명서 제목',
+                        width: '10%'
+                    },
+                    {
+                        name: 'certificate_status',
+                        text: '증명서 신청 현황',
+                        width: '10%'
                     },
                     {
                         name: 'count',
