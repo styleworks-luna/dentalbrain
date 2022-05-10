@@ -43,10 +43,18 @@
                     <td>{{ slotProps.row.type }}</td>
                     <td>{{ slotProps.row.title }}</td>
                     <td>
-                        <router-link :to="`certificate/${slotProps.row.id}`"
-                           class="btn btn-info">
-                            수정
-                        </router-link>
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <router-link :to="`/admin/certificate/certificate/${slotProps.row.id}`"
+                                         class="btn btn-info">
+                                수정
+                            </router-link>
+                        </template>
+                        <template v-else-if="slotProps.row.type == '수료증'">
+                            <router-link :to="`/admin/certificate/completion/${slotProps.row.id}`"
+                                         class="btn btn-info">
+                                수정
+                            </router-link>
+                        </template>
                     </td>
                 </template>
             </table-grid>

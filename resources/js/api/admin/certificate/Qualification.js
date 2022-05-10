@@ -8,4 +8,10 @@ export default {
             data: params
         });
     },
+    getEditData(id) {
+        return Send({
+            url: `/api/admin/certificate/qualifications/${id}`,
+            method: 'get',
+        })
+    }
 }

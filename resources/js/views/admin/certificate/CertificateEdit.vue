@@ -56,10 +56,15 @@
 <script>
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 
+import Qualification from '@/api/admin/certificate/Qualification.js';
+
 export default {
     name: 'CertificateEdit',
     components: {
         'single-group': SingleGroup,
+    },
+    created() {
+        this.id = this.$route.params.id;
     },
     data() {
         return {
@@ -69,7 +74,19 @@ export default {
             content: '',
         }
     },
+    mounted() {
+      this.getEditData();
+    },
     methods: {
+        getEditData() {
+            Qualification.getEditData(this.id).then(res => {
+                console.log(res);
+                this.title = res.data[0].title;
+                this.certificateNumber = res.data[0].certification_number;
+                this.certificateRate = res.data[0].grade;
+                this.content = res.data[0].content;
+            })
+        },
         create() {
             let data = {
                 title: this.title,
