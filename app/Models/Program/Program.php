@@ -398,6 +398,7 @@ class Program extends Model
             'minor_category_id', 'title', 'running_time', 'term',
             'is_free',
             'price', 'discount_rate', 'discounted_price',
+            'qualification_id', 'completion_id',
         ])
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])

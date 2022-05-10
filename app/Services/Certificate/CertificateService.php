@@ -14,7 +14,6 @@ class CertificateService
     public function getValidatorRecruit(Request $rawData, array $additionalRules = []): array
     {
         $validated = Validator::make($rawData->all(), array_merge([
-//            'file' => ['required', 'numeric', 'min:1',],
             'file' => ['required'],
             'name' => ['required', 'string', 'max:50'],
             'university' => ['nullable', 'string', 'max:50'],
