@@ -681,5 +681,21 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
             Route::delete('{recruit}/cancel', [\App\Http\Controllers\Admin\Payment\RecruitCancelController::class, 'cancel'])->name('cancel');
         });
+
+        Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'search']);
+
+            Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function () {
+                Route::post('/', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'create']);
+                Route::get('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getDetail']);
+            });
+
+            Route::group(['prefix' => 'completions', 'as' => 'completions.'], function () {
+                Route::post('/', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'create']);
+                Route::get('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getDetail']);
+            });
+
+
+        });
     });
 });
