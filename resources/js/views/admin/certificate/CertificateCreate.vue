@@ -55,6 +55,8 @@
 
 <script>
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+import Qualification from '@/api/admin/certificate/Qualification.js';
+
 export default {
     name: 'CertificateCreate',
     components: {
@@ -72,10 +74,14 @@ export default {
         create() {
             let data = {
                 title: this.title,
-                certificateNumber: this.certificateNumber,
-                certificateRate: this.certificateRate,
+                certification_number: this.certificateNumber,
+                grade: this.certificateRate,
                 content: this.content
             };
+            Qualification.create(data).then(res => {
+                alert(res.data.msg);
+                this.$router.push('/admin/certificate/information');
+            });
         }
     }
 }

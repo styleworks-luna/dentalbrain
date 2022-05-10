@@ -14,7 +14,7 @@ class CompletionController extends Controller
 
         $completion = CertificateCompletion::query()->create($validated);
 
-        return response()->json(['message' => '생성되었습니다.']);
+        return response()->json(['msg' => '생성되었습니다.']);
     }
 
     public function update(Request $request, CertificateCompletion $completion): \Illuminate\Http\JsonResponse
@@ -23,7 +23,7 @@ class CompletionController extends Controller
 
         $completion->update($validated);
 
-        return response()->json(['message' => '수정되었습니다.']);
+        return response()->json(['msg' => '수정되었습니다.']);
     }
 
     public function getDetail(Request $request, CertificateCompletion $completion): \Illuminate\Http\JsonResponse
