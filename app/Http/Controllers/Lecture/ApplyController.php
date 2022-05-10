@@ -4,21 +4,38 @@ namespace App\Http\Controllers\Lecture;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApplyLecture;
+use App\Models\Certificate\CertificateCompletion;
+use App\Models\Certificate\CertificateProfile;
+use App\Models\File;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
+use App\Services\Certificate\CertificateService;
+use App\Services\File\CertificateThumbnail;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Survey\SurveyAnswerService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class ApplyController extends Controller
 {
+    protected $certificateService;
+
+    /**
+     * @param CertificateService $certificateService
+     */
+    public function __construct(CertificateService $certificateService)
+    {
+        $this->certificateService = $certificateService;
+    }
+
     public function showApplyForm(Program $program)
     {
         if ($program->alreadyApplied() || $program->waitDeposit() || $program->waitConfirmAnotherPay()) {
@@ -55,19 +72,23 @@ class ApplyController extends Controller
             'price' => $price,
         ]);
     }
-
     /**
      *  재수강 시에 질문을 새로 작성하지 않음.
      *
      * @param Request $request
      * @param Program $program
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function apply(Request $request, Program $program)
+    public function apply(Request $request, Program $program): RedirectResponse
     {
+
+        // 자격증 여부 추가 신청 validate
+        if($program->completion_id || $program->qualification_id) {
+            $certificateProfileData = $this->certificateService->getValidatorRecruit($request, []);
+        }
+
         // 파일을 함께 조회하기 위해 all 사용.
         $surveyDataSet = $request->all('surveys')['surveys'];
-
         $surveyAnswerService = new SurveyAnswerService();
 
         try {
@@ -75,7 +96,7 @@ class ApplyController extends Controller
 
             if ($program->surveys()->exists()) {
                 // 질문이 존재하는 경우
-                if ($surveyAnswerService->validateSurveyAnswers($surveyDataSet) == false) {
+                if (!$surveyAnswerService->validateSurveyAnswers($surveyDataSet)) {
                     // Validation Failed.
 
                     DB::rollback();
@@ -88,12 +109,23 @@ class ApplyController extends Controller
             $price = $program->getUserSpecificPrice();
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $price);
 
+            if($program->completion_id || $program->qualification_id) {
+                // 파일 생성
+                $file = CertificateThumbnail::saveFile($certificateProfileData['file']);
+                // 수료/자격증 증명정보 생성
+                $certificateProfile = $this->certificateService->storeCertificateProfile($certificateProfileData, $program, $file);
+            }
+
             DB::commit();
             if ($price == 0) {
                 // 무료 행사인 경우.
-
                 Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
                 Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
+
+                // 신청 후 => 증명정보 상태 '대기'로 변경
+                if($program->completion_id || $program->qualification_id) {
+                    $certificateProfile = CertificateProfile::updateStateAfterPaid($program);
+                }
 
                 return redirect()->route('lectures.result', $program->id);
             }

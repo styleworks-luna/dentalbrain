@@ -16,6 +16,15 @@
 @section('content')
     <section class="content lecture-apply">
         <div class="container">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('lectures.apply',$program->id) }}" id="lecture-apply-form" method="POST"
                   enctype="multipart/form-data">
                 <div class="row">
@@ -59,7 +68,9 @@
                                         <th>강의장소</th>
                                         <td>
                                             <p class="lecture-length">
-                                                {{ $program->place->address }} @isset($program->place->address_detail){{ ' , '.$program->place->address_detail }}@endisset
+                                                {{ $program->place->address }} @isset($program->place->address_detail)
+                                                    {{ ' , '.$program->place->address_detail }}
+                                                @endisset
                                             </p>
                                         </td>
                                     </tr>
@@ -96,94 +107,100 @@
                         </table>
                     </section>
 
-                    <section class="certificate-information">
-                        <h3>증명서 정보 입력</h3>
-                        <div class="file-question">
-                            <h4>사진 <em>(필수)</em></h4>
-                            <input type="hidden" name="surveys[][survey_id]"
-                                   value="">
-                            <div class="answers">
-                                <div class="file-wrap">
-                                    <input type="file"
-                                           id="file-upload"
-                                           class="upload-hidden"
-                                           name="surveys[][file]"
-                                           accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
+                    @if($program->qualification_id || $program->completion_id)
+                        <section class="certificate-information">
+                            <h3>증명서 정보 입력</h3>
+                            <div class="file-question">
+                                <h4>사진 <em>(필수)</em></h4>
+                                <input type="hidden" name="file"
+                                       value="">
+                                <div class="answers">
+                                    <div class="file-wrap">
+                                        <input type="file"
+                                               id="file-upload"
+                                               class="upload-hidden"
+                                               name="file"
+                                               accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
-                                           data-parsley-required-message="파일을 업로드해주세요.">
-                                    <label for="file-upload" class="btn-file-upload">사진선택</label>
-                                    <input type="text" id="file-name" name="surveys[][fileName]"
-                                           class="file-name"
-                                           value="사진을 업로드해주세요." disabled="disabled">
+                                               data-parsley-required-message="파일을 업로드해주세요.">
+                                        <label for="file-upload" class="btn-file-upload">사진선택</label>
+                                        <input type="text" id="file-name" name="file"
+                                               class="file-name"
+                                               value="사진을 업로드해주세요." disabled="disabled">
+                                    </div>
+                                    <div class="file_error_wrap"></div>
+                                    <div class="tips">
+                                        <p>
+                                            ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
+                                            ※ 첨부가능 확장자 : JPG, JPEG, PNG, GIF<br>
+                                            ※ 사진 사이즈 : 반명함 3cm x 4cm
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="file_error_wrap"></div>
-                                <div class="tips">
-                                    <p>
-                                        ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
-                                        ※ 첨부가능 확장자 : JPG, JPEG, PNG, GIF<br>
-                                        ※ 사진 사이즈 : 반명함 3cm x 4cm
-                                    </p>
+                            </div>
+                            <div class="short-answer">
+                                <h4>성명 <em>(필수)</em>
+                                </h4>
+                                <input type="hidden" name="name"
+                                       value="">
+                                <div class="answers">
+                                    <input type="text" id="short-answer-response"
+                                           name="name"
+                                           value="{{old('name')}}"
+                                           class="short-answer-response"
+                                           data-parsley-errors-container=".short_answer_error_wrap"
+                                           data-parsley-required-message="답변을 입력하세요.">
                                 </div>
+                                <div class="short_answer_error_wrap"></div>
                             </div>
-                        </div>
-                        <div class="short-answer">
-                            <h4>성명 <em>(필수)</em>
-                            </h4>
-                            <input type="hidden" name="surveys[][survey_id]"
-                                   value="">
-                            <div class="answers">
-                                <input type="text" id="short-answer-response"
-                                       name="surveys[][answer]"
-                                       class="short-answer-response"
-                                       data-parsley-errors-container=".short_answer_error_wrap"
-                                       data-parsley-required-message="답변을 입력하세요.">
+                            <div class="short-answer">
+                                <h4>대학교</h4>
+                                <input type="hidden" name="university"
+                                       value="">
+                                <div class="answers">
+                                    <input type="text" id="short-answer-response"
+                                           name="university"
+                                           value="{{old('university')}}"
+                                           class="short-answer-response"
+                                           placeholder="대학생일 경우 기입해주세요. (ex : 덴탈브레인대학교)"
+                                           data-parsley-errors-container=".short_answer_error_wrap"
+                                           data-parsley-required-message="답변을 입력하세요.">
+                                </div>
+                                <div class="short_answer_error_wrap"></div>
                             </div>
-                            <div class="short_answer_error_wrap"></div>
-                        </div>
-                        <div class="short-answer">
-                            <h4>대학교</h4>
-                            <input type="hidden" name="surveys[][survey_id]"
-                                   value="">
-                            <div class="answers">
-                                <input type="text" id="short-answer-response"
-                                       name="surveys[][answer]"
-                                       class="short-answer-response"
-                                       placeholder="대학생일 경우 기입해주세요. (ex : 덴탈브레인대학교)"
-                                       data-parsley-errors-container=".short_answer_error_wrap"
-                                       data-parsley-required-message="답변을 입력하세요.">
+                            <div class="short-answer">
+                                <h4>학번</h4>
+                                <input type="hidden" name="student_number"
+                                       value="">
+                                <div class="answers">
+                                    <input type="text" id="short-answer-response"
+                                           name="student_number"
+                                           value="{{old('student_number')}}"
+                                           class="short-answer-response"
+                                           placeholder="대학생일 경우 기입해주세요."
+                                           data-parsley-errors-container=".short_answer_error_wrap"
+                                           data-parsley-required-message="답변을 입력하세요.">
+                                </div>
+                                <div class="short_answer_error_wrap"></div>
                             </div>
-                            <div class="short_answer_error_wrap"></div>
-                        </div>
-                        <div class="short-answer">
-                            <h4>학번</h4>
-                            <input type="hidden" name="surveys[][survey_id]"
-                                   value="">
-                            <div class="answers">
-                                <input type="text" id="short-answer-response"
-                                       name="surveys[][answer]"
-                                       class="short-answer-response"
-                                       placeholder="대학생일 경우 기입해주세요."
-                                       data-parsley-errors-container=".short_answer_error_wrap"
-                                       data-parsley-required-message="답변을 입력하세요.">
+                            <div class="short-answer">
+                                <h4>생년월일 <em>(필수)</em>
+                                </h4>
+                                <input type="hidden" name="birthday"
+                                       value="">
+                                <div class="answers">
+                                    <input type="text" id="short-answer-response"
+                                           name="birthday"
+                                           value="{{old('birthday')}}"
+                                           class="short-answer-response"
+                                           placeholder="2022.01.01 형식으로 입력"
+                                           data-parsley-errors-container=".short_answer_error_wrap"
+                                           data-parsley-required-message="답변을 입력하세요.">
+                                </div>
+                                <div class="short_answer_error_wrap"></div>
                             </div>
-                            <div class="short_answer_error_wrap"></div>
-                        </div>
-                        <div class="short-answer">
-                            <h4>생년월일 <em>(필수)</em>
-                            </h4>
-                            <input type="hidden" name="surveys[][survey_id]"
-                                   value="">
-                            <div class="answers">
-                                <input type="text" id="short-answer-response"
-                                       name="surveys[][answer]"
-                                       class="short-answer-response"
-                                       placeholder="2022.01.01 형식으로 입력"
-                                       data-parsley-errors-container=".short_answer_error_wrap"
-                                       data-parsley-required-message="답변을 입력하세요.">
-                            </div>
-                            <div class="short_answer_error_wrap"></div>
-                        </div>
-                    </section>
+                        </section>
+                    @endif
 
                     @if($surveys->isNotEmpty())
                         <section class="additional-information">

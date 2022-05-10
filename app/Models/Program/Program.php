@@ -2,7 +2,9 @@
 
 namespace App\Models\Program;
 
+use App\Models\Certificate\CertificateCompletion;
 use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CertificateQualification;
 use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Models\Program\Survey\Survey;
@@ -328,6 +330,16 @@ class Program extends Model
     public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CertificateProfile::class, 'program_id', 'id');
+    }
+
+    public function certificateQualification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CertificateQualification::class, 'qualification_id', 'id');
+    }
+
+    public function certificateCompletion(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CertificateCompletion::class, 'completion_id', 'id');
     }
 
     public function getMajorCategoryNameAttribute()

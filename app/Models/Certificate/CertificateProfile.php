@@ -6,10 +6,20 @@ use App\Models\User;
 use App\Models\Program\Program;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class CertificateProfile extends Model
 {
     protected $guarded = [];
+
+    // 결제대기
+    const DO_NOT_PAID = 1;
+    // 대기중
+    const WAITING = 2;
+    // 불합격
+    const FAILED = 3;
+    // 합격
+    const PASS = 4;
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -34,5 +44,17 @@ class CertificateProfile extends Model
     public function file(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(File::class, 'file_id', 'id');
+    }
+
+    public static function updateStateAfterPaid(Program $program)
+    {
+        $certificateProfile = CertificateProfile::query()->where('user_id', Auth::id())
+            ->where('program_id', $program->id)->first();
+
+        $certificateProfile->update([
+            'state' => CertificateProfile::WAITING,
+        ]);
+
+        return $certificateProfile;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
+use App\Models\Certificate\CertificateProfile;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -56,6 +57,9 @@ class PaymentsController extends Controller
             $payment = Payment::createByTossSuccess($response);
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
+
+            // 결제 후 => 증명정보 상태 '대기'로 변경
+            $certificateProfile = CertificateProfile::updateStateAfterPaid($program);
 
             Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
             Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
