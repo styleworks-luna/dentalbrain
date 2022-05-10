@@ -40,6 +40,9 @@ if (env('APP_ENV') != 'production') {
     });
 
     Route::get("show", [\App\Http\Controllers\Development\DevelopmentController::class, 'show']);
+
+    Route::post("createQual", [\App\Http\Controllers\Development\DevelopmentController::class, 'createCertificationQual']);
+    Route::post("createComp", [\App\Http\Controllers\Development\DevelopmentController::class, 'createCertificationComp']);
 }
 
 /*============================ PAGES ============================*/
