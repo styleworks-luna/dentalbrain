@@ -17,7 +17,7 @@ class QualificationController extends Controller
         return response()->json(['message' => '생성되었습니다.']);
     }
 
-    public function update(Request $request, CertificateQualification $qualification)
+    public function update(Request $request, CertificateQualification $qualification): \Illuminate\Http\JsonResponse
     {
         $validated = $this->validateQualification($request);
 
@@ -27,7 +27,7 @@ class QualificationController extends Controller
         return response()->json(['message' => '수정되었습니다.']);
     }
 
-    public function getDetail(Request $request, CertificateQualification $qualification)
+    public function getDetail(Request $request, CertificateQualification $qualification): \Illuminate\Http\JsonResponse
     {
         return response()->json([$qualification]);
     }
