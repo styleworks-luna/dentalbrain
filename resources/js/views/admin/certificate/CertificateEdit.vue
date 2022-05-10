@@ -80,7 +80,6 @@ export default {
     methods: {
         getEditData() {
             Qualification.getEditData(this.id).then(res => {
-                console.log(res);
                 this.title = res.data[0].title;
                 this.certificateNumber = res.data[0].certification_number;
                 this.certificateRate = res.data[0].grade;
