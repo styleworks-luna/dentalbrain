@@ -39,19 +39,19 @@ class CertificationController extends Controller
             $collection = $collection->concat($completions);
         }
 
-        $num = 1;
+        $num = $collection->count();
 
         $result = $collection->sortByDesc('created_at')->map(function ($item) use (&$num) {
             if ($item instanceof CertificateCompletion) {
-                return new CertificationDTO($num++, '수료증', $item);
+                return new CertificationDTO($num--, '수료증', $item);
             }
             if ($item instanceof CertificateQualification) {
-                return new CertificationDTO($num++, '자격증', $item);
+                return new CertificationDTO($num--, '자격증', $item);
             }
-            return new CertificationDTO($num++, '오류', $item);
+            return new CertificationDTO($num--, '오류', $item);
         });
 
-        return response()->json($result->toArray());
+        return response()->json($result->values()->toArray());
     }
 }
 
