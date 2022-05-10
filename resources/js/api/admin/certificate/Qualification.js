@@ -13,5 +13,12 @@ export default {
             url: `/api/admin/certificate/qualifications/${id}`,
             method: 'get',
         })
+    },
+    update(id,data) {
+        return Send({
+            url: `/api/admin/certificate/qualifications/${id}`,
+            method: 'post',
+            data: data,
+        })
     }
 }

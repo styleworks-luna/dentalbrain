@@ -44,10 +44,8 @@
 
         <template v-slot:footer>
             <div class="float-right">
-                <button type="submit" class="btn btn-info" @click="create">등록</button>
-                <router-link to="/admin/certificate/information"
-                             class="btn btn-dark">취소
-                </router-link>
+                <button type="submit" class="btn btn-info" @click="update">등록</button>
+                <button class="btn btn-dark" @click.prevent="$router.back();">취소 </button>
             </div>
         </template>
     </layout>
@@ -86,13 +84,17 @@ export default {
                 this.content = res.data[0].content;
             })
         },
-        create() {
+        update() {
             let data = {
                 title: this.title,
-                certificateNumber: this.certificateNumber,
-                certificateRate: this.certificateRate,
+                certification_number: this.certificateNumber,
+                grade: this.certificateRate,
                 content: this.content
             };
+            Qualification.update(this.id, data).then(res => {
+                alert(res.data.msg);
+                this.$router.back();
+            })
         }
     }
 }
