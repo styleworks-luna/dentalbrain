@@ -63,24 +63,9 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
     public function update(Request $request, Program $program)
     {
-        $programData = $this->onlineConcrete->validateProgram($request, [
-            'running_time' => ['required', 'string'],
-            'preview_url' => ['nullable', 'url'],
-            'preview_type' => ['nullable', 'string'],
-            'term' => ['required', 'numeric'],
-            'qualification_id' => ['nullable', 'numeric'],
-            'completion_id' => ['nullable', 'numeric'],
-        ]);
-
-        $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
-            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
-            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
-            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
-        ]);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request, [
-            'lectures.*.id' => ['sometimes', 'required', Rule::exists('lectures', 'id')]
-        ]);
+        $programData = $this->onlineConcrete->validateUpdateProgram($request);
+        $surveyDataSet = $this->onlineConcrete->validateUpdateSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateUpdateLectures($request);
 
         try {
             DB::beginTransaction();
@@ -142,19 +127,9 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
     public function store(Request $request)
     {
-        $programData = $this->onlineConcrete->validateProgram($request,
-            [
-                'running_time' => ['required', 'string'],
-                'preview_url' => ['nullable', 'url'],
-                'preview_type' => ['nullable', 'string'],
-                'term' => ['required', 'numeric'],
-                'qualification_id' => ['nullable', 'numeric'],
-                'completion_id' => ['nullable', 'numeric'],
-            ]);
-
-        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
+        $programData = $this->onlineConcrete->validateStoreProgram($request);
+        $surveyDateSet = $this->onlineConcrete->validateStoreSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateStoreLectures($request);
 
         try {
             DB::beginTransaction();

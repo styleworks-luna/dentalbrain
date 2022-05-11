@@ -11,6 +11,7 @@ use App\Services\File\LectureThumbnail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OnlineProgramConcrete extends ProgramTemplate
 {
@@ -18,6 +19,30 @@ class OnlineProgramConcrete extends ProgramTemplate
     {
         $is_online = true;
         parent::__construct($is_online);
+    }
+
+    public function validateStoreProgram(Request $request): array
+    {
+        return parent::validateProgram($request, [
+            'running_time' => ['required', 'string'],
+            'preview_url' => ['nullable', 'url'],
+            'preview_type' => ['nullable', 'string'],
+            'term' => ['required', 'numeric'],
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
+    }
+
+    public function validateUpdateProgram(Request $request): array
+    {
+        return parent::validateProgram($request, [
+            'running_time' => ['required', 'string'],
+            'preview_url' => ['nullable', 'url'],
+            'preview_type' => ['nullable', 'string'],
+            'term' => ['required', 'numeric'],
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
     }
 
     /**
@@ -47,6 +72,18 @@ class OnlineProgramConcrete extends ProgramTemplate
         return $returnableDataSet;
     }
 
+    public function validateStoreLectures($request)
+    {
+        return $this->validateLectures($request);
+    }
+
+    public function validateUpdateLectures($request)
+    {
+        return $this->validateLectures($request, [
+            'lectures.*.id' => ['sometimes', 'required', Rule::exists('lectures', 'id')]
+        ]);
+    }
+
     /**
      * Lecture validate
      *
@@ -54,7 +91,7 @@ class OnlineProgramConcrete extends ProgramTemplate
      * @param array $additionalRules
      * @return array
      */
-    public function validateLectures($request, array $additionalRules = [])
+    protected function validateLectures($request, array $additionalRules = [])
     {
         $v = Validator::make($request->all(), array_merge([
             'lectures.*.title' => ['required', 'string'],
