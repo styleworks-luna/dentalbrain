@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin\Payment;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Services\Certificate\CertificateService;
 use App\Services\Program\ProgramCancelTemplate;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,6 +16,16 @@ use Illuminate\Support\Facades\Log;
 
 class CancelController extends Controller
 {
+    /**
+     * @var CertificateService
+     */
+    private $certificateService;
+
+    public function __construct(CertificateService $certificateService)
+    {
+        $this->certificateService = $certificateService;
+    }
+
     /**
      * 어드민 환불 처리
      *
@@ -35,6 +48,8 @@ class CancelController extends Controller
         if ($response === false) {
             return response()->json(['message' => '취소 오류 발생 하였습니다.'], 500);
         }
+
+        $this->certificateService->deleteCertification($program, $student->user_id);
 
         return response()->json(['message' => '취소되었습니다.']);
     }
