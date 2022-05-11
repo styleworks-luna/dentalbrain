@@ -8,4 +8,16 @@ export default {
             params: params
         });
     },
+    getCount() {
+        return Send({
+            url: '/api/admin/certificate/count',
+            method: 'get',
+        });
+    },
+    getOptions() {
+        return Send({
+            url: '/api/admin/certificate/options',
+            method: 'get',
+        });
+    },
 }

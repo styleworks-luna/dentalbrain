@@ -687,6 +687,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
             Route::get('/', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'search']);
+            Route::get('/count', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'count']);
+            Route::get('/options', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'getOptions']);
 
             Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function () {
                 Route::post('/', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'create']);

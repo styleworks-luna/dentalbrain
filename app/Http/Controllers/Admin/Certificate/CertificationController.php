@@ -53,5 +53,25 @@ class CertificationController extends Controller
 
         return response()->json($result->values()->toArray());
     }
+
+    public function count(): \Illuminate\Http\JsonResponse
+    {
+        $completions = CertificateCompletion::query()->count('id');
+        $qualifications = CertificateQualification::query()->count('id');
+        return response()->json([
+            'completion_count' => $completions,
+            'qualification_count' => $qualifications,
+        ]);
+    }
+
+    public function getOptions(): \Illuminate\Http\JsonResponse
+    {
+        $completions = CertificateCompletion::query()->select(['id', 'title'])->orderByDesc('created_at')->get();
+        $qualifications = CertificateQualification::query()->select(['id', 'title'])->orderByDesc('created_at')->get();
+        return response()->json([
+            'completions' => $completions,
+            'qualifications' => $qualifications,
+        ]);
+    }
 }
 
