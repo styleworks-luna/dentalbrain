@@ -8,4 +8,17 @@ export default {
             data: params
         });
     },
+    getEditData(id) {
+        return Send({
+            url: `/api/admin/certificate/completions/${id}`,
+            method: 'get',
+        })
+    },
+    update(id,data) {
+        return Send({
+            url: `/api/admin/certificate/completions/${id}`,
+            method: 'post',
+            data: data,
+        })
+    }
 }

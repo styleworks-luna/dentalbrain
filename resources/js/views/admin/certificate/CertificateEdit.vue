@@ -45,7 +45,7 @@
         <template v-slot:footer>
             <div class="float-right">
                 <button type="submit" class="btn btn-info" @click="update">등록</button>
-                <button class="btn btn-dark" @click.prevent="$router.back();">취소 </button>
+                <button class="btn btn-dark" @click.prevent="$router.back();">취소</button>
             </div>
         </template>
     </layout>
@@ -73,7 +73,7 @@ export default {
         }
     },
     mounted() {
-      this.getEditData();
+        this.getEditData();
     },
     methods: {
         getEditData() {
@@ -82,7 +82,7 @@ export default {
                 this.certificateNumber = res.data[0].certification_number;
                 this.certificateRate = res.data[0].grade;
                 this.content = res.data[0].content;
-            })
+            });
         },
         update() {
             let data = {
