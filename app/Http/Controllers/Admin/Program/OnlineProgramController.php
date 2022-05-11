@@ -57,14 +57,13 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()
+        return $this->search->search()
             ->where('is_online', '=', 1)
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
             }])->orderByDesc('id')
             ->paginate('10');
-        return $search;
     }
 
     public function update(Request $request, Program $program)
