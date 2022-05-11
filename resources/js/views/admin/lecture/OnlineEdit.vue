@@ -9,6 +9,24 @@
             </div>
 
             <div class="right-wrap">
+                <single-group name="증명서 선택"
+                              class="form-type"
+                              :isRow="true"
+                              :size="9">
+                    <template v-slot:content>
+                        <select-box class="form-control mr-3"
+                                    :text="'자격증 선택'"
+                                    :value="certification_id"
+                                    :options="certificationOptions"
+                                    @setValue="handleSetCertificateCategoryId"></select-box>
+
+                        <select-box class="form-control"
+                                    :text="'수료증 선택'"
+                                    :value="completion_id"
+                                    :options="completionOptions"
+                                    @setValue="handleSetCompletionCategoryId"></select-box>
+                    </template>
+                </single-group>
                 <single-group name="분류 선택"
                               class="form-type"
                               :isRequired="true"

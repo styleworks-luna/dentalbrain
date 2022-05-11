@@ -16,10 +16,16 @@
                               :size="9">
                     <template v-slot:content>
                         <select-box class="form-control mr-3"
-                                    :text="'자격증 선택'"></select-box>
+                                    :text="'자격증 선택'"
+                                    :value="certification_id"
+                                    :options="certificationOptions"
+                                    @setValue="handleSetCertificateCategoryId"></select-box>
 
                         <select-box class="form-control"
-                                    :text="'수료증 선택'"></select-box>
+                                    :text="'수료증 선택'"
+                                    :value="completion_id"
+                                    :options="completionOptions"
+                                    @setValue="handleSetCompletionCategoryId"></select-box>
                     </template>
                 </single-group>
 
@@ -288,16 +294,20 @@ import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 //api
 import { Online } from '@/api/admin/lecture/Online.js'
+import Certificate from '@/api/admin/certificate/Certificate.js'
 
 export default {
     name: 'AdminOnlineCreate',
-
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
         OnlineMixin
     ],
+    mounted() {
+
+    },
     methods: {
+
         create() {
             let lectures = [];
 
