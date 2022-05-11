@@ -3,8 +3,9 @@
 namespace App\Models\Program;
 
 use App\Models\Certificate\CertificateCompletion;
-use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\CertificateQualification;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Models\Program\Survey\Survey;
@@ -327,9 +328,14 @@ class Program extends Model
             'id', 'id');
     }
 
-    public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function qualificationProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CertificateProfile::class, 'program_id', 'id');
+        return $this->hasMany(QualificationProfile::class, 'program_id', 'id');
+    }
+
+    public function completionProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CompletionProfile::class, 'program_id', 'id');
     }
 
     public function certificateQualification(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -8,7 +8,7 @@ use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class CertificateProfile extends Model
+class CompletionProfile extends Model
 {
     protected $guarded = [];
 
@@ -31,16 +31,6 @@ class CertificateProfile extends Model
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
 
-    public function certificationCompletion(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(CertificateCompletion::class, 'completion_id', 'id');
-    }
-
-    public function certificationQualification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(CertificateQualification::class, 'qualification_id', 'id');
-    }
-
     public function file(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(File::class, 'file_id', 'id');
@@ -48,11 +38,11 @@ class CertificateProfile extends Model
 
     public static function updateStateAfterPaid(Program $program)
     {
-        $certificateProfile = CertificateProfile::query()->where('user_id', Auth::id())
+        $certificateProfile = CompletionProfile::query()->where('user_id', Auth::id())
             ->where('program_id', $program->id)->first();
 
         $certificateProfile->update([
-            'state' => CertificateProfile::WAITING,
+            'state' => CompletionProfile::WAITING,
         ]);
 
         return $certificateProfile;

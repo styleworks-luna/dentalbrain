@@ -8,8 +8,4 @@ class CertificateQualification extends Model
 {
     protected $guarded = [];
 
-    public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(CertificateProfile::class, 'qualification_id', 'id');
-    }
 }

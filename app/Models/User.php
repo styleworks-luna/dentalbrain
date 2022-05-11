@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\Membership\Membership;
 use App\Models\Program\Comment;
 use App\Models\Program\LectureQuestion;
@@ -103,9 +104,14 @@ class User extends Authenticatable
             ->using(UserLike::class);
     }
 
-    public function certificateProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function qualificationProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(CertificateProfile::class, 'user_id', 'id');
+        return $this->hasMany(QualificationProfile::class, 'user_id', 'id');
+    }
+
+    public function completionProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CompletionProfile::class, 'user_id', 'id');
     }
 
     /*  ==============================================================================
