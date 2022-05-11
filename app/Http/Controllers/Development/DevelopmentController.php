@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DevelopmentController extends Controller
 {
-
     /**
      * @var AbilityService
      */
@@ -46,23 +45,6 @@ class DevelopmentController extends Controller
     {
         return view('desktop.pages.dev.devRegister', [
             'jobs' => UserJobName::query()->orderBy('id')->get()
-        ]);
-    }
-
-    public function createCertificationQual() {
-        CertificateQualification::create([
-            'title' => 'test자격증',
-            'certification_number' => 'test',
-            'grade' => 'test',
-            'content' => 'test',
-        ]);
-    }
-
-    public function createCertificationComp() {
-        CertificateCompletion::create([
-            'title' => 'test자격증',
-            'content' => 'test',
-            'bottom_content' => 'test',
         ]);
     }
 }
