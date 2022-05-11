@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Development;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate\CertificateCompletion;
+use App\Models\Certificate\CertificateQualification;
 use App\Models\User;
 use App\Models\UserJobName;
 use App\Services\Recruit\AbilityService;
@@ -44,6 +46,23 @@ class DevelopmentController extends Controller
     {
         return view('desktop.pages.dev.devRegister', [
             'jobs' => UserJobName::query()->orderBy('id')->get()
+        ]);
+    }
+
+    public function createCertificationQual() {
+        CertificateQualification::create([
+            'title' => 'test자격증',
+            'certification_number' => 'test',
+            'grade' => 'test',
+            'content' => 'test',
+        ]);
+    }
+
+    public function createCertificationComp() {
+        CertificateCompletion::create([
+            'title' => 'test자격증',
+            'content' => 'test',
+            'bottom_content' => 'test',
         ]);
     }
 }

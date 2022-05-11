@@ -5,13 +5,13 @@
                 <a :href="'/banner-redirect/' + banner.id">
                     <div class="lecture-image-box">
                         <img :src="banner.program.thumbnail.url" alt="">
-                        <template v-if="banner.completion_id && banner.qualification_id">
+                        <template v-if="banner.program.completion_id && banner.program.qualification_id">
                             <div class="certificate-mark">수료/자격증</div>
                         </template>
-                        <template v-else-if="banner.completion_id">
+                        <template v-else-if="banner.program.completion_id">
                             <div class="certificate-mark">수료증</div>
                         </template>
-                        <template v-else-if="banner.qualification_id">
+                        <template v-else-if="banner.program.qualification_id">
                             <div class="certificate-mark">자격증</div>
                         </template>
                     </div>
