@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\File;
 
-use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CompletionProfile;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class CertificateThumbnail extends FileTemplate {
 
-    public function __construct(CertificateProfile $model)
+    public function __construct(Model $model)
     {
         parent::__construct($model);
     }

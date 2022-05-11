@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
-use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\Certificate\CertificateService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -29,6 +31,16 @@ use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class PaymentsController extends Controller
 {
+    protected $certificateService;
+
+    /**
+     * @param CertificateService $certificateService
+     */
+    public function __construct(CertificateService $certificateService)
+    {
+        $this->certificateService = $certificateService;
+    }
+
     /**
      * 결제 승인 플로우.
      *
@@ -58,8 +70,8 @@ class PaymentsController extends Controller
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
-            // 결제 후 => 증명정보 상태 '대기'로 변경
-            $certificateProfile = CertificateProfile::updateStateAfterPaid($program);
+            // 신청 후 => 증명정보 상태 '대기'로 변경
+            $this->certificateService->updateCertificationProfilesLoginUser($program);
 
             Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
             Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));

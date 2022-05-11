@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Mail\ApplyLecture;
 use App\Models\Certificate\CertificateCompletion;
-use App\Models\Certificate\CertificateProfile;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
@@ -72,6 +73,7 @@ class ApplyController extends Controller
             'price' => $price,
         ]);
     }
+
     /**
      *  재수강 시에 질문을 새로 작성하지 않음.
      *
@@ -83,8 +85,8 @@ class ApplyController extends Controller
     {
 
         // 자격증 여부 추가 신청 validate
-        if($program->completion_id || $program->qualification_id) {
-            $certificateProfileData = $this->certificateService->getValidatorRecruit($request, []);
+        if ($program->completion_id || $program->qualification_id) {
+            $profileData = $this->certificateService->getValidatorRecruit($request, []);
         }
 
         // 파일을 함께 조회하기 위해 all 사용.
@@ -109,11 +111,14 @@ class ApplyController extends Controller
             $price = $program->getUserSpecificPrice();
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $price);
 
-            if($program->completion_id || $program->qualification_id) {
-                // 파일 생성
-                $file = CertificateThumbnail::saveFile($certificateProfileData['file']);
-                // 수료/자격증 증명정보 생성
-                $certificateProfile = $this->certificateService->storeCertificateProfile($certificateProfileData, $program, $file);
+            // 파일 생성
+            $file = CertificateThumbnail::saveFile($profileData['file']);
+            // 수료/자격증 증명정보 생성
+            if ($program->qualification_id) {
+                $this->certificateService->storeQualificationProfile($profileData, $program, $file);
+            }
+            if ($program->completion_id) {
+                $this->certificateService->storeCompletionProfile($profileData, $program, $file);
             }
 
             DB::commit();
@@ -123,9 +128,7 @@ class ApplyController extends Controller
                 Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
                 // 신청 후 => 증명정보 상태 '대기'로 변경
-                if($program->completion_id || $program->qualification_id) {
-                    $certificateProfile = CertificateProfile::updateStateAfterPaid($program);
-                }
+                $this->certificateService->updateCertificationProfilesLoginUser($program);
 
                 return redirect()->route('lectures.result', $program->id);
             }
