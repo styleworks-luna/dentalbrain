@@ -302,6 +302,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
@@ -458,6 +461,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         return $this->program;
