@@ -12,7 +12,7 @@ class QualificationController extends Controller
     {
         $validated = $this->validateQualification($request);
 
-        $qualification = CertificateQualification::query()->create($validated);
+        CertificateQualification::query()->create($validated);
 
         return response()->json(['msg' => '생성되었습니다.']);
     }
