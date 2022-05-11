@@ -47,17 +47,23 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
     public function search(Request $request)
     {
-        $this->search = new SearchService(Program::query());
+        $query = Program::query()
+            ->with('certificateQualification:id,title', 'certificateCompletion:id,title')
+            ->withCount(['completionProfiles as completion_count', 'qualificationProfiles as qualification_count']);
+
+        $this->search = new SearchService($query);
 
         $this->search->addKeyword('title', $request->keyword);
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', 1)
+        $search = $this->search->search()
+            ->where('is_online', '=', 1)
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
+            }])->orderByDesc('id')
+            ->paginate('10');
         return $search;
     }
 

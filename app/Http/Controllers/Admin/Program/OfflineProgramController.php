@@ -30,12 +30,14 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+        $search = $this->search->search()
+            ->where('is_online', '=', 0)
             ->with('place:id,program_id,started_at,ended_at,address,address_detail')
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
+            }])->orderByDesc('id')
+            ->paginate(10);
 
         return $search;
     }
