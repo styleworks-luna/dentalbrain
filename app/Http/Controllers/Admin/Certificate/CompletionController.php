@@ -12,7 +12,7 @@ class CompletionController extends Controller
     {
         $validated = $this->validateCompletion($request);
 
-        $completion = CertificateCompletion::query()->create($validated);
+        CertificateCompletion::query()->create($validated);
 
         return response()->json(['msg' => '생성되었습니다.']);
     }
