@@ -39,14 +39,22 @@
             <table-grid :tableCol="tableCol"
                         :data="certificationList.data">
                 <template v-slot:list="slotProps">
-                    <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.category }}</td>
+                    <td>{{ slotProps.row.num }}</td>
+                    <td>{{ slotProps.row.type }}</td>
                     <td>{{ slotProps.row.title }}</td>
                     <td>
-                        <router-link :to="`certificate/${slotProps.row.id}`"
-                           class="btn btn-info">
-                            수정
-                        </router-link>
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <router-link :to="`/admin/certificate/certificate/${slotProps.row.id}`"
+                                         class="btn btn-info">
+                                수정
+                            </router-link>
+                        </template>
+                        <template v-else-if="slotProps.row.type == '수료증'">
+                            <router-link :to="`/admin/certificate/completion/${slotProps.row.id}`"
+                                         class="btn btn-info">
+                                수정
+                            </router-link>
+                        </template>
                     </td>
                 </template>
             </table-grid>
@@ -67,6 +75,8 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+
+import Certificate from '@/api/admin/certificate/Certificate.js'
 
 export default {
     name: "History",
@@ -103,11 +113,11 @@ export default {
         CategoryOptions() {
             return [
                 {
-                    id: '1',
+                    id: 'qualification',
                     name: '자격증'
                 },
                 {
-                    id: '0',
+                    id: 'completion',
                     name: '수료증'
                 }
             ]
@@ -116,13 +126,7 @@ export default {
     data() {
         return {
             certificationList: {
-                data: [
-                    {
-                        id: 11,
-                        category: '자격증',
-                        title: '자격증 제목',
-                    }
-                ],
+                data: [],
             },
             keyword: "",
             category_id: "",
@@ -137,6 +141,9 @@ export default {
                 keyword: this.keyword,
                 category: this.category_id
             }
+            Certificate.getData(params).then(res => {
+                this.certificationList.data = res.data;
+            })
         },
         handleSetCategoryId(id) {
             this.category_id = id;
