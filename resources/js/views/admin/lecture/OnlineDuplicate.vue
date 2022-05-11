@@ -326,6 +326,9 @@ export default {
                 this.major_category_id = program.major_category_id;
                 this.minor_category_id = program.minor_category_id;
 
+                this.certification_id = program.qualification_id;
+                this.completion_id = program.completion_id;
+
                 this.thumbnail = program.thumbnail;
 
                 this.title = program.title;
@@ -378,6 +381,8 @@ export default {
             });
 
             let data = {
+                qualification_id: this.certification_id,
+                completion_id: this.completion_id,
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
 
