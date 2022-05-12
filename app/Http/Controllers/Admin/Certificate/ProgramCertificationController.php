@@ -10,6 +10,8 @@ use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class ProgramCertificationController extends Controller
 {
@@ -23,9 +25,33 @@ class ProgramCertificationController extends Controller
         $keyword = $validated['keyword'] ?? null;
         $category = $validated['category'] ?? null;
 
-        $result = $this->searchProgramsCertificateProfiles($program, $keyword, $category);
+        $perPage = 10;
+        $page = Paginator::resolveCurrentPage();
+        $offset = $perPage * ($page - 1);
 
-        return response()->json($result->paginate(10));
+        $result = $this->searchProgramsCertificateProfiles($program, $keyword, $category)
+            ->offset($offset)
+            ->limit($perPage)
+            ->get();
+
+        $paginator = new Paginator($result, $perPage, $page);
+
+        return response()->json($paginator);
+    }
+
+    public function passAll(Request $request, Program $program): JsonResponse
+    {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
+
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+        $this->updateProgramCertificateProfiles(HasCertificateStatus::$PASS, $program, $keyword, $category);
+
+        return response()->json(['msg' => '합격 처리되었습니다.']);
     }
 
     /**
@@ -36,23 +62,53 @@ class ProgramCertificationController extends Controller
      */
     public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category)
     {
-        $completionQuery = $this->searchQuery(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
-        $qualificationQuery = $this->searchQuery(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
+        $completionQuery = $this->searchQuery(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword, '자격증');
+        $qualificationQuery = $this->searchQuery(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword, '수료증');
         return $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
     }
 
-    public function searchQuery($query, $program, $category, $keyword)
+    public function updateProgramCertificateProfiles($status, Program $program, ?string $keyword, $category)
     {
-        $query->select([
-            'profiles.id', 'profiles.status', 'profiles.created_at',
-            'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday', 'profiles.university', 'profiles.student_number',
-        ])
+        $completionQuery = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
+        $completionIds = $completionQuery->pluck('profiles.id');
+        CompletionProfile::query()->whereIn('id', $completionIds)->update([
+            'status' => $status
+        ]);
+
+        $qualificationQuery = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
+        $qualificationIds = $qualificationQuery->pluck('profiles.id');
+        QualificationProfile::query()->whereIn('id', $qualificationIds)->update([
+            'status' => $status
+        ]);
+    }
+
+
+    private function searchQuery($baseQuery, $program, $category, $keyword, $type)
+    {
+        $query = $this->selectForSearch($baseQuery, $type);
+        return $this->whereForSearch($query, $program, $category, $keyword);
+    }
+
+    /**
+     * @param $query
+     * @param $program
+     * @param $category
+     * @param $keyword
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    private function whereForSearch($query, $program, $category, $keyword)
+    {
+        $query
             ->leftJoin('users', 'profiles.user_id', '=', 'users.id')
             ->where('profiles.program_id', '=', $program->id)
             ->where('profiles.status', '!=', HasCertificateStatus::$DO_NOT_PAID);
 
         if ($category != null) {
-            $this->searchProfilesByCategory($query, $category);
+            if ($category == 'ongoing') {
+                $query->where('status', '=', HasCertificateStatus::$WAITING);
+            } else if ($category == 'ended') {
+                $query->whereIn('status', [HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS]);
+            }
         }
 
         if ($keyword != null) {
@@ -67,19 +123,12 @@ class ProgramCertificationController extends Controller
         return $query;
     }
 
-    /**
-     * @param Builder|\Illuminate\Database\Query\Builder $query
-     * @param $category
-     */
-    private function searchProfilesByCategory(Builder $query, $category): void
+    private function selectForSearch($query, $type)
     {
-        if ($category == 'ongoing') {
-            $query->where('status', '=', HasCertificateStatus::$WAITING);
-            return;
-        }
-        if ($category == 'ended') {
-            $query->whereIn('status', [HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS]);
-        }
+        return $query->select([
+            'profiles.id', 'profiles.status', 'profiles.created_at', DB::raw("'$type' as type"),
+            'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday', 'profiles.university', 'profiles.student_number',
+        ]);
     }
 
 }
