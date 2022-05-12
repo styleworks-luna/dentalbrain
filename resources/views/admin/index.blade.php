@@ -9,7 +9,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', '덴탈 브레인') }}</title>
-
     <!-- Scripts -->
     <script>
         window.onpageshow = function (event) {

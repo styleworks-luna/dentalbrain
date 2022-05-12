@@ -465,6 +465,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                         // 온라인 강의 계좌입금 확인
                         Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     });
+
+                    Route::group(['prefix' => 'certificate'], function () {
+                        Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
+                        Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
+                        Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
+                    });
                 });
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
@@ -687,17 +693,21 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
         Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
             Route::get('/', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'search']);
+            Route::get('/count', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'count']);
+            Route::get('/options', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'getOptions']);
 
             Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function () {
                 Route::post('/', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'create']);
                 Route::get('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getDetail']);
                 Route::post('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'update']);
+                Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusQualification']);
             });
 
             Route::group(['prefix' => 'completions', 'as' => 'completions.'], function () {
                 Route::post('/', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'create']);
                 Route::get('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getDetail']);
                 Route::post('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'update']);
+                Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusCompletion']);
             });
         });
     });

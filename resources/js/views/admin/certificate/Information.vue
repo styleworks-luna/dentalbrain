@@ -12,7 +12,7 @@
         </template>
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">증명서 등록 정보 (자격증 {{  }}건 | 수료증 {{}}건) ]</p>
+                <p class="mb-0" style="font-size: 12px">증명서 등록 정보 (자격증 {{certification_count}} 건 | 수료증 {{qualification_count}}건)</p>
                 <div>
                     <form @submit.prevent="getData">
                         <select-box class="form-control"
@@ -130,10 +130,13 @@ export default {
             },
             keyword: "",
             category_id: "",
+            qualification_count: 0,
+            certification_count: 0,
         }
     },
     mounted() {
         this.getData();
+        this.getCount();
     },
     methods: {
         getData() {
@@ -144,6 +147,12 @@ export default {
             Certificate.getData(params).then(res => {
                 this.certificationList.data = res.data;
             })
+        },
+        getCount() {
+            Certificate.getCount().then(res => {
+                this.qualification_count = res.data.qualification_count;
+                this.certification_count = res.data.completion_count;
+            });
         },
         handleSetCategoryId(id) {
             this.category_id = id;

@@ -25,22 +25,6 @@ class BaseProgramController extends Controller
         ]);
     }
 
-    protected function search(Request $request)
-    {
-        $this->search = new SearchService(Program::query());
-
-        $this->search->addKeyword('title', $request->keyword);
-        $this->addMajorCategoryId($request);
-        $this->addMinorCategoryId($request);
-
-        $search = $this->search->search()
-            ->withCount(['students' => function ($query) {
-                $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
-                    ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
-        return $search;
-    }
-
     protected function addMajorCategoryId(Request $request)
     {
         if (isset($request->major_category_id) && is_numeric($request->major_category_id)) {
