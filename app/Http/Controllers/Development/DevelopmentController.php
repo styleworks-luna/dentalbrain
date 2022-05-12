@@ -47,4 +47,23 @@ class DevelopmentController extends Controller
             'jobs' => UserJobName::query()->orderBy('id')->get()
         ]);
     }
+
+    public function createCertificationQual()
+    {
+        CertificateQualification::create([
+            'title' => 'AAA자격증',
+            'certification_number' => '123456',
+            'grade' => '1등급',
+            'content'=> 'AAA자격증입니다.',
+        ]);
+    }
+
+    public function createCertificationComp()
+    {
+        CertificateCompletion::create([
+            'title' => 'AAA자격증',
+            'content'=> 'AAA자격증 내용.',
+            'bottom_content'=> 'AAA자격증 하단내용.',
+        ]);
+    }
 }
