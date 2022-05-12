@@ -51,7 +51,7 @@
                     <img src="/images/admin/KDMA_mark.svg" class="certificate-logo" alt="KDMA">
                     <img src="/images/admin/KDMA_light_mark.svg" class="certificate-background-logo" alt="KDMA">
                     <h3 class="certificate-title">교 육 수 료 증</h3>
-                    <p class="certificate-name">성&nbsp;&nbsp;&nbsp;&nbsp;명 : 홍 길 동</p>
+                    <p class="certificate-name">성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명 : 홍 길 동</p>
                     <pre class="certificate-content">{{ content }}</pre>
                     <p class="certificate-sub-content">{{ subContent }}</p>
                     <p class="certificate-date">{{ date }}</p>
