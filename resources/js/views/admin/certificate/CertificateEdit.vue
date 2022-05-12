@@ -11,7 +11,7 @@
                                   :isRequired="true"
                                   :size="9">
                         <template v-slot:content>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control mb-3"
                                    v-model="title">
                         </template>
                     </single-group>
@@ -21,7 +21,7 @@
                                   :isRequired="true"
                                   :size="9">
                         <template v-slot:content>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control mb-3"
                                    v-model="certificateNumber">
                         </template>
                     </single-group>
@@ -31,7 +31,7 @@
                                   :isRequired="true"
                                   :size="9">
                         <template v-slot:content>
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control mb-3"
                                    v-model="certificateRate">
                         </template>
                     </single-group>
@@ -41,7 +41,7 @@
                                   :isRequired="true"
                                   :size="9">
                         <template v-slot:content>
-                    <textarea class="form-control" rows="9" placeholder="최대 3줄 / 80자 이내"
+                    <textarea class="form-control mb-3" rows="9" placeholder="최대 3줄 / 80자 이내"
                               v-model="content"></textarea>
                         </template>
                     </single-group>
