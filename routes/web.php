@@ -295,6 +295,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('compare-verification', 'Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
+
+    Route::get('certificatesData', [App\Http\Controllers\Account\CertificateController::class, 'certificatesData'])->name('certificatesData');
     // 회원 아이디 중복체크
     Route::post('check-id', 'Account\FindIdController@checkIdDuplication')->name('check-id');
 
