@@ -28,7 +28,7 @@ trait HasCertificateStatus
      */
     static $PASS = 4;
 
-    public static function translateStatus(int $status): string
+    public static function translateStatusToKorean(int $status): string
     {
         switch ($status) {
             case HasCertificateStatus::$DO_NOT_PAID:
