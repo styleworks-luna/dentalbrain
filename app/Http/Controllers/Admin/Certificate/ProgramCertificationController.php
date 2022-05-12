@@ -9,10 +9,26 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ProgramCertificationController extends Controller
 {
     public function index(Request $request, Program $program)
+    {
+
+        $result = $this->searchProgramsCertificateProfiles($request, $program);
+
+        return response()->json(
+            $result->toArray()
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @return Collection
+     */
+    private function searchProgramsCertificateProfiles(Request $request, Program $program): Collection
     {
         $validated = $request->validate([
             'category' => ['nullable', 'numeric'],
@@ -40,7 +56,8 @@ class ProgramCertificationController extends Controller
         }
 
         $number = 1;
-        $result = collect()->concat(
+
+        return collect()->concat(
             $completionQuery->get()->map(function ($item) use (&$number) {
                 return ProgramCertificationDTO::create($item, $number++);
             })
@@ -48,10 +65,6 @@ class ProgramCertificationController extends Controller
             $qualificationQuery->get()->map(function ($item) use (&$number) {
                 return ProgramCertificationDTO::create($item, $number++);
             })
-        );
-
-        return response()->json(
-            $result->toArray()
         );
     }
 
