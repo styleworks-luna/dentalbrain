@@ -469,6 +469,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::group(['prefix' => 'certificate'], function () {
                         Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
                         Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
+                        Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
                     });
                 });
             });

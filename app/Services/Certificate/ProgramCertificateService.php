@@ -7,6 +7,7 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
@@ -61,6 +62,24 @@ class ProgramCertificateService
         QualificationProfile::query()->whereIn('id', $qualificationIds)->update([
             'status' => $status
         ]);
+    }
+
+    /**
+     * @param Program $program
+     * @param $keyword
+     * @param $category
+     * @return Builder[]|Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     */
+    public function excelProgramCertificateProfiles(Program $program, $keyword, $category)
+    {
+        $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
+        $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
+
+        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '수료증');
+        $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
+        $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
+
+        return $unionized->get();
     }
 
 

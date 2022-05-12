@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Certificate;
 
+use App\Exports\CertificationExport;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
 use App\Services\Certificate\ProgramCertificateService;
@@ -10,6 +11,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProgramCertificationController extends Controller
 {
@@ -40,6 +43,26 @@ class ProgramCertificationController extends Controller
         $result = $this->programCertificateService->searchProgramsCertificateProfiles($program, $keyword, $category);
 
         return response()->json($result);
+    }
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @return BinaryFileResponse
+     */
+    public function excel(Request $request, Program $program): BinaryFileResponse
+    {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
+
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+
+        $profiles = $this->programCertificateService->excelProgramCertificateProfiles($program, $keyword, $category);
+        return Excel::download(new CertificationExport($profiles), "{$program->title}_증명서_신청_현황.xlsx");
     }
 
     public function passAll(Request $request, Program $program): JsonResponse
