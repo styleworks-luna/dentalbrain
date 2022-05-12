@@ -48,7 +48,8 @@ class ProgramCertificationController extends Controller
         $query = CompletionProfile::query()
             ->with('user')
             ->where('program_id', '=', $program->id)
-            ->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
+            ->where('status', '!=', CompletionProfile::$DO_NOT_PAID)
+            ->orderBy('created_at');
 
         if ($category != null) {
             $this->searchProfilesByCategory($query, $category);
@@ -72,7 +73,8 @@ class ProgramCertificationController extends Controller
         $query = QualificationProfile::query()
             ->with('user')
             ->where('program_id', '=', $program->id)
-            ->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+            ->where('status', '!=', QualificationProfile::$DO_NOT_PAID)
+            ->orderBy('created_at');
 
         if ($category != null) {
             $this->searchProfilesByCategory($query, $category);
