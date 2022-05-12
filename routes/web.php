@@ -465,6 +465,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                         // 온라인 강의 계좌입금 확인
                         Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     });
+
+                    Route::group(['prefix' => 'certificate'], function () {
+                        Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
+                    });
                 });
             });
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {

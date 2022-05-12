@@ -147,7 +147,7 @@ abstract class ProgramTemplate
      * @param array|null $additionalRules
      * @return array
      */
-    function validateProgram(Request $request, array $additionalRules = [])
+    protected function validateProgram(Request $request, array $additionalRules = [])
     {
         $v = Validator::make($request->all(), array_merge([
             'major_category_id' => ['required', 'numeric'],
@@ -203,7 +203,7 @@ abstract class ProgramTemplate
         return $v->validate();
     }
 
-    function validateSurveys(Request $request, array $additionalRules = [])
+    protected function validateSurveys(Request $request, array $additionalRules = [])
     {
         $hasChoices = ['singleChoice', 'multipleChoice'];
 
@@ -222,6 +222,20 @@ abstract class ProgramTemplate
         }
 
         return $validatedData;
+    }
+
+    public function validateStoreSurveys(Request $request)
+    {
+        return $this->validateSurveys($request);
+    }
+
+    public function validateUpdateSurveys(Request $request)
+    {
+        return $this->validateSurveys($request, [
+            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
+            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
+            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
+        ]);
     }
 
     /*
@@ -302,6 +316,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
@@ -458,6 +475,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         return $this->program;

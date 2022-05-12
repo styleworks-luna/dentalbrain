@@ -16,9 +16,6 @@ use Illuminate\Validation\Rule;
 class OfflineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
     protected $offlineConcrete;
-    /**
-     * @var SearchService|null
-     */
 
     public function __construct()
     {
@@ -33,27 +30,21 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+        return $this->search->search()
+            ->where('is_online', '=', 0)
             ->with('place:id,program_id,started_at,ended_at,address,address_detail')
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
-
-        return $search;
+            }])->orderByDesc('id')
+            ->paginate(10);
     }
 
     public function update(Request $request, Program $program)
     {
-        $programData = $this->offlineConcrete->validateProgram($request);
-        $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [
-            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
-            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
-            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
-        ]);
-        $placeData = $this->offlineConcrete->validatePlace($request, [
-            'id' => ['required', Rule::exists('program_places', 'id')],
-        ]);
+        $programData = $this->offlineConcrete->validateUpdateProgram($request);
+        $surveyDataSet = $this->offlineConcrete->validateUpdateSurveys($request);
+        $placeData = $this->offlineConcrete->validateUpdatePlace($request);
 
         try {
             DB::beginTransaction();
@@ -99,9 +90,9 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
 
     public function store(Request $request)
     {
-        $programData = $this->offlineConcrete->validateProgram($request);
-        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
-        $placeData = $this->offlineConcrete->validatePlace($request);
+        $programData = $this->offlineConcrete->validateStoreProgram($request);
+        $surveyDataSet = $this->offlineConcrete->validateStoreSurveys($request);
+        $placeData = $this->offlineConcrete->validateStorePlace($request);
 
         try {
             DB::beginTransaction();
