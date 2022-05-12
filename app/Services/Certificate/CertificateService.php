@@ -14,16 +14,6 @@ use App\Traits\HasCertificateStatus;
 
 class CertificateService
 {
-    protected $certificateThumbnail;
-
-    /**
-     * @param $certificateThumbnail
-     */
-    public function __construct($certificateThumbnail)
-    {
-        $this->certificateThumbnail = $certificateThumbnail;
-    }
-
     public function getValidatorRecruit(Request $rawData, array $additionalRules = []): array
     {
         $validated = Validator::make($rawData->all(), array_merge([
