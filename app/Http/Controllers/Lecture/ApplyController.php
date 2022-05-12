@@ -111,14 +111,16 @@ class ApplyController extends Controller
             $price = $program->getUserSpecificPrice();
             $programStudent = ProgramStudent::updateOrCreateWhenApplySuccess($program, $price);
 
-            // 파일 생성
-            $file = CertificateThumbnail::saveFile($profileData['file']);
             // 수료/자격증 증명정보 생성
             if ($program->qualification_id) {
-                $this->certificateService->storeQualificationProfile($profileData, $program, $file);
+                // 파일 생성
+                $file = CertificateThumbnail::saveFile($profileData['file']);
+                $this->certificateService->createOrUpdateQualificationProfile($profileData, $program, $file);
             }
             if ($program->completion_id) {
-                $this->certificateService->storeCompletionProfile($profileData, $program, $file);
+                // 파일 생성
+                $file = CertificateThumbnail::saveFile($profileData['file']);
+                $this->certificateService->createOrUpdateCompletionProfile($profileData, $program, $file);
             }
 
             DB::commit();

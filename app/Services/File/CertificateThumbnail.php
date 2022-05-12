@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\File;
 
 use App\Models\Certificate\CompletionProfile;
@@ -9,7 +10,8 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class CertificateThumbnail extends FileTemplate {
+class CertificateThumbnail extends FileTemplate
+{
 
     public function __construct(Model $model)
     {
@@ -47,6 +49,12 @@ class CertificateThumbnail extends FileTemplate {
 
     protected function deleteFileInDB()
     {
-        // TODO: Implement deleteFileInDB() method.
+        $profile = $this->model;
+        if ($profile->file()->exists()) {
+            $path = $profile->file->path;
+            $profile->file->delete();
+            return $path;
+        }
+        return false;
     }
 }

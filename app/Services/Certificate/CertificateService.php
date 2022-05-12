@@ -5,6 +5,7 @@ namespace App\Services\Certificate;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
+use App\Services\File\CertificateThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,16 @@ use App\Traits\HasCertificateStatus;
 
 class CertificateService
 {
+    protected $certificateThumbnail;
+
+    /**
+     * @param $certificateThumbnail
+     */
+    public function __construct($certificateThumbnail)
+    {
+        $this->certificateThumbnail = $certificateThumbnail;
+    }
+
     public function getValidatorRecruit(Request $rawData, array $additionalRules = []): array
     {
         $validated = Validator::make($rawData->all(), array_merge([
@@ -26,32 +37,68 @@ class CertificateService
         return $validated->validate();
     }
 
-    public function storeCompletionProfile(array $data, Program $program, $file)
+    public function createOrUpdateCompletionProfile(array $data, Program $program, $file)
     {
-        return CompletionProfile::create([
-            'user_id' => Auth::id(),
-            'program_id' => $program->id,
-            'file_id' => $file->id,
-            'name' => $data['name'],
-            'university' => $data['university'],
-            'student_number' => $data['student_number'],
-            'birthday' => $data['birthday'],
-            'status' => CompletionProfile::$DO_NOT_PAID,
-        ]);
+        $existProfile = CompletionProfile::query()->where('user_id', Auth::id())->where('program_id', $program->id)->first();
+
+        $certificateThumbnail = new CertificateThumbnail($existProfile);
+        $certificateThumbnail->deleteFile();
+
+        if ($existProfile) {
+            $existProfile->update([
+                'user_id' => Auth::id(),
+                'program_id' => $program->id,
+                'file_id' => $file->id,
+                'name' => $data['name'],
+                'university' => $data['university'],
+                'student_number' => $data['student_number'],
+                'birthday' => $data['birthday'],
+                'status' => CompletionProfile::$DO_NOT_PAID,
+            ]);
+        } else {
+            CompletionProfile::create([
+                'user_id' => Auth::id(),
+                'program_id' => $program->id,
+                'file_id' => $file->id,
+                'name' => $data['name'],
+                'university' => $data['university'],
+                'student_number' => $data['student_number'],
+                'birthday' => $data['birthday'],
+                'status' => CompletionProfile::$DO_NOT_PAID,
+            ]);
+        }
     }
 
-    public function storeQualificationProfile(array $data, Program $program, $file)
+    public function createOrUpdateQualificationProfile(array $data, Program $program, $file)
     {
-        return QualificationProfile::create([
-            'user_id' => Auth::id(),
-            'program_id' => $program->id,
-            'file_id' => $file->id,
-            'name' => $data['name'],
-            'university' => $data['university'],
-            'student_number' => $data['student_number'],
-            'birthday' => $data['birthday'],
-            'status' => QualificationProfile::$DO_NOT_PAID,
-        ]);
+        $existProfile = QualificationProfile::query()->where('user_id', Auth::id())->where('program_id', $program->id)->first();
+
+        $certificateThumbnail = new CertificateThumbnail($existProfile);
+        $certificateThumbnail->deleteFile();
+
+        if ($existProfile) {
+            $existProfile->update([
+                'user_id' => Auth::id(),
+                'program_id' => $program->id,
+                'file_id' => $file->id,
+                'name' => $data['name'],
+                'university' => $data['university'],
+                'student_number' => $data['student_number'],
+                'birthday' => $data['birthday'],
+                'status' => QualificationProfile::$DO_NOT_PAID,
+            ]);
+        } else {
+            QualificationProfile::create([
+                'user_id' => Auth::id(),
+                'program_id' => $program->id,
+                'file_id' => $file->id,
+                'name' => $data['name'],
+                'university' => $data['university'],
+                'student_number' => $data['student_number'],
+                'birthday' => $data['birthday'],
+                'status' => QualificationProfile::$DO_NOT_PAID,
+            ]);
+        }
     }
 
     /**
@@ -67,7 +114,7 @@ class CertificateService
         }
 
         // 신청 후 상태 변경
-        if($program->completion_id) {
+        if ($program->completion_id) {
             CompletionProfile::query()
                 ->where('user_id', $userId)
                 ->where('program_id', $program->id)
@@ -105,16 +152,22 @@ class CertificateService
 
         // 환불 신청 후 증명정보 삭제
         if ($program->completion_id) {
-            CompletionProfile::query()
+            $completionProfile = CompletionProfile::query()
                 ->where('program_id', $program->id)
                 ->where('user_id', $userId)
-                ->delete();
+                ->first();
+            $certificateThumbnail = new CertificateThumbnail($completionProfile);
+            $certificateThumbnail->deleteFile();
+            $completionProfile->delete();
         }
         if ($program->qualification_id) {
-            QualificationProfile::query()
+            $qualificationProfile = QualificationProfile::query()
                 ->where('program_id', $program->id)
                 ->where('user_id', $userId)
-                ->delete();
+                ->first();
+            $certificateThumbnail = new CertificateThumbnail($qualificationProfile);
+            $certificateThumbnail->deleteFile();
+            $qualificationProfile->delete();
         }
     }
 
