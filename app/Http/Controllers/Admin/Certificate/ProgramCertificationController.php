@@ -8,12 +8,12 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class ProgramCertificationController extends Controller
 {
-    public function index(Request $request, Program $program)
+    public function index(Request $request, Program $program): JsonResponse
     {
         $validated = $request->validate([
             'category' => ['nullable', 'numeric'],
@@ -23,25 +23,25 @@ class ProgramCertificationController extends Controller
         $keyword = $validated['keyword'] ?? null;
         $category = $validated['category'] ?? null;
 
-        $result = $this->searchProgramsCertificateProfiles($keyword, $category, $program);
+        $result = $this->searchProgramsCertificateProfiles($program, $keyword, $category);
 
         return response()->json($result->paginate(10));
     }
 
     /**
-     * @param $keyword
-     * @param $category
      * @param Program $program
+     * @param string|null $keyword
+     * @param $category
      * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public function searchProgramsCertificateProfiles($keyword, $category, Program $program)
+    public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category)
     {
-        $completionQuery = $this->search(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
-        $qualificationQuery = $this->search(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
+        $completionQuery = $this->searchQuery(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
+        $qualificationQuery = $this->searchQuery(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
         return $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
     }
 
-    public function search($query, $program, $category, $keyword)
+    public function searchQuery($query, $program, $category, $keyword)
     {
         $query->select([
             'profiles.id', 'profiles.status', 'profiles.created_at',
