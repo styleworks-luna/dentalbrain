@@ -5,21 +5,15 @@ namespace App\Models\Certificate;
 use App\Models\User;
 use App\Models\Program\Program;
 use App\Models\File;
+use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 class CompletionProfile extends Model
 {
-    protected $guarded = [];
+    use HasCertificateStatus;
 
-    // 결제대기
-    const DO_NOT_PAID = 1;
-    // 대기중
-    const WAITING = 2;
-    // 불합격
-    const FAILED = 3;
-    // 합격
-    const PASS = 4;
+    protected $guarded = [];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -34,17 +28,5 @@ class CompletionProfile extends Model
     public function file(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(File::class, 'file_id', 'id');
-    }
-
-    public static function updateStateAfterPaid(Program $program)
-    {
-        $certificateProfile = CompletionProfile::query()->where('user_id', Auth::id())
-            ->where('program_id', $program->id)->first();
-
-        $certificateProfile->update([
-            'state' => CompletionProfile::WAITING,
-        ]);
-
-        return $certificateProfile;
     }
 }
