@@ -7,16 +7,30 @@ use App\Http\Controllers\Controller;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
+use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class ProgramCertificationController extends Controller
 {
     public function index(Request $request, Program $program)
     {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
 
-        $result = $this->searchProgramsCertificateProfiles($request, $program);
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+        $number = 1;
+        $result = collect()
+            ->concat($this->searchProgramsCompletionProfiles($keyword, $category, $program)->get())
+            ->concat($this->searchProgramsQualificationProfiles($keyword, $category, $program)->get())
+            ->sortByDesc('created_at')
+            ->map(function ($item) use (&$number) {
+                return ProgramCertificationDTO::create($item, $number++);
+            });
 
         return response()->json(
             $result->toArray()
@@ -24,48 +38,51 @@ class ProgramCertificationController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param $keyword
+     * @param $category
      * @param Program $program
-     * @return Collection
+     * @return Builder
      */
-    private function searchProgramsCertificateProfiles(Request $request, Program $program): Collection
+    private function searchProgramsCompletionProfiles($keyword, $category, Program $program): Builder
     {
-        $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
-            'keyword' => ['nullable', 'string']
-        ]);
-        $keyword = $validated['keyword'] ?? null;
-        $category = $validated['category'] ?? null;
-
-        $qualificationQuery = QualificationProfile::query()
+        $query = CompletionProfile::query()
             ->with('user')
-            ->where('program_id', '=', $program->id);
-
-        $completionQuery = CompletionProfile::query()
-            ->with('user')
-            ->where('program_id', '=', $program->id);
+            ->where('program_id', '=', $program->id)
+            ->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
 
         if ($category != null) {
-            $this->searchProfilesByCategory($qualificationQuery, $keyword);
-            $this->searchProfilesByCategory($completionQuery, $keyword);
+            $this->searchProfilesByCategory($query, $category);
         }
 
         if ($keyword != null) {
-            $this->searchProfilesByKeyword($qualificationQuery, $keyword);
-            $this->searchProfilesByKeyword($completionQuery, $keyword);
+            $this->searchProfilesByKeyword($query, $keyword);
         }
 
-        $number = 1;
+        return $query;
+    }
 
-        return collect()->concat(
-            $completionQuery->get()->map(function ($item) use (&$number) {
-                return ProgramCertificationDTO::create($item, $number++);
-            })
-        )->concat(
-            $qualificationQuery->get()->map(function ($item) use (&$number) {
-                return ProgramCertificationDTO::create($item, $number++);
-            })
-        );
+    /**
+     * @param $keyword
+     * @param $category
+     * @param Program $program
+     * @return Builder
+     */
+    private function searchProgramsQualificationProfiles($keyword, $category, Program $program): Builder
+    {
+        $query = QualificationProfile::query()
+            ->with('user')
+            ->where('program_id', '=', $program->id)
+            ->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+
+        if ($category != null) {
+            $this->searchProfilesByCategory($query, $category);
+        }
+
+        if ($keyword != null) {
+            $this->searchProfilesByKeyword($query, $keyword);
+        }
+
+        return $query;
     }
 
     /**
@@ -86,10 +103,17 @@ class ProgramCertificationController extends Controller
 
     /**
      * @param Builder $query
-     * @param $keyword
+     * @param $category
      */
-    private function searchProfilesByCategory(Builder $query, $keyword): void
+    private function searchProfilesByCategory(Builder $query, $category): void
     {
+        if ($category == 'ongoing') {
+            $query->where('status', '=', HasCertificateStatus::$WAITING);
+            return;
+        }
+        if ($category == 'ended') {
+            $query->whereIn('status', [HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS]);
+        }
     }
 
 }

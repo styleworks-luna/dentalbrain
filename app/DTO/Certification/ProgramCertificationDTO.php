@@ -4,6 +4,7 @@ namespace App\DTO\Certification;
 
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
+use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class ProgramCertificationDTO
@@ -42,7 +43,7 @@ class ProgramCertificationDTO
         $this->birthday = $birthday;
         $this->university = $university;
         $this->student_number = $student_number;
-        $this->status = $status;
+        $this->status = HasCertificateStatus::translateStatus($status);
     }
 
     /**
@@ -76,6 +77,4 @@ class ProgramCertificationDTO
             $profileWithUser->name, $user->email, $user->phone, $profileWithUser->birthday,
             $profileWithUser->university, $profileWithUser->student_number, $profileWithUser->status);
     }
-
-
 }
