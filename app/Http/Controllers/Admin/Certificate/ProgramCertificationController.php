@@ -12,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProgramCertificationController extends Controller
 {
@@ -25,18 +26,9 @@ class ProgramCertificationController extends Controller
         $keyword = $validated['keyword'] ?? null;
         $category = $validated['category'] ?? null;
 
-        $perPage = 10;
-        $page = Paginator::resolveCurrentPage();
-        $offset = $perPage * ($page - 1);
+        $result = $this->searchProgramsCertificateProfiles($program, $keyword, $category);
 
-        $result = $this->searchProgramsCertificateProfiles($program, $keyword, $category)
-            ->offset($offset)
-            ->limit($perPage)
-            ->get();
-
-        $paginator = new Paginator($result, $perPage, $page);
-
-        return response()->json($paginator);
+        return response()->json($result);
     }
 
     public function passAll(Request $request, Program $program): JsonResponse
@@ -49,8 +41,17 @@ class ProgramCertificationController extends Controller
         $keyword = $validated['keyword'] ?? null;
         $category = $validated['category'] ?? null;
 
-        $this->updateProgramCertificateProfiles(HasCertificateStatus::$PASS, $program, $keyword, $category);
+        try {
+            DB::beginTransaction();
+            $this->updateProgramCertificateProfiles(HasCertificateStatus::$PASS, $program, $keyword, $category);
 
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('CERTIFICATE UPDATE ERROR', [$exception]);
+            return response()->json(['msg' => '오류가 발생하였습니다.']);
+        }
+        
+        DB::commit();
         return response()->json(['msg' => '합격 처리되었습니다.']);
     }
 
@@ -58,16 +59,35 @@ class ProgramCertificationController extends Controller
      * @param Program $program
      * @param string|null $keyword
      * @param $category
-     * @return Builder|\Illuminate\Database\Query\Builder
+     * @return Paginator
      */
-    public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category)
+    public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category): Paginator
     {
-        $completionQuery = $this->searchQuery(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword, '자격증');
-        $qualificationQuery = $this->searchQuery(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword, '수료증');
-        return $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
+        $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
+        $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
+
+        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '수료증');
+        $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
+        $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
+
+        $perPage = 10;
+        $page = Paginator::resolveCurrentPage();
+
+        $result = $unionized
+            ->offset($perPage * ($page - 1))
+            ->limit($perPage)
+            ->get();
+
+        return new Paginator($result, $perPage, $page);
     }
 
-    public function updateProgramCertificateProfiles($status, Program $program, ?string $keyword, $category)
+    /**
+     * @param $status
+     * @param Program $program
+     * @param string|null $keyword
+     * @param $category
+     */
+    public function updateProgramCertificateProfiles($status, Program $program, ?string $keyword, $category): void
     {
         $completionQuery = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
         $completionIds = $completionQuery->pluck('profiles.id');
