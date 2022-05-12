@@ -1,6 +1,7 @@
 @import './helpers/variables.sass'
 @import './helpers/extends.sass'
 @import './helpers/mixins.scss'
+@import 'base/_fonts.sass'
 
 .content
     .card-search
@@ -272,6 +273,95 @@
 
             &:first-child
                 +border(0, top)
+
+.certificate-container
+    overflow-x: auto
+
+    .certificate-wrap
+        width: 1550px
+        overflow: hidden
+
+        .card
+            width: 750px
+            float: left
+
+        .card-left
+            margin-right: 50px
+
+    .card-right .card-body
+        font-family: $font-family-chosun
+        background: url('/images/admin/certification_back.png') no-repeat center center
+        background-size: 100% 100%
+        min-height: 1010px
+        position: relative
+
+
+        .certificate-logo
+            display: block
+            width: 150px
+            margin: 30px auto 0 auto
+
+        .certificate-background-logo
+            display: block
+            width: 272px
+            position: absolute
+            top: 43%
+            left: 50%
+            transform: translate(-50%, -50%)
+
+        .certificate-title
+            margin-top: 70px
+            text-align: center
+            font-weight: bold
+            font-size: 60px
+            color: #1d1d1b
+
+        .certificate-name
+            +margin(top 70px)
+            +padding(left 70px)
+            font-size: 25px
+            color: #1d1d1b
+
+        .certificate-content
+            +margin(top 60px)
+            font-family: $font-family-chosun
+            min-height: 100px
+            font-size: 30px
+            text-align: center
+            color: #1d1d1b
+
+        .certificate-sub-content
+            +margin(top 75px)
+            text-align: center
+            font-size: 30px
+            color: #1d1d1b
+
+        .certificate-date
+            +margin(top 30px)
+            text-align: center
+            font-size: 30px
+            color: #1d1d1b
+
+        .certificate-associate
+            +margin(top 100px)
+            text-align: center
+            font-size: 33px
+            color: #1d1d1b
+
+        .certificate-main-associate
+            text-align: center
+            font-size: 45px
+            color: #1d1d1b
+
+        .certificate-main-associate-wrap
+            +margin(top 15px bottom 50px)
+            position: relative
+
+        .sign
+            +size(100px)
+            position: absolute
+            right: 74px
+            top: -22px
 
 .popup-container
     +size(100%, 100%)
