@@ -71,7 +71,7 @@ class PaymentsController extends Controller
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
 
             // 신청 후 => 증명정보 상태 '대기'로 변경
-            $this->certificateService->updateCertificationProfilesLoginUser($program);
+            $this->certificateService->updateToWaitingCertificationProfilesLoginUser($program);
 
             Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
             Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
