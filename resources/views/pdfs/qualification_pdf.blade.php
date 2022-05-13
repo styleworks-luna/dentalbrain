@@ -71,7 +71,7 @@
 
 </style>
 <body>
-<h2>자격증</h2>
+<h2>{{ $certification->title }}</h2>
 <h3>자격번호 : {{ $profile->certificate_number }}</h3>
 <img src="{{ url($profile->file->url) }}" alt="" width="300" height="400">
 <div>
