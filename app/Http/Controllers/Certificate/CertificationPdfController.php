@@ -10,11 +10,16 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class CertificationPdfController extends Controller
 {
     public function pdfOfCompletion(Program $program, User $user): \Illuminate\Http\Response
     {
+        if (Auth::id() != $user->id || Auth::user()->is_admin == false) {
+            throw new ModelNotFoundException();
+        }
+
         $certificateCompletion = $program->certificateCompletion;
         $profile = CompletionProfile::query()
             ->with('file')
@@ -30,6 +35,10 @@ class CertificationPdfController extends Controller
 
     public function pdfOfQualification(Program $program, User $user): \Illuminate\Http\Response
     {
+        if (Auth::id() != $user->id || Auth::user()->is_admin == false) {
+            throw new ModelNotFoundException();
+        }
+
         $certificateQualification = $program->certificateQualification;
         $profile = QualificationProfile::query()
             ->with('file')

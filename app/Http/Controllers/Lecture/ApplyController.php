@@ -92,6 +92,7 @@ class ApplyController extends Controller
                     'alert' => $validator->errors()->first()
                 ]);
             }
+            $profileData = $validator->validate();
         }
 
         // 파일을 함께 조회하기 위해 all 사용.

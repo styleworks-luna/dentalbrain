@@ -71,6 +71,29 @@
 
 </style>
 <body>
-<h2>수료증</h2>
+<h2>{{ $certification->title }}</h2>
+<img src="{{ url($profile->file->url) }}" alt="" width="300" height="400">
+<div>
+    <table>
+        <tr>
+            <td>성 명</td>
+            <td>{{ $profile->name }}</td>
+        </tr>
+        <tr>
+            <td>본문</td>
+            <td>{{ $certification->content }}</td>
+        </tr>
+        <tr>
+            <td>자격등급</td>
+            <td>{{ $certification->bottom_content }}</td>
+        </tr>
+    </table>
+    <div>
+        {!! $certification->content !!}
+    </div>
+    <div>
+        {{ now()->format('Y년 m월 d일') }}
+    </div>
+</div>
 </body>
 </html>
