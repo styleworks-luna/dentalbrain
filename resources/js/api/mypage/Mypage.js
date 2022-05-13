@@ -41,5 +41,11 @@ export default {
             url: '/api/account/applied-resume',
             method: 'get',
         });
+    },
+    getMyCertificate() {
+        return Send({
+            url: `/api/certificatesData`,
+            method: 'get',
+        })
     }
 }

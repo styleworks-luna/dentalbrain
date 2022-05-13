@@ -92,6 +92,7 @@ export default {
     mounted() {
         this.getData();
         this.getLikeData();
+        this.getCertificateData();
     },
     methods: {
         handleSetOrder(order) {
@@ -135,6 +136,21 @@ export default {
             }).catch(err => {
                 this.likeList = [];
             });
+        },
+        getCertificateData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+            Mypage.getMyCertificate().then(res => {
+                this.LectureCertificateList = res.data;
+                console.log(res);
+            }).catch(err => {
+                this.LectureCertificateList = [];
+            })
         },
         infiniteHandler($state, page = this.page) {
             let vm = this;
