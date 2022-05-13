@@ -86,7 +86,12 @@ class ApplyController extends Controller
 
         // 자격증 여부 추가 신청 validate
         if ($program->completion_id || $program->qualification_id) {
-            $profileData = $this->certificateService->getValidatorRecruit($request, []);
+            $validator = $this->certificateService->validator($request);
+            if ($validator->fails()) {
+                return back()->with([
+                    'alert' => $validator->errors()->first()
+                ]);
+            }
         }
 
         // 파일을 함께 조회하기 위해 all 사용.

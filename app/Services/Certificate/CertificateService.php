@@ -14,17 +14,22 @@ use App\Traits\HasCertificateStatus;
 
 class CertificateService
 {
-    public function getValidatorRecruit(Request $rawData, array $additionalRules = []): array
+    public function validator(Request $rawData): \Illuminate\Contracts\Validation\Validator
     {
-        $validated = Validator::make($rawData->all(), array_merge([
-            'file' => ['required'],
+        return Validator::make($rawData->all(), [
+            'file' => ['required', 'file', 'image', 'max:2048'],
             'name' => ['required', 'string', 'max:50'],
             'university' => ['nullable', 'string', 'max:50'],
             'student_number' => ['nullable', 'string', 'max:20'],
-            'birthday' => ['required', 'string', 'max:20'],
-        ], $additionalRules));
-
-        return $validated->validate();
+            'birthday' => ['required', 'string', 'max:20','regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
+        ], [
+            'file.max' => '파일이 너무 큽니다.',
+            'file.required' => '증명서 사진이 필요합니다.',
+            'name.max' => '이름이 너무 깁니다. 50자 이내로 수정해주세요.',
+            'name.required' => '이름을 작성해 주세요.',
+            'birthday.required' => '생년월일을 작성해 주세요.',
+            'birthday.regex' => '생년월일이 형식에 맞지 않습니다.',
+        ]);
     }
 
     public function createOrUpdateCompletionProfile(array $data, Program $program, $file)
