@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -33,7 +34,7 @@ class ProgramCertificationController extends Controller
     public function index(Request $request, Program $program): JsonResponse
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 

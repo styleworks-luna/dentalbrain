@@ -111,7 +111,7 @@ class CertificateService
      * @return void
      */
     // 자격증 증명 정보 상태 대기로 변경
-    private function updateCertificationProfiles(Program $program, int $userId)
+    private function updateToWaitingCertificationProfiles(Program $program, int $userId)
     {
         if ($userId == null) {
             $userId = Auth::id();
@@ -132,14 +132,14 @@ class CertificateService
         }
     }
 
-    public function updateCertificationProfilesLoginUser(Program $program)
+    public function updateToWaitingCertificationProfilesLoginUser(Program $program)
     {
-        $this->updateCertificationProfiles($program, Auth::id());
+        $this->updateToWaitingCertificationProfiles($program, Auth::id());
     }
 
-    public function updateCertificationProfile(Program $program, $userId)
+    public function updateToWaitingCertificationProfile(Program $program, $userId)
     {
-        $this->updateCertificationProfiles($program, $userId);
+        $this->updateToWaitingCertificationProfiles($program, $userId);
     }
 
     /**

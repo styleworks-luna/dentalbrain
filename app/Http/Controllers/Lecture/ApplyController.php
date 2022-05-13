@@ -132,7 +132,7 @@ class ApplyController extends Controller
                 Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
 
                 // 신청 후 => 증명정보 상태 '대기'로 변경
-                $this->certificateService->updateCertificationProfilesLoginUser($program);
+                $this->certificateService->updateToWaitingCertificationProfilesLoginUser($program);
 
                 return redirect()->route('lectures.result', $program->id);
             }

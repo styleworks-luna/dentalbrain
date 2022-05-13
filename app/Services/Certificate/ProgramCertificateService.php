@@ -30,15 +30,23 @@ class ProgramCertificateService
 
         $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
+
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
 
+        $total = $this->getCount($program, $category, $keyword);
         $perPage = 10;
         $page = Paginator::resolveCurrentPage();
+        $num = $total - (($page - 1) * $perPage);
 
         $result = $unionized
             ->offset($perPage * ($page - 1))
             ->limit($perPage)
             ->get();
+        
+        $result->transform(function ($item, $key) use (&$num) {
+            $item->num = $num--;
+            return $item;
+        });
 
         return new Paginator($result, $perPage, $page);
     }
@@ -82,13 +90,6 @@ class ProgramCertificateService
         return $unionized->get();
     }
 
-
-    private function searchQuery($baseQuery, $program, $category, $keyword, $type)
-    {
-        $query = $this->selectForSearch($baseQuery, $type);
-        return $this->whereForSearch($query, $program, $category, $keyword);
-    }
-
     /**
      * @param $query
      * @param $program
@@ -105,14 +106,14 @@ class ProgramCertificateService
 
         if ($category != null) {
             if ($category == 'ongoing') {
-                $query->where('status', '=', HasCertificateStatus::$WAITING);
+                $query = $query->where('status', '=', HasCertificateStatus::$WAITING);
             } else if ($category == 'ended') {
-                $query->whereIn('status', [HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS]);
+                $query = $query->whereIn('status', [HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS]);
             }
         }
 
         if ($keyword != null) {
-            $query->where(function (Builder $query) use ($keyword) {
+            $query = $query->where(function (Builder $query) use ($keyword) {
                 $query->where('profiles.name', 'LIKE', "%$keyword%")
                     ->orWhere('profiles.university', 'LIKE', "%$keyword%")
                     ->orWhere('users.email', 'LIKE', "%$keyword%")
@@ -126,8 +127,22 @@ class ProgramCertificateService
     private function selectForSearch($query, $type)
     {
         return $query->select([
-            'profiles.id', 'profiles.status', 'profiles.created_at', DB::raw("'$type' as type"),
+            'profiles.id', 'profiles.status', 'profiles.created_at', DB::raw("'$type' as type"), 'profiles.user_id',
             'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday', 'profiles.university', 'profiles.student_number',
         ]);
+    }
+
+    /**
+     * @param Program $program
+     * @param $category
+     * @param string|null $keyword
+     * @return int
+     */
+    private function getCount(Program $program, $category, ?string $keyword): int
+    {
+        $qualificationCount = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
+        $completionCount = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
+
+        return $qualificationCount + $completionCount;
     }
 }
