@@ -102,8 +102,7 @@
                                                id="file-upload"
                                                class="upload-hidden"
                                                name="file"
-                                               accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
-                                               .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
+                                               accept="image/jpeg, image/png"
                                                data-parsley-required="true"
                                                data-parsley-errors-container=".thumbnail-error-wrap"
                                                data-parsley-required-message="파일을 업로드해주세요.">
