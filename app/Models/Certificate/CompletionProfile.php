@@ -6,9 +6,13 @@ use App\Models\User;
 use App\Models\Program\Program;
 use App\Models\File;
 use App\Traits\HasCertificateStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @method static CompletionProfile|Builder create(array $array)
+ */
 class CompletionProfile extends Model
 {
     use HasCertificateStatus;

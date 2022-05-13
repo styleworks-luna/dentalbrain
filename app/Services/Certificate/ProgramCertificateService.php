@@ -28,7 +28,7 @@ class ProgramCertificateService
         $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
         $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
 
-        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '수료증');
+        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
 
@@ -75,7 +75,7 @@ class ProgramCertificateService
         $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
         $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
 
-        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '수료증');
+        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
 

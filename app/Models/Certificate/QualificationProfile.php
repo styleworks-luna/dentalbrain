@@ -6,9 +6,12 @@ use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\User;
 use App\Traits\HasCertificateStatus;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 
+/**
+ * @method static QualificationProfile|Builder create(array $array)
+ */
 class QualificationProfile extends Model
 {
     use HasCertificateStatus;

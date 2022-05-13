@@ -119,14 +119,10 @@ class ApplyController extends Controller
 
             // 수료/자격증 증명정보 생성
             if ($program->qualification_id) {
-                // 파일 생성
-                $file = CertificateThumbnail::saveFile($profileData['file']);
-                $this->certificateService->createOrUpdateQualificationProfile($profileData, $program, $file);
+                $this->certificateService->createOrUpdateQualificationProfile($profileData, $program);
             }
             if ($program->completion_id) {
-                // 파일 생성
-                $file = CertificateThumbnail::saveFile($profileData['file']);
-                $this->certificateService->createOrUpdateCompletionProfile($profileData, $program, $file);
+                $this->certificateService->createOrUpdateCompletionProfile($profileData, $program);
             }
 
             DB::commit();

@@ -9,7 +9,6 @@ use App\Services\File\CertificateThumbnail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Traits\HasCertificateStatus;
 
 
 class CertificateService
@@ -21,7 +20,7 @@ class CertificateService
             'name' => ['required', 'string', 'max:50'],
             'university' => ['nullable', 'string', 'max:50'],
             'student_number' => ['nullable', 'string', 'max:20'],
-            'birthday' => ['required', 'string', 'max:20','regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
+            'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
         ], [
             'file.max' => '파일이 너무 큽니다.',
             'file.required' => '증명서 사진이 필요합니다.',
@@ -32,17 +31,20 @@ class CertificateService
         ]);
     }
 
-    public function createOrUpdateCompletionProfile(array $data, Program $program, $file)
+    public function createOrUpdateCompletionProfile(array $data, Program $program)
     {
-        $existProfile = CompletionProfile::query()->where('user_id', Auth::id())->where('program_id', $program->id)->first();
+        $file = CertificateThumbnail::saveFile($data['file']);
 
-        $certificateThumbnail = new CertificateThumbnail($existProfile);
-        $certificateThumbnail->deleteFile();
+        $existProfile = CompletionProfile::query()
+            ->where('user_id', Auth::id())
+            ->where('program_id', $program->id)
+            ->first();
 
         if ($existProfile) {
+            $certificateThumbnail = new CertificateThumbnail($existProfile);
+            $certificateThumbnail->deleteFile();
+
             $existProfile->update([
-                'user_id' => Auth::id(),
-                'program_id' => $program->id,
                 'file_id' => $file->id,
                 'name' => $data['name'],
                 'university' => $data['university'],
@@ -64,17 +66,24 @@ class CertificateService
         }
     }
 
-    public function createOrUpdateQualificationProfile(array $data, Program $program, $file)
+    /**
+     * @param array $data
+     * @param Program $program
+     */
+    public function createOrUpdateQualificationProfile(array $data, Program $program)
     {
-        $existProfile = QualificationProfile::query()->where('user_id', Auth::id())->where('program_id', $program->id)->first();
+        $file = CertificateThumbnail::saveFile($data['file']);
 
-        $certificateThumbnail = new CertificateThumbnail($existProfile);
-        $certificateThumbnail->deleteFile();
+        $existProfile = QualificationProfile::query()
+            ->where('user_id', Auth::id())
+            ->where('program_id', $program->id)
+            ->first();
 
         if ($existProfile) {
+            $certificateThumbnail = new CertificateThumbnail($existProfile);
+            $certificateThumbnail->deleteFile();
+
             $existProfile->update([
-                'user_id' => Auth::id(),
-                'program_id' => $program->id,
                 'file_id' => $file->id,
                 'name' => $data['name'],
                 'university' => $data['university'],

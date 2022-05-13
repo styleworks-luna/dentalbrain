@@ -1,14 +1,13 @@
 <template>
     <layout title="'개설 된 강의 제목' 증명서 신청 현황">
         <template v-slot:button>
-            <router-link to="/admin/certificate/create/certificate/"
+            <a :href="`/api/admin/lecture/online/${program_id}/certificate/excel`"
                          class="btn btn-lg btn-info">
                 엑셀 다운로드
-            </router-link>
-            <router-link to="/admin/certificate/create/completion/"
-                         class="btn btn-lg btn-info">
+            </a>
+            <button class="btn btn-lg btn-info" @click.prevent="allPass">
                 일괄 합격
-            </router-link>
+            </button>
             <router-link to="/admin/certificate/create/completion/"
                          class="btn btn-lg btn-info">
                 일괄 발급
@@ -43,20 +42,35 @@
                         :data="lectureCertificationList.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.category }}</td>
-                    <td>{{ slotProps.row.user_id }}</td>
-                    <td>{{ slotProps.row.user_name }}</td>
-                    <td>{{ slotProps.row.user_email }}</td>
-                    <td>{{ slotProps.row.user_phone }}</td>
-                    <td>{{ slotProps.row.user_birth }}</td>
-                    <td>{{ slotProps.row.user_universe }}</td>
-                    <td>{{ slotProps.row.user_st_num }}</td>
-                    <td>{{ slotProps.row.score }}</td>
-                    <td>대기
-                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
-                                     class="btn btn-info ml-2">
+                    <td>{{ slotProps.row.type }}</td>
+                    <td>{{ slotProps.row.login_id }}</td>
+                    <td>{{ slotProps.row.name }}</td>
+                    <td>{{ slotProps.row.email }}</td>
+                    <td>{{ slotProps.row.phone }}</td>
+                    <td>{{ slotProps.row.birthday }}</td>
+                    <td>{{ slotProps.row.university }}</td>
+                    <td>{{ slotProps.row.student_number }}</td>
+                    <td>
+                        <template v-if="slotProps.row.status == 2">대기중</template>
+                        <template v-else-if="slotProps.row.status == 3">불합격</template>
+                        <template v-else-if="slotProps.row.status == 4">합격</template>
+                        <button class="btn btn-info ml-2">
                             변경
-                        </router-link>
+                        </button>
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control" v-model="slotProps.row.status">
+                                <option value=2>대기중</option>
+                                <option value=3>불합격</option>
+                                <option value=4>합격</option>
+                            </select>
+                        </template>
+                        <template v-if="slotProps.row.type =='수료증'">
+                            <select @change="handleCompletionPass(slotProps.row.id, $event)" class="form-control" v-model="slotProps.row.status">
+                                <option value=2>대기중</option>
+                                <option value=3>불합격</option>
+                                <option value=4>합격</option>
+                            </select>
+                        </template>
                     </td>
                     <td>
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
@@ -68,22 +82,30 @@
                         <button class="btn btn-danger" @click="popupControl(slotProps.row.id)">수정</button>
                     </td>
                     <td>
-                        <a :href="`/certificate/certificate/${slotProps.row.id}`"
-                           class="btn btn-info">
-                            보기
-                        </a>
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <a :href="`/certificate/pdf/program/${program_id}/user/${slotProps.row.user_id}/qualification`"
+                               class="btn btn-info">
+                                보기
+                            </a>
+                        </template>
+                        <template v-if="slotProps.row.type == '수료증'">
+                            <a :href="`/certificate/pdf/program/${program_id}/user/${slotProps.row.user_id}/completion`"
+                               class="btn btn-info">
+                                보기
+                            </a>
+                        </template>
                     </td>
                 </template>
             </table-grid>
 
-            <!--<div class="paging-wrap text-center">
+            <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="recruitList" :limit=3 @pagination-change-page="" class="mb-0">
+                    <pagination :data="lectureCertificationList" :limit=3 @pagination-change-page="getData" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
                 </nav>
-            </div>-->
+            </div>
         </template>
 
         <template v-slot:footer>
@@ -97,6 +119,8 @@ import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
 import LectureCertificatePopup from '@/views/admin/certificate/LectureCertificatePopup.vue';
+
+import LectureCertificates from '@/api/admin/certificate/LectureCertificates.js';
 
 export default {
     name: "LectureCertificate",
@@ -120,7 +144,7 @@ export default {
                     width: '5%'
                 },
                 {
-                    name: 'id',
+                    name: 'login_id',
                     text: '아이디',
                     width: '5%'
                 },
@@ -132,7 +156,7 @@ export default {
                 {
                     name: 'email',
                     text: '이메일',
-                    width: '10%'
+                    width: '12%'
                 },
                 {
                     name: 'phone',
@@ -147,17 +171,12 @@ export default {
                 {
                     name: 'school',
                     text: '대학교',
-                    width: '7%'
+                    width: '10%'
                 },
                 {
                     name: 'number',
                     text: '학번',
                     width: '7%'
-                },
-                {
-                    name: 'score',
-                    text: '점수',
-                    width: '5%'
                 },
                 {
                     name: 'certificate_pass',
@@ -193,30 +212,38 @@ export default {
                     name: '종료'
                 }
             ]
+        },
+        statusOptions() {
+            return [
+                {
+                    id: 2,
+                    name: '대기중'
+                },
+                {
+                    id: 3,
+                    name: '불합격'
+                },
+                {
+                    id: 4,
+                    name: '합격'
+                }
+            ]
         }
+    },
+    created() {
+        this.program_id = this.$route.params.id;
     },
     data() {
         return {
             lectureCertificationList: {
-                data: [
-                    {
-                        id: 11,
-                        category: '자격증',
-                        user_id: 'test',
-                        user_name: 'test',
-                        user_email: 'test@test.com',
-                        user_phone: '01093737194',
-                        user_birth: '0515',
-                        user_universe: '서울대학교',
-                        user_st_num: '18012666',
-                        score: '100',
-                    }
-                ],
+                data: [],
             },
             keyword: "",
             category_id: "",
             showPopup: false,
+            showSelected: false,
             popupId: 0,
+            page: 1,
         }
     },
     mounted() {
@@ -226,14 +253,47 @@ export default {
         getData() {
             let params = {
                 keyword: this.keyword,
-                category: this.category_id
+                category: this.category_id,
+                page: this.page,
             }
+            LectureCertificates.getData(this.program_id,params).then(res => {
+                console.log(res);
+                this.lectureCertificationList = res.data;
+            })
         },
-        handleSetCategoryId(id) {
-            this.category_id = id;
+        allPass() {
+          let params = {
+              keyword: this.keyword,
+              category: this.category_id,
+          }
+          LectureCertificates.handleAllPass(this.program_id, params).then(res => {
+              alert(res.data.msg);
+              this.getData();
+          })
         },
-        popupControl(id) {
-            this.popupId = id;
+        handleCertificatePass(certificate_id, event) {
+            let params = {
+                status: event.target.value,
+            }
+            LectureCertificates.handleCertificatePass(certificate_id, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
+        },
+        handleCompletionPass(certificate_id, event) {
+            let params = {
+                status: event.target.value,
+            }
+            LectureCertificates.handleCompletionPass(certificate_id, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
+        },
+        handleSetCategoryId(categoryId) {
+            this.category_id = categoryId;
+        },
+        popupControl(popupId) {
+            this.popupId = popupId;
             this.showPopup = true;
         },
         popupClose(show) {
