@@ -70,12 +70,12 @@
                             <template v-if="lecture.program.qualification_profiles[0] != null">
                                 <template v-if="lecture.program.qualification_profiles[0].status == 2"><p>자격증 대기중</p></template>
                                 <template v-if="lecture.program.qualification_profiles[0].status == 3"><button class="btn-lecture fail" disabled>불합격</button></template>
-                                <template v-if="lecture.program.qualification_profiles[0].status == 4"><a :href="`/certificate/pdf/program/${lecture.program.id}/user/${lecture.user_id}/completion`" class="btn-lecture" target="_blank"><em>자격증 보기</em></a></template>
+                                <template v-if="lecture.program.qualification_profiles[0].status == 4"><a :href="`/certificate/pdf/program/${lecture.program.id}/user/${lecture.user_id}/qualification`" class="btn-lecture" target="_blank"><em>자격증 보기</em></a></template>
                             </template>
                             <template v-if="lecture.program.completion_profiles[0]  != null">
                                 <template v-if="lecture.program.completion_profiles[0].status == 2"><p>수료증 대기중</p></template>
                                 <template v-if="lecture.program.completion_profiles[0].status == 3"><button class="btn-lecture fail" disabled>불합격</button></template>
-                                <template v-if="lecture.program.completion_profiles[0].status == 4"><a :href="`/certificate/pdf/program/${lecture.program.id}/user/${lecture.user_id}/qualification`" class="btn-lecture" target="_blank">수료증 보기</a></template>
+                                <template v-if="lecture.program.completion_profiles[0].status == 4"><a :href="`/certificate/pdf/program/${lecture.program.id}/user/${lecture.user_id}/completion`" class="btn-lecture" target="_blank">수료증 보기</a></template>
                             </template>
                             <!-- <a class="btn-lecture fail">불합격</a> -->
                             <!-- 대기중 -->
