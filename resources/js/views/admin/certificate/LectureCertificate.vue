@@ -41,7 +41,7 @@
             <table-grid :tableCol="tableCol"
                         :data="lectureCertificationList.data">
                 <template v-slot:list="slotProps">
-                    <td>{{ slotProps.row.id }}</td>
+                    <td>{{ slotProps.row.num }}</td>
                     <td>{{ slotProps.row.type }}</td>
                     <td>{{ slotProps.row.login_id }}</td>
                     <td>{{ slotProps.row.name }}</td>
