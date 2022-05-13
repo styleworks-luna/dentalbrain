@@ -112,8 +112,6 @@
                             <h3>증명서 정보 입력</h3>
                             <div class="file-question">
                                 <h4>사진 <em>(필수)</em></h4>
-                                <input type="hidden" name="file"
-                                       value="">
                                 <div class="answers">
                                     <div class="file-wrap">
                                         <input type="file"
@@ -122,13 +120,15 @@
                                                name="file"
                                                accept=".Key, .PDF, .Doc, .PPT, .Pages, .pptx, .docx, .xlsx,
                                                .xls, .hwp, .JPG, .JPEG, .PNG, .GIF  .zip, .alz, .rar"
+                                               data-parsley-required="true"
+                                               data-parsley-errors-container=".thumbnail-error-wrap"
                                                data-parsley-required-message="파일을 업로드해주세요.">
                                         <label for="file-upload" class="btn-file-upload">사진선택</label>
                                         <input type="text" id="file-name" name="file"
                                                class="file-name"
                                                value="사진을 업로드해주세요." disabled="disabled">
                                     </div>
-                                    <div class="file_error_wrap"></div>
+                                    <div class="thumbnail-error-wrap parsley-error-wrap"></div>
                                     <div class="tips">
                                         <p>
                                             ※ 파일 용량은 최대 2MB까지 등록할 수 있습니다.<br>
@@ -139,65 +139,51 @@
                                 </div>
                             </div>
                             <div class="short-answer">
-                                <h4>성명 <em>(필수)</em>
-                                </h4>
-                                <input type="hidden" name="name"
-                                       value="">
+                                <h4>성명 <em>(필수)</em></h4>
                                 <div class="answers">
-                                    <input type="text" id="short-answer-response"
+                                    <input type="text"
                                            name="name"
                                            value="{{old('name')}}"
                                            class="short-answer-response"
-                                           data-parsley-errors-container=".short_answer_error_wrap"
-                                           data-parsley-required-message="답변을 입력하세요.">
+                                           data-parsley-required="true"
+                                           data-parsley-errors-container=".name-error-wrap"
+                                           data-parsley-required-message="이름을 입력하세요.">
+                                    <div class="name-error-wrap parsley-error-wrap"></div>
                                 </div>
-                                <div class="short_answer_error_wrap"></div>
                             </div>
                             <div class="short-answer">
                                 <h4>대학교</h4>
-                                <input type="hidden" name="university"
-                                       value="">
                                 <div class="answers">
-                                    <input type="text" id="short-answer-response"
+                                    <input type="text"
                                            name="university"
                                            value="{{old('university')}}"
                                            class="short-answer-response"
-                                           placeholder="대학생일 경우 기입해주세요. (ex : 덴탈브레인대학교)"
-                                           data-parsley-errors-container=".short_answer_error_wrap"
-                                           data-parsley-required-message="답변을 입력하세요.">
+                                           placeholder="대학생일 경우 기입해주세요. (ex : 덴탈브레인대학교)">
                                 </div>
-                                <div class="short_answer_error_wrap"></div>
                             </div>
                             <div class="short-answer">
                                 <h4>학번</h4>
-                                <input type="hidden" name="student_number"
-                                       value="">
                                 <div class="answers">
-                                    <input type="text" id="short-answer-response"
+                                    <input type="text"
                                            name="student_number"
                                            value="{{old('student_number')}}"
                                            class="short-answer-response"
-                                           placeholder="대학생일 경우 기입해주세요."
-                                           data-parsley-errors-container=".short_answer_error_wrap"
-                                           data-parsley-required-message="답변을 입력하세요.">
+                                           placeholder="대학생일 경우 기입해주세요.">
                                 </div>
-                                <div class="short_answer_error_wrap"></div>
                             </div>
                             <div class="short-answer">
-                                <h4>생년월일 <em>(필수)</em>
-                                </h4>
-                                <input type="hidden" name="birthday"
-                                       value="">
+                                <h4>생년월일 <em>(필수)</em></h4>
                                 <div class="answers">
-                                    <input type="text" id="short-answer-response"
+                                    <input type="text"
                                            name="birthday"
                                            value="{{old('birthday')}}"
                                            class="short-answer-response"
                                            placeholder="2022.01.01 형식으로 입력"
-                                           data-parsley-errors-container=".short_answer_error_wrap"
+                                           data-parsley-required="true"
+                                           data-parsley-errors-container=".birth-error-wrap"
                                            data-parsley-required-message="답변을 입력하세요.">
+                                    <div class="birth-error-wrap parsley-error-wrap"></div>
                                 </div>
-                                <div class="short_answer_error_wrap"></div>
                             </div>
                         </section>
                     @endif
