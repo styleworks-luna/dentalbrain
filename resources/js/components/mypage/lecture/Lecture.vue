@@ -146,10 +146,9 @@ export default {
                 page: page
             };
             Mypage.getMyCertificate().then(res => {
-                this.LectureCertificateList = res.data;
-                console.log(res);
+                this.certificateList = res;
             }).catch(err => {
-                this.LectureCertificateList = [];
+                this.certificateList = [];
             })
         },
         infiniteHandler($state, page = this.page) {
