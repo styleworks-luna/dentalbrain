@@ -7,6 +7,25 @@
                            @setFile="handleSetThumbnail"></thumbnail>
             </div>
             <div class="right-wrap">
+                <single-group name="증명서 선택"
+                              class="form-type"
+                              :isRow="true"
+                              :size="9">
+                    <template v-slot:content>
+                        <select-box class="form-control mr-3"
+                                    :text="'자격증 선택'"
+                                    :value="certification_id"
+                                    :options="certificationOptions"
+                                    @setValue="handleSetCertificateCategoryId"></select-box>
+
+                        <select-box class="form-control"
+                                    :text="'수료증 선택'"
+                                    :value="completion_id"
+                                    :options="completionOptions"
+                                    @setValue="handleSetCompletionCategoryId"></select-box>
+                    </template>
+                </single-group>
+
                 <single-group name="분류 선택"
                               class="form-type"
                               :isRequired="true"
@@ -225,7 +244,7 @@
 
 <script>
 // mixin
-import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin, ProgramCertificateCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 //api
@@ -236,7 +255,8 @@ export default {
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
-        OfflineMixin
+        OfflineMixin,
+        ProgramCertificateCategoryMixin
     ],
     methods: {
         create() {
@@ -251,6 +271,8 @@ export default {
             this.program_place.receipt_ended_at = receipt_ended_at;
 
             let data = {
+                qualification_id: this.certification_id,
+                completion_id: this.completion_id,
                 thumbnail_id: this.thumbnail.id,
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,

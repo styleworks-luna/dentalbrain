@@ -8,6 +8,7 @@ import ButtonCheck from '@/components/admin/button/ButtonCheck.vue';
 
 // api
 import Common from '@/api/admin/lecture/Common.js';
+import Certificate from '@/api/admin/certificate/Certificate.js'
 
 //
 export const LectureFormMixin = {
@@ -84,3 +85,41 @@ export const ProgramCategoryMixin = {
         },
     },
 };
+
+export const ProgramCertificateCategoryMixin = {
+    data() {
+        return {
+            certification_id: '',
+            completion_id: '',
+            certificationOptions: [],
+            completionOptions: [],
+        }
+    },
+    mounted() {
+        this.getCertificationCategory();
+    },
+    methods: {
+        getCertificationCategory() {
+            Certificate.getOptions().then(res => {
+                res.data.qualifications.forEach(x => {
+                    this.certificationOptions.push({
+                        id: x.id,
+                        name: x.title
+                    });
+                })
+                res.data.completions.forEach(x => {
+                    this.completionOptions.push({
+                        id: x.id,
+                        name: x.title
+                    });
+                })
+            })
+        },
+        handleSetCertificateCategoryId(id) {
+            this.certification_id = id;
+        },
+        handleSetCompletionCategoryId(id) {
+            this.completion_id = id;
+        },
+    }
+}
