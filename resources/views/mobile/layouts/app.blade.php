@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes">
-    
+
+    <!-- naver 웹마스터 -->
+    <meta name="naver-site-verification" content="c28ce15a76c55f9c1c3928c13fdd50e0e425ab8c" />
 
     <!-- translate -->
     <meta name="google" content="notranslate">
