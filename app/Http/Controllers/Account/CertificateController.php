@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Account;
 
-use App\DTO\TestDto;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
-use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 
 class CertificateController
@@ -55,7 +50,6 @@ class CertificateController
             ->leftJoin('qualification_profiles', 'programs.id', '=', 'qualification_profiles.program_id')
             ->join('program_major_categories', 'program_major_categories.id', '=', 'programs.major_category_id')
             ->join('program_minor_categories', 'program_minor_categories.id', '=', 'programs.minor_category_id')
-
             ->where('program_students.user_id', Auth::id())
             ->whereNotIn('program_students.pay_status', [ProgramStudent::$PAY_REFUNDED, ProgramStudent::$PAY_BEFORE])
             ->whereHas('program', function (Builder $query) {
@@ -63,9 +57,25 @@ class CertificateController
             })
             ->where('completion_profiles.status', '!=', CompletionProfile::$DO_NOT_PAID)
             ->orWhere('qualification_profiles.status', '!=', QualificationProfile::$DO_NOT_PAID)
-
             ->orderBy('applied_at')
+            ->get()
+            ->transform(function ($item, $key) {
+                $item->time_in_string = $this->offlineProgramDateReset($item);
+                return $item;
+            })
             ->paginate(10);
+    }
+
+    function offlineProgramDateReset($item): ?string
+    {
+        if ($item->places_started_at == null || $item->places_ended_at == null) {
+            return null;
+        }
+        $started_at = date('Y', strtotime($item->places_started_at)) . '년 ' . date('m', strtotime($item->places_started_at)) . '월 ' . date('d', strtotime($item->places_started_at)) . '일 ' . '(' . carbonDate($item->places_started_at, 'ddd') . ') ' . date('H:i', strtotime($item->places_started_at));
+        $tilde = ' ~ ';
+        $ended_at = date('Y', strtotime($item->places_ended_at)) . '년 ' . date('m', strtotime($item->places_ended_at)) . '월 ' . date('d', strtotime($item->places_ended_at)) . '일 ' . '(' . carbonDate($item->places_ended_at, 'ddd') . ') ' . date('H:i', strtotime($item->places_ended_at));
+
+        return $started_at . $tilde . $ended_at;
     }
 }
 
