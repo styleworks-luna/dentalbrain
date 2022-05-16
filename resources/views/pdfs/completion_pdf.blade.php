@@ -54,19 +54,19 @@
 </style>
 <style>
     @font-face {
-        font-family: "SourceHanSansKR";
+        font-family: "chosunGs";
         font-weight: normal;
-        src: url('fonts/SourceHanSansKR-Regular.otf');
+        src: url('fonts/ChosunGs_pdf.ttf');
     }
 
     @font-face {
-        font-family: "SourceHanSansKR";
+        font-family: "chosunGs";
         font-weight: bold;
-        src: url('fonts/SourceHanSansKR-Bold.otf');
+        src: url('fonts/ChosunGs_pdf.ttf');
     }
 
     * {
-        font-family: 'SourceHanSansKR', 'Malgun Gothic', sans-serif;
+        font-family: 'chosunGs', 'Malgun Gothic', sans-serif;
     }
     .background-image {
         position: absolute;

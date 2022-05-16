@@ -30,7 +30,8 @@ class CertificationPdfController extends Controller
             throw new ModelNotFoundException();
         }
 
-        return $this->exportCompletionPdf($certificateCompletion, $profile)->stream();
+        return $this->exportCompletionPdf($certificateCompletion, $profile)
+            ->stream($program->title . ' ' . $user->name . ' 수료증.pdf');
     }
 
     public function pdfOfQualification(Program $program, User $user): \Illuminate\Http\Response
@@ -48,7 +49,8 @@ class CertificationPdfController extends Controller
         if ($profile == null) {
             throw new ModelNotFoundException();
         }
-        return $this->exportQualificationPdf($certificateQualification, $profile)->stream();
+        return $this->exportQualificationPdf($certificateQualification, $profile)
+            ->stream($program->title . ' ' . $user->name . ' 자격증.pdf');
     }
 
     private function exportQualificationPdf($certificateQualification, Model $profile): \Barryvdh\DomPDF\PDF

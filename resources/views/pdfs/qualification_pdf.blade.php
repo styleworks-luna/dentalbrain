@@ -62,13 +62,13 @@
     @font-face {
         font-family: "chosunGs";
         font-weight: normal;
-        src: url('fonts/ChosunGs.woff');
+        src: url('fonts/ChosunGs_pdf.ttf');
     }
 
     @font-face {
         font-family: "chosunGs";
         font-weight: bold;
-        src: url('fonts/ChosunGs.woff');
+        src: url('fonts/ChosunGs_pdf.ttf');
     }
 
     * {
