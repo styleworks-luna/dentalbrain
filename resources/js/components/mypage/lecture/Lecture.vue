@@ -18,7 +18,17 @@
                     </nav>
                 </div>
             </template>
-            <template v-else>
+            <template v-if="certificate">
+                <div class="paging-wrap">
+                    <nav>
+                        <pagination :data="list" :limit=3 @pagination-change-page="getCertificateData">
+                            <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                            <span slot="next-nav" class="next-nav ir_pm">next</span>
+                        </pagination>
+                    </nav>
+                </div>
+            </template>
+            <template v-if="like">
                 <div class="paging-wrap">
                     <nav>
                         <pagination :data="likeList" :limit=3 @pagination-change-page="getLikeData">
@@ -146,7 +156,8 @@ export default {
                 page: page
             };
             Mypage.getMyCertificate().then(res => {
-                this.certificateList = res;
+                console.log(res);
+                this.certificateList = res.data;
             }).catch(err => {
                 this.certificateList = [];
             })
