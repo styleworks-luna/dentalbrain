@@ -57,7 +57,7 @@ class CertificateController
             })
             ->where('completion_profiles.status', '!=', CompletionProfile::$DO_NOT_PAID)
             ->orWhere('qualification_profiles.status', '!=', QualificationProfile::$DO_NOT_PAID)
-            ->orderBy('applied_at')
+            ->orderByDesc('applied_at')
             ->get()
             ->transform(function ($item, $key) {
                 $item->time_in_string = $this->offlineProgramDateReset($item);
