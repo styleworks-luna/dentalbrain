@@ -21,12 +21,18 @@ class OfflineProgramConcrete extends ProgramTemplate
 
     public function validateStoreProgram(Request $request)
     {
-        return parent::validateProgram($request);
+        return parent::validateProgram($request, [
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
     }
 
     public function validateUpdateProgram(Request $request)
     {
-        return parent::validateProgram($request);
+        return parent::validateProgram($request, [
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
     }
 
     public function validateStorePlace(Request $request)
