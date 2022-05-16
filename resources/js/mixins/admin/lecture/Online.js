@@ -21,9 +21,6 @@ export const OnlineMixin = {
             ]
         }
     },
-    mounted() {
-        this.getCertificationCategory();
-    },
     data() {
         return {
             material: '',
@@ -39,10 +36,6 @@ export const OnlineMixin = {
                     thumbnail: {}
                 },
             ],
-            certification_id: '',
-            completion_id: '',
-            certificationOptions: [],
-            completionOptions: [],
         }
     },
     methods: {
@@ -69,27 +62,6 @@ export const OnlineMixin = {
         handleSetPreview(id) {
             this.preview_type = id;
         },
-        getCertificationCategory() {
-            Certificate.getOptions().then(res => {
-                res.data.qualifications.forEach(x => {
-                    this.certificationOptions.push({
-                        id: x.id,
-                        name: x.title
-                    });
-                })
-                res.data.completions.forEach(x => {
-                    this.completionOptions.push({
-                        id: x.id,
-                        name: x.title
-                    });
-                })
-            })
-        },
-        handleSetCertificateCategoryId(id) {
-            this.certification_id = id;
-        },
-        handleSetCompletionCategoryId(id) {
-            this.completion_id = id;
-        },
+
     }
 };

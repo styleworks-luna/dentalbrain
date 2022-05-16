@@ -289,7 +289,7 @@
 
 <script>
 // mixin
-import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin, ProgramCertificateCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OnlineMixin} from '@/mixins/admin/lecture/Online.js';
 
 //api
@@ -301,7 +301,8 @@ export default {
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
-        OnlineMixin
+        OnlineMixin,
+        ProgramCertificateCategoryMixin
     ],
     mounted() {
 
