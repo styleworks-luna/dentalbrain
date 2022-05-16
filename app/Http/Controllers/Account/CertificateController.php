@@ -44,7 +44,7 @@ class CertificateController
                 'files.id as thumbnail_id', 'files.path as thumbnail_path', 'files.url as thumbnail_url',
 
                 'completion_profiles.id as completion_profiles_id', 'completion_profiles.status as completion_status',
-                'qualification_profiles.id as qualification_profiles_id', 'qualification_profiles.status as qulification_status'
+                'qualification_profiles.id as qualification_profiles_id', 'qualification_profiles.status as qualification_status'
             )
             ->from('program_students')
             ->leftJoin('payments', 'payments.id', '=', 'program_students.payment_id')
