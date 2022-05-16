@@ -8,6 +8,7 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Options;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,7 @@ class CertificationPdfController extends Controller
 
     private function exportQualificationPdf($certificateQualification, Model $profile): \Barryvdh\DomPDF\PDF
     {
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         return Pdf::loadView('pdfs.qualification_pdf', [
             'certification' => $certificateQualification,
             'profile' => $profile
@@ -63,6 +65,7 @@ class CertificationPdfController extends Controller
 
     private function exportCompletionPdf($certificateCompletion, Model $profile): \Barryvdh\DomPDF\PDF
     {
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         return Pdf::loadView('pdfs.completion_pdf', [
             'certification' => $certificateCompletion,
             'profile' => $profile

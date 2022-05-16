@@ -80,7 +80,7 @@ return array(
         /**
          * Whether to enable font subsetting or not.
          */
-        "enable_font_subsetting" => true,
+        "enable_font_subsetting" => false,
 
         /**
          * The PDF rendering backend to use
