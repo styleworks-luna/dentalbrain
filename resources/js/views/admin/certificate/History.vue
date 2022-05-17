@@ -27,33 +27,41 @@
 
         <template v-slot:body>
             <table-grid :tableCol="tableCol"
-                        :data="completion.data">
+                        :data="history.data">
                 <template v-slot:list="slotProps">
                     <td>{{ slotProps.row.id }}</td>
-                    <td>{{ slotProps.row.status }}</td>
+                    <td>{{ slotProps.row.type }}</td>
                     <td>{{ slotProps.row.title }}</td>
-                    <td>{{ slotProps.row.lecture_title }}</td>
-                    <td>{{ slotProps.row.user_id }}</td>
-                    <td>{{ slotProps.row.user_name }}</td>
-                    <td>{{ slotProps.row.user_email }}</td>
-                    <td>{{ slotProps.row.user_phone }}</td>
+                    <td>{{ slotProps.row.program_title }}</td>
+                    <td>{{ slotProps.row.login_id }}</td>
+                    <td>{{ slotProps.row.name }}</td>
+                    <td>{{ slotProps.row.email }}</td>
+                    <td>{{ slotProps.row.phone }}</td>
                     <td>
-                        <a :href="`/certificate/certificate/${slotProps.row.id}`"
+                        <template v-if="slotProps.row.status == '수료증'">
+                        <router-link :to="`/admin/certificate/completion/${slotProps.row.id}`"
                            class="btn btn-info">
                             보기
-                        </a>
+                        </router-link>
+                        </template>
+                        <template v-else>
+                            <router-link :to="`/admin/certificate/certificate/${slotProps.row.id}`"
+                               class="btn btn-info">
+                                보기
+                            </router-link>
+                        </template>
                     </td>
                 </template>
             </table-grid>
 
-            <!--<div class="paging-wrap text-center">
+            <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="recruitList" :limit=3 @pagination-change-page="" class="mb-0">
+                    <pagination :data="history" :limit=3 @pagination-change-page="getData()" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
                 </nav>
-            </div>-->
+            </div>
         </template>
     </layout>
 </template>
@@ -62,6 +70,8 @@
 import Table from '@/components/admin/grid/Table.vue';
 import ButtonOpen from '@/components/admin/button/ButtonOpen.vue';
 import SelectBox from '@/components/common/SelectBox.vue';
+
+import Certificate from '@/api/admin/certificate/Certificate.js';
 
 export default {
     name: "History",
@@ -123,11 +133,11 @@ export default {
         CategoryOptions() {
             return [
                 {
-                    id: '1',
+                    id: 'qualification',
                     name: '자격증'
                 },
                 {
-                    id: '0',
+                    id: 'completion',
                     name: '수료증'
                 }
             ]
@@ -135,22 +145,12 @@ export default {
     },
     data() {
         return {
-            completion: {
-                data: [
-                    {
-                        id: 11,
-                        status: '자격증',
-                        title: '증명서 제목',
-                        lecture_title: '강의 제목',
-                        user_id: 'test',
-                        user_name: '홍길동',
-                        user_email: 'test@example.com',
-                        user_phone: '01093737194',
-                    }
-                ],
+            history: {
+                data:[]
             },
             keyword: "",
             category_id: "",
+            page: '',
         }
     },
     mounted() {
@@ -160,8 +160,12 @@ export default {
         getData() {
             let params = {
                 keyword: this.keyword,
-                category: this.category_id
+                category: this.category_id,
+                page: this.page,
             }
+            Certificate.getHistoryData(params).then(res => {
+                this.history = res.data.result;
+            })
         },
         handleSetCategoryId(id) {
             this.category_id = id;

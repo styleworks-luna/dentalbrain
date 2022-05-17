@@ -59,14 +59,14 @@
                 </template>
             </table-grid>
 
-            <!--<div class="paging-wrap text-center">
+            <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="recruitList" :limit=3 @pagination-change-page="" class="mb-0">
+                    <pagination :data="certificationList" :limit=3 @pagination-change-page="" class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
                 </nav>
-            </div>-->
+            </div>
         </template>
     </layout>
 </template>

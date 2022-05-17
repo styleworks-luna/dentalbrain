@@ -20,4 +20,11 @@ export default {
             method: 'get',
         });
     },
+    getHistoryData(params) {
+        return Send({
+            url: `/api/admin/certificate/histories`,
+            method: 'get',
+            params: params,
+        })
+    }
 }
