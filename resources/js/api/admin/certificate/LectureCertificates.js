@@ -3,14 +3,14 @@ import Send from '@/utils/Send.js';
 export default {
     getData(id,params) {
         return Send({
-            url: `/api/admin/lecture/online/${id}/certificate/`,
+            url: `/api/admin/lecture/${id}/certificate/`,
             method: 'get',
             params: params,
         })
     },
     handleAllPass(id, params) {
         return Send({
-            url: `/api/admin/lecture/online/${id}/certificate`,
+            url: `/api/admin/lecture/${id}/certificate`,
             method: 'put',
             params: params,
         })
