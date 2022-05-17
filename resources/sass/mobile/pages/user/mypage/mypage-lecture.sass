@@ -226,18 +226,22 @@ body
 
 .mypage-certificateList
     .lecture-under
-        display: flex
-        justify-content: center
-        color: $gray-700
-
         .btn-zone
+            display: flex
+            justify-content: center
+            color: $gray-700
             .btn-lecture
-                +size(159px, 42px)
+                +size(44.166667vw, 11.666667vw)
                 color: #222
-                &:nth-child(2)                                    
-                    +margin(right 10px)
+
+                &:nth-child(2)
+                    +margin(left 2.777778vw)
+
             .fail
-                +size(328px, 42px)
+                +btn()
+                +size(44.166667vw, 11.666667vw)
+                font-size: 3.8888888vw
+                font-weight: bold
                 background-color: #f0f0f0
                 color: $gray-900
 
