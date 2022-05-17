@@ -163,7 +163,9 @@
                                            class="short-answer-response"
                                            placeholder="2022.01.01 형식으로 입력"
                                            data-parsley-required="true"
+                                           data-parsley-pattern="/^(19[0-9][0-9]|20\d{2}).(0[0-9]|1[0-2]).(0[1-9]|[1-2][0-9]|3[0-1])$/"
                                            data-parsley-errors-container=".birth-error-wrap"
+                                           data-parsley-pattern-message="생년월일이 형식에 맞지 않습니다."
                                            data-parsley-required-message="답변을 입력하세요.">
                                     <div class="birth-error-wrap parsley-error-wrap"></div>
                                 </div>
