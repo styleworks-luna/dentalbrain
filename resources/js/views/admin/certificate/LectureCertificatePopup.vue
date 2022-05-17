@@ -76,16 +76,21 @@
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
 import Thumbnail from '@/components/admin/form/Thumbnail.vue';
 
+import LectureCertificates from '@/api/admin/certificate/LectureCertificates.js';
+
 export default {
     name: "LectureCertificatePopup",
     props: {
         id: Number,
+        program_id: String,
+        type: String,
     },
     components: {
         'single-group': SingleGroup,
         Thumbnail,
     },
     mounted() {
+        this.getEditData();
     },
     data() {
         return {
@@ -98,6 +103,18 @@ export default {
         }
     },
     methods: {
+        getEditData() {
+            if(this.type == '자격증') {
+                LectureCertificates.getCertificateEditData(this.program_id, this.id).then(res => {
+                    console.log(res);
+                })
+            }
+            else {
+                LectureCertificates.getCompletionEditData(this.program_id, this.id).then(res => {
+                    console.log(res);
+                })
+            }
+        },
         handleSetThumbnail(file) {
             this.thumbnail = file;
         },

@@ -79,7 +79,7 @@
                         </router-link>
                     </td>
                     <td>
-                        <button class="btn btn-danger" @click="popupControl(slotProps.row.id)">수정</button>
+                        <button class="btn btn-danger" @click="popupControl(slotProps.row.id, slotProps.row.type)">수정</button>
                     </td>
                     <td>
                         <template v-if="slotProps.row.type == '자격증'">
@@ -111,7 +111,7 @@
         </template>
 
         <template v-slot:footer>
-            <LectureCertificatePopup v-if="showPopup" :id="popupId" @close="popupClose"/>
+            <LectureCertificatePopup v-if="showPopup" :id="popupId" :type="popType" :program_id="program_id" @close="popupClose"/>
         </template>
     </layout>
 </template>
@@ -245,6 +245,7 @@ export default {
             showPopup: false,
             showSelected: false,
             popupId: 0,
+            popType: '',
             page: 1,
         }
     },
@@ -293,8 +294,9 @@ export default {
         handleSetCategoryId(categoryId) {
             this.category_id = categoryId;
         },
-        popupControl(popupId) {
+        popupControl(popupId, popType) {
             this.popupId = popupId;
+            this.popType = popType;
             this.showPopup = true;
         },
         popupClose(show) {

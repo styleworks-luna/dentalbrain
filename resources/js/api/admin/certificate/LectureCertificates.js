@@ -8,6 +8,18 @@ export default {
             params: params,
         })
     },
+    getCertificateEditData(program_id, id) {
+      return Send({
+          url: `/api/admin/lecture/online/${program_id}/certificate/qualifications/${id}`,
+          method: 'get',
+      })
+    },
+    getCompletionEditData(program_id, id) {
+        return Send({
+            url: `/api/admin/lecture/online/${program_id}/certificate/completions/${id}`,
+            method: 'get',
+        })
+    },
     handleAllPass(id, params) {
         return Send({
             url: `/api/admin/lecture/online/${id}/certificate`,
