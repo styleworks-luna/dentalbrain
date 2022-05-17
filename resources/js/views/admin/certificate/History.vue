@@ -38,17 +38,17 @@
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
                     <td>
-                        <template v-if="slotProps.row.status == '수료증'">
-                        <router-link :to="`/admin/certificate/completion/${slotProps.row.id}`"
-                           class="btn btn-info">
-                            보기
-                        </router-link>
-                        </template>
-                        <template v-else>
-                            <router-link :to="`/admin/certificate/certificate/${slotProps.row.id}`"
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <a :href="`/certificate/pdf/program/${slotProps.row.program_id}/user/${slotProps.row.user_id}/qualification`"
                                class="btn btn-info">
                                 보기
-                            </router-link>
+                            </a>
+                        </template>
+                        <template v-if="slotProps.row.type == '수료증'">
+                            <a :href="`/certificate/pdf/program/${slotProps.row.program_id}/user/${slotProps.row.user_id}/completion`"
+                               class="btn btn-info">
+                                보기
+                            </a>
                         </template>
                     </td>
                 </template>
