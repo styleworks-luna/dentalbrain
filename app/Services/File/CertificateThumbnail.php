@@ -20,7 +20,7 @@ class CertificateThumbnail extends FileTemplate
 
     protected function getSavePath(string $fileName)
     {
-        // TODO: Implement getSavePath() method.
+        return 'public/certificate/image/' . $fileName;
     }
 
     /**

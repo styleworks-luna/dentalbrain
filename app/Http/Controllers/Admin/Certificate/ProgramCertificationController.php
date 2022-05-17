@@ -4,13 +4,18 @@ namespace App\Http\Controllers\Admin\Certificate;
 
 use App\Exports\CertificationExport;
 use App\Http\Controllers\Controller;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
+use App\Models\File;
 use App\Models\Program\Program;
 use App\Services\Certificate\ProgramCertificateService;
+use App\Services\File\CertificateThumbnail;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,7 +26,6 @@ class ProgramCertificationController extends Controller
      * @var ProgramCertificateService
      */
     private $programCertificateService;
-
     /**
      * @param ProgramCertificateService $programCertificateService
      */
@@ -88,5 +92,81 @@ class ProgramCertificationController extends Controller
 
         DB::commit();
         return response()->json(['msg' => '합격 처리되었습니다.']);
+    }
+
+    public function updateCompletion(Request $request, Program $program, CompletionProfile $profile)
+    {
+        $completionValidator = Validator::make($request->all(), [
+            'file_id' => ['required', 'numeric'],
+            'name' => ['required', 'string', 'max:50'],
+            'university' => ['required', 'string', 'max:50'],
+            'student_number' => ['required', 'string', 'max:20'],
+            'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
+        ]);
+        if ($completionValidator->fails()) {
+            return $completionValidator->errors();
+        }
+        $completionData = $completionValidator->validated();
+
+        if ($profile->file != null && $completionData['file_id'] != $profile->file->id) {
+            $certificateThumbnail = new CertificateThumbnail($profile);
+            $certificateThumbnail->deleteFile();
+            $file = $certificateThumbnail->moveTempToPublic(File::find($completionData['file_id']));
+            if (!$file) {
+                Log::error("QUALIFICATION PROFILE UPDATE ERROR");
+                return response()->json(['msg' => '에러가 발생했습니다.'], 500);
+            }
+        }
+
+        $profile->update([
+            'file_id' => $completionData['file_id'],
+            'name' => $completionData['name'],
+            'university' => $completionData['university'],
+            'student_number' => $completionData['student_number'],
+            'birthday' => $completionData['birthday'],
+        ]);
+
+        return response()->json([
+            'message' => 'ok',
+            'completionProfile' => $profile
+        ]);
+    }
+
+    public function updateQualification(Request $request, Program $program, QualificationProfile $profile)
+    {
+        $qualificationValidator = Validator::make($request->all(), [
+            'file_id' => ['required', 'numeric'],
+            'name' => ['required', 'string', 'max:50'],
+            'university' => ['required', 'string', 'max:50'],
+            'student_number' => ['required', 'string', 'max:20'],
+            'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
+        ]);
+        if ($qualificationValidator->fails()) {
+            return $qualificationValidator->errors();
+        }
+        $qualificationData = $qualificationValidator->validated();
+
+        if ($profile->file != null && $qualificationData['file_id'] != $profile->file->id) {
+            $certificateThumbnail = new CertificateThumbnail($profile);
+            $certificateThumbnail->deleteFile();
+            $file = $certificateThumbnail->moveTempToPublic(File::find($qualificationData['file_id']));
+            if (!$file) {
+                Log::error("QUALIFICATION PROFILE UPDATE ERROR");
+                return response()->json(['msg' => '에러가 발생했습니다.'], 500);
+            }
+        }
+
+        $profile->update([
+            'file_id' => $qualificationData['file_id'],
+            'name' => $qualificationData['name'],
+            'university' => $qualificationData['university'],
+            'student_number' => $qualificationData['student_number'],
+            'birthday' => $qualificationData['birthday'],
+        ]);
+
+        return response()->json([
+            'message' => 'ok',
+            'completionProfile' => $profile
+        ]);
     }
 }
