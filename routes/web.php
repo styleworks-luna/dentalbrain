@@ -478,9 +478,12 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                         Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
                         Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
                         Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
+                        Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getCompletionProfile']);
+                        Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getQualificationProfile']);
                     });
                 });
             });
+            
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OfflineProgramController::class, 'index'])->name('index');
