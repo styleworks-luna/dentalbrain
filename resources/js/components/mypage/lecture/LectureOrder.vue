@@ -25,7 +25,7 @@
                 <option value="newest" selected>최신순</option>
                 <option value="online">온라인</option>
                 <option value="offline">오프라인</option>
-                <option value="">수료/자격증</option>
+                <option value="certificate">수료/자격증</option>
             </select>
             </div>
         </template>

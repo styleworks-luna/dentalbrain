@@ -1,10 +1,15 @@
 <template>
     <div>
         <div>
-            <lecture-order v-if="!(mobile&&certificate)" @setOrder="handleSetOrder" :mobile="mobile" :like="like" :certificate="certificate"></lecture-order>
-            <lecture-list v-if="!like && !certificate" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
-            <lecture-certificate-list v-else-if="certificate" :listData="mobile ? mobileCertificateList : certificateList.data" :mobile="mobile"></lecture-certificate-list>
-            <lecture-like-list v-else :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
+            <lecture-order v-if="!(mobile&&certificate)" @setOrder="handleSetOrder" :mobile="mobile" :like="like"
+                           :certificate="certificate"></lecture-order>
+            <lecture-list v-if="!like && !certificate" :list="mobile ? mobileList : list.data"
+                          :mobile="mobile"></lecture-list>
+            <lecture-certificate-list v-else-if="certificate"
+                                      :listData="mobile ? mobileCertificateList : certificateList.data"
+                                      :mobile="mobile"></lecture-certificate-list>
+            <lecture-like-list v-else :listData="mobile ? mobileLikeList : likeList.data"
+                               :mobile="mobile"></lecture-like-list>
         </div>
 
         <template v-if="!mobile">
@@ -21,14 +26,14 @@
             <template v-if="certificate">
                 <div class="paging-wrap">
                     <nav>
-                        <pagination :data="list" :limit=3 @pagination-change-page="getCertificateData">
+                        <pagination :data="certificateList" :limit=3 @pagination-change-page="getCertificateData">
                             <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
                             <span slot="next-nav" class="next-nav ir_pm">next</span>
                         </pagination>
                     </nav>
                 </div>
             </template>
-            <template v-if="like">
+            <template v-else-if="like">
                 <div class="paging-wrap">
                     <nav>
                         <pagination :data="likeList" :limit=3 @pagination-change-page="getLikeData">
@@ -41,7 +46,7 @@
         </template>
 
         <template v-else>
-            <template v-if="!like">
+            <template v-if="!like && !certificate">
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
                                       force-use-infinite-wrapper>
@@ -49,7 +54,16 @@
                     </infinite-loading>
                 </div>
             </template>
-            <template v-else>
+            <template v-if="certificate">
+                <div class="infinite-wrapper">
+                    <infinite-loading @distance="1" :identifier="infiniteCertificateId"
+                                      @infinite="infiniteCertificateHandler"
+                                      force-use-infinite-wrapper>
+                        <div slot="no-more"></div>
+                    </infinite-loading>
+                </div>
+            </template>
+            <template v-else-if="like">
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteLikeId" @infinite="infiniteLikeHandler"
                                       force-use-infinite-wrapper>
@@ -96,6 +110,7 @@ export default {
             mobileLikeList: [],
             mobileCertificateList: [],
             infiniteId: +new Date(),
+            infiniteCertificateId: +new Date(),
             infiniteLikeId: +new Date(),
         }
     },
@@ -109,6 +124,8 @@ export default {
             this.order = order;
             if (this.like) {
                 this.getLikeData();
+            } else if (this.certificate) {
+                this.getCertificateData();
             } else {
                 this.getData();
             }
@@ -156,7 +173,6 @@ export default {
                 page: page
             };
             Mypage.getMyCertificate().then(res => {
-                console.log(res);
                 this.certificateList = res.data;
             }).catch(err => {
                 this.certificateList = [];
@@ -212,12 +228,37 @@ export default {
             });
             this.page = this.page + 1;
         },
+        infiniteCertificateHandler($state, page = this.page) {
+            let vm = this;
+
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+
+            Mypage.getMyCertificate(params).then(res => {
+                if (res.data.data.length) {
+                    $.each(res.data.data, function (key, value) {
+                        vm.mobileCertificateList.push(value);
+                    });
+                    $state.loaded();
+                } else {
+                    $state.complete();
+                }
+            });
+            this.page = this.page + 1;
+        },
         changeType() {
             this.page = 1;
             this.mobileList = [];
             this.mobileLikeList = [];
+            this.mobileCertificateList = [];
             this.infiniteId += 1;
             this.infiniteLikeId += 1;
+            this.infiniteCertificateId += 1;
         },
     },
 }
