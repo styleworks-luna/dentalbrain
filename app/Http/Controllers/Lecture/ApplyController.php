@@ -88,9 +88,10 @@ class ApplyController extends Controller
         if ($program->completion_id || $program->qualification_id) {
             $validator = $this->certificateService->validator($request);
             if ($validator->fails()) {
-                return back()->with([
-                    'alert' => $validator->errors()->first()
-                ]);
+                $errorBags = $validator->errors();
+                return \redirect(url()->previous())
+                    ->withInput($request->input())
+                    ->withErrors($errorBags);
             }
             $profileData = $validator->validate();
         }
