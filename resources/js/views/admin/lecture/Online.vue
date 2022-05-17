@@ -53,22 +53,24 @@
                             {{ slotProps.row.title }}
                         </a>
                     </td>
-                    <td v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
-                        {{ slotProps.row.certificate_qualification != null ?
-                        slotProps.row.certificate_qualification.title : '' }}
-                        /
-                        {{ slotProps.row.certificate_completion != null ?
-                        slotProps.row.certificate_completion.title : '' }}
+                    <td >
+                        <template v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
+                            {{ slotProps.row.certificate_qualification != null ?
+                            slotProps.row.certificate_qualification.title : '' }}
+                            /
+                            {{ slotProps.row.certificate_completion != null ?
+                            slotProps.row.certificate_completion.title : '' }}
+                        </template>
                     </td>
-                    <td v-else></td>
-                    <td v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
-                        {{ slotProps.row.completion_count + slotProps.row.qualification_count }} 명
-                        <router-link :to="`/admin/certificate/lecture/${slotProps.row.id}`"
-                                     class="btn btn-info ml-2">
-                            보기
-                        </router-link>
+                    <td>
+                        <template v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
+                            {{ slotProps.row.completion_count + slotProps.row.qualification_count }} 명
+                            <router-link :to="`/admin/certificate/lecture/${slotProps.row.id}`"
+                                         class="btn btn-info ml-2">
+                                보기
+                            </router-link>
+                        </template>
                     </td>
-                    <td v-else></td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
