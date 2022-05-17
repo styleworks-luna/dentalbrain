@@ -42,10 +42,11 @@ export default {
             method: 'get',
         });
     },
-    getMyCertificate() {
+    getMyCertificate(params) {
         return Send({
             url: `/api/certificatesData`,
             method: 'get',
+            params: params,
         })
     }
 }
