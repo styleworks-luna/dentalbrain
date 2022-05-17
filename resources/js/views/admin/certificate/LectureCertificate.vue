@@ -259,7 +259,6 @@ export default {
                 page: this.page,
             }
             LectureCertificates.getData(this.program_id,params).then(res => {
-                console.log(res);
                 this.lectureCertificationList = res.data;
             })
         },
