@@ -2,7 +2,8 @@
     <layout title="발급 내역">
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0" style="font-size: 12px">발급내역 (자격증 {{  }}건 | 수료증 {{  }}건) ]</p>
+                <p class="mb-0" style="font-size: 12px">
+                    발급내역 (자격증 {{ qualification_count }}건 | 수료증 {{ completion_count }}건) </p>
                 <div>
                     <form @submit.prevent="getData">
                         <select-box class="form-control"
@@ -97,7 +98,7 @@ export default {
                 },
                 {
                     name: 'title',
-                    text: '증명서제목',
+                    text: '증명서 제목',
                     width: '10%'
                 },
                 {
@@ -148,8 +149,10 @@ export default {
     data() {
         return {
             history: {
-                data:[]
+                data: []
             },
+            qualification_count: "#",
+            completion_count: "#",
             keyword: "",
             category_id: "",
             page: '',
@@ -167,6 +170,8 @@ export default {
             }
             Certificate.getHistoryData(params).then(res => {
                 this.history = res.data.result;
+                this.qualification_count = res.data.qualification_count;
+                this.completion_count = res.data.completion_count;
             })
         },
         handleSetCategoryId(id) {

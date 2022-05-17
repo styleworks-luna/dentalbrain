@@ -28,6 +28,9 @@ class CertificationHistoryController extends Controller
         $completionQuery = $this->getCompletionQuery($keyword);
         $qualificationQuery = $this->getQualificationQuery($keyword);
 
+        $completionCount = $this->getCompletionCount($keyword);
+        $qualificationCount = $this->getQualificationCount($keyword);
+
         if ($category == 'completion') {
             $query = $completionQuery;
             $total = $this->getCompletionCount($keyword);
@@ -36,7 +39,7 @@ class CertificationHistoryController extends Controller
             $total = $this->getQualificationCount($keyword);
         } else {
             $query = $qualificationQuery->union($completionQuery);
-            $total = $this->getCompletionCount($keyword) + $this->getQualificationCount($keyword);
+            $total = $completionCount + $qualificationCount;
         }
 
         $result = $query->orderByDesc('created_at')->get()
@@ -46,7 +49,9 @@ class CertificationHistoryController extends Controller
             })->paginate(10, $total);
 
         return response()->json([
-            'result' => $result
+            'result' => $result,
+            'qualification_count' => $qualificationCount,
+            'completion_count' => $completionCount,
         ]);
     }
 
