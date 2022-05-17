@@ -12,12 +12,13 @@ use Dompdf\Options;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CertificationPdfController extends Controller
 {
     public function pdfOfCompletion(Program $program, User $user): \Illuminate\Http\Response
     {
-        if (Auth::id() != $user->id || Auth::user()->is_admin == false) {
+        if (Auth::id() != $user->id && Auth::user()->is_admin == false) {
             throw new ModelNotFoundException();
         }
 
@@ -37,7 +38,7 @@ class CertificationPdfController extends Controller
 
     public function pdfOfQualification(Program $program, User $user): \Illuminate\Http\Response
     {
-        if (Auth::id() != $user->id || Auth::user()->is_admin == false) {
+        if (Auth::id() != $user->id && Auth::user()->is_admin == false) {
             throw new ModelNotFoundException();
         }
 

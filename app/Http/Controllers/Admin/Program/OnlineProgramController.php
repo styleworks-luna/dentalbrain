@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -10,10 +12,10 @@ use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 
 class OnlineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
@@ -49,7 +51,12 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
     {
         $query = Program::query()
             ->with('certificateQualification:id,title', 'certificateCompletion:id,title')
-            ->withCount(['completionProfiles as completion_count', 'qualificationProfiles as qualification_count']);
+            ->withCount(['completionProfiles as completion_count' => function (Builder $query) {
+                $query->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
+            }])
+            ->withCount(['qualificationProfiles as qualification_count' => function (Builder $query) {
+                $query->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+            }]);
 
         $this->search = new SearchService($query);
 
