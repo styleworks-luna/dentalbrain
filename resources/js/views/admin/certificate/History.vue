@@ -40,12 +40,14 @@
                     <td>
                         <template v-if="slotProps.row.type == '자격증'">
                             <a :href="`/certificate/pdf/program/${slotProps.row.program_id}/user/${slotProps.row.user_id}/qualification`"
+                               target="_blank"
                                class="btn btn-info">
                                 보기
                             </a>
                         </template>
                         <template v-if="slotProps.row.type == '수료증'">
                             <a :href="`/certificate/pdf/program/${slotProps.row.program_id}/user/${slotProps.row.user_id}/completion`"
+                               target="_blank"
                                class="btn btn-info">
                                 보기
                             </a>
