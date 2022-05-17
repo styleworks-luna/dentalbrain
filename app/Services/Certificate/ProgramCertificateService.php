@@ -31,7 +31,7 @@ class ProgramCertificateService
         $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
 
-        $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
+        $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at')->orderByDesc('type');
 
         $total = $this->getCount($program, $category, $keyword);
         $perPage = 10;
@@ -42,7 +42,7 @@ class ProgramCertificateService
             ->offset($perPage * ($page - 1))
             ->limit($perPage)
             ->get();
-        
+
         $result->transform(function ($item, $key) use (&$num) {
             $item->num = $num--;
             return $item;

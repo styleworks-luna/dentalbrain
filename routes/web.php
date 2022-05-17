@@ -473,14 +473,9 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                         // 온라인 강의 계좌입금 확인
                         Route::patch('{student}', 'Admin\Payment\PaymentController@confirmAnotherPay')->name('students.confirm');
                     });
-
-                    Route::group(['prefix' => 'certificate'], function () {
-                        Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
-                        Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
-                        Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
-                    });
                 });
             });
+
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OfflineProgramController::class, 'index'])->name('index');
@@ -529,6 +524,16 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('sms', 'Admin\Program\NotificationController@sendSms')->name('sms');
                 Route::post('id-email', 'Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
                 Route::post('id-phone', 'Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
+            });
+
+            Route::group(['prefix' => '{program}'], function () {
+                Route::group(['prefix' => 'certificate'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
+                    Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
+                    Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
+                    Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getCompletionProfile']);
+                    Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getQualificationProfile']);
+                });
             });
         });
 

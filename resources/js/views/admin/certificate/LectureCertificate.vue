@@ -1,7 +1,7 @@
 <template>
     <layout title="'개설 된 강의 제목' 증명서 신청 현황">
         <template v-slot:button>
-            <a :href="`/api/admin/lecture/online/${program_id}/certificate/excel`"
+            <a :href="`/api/admin/lecture/${program_id}/certificate/excel`"
                          class="btn btn-lg btn-info">
                 엑셀 다운로드
             </a>
