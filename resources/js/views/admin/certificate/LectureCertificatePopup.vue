@@ -54,15 +54,6 @@
                                v-model="st_num">
                     </template>
                 </single-group>
-                <single-group name="점수"
-                              :isRow="true"
-                              :isRequired="true"
-                              :size="8">
-                    <template v-slot:content>
-                        <input type="text" class="form-control"
-                               v-model="score">
-                    </template>
-                </single-group>
             </section>
             <footer class="popup-footer border-top pt-3 d-flex justify-content-center">
                 <button class="btn btn-info mr-3">저장</button>
@@ -98,7 +89,6 @@ export default {
             birth: '',
             universe: '',
             st_num: '',
-            score: '',
             thumbnail: {},
         }
     },
@@ -106,12 +96,22 @@ export default {
         getEditData() {
             if(this.type == '자격증') {
                 LectureCertificates.getCertificateEditData(this.program_id, this.id).then(res => {
-                    console.log(res);
+                    let result = res.data;
+                    this.name = result.name;
+                    this.birth = result.birthday;
+                    this.universe = result.university;
+                    this.st_num = result.student_number;
+                    this.thumbnail = result.file;
                 })
             }
             else {
                 LectureCertificates.getCompletionEditData(this.program_id, this.id).then(res => {
-                    console.log(res);
+                    let result = res.data;
+                    this.name = result.name;
+                    this.birth = result.birthday;
+                    this.universe = result.university;
+                    this.st_num = result.student_number;
+                    this.thumbnail = result.file;
                 })
             }
         },
