@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +27,16 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
 
     public function search(Request $request)
     {
-        $this->search = new SearchService(Program::query());
+        $query = Program::query()
+            ->with('certificateQualification:id,title', 'certificateCompletion:id,title')
+            ->withCount(['completionProfiles as completion_count' => function (Builder $query) {
+                $query->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
+            }])
+            ->withCount(['qualificationProfiles as qualification_count' => function (Builder $query) {
+                $query->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+            }]);
+
+        $this->search = new SearchService($query);
 
         $this->search->addKeyword('title', $request->keyword);
         $this->addMajorCategoryId($request);
