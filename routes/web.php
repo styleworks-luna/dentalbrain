@@ -193,7 +193,7 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
 Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
     Route::group(['prefix' => 'pdf', 'middleware' => 'auth'], function () {
         Route::get('program/{program}/user/{user}/qualification', [\App\Http\Controllers\Certificate\CertificationPdfController::class, 'pdfOfQualification']);
-        Route::get('program/{program/user/{user}/completion', [\App\Http\Controllers\Certificate\CertificationPdfController::class, 'pdfOfCompletion']);
+        Route::get('program/{program}/user/{user}/completion', [\App\Http\Controllers\Certificate\CertificationPdfController::class, 'pdfOfCompletion']);
     });
 });
 
