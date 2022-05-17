@@ -52,42 +52,6 @@ class CertificationHistoryController extends Controller
 
     /**
      * @param string|null $keyword
-     * @return Builder|\Illuminate\Database\Query\Builder
-     */
-    private function getQualificationQuery(?string $keyword)
-    {
-        $builder = QualificationProfile::query()
-            ->select([
-                'qualification_profiles.id as id',
-                DB::raw("'자격증' as type"),
-                'certificate_qualifications.title as title',
-                'programs.title as program_title',
-                'users.login_id as login_id',
-                'qualification_profiles.name as name',
-                'users.email as email',
-                'users.phone as phone',
-                'qualification_profiles.created_at'
-            ])
-            ->from('qualification_profiles')
-            ->leftJoin('programs', 'programs.id', '=', 'qualification_profiles.program_id')
-            ->leftJoin('certificate_qualifications', 'certificate_qualifications.id', '=', 'programs.qualification_id')
-            ->leftJoin('users', 'qualification_profiles.user_id', '=', 'users.id')
-            ->whereIn('qualification_profiles.status', [HasCertificateStatus::$WAITING, HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS,]);
-
-        if ($keyword != null) {
-            return $builder->where(function (Builder $query) use ($keyword) {
-                $query->where('certificate_qualifications.title', 'LIKE', $keyword)
-                    ->orWhere('programs.title', 'LIKE', $keyword)
-                    ->orWhere('users.login_id', 'LIKE', $keyword)
-                    ->orWhere('qualification_profiles.name', 'LIKE', $keyword);
-            });
-        }
-        return $builder;
-
-    }
-
-    /**
-     * @param string|null $keyword
      * @return int
      */
     private function getQualificationCount(?string $keyword): int
@@ -150,6 +114,8 @@ class CertificationHistoryController extends Controller
                 'users.email as email',
                 'users.phone as phone',
                 'completion_profiles.created_at',
+                'programs.id as program_id',
+                'users.id as user_id',
             ])
             ->from('completion_profiles')
             ->leftJoin('programs', 'programs.id', '=', 'completion_profiles.program_id')
@@ -167,6 +133,44 @@ class CertificationHistoryController extends Controller
                 });
         }
         return $builder;
+    }
+
+    /**
+     * @param string|null $keyword
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    private function getQualificationQuery(?string $keyword)
+    {
+        $builder = QualificationProfile::query()
+            ->select([
+                'qualification_profiles.id as id',
+                DB::raw("'자격증' as type"),
+                'certificate_qualifications.title as title',
+                'programs.title as program_title',
+                'users.login_id as login_id',
+                'qualification_profiles.name as name',
+                'users.email as email',
+                'users.phone as phone',
+                'qualification_profiles.created_at',
+                'programs.id as program_id',
+                'users.id as user_id',
+            ])
+            ->from('qualification_profiles')
+            ->leftJoin('programs', 'programs.id', '=', 'qualification_profiles.program_id')
+            ->leftJoin('certificate_qualifications', 'certificate_qualifications.id', '=', 'programs.qualification_id')
+            ->leftJoin('users', 'qualification_profiles.user_id', '=', 'users.id')
+            ->whereIn('qualification_profiles.status', [HasCertificateStatus::$WAITING, HasCertificateStatus::$FAILED, HasCertificateStatus::$PASS,]);
+
+        if ($keyword != null) {
+            return $builder->where(function (Builder $query) use ($keyword) {
+                $query->where('certificate_qualifications.title', 'LIKE', $keyword)
+                    ->orWhere('programs.title', 'LIKE', $keyword)
+                    ->orWhere('users.login_id', 'LIKE', $keyword)
+                    ->orWhere('qualification_profiles.name', 'LIKE', $keyword);
+            });
+        }
+        return $builder;
+
     }
 }
 
