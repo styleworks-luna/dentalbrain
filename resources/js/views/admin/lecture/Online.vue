@@ -204,7 +204,6 @@ export default {
             };
             Online.getData(params).then(res => {
                 this.lectures = res.data.programs;
-                console.log(this.lectures);
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/lecture/online/${page}`
                 if (this.$route.path !== path) this.$router.push(path);

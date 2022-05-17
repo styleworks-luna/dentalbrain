@@ -240,7 +240,6 @@ export default {
             };
 
             Mypage.getMyCertificate(params).then(res => {
-                console.log(res);
                 if (res.data.data.length) {
                     $.each(res.data.data, function (key, value) {
                         vm.mobileCertificateList.push(value);

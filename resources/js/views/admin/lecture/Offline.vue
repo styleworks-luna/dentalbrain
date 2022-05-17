@@ -202,7 +202,6 @@ export default {
             };
 
             Offline.getData(params).then(res => {
-                console.log(res);
                 this.lectures = res.data.programs;
                 // 뒤로가기 page에 따라 reload
                 const path = `/admin/lecture/offline/${page}`

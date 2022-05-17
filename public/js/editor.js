@@ -17,7 +17,6 @@ $(function () {
             data: formData,
             type: 'POST',
         }).then(res => {
-            console.log(res);
             let path = res.url;
             var name = res.name;
 
@@ -43,7 +42,6 @@ $(function () {
             data: formData,
             type: 'POST',
         }).then(res => {
-            console.log(res);
             var path = res.url;
             var name = res.name;
             CKEDITOR.instances.editor.insertHtml(`<a href="${path}" download>${name}</a>`)
