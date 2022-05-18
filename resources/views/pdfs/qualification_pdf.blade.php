@@ -150,10 +150,11 @@
         margin: 0 31px;
     }
 
-    .certification-wrap  .certificate-birth {
+    .certification-wrap .certificate-birth {
         margin-top: 15px;
         font-size: 34px;
     }
+
     .certification-wrap .certificate-grade {
         margin-top: 15px;
         font-size: 34px;
@@ -219,7 +220,7 @@
     <div class="certificate-information-wrap">
         <div class="certificate-text-wrap">
             <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
-            <p class="certificate-birth">생년월일 : {{ \Carbon\Carbon::parse($profile->birthday)->format('Y-m-d') }}</p>
+            <p class="certificate-birth">생년월일 : {{ carbonDate($profile->birthday,'Y-MM-DD') }}</p>
             <p class="certificate-grade">자격등급 : {{ $certification->grade }}</p>
         </div>
         <div class="certificate-image-wrap">
@@ -227,7 +228,7 @@
         </div>
     </div>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
-    <p class="certificate-date"> {{ now()->format('Y년 m월 d일') }}</p>
+    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
     <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>

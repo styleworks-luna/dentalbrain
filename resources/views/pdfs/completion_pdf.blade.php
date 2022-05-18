@@ -179,12 +179,11 @@
         <img src="{{ asset('/images/admin/KDMA_mark.svg') }}" class="certificate-logo" alt="KDMA">
     </div>
     <img src="{{ asset('/images/admin/KDMA_light_mark.svg') }}" class="certificate-background-logo" alt="KDMA">
-    <p class="certificate-number">자격번호 : {{ $profile->certificate_number }}</p>
-    <h3 class="certificate-title">자 격 증</h3>
+    <h3 class="certificate-title"> 교 육 수 료 증</h3>
     <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
-    <p class="certificate-date"> {{ now()->format('Y년 m월 d일') }}</p>
+    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
     <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>

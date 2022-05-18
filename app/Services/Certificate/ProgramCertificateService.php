@@ -67,12 +67,16 @@ class ProgramCertificateService
     {
         $completionQuery = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
         $completionIds = $completionQuery->pluck('profiles.id');
-        CompletionProfile::query()->whereIn('id', $completionIds)
-            ->where('status', '!=', $status)
-            ->update([
-                'status' => $status
-            ]);
-
+        if ($status == CompletionProfile::$PASS) {
+            $this->certificateService->passCompletions($completionIds->values());
+        } else {
+            CompletionProfile::query()->whereIn('id', $completionIds)
+                ->where('status', '!=', $status)
+                ->update([
+                    'status' => $status,
+                    'passed_at' => null,
+                ]);
+        }
 
         $qualificationQuery = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
         $qualificationIds = $qualificationQuery->pluck('profiles.id');
@@ -82,7 +86,8 @@ class ProgramCertificateService
             QualificationProfile::query()->whereIn('id', $qualificationIds)
                 ->where('status', '!=', $status)
                 ->update([
-                    'status' => $status
+                    'status' => $status,
+                    'passed_at' => null,
                 ]);
         }
     }

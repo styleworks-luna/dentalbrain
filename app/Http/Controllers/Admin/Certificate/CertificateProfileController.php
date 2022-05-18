@@ -37,6 +37,12 @@ class CertificateProfileController extends Controller
         $status = $validated['status'];
 
         $profile->status = $status;
+        if ($status == QualificationProfile::$PASS) {
+            $profile->passed_at = now();
+        } else {
+            $profile->passed_at = null;
+        }
+
         $profile->save();
 
         return response()->json(['msg' => '변경되었습니다.']);
@@ -51,8 +57,10 @@ class CertificateProfileController extends Controller
 
         if ($status == QualificationProfile::$PASS) {
             $profile->certificate_number = $this->certificateService->getCertificationNumberForPassedQualification($profile);
+            $profile->passed_at = now();
         } else {
             $profile->certificate_number = null;
+            $profile->passed_at = null;
         }
 
         $profile->status = $status;

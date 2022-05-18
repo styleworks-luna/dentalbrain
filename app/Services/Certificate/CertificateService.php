@@ -209,7 +209,7 @@ class CertificateService
         return $start + $count;
     }
 
-    public function passQualifications(Collection $ids)
+    public function passQualifications(Collection $ids): void
     {
         $collection = $ids->sort();
         $profile = QualificationProfile::find($collection->first());
@@ -222,8 +222,19 @@ class CertificateService
                 ->where('status', '!=', QualificationProfile::$PASS)
                 ->update([
                     'certificate_number' => $startNumber + $index,
-                    'status' => QualificationProfile::$PASS
+                    'status' => QualificationProfile::$PASS,
+                    'passed_at' => now(),
                 ]);
         });
+    }
+
+    public function passCompletions(Collection $ids): void
+    {
+        CompletionProfile::query()->whereIn('id', $ids->toArray())
+            ->where('status', '!=', CompletionProfile::$PASS)
+            ->update([
+                'status' => CompletionProfile::$PASS,
+                'passed_at' => now(),
+            ]);
     }
 }
