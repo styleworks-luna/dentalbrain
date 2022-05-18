@@ -99,8 +99,8 @@ class ProgramCertificationController extends Controller
         $completionValidator = Validator::make($request->all(), [
             'file_id' => ['required', 'numeric'],
             'name' => ['required', 'string', 'max:50'],
-            'university' => ['required', 'string', 'max:50'],
-            'student_number' => ['required', 'string', 'max:20'],
+            'university' => ['nullable', 'string', 'max:50'],
+            'student_number' => ['nullable', 'string', 'max:20'],
             'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
         ]);
         if ($completionValidator->fails()) {
@@ -121,8 +121,8 @@ class ProgramCertificationController extends Controller
         $profile->update([
             'file_id' => $completionData['file_id'],
             'name' => $completionData['name'],
-            'university' => $completionData['university'],
-            'student_number' => $completionData['student_number'],
+            'university' => $completionData['university'] ?? null,
+            'student_number' => $completionData['student_number'] ?? null,
             'birthday' => $completionData['birthday'],
         ]);
 
@@ -137,8 +137,8 @@ class ProgramCertificationController extends Controller
         $qualificationValidator = Validator::make($request->all(), [
             'file_id' => ['required', 'numeric'],
             'name' => ['required', 'string', 'max:50'],
-            'university' => ['required', 'string', 'max:50'],
-            'student_number' => ['required', 'string', 'max:20'],
+            'university' => ['nullable', 'string', 'max:50'],
+            'student_number' => ['nullable', 'string', 'max:20'],
             'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
         ]);
         if ($qualificationValidator->fails()) {
@@ -161,8 +161,8 @@ class ProgramCertificationController extends Controller
         $profile->update([
             'file_id' => $qualificationData['file_id'],
             'name' => $qualificationData['name'],
-            'university' => $qualificationData['university'],
-            'student_number' => $qualificationData['student_number'],
+            'university' => $qualificationData['university'] ?? null,
+            'student_number' => $qualificationData['student_number'] ?? null,
             'birthday' => $qualificationData['birthday'],
         ]);
 
