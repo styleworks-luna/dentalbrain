@@ -163,6 +163,12 @@ class CertificateProfileController extends Controller
 
     public function issueCompletion(CompletionProfile $profile): JsonResponse
     {
+        if ($profile->status != CompletionProfile::$PASS && $profile->status != CompletionProfile::$FAILED) {
+            return response()->json([
+                'msg' => '발급 할 수 없는 합격 여부입니다.'
+            ]);
+        }
+
         $profile->is_issued = true;
         $profile->save();
 
@@ -173,6 +179,12 @@ class CertificateProfileController extends Controller
 
     public function issueQualification(QualificationProfile $profile): JsonResponse
     {
+        if ($profile->status != QualificationProfile::$PASS && $profile->status != QualificationProfile::$FAILED) {
+            return response()->json([
+                'msg' => '발급 할 수 없는 합격 여부입니다.'
+            ]);
+        }
+
         $profile->is_issued = true;
         $profile->save();
 
