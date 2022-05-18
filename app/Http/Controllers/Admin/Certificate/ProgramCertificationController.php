@@ -142,7 +142,9 @@ class ProgramCertificationController extends Controller
             'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
         ]);
         if ($qualificationValidator->fails()) {
-            return $qualificationValidator->errors();
+            if ($qualificationValidator->fails()) {
+                return response()->json($qualificationValidator->errors(),400);
+            }
         }
         $qualificationData = $qualificationValidator->validated();
 
