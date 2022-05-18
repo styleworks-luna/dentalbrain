@@ -104,7 +104,7 @@ class ProgramCertificationController extends Controller
             'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
         ]);
         if ($completionValidator->fails()) {
-            return $completionValidator->errors();
+            return response()->json($completionValidator->errors(),400);
         }
         $completionData = $completionValidator->validated();
 
