@@ -20,6 +20,20 @@ export default {
             method: 'get',
         })
     },
+    updateCertificate(program_id, id, data) {
+        return Send({
+            url: `/api/admin/lecture/${program_id}/certificate/qualifications/${id}`,
+            method: 'put',
+            data: data,
+        })
+    },
+    updateCompletions(program_id, id, data) {
+        return Send({
+            url: `/api/admin/lecture/${program_id}/certificate/completions/${id}`,
+            method: 'put',
+            data: data,
+        })
+    },
     handleAllPass(id, params) {
         return Send({
             url: `/api/admin/lecture/${id}/certificate`,

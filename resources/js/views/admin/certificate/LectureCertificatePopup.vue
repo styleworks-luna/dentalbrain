@@ -56,7 +56,7 @@
                 </single-group>
             </section>
             <footer class="popup-footer border-top pt-3 d-flex justify-content-center">
-                <button class="btn btn-info mr-3">저장</button>
+                <button class="btn btn-info mr-3" @click="update">저장</button>
                 <button class="btn btn-secondary" @click="controlPopup">취소</button>
             </footer>
         </article>
@@ -98,7 +98,7 @@ export default {
                 LectureCertificates.getCertificateEditData(this.program_id, this.id).then(res => {
                     let result = res.data;
                     this.name = result.name;
-                    this.birth = result.birthday;
+                    this.birth = this.Helper.dateFormatYDMByComma(result.birthday);
                     this.universe = result.university;
                     this.st_num = result.student_number;
                     this.thumbnail = result.file;
@@ -108,10 +108,30 @@ export default {
                 LectureCertificates.getCompletionEditData(this.program_id, this.id).then(res => {
                     let result = res.data;
                     this.name = result.name;
-                    this.birth = result.birthday;
+                    this.birth = this.Helper.dateFormatYDMByComma(result.birthday);
                     this.universe = result.university;
                     this.st_num = result.student_number;
                     this.thumbnail = result.file;
+                })
+            }
+        },
+        update() {
+            let data = {
+                file_id: this.thumbnail.id,
+                name: this.name,
+                university: this.universe,
+                student_number: this.st_num,
+                birthday: this.birth
+            }
+            if(this.type == '자격증') {
+                LectureCertificates.updateCertificate(this.program_id, this.id, data).then(res => {
+                    alert(res.data.message);
+                    this.controlPopup();
+                })
+            } else {
+                LectureCertificates.updateCompletions(this.program_id, this.id, data).then(res => {
+                    alert(res.data.message);
+                    this.controlPopup();
                 })
             }
         },
