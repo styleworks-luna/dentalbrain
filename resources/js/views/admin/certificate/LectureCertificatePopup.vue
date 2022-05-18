@@ -13,9 +13,9 @@
                         <div style="text-align: left">285x380</div>
                     </div>
                     <div class="pl-3">
-                    <thumbnail :id="'thumbnail'"
-                               :file="thumbnail"
-                               @setFile="handleSetThumbnail"></thumbnail>
+                        <thumbnail :id="'thumbnail'"
+                                   :file="thumbnail"
+                                   @setFile="handleSetThumbnail"></thumbnail>
                     </div>
                 </div>
                 <single-group name="이름"
@@ -50,6 +50,14 @@
                     <template v-slot:content>
                         <input type="text" class="form-control"
                                v-model="st_num">
+                    </template>
+                </single-group>
+                <single-group name="점수"
+                              :isRow="true"
+                              :size="8">
+                    <template v-slot:content>
+                        <input type="text" class="form-control"
+                               v-model="score">
                     </template>
                 </single-group>
             </section>
@@ -88,11 +96,12 @@ export default {
             universe: '',
             st_num: '',
             thumbnail: {},
+            score: '',
         }
     },
     methods: {
         getEditData() {
-            if(this.type == '자격증') {
+            if (this.type == '자격증') {
                 LectureCertificates.getCertificateEditData(this.program_id, this.id).then(res => {
                     let result = res.data;
                     this.name = result.name;
@@ -100,9 +109,9 @@ export default {
                     this.universe = result.university;
                     this.st_num = result.student_number;
                     this.thumbnail = result.file;
+                    this.score = result.score;
                 })
-            }
-            else {
+            } else {
                 LectureCertificates.getCompletionEditData(this.program_id, this.id).then(res => {
                     let result = res.data;
                     this.name = result.name;
@@ -110,6 +119,7 @@ export default {
                     this.universe = result.university;
                     this.st_num = result.student_number;
                     this.thumbnail = result.file;
+                    this.score = result.score;
                 })
             }
         },
@@ -119,9 +129,10 @@ export default {
                 name: this.name,
                 university: this.universe,
                 student_number: this.st_num,
-                birthday: this.birth
+                birthday: this.birth,
+                score: this.score,
             }
-            if(this.type == '자격증') {
+            if (this.type == '자격증') {
                 LectureCertificates.updateCertificate(this.program_id, this.id, data).then(res => {
                     alert('변경 되었습니다.');
                     this.controlPopup();
@@ -131,7 +142,7 @@ export default {
                 LectureCertificates.updateCompletions(this.program_id, this.id, data).then(res => {
                     alert('변경 되었습니다.');
                     this.controlPopup();
-                }).catch((err) =>{
+                }).catch((err) => {
                 })
             }
         },

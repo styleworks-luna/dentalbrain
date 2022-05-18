@@ -47,9 +47,9 @@ class ProgramCertificateService
         $result = $unionized
             ->offset($perPage * ($page - 1))
             ->limit($perPage)
-            ->get();
+            ->cursor();
 
-        $result->transform(function ($item, $key) use (&$num) {
+        $result = $result->map(function ($item) use (&$num) {
             $item->num = $num--;
             return $item;
         });

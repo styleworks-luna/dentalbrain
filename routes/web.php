@@ -531,10 +531,10 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
                     Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
                     Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
-                    Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'updateCompletion']);
-                    Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'updateQualification']);
-                    Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getCompletionProfile']);
-                    Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationDetailController::class, 'getQualificationProfile']);
+                    Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateCompletionProfile']);
+                    Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateQualificationProfile']);
+                    Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getCompletionProfile']);
+                    Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getQualificationProfile']);
                 });
             });
         });

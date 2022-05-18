@@ -26,6 +26,7 @@ class ProgramCertificationController extends Controller
      * @var ProgramCertificateService
      */
     private $programCertificateService;
+
     /**
      * @param ProgramCertificateService $programCertificateService
      */
@@ -92,83 +93,5 @@ class ProgramCertificationController extends Controller
 
         DB::commit();
         return response()->json(['msg' => '합격 처리되었습니다.']);
-    }
-
-    public function updateCompletion(Request $request, Program $program, CompletionProfile $profile)
-    {
-        $completionValidator = Validator::make($request->all(), [
-            'file_id' => ['required', 'numeric'],
-            'name' => ['required', 'string', 'max:50'],
-            'university' => ['nullable', 'string', 'max:50'],
-            'student_number' => ['nullable', 'string', 'max:20'],
-            'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
-        ]);
-        if ($completionValidator->fails()) {
-            return response()->json($completionValidator->errors(),400);
-        }
-        $completionData = $completionValidator->validated();
-
-        if ($profile->file != null && $completionData['file_id'] != $profile->file->id) {
-            $certificateThumbnail = new CertificateThumbnail($profile);
-            $certificateThumbnail->deleteFile();
-            $file = $certificateThumbnail->moveTempToPublic(File::find($completionData['file_id']));
-            if (!$file) {
-                Log::error("QUALIFICATION PROFILE UPDATE ERROR");
-                return response()->json(['msg' => '에러가 발생했습니다.'], 500);
-            }
-        }
-
-        $profile->update([
-            'file_id' => $completionData['file_id'],
-            'name' => $completionData['name'],
-            'university' => $completionData['university'] ?? null,
-            'student_number' => $completionData['student_number'] ?? null,
-            'birthday' => $completionData['birthday'],
-        ]);
-
-        return response()->json([
-            'message' => 'ok',
-            'completionProfile' => $profile
-        ]);
-    }
-
-    public function updateQualification(Request $request, Program $program, QualificationProfile $profile)
-    {
-        $qualificationValidator = Validator::make($request->all(), [
-            'file_id' => ['required', 'numeric'],
-            'name' => ['required', 'string', 'max:50'],
-            'university' => ['nullable', 'string', 'max:50'],
-            'student_number' => ['nullable', 'string', 'max:20'],
-            'birthday' => ['required', 'string', 'max:20', 'regex:/\d{4}\.\d{1,2}\.\d{1,2}/x'],
-        ]);
-        if ($qualificationValidator->fails()) {
-            if ($qualificationValidator->fails()) {
-                return response()->json($qualificationValidator->errors(),400);
-            }
-        }
-        $qualificationData = $qualificationValidator->validated();
-
-        if ($profile->file != null && $qualificationData['file_id'] != $profile->file->id) {
-            $certificateThumbnail = new CertificateThumbnail($profile);
-            $certificateThumbnail->deleteFile();
-            $file = $certificateThumbnail->moveTempToPublic(File::find($qualificationData['file_id']));
-            if (!$file) {
-                Log::error("QUALIFICATION PROFILE UPDATE ERROR");
-                return response()->json(['msg' => '에러가 발생했습니다.'], 500);
-            }
-        }
-
-        $profile->update([
-            'file_id' => $qualificationData['file_id'],
-            'name' => $qualificationData['name'],
-            'university' => $qualificationData['university'] ?? null,
-            'student_number' => $qualificationData['student_number'] ?? null,
-            'birthday' => $qualificationData['birthday'],
-        ]);
-
-        return response()->json([
-            'message' => 'ok',
-            'completionProfile' => $profile
-        ]);
     }
 }
