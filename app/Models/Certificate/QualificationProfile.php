@@ -16,6 +16,10 @@ class QualificationProfile extends Model
 {
     use HasCertificateStatus;
 
+    protected $casts = [
+        'is_issued' => 'boolean'
+    ];
+
     protected $guarded = [];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

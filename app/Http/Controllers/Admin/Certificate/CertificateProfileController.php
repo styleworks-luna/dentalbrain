@@ -69,17 +69,17 @@ class CertificateProfileController extends Controller
         return response()->json(['msg' => '변경되었습니다.']);
     }
 
-    public function getCompletionProfile(Request $request, Program $program, CompletionProfile $profile)
+    public function getCompletionProfile(Request $request, Program $program, CompletionProfile $profile): JsonResponse
     {
         return response()->json($profile->load('file', 'user')->toArray());
     }
 
-    public function getQualificationProfile(Request $request, Program $program, QualificationProfile $profile)
+    public function getQualificationProfile(Request $request, Program $program, QualificationProfile $profile): JsonResponse
     {
         return response()->json($profile->load('file', 'user')->toArray());
     }
 
-    public function updateCompletionProfile(Request $request, Program $program, CompletionProfile $profile)
+    public function updateCompletionProfile(Request $request, Program $program, CompletionProfile $profile): JsonResponse
     {
         $completionValidator = Validator::make($request->all(), [
             'file_id' => ['required', 'numeric'],
@@ -119,7 +119,7 @@ class CertificateProfileController extends Controller
         ]);
     }
 
-    public function updateQualificationProfile(Request $request, Program $program, QualificationProfile $profile)
+    public function updateQualificationProfile(Request $request, Program $program, QualificationProfile $profile): JsonResponse
     {
         $qualificationValidator = Validator::make($request->all(), [
             'file_id' => ['required', 'numeric'],
@@ -158,6 +158,26 @@ class CertificateProfileController extends Controller
         return response()->json([
             'message' => '변경되었습니다.',
             'completionProfile' => $profile
+        ]);
+    }
+
+    public function issueCompletion(CompletionProfile $profile): JsonResponse
+    {
+        $profile->is_issued = true;
+        $profile->save();
+
+        return response()->json([
+            'msg' => '발급되었습니다.'
+        ]);
+    }
+
+    public function issueQualification(QualificationProfile $profile): JsonResponse
+    {
+        $profile->is_issued = true;
+        $profile->save();
+
+        return response()->json([
+            'msg' => '발급되었습니다.'
         ]);
     }
 }

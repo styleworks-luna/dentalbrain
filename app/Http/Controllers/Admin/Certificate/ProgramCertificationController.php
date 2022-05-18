@@ -94,4 +94,28 @@ class ProgramCertificationController extends Controller
         DB::commit();
         return response()->json(['msg' => '합격 처리되었습니다.']);
     }
+
+    public function issueAll(Request $request, Program $program): JsonResponse
+    {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
+
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+        try {
+            DB::beginTransaction();
+            $this->programCertificateService->issueProgramCertificateProfiles($program, $keyword, $category);
+
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('CERTIFICATE UPDATE ERROR', [$exception]);
+            return response()->json(['msg' => '오류가 발생하였습니다.']);
+        }
+
+        DB::commit();
+        return response()->json(['msg' => '발급 처리되었습니다.']);
+    }
 }

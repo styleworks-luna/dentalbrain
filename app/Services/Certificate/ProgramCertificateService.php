@@ -110,6 +110,27 @@ class ProgramCertificateService
         return $unionized->get();
     }
 
+    public function issueProgramCertificateProfiles(Program $program, $keyword, $category)
+    {
+        $completionQuery = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
+        $completionIds = $completionQuery->pluck('profiles.id');
+
+        CompletionProfile::query()->whereIn('id', $completionIds)
+            ->whereIn('status', [CompletionProfile::$PASS, CompletionProfile::$FAILED])
+            ->update([
+                'is_issued' => true,
+            ]);
+
+        $qualificationQuery = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
+        $qualificationIds = $qualificationQuery->pluck('profiles.id');
+
+        QualificationProfile::query()->whereIn('id', $qualificationIds)
+            ->whereIn('status', [QualificationProfile::$PASS, CompletionProfile::$FAILED])
+            ->update([
+                'is_issued' => true,
+            ]);
+    }
+
     /**
      * @param $query
      * @param $program

@@ -530,11 +530,17 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::group(['prefix' => 'certificate'], function () {
                     Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
                     Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
+                    Route::put('/issue', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'issueAll']);
                     Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
-                    Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateCompletionProfile']);
-                    Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateQualificationProfile']);
+                    // EDIT form
                     Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getCompletionProfile']);
                     Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getQualificationProfile']);
+                    // update
+                    Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateCompletionProfile']);
+                    Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateQualificationProfile']);
+                    // issue
+                    Route::put('/completions/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueCompletion']);
+                    Route::put('/qualifications/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueQualification']);
                 });
             });
         });
