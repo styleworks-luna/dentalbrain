@@ -38,7 +38,6 @@
                 </single-group>
                 <single-group name="대학교"
                               :isRow="true"
-                              :isRequired="true"
                               :size="8">
                     <template v-slot:content>
                         <input type="text" class="form-control"
@@ -47,7 +46,6 @@
                 </single-group>
                 <single-group name="학번"
                               :isRow="true"
-                              :isRequired="true"
                               :size="8">
                     <template v-slot:content>
                         <input type="text" class="form-control"

@@ -68,14 +68,14 @@
                     </div>
                     </div>
                     <div class="lecture-under">
-                        <div class="btn-zone">
+                        <div class="btn-zone" :class="(lecture.programs_qualification_id != null && lecture.programs_completion_id  != null) ? ''  : 'btn-zone-one'">
                             <template v-if="lecture.programs_qualification_id != null">
-                                <template v-if="lecture.qualification_status == 2"><button class="btn-lecture fail">자격증 대기중</button></template>
+                                <template v-if="lecture.qualification_status == 2"><button class="btn-lecture fail" disabled>자격증 대기중</button></template>
                                 <template v-if="lecture.qualification_status == 3"><button class="btn-lecture fail" disabled>불합격</button></template>
                                 <template v-if="lecture.qualification_status == 4"><a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture" target="_blank"><em>자격증 보기</em></a></template>
                             </template>
                             <template v-if="lecture.programs_completion_id  != null">
-                                <template v-if="lecture.completion_status == 2"><button class="btn-lecture fail">수료증 대기중</button></template>
+                                <template v-if="lecture.completion_status == 2"><button class="btn-lecture fail" disabled>수료증 대기중</button></template>
                                 <template v-if="lecture.completion_status == 3"><button class="btn-lecture fail" disabled>불합격</button></template>
                                 <template v-if="lecture.completion_status == 4"><a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/qualification`" class="btn-lecture" target="_blank">수료증 보기</a></template>
                             </template>
