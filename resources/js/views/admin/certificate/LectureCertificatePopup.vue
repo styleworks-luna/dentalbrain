@@ -125,13 +125,15 @@ export default {
             }
             if(this.type == '자격증') {
                 LectureCertificates.updateCertificate(this.program_id, this.id, data).then(res => {
-                    alert(res.data.message);
+                    alert('변경 되었습니다.');
                     this.controlPopup();
+                }).catch(err => {
                 })
             } else {
                 LectureCertificates.updateCompletions(this.program_id, this.id, data).then(res => {
-                    alert(res.data.message);
+                    alert('변경 되었습니다.');
                     this.controlPopup();
+                }).catch((err) =>{
                 })
             }
         },
