@@ -7,7 +7,10 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Services\File\CertificateThumbnail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -146,6 +149,7 @@ class CertificateService
      * @param Program $program
      * @param int|null $userId
      * @return void
+     * @throws \Exception
      */
     // 환불 신청 후 증명 정보 삭제
     private function deleteCertifications(Program $program, int $userId)
@@ -183,5 +187,43 @@ class CertificateService
     public function deleteCertification(Program $program, $userId)
     {
         $this->deleteCertifications($program, $userId);
+    }
+
+    /**
+     * @param QualificationProfile $profile
+     * @return int
+     */
+    public function getCertificationNumberForPassedQualification(QualificationProfile $profile): int
+    {
+        $count = QualificationProfile::query()->where('status', '=', QualificationProfile::$PASS)
+            ->where('program_id', '=', $profile->program_id)
+            ->where('user_id', '!=', $profile->user_id)
+            ->count('id');
+
+        $start = Program::query()
+            ->leftJoin('certificate_qualifications as Q', 'Q.id', '=', 'programs.qualification_id')
+            ->where('programs.id', '=', $profile->program_id)
+            ->first('Q.certification_number')
+            ->certification_number;
+
+        return $start + $count;
+    }
+
+    public function passQualifications(Collection $ids)
+    {
+        $collection = $ids->sort();
+        $profile = QualificationProfile::find($collection->first());
+
+        $startNumber = $this->getCertificationNumberForPassedQualification($profile);
+
+        $collection->each(function ($item, $index) use ($startNumber) {
+            DB::table('qualification_profiles')
+                ->where('id', '=', $item)
+                ->where('status', '!=', QualificationProfile::$PASS)
+                ->update([
+                    'certificate_number' => $startNumber + $index,
+                    'status' => QualificationProfile::$PASS
+                ]);
+        });
     }
 }

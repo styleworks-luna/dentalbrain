@@ -157,24 +157,31 @@ class PaymentsController extends Controller
                 return response()->json(['code' => 3], ResponseCode::HTTP_BAD_REQUEST);
             }
 
-            $payment->update([
-                'status' => $body['status'],
-                'approvedAt' => now(),
-            ]);
-
             $program = $payment->student->program;
 
-            $payment->student()->update([
-                'payment_id' => $payment->id,
-                'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
-                'pay_status' => ProgramStudent::$PAY_PAID,
-            ]);
+            if ($body['status'] == 'CANCELED') {
+                $payment->update([
+                    'status' => $body['status'],
+                ]);
+                $payment->student->updateWhenCancel($program->is_free);
+            } else {
+                $payment->update([
+                    'status' => $body['status'],
+                    'approvedAt' => now(),
+                ]);
+
+                $payment->student()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
+                    'pay_status' => ProgramStudent::$PAY_PAID,
+                ]);
+            }
 
             DB::commit();
             return response()->json(['code' => 1], ResponseCode::HTTP_OK);
 
         } catch (\Exception $e) {
-            Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
+            Log::error('DEPOSIT ERROR', [$request->all()]);
 
             DB::rollBack();
             return response()->json(['code' => 2], ResponseCode::HTTP_INTERNAL_SERVER_ERROR);

@@ -214,7 +214,7 @@
         <img src="{{ asset('/images/admin/KDMA_mark.svg') }}" class="certificate-logo" alt="KDMA">
     </div>
     <img src="{{ asset('/images/admin/KDMA_light_mark.svg') }}" class="certificate-background-logo" alt="KDMA">
-    <p class="certificate-number">자격번호 : {{ $profile->certificate_number }}</p>
+    <p class="certificate-number">자격번호 : {{ $profile->certificate_number ?? '없음' }}</p>
     <h3 class="certificate-title">자 격 증</h3>
     <div class="certificate-information-wrap">
         <div class="certificate-text-wrap">
