@@ -46,17 +46,26 @@ class CertificateController
             ->leftJoin('programs', 'program_students.program_id', '=', 'programs.id')
             ->leftJoin('program_places', 'programs.id', '=', 'program_places.program_id')
             ->leftJoin('files', 'programs.thumbnail_id', '=', 'files.id')
-            ->leftJoin('completion_profiles', 'programs.id', '=', 'completion_profiles.program_id')
-            ->leftJoin('qualification_profiles', 'programs.id', '=', 'qualification_profiles.program_id')
+            ->leftJoin('completion_profiles', function ($join) {
+                $join->on('programs.id', '=', 'completion_profiles.program_id')
+                    ->where('completion_profiles.user_id', '=', Auth::id());
+            })
+            ->leftJoin('qualification_profiles', function ($join) {
+                $join->on('programs.id', '=', 'qualification_profiles.program_id')
+                    ->where('qualification_profiles.user_id', '=', Auth::id());
+            })
             ->join('program_major_categories', 'program_major_categories.id', '=', 'programs.major_category_id')
             ->join('program_minor_categories', 'program_minor_categories.id', '=', 'programs.minor_category_id')
             ->where('program_students.user_id', Auth::id())
             ->whereNotIn('program_students.pay_status', [ProgramStudent::$PAY_REFUNDED, ProgramStudent::$PAY_BEFORE])
-            ->whereHas('program', function (Builder $query) {
-                $query->whereNotNull('completion_id')->orWhereNotNull('qualification_id');
+            ->where(function (Builder $query) {
+                $query->whereNotNull('programs.completion_id')
+                    ->orWhereNotNull('programs.qualification_id');
             })
-            ->where('completion_profiles.status', '!=', CompletionProfile::$DO_NOT_PAID)
-            ->orWhere('qualification_profiles.status', '!=', QualificationProfile::$DO_NOT_PAID)
+            ->where(function (Builder $query) {
+                $query->where('completion_profiles.status', '!=', CompletionProfile::$DO_NOT_PAID)
+                    ->orWhere('qualification_profiles.status', '!=', QualificationProfile::$DO_NOT_PAID);
+            })
             ->orderByDesc('applied_at')
             ->get()
             ->transform(function ($item, $key) {
