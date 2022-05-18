@@ -8,10 +8,9 @@
             <button class="btn btn-lg btn-info" @click.prevent="allPass">
                 일괄 합격
             </button>
-            <router-link to="/admin/certificate/create/completion/"
-                         class="btn btn-lg btn-info">
+            <button class="btn btn-lg btn-info" @click.prevent="allIssue">
                 일괄 발급
-            </router-link>
+            </button>
         </template>
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
@@ -54,9 +53,6 @@
                         <template v-if="slotProps.row.status == 2">대기중</template>
                         <template v-else-if="slotProps.row.status == 3">불합격</template>
                         <template v-else-if="slotProps.row.status == 4">합격</template>
-                        <button class="btn btn-info ml-2">
-                            변경
-                        </button>
                         <template v-if="slotProps.row.type == '자격증'">
                             <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control" v-model="slotProps.row.status">
                                 <option value=2>대기중</option>
@@ -73,10 +69,19 @@
                         </template>
                     </td>
                     <td>
-                        <router-link :to="`/admin/lecture/online/${slotProps.row.id}/student`"
-                                     class="btn btn-info ml-2">
-                            발급
-                        </router-link>
+                        <template v-if="slotProps.row.status == 4 || slotProps.row.status == 3">
+                            <template v-if="slotProps.row.is_issued">
+                                발급 완료
+                            </template>
+                            <template v-else>
+                                <template v-if="slotProps.row.type == '자격증'">
+                                    <button class="btn btn-info" @click="handleCertificateIssue(slotProps.row.id)">발급</button>
+                                </template>
+                                <template v-if="slotProps.row.type == '수료증'">
+                                    <button class="btn btn-info"  @click="handleCompletionIssue(slotProps.row.id)">발급</button>
+                                </template>
+                            </template>
+                        </template>
                     </td>
                     <td>
                         <button class="btn btn-danger" @click="popupControl(slotProps.row.id, slotProps.row.type)">수정</button>
@@ -287,6 +292,28 @@ export default {
                 status: event.target.value,
             }
             LectureCertificates.handleCompletionPass(certificate_id, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
+        },
+        allIssue() {
+            let params = {
+                keyword: this.keyword,
+                category: this.category_id,
+            }
+            LectureCertificates.handleAllIssue(this.program_id, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
+        },
+        handleCertificateIssue(certificate_id) {
+            LectureCertificates.handleCertificateIssue(certificate_id).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
+        },
+        handleCompletionIssue(certificate_id) {
+            LectureCertificates.handleCompletionIssue(certificate_id).then(res => {
                 alert(res.data.msg);
                 this.getData();
             })

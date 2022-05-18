@@ -538,9 +538,6 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     // update
                     Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateCompletionProfile']);
                     Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateQualificationProfile']);
-                    // issue
-                    Route::put('/completions/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueCompletion']);
-                    Route::put('/qualifications/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueQualification']);
                 });
             });
         });
@@ -723,6 +720,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getDetail']);
                 Route::post('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'update']);
                 Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusQualification']);
+                Route::put('/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueQualification']);
             });
 
             Route::group(['prefix' => 'completions', 'as' => 'completions.'], function () {
@@ -730,6 +728,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::get('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getDetail']);
                 Route::post('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'update']);
                 Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusCompletion']);
+                Route::put('/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueCompletion']);
             });
         });
     });

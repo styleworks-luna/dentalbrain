@@ -55,4 +55,23 @@ export default {
             params: params,
         })
     },
+    handleAllIssue(id, params) {
+        return Send({
+            url: `/api/admin/lecture/${id}/certificate/issue`,
+            method: 'put',
+            params: params,
+        })
+    },
+    handleCertificateIssue(certificate_id) {
+        return Send({
+            url: `/api/admin/certificate/qualifications/${certificate_id}/issue`,
+            method: 'put',
+        })
+    },
+    handleCompletionIssue(certificate_id) {
+        return Send({
+            url: `/api/admin/certificate/completions/${certificate_id}/issue`,
+            method: 'put',
+        })
+    },
 }
