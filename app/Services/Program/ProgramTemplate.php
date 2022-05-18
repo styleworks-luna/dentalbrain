@@ -14,6 +14,7 @@ use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\Survey\SurveyCategory;
+use App\Services\Certificate\CertificateService;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\File\SurveyFile;
@@ -569,6 +570,8 @@ abstract class ProgramTemplate
             DB::beginTransaction();
             // student 업데이트
             $student->updateWhenConfirmAnotherPay($program, $expired_at);
+            $certificateService = app()->make(CertificateService::class);
+            $certificateService->updateToWaitingCertificationProfile($program, $student->user_id);
 
             // payment 업데이트
             /** @var Payment $payment */

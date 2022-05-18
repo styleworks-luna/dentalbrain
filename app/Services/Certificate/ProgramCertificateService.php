@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\DB;
 
 class ProgramCertificateService
 {
-    public function __construct()
+    /**
+     * @var CertificateService
+     */
+    private $certificateService;
+
+    public function __construct(CertificateService $certificateService)
     {
+        $this->certificateService = $certificateService;
     }
 
     /**
@@ -61,15 +67,24 @@ class ProgramCertificateService
     {
         $completionQuery = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword);
         $completionIds = $completionQuery->pluck('profiles.id');
-        CompletionProfile::query()->whereIn('id', $completionIds)->update([
-            'status' => $status
-        ]);
+        CompletionProfile::query()->whereIn('id', $completionIds)
+            ->where('status', '!=', $status)
+            ->update([
+                'status' => $status
+            ]);
+
 
         $qualificationQuery = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword);
         $qualificationIds = $qualificationQuery->pluck('profiles.id');
-        QualificationProfile::query()->whereIn('id', $qualificationIds)->update([
-            'status' => $status
-        ]);
+        if ($status == QualificationProfile::$PASS) {
+            $this->certificateService->passQualifications($qualificationIds->values());
+        } else {
+            QualificationProfile::query()->whereIn('id', $qualificationIds)
+                ->where('status', '!=', $status)
+                ->update([
+                    'status' => $status
+                ]);
+        }
     }
 
     /**
