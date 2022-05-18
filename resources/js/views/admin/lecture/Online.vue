@@ -55,11 +55,13 @@
                     </td>
                     <td >
                         <template v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
-                            {{ slotProps.row.certificate_qualification != null ?
-                            slotProps.row.certificate_qualification.title : '' }}
-                            /
-                            {{ slotProps.row.certificate_completion != null ?
-                            slotProps.row.certificate_completion.title : '' }}
+                            <p class="mb-0">
+                                {{ slotProps.row.certificate_qualification != null ? slotProps.row.certificate_qualification.title : '' }}
+                                {{ (slotProps.row.certificate_qualification != null && slotProps.row.certificate_completion != null) ? '/': '' }}
+                            </p>
+                            <p class="mb-0">
+                                {{ slotProps.row.certificate_completion != null ? slotProps.row.certificate_completion.title : '' }}
+                            </p>
                         </template>
                     </td>
                     <td>
