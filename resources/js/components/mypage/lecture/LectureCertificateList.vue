@@ -84,9 +84,10 @@
                         </div>
                     </div>
                 </li>
-                <div class="content-none" v-if="lectures.length == 0">발급 된 증명서가 없습니다.</div>
+                <li class="none" v-if="lectures.length <= 0">
+                    <p>발급 된 증명서가 없습니다.</p>
+                </li>
             </ul>
-
         </div>
     </div>
 </template>
