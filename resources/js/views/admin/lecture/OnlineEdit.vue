@@ -11,16 +11,19 @@
             <div class="right-wrap">
                 <single-group name="증명서 선택"
                               class="form-type"
+                              :class="haveStudents ? 'bg-light text-dark':''"
                               :isRow="true"
                               :size="9">
                     <template v-slot:content>
                         <select-box class="form-control mr-3"
+                                    :disabled="haveStudents"
                                     :text="'자격증 선택'"
                                     :value="certification_id"
                                     :options="certificationOptions"
                                     @setValue="handleSetCertificateCategoryId"></select-box>
 
                         <select-box class="form-control"
+                                    :disabled="haveStudents"
                                     :text="'수료증 선택'"
                                     :value="completion_id"
                                     :options="completionOptions"
