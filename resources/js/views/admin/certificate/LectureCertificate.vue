@@ -48,8 +48,8 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.birthday }}</td>
                     <td>{{ slotProps.row.university }}</td>
-                    <td>{{ slotProps.row.score }}</td>
                     <td>{{ slotProps.row.student_number }}</td>
+                    <td>{{ slotProps.row.score }}</td>
                     <td>
                         <template v-if="slotProps.row.status == 2">대기중</template>
                         <template v-else-if="slotProps.row.status == 3">불합격</template>
@@ -182,14 +182,14 @@ export default {
                     width: '10%'
                 },
                 {
-                    name: 'score',
-                    text: '점수',
-                    width: '6%'
-                },
-                {
                     name: 'number',
                     text: '학번',
                     width: '7%'
+                },
+                {
+                    name: 'score',
+                    text: '점수',
+                    width: '6%'
                 },
                 {
                     name: 'certificate_pass',
