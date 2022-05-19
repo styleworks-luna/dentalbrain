@@ -10,7 +10,7 @@ class QualificationController extends Controller
 {
     public function create(Request $request): \Illuminate\Http\JsonResponse
     {
-        $validated = $this->validateQualification($request);
+        $validated = $this->validateCreate($request);
 
         CertificateQualification::query()->create($validated);
 
@@ -19,7 +19,7 @@ class QualificationController extends Controller
 
     public function update(Request $request, CertificateQualification $qualification): \Illuminate\Http\JsonResponse
     {
-        $validated = $this->validateQualification($request);
+        $validated = $this->validateUpdate($request);
 
 
         $qualification->update($validated);
@@ -36,11 +36,24 @@ class QualificationController extends Controller
      * @param Request $request
      * @return array
      */
-    private function validateQualification(Request $request): array
+    private function validateCreate(Request $request): array
     {
         return $request->validate([
             'title' => ['required', 'string', 'max:80',],
             'certification_number' => ['required', 'numeric',],
+            'grade' => ['required', 'string', 'max:80',],
+            'content' => ['required', 'max:80'],
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    private function validateUpdate(Request $request): array
+    {
+        return $request->validate([
+            'title' => ['required', 'string', 'max:80',],
             'grade' => ['required', 'string', 'max:80',],
             'content' => ['required', 'max:80'],
         ]);
