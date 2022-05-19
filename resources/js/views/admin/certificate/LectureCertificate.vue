@@ -48,6 +48,7 @@
                     <td>{{ slotProps.row.phone }}</td>
                     <td>{{ slotProps.row.birthday }}</td>
                     <td>{{ slotProps.row.university }}</td>
+                    <td>{{ slotProps.row.score }}</td>
                     <td>{{ slotProps.row.student_number }}</td>
                     <td>
                         <template v-if="slotProps.row.status == 2">대기중</template>
