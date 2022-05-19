@@ -100,7 +100,7 @@
                                     <div class="file-wrap">
                                         <input type="file"
                                                id="file-upload"
-                                               class="upload-hidden"
+                                               {{-- class="upload-hidden" --}}
                                                name="file"
                                                accept="image/jpeg, image/png"
                                                data-parsley-required="true"
