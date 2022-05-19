@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="none" v-if="lectures.length <= 0">
+                <li style="margin-top: 0" class="none" v-if="lectures.length <= 0">
                     <p>발급 된 증명서가 없습니다.</p>
                 </li>
             </ul>
