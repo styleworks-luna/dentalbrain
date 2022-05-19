@@ -21,7 +21,7 @@
                                   :isRequired="true"
                                   :size="9">
                         <template v-slot:content>
-                            <input type="text" class="form-control mb-3"
+                            <input type="text" class="form-control mb-3" disabled
                                    v-model="certificateNumber">
                         </template>
                     </single-group>
