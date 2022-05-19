@@ -168,8 +168,11 @@ class ProgramCertificateService
     private function selectForSearch($query, $type)
     {
         return $query->select([
-            'profiles.id', 'profiles.status', 'profiles.created_at', DB::raw("'$type' as type"), 'profiles.user_id', 'profiles.is_issued',
-            'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday', 'profiles.university', 'profiles.student_number',
+            DB::raw("'$type' as type"),
+            'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday',
+            'profiles.university', 'profiles.student_number', 'profiles.score',
+            'profiles.status', 'profiles.is_issued',
+            'profiles.user_id', 'profiles.id', 'profiles.created_at',
         ]);
     }
 
