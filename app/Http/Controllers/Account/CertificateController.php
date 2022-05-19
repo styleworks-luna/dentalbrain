@@ -39,6 +39,8 @@ class CertificateController
                 'files.id as thumbnail_id', 'files.path as thumbnail_path', 'files.url as thumbnail_url',
 
                 'completion_profiles.id as completion_profiles_id', 'completion_profiles.status as completion_status',
+                'completion_profiles.is_issued as completion_profiles_is_issued',
+
                 'qualification_profiles.id as qualification_profiles_id', 'qualification_profiles.status as qualification_status',
                 'qualification_profiles.is_issued as qualification_profiles_is_issued'
             )
