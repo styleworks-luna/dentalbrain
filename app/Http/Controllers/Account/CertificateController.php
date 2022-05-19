@@ -40,7 +40,7 @@ class CertificateController
 
                 'completion_profiles.id as completion_profiles_id', 'completion_profiles.status as completion_status',
                 'qualification_profiles.id as qualification_profiles_id', 'qualification_profiles.status as qualification_status',
-                'qualification_profiles.is_issued'
+                'qualification_profiles.is_issued as qualification_profiles_is_issued'
             )
             ->from('program_students')
             ->leftJoin('payments', 'payments.id', '=', 'program_students.payment_id')
