@@ -164,22 +164,27 @@ export default {
                 {
                     name: 'email',
                     text: '이메일',
-                    width: '12%'
+                    width: '10%'
                 },
                 {
                     name: 'phone',
                     text: '연락처',
-                    width: '10%'
+                    width: '8%'
                 },
                 {
                     name: 'birth',
                     text: '생년월일',
-                    width: '10%'
+                    width: '8%'
                 },
                 {
                     name: 'school',
                     text: '대학교',
                     width: '10%'
+                },
+                {
+                    name: 'score',
+                    text: '점수',
+                    width: '6%'
                 },
                 {
                     name: 'number',
