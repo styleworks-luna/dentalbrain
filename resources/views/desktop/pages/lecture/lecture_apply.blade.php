@@ -114,7 +114,7 @@
                                                id="file-upload"
                                                class="upload-hidden"
                                                name="file"
-                                               accept="image/jpeg, image/png"
+                                               accept="image/*"
                                                data-parsley-required="true"
                                                data-parsley-errors-container=".thumbnail-error-wrap"
                                                data-parsley-required-message="파일을 업로드해주세요.">
