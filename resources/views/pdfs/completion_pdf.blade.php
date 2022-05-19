@@ -98,18 +98,14 @@
         transform: translate(-50%, -50%);
     }
 
-    .certification-wrap .certificate-number {
-        margin-top: 50px;
-        font-size: 33px;
-    }
-
     .certification-wrap .certificate-title {
-        margin-top: 30px;
+        margin-top: 100px;
         font-size: 100px;
         text-align: center;
     }
 
     .certification-wrap .certificate-name {
+        margin-top: 100px;
         font-size: 34px;
     }
 
@@ -126,19 +122,20 @@
     }
 
     .certification-wrap .certificate-sub-content {
-        margin-top: 90px;
+        margin-top: 120px;
         text-align: center;
         font-size: 36px;
-        min-height: 160px;
+        min-height: 100px;
     }
 
     .certification-wrap .certificate-date {
+        margin-top: 20px;
         font-size: 36px;
         text-align: center;
     }
 
     .certification-wrap .certificate-associate {
-        margin-top: 50px;
+        margin-top: 150px;
         text-align: center;
     }
 
