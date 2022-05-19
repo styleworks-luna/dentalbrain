@@ -445,6 +445,12 @@ abstract class ProgramTemplate
             }
         }
 
+        // 신청자가 있을 경우 수정이 불가능함.
+        if ($program->students()->exists()) {
+            $data['completion_id'] = $program->completion_id;
+            $data['qualification_id'] = $program->qualification_id;
+        }
+
         $program->update([
             'title' => $data['title'],
             'content' => $data['content'],
