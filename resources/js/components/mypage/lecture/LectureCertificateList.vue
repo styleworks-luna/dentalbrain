@@ -78,7 +78,7 @@
                                     </template>
                                     <template v-else-if="lecture.completion_status == 4">
                                         <!--합격-->
-                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture" target="_blank">수료증 보기</a>
+                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture btn-complete" target="_blank">수료증 보기</a>
                                     </template>
                                     <template v-else>
                                         <!--그 외-->
@@ -99,7 +99,7 @@
                                     </template>
                                     <template v-else-if="lecture.qualification_status == 4">
                                         <!--합격-->
-                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/qualification`" class="btn-lecture" target="_blank"><em>자격증 보기</em></a>
+                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/qualification`" class="btn-lecture btn-complete" target="_blank">자격증 보기</a>
                                     </template>
                                     <template v-else>
                                         <!--그 외-->
