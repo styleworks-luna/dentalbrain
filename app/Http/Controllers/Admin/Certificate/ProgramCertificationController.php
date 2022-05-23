@@ -48,7 +48,10 @@ class ProgramCertificationController extends Controller
 
         $result = $this->programCertificateService->searchProgramsCertificateProfiles($program, $keyword, $category);
 
-        return response()->json($result);
+        return response()->json([
+            $result,
+            'programTitle' => $program->title
+        ]);
     }
 
     /**

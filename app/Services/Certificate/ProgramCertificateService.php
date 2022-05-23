@@ -31,10 +31,10 @@ class ProgramCertificateService
      */
     public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category): Paginator
     {
-        $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
+        $completionQuery = $this->selectForCompletionSearch(CompletionProfile::query()->from('completion_profiles as profiles'));
         $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
 
-        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
+        $qualificationQuery = $this->selectForQualificationSearch(QualificationProfile::query()->from('qualification_profiles as profiles'));
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
 
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at')->orderByDesc('type');
@@ -100,10 +100,10 @@ class ProgramCertificateService
      */
     public function excelProgramCertificateProfiles(Program $program, $keyword, $category)
     {
-        $completionQuery = $this->selectForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), '수료증');
+        $completionQuery = $this->selectForCompletionSearch(CompletionProfile::query()->from('completion_profiles as profiles'));
         $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
 
-        $qualificationQuery = $this->selectForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), '자격증');
+        $qualificationQuery = $this->selectForQualificationSearch(QualificationProfile::query()->from('qualification_profiles as profiles'));
         $qualificationQuery = $this->whereForSearch($qualificationQuery, $program, $category, $keyword);
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at');
 
@@ -165,15 +165,26 @@ class ProgramCertificateService
         return $query;
     }
 
-    private function selectForSearch($query, $type)
+    private function selectForCompletionSearch($query)
     {
-        return $query->select([
-            DB::raw("'$type' as type"),
+        return $query->select(
+            DB::raw("'수료증' as type"),
             'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday',
             'profiles.university', 'profiles.student_number', 'profiles.score',
             'profiles.status', 'profiles.is_issued',
-            'profiles.user_id', 'profiles.id', 'profiles.created_at',
-        ]);
+            'profiles.user_id', 'profiles.id', 'profiles.created_at', DB::raw("null as certificate_number")
+        );
+    }
+
+    private function selectForQualificationSearch($query)
+    {
+        return $query->select(
+            DB::raw("'자격증' as type"),
+            'users.login_id', 'profiles.name', 'users.email', 'users.phone', 'profiles.birthday',
+            'profiles.university', 'profiles.student_number', 'profiles.score',
+            'profiles.status', 'profiles.is_issued',
+            'profiles.user_id', 'profiles.id', 'profiles.created_at', 'profiles.certificate_number'
+        );
     }
 
     /**
