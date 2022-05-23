@@ -1,5 +1,5 @@
 <template>
-    <layout title="'개설 된 강의 제목' 증명서 신청 현황">
+    <layout :title="`${lectureTitle} 증명서 신청 현황`">
         <template v-slot:button>
             <a :href="`/api/admin/lecture/${program_id}/certificate/excel`"
                          class="btn btn-lg btn-info">
@@ -46,7 +46,7 @@
                     <td>{{ slotProps.row.name }}</td>
                     <td>{{ slotProps.row.email }}</td>
                     <td>{{ slotProps.row.phone }}</td>
-                    <td>{{ slotProps.row.birthday }}</td>
+                    <td>{{ Helper.dateFormatYDMByComma(slotProps.row.birthday) }}</td>
                     <td>{{ slotProps.row.university }}</td>
                     <td>{{ slotProps.row.student_number }}</td>
                     <td>{{ slotProps.row.score }}</td>
@@ -73,6 +73,7 @@
                         <template v-if="slotProps.row.status == 4 || slotProps.row.status == 3">
                             <template v-if="slotProps.row.is_issued">
                                 발급 완료
+                                <p v-if="slotProps.row.certificate_number">{{ slotProps.row.certificate_number }}</p>
                             </template>
                             <template v-else>
                                 <template v-if="slotProps.row.type == '자격증'">
@@ -253,6 +254,7 @@ export default {
             },
             keyword: "",
             category_id: "",
+            lectureTitle: '',
             showPopup: false,
             showSelected: false,
             popupId: 0,
@@ -271,7 +273,9 @@ export default {
                 page: this.page,
             }
             LectureCertificates.getData(this.program_id,params).then(res => {
-                this.lectureCertificationList = res.data;
+                console.log(res);
+                this.lectureTitle = res.data.programTitle;
+                this.lectureCertificationList = res.data[0];
             })
         },
         allPass() {
