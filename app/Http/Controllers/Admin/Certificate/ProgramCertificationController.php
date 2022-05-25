@@ -71,7 +71,7 @@ class ProgramCertificationController extends Controller
 
 
         $profiles = $this->programCertificateService->excelProgramCertificateProfiles($program, $keyword, $category);
-        return Excel::download(new CertificationExport($profiles), "{$program->title}_증명서_신청_현황.xlsx");
+        return Excel::download(new CertificationExport($profiles), sanitizeForFileName("{$program->title}_증명서_신청_현황.xlsx"));
     }
 
     public function passAll(Request $request, Program $program): JsonResponse
