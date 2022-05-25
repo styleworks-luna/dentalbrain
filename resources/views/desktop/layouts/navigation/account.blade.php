@@ -19,6 +19,9 @@
         <li class="{{ (strpos(Route::currentRouteName(), 'account.offer') !== false) ? 'active-menu' : '' }}">
             <a href="{{ route('account.offer') }}">구직정보</a>
         </li>
+        <li class="{{ (strpos(Route::currentRouteName(), 'account.certificate') !== false) ? 'active-menu' : '' }}">
+            <a href="{{ route('account.certificate') }}">증명서</a>
+        </li>
         <li class="{{ (strpos(Route::currentRouteName(), 'account.modify') !== false ||
                       (strpos(Route::currentRouteName(), 'account.confirm') !== false)) ? 'active-menu' : '' }}">
             <a href="{{ route('account.modify') }}">회원정보 수정</a>

@@ -3,7 +3,18 @@
         <ul>
             <li class="lecture-card" v-for="lecture in lectures" :key="lecture.id">
                 <a :href="'/lectures/' + lecture.id">
-                    <img :src="lecture.thumbnail.url" alt="">
+                    <div class="lecture-image-box">
+                        <img :src="lecture.thumbnail.url" alt="">
+                        <template v-if="lecture.completion_id && lecture.qualification_id">
+                            <div class="certificate-mark">수료/자격증</div>
+                        </template>
+                        <template v-else-if="lecture.completion_id">
+                            <div class="certificate-mark">수료증</div>
+                        </template>
+                        <template v-else-if="lecture.qualification_id">
+                            <div class="certificate-mark">자격증</div>
+                        </template>
+                    </div>
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{ lecture.minor_category_name }}</span>

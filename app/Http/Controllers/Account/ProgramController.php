@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\Models\Program\ProgramStudent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class ProgramController extends Controller
     public function lecturesData(Request $request)
     {
         $request->validate([
-            'order' => ['required', Rule::in(['online', 'offline', 'newest'])],
+            'order' => ['required', Rule::in(['online', 'offline', 'newest', 'certificate'])],
         ]);
 
         //TODO: 사용자에 따른 강의 구분 정보 넣기.
@@ -33,7 +34,7 @@ class ProgramController extends Controller
             ->with([
                 'payment:id,totalAmount,receiptUrl,method,status',
                 'program' => function (BelongsTo $query) {
-                    $query->select('id', 'thumbnail_id', 'title', 'is_online', 'running_time', 'major_category_id', 'minor_category_id', 'price', 'term')
+                    $query->select('id', 'thumbnail_id', 'title', 'is_online', 'running_time', 'major_category_id', 'minor_category_id', 'price', 'term', 'qualification_id', 'completion_id')
                         ->with('place:id,program_id,address,address_detail,sido,gugun,started_at,ended_at')
                         ->with('thumbnail:id,path,url')
                         ->with('lectures:id,program_id');
@@ -51,6 +52,11 @@ class ProgramController extends Controller
             // 오프라인 정렬일 경우.
             $queryBuilder = $queryBuilder->whereHas('program', function ($query) {
                 $query->where('is_online', '0');
+            });
+        } elseif ($request->input('order', 'newest') == 'certificate') {
+            // 수료/자격증 정렬일 경우.
+            $queryBuilder = $queryBuilder->whereHas('program', function (Builder $query) {
+                $query->whereNotNull('completion_id')->orWhereNotNull('qualification_id');
             });
         }
 

@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\SuccessPayments;
 use App\Mail\ApplyLecture;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Payments\TossPayments\TossPayments;
 use App\Payments\TossPayments\TossPaymentsException;
+use App\Services\Certificate\CertificateService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +31,16 @@ use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class PaymentsController extends Controller
 {
+    protected $certificateService;
+
+    /**
+     * @param CertificateService $certificateService
+     */
+    public function __construct(CertificateService $certificateService)
+    {
+        $this->certificateService = $certificateService;
+    }
+
     /**
      * 결제 승인 플로우.
      *
@@ -56,6 +69,9 @@ class PaymentsController extends Controller
             $payment = Payment::createByTossSuccess($response);
 
             $programStudent = ProgramStudent::updateWhenTossSuccess($response, $program, $payment);
+
+            // 신청 후 => 증명정보 상태 '대기'로 변경
+            $this->certificateService->updateToWaitingCertificationProfilesLoginUser($program);
 
             Mail::to(Auth::user()->email)->send(new ApplyLecture(Auth::user(), $programStudent));
             Mail::to(config('mail.admin_emails', ['dentalbrainon@gmail.com']))->send(new ApplyLecture(Auth::user(), $programStudent));
@@ -141,24 +157,31 @@ class PaymentsController extends Controller
                 return response()->json(['code' => 3], ResponseCode::HTTP_BAD_REQUEST);
             }
 
-            $payment->update([
-                'status' => $body['status'],
-                'approvedAt' => now(),
-            ]);
-
             $program = $payment->student->program;
 
-            $payment->student()->update([
-                'payment_id' => $payment->id,
-                'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
-                'pay_status' => ProgramStudent::$PAY_PAID,
-            ]);
+            if ($body['status'] == 'CANCELED') {
+                $payment->update([
+                    'status' => $body['status'],
+                ]);
+                $payment->student->updateWhenCancel($program->is_free);
+            } else {
+                $payment->update([
+                    'status' => $body['status'],
+                    'approvedAt' => now(),
+                ]);
+
+                $payment->student()->update([
+                    'payment_id' => $payment->id,
+                    'expired_at' => $program->is_online ? now()->addDays($program->term) : $program->place->ended_at,
+                    'pay_status' => ProgramStudent::$PAY_PAID,
+                ]);
+            }
 
             DB::commit();
             return response()->json(['code' => 1], ResponseCode::HTTP_OK);
 
         } catch (\Exception $e) {
-            Log::error('DEPOSIT ERROR', [encrypt($request->all())]);
+            Log::error('DEPOSIT ERROR', [$request->all()]);
 
             DB::rollBack();
             return response()->json(['code' => 2], ResponseCode::HTTP_INTERNAL_SERVER_ERROR);

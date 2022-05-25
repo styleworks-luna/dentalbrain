@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OfflineProgramConcrete;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,9 +19,6 @@ use Illuminate\Validation\Rule;
 class OfflineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
     protected $offlineConcrete;
-    /**
-     * @var SearchService|null
-     */
 
     public function __construct()
     {
@@ -27,33 +27,36 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
 
     public function search(Request $request)
     {
-        $this->search = new SearchService(Program::query());
+        $query = Program::query()
+            ->with('certificateQualification:id,title', 'certificateCompletion:id,title')
+            ->withCount(['completionProfiles as completion_count' => function (Builder $query) {
+                $query->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
+            }])
+            ->withCount(['qualificationProfiles as qualification_count' => function (Builder $query) {
+                $query->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+            }]);
+
+        $this->search = new SearchService($query);
 
         $this->search->addKeyword('title', $request->keyword);
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', $this->offlineConcrete->is_online)
+        return $this->search->search()
+            ->where('is_online', '=', 0)
             ->with('place:id,program_id,started_at,ended_at,address,address_detail')
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
-
-        return $search;
+            }])->orderByDesc('id')
+            ->paginate(10);
     }
 
     public function update(Request $request, Program $program)
     {
-        $programData = $this->offlineConcrete->validateProgram($request);
-        $surveyDataSet = $this->offlineConcrete->validateSurveys($request, [
-            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
-            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
-            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
-        ]);
-        $placeData = $this->offlineConcrete->validatePlace($request, [
-            'id' => ['required', Rule::exists('program_places', 'id')],
-        ]);
+        $programData = $this->offlineConcrete->validateUpdateProgram($request);
+        $surveyDataSet = $this->offlineConcrete->validateUpdateSurveys($request);
+        $placeData = $this->offlineConcrete->validateUpdatePlace($request);
 
         try {
             DB::beginTransaction();
@@ -99,9 +102,9 @@ class OfflineProgramController extends BaseProgramController implements ProgramC
 
     public function store(Request $request)
     {
-        $programData = $this->offlineConcrete->validateProgram($request);
-        $surveyDataSet = $this->offlineConcrete->validateSurveys($request);
-        $placeData = $this->offlineConcrete->validatePlace($request);
+        $programData = $this->offlineConcrete->validateStoreProgram($request);
+        $surveyDataSet = $this->offlineConcrete->validateStoreSurveys($request);
+        $placeData = $this->offlineConcrete->validateStorePlace($request);
 
         try {
             DB::beginTransaction();

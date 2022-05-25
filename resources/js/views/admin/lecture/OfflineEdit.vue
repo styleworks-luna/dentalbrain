@@ -7,6 +7,27 @@
                            @setFile="handleSetThumbnail"></thumbnail>
             </div>
             <div class="right-wrap">
+                <single-group name="증명서 선택"
+                              class="form-type"
+                              :class="haveStudents ? 'bg-light text-dark':''"
+                              :isRow="true"
+                              :size="9">
+                    <template v-slot:content>
+                        <select-box class="form-control mr-3"
+                                    :disabled="haveStudents"
+                                    :text="'자격증 선택'"
+                                    :value="certification_id"
+                                    :options="certificationOptions"
+                                    @setValue="handleSetCertificateCategoryId"></select-box>
+
+                        <select-box class="form-control"
+                                    :disabled="haveStudents"
+                                    :text="'수료증 선택'"
+                                    :value="completion_id"
+                                    :options="completionOptions"
+                                    @setValue="handleSetCompletionCategoryId"></select-box>
+                    </template>
+                </single-group>
                 <single-group name="분류 선택"
                               class="form-type"
                               :isRequired="true"
@@ -235,7 +256,7 @@
 import { Offline } from '@/api/admin/lecture/Offline.js'
 
 //mixins
-import {LectureFormMixin, ProgramCategoryMixin} from '@/mixins/admin/lecture/Form.js';
+import {LectureFormMixin, ProgramCategoryMixin, ProgramCertificateCategoryMixin} from '@/mixins/admin/lecture/Form.js';
 import {OfflineMixin} from '@/mixins/admin/lecture/Offline.js';
 
 export default {
@@ -243,6 +264,7 @@ export default {
     mixins: [
         LectureFormMixin,
         ProgramCategoryMixin,
+        ProgramCertificateCategoryMixin,
         OfflineMixin
     ],
     data() {
@@ -265,6 +287,8 @@ export default {
 
                 this.major_category_id = program.major_category_id;
                 this.minor_category_id = program.minor_category_id;
+                this.certification_id = program.qualification_id;
+                this.completion_id = program.completion_id;
                 this.title = program.title;
 
                 this.lecture_info = program.description;
@@ -317,7 +341,8 @@ export default {
 
             let data = {
                 thumbnail_id: this.thumbnail.id,
-
+                qualification_id: this.certification_id,
+                completion_id: this.completion_id,
                 major_category_id: this.major_category_id,
                 minor_category_id: this.minor_category_id,
                 title: this.title,

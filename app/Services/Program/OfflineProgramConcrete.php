@@ -8,6 +8,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramPlace;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class OfflineProgramConcrete extends ProgramTemplate
 {
@@ -18,7 +19,35 @@ class OfflineProgramConcrete extends ProgramTemplate
         parent::__construct($is_online);
     }
 
-    public function validatePlace(Request $request, array $additionalRules = [])
+    public function validateStoreProgram(Request $request)
+    {
+        return parent::validateProgram($request, [
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
+    }
+
+    public function validateUpdateProgram(Request $request)
+    {
+        return parent::validateProgram($request, [
+            'qualification_id' => ['nullable', 'numeric'],
+            'completion_id' => ['nullable', 'numeric'],
+        ]);
+    }
+
+    public function validateStorePlace(Request $request)
+    {
+        return $this->validatePlace($request);
+    }
+
+    public function validateUpdatePlace(Request $request)
+    {
+        return $this->validatePlace($request, [
+            'id' => ['required', Rule::exists('program_places', 'id')],
+        ]);
+    }
+
+    protected function validatePlace(Request $request, array $additionalRules = [])
     {
         $v = Validator::make($request->all()['program_place'], array_merge([
             'address' => ['required', 'string',],
@@ -31,7 +60,7 @@ class OfflineProgramConcrete extends ProgramTemplate
             'latitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
             'longitude' => ['required', 'regex:/^[0-9]{2,3}\.[0-9]{1,7}$/'],
 
-            'capacity' => ['required', 'numeric','min:1'],
+            'capacity' => ['required', 'numeric', 'min:1'],
 
             'started_at' => ['required', 'date',],
             'ended_at' => ['required', 'date', 'after:started_at'],

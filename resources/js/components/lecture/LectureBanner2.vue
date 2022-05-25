@@ -1,9 +1,20 @@
 <template>
     <div class="swiper-wrapper">
-        <ul class="swiper-slide" v-for="banner in banners">
+        <ul class="swiper-slide" v-for="banner in banners" :key="banner.id">
             <li class="lecture-card" :key="banner.id">
                 <a :href="'/banner-redirect/' + banner.id">
-                    <img :src="banner.program.thumbnail.url" alt="">
+                    <div class="lecture-image-box">
+                        <img :src="banner.program.thumbnail.url" alt="">
+                        <template v-if="banner.program.completion_id && banner.program.qualification_id">
+                            <div class="certificate-mark">수료/자격증</div>
+                        </template>
+                        <template v-else-if="banner.program.completion_id">
+                            <div class="certificate-mark">수료증</div>
+                        </template>
+                        <template v-else-if="banner.program.qualification_id">
+                            <div class="certificate-mark">자격증</div>
+                        </template>
+                    </div>
                     <div class="lecture-description">
                         <div class="lecture-description-sub">
                             <span class="lecture-type">{{banner.program.minor_category_name}}</span>

@@ -82,5 +82,9 @@ return array (
     'normal' => $fontDir . '/sourcehansanskr_normal_5cc9ed0c1a6a9ccbe6b8224fec09c7da',
     'bold' => $fontDir . '/sourcehansanskr_bold_0045fde3ee6dc192a2b2eaff1015aa3f',
   ),
+  'chosungs' => array(
+    'normal' => $fontDir . '/chosungs_normal_906ce08a002d6ad4872d508d4e09950b',
+    'bold' => $fontDir . '/chosungs_bold_906ce08a002d6ad4872d508d4e09950b',
+  ),
 );
 }; ?>

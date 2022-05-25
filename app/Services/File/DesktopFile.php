@@ -20,7 +20,7 @@ class DesktopFile extends FileTemplate
     protected function getSavePath(string $fileName)
     {
         $banner = $this->model;
-        return $path = 'public/banners/' . $banner->id . '/desktop/' . $fileName;
+        return 'public/banners/' . $banner->id . '/desktop/' . $fileName;
     }
 
     protected function deleteFileInDB()

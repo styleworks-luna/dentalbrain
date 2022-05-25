@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Program;
 
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
@@ -10,10 +12,10 @@ use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\Program\OnlineProgramConcrete;
 use App\Services\Search\SearchService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
 
 class OnlineProgramController extends BaseProgramController implements ProgramControllerInterface
 {
@@ -47,38 +49,35 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
     public function search(Request $request)
     {
-        $this->search = new SearchService(Program::query());
+        $query = Program::query()
+            ->with('certificateQualification:id,title', 'certificateCompletion:id,title')
+            ->withCount(['completionProfiles as completion_count' => function (Builder $query) {
+                $query->where('status', '!=', CompletionProfile::$DO_NOT_PAID);
+            }])
+            ->withCount(['qualificationProfiles as qualification_count' => function (Builder $query) {
+                $query->where('status', '!=', QualificationProfile::$DO_NOT_PAID);
+            }]);
+
+        $this->search = new SearchService($query);
 
         $this->search->addKeyword('title', $request->keyword);
         $this->addMajorCategoryId($request);
         $this->addMinorCategoryId($request);
 
-        $search = $this->search->search()->where('is_online', '=', 1)
+        return $this->search->search()
+            ->where('is_online', '=', 1)
             ->withCount(['students' => function ($query) {
                 $query->where('pay_status', '!=', ProgramStudent::$PAY_BEFORE)
                     ->where('pay_status', '!=', ProgramStudent::$PAY_REFUNDED);
-            }])->orderByDesc('id')->paginate('10');
-        return $search;
+            }])->orderByDesc('id')
+            ->paginate('10');
     }
 
     public function update(Request $request, Program $program)
     {
-        $programData = $this->onlineConcrete->validateProgram($request, [
-            'running_time' => ['required', 'string'],
-            'preview_url' => ['nullable', 'url'],
-            'preview_type' => ['nullable', 'string'],
-            'term' => ['required', 'numeric']
-        ]);
-
-        $surveyDataSet = $this->onlineConcrete->validateSurveys($request, [
-            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
-            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
-            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
-        ]);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request, [
-            'lectures.*.id' => ['sometimes', 'required', Rule::exists('lectures', 'id')]
-        ]);
+        $programData = $this->onlineConcrete->validateUpdateProgram($request);
+        $surveyDataSet = $this->onlineConcrete->validateUpdateSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateUpdateLectures($request);
 
         try {
             DB::beginTransaction();
@@ -140,17 +139,9 @@ class OnlineProgramController extends BaseProgramController implements ProgramCo
 
     public function store(Request $request)
     {
-        $programData = $this->onlineConcrete->validateProgram($request,
-            [
-                'running_time' => ['required', 'string'],
-                'preview_url' => ['nullable', 'url'],
-                'preview_type' => ['nullable', 'string'],
-                'term' => ['required', 'numeric']
-            ]);
-
-        $surveyDateSet = $this->onlineConcrete->validateSurveys($request);
-
-        $lectureDataSet = $this->onlineConcrete->validateLectures($request);
+        $programData = $this->onlineConcrete->validateStoreProgram($request);
+        $surveyDateSet = $this->onlineConcrete->validateStoreSurveys($request);
+        $lectureDataSet = $this->onlineConcrete->validateStoreLectures($request);
 
         try {
             DB::beginTransaction();

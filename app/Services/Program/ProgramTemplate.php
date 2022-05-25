@@ -14,6 +14,7 @@ use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\Survey;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\Survey\SurveyCategory;
+use App\Services\Certificate\CertificateService;
 use App\Services\File\ProgramMaterial;
 use App\Services\File\ProgramThumbnail;
 use App\Services\File\SurveyFile;
@@ -147,7 +148,7 @@ abstract class ProgramTemplate
      * @param array|null $additionalRules
      * @return array
      */
-    function validateProgram(Request $request, array $additionalRules = [])
+    protected function validateProgram(Request $request, array $additionalRules = [])
     {
         $v = Validator::make($request->all(), array_merge([
             'major_category_id' => ['required', 'numeric'],
@@ -203,7 +204,7 @@ abstract class ProgramTemplate
         return $v->validate();
     }
 
-    function validateSurveys(Request $request, array $additionalRules = [])
+    protected function validateSurveys(Request $request, array $additionalRules = [])
     {
         $hasChoices = ['singleChoice', 'multipleChoice'];
 
@@ -222,6 +223,20 @@ abstract class ProgramTemplate
         }
 
         return $validatedData;
+    }
+
+    public function validateStoreSurveys(Request $request)
+    {
+        return $this->validateSurveys($request);
+    }
+
+    public function validateUpdateSurveys(Request $request)
+    {
+        return $this->validateSurveys($request, [
+            '*.id' => ['sometimes', 'required', Rule::exists('surveys', 'id')],
+            '*.choices.*.id' => ['sometimes', Rule::exists('surveys', 'id')],
+            '*.choices.*.parent_id' => ['sometimes', 'nullable', Rule::exists('surveys', 'id')],
+        ]);
     }
 
     /*
@@ -302,6 +317,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         $fileService = new ProgramThumbnail($this->program);
@@ -427,6 +445,12 @@ abstract class ProgramTemplate
             }
         }
 
+        // 신청자가 있을 경우 수정이 불가능함.
+        if ($program->students()->exists()) {
+            $data['completion_id'] = $program->completion_id;
+            $data['qualification_id'] = $program->qualification_id;
+        }
+
         $program->update([
             'title' => $data['title'],
             'content' => $data['content'],
@@ -458,6 +482,9 @@ abstract class ProgramTemplate
 
             'description' => $data['lecture_info'],
             'term' => $data['term'] ?? Program::$TERM,
+
+            'completion_id' => $data['completion_id'] ?? null,
+            'qualification_id' => $data['qualification_id'] ?? null,
         ]);
 
         return $this->program;
@@ -549,6 +576,8 @@ abstract class ProgramTemplate
             DB::beginTransaction();
             // student 업데이트
             $student->updateWhenConfirmAnotherPay($program, $expired_at);
+            $certificateService = app()->make(CertificateService::class);
+            $certificateService->updateToWaitingCertificationProfile($program, $student->user_id);
 
             // payment 업데이트
             /** @var Payment $payment */

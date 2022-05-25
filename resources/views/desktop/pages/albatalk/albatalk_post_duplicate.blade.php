@@ -712,65 +712,6 @@
                                         <div class="benefit-type-error-container"></div>
                                     </td>
                                 </tr>
-                                {{--                                <tr>--}}
-                                {{--                                    <th>모집마감일 *</th>--}}
-                                {{--                                    <td class="wrapper-s">--}}
-                                {{--                                        <div class="radio-container">--}}
-                                {{--                                            <div class="radio-wrap">--}}
-                                {{--                                                <input type="radio" id="deadline_field_01" class="deadline"--}}
-                                {{--                                                       name="deadline" value="1"--}}
-                                {{--                                                       @if(old('deadline', $recruit->started_at != null ) == 1) checked--}}
-                                {{--                                                       @endif--}}
-                                {{--                                                       data-parsley-required="true"--}}
-                                {{--                                                       data-parsley-required-message="※ 모집마감일을 선택해주세요."--}}
-                                {{--                                                       data-parsley-errors-container=".deadline-error-container">--}}
-                                {{--                                                <input type="hidden" class="date-compare-check" value="N">--}}
-                                {{--                                                <input type="text" class="input-xs start-date" name="started_at_ymd"--}}
-                                {{--                                                       @if(!$recruit->started_at)--}}
-                                {{--                                                       value="{{old("started_at_ymd") ?? null}}"--}}
-                                {{--                                                       @else--}}
-                                {{--                                                       value="{{old("started_at_ymd", $recruit->started_at->format('Y-m-d'))}}"--}}
-                                {{--                                                       @endif--}}
-                                {{--                                                       placeholder="시작일자 선택"--}}
-                                {{--                                                       @if(old('deadline', $recruit->started_at != null) != 1) readonly--}}
-                                {{--                                                       disabled @endif>--}}
-                                {{--                                                <input type="text" class="input-xxs start-time" placeholder="HH:mm"--}}
-                                {{--                                                       name="started_at_hm" id="start_time"--}}
-                                {{--                                                       @if(!$recruit->started_at)--}}
-                                {{--                                                       value="{{old("started_at_hm" ?? null)}}"--}}
-                                {{--                                                       @else--}}
-                                {{--                                                       value="{{old("started_at_hm", $recruit->started_at->format('H:i') ?? null)}}"--}}
-                                {{--                                                       @endif--}}
-                                {{--                                                       @if(old('deadline', $recruit->started_at != null) != 1) disabled @endif>--}}
-                                {{--                                                <p class="time-from">부터</p>--}}
-                                {{--                                                <input type="text" class="input-xs end-date" name="ended_at_ymd"--}}
-                                {{--                                                       @if(!$recruit->started_at)--}}
-                                {{--                                                       value="{{old("ended_at_ymd" ?? null)}}"--}}
-                                {{--                                                       @else--}}
-                                {{--                                                       value="{{old("ended_at_ymd", $recruit->ended_at->format('Y-m-d') ?? null)}}"--}}
-                                {{--                                                       @endif--}}
-                                {{--                                                       placeholder="마감일자 선택"--}}
-                                {{--                                                       @if(old('deadline', $recruit->ended_at != null) != 1) readonly--}}
-                                {{--                                                       disabled @endif>--}}
-                                {{--                                                <input type="text" class="input-xxs end-time" placeholder="HH:mm"--}}
-                                {{--                                                       name="ended_at_hm" id="end_time"--}}
-                                {{--                                                       @if(!$recruit->started_at)--}}
-                                {{--                                                       value="{{old("ended_at_hm" ?? null)}}"--}}
-                                {{--                                                       @else--}}
-                                {{--                                                       value="{{old("ended_at_hm", $recruit->ended_at->format('H:i') ?? null)}}"--}}
-                                {{--                                                       @endif--}}
-                                {{--                                                       @if(old('deadline', $recruit->ended_at != null) != 1) disabled @endif>--}}
-                                {{--                                            </div>--}}
-                                {{--                                            <div class="radio-wrap">--}}
-                                {{--                                                <input type="radio" id="deadline_field_02" class="deadline"--}}
-                                {{--                                                       name="deadline" value="2"--}}
-                                {{--                                                       @if(old('deadline', $recruit->started_at == null) == 2) checked @endif>--}}
-                                {{--                                                <label for="deadline_field_02">채용시까지</label>--}}
-                                {{--                                            </div>--}}
-                                {{--                                        </div>--}}
-                                {{--                                        <div class="deadline-error-container"></div>--}}
-                                {{--                                    </td>--}}
-                                {{--                                </tr>--}}
                                 <tr>
                                     <th>상세정보</th>
                                     <td class="wrapper-s">

@@ -1,5 +1,6 @@
 // component
 import FileUpload from '@/components/admin/form/FileUpload.vue';
+import Certificate from '@/api/admin/certificate/Certificate.js'
 
 // 온라인 강의 생성,수정
 export const OnlineMixin = {
@@ -60,6 +61,7 @@ export const OnlineMixin = {
         },
         handleSetPreview(id) {
             this.preview_type = id;
-        }
+        },
+
     }
 };

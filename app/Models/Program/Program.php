@@ -2,6 +2,10 @@
 
 namespace App\Models\Program;
 
+use App\Models\Certificate\CertificateCompletion;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\CertificateQualification;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
 use App\Models\Manage\Banner;
 use App\Models\Program\Survey\Survey;
@@ -324,6 +328,26 @@ class Program extends Model
             'id', 'id');
     }
 
+    public function qualificationProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(QualificationProfile::class, 'program_id', 'id');
+    }
+
+    public function completionProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CompletionProfile::class, 'program_id', 'id');
+    }
+
+    public function certificateQualification(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CertificateQualification::class, 'qualification_id', 'id');
+    }
+
+    public function certificateCompletion(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CertificateCompletion::class, 'completion_id', 'id');
+    }
+
     public function getMajorCategoryNameAttribute()
     {
         if ($this->majorCategory) {
@@ -380,6 +404,7 @@ class Program extends Model
             'minor_category_id', 'title', 'running_time', 'term',
             'is_free',
             'price', 'discount_rate', 'discounted_price',
+            'qualification_id', 'completion_id',
         ])
             ->where('is_open', '=', 1)
             ->with(['thumbnail:id,url', 'place:id,program_id,started_at,ended_at'])

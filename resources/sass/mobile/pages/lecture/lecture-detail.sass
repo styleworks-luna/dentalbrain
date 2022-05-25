@@ -18,6 +18,25 @@
         outline: solid .27777777vw rgba(0, 0, 0, 0.1)
         outline-offset: -.27777777vw
 
+    .lecture-image-box
+        position: relative
+
+        .certificate-mark
+            +border(0.277778vw solid rgba(255, 255, 255, 0.8))
+            +border-radius(4.444444vw)
+            +margin(right 2.777778vw bottom 2.777778vw)
+            +padding(1.944444vw 2.5vw)
+            display: flex
+            align-items: center
+            justify-content: center
+            background-color: rgba(0, 0, 0, 0.6)
+            position: absolute
+            bottom: 0
+            right: 0
+            font-size: 3.333333vw
+            font-weight: bold
+            color: #fff
+
     .lecture-information
         +margin(top 5.5555555vw)
 
@@ -125,9 +144,9 @@
                 color: black
                 font-weight: bold
                 color: red
-                +margin(bottom 5px)
+                +margin(bottom 1.388889vw)
                 font-size: 3.333333vw
-                //+padding(left 4.72222px)
+                //+padding(left 1.311728vw)
 
     .lecture-btn
         +size(100%)
@@ -297,7 +316,7 @@
 
 .lecture-list
     display: none
-    //+padding(top 138px)
+    //+padding(top 38.333333vw)
 
     .list-title
         overflow: hidden
@@ -305,7 +324,7 @@
         h3
             float: left
             font-weight: bold
-            font-size: 20px
+            font-size: 5.555556vw
 
     ul
 
@@ -314,14 +333,14 @@
             +padding(right 3.888888vw)
 
         +padding(top 2.777777vw)
-        //border-top: 1px solid black
+        //border-top: 0.277778vw solid black
 
         li
             //+size(50vw)
             +margin(left 5.555555vw right 5.555555vw)
             +padding(top 5vw bottom 5vw)
             //+margin(4%)
-            +border(1px solid $border-color-base, bottom)
+            +border(0.277778vw solid $border-color-base, bottom)
 
 
 .lecture-comment
@@ -337,7 +356,7 @@
         position: relative
 
     .comment-input-btn
-        +btn(null, 1px solid $border-color-base)
+        +btn(null, 0.277778vw solid $border-color-base)
         +size(19.44444444vw, 13.8888888vw)
         +background(null, null, null, $white)
         font-size: 3.3333333vw
@@ -350,12 +369,12 @@
     .comment-input-form
         +margin(top 5.5555555vw)
         +padding(bottom 5.555555vw)
-        +border(1px solid $border-color-base, bottom)
+        +border(0.277778vw solid $border-color-base, bottom)
 
     // 댓글 리스트 레이아웃
     .comment-total-area
         +padding(8.33333333vw 0)
-        +border(1px solid $border-color-base, bottom)
+        +border(0.277778vw solid $border-color-base, bottom)
 
         // 수정 삭제버튼 공통
         .btn-comment-modified,
@@ -416,12 +435,12 @@
                 color: $gray-700
 
                 &::after
-                    +size(13px, 7px)
+                    +size(3.611111vw, 1.944444vw)
                     +background('/images/mobile/lecture/icon_arrow_down.svg',no-repeat, center center)
                     display: block
                     position: absolute
-                    bottom: 3px
-                    left: 60px
+                    bottom: 0.833333vw
+                    left: 16.666667vw
                     content: ''
 
             .btn-comment-write.active::after
@@ -491,7 +510,7 @@
         position: fixed
         left: 50%
         top: 50%
-        box-shadow: 3px 3px 10px rgba(0,0,0,0.4)
+        box-shadow: 0.833333vw 0.833333vw 2.777778vw rgba(0,0,0,0.4)
         transform: translate(-50%, -50%)
         z-index: 220
 
@@ -513,7 +532,7 @@
 
         .map
             +size(100%, 72.2%)
-            +margin(top 20px)
+            +margin(top 5.555556vw)
             +border(.277777vw solid $border-color-base)
             +box-sizing(border-box)
 

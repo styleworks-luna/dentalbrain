@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Lecture;
 use App\Http\Controllers\Controller;
 use App\Mail\RequestProgramCancel;
 use App\Mail\RequestProgramCancelAdmin;
+use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
+use App\Services\Certificate\CertificateService;
 use App\Services\Program\OfflineProgramCancelConcrete;
 use App\Services\Program\ProgramCancelTemplate;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +20,16 @@ use Illuminate\Support\Facades\Mail;
 
 class CancelController extends Controller
 {
+    /**
+     * @var CertificateService
+     */
+    private $certificateService;
+
+    public function __construct(CertificateService $certificateService)
+    {
+        $this->certificateService = $certificateService;
+    }
+
     /**
      *  유저 측 자동 환불 요청 받는 컨트롤러 로직
      *
@@ -47,6 +60,9 @@ class CancelController extends Controller
                 'msg' => '환불 실패하였습니다.'
             ], 500);
         }
+
+        // 환불 신청 후 증명정보 삭제
+        $this->certificateService->deleteCertificationLoginUser($program);
 
         return response()->json([
             'msg' => '환불이 완료되었습니다.',

@@ -1,15 +1,19 @@
 <template>
     <div>
         <div>
-            <lecture-order @setOrder="handleSetOrder" :mobile="mobile" :like="like"></lecture-order>
-            <lecture-list v-if="!like" :list="mobile ? mobileList : list.data" :mobile="mobile"></lecture-list>
-            <template v-else>
-                <lecture-like-list :listData="mobile ? mobileLikeList : likeList.data" :mobile="mobile"></lecture-like-list>
-            </template>
+            <lecture-order v-if="!(mobile&&certificate)" @setOrder="handleSetOrder" :mobile="mobile" :like="like"
+                           :certificate="certificate"></lecture-order>
+            <lecture-list v-if="!like && !certificate" :list="mobile ? mobileList : list.data"
+                          :mobile="mobile"></lecture-list>
+            <lecture-certificate-list v-else-if="certificate"
+                                      :listData="mobile ? mobileCertificateList : certificateList.data"
+                                      :mobile="mobile"></lecture-certificate-list>
+            <lecture-like-list v-else :listData="mobile ? mobileLikeList : likeList.data"
+                               :mobile="mobile"></lecture-like-list>
         </div>
 
         <template v-if="!mobile">
-            <template v-if="!like">
+            <template v-if="!like && !certificate">
                 <div class="paging-wrap">
                     <nav>
                         <pagination :data="list" :limit=3 @pagination-change-page="getData">
@@ -19,7 +23,17 @@
                     </nav>
                 </div>
             </template>
-            <template v-else>
+            <template v-if="certificate">
+                <div class="paging-wrap">
+                    <nav>
+                        <pagination :data="certificateList" :limit=3 @pagination-change-page="getCertificateData">
+                            <span slot="prev-nav" class="prev-nav ir_pm">prev</span>
+                            <span slot="next-nav" class="next-nav ir_pm">next</span>
+                        </pagination>
+                    </nav>
+                </div>
+            </template>
+            <template v-else-if="like">
                 <div class="paging-wrap">
                     <nav>
                         <pagination :data="likeList" :limit=3 @pagination-change-page="getLikeData">
@@ -32,7 +46,7 @@
         </template>
 
         <template v-else>
-            <template v-if="!like">
+            <template v-if="!like && !certificate">
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteId" @infinite="infiniteHandler"
                                       force-use-infinite-wrapper>
@@ -40,7 +54,16 @@
                     </infinite-loading>
                 </div>
             </template>
-            <template v-else>
+            <template v-if="certificate">
+                <div class="infinite-wrapper">
+                    <infinite-loading @distance="1" :identifier="infiniteCertificateId"
+                                      @infinite="infiniteCertificateHandler"
+                                      force-use-infinite-wrapper>
+                        <div slot="no-more"></div>
+                    </infinite-loading>
+                </div>
+            </template>
+            <template v-else-if="like">
                 <div class="infinite-wrapper">
                     <infinite-loading @distance="1" :identifier="infiniteLikeId" @infinite="infiniteLikeHandler"
                                       force-use-infinite-wrapper>
@@ -55,6 +78,7 @@
 <script>
 import LectureList from '@/components/mypage/lecture/LectureList.vue';
 import LectureLikeList from '@/components/mypage/lecture/LectureLikeList.vue';
+import LectureCertificateList from '@/components/mypage/lecture/LectureCertificateList.vue';
 import LectureOrder from '@/components/mypage/lecture/LectureOrder.vue';
 import InfiniteLoading from 'vue-infinite-loading';
 
@@ -67,33 +91,41 @@ export default {
         'lecture-list': LectureList,
         'lecture-order': LectureOrder,
         LectureLikeList,
+        LectureCertificateList,
         InfiniteLoading,
     },
     props: {
         'mobile': Boolean,
         'like': Boolean,
+        'certificate': Boolean,
     },
     data() {
         return {
             list: {},
             likeList: {},
+            certificateList: {},
             order: 'newest',
             page: 1,
             mobileList: [],
             mobileLikeList: [],
+            mobileCertificateList: [],
             infiniteId: +new Date(),
+            infiniteCertificateId: +new Date(),
             infiniteLikeId: +new Date(),
         }
     },
     mounted() {
         this.getData();
         this.getLikeData();
+        this.getCertificateData();
     },
     methods: {
         handleSetOrder(order) {
             this.order = order;
             if (this.like) {
                 this.getLikeData();
+            } else if (this.certificate) {
+                this.getCertificateData();
             } else {
                 this.getData();
             }
@@ -131,6 +163,20 @@ export default {
             }).catch(err => {
                 this.likeList = [];
             });
+        },
+        getCertificateData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+            Mypage.getMyCertificate().then(res => {
+                this.certificateList = res.data;
+            }).catch(err => {
+                this.certificateList = [];
+            })
         },
         infiniteHandler($state, page = this.page) {
             let vm = this;
@@ -182,12 +228,37 @@ export default {
             });
             this.page = this.page + 1;
         },
+        infiniteCertificateHandler($state, page = this.page) {
+            let vm = this;
+
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+
+            let params = {
+                page: page
+            };
+
+            Mypage.getMyCertificate(params).then(res => {
+                if (res.data.data.length) {
+                    $.each(res.data.data, function (key, value) {
+                        vm.mobileCertificateList.push(value);
+                    });
+                    $state.loaded();
+                } else {
+                    $state.complete();
+                }
+            });
+            this.page = this.page + 1;
+        },
         changeType() {
             this.page = 1;
             this.mobileList = [];
             this.mobileLikeList = [];
+            this.mobileCertificateList = [];
             this.infiniteId += 1;
             this.infiniteLikeId += 1;
+            this.infiniteCertificateId += 1;
         },
     },
 }

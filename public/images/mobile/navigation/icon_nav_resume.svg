@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <path id="ns8a2pxuwa" d="M0 0h24v28H0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <path d="M24 19.15V4.879A1.891 1.891 0 0 0 22.1 3H6.9C5.852 3 5 3.843 5 4.878v19.244A1.89 1.89 0 0 0 6.9 26h15.2a1.89 1.89 0 0 0 1.9-1.878v-4.971z" fill="#FBF0FF"/>
+        <g transform="translate(4 2)">
+            <mask id="z0ll4ct4fb" fill="#fff">
+                <use xlink:href="#ns8a2pxuwa"/>
+            </mask>
+            <path d="M22 18.867V3.93c0-1.084-.897-1.965-2-1.965H4c-1.103 0-2 .881-2 1.965v20.14c0 1.084.897 1.965 2 1.965h16c1.103 0 2-.881 2-1.965v-5.203M0 24.07V3.93C0 1.763 1.794 0 4 0h16c2.206 0 4 1.763 4 3.93v20.14c0 2.168-1.794 3.93-4 3.93H4c-2.206 0-4-1.762-4-3.93" fill="#777" mask="url(#z0ll4ct4fb)"/>
+        </g>
+        <g transform="translate(9.5 7.5)">
+            <path d="M11.974 17H1.026A1.013 1.013 0 0 1 0 16c0-.552.459-1 1.026-1h10.948c.566 0 1.026.448 1.026 1s-.46 1-1.026 1" fill="#9B00D8"/>
+            <circle stroke="#9B00D8" stroke-width="1.5" cx="6.5" cy="3.5" r="2.75"/>
+            <path d="M11.5 11.9a5 5 0 1 0-10 0h10z" stroke="#9B00D8" stroke-width="1.5" stroke-linejoin="round"/>
+        </g>
+    </g>
+</svg>

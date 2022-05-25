@@ -17,9 +17,9 @@
 
         <tbody>
             <template v-if="data.length > 0">
-                <tr v-for="row in data"
-                    :key="row.id">
-                    <slot name="list" :row="row"></slot>
+                <tr v-for="(row, index) in data"
+                    :key="row.num ? row.num : row.id">
+                    <slot name="list" :row="row" :idx="index"></slot>
                 </tr>
             </template>
 

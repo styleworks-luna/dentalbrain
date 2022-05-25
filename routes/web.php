@@ -40,6 +40,9 @@ if (env('APP_ENV') != 'production') {
     });
 
     Route::get("show", [\App\Http\Controllers\Development\DevelopmentController::class, 'show']);
+
+    Route::post("createQual", [\App\Http\Controllers\Development\DevelopmentController::class, 'createCertificationQual']);
+    Route::post("createComp", [\App\Http\Controllers\Development\DevelopmentController::class, 'createCertificationComp']);
 }
 
 /*============================ PAGES ============================*/
@@ -187,6 +190,12 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
     });
 });
 
+Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
+    Route::group(['prefix' => 'pdf', 'middleware' => 'auth'], function () {
+        Route::get('program/{program}/user/{user}/qualification', [\App\Http\Controllers\Certificate\CertificationPdfController::class, 'pdfOfQualification']);
+        Route::get('program/{program}/user/{user}/completion', [\App\Http\Controllers\Certificate\CertificationPdfController::class, 'pdfOfCompletion']);
+    });
+});
 
 Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
     // 전체 강의
@@ -268,6 +277,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => 'auth']
         return view(viewPrefix() . 'pages.user.mypage.mypage_albatalk_resume_apply');
     })->name('offer');
 
+    //증명서 정보
+    Route::get('certificate', function () {
+        return view(viewPrefix() . 'pages.user.mypage.mypage_certificate');
+    })->name('certificate');
+
     //구직 이력서 정보
     Route::get('resume', [\App\Http\Controllers\Account\ResumeController::class, 'mypageResume'])->name('resume');
 
@@ -287,6 +301,8 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::post('compare-verification', 'Notification\PhoneVerificationController@compareVerificationNumber')->name('compare-verification');
 
     Route::get('lecturesData', 'Account\ProgramController@lecturesData')->name('lecturesData');
+
+    Route::get('certificatesData', [App\Http\Controllers\Account\CertificateController::class, 'certificatesData'])->name('certificatesData');
     // 회원 아이디 중복체크
     Route::post('check-id', 'Account\FindIdController@checkIdDuplication')->name('check-id');
 
@@ -459,6 +475,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     });
                 });
             });
+
             Route::group(['prefix' => 'offline', 'as' => 'offline.'], function () {
                 // 오프라인 강의 리스트
                 Route::get('/', [\App\Http\Controllers\Admin\Program\OfflineProgramController::class, 'index'])->name('index');
@@ -507,6 +524,21 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                 Route::post('sms', 'Admin\Program\NotificationController@sendSms')->name('sms');
                 Route::post('id-email', 'Admin\Program\NotificationController@findIdWIthNameAndEmailInSendEmail')->name('findId.email');
                 Route::post('id-phone', 'Admin\Program\NotificationController@findIdWithNameAndPhoneInSendSms')->name('findId.phone');
+            });
+
+            Route::group(['prefix' => '{program}'], function () {
+                Route::group(['prefix' => 'certificate'], function () {
+                    Route::get('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'index']);
+                    Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
+                    Route::put('/issue', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'issueAll']);
+                    Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
+                    // EDIT form
+                    Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getCompletionProfile']);
+                    Route::get('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getQualificationProfile']);
+                    // update
+                    Route::put('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateCompletionProfile']);
+                    Route::put('/qualifications/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'updateQualificationProfile']);
+                });
             });
         });
 
@@ -675,6 +707,29 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             Route::patch('{recruit}/status', [\App\Http\Controllers\Admin\Albatalk\RecruitController::class, 'statusChange'])->name('statusChange');
 
             Route::delete('{recruit}/cancel', [\App\Http\Controllers\Admin\Payment\RecruitCancelController::class, 'cancel'])->name('cancel');
+        });
+
+        Route::group(['prefix' => 'certificate', 'as' => 'certificate.'], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'search']);
+            Route::get('/count', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'count']);
+            Route::get('/options', [\App\Http\Controllers\Admin\Certificate\CertificationController::class, 'getOptions']);
+            Route::get('/histories', [\App\Http\Controllers\Admin\Certificate\CertificationHistoryController::class, 'search']);
+
+            Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function () {
+                Route::post('/', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'create']);
+                Route::get('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getDetail']);
+                Route::post('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'update']);
+                Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusQualification']);
+                Route::put('/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueQualification']);
+            });
+
+            Route::group(['prefix' => 'completions', 'as' => 'completions.'], function () {
+                Route::post('/', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'create']);
+                Route::get('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getDetail']);
+                Route::post('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'update']);
+                Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusCompletion']);
+                Route::put('/{profile}/issue', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'issueCompletion']);
+            });
         });
     });
 });

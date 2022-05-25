@@ -7,6 +7,15 @@
                         <a :href="'/lectures/' + lecture.program.id">
                             <img :src="lecture.program.thumbnail.url" alt="강의사진">
                         </a>
+                        <template v-if="lecture.program.completion_id && lecture.program.qualification_id">
+                            <div class="certificate-mark">수료/자격증</div>
+                        </template>
+                        <template v-else-if="lecture.program.completion_id">
+                            <div class="certificate-mark">수료증</div>
+                        </template>
+                        <template v-else-if="lecture.program.qualification_id">
+                            <div class="certificate-mark">자격증</div>
+                        </template>
                     </figure>
                     <div class="content-information">
                         <div class="lecture-sort">
@@ -201,7 +210,7 @@
                     </div>
                 </div>
             </li>
-            <li class="content-none" v-if="lectures.length == 0">신청한 강의가 없습니다.</li>
+            <div class="content-none" v-if="lectures.length == 0">신청한 강의가 없습니다.</div>
         </ul>
 
         <refund-pop v-if="modalData.is_free == 0 && showModal"

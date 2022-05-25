@@ -51,6 +51,24 @@
                         {{ slotProps.row.place.started_at }} ~<br>
                         {{ slotProps.row.place.ended_at }}
                     </td>
+                    <td >
+                        <template v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
+                            {{ slotProps.row.certificate_qualification != null ?
+                            slotProps.row.certificate_qualification.title : '' }}
+                            /
+                            {{ slotProps.row.certificate_completion != null ?
+                            slotProps.row.certificate_completion.title : '' }}
+                        </template>
+                    </td>
+                    <td>
+                        <template v-if="(slotProps.row.completion_id != null) || (slotProps.row.qualification_id != null)">
+                            {{ slotProps.row.completion_count + slotProps.row.qualification_count }} 명
+                            <router-link :to="`/admin/certificate/lecture/${slotProps.row.id}`"
+                                         class="btn btn-info ml-2">
+                                보기
+                            </router-link>
+                        </template>
+                    </td>
                     <td>
                         {{ slotProps.row.students_count }}명
                         <router-link :to="`/admin/lecture/offline/${slotProps.row.id}/student`"
@@ -124,37 +142,47 @@ export default {
                 {
                     name: 'id',
                     text: '번호',
-                    width: '6%'
+                    width: '5%'
                 },
                 {
                     name: 'category',
                     text: '대분류',
-                    width: '9%'
+                    width: '6%'
                 },
                 {
                     name: 'subclass',
                     text: '소분류',
-                    width: '7%'
+                    width: '6%'
                 },
                 {
                     name: 'title',
                     text: '강의 제목',
-                    width: '25%'
+                    width: '15%'
                 },
                 {
                     name: 'started_at',
                     text: '강의 기간',
-                    width: '22%'
+                    width: '15%'
+                },
+                {
+                    name: 'certificate_title',
+                    text: '증명서 제목',
+                    width: '10%'
+                },
+                {
+                    name: 'certificate_status',
+                    text: '증명서 신청 현황',
+                    width: '10%'
                 },
                 {
                     name: 'count',
                     text: '수강현황',
-                    width: '14%'
+                    width: '10%'
                 },
                 {
                     name: 'control',
                     text: '수정',
-                    width: '17%'
+                    width: '25%'
                 }
             ]
         }

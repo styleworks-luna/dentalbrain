@@ -83,8 +83,8 @@
 
             ul
                 display: grid
-                grid-template-columns: 1fr 1fr 1fr
-                gap: 5.555555vw 11.9444444vw
+                grid-template-columns: 1fr 1fr 1fr 1fr
+                gap: 5.555555vw 2.5vw
 
             li
                 +size(16.1111111vw)
@@ -124,9 +124,17 @@
                     a::before
                         +background('/images/mobile/navigation/icon_nav_work.svg', no-repeat, center center)
 
-                &:last-child
+                &:nth-child(6)
                     a::before
                         +background('/images/mobile/navigation/icon_nav_worker.svg', no-repeat, center center)
+
+                &:nth-child(7)
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_resume.svg', no-repeat, center center)
+
+                &:last-child
+                    a::before
+                        +background('/images/mobile/navigation/icon_nav_certificate.svg', no-repeat, center center)
 
         .user-no-login
             h2

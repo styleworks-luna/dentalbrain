@@ -44,7 +44,11 @@ class ResumeController extends Controller
             return $this->completeForm();
         }
 
-        return view(viewPrefix() . 'pages.albatalk.albatalk_resume')->with([
+        if (Agent::isMobile()) {
+            return back()->with(['alert' => 'PC에서만 작성해 주세요.']);
+        }
+
+        return view('desktop.pages.albatalk.albatalk_resume')->with([
             'leftList' => AbilityCategory::query()->where('id', '<=', '5')->with('abilities')->get(),
             'rightList' => AbilityCategory::query()->where('id', '>', '5')->with('abilities')->get()
         ]);

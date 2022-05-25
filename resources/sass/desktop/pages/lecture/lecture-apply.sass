@@ -179,6 +179,71 @@ h3
         tr:last-child
             +border(2px solid $border-color-base,bottom)
 
+.certificate-information
+    +margin(top 60px)
+
+    em
+        font-weight: normal
+        font-size: 16px
+        color: $font-color-emphasis
+
+    h3
+        +padding(bottom 20px)
+        +border(2px solid $gray-900, bottom)
+
+    h4
+        +padding(left 40px)
+        font-weight: bold
+        font-size: 16px
+
+    .answers
+        +padding(left 40px)
+
+    .file-question
+        +margin(top 30px)
+        +border(1px solid $border-color-base, bottom)
+        position: relative
+
+        .file-wrap
+            +file()
+            +margin(top 20px)
+            +padding(right 40px)
+
+        .tips
+            +size(1060px)
+            +margin(top 10px bottom 30px)
+            +border(1px solid #ece6ec)
+            +background(null, null, null, #fdf8ff)
+
+            p
+                +padding(14px 0 14px 20px)
+                display: block
+                font-size: 12px
+                line-height: 1.5
+                letter-spacing: 0.1px
+                color: $gray-700
+
+    .short-answer
+        +margin(top 30px)
+        +padding(bottom 30px)
+        +border(1px solid $border-color-base, bottom)
+
+        .short-answer-response
+            +size(525px, 50px)
+            +margin(top 20px)
+            +padding(left 20px)
+            +border(1px solid $border-color-base)
+            +border-radius(25px)
+            +background(null, null, null, $white-light)
+            +box-sizing(border-box)
+            font-size: 14px
+
+        &:last-child
+            +border(2px solid $border-color-base,bottom)
+
+    .parsley-error-wrap ul li
+        +padding(left 0)
+
 .additional-information
     +margin(top 60px)
 
