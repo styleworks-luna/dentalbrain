@@ -68,6 +68,7 @@
     * {
         font-family: 'chosunGs', 'Malgun Gothic', sans-serif;
     }
+
     .background-image {
         position: absolute;
         width: 100%;
@@ -171,11 +172,11 @@
 </style>
 <body>
 <div class="certification-wrap">
-    <img src="{{ asset('/images/admin/certification_back.png') }}" class="background-image" alt="background-image">
+    <img src="{{ $images['certification_back'] }}" class="background-image" alt="background-image">
     <div class="img-wrap">
-        <img src="{{ asset('/images/admin/KDMA_mark.svg') }}" class="certificate-logo" alt="KDMA">
+        <img src="{{ $images['KDMA_mark'] }}" class="certificate-logo" alt="KDMA">
     </div>
-    <img src="{{ asset('/images/admin/KDMA_light_mark.svg') }}" class="certificate-background-logo" alt="KDMA">
+    <img src="{{ $images['KDMA_light_mark'] }}" class="certificate-background-logo" alt="KDMA">
     <h3 class="certificate-title"> 교 육 수 료 증</h3>
     <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
@@ -184,7 +185,7 @@
     <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>
-        <img src="{{ asset('/images/admin/sign.png') }}" class="sign" alt="SIGN">
+        <img src="{{ $images['sign'] }}" class="sign" alt="SIGN">
     </div>
 </div>
 </body>

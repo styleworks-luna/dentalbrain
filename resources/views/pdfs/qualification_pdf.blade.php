@@ -210,11 +210,11 @@
 </style>
 <body>
 <div class="certification-wrap">
-    <img src="{{ asset('/images/admin/certification_back.png') }}" class="background-image" alt="background-image">
+    <img src="{{ $images['certification_back'] }}" class="background-image" alt="background-image">
     <div class="img-wrap">
-        <img src="{{ asset('/images/admin/KDMA_mark.svg') }}" class="certificate-logo" alt="KDMA">
+        <img src="{{ $images['KDMA_mark'] }}" class="certificate-logo" alt="KDMA">
     </div>
-    <img src="{{ asset('/images/admin/KDMA_light_mark.svg') }}" class="certificate-background-logo" alt="KDMA">
+    <img src="{{ $images['KDMA_light_mark'] }}" class="certificate-background-logo" alt="KDMA">
     <p class="certificate-number">자격번호 : {{ $profile->certificate_number ?? '없음' }}</p>
     <h3 class="certificate-title">자 격 증</h3>
     <div class="certificate-information-wrap">
@@ -224,7 +224,7 @@
             <p class="certificate-grade">자격등급 : {{ $certification->grade }}</p>
         </div>
         <div class="certificate-image-wrap">
-            <img src="{{ url($profile->file->url) }}" alt="" class="thumbnail">
+            <img src="{{ $file }}" alt="" class="thumbnail">
         </div>
     </div>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
@@ -232,7 +232,7 @@
     <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>
-        <img src="{{ asset('/images/admin/sign.png') }}" class="sign" alt="SIGN">
+        <img src="{{ $images['sign'] }}" class="sign" alt="SIGN">
     </div>
 </div>
 </body>

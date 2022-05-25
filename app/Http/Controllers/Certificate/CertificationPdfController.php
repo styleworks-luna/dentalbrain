@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Certificate;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
+use App\Models\File;
 use App\Models\Program\Program;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class CertificationPdfController extends Controller
@@ -54,7 +56,9 @@ class CertificationPdfController extends Controller
         Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         return Pdf::loadView('pdfs.qualification_pdf', [
             'certification' => $certificateQualification,
-            'profile' => $profile
+            'profile' => $profile,
+            'file' => $profile->file != null ? $this->encodeToBase64($profile->file) : '',
+            'images' => $this->defaultCertificationPdfImages(),
         ]);
     }
 
@@ -63,8 +67,36 @@ class CertificationPdfController extends Controller
         Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         return Pdf::loadView('pdfs.completion_pdf', [
             'certification' => $certificateCompletion,
-            'profile' => $profile
+            'profile' => $profile,
+            'file' => $profile->file != null ? $this->encodeToBase64($profile->file) : '',
+            'images' => $this->defaultCertificationPdfImages(),
         ]);
+    }
+
+    private function defaultCertificationPdfImages(): Collection
+    {
+        return collect([
+            'certification_back' => $this->encodeToBase64DefaultImg('/images/admin/certification_back.png'),
+            'KDMA_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_mark.svg'),
+            'KDMA_light_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_light_mark.svg'),
+            'sign' => $this->encodeToBase64DefaultImg('/images/admin/sign.png'),
+        ]);
+    }
+
+    private function encodeToBase64DefaultImg($imgPath): string
+    {
+        $path = asset($imgPath);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+    }
+
+    private function encodeToBase64(File $file): string
+    {
+        $path = storage_path('app/' . $file->path);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 
     /**
