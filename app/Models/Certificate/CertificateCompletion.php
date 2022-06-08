@@ -8,4 +8,8 @@ class CertificateCompletion extends Model
 {
     protected $guarded = [];
 
+    public function certificateCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(CertificateCategory::class, 'category_id', 'id');
+    }
 }
