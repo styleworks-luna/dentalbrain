@@ -10,6 +10,6 @@ class CertificateCompletion extends Model
 
     public function certificateCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(CertificateCategory::class, 'category_id', 'id');
+        return $this->belongsTo(CompletionCategory::class, 'category_id', 'id');
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\Certificate;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate\CompletionCategory;
 use App\Models\Certificate\CertificateCompletion;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CompletionController extends Controller
 {

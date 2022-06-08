@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCertificateCategoriesTable extends Migration
+class CreateCompletionCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class CreateCertificateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('certificate_categories', function (Blueprint $table) {
+        Schema::create('completion_categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->comment('수료증 종류 이름');
+        });
+        Schema::create('qualification_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('자격증 종류 이름');
         });
@@ -26,6 +30,7 @@ class CreateCertificateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('certificate_categories');
+        Schema::dropIfExists('completion_categories');
+        Schema::dropIfExists('qualification_categories');
     }
 }

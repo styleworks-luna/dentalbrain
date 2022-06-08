@@ -213,8 +213,8 @@ return [
         'resume_image' => '이력서 사진',
         'english_name' => '영문 이름',
         'bottom_content' => '하단 내용',
-        'certification_number' => '자격 번호',
         'grade' => '자격등급',
+        'certificate_category' => '증명서 종류'
     ],
 
 ];
