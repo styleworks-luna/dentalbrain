@@ -62,3 +62,14 @@ if (!function_exists('changePaymentStatusName')) {
         }
     }
 }
+if (!function_exists('sanitizeForFileName')) {
+    function sanitizeForFileName(string $string)
+    {
+        //  / \ : * ? " < > |
+        $str = preg_replace("/[\/\\\:\*\?\"\<\>\|]/", '', $string);
+        if ($str == null) {
+            return "오류";
+        }
+        return $str;
+    }
+}

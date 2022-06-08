@@ -185,6 +185,7 @@ export default {
         destroy(id) {
             Banner2.destroy(id).then(res => {
                 alert(res.data.msg);
+                this.getData();
             })
         }
     }
