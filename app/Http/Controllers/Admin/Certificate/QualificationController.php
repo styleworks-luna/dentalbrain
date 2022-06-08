@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin\Certificate;
 
 use App\Http\Controllers\Controller;
 use App\Models\Certificate\CertificateQualification;
+use App\Models\Certificate\CompletionCategory;
+use App\Models\Certificate\QualificationCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class QualificationController extends Controller
 {
@@ -39,6 +42,7 @@ class QualificationController extends Controller
     private function validateCreate(Request $request): array
     {
         return $request->validate([
+            'category_id' => ['required', Rule::in([QualificationCategory::QUALIFICATION_CATEGORY_01, QualificationCategory::QUALIFICATION_CATEGORY_02])],
             'title' => ['required', 'string', 'max:80',],
             'certification_number' => ['required', 'numeric',],
             'grade' => ['required', 'string', 'max:80',],
@@ -53,9 +57,17 @@ class QualificationController extends Controller
     private function validateUpdate(Request $request): array
     {
         return $request->validate([
+            'category_id' => ['required', Rule::in([QualificationCategory::QUALIFICATION_CATEGORY_01, QualificationCategory::QUALIFICATION_CATEGORY_02])],
             'title' => ['required', 'string', 'max:80',],
             'grade' => ['required', 'string', 'max:80',],
             'content' => ['required', 'max:80'],
+        ]);
+    }
+
+    public function getQualificationCategories(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'qualificationCategory' => QualificationCategory::query()->get()
         ]);
     }
 }

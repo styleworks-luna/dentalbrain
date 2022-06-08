@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Certificate;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate\CompletionCategory;
 use App\Models\Certificate\CertificateCompletion;
+use App\Models\Certificate\QualificationCategory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -40,9 +41,17 @@ class CompletionController extends Controller
     private function validateCompletion(Request $request): array
     {
         return $request->validate([
+            'category_id' => ['required', Rule::in([CompletionCategory::COMPLETION_CATEGORY_01, CompletionCategory::COMPLETION_CATEGORY_02])],
             'title' => ['required', 'string', 'max:80',],
             'content' => ['required', 'max:80',],
             'bottom_content' => ['required', 'max:80',],
+        ]);
+    }
+
+    public function getCompletionCategories(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'completionCategory' => CompletionCategory::query()->get()
         ]);
     }
 }
