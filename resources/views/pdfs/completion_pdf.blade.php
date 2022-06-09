@@ -182,13 +182,13 @@
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
     <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
-    @if($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_01)
+    @if($certification->category_id == \App\Models\Certificate\CompletionCategory::COMPLETION_CATEGORY_01)
         <div class="certificate-associate">
             @foreach($categories as $category)
                 <span>{{$category}}</span>
             @endforeach
         </div>
-    @elseif($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_02)
+    @elseif($certification->category_id == \App\Models\Certificate\CompletionCategory::COMPLETION_CATEGORY_02)
         <div class="certificate-associate">
             @foreach($categories as $category)
                 <span>{{$category}}</span>
