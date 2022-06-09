@@ -6,6 +6,18 @@
                     <h1 class="float-left mb-0 pt-2 pb-2 font-xl">자격증 생성</h1>
                 </div>
                 <div class="card-body">
+                    <single-group name="협회"
+                                  :isRow="true"
+                                  :isRequired="true"
+                                  :size="9">
+                        <template v-slot:content>
+                            <select-box class="form-control mb-3"
+                                        :value="categoryId"
+                                        :options="certificateCategoryOptions"
+                                        @setValue="handleSetCategoryId"></select-box>
+                        </template>
+                    </single-group>
+
                     <single-group name="자격증 제목 입력"
                                   :isRow="true"
                                   :isRequired="true"
@@ -75,7 +87,12 @@
                     </div>
                     <pre class="certificate-content">{{ content }}</pre>
                     <p class="certificate-date">{{ date }}</p>
-                    <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
+                    <template v-if="categoryId == 1">
+                        <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
+                    </template>
+                    <template v-else >
+                        <div class="certificate-associate"><span style="margin:0">한국치위생감염관리학회</span></div>
+                    </template>
                     <div class="certificate-main-associate-wrap">
                         <p class="certificate-main-associate">대한치과경영관리협회</p>
                         <img src="/images/admin/sign.png" class="sign" alt="SIGN">
@@ -87,16 +104,23 @@
 </template>
 
 <script>
-import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+// api
 import Qualification from '@/api/admin/certificate/Qualification.js';
+
+// component
+import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
 export default {
     name: 'CertificateCreate',
     components: {
         'single-group': SingleGroup,
+        'select-box': SelectBox,
     },
     data() {
         return {
+            certificateCategoryOptions: [],
+            categoryId: '1',
             title: '',
             certificateNumber: '',
             certificateRate: '',
@@ -121,9 +145,18 @@ export default {
             return `${year}년 ${month}월 ${day}일`;
         },
     },
+    mounted() {
+      this.getCategory();
+    },
     methods: {
+        getCategory() {
+            Qualification.getCategory().then(res => {
+                this.certificateCategoryOptions = res.data.qualificationCategory;
+            });
+        },
         create() {
             let data = {
+                category_id: this.categoryId,
                 title: this.title,
                 certification_number: this.certificateNumber,
                 grade: this.certificateRate,
@@ -133,7 +166,10 @@ export default {
                 alert(res.data.msg);
                 this.$router.push('/admin/certificate/information');
             });
-        }
+        },
+        handleSetCategoryId(value) {
+            this.categoryId = value;
+        },
     }
 }
 </script>
