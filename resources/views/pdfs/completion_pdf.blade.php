@@ -182,7 +182,19 @@
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
     <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
-    <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
+    @if($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_01)
+        <div class="certificate-associate">
+            @foreach($categories as $category)
+                <span>{{$category}}</span>
+            @endforeach
+        </div>
+    @elseif($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_02)
+        <div class="certificate-associate">
+            @foreach($categories as $category)
+                <span>{{$category}}</span>
+            @endforeach
+        </div>
+    @endif
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>
         <img src="{{ $images['sign'] }}" class="sign" alt="SIGN">

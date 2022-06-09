@@ -15,11 +15,11 @@ class InsertRowsToCertificateCategoriesTable extends Migration
     public function up()
     {
         DB::table('completion_categories')->insert([
-            ['name' => '대한치과위생사협회, 대한치과의료관리학회'],
+            ['name' => '대한치과위생사협회 대한치과의료관리학회'],
             ['name' => '한국치위생감염관리학회'],
         ]);
         DB::table('qualification_categories')->insert([
-            ['name' => '대한치과위생사협회, 대한치과의료관리학회'],
+            ['name' => '대한치과위생사협회 대한치과의료관리학회'],
             ['name' => '한국치위생감염관리학회'],
         ]);
     }
