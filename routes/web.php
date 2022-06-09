@@ -717,6 +717,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
             Route::group(['prefix' => 'qualifications', 'as' => 'qualifications.'], function () {
                 Route::post('/', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'create']);
+                Route::get('/category', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getQualificationCategories']);
                 Route::get('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'getDetail']);
                 Route::post('/{qualification}', [\App\Http\Controllers\Admin\Certificate\QualificationController::class, 'update']);
                 Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusQualification']);
@@ -725,6 +726,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
 
             Route::group(['prefix' => 'completions', 'as' => 'completions.'], function () {
                 Route::post('/', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'create']);
+                Route::get('/category', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getCompletionCategories']);
                 Route::get('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'getDetail']);
                 Route::post('/{completion}', [\App\Http\Controllers\Admin\Certificate\CompletionController::class, 'update']);
                 Route::put('/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'statusCompletion']);

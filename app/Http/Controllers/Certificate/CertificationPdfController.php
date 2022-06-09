@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Certificate;
 
 use App\Http\Controllers\Controller;
+use App\Models\Certificate\CompletionCategory;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\File;
@@ -65,8 +66,14 @@ class CertificationPdfController extends Controller
     private function exportCompletionPdf($certificateCompletion, Model $profile): \Barryvdh\DomPDF\PDF
     {
         Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+
+        // 협회 이름이 여러 개일 가능성이 있어서 ' '기준으로 나눠 배열에 담음
+        $category = CompletionCategory::find($certificateCompletion->category_id);
+        $categories = explode(" ", $category->name);
+
         return Pdf::loadView('pdfs.completion_pdf', [
             'certification' => $certificateCompletion,
+            'categories' => $categories,
             'profile' => $profile,
             'file' => $profile->file != null ? $this->encodeToBase64($profile->file) : '',
             'images' => $this->defaultCertificationPdfImages(),

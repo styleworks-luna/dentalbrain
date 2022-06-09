@@ -6,6 +6,18 @@
                     <h1 class="float-left mb-0 pt-2 pb-2 font-xl">교육수료증 수정</h1>
                 </div>
                 <div class="card-body">
+                    <single-group name="협회"
+                                  :isRow="true"
+                                  :isRequired="true"
+                                  :size="9">
+                        <template v-slot:content>
+                            <select-box class="form-control mb-3"
+                                        :value="categoryId"
+                                        :options="certificateCategoryOptions"
+                                        @setValue="handleSetCategoryId"></select-box>
+                        </template>
+                    </single-group>
+
                     <single-group name="수료증 제목 입력"
                                   :isRow="true"
                                   :isRequired="true"
@@ -55,7 +67,12 @@
                     <pre class="certificate-content">{{ content }}</pre>
                     <p class="certificate-sub-content">{{ subContent }}</p>
                     <p class="certificate-date">{{ date }}</p>
-                    <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
+                    <template v-if="categoryId == 1">
+                        <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
+                    </template>
+                    <template v-else >
+                        <div class="certificate-associate"><span style="margin:0">한국치위생감염관리학회</span></div>
+                    </template>
                     <div class="certificate-main-associate-wrap">
                         <p class="certificate-main-associate">대한치과경영관리협회</p>
                         <img src="/images/admin/sign.png" class="sign" alt="SIGN">
@@ -68,19 +85,23 @@
 
 <script>
 import SingleGroup from '@/components/admin/form/SingleGroup.vue';
+import SelectBox from '@/components/common/SelectBox.vue';
 
-import Qualification from '@/api/admin/certificate/Completion.js';
+import Completion from '@/api/admin/certificate/Completion.js';
 
 export default {
     name: 'CompletionEdit',
     components: {
         'single-group': SingleGroup,
+        'select-box': SelectBox,
     },
     created() {
         this.id = this.$route.params.id;
     },
     data() {
         return {
+            certificateCategoryOptions: [],
+            categoryId: '',
             title: '',
             content: '',
             subContent: '',
@@ -105,12 +126,19 @@ export default {
         },
     },
     mounted() {
+        this.getCategory();
         this.getEditData();
     },
     methods: {
+        getCategory() {
+            Completion.getCategory().then(res => {
+                this.certificateCategoryOptions = res.data.completionCategory;
+            });
+        },
         getEditData() {
-            Qualification.getEditData(this.id).then(res => {
+            Completion.getEditData(this.id).then(res => {
                 let data = res.data[0];
+                this.categoryId = data.category_id;
                 this.title = data.title;
                 this.content = data.content;
                 this.subContent = data.bottom_content;
@@ -118,15 +146,19 @@ export default {
         },
         update() {
             let data = {
+                category_id : this.categoryId,
                 title: this.title,
                 content: this.content,
                 bottom_content: this.subContent,
             };
-            Qualification.update(this.id, data).then(res => {
+            Completion.update(this.id, data).then(res => {
                 alert(res.data.msg);
                 this.$router.back();
             });
-        }
+        },
+        handleSetCategoryId(value) {
+            this.categoryId = value;
+        },
     }
 }
 </script>

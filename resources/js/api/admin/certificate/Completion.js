@@ -8,6 +8,12 @@ export default {
             data: params
         });
     },
+    getCategory() {
+        return Send({
+            url: '/api/admin/certificate/completions/category',
+            method: 'get',
+        });
+    },
     getEditData(id) {
         return Send({
             url: `/api/admin/certificate/completions/${id}`,
