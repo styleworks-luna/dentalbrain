@@ -5,9 +5,12 @@ namespace App\Services\Certificate;
 use App\Models\Certificate\CompletionProfile;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
+use App\Models\User;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 
@@ -27,9 +30,9 @@ class ProgramCertificateService
      * @param Program $program
      * @param string|null $keyword
      * @param $category
-     * @return Paginator
+     * @return AbstractPaginator
      */
-    public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category): Paginator
+    public function searchProgramsCertificateProfiles(Program $program, ?string $keyword, $category): AbstractPaginator
     {
         $completionQuery = $this->selectForCompletionSearch(CompletionProfile::query()->from('completion_profiles as profiles'));
         $completionQuery = $this->whereForSearch($completionQuery, $program, $category, $keyword);
@@ -54,7 +57,7 @@ class ProgramCertificateService
             return $item;
         });
 
-        return new Paginator($result, $perPage, $page);
+        return new LengthAwarePaginator($result, $total, $perPage, $page);
     }
 
     /**

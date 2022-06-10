@@ -266,14 +266,17 @@ export default {
         this.getData();
     },
     methods: {
-        getData() {
+        getData(page = this.page) {
+            if (this.Helper.nullCheck(page)) {
+                page = 1;
+            }
+            this.page = page;
             let params = {
                 keyword: this.keyword,
                 category: this.category_id,
-                page: this.page,
+                page: page,
             }
             LectureCertificates.getData(this.program_id,params).then(res => {
-                console.log(res);
                 this.lectureTitle = res.data.programTitle;
                 this.lectureCertificationList = res.data[0];
             })
