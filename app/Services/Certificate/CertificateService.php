@@ -195,18 +195,24 @@ class CertificateService
      */
     public function getCertificationNumberForPassedQualification(QualificationProfile $profile): int
     {
-        $count = QualificationProfile::query()->where('status', '=', QualificationProfile::$PASS)
-            ->where('program_id', '=', $profile->program_id)
-            ->where('user_id', '!=', $profile->user_id)
-            ->count('id');
+        $program = $profile->program;
+        $max = QualificationProfile::query()
+            ->leftJoin('programs as p', 'p.id', '=', 'program_id')
+            ->leftJoin('certificate_qualifications as cq', 'cq.id', '=', 'p.qualification_id')
+            ->where('status', '=', QualificationProfile::$PASS)
+            ->where('cq.id', '=', $program->certificateQualification->id)
+            ->whereNotNull('qualification_profiles.certificate_number')
+            ->max('qualification_profiles.certificate_number');
 
-        $start = Program::query()
+        if ($max > 0) {
+            return $max + 1;
+        }
+
+        return Program::query()
             ->leftJoin('certificate_qualifications as Q', 'Q.id', '=', 'programs.qualification_id')
             ->where('programs.id', '=', $profile->program_id)
             ->first('Q.certification_number')
             ->certification_number;
-
-        return $start + $count;
     }
 
     public function passQualifications(Collection $ids): void

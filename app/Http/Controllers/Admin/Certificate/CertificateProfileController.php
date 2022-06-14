@@ -51,7 +51,7 @@ class CertificateProfileController extends Controller
     public function statusQualification(Request $request, QualificationProfile $profile): JsonResponse
     {
         $validated = $request->validate([
-            'status' => ['required', Rule::in([CompletionProfile::$WAITING, CompletionProfile::$FAILED, CompletionProfile::$PASS])]
+            'status' => ['required', Rule::in([QualificationProfile::$WAITING, QualificationProfile::$FAILED, QualificationProfile::$PASS])]
         ]);
         $status = $validated['status'];
 
