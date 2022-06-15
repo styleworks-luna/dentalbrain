@@ -11,6 +11,7 @@
         <td>대학교</td>
         <td>학번</td>
         <td>점수</td>
+        <td>발급번호</td>
         <td>합격여부</td>
         <td>증명서 발급 상태</td>
     </tr>
@@ -28,6 +29,7 @@
             <td>{{ $profile->university ?? '없음' }}</td>
             <td>{{ $profile->student_number ?? '없음' }}</td>
             <td>{{ $profile->score }}</td>
+            <td>{{ $profile->certificate_number ?? '' }}</td>
             <td>
                 @switch($profile->status)
                     @case(\App\Traits\HasCertificateStatus::$DO_NOT_PAID)
