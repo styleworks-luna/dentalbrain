@@ -1,109 +1,114 @@
 <?php
 
 namespace App\Services\Notification\Sms;
+
 use App\Models\Notification\PhoneVerification;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class Ppurio{
-    public function getToken() {
+class Ppurio
+{
+    public function getToken()
+    {
         $client = new Client();
-        $authorize = base64_encode(env('PPURIO_ID').":".env('PPURIO_SECRET'));
+        $authorize = base64_encode(env('PPURIO_ID') . ":" . env('PPURIO_SECRET'));
         $result = $client->request('POST', 'https://api.bizppurio.com/v1/token', [
             'headers' => [
-                'Authorization' => 'Basic '.$authorize,
+                'Authorization' => 'Basic ' . $authorize,
                 'Content-Type' => 'application/json',
             ]
         ]);
-        return json_decode($result->getBody()->getContents(),true);
+        return json_decode($result->getBody()->getContents(), true);
     }
 
-    public function sendVerificationNumber($phoneNumber){
+    public function sendVerificationNumber($phoneNumber)
+    {
         $token = $this->getToken();
-        $verification_num = str_pad(mt_rand(0,999999),6,'0');
-        $message = "덴탈 브레인 문자 인증번호: ".$verification_num;
+        $verification_num = str_pad(mt_rand(0, 999999), 6, '0');
+        $message = "덴탈 브레인 문자 인증번호: " . $verification_num;
         $sms = array("message" => $message);
         $content = array("sms" => $sms);
 
-        $data =array();
+        $data = array();
         $data['account'] = env('PPURIO_ID');
-        $data['refkey']=Str::random('10');
+        $data['refkey'] = Str::random('10');
         $data['type'] = "sms";
         $data['from'] = env('PPURIO_PHONE');
         $data['to'] = $phoneNumber;
         $data['content'] = $content;
 
-        $json_data = json_encode($data,JSON_UNESCAPED_SLASHES);
+        $json_data = json_encode($data, JSON_UNESCAPED_SLASHES);
 
         $url = 'https://api.bizppurio.com/v3/message';
 
         $oCurl = curl_init();
-        curl_setopt($oCurl,CURLOPT_URL,$url);
+        curl_setopt($oCurl, CURLOPT_URL, $url);
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1); //result로 true, false 대신 해당 값들을 return함.
         curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($oCurl, CURLOPT_HTTPHEADER, array('Accept:application/json','Content-Type:application/json','Authorization:'.$token['type']." ".$token['accesstoken']));
+        curl_setopt($oCurl, CURLOPT_HTTPHEADER, array('Accept:application/json', 'Content-Type:application/json', 'Authorization:' . $token['type'] . " " . $token['accesstoken']));
         curl_setopt($oCurl, CURLOPT_VERBOSE, true);
         curl_setopt($oCurl, CURLOPT_POSTFIELDS, $json_data);
         curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
         $response = curl_exec($oCurl);
 
-        try{
+        try {
             DB::beginTransaction();
-            if(json_decode($response,true)['code'] == '1000'){
+            if (json_decode($response, true)['code'] == '1000') {
                 PhoneVerification::query()->updateOrCreate(
-                    ['phone'=>$phoneNumber],['phone'=> $phoneNumber,'verification_number'=> $verification_num, 'expired_at'=> date("Y-m-d H:i:s", strtotime("+3 minutes"))]
+                    ['phone' => $phoneNumber], ['phone' => $phoneNumber, 'verification_number' => $verification_num, 'expired_at' => date("Y-m-d H:i:s", strtotime("+3 minutes"))]
                 );
                 DB::commit();
             }
-        }catch(\Exception $exception){
-            Log::error('CREATE PPURIO CHECKVERIFICATION ERROR',[$exception]);
+        } catch (\Exception $exception) {
+            Log::error('CREATE PPURIO CHECKVERIFICATION ERROR', [$exception]);
             DB::rollBack();
         }
         curl_close($oCurl);
-        return json_decode($response,true);
+        return json_decode($response, true);
     }
 
-    public function sendMessage($phoneNumber,$message){
+    public function sendMessage($phoneNumber, $message)
+    {
         $token = $this->getToken();
         $sms = array("message" => $message);
         $content = array("sms" => $sms);
 
-        $data =array();
+        $data = array();
         $data['account'] = env('PPURIO_ID');
-        $data['refkey']=Str::random('10');
-        if(Str::length($message) < 80 ){
+        $data['refkey'] = Str::random('10');
+        if (Str::length($message) < 80) {
             $data['type'] = "sms";
-        }else{
+        } else {
             $data['type'] = "lms";
         }
         $data['from'] = env('PPURIO_PHONE');
         $data['to'] = $phoneNumber;
         $data['content'] = $content;
 
-        $json_data = json_encode($data,JSON_UNESCAPED_SLASHES);
+        $json_data = json_encode($data, JSON_UNESCAPED_SLASHES);
 
         $url = 'https://api.bizppurio.com/v3/message';
 
         $oCurl = curl_init();
-        curl_setopt($oCurl,CURLOPT_URL,$url);
+        curl_setopt($oCurl, CURLOPT_URL, $url);
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1); //result로 true, false 대신 해당 값들을 return함.
         curl_setopt($oCurl, CURLOPT_NOSIGNAL, 1);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($oCurl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($oCurl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($oCurl, CURLOPT_HTTPHEADER, array('Accept:application/json','Content-Type:application/json','Authorization:'.$token['type']." ".$token['accesstoken']));
+        curl_setopt($oCurl, CURLOPT_HTTPHEADER, array('Accept:application/json', 'Content-Type:application/json', 'Authorization:' . $token['type'] . " " . $token['accesstoken']));
         curl_setopt($oCurl, CURLOPT_VERBOSE, true);
         curl_setopt($oCurl, CURLOPT_POSTFIELDS, $json_data);
         curl_setopt($oCurl, CURLOPT_TIMEOUT, 3);
 
         $response = curl_exec($oCurl);
         curl_close($oCurl);
-        return json_decode($response,true);
+        return json_decode($response, true);
     }
 }
