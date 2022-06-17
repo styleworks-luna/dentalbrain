@@ -219,7 +219,7 @@ class ProgramCertificateService
             return null;
         }
 
-        $completion = $program->certificateCompletion();
+        $completion = $program->certificateCompletion;
         $C_categories = CompletionCategory::all();
 
         foreach ($C_profileCollection as $C_profile) {
