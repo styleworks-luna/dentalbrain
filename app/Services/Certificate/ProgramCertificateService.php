@@ -2,11 +2,15 @@
 
 namespace App\Services\Certificate;
 
+use App\Exports\Pdfs\CompletionPdf;
+use App\Exports\Pdfs\QualificationPdf;
+use App\Models\Certificate\CompletionCategory;
 use App\Models\Certificate\CompletionProfile;
+use App\Models\Certificate\QualificationCategory;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
-use App\Models\User;
 use App\Traits\HasCertificateStatus;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\AbstractPaginator;
@@ -202,5 +206,57 @@ class ProgramCertificateService
         $completionCount = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
 
         return $qualificationCount + $completionCount;
+    }
+
+    public function pdfCompletions(Program $program, $keyword, $category): ?\Barryvdh\DomPDF\PDF
+    {
+        $C_profileCollection = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles')
+            ->select('profiles.*'), $program, $category, $keyword)->with('file')->get();
+
+        $pdfList = collect();
+
+        if ($C_profileCollection->isEmpty()) {
+            return null;
+        }
+
+        $completion = $program->certificateCompletion();
+        $C_categories = CompletionCategory::all();
+
+        foreach ($C_profileCollection as $C_profile) {
+            $categoryName = $C_categories->find($completion->category_id)->name;
+            $pdf = new CompletionPdf($completion, $C_profile, $categoryName);
+            $pdfList->push($pdf);
+        }
+
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+
+        return Pdf::loadView('pdfs.completion.completion_multiple_pdf',
+            ['pdfList' => $pdfList->all()]);
+    }
+
+    public function pdfQualifications(Program $program, $keyword, $category): ?\Barryvdh\DomPDF\PDF
+    {
+        $Q_profileCollection = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles')
+            ->select('profiles.*'), $program, $category, $keyword)->with('file')->get();
+
+        $pdfList = collect();
+
+        if ($Q_profileCollection->isEmpty()) {
+            return null;
+        }
+
+        $qualification = $program->certificateQualification;
+        $Q_categories = QualificationCategory::all();
+
+        foreach ($Q_profileCollection as $Q_profile) {
+            $categoryName = $Q_categories->find($qualification->category_id)->name;
+            $pdf = new QualificationPdf($qualification, $Q_profile, $categoryName);
+            $pdfList->push($pdf);
+        }
+
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+
+        return Pdf::loadView('pdfs.qualification.qualification_multiple_pdf',
+            ['pdfList' => $pdfList->all()]);
     }
 }

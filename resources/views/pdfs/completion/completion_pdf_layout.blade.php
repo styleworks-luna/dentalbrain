@@ -171,34 +171,6 @@
 
 </style>
 <body>
-<div class="certification-wrap">
-    <img src="{{ $images['certification_back'] }}" class="background-image" alt="background-image">
-    <div class="img-wrap">
-        <img src="{{ $images['KDMA_mark'] }}" class="certificate-logo" alt="KDMA">
-    </div>
-    <img src="{{ $images['KDMA_light_mark'] }}" class="certificate-background-logo" alt="KDMA">
-    <h3 class="certificate-title"> 교 육 수 료 증</h3>
-    <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
-    <pre class="certificate-content">{!! $certification->content !!}</pre>
-    <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
-    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
-    @if($certification->category_id == \App\Models\Certificate\CompletionCategory::COMPLETION_CATEGORY_01)
-        <div class="certificate-associate">
-            @foreach($categories as $category)
-                <span>{{$category}}</span>
-            @endforeach
-        </div>
-    @elseif($certification->category_id == \App\Models\Certificate\CompletionCategory::COMPLETION_CATEGORY_02)
-        <div class="certificate-associate">
-            @foreach($categories as $category)
-                <span>{{$category}}</span>
-            @endforeach
-        </div>
-    @endif
-    <div class="certificate-main-associate-wrap">
-        <p class="certificate-main-associate">대한치과경영관리협회</p>
-        <img src="{{ $images['sign'] }}" class="sign" alt="SIGN">
-    </div>
-</div>
+@yield('content')
 </body>
 </html>

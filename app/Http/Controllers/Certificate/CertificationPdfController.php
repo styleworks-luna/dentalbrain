@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Certificate;
 
+use App\Exports\Pdfs\QualificationPdf;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate\CompletionCategory;
 use App\Models\Certificate\CompletionProfile;
@@ -55,36 +56,20 @@ class CertificationPdfController extends Controller
 
     private function exportQualificationPdf($certificateQualification, Model $profile): \Barryvdh\DomPDF\PDF
     {
-        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+        $category = QualificationCategory::query()->findOrFail($certificateQualification->category_id);
 
-        // 협회 이름이 여러 개일 가능성이 있어서 ' '기준으로 나눠 배열에 담음
-        $category = QualificationCategory::find($certificateQualification->category_id);
-        $categories = explode(" ", $category->name);
+        $qualificationPdf = new QualificationPdf($certificateQualification, $profile, $category->name);
 
-        return Pdf::loadView('pdfs.qualification_pdf', [
-            'certification' => $certificateQualification,
-            'categories' => $categories,
-            'profile' => $profile,
-            'file' => $profile->file != null ? $this->encodeToBase64($profile->file) : '',
-            'images' => $this->defaultCertificationPdfImages(),
-        ]);
+        return $qualificationPdf->getPdf();
     }
 
     private function exportCompletionPdf($certificateCompletion, Model $profile): \Barryvdh\DomPDF\PDF
     {
-        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+        $category = CompletionCategory::query()->findOrFail($certificateCompletion->category_id);
 
-        // 협회 이름이 여러 개일 가능성이 있어서 ' '기준으로 나눠 배열에 담음
-        $category = CompletionCategory::find($certificateCompletion->category_id);
-        $categories = explode(" ", $category->name);
+        $completionPdf = new QualificationPdf($certificateCompletion, $profile, $category->name);
 
-        return Pdf::loadView('pdfs.completion_pdf', [
-            'certification' => $certificateCompletion,
-            'categories' => $categories,
-            'profile' => $profile,
-            'file' => $profile->file != null ? $this->encodeToBase64($profile->file) : '',
-            'images' => $this->defaultCertificationPdfImages(),
-        ]);
+        return $completionPdf->getPdf();
     }
 
     private function defaultCertificationPdfImages(): Collection

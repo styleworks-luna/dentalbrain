@@ -47,16 +47,6 @@
         content: none;
     }
 
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-    }
-
-    .qualification-wrap {
-        width: 100%;
-        height: 100%;
-        background-size: 100% 100%;
-    }
 </style>
 <style>
     @font-face {
@@ -206,46 +196,12 @@
         z-index: 1;
     }
 
+    .page-break {
+        page-break-after: always;
+    }
 
 </style>
 <body>
-<div class="certification-wrap">
-    <img src="{{ $images['certification_back'] }}" class="background-image" alt="background-image">
-    <div class="img-wrap">
-        <img src="{{ $images['KDMA_mark'] }}" class="certificate-logo" alt="KDMA">
-    </div>
-    <img src="{{ $images['KDMA_light_mark'] }}" class="certificate-background-logo" alt="KDMA">
-    <p class="certificate-number">자격번호 : {{ $profile->certificate_number ?? '없음' }}</p>
-    <h3 class="certificate-title">자 격 증</h3>
-    <div class="certificate-information-wrap">
-        <div class="certificate-text-wrap">
-            <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
-            <p class="certificate-birth">생년월일 : {{ carbonDate($profile->birthday,'Y-MM-DD') }}</p>
-            <p class="certificate-grade">자격등급 : {{ $certification->grade }}</p>
-        </div>
-        <div class="certificate-image-wrap">
-            <img src="{{ $file }}" alt="" class="thumbnail">
-        </div>
-    </div>
-    <pre class="certificate-content">{!! $certification->content !!}</pre>
-    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
-    @if($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_01)
-        <div class="certificate-associate">
-            @foreach($categories as $category)
-                <span>{{$category}}</span>
-            @endforeach
-        </div>
-    @elseif($certification->category_id == \App\Models\Certificate\QualificationCategory::QUALIFICATION_CATEGORY_02)
-        <div class="certificate-associate">
-            @foreach($categories as $category)
-                <span>{{$category}}</span>
-            @endforeach
-        </div>
-    @endif
-    <div class="certificate-main-associate-wrap">
-        <p class="certificate-main-associate">대한치과경영관리협회</p>
-        <img src="{{ $images['sign'] }}" class="sign" alt="SIGN">
-    </div>
-</div>
+@yield('content')
 </body>
 </html>

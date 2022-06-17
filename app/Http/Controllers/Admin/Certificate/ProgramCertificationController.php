@@ -12,7 +12,9 @@ use App\Services\Certificate\ProgramCertificateService;
 use App\Services\File\CertificateThumbnail;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -120,5 +122,52 @@ class ProgramCertificationController extends Controller
 
         DB::commit();
         return response()->json(['msg' => '발급 처리되었습니다.']);
+    }
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @return RedirectResponse|Response
+     */
+    public function pdfCompletion(Request $request, Program $program)
+    {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
+
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+        $pdf = $this->programCertificateService->pdfCompletions($program, $keyword, $category);
+        if ($pdf == null) {
+            return redirect('/admin')->with('alert', '출력할 수료증이 없습니다.');
+        }
+
+        return $pdf->stream('document.pdf');
+    }
+
+    /**
+     * @param Request $request
+     * @param Program $program
+     * @return RedirectResponse|Response
+     */
+    public function pdfQualification(Request $request, Program $program)
+    {
+        $validated = $request->validate([
+            'category' => ['nullable', 'numeric'],
+            'keyword' => ['nullable', 'string']
+        ]);
+
+        $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+
+        $pdf = $this->programCertificateService->pdfQualifications($program, $keyword, $category);
+
+        if ($pdf == null) {
+            return redirect('/admin')->with('alert', '출력할 자격증이 없습니다.');
+        }
+
+        return $pdf->stream('document.pdf');
     }
 }
