@@ -169,6 +169,10 @@
         z-index: 1;
     }
 
+    .page-break {
+        page-break-after: always;
+    }
+
 </style>
 <body>
 @yield('content')
