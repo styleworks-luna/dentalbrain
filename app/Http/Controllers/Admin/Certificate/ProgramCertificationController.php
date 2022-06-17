@@ -64,7 +64,7 @@ class ProgramCertificationController extends Controller
     public function excel(Request $request, Program $program): BinaryFileResponse
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
@@ -79,7 +79,7 @@ class ProgramCertificationController extends Controller
     public function passAll(Request $request, Program $program): JsonResponse
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
@@ -103,7 +103,7 @@ class ProgramCertificationController extends Controller
     public function issueAll(Request $request, Program $program): JsonResponse
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
@@ -132,7 +132,7 @@ class ProgramCertificationController extends Controller
     public function pdfCompletion(Request $request, Program $program)
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
@@ -155,7 +155,7 @@ class ProgramCertificationController extends Controller
     public function pdfQualification(Request $request, Program $program)
     {
         $validated = $request->validate([
-            'category' => ['nullable', 'numeric'],
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 

@@ -1,7 +1,7 @@
 import Send from '@/utils/Send.js';
 
 export default {
-    getData(id,params) {
+    getData(id, params) {
         return Send({
             url: `/api/admin/lecture/${id}/certificate/`,
             method: 'get',
@@ -9,10 +9,10 @@ export default {
         })
     },
     getCertificateEditData(program_id, id) {
-      return Send({
-          url: `/api/admin/lecture/${program_id}/certificate/qualifications/${id}`,
-          method: 'get',
-      })
+        return Send({
+            url: `/api/admin/lecture/${program_id}/certificate/qualifications/${id}`,
+            method: 'get',
+        })
     },
     getCompletionEditData(program_id, id) {
         return Send({

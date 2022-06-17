@@ -1,8 +1,7 @@
 <template>
     <layout :title="`${lectureTitle} 증명서 신청 현황`">
         <template v-slot:button>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/excel`"
-                         class="btn btn-lg btn-info">
+            <a :href="`/api/admin/lecture/${program_id}/certificate/excel?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
                 엑셀 다운로드
             </a>
             <button class="btn btn-lg btn-info" @click.prevent="allPass">
@@ -11,6 +10,12 @@
             <button class="btn btn-lg btn-info" @click.prevent="allIssue">
                 일괄 발급
             </button>
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/completions?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
+                수료증 일괄 다운로드
+            </a>
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/qualifications?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
+                자격증 일괄 다운로드
+            </a>
         </template>
         <template v-slot:search>
             <div class="d-flex justify-content-between align-items-center">
@@ -223,11 +228,11 @@ export default {
         CategoryOptions() {
             return [
                 {
-                    id: '1',
+                    id: 'ongoing',
                     name: '진행중'
                 },
                 {
-                    id: '0',
+                    id: 'ended',
                     name: '종료'
                 }
             ]
