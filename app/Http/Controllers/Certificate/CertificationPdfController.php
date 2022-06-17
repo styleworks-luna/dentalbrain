@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Certificate;
 
+use App\Exports\Pdfs\CompletionPdf;
 use App\Exports\Pdfs\QualificationPdf;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate\CompletionCategory;
@@ -67,7 +68,7 @@ class CertificationPdfController extends Controller
     {
         $category = CompletionCategory::query()->findOrFail($certificateCompletion->category_id);
 
-        $completionPdf = new QualificationPdf($certificateCompletion, $profile, $category->name);
+        $completionPdf = new CompletionPdf($certificateCompletion, $profile, $category->name);
 
         return $completionPdf->getPdf();
     }
