@@ -10,10 +10,10 @@
             <button class="btn btn-lg btn-info" @click.prevent="allIssue">
                 일괄 발급
             </button>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/completions?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/completions?keyword=${keyword}`" class="btn btn-lg btn-info" target="_blank">
                 수료증 일괄 다운로드
             </a>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/qualifications?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/qualifications?keyword=${keyword}`" class="btn btn-lg btn-info" target="_blank">
                 자격증 일괄 다운로드
             </a>
         </template>

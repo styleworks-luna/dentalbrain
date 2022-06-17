@@ -208,10 +208,16 @@ class ProgramCertificateService
         return $qualificationCount + $completionCount;
     }
 
-    public function pdfCompletions(Program $program, $keyword, $category): ?\Barryvdh\DomPDF\PDF
+    public function pdfCompletions(Program $program, $keyword): ?\Barryvdh\DomPDF\PDF
     {
-        $C_profileCollection = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles')
-            ->select('profiles.*'), $program, $category, $keyword)->with('file')->get();
+        $C_profileCollection =
+            $this->whereForSearch(
+                CompletionProfile::query()->from('completion_profiles as profiles')
+                    ->select('profiles.*'), $program, 'ended', $keyword
+            )
+                ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
+                ->with('file')
+                ->get();
 
         $pdfList = collect();
 
@@ -234,10 +240,16 @@ class ProgramCertificateService
             ['pdfList' => $pdfList->all()]);
     }
 
-    public function pdfQualifications(Program $program, $keyword, $category): ?\Barryvdh\DomPDF\PDF
+    public function pdfQualifications(Program $program, $keyword): ?\Barryvdh\DomPDF\PDF
     {
-        $Q_profileCollection = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles')
-            ->select('profiles.*'), $program, $category, $keyword)->with('file')->get();
+        $Q_profileCollection =
+            $this->whereForSearch(
+                QualificationProfile::query()->from('qualification_profiles as profiles')
+                    ->select('profiles.*'), $program, 'ended', $keyword
+            )
+                ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
+                ->with('file')
+                ->get();
 
         $pdfList = collect();
 

@@ -132,14 +132,12 @@ class ProgramCertificationController extends Controller
     public function pdfCompletion(Request $request, Program $program)
     {
         $validated = $request->validate([
-            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
         $keyword = $validated['keyword'] ?? null;
-        $category = $validated['category'] ?? null;
 
-        $pdf = $this->programCertificateService->pdfCompletions($program, $keyword, $category);
+        $pdf = $this->programCertificateService->pdfCompletions($program, $keyword);
         if ($pdf == null) {
             return redirect('/admin')->with('alert', '출력할 수료증이 없습니다.');
         }
@@ -155,14 +153,12 @@ class ProgramCertificationController extends Controller
     public function pdfQualification(Request $request, Program $program)
     {
         $validated = $request->validate([
-            'category' => ['nullable', Rule::in('ongoing', 'ended')],
             'keyword' => ['nullable', 'string']
         ]);
 
         $keyword = $validated['keyword'] ?? null;
-        $category = $validated['category'] ?? null;
 
-        $pdf = $this->programCertificateService->pdfQualifications($program, $keyword, $category);
+        $pdf = $this->programCertificateService->pdfQualifications($program, $keyword);
 
         if ($pdf == null) {
             return redirect('/admin')->with('alert', '출력할 자격증이 없습니다.');
