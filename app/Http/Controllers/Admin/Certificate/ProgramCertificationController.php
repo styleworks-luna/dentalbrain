@@ -4,20 +4,14 @@ namespace App\Http\Controllers\Admin\Certificate;
 
 use App\Exports\CertificationExport;
 use App\Http\Controllers\Controller;
-use App\Models\Certificate\CompletionProfile;
-use App\Models\Certificate\QualificationProfile;
-use App\Models\File;
 use App\Models\Program\Program;
 use App\Services\Certificate\ProgramCertificateService;
-use App\Services\File\CertificateThumbnail;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -127,7 +121,6 @@ class ProgramCertificationController extends Controller
     /**
      * @param Request $request
      * @param Program $program
-     * @return RedirectResponse|Response
      */
     public function pdfCompletion(Request $request, Program $program)
     {
@@ -137,18 +130,16 @@ class ProgramCertificationController extends Controller
 
         $keyword = $validated['keyword'] ?? null;
 
-        $pdf = $this->programCertificateService->pdfCompletions($program, $keyword);
-        if ($pdf == null) {
-            return redirect('/admin')->with('alert', '출력할 수료증이 없습니다.');
+        $path = $this->programCertificateService->pdfCompletions($program, $keyword);
+        if ($path == null) {
+            return redirect('/admin')->with('alert', '다운로드할 수료증이 없습니다.');
         }
-
-        return $pdf->stream('document.pdf');
+        return \response()->download($path, sanitizeForFileName($program->title . '_수료증_' . now()->format('y_m_d_Gi') . '.zip'));
     }
 
     /**
      * @param Request $request
      * @param Program $program
-     * @return RedirectResponse|Response
      */
     public function pdfQualification(Request $request, Program $program)
     {
@@ -158,12 +149,10 @@ class ProgramCertificationController extends Controller
 
         $keyword = $validated['keyword'] ?? null;
 
-        $pdf = $this->programCertificateService->pdfQualifications($program, $keyword);
-
-        if ($pdf == null) {
-            return redirect('/admin')->with('alert', '출력할 자격증이 없습니다.');
+        $path = $this->programCertificateService->pdfQualifications($program, $keyword);
+        if ($path == null) {
+            return redirect('/admin')->with('alert', '다운로드할 자격증이 없습니다.');
         }
-
-        return $pdf->stream('document.pdf');
+        return \response()->download($path, sanitizeForFileName($program->title . '_자격증_' . now()->format('y_m_d_Gi') . '.zip'));
     }
 }

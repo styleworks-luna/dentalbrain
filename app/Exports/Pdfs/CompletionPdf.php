@@ -42,4 +42,9 @@ class CompletionPdf extends CertificationPdf
             'staticImages' => $this->getStaticImages(),
         ];
     }
+
+    function getFileName(): string
+    {
+        return sanitizeForFileName($this->profile->name . ".pdf");
+    }
 }

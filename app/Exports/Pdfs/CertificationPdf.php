@@ -13,6 +13,8 @@ abstract class CertificationPdf
 
     abstract function getPdfArguments(): array;
 
+    abstract function getFileName(): string;
+
     protected function getStaticImages(): Collection
     {
         return collect([

@@ -17,6 +17,11 @@ use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use ZipArchive;
 
 class ProgramCertificateService
 {
@@ -208,8 +213,10 @@ class ProgramCertificateService
         return $qualificationCount + $completionCount;
     }
 
-    public function pdfCompletions(Program $program, $keyword): ?\Barryvdh\DomPDF\PDF
+    public function pdfCompletions(Program $program, $keyword)
     {
+        $this->cleanUpTempPdfs();
+
         $C_profileCollection =
             $this->whereForSearch(
                 CompletionProfile::query()->from('completion_profiles as profiles')
@@ -219,8 +226,6 @@ class ProgramCertificateService
                 ->with('file')
                 ->get();
 
-        $pdfList = collect();
-
         if ($C_profileCollection->isEmpty()) {
             return null;
         }
@@ -228,20 +233,23 @@ class ProgramCertificateService
         $completion = $program->certificateCompletion;
         $C_categories = CompletionCategory::all();
 
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+        $folderName = Str::random();
+
         foreach ($C_profileCollection as $C_profile) {
             $categoryName = $C_categories->find($completion->category_id)->name;
             $pdf = new CompletionPdf($completion, $C_profile, $categoryName);
-            $pdfList->push($pdf);
+            $filename = $pdf->getFileName();
+            Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
         }
 
-        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
-
-        return Pdf::loadView('pdfs.completion.completion_multiple_pdf',
-            ['pdfList' => $pdfList->all()]);
+        return $this->makeZipWithFiles($folderName);
     }
 
-    public function pdfQualifications(Program $program, $keyword): ?\Barryvdh\DomPDF\PDF
+    public function pdfQualifications(Program $program, $keyword)
     {
+        $this->cleanUpTempPdfs();
+
         $Q_profileCollection =
             $this->whereForSearch(
                 QualificationProfile::query()->from('qualification_profiles as profiles')
@@ -251,8 +259,6 @@ class ProgramCertificateService
                 ->with('file')
                 ->get();
 
-        $pdfList = collect();
-
         if ($Q_profileCollection->isEmpty()) {
             return null;
         }
@@ -260,15 +266,53 @@ class ProgramCertificateService
         $qualification = $program->certificateQualification;
         $Q_categories = QualificationCategory::all();
 
+        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+        $folderName = Str::random();
+
         foreach ($Q_profileCollection as $Q_profile) {
             $categoryName = $Q_categories->find($qualification->category_id)->name;
             $pdf = new QualificationPdf($qualification, $Q_profile, $categoryName);
-            $pdfList->push($pdf);
+
+            $filename = $pdf->getFileName();
+            Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
         }
 
-        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
+        return $this->makeZipWithFiles($folderName);
+    }
 
-        return Pdf::loadView('pdfs.qualification.qualification_multiple_pdf',
-            ['pdfList' => $pdfList->all()]);
+    private function makeZipWithFiles(string $folderName): ?string
+    {
+        $filePaths = File::files(storage_path("app/temp/pdfs/$folderName"));
+
+        $zip = new ZipArchive();
+        $zipFilePath = storage_path("app/temp/pdfs/$folderName.zip");
+
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) !== TRUE) {
+            Log::error('Could not open ZIP file.');
+            return null;
+        }
+
+        // Add File in ZipArchive
+        foreach ($filePaths as $filePath) {
+            if (!$zip->addFile($filePath, basename($filePath))) {
+                Log::error('Could not add file to ZIP: ' . $filePath);
+            }
+        }
+        // Close ZipArchive
+        $zip->close();
+
+        File::deleteDirectory(storage_path("app/temp/pdfs/$folderName"));
+        Log::debug('Path:' . $zipFilePath);
+        return $zipFilePath;
+    }
+
+    private function cleanUpTempPdfs()
+    {
+        $files = File::files(storage_path("app/temp/pdfs"));
+        File::delete($files);
+        $directories = File::directories(storage_path("app/temp/pdfs"));
+        foreach ($directories as $directory) {
+            @rmdir($directory);
+        }
     }
 }
