@@ -308,11 +308,14 @@ class ProgramCertificateService
 
     private function cleanUpTempPdfs()
     {
-        $files = File::files(storage_path("app/temp/pdfs"));
-        File::delete($files);
-        $directories = File::directories(storage_path("app/temp/pdfs"));
-        foreach ($directories as $directory) {
-            @rmdir($directory);
+        try {
+            $files = File::files(storage_path("app/temp/pdfs"));
+            File::delete($files);
+            $directories = File::directories(storage_path("app/temp/pdfs"));
+            foreach ($directories as $directory) {
+                @rmdir($directory);
+            }
+        } catch (\Exception $exception) {
         }
     }
 }
