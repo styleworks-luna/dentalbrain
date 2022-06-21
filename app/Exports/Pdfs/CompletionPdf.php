@@ -10,19 +10,22 @@ class CompletionPdf extends CertificationPdf
     private $certification;
     private $profile;
     private $categories;
+    private $staticImages;
 
     /**
      * @param $certification
      * @param $profile
      * @param $categoryName
+     * @param PdfImages $pdfImages
      */
-    public function __construct($certification, $profile, $categoryName)
+    public function __construct($certification, $profile, $categoryName, PdfImages $pdfImages)
     {
         $this->certification = $certification;
         $this->profile = $profile;
 
         // 협회 이름이 여러 개일 가능성이 있어서 ' '기준으로 나눠 배열에 담음
         $this->categories = explode(" ", $categoryName);
+        $this->staticImages = $pdfImages->getStaticImages();
     }
 
 
@@ -39,7 +42,7 @@ class CompletionPdf extends CertificationPdf
             'categories' => $this->categories,
             'profile' => $this->profile,
             'profile_image' => $this->profile->file != null ? $this->encodeToBase64($this->profile->file) : '',
-            'staticImages' => $this->getStaticImages(),
+            'staticImages' => $this->staticImages,
         ];
     }
 

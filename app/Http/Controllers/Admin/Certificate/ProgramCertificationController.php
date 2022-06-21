@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin\Certificate;
 use App\Exports\CertificationExport;
 use App\Http\Controllers\Controller;
 use App\Models\Program\Program;
+use App\Services\Certificate\CertificatePdfService;
 use App\Services\Certificate\ProgramCertificateService;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,13 +22,19 @@ class ProgramCertificationController extends Controller
      * @var ProgramCertificateService
      */
     private $programCertificateService;
+    /**
+     * @var CertificatePdfService
+     */
+    private $pdfService;
 
     /**
      * @param ProgramCertificateService $programCertificateService
+     * @param CertificatePdfService $certificatePdfService
      */
-    public function __construct(ProgramCertificateService $programCertificateService)
+    public function __construct(ProgramCertificateService $programCertificateService, CertificatePdfService $certificatePdfService)
     {
         $this->programCertificateService = $programCertificateService;
+        $this->pdfService = $certificatePdfService;
     }
 
 
@@ -130,7 +136,7 @@ class ProgramCertificationController extends Controller
 
         $keyword = $validated['keyword'] ?? null;
 
-        $path = $this->programCertificateService->pdfCompletions($program, $keyword);
+        $path = $this->pdfService->pdfCompletions($program, $keyword);
         if ($path == null) {
             return redirect('/admin')->with('alert', '다운로드할 수료증이 없습니다.');
         }
@@ -149,7 +155,7 @@ class ProgramCertificationController extends Controller
 
         $keyword = $validated['keyword'] ?? null;
 
-        $path = $this->programCertificateService->pdfQualifications($program, $keyword);
+        $path = $this->pdfService->pdfQualifications($program, $keyword);
         if ($path == null) {
             return redirect('/admin')->with('alert', '다운로드할 자격증이 없습니다.');
         }

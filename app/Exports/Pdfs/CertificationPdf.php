@@ -2,26 +2,22 @@
 
 namespace App\Exports\Pdfs;
 
+use App\Models\File;
 use Barryvdh\DomPDF\PDF;
-use Illuminate\Support\Collection;
 
 abstract class CertificationPdf
 {
-    use HasPdfUtils;
-
     abstract function getPdf(): PDF;
 
     abstract function getPdfArguments(): array;
 
     abstract function getFileName(): string;
 
-    protected function getStaticImages(): Collection
+    protected static function encodeToBase64(File $file): string
     {
-        return collect([
-            'certification_back' => $this->encodeToBase64DefaultImg('/images/admin/certification_back.png'),
-            'KDMA_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_mark.svg'),
-            'KDMA_light_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_light_mark.svg'),
-            'sign' => $this->encodeToBase64DefaultImg('/images/admin/sign.png'),
-        ]);
+        $path = storage_path('app/' . $file->path);
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        return 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
 }
