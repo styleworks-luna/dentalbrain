@@ -95,17 +95,7 @@ class CertificatePdfService
             $filename = $pdf->getFileName();
             Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
         }
-        for ($i = 0; $i <= 30; $i++) {
-            foreach ($Q_profileCollection as $Q_profile) {
-                $categoryName = $Q_categories->find($qualification->category_id)->name;
-                $pdf = new QualificationPdf($qualification, $Q_profile, $categoryName, $pdfImages);
-
-                $filename = Str::random(10) . ".pdf";
-                Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
-            }
-        }
-
-
+        
         return $this->makeZipWithFiles($folderName);
     }
 
