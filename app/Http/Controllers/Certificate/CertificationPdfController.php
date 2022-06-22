@@ -78,17 +78,7 @@ class CertificationPdfController extends Controller
         return $completionPdf->getPdf();
     }
 
-    private function defaultCertificationPdfImages(): Collection
-    {
-        return collect([
-            'certification_back' => $this->encodeToBase64DefaultImg('/images/admin/certification_back.png'),
-            'KDMA_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_mark.svg'),
-            'KDMA_light_mark' => $this->encodeToBase64DefaultImg('/images/admin/KDMA_light_mark.svg'),
-            'sign' => $this->encodeToBase64DefaultImg('/images/admin/sign.png'),
-        ]);
-    }
-
-    private function encodeToBase64DefaultImg($imgPath): string
+       private function encodeToBase64DefaultImg($imgPath): string
     {
         $path = public_path($imgPath);
         $type = pathinfo($path, PATHINFO_EXTENSION);

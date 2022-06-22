@@ -95,7 +95,7 @@ class CertificatePdfService
             $filename = $pdf->getFileName();
             Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
         }
-        
+
         return $this->makeZipWithFiles($folderName);
     }
 

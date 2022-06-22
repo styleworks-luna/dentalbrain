@@ -15,10 +15,10 @@ class PdfImages
      */
     public function __construct()
     {
-        $this->certification_back = $this->encodeToBase64DefaultImg('/images/admin/certification_back.png');
-        $this->kdma_mark = $this->encodeToBase64DefaultImg('/images/admin/KDMA_mark.svg');
-        $this->kdma_light_mark = $this->encodeToBase64DefaultImg('/images/admin/KDMA_light_mark.svg');
-        $this->sign = $this->encodeToBase64DefaultImg('/images/admin/sign.png');
+        $this->certification_back = "file://" . public_path("/images/admin/certification_back.jpg");
+        $this->kdma_mark = "file://" . public_path("/images/admin/KDMA_mark.jpg");
+        $this->kdma_light_mark = "file://" . public_path("/images/admin/KDMA_light_mark.jpg");
+        $this->sign = "file://" . public_path("/images/admin/sign.jpg");
     }
 
     private static function encodeToBase64DefaultImg($imgPath): string

@@ -2,19 +2,10 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <style>
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
+    html, body, div, span,
+    h1, h2, h3,
+    p, pre,
+    img {
         margin: 0;
         padding: 0;
         border: 0;
@@ -24,15 +15,18 @@
     }
 
     /* HTML5 display-role reset for older browsers */
+    /*
     article, aside, details, figcaption, figure,
     footer, header, hgroup, menu, nav, section {
         display: block;
     }
+    */
 
     body {
         line-height: 1;
     }
 
+    /*
     ol, ul {
         list-style: none;
     }
@@ -46,7 +40,7 @@
         content: '';
         content: none;
     }
-
+    */
 </style>
 <style>
     @font-face {
@@ -198,6 +192,18 @@
 
     .page-break {
         page-break-after: always;
+    }
+
+    .background-image {
+        z-index: -99;
+    }
+
+    .certificate-logo {
+        z-index: -98;
+    }
+
+    .certificate-background-logo {
+        z-index: -97;
     }
 
 </style>
