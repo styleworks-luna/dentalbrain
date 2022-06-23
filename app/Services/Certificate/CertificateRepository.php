@@ -34,6 +34,30 @@ class CertificateRepository
         );
     }
 
+    public function selectForCompletionPdf($query)
+    {
+        return $query->select(
+            DB::raw("'수료증' as type"),
+            'profiles.name', 'users.email', 'profiles.birthday',
+            'profiles.university', 'profiles.student_number', 'profiles.score',
+            'profiles.status', 'profiles.is_issued',
+            'profiles.user_id', 'profiles.id', 'profiles.created_at', DB::raw("null as certificate_number"),
+            'profiles.passed_at', 'profiles.file_id'
+        );
+    }
+
+    public function selectForQualificationPdf($query)
+    {
+        return $query->select(
+            DB::raw("'자격증' as type"),
+            'profiles.name', 'users.email', 'profiles.birthday',
+            'profiles.university', 'profiles.student_number', 'profiles.score',
+            'profiles.status', 'profiles.is_issued',
+            'profiles.user_id', 'profiles.id', 'profiles.created_at', 'profiles.certificate_number',
+            'profiles.passed_at', 'profiles.file_id'
+        );
+    }
+
     /**
      * @param Program $program
      * @param $category

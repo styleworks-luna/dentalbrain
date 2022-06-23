@@ -39,87 +39,54 @@ class CertificatePdfService
      * @param int $page
      * @return string|null
      */
-    public function pdfCompletions(Program $program, ?string $keyword, ?string $category, int $page): ?string
+    public function pdfAll(Program $program, ?string $keyword, ?string $category, int $page): ?string
     {
         $this->cleanUpTempPdfs();
 
+        $completionQuery = $this->certificateRepository->selectForCompletionPdf(CompletionProfile::query()->from('completion_profiles as profiles'));
+        $completionQuery = $this->certificateRepository->whereForSearch($completionQuery, $program, $category, $keyword
+        )->with('file');
+
+        $qualificationQuery = $this->certificateRepository->selectForQualificationPdf(QualificationProfile::query()->from('qualification_profiles as profiles'));
+        $qualificationQuery = $this->certificateRepository->whereForSearch($qualificationQuery, $program, $category, $keyword
+        )->with('file');
+
+        $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at')->orderByDesc('type');
+
         $perPage = 10;
 
-
-        $C_profileCollection =
-            $this->certificateRepository->whereForSearch(
-                CompletionProfile::query()->from('completion_profiles as profiles')
-                    ->select('profiles.*'), $program, $category, $keyword
-            )
-                ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
-                ->with('file')
-                ->offset($perPage * ($page - 1))
-                ->limit($perPage)
-                ->get();
-
-        if ($C_profileCollection->isEmpty()) {
-            return null;
-        }
+        $result = $unionized
+            ->offset($perPage * ($page - 1))
+            ->limit($perPage)
+            ->cursor();
 
         $completion = $program->certificateCompletion;
-        $C_categories = CompletionCategory::all();
-
-        Pdf::setOptions(['isFontSubsettingEnabled' => true]);
-        $folderName = Str::random();
-        $pdfImages = new PdfImages();
-
-        foreach ($C_profileCollection as $C_profile) {
-            $categoryName = $C_categories->find($completion->category_id)->name;
-            $pdf = new CompletionPdf($completion, $C_profile, $categoryName, $pdfImages);
-            $filename = $pdf->getFileName();
-            Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
-        }
-
-        return $this->makeZipWithFiles($folderName);
-    }
-
-    /**
-     *  자격증 일괄 다운로드
-     * @param Program $program
-     * @param ?string $keyword
-     * @param ?string $category
-     * @param int $page
-     * @return string|null returns null if empty
-     */
-    public function pdfQualifications(Program $program, ?string $keyword, ?string $category, int $page): ?string
-    {
-        $this->cleanUpTempPdfs();
-
-        $perPage = 10;
-
-        $Q_profileCollection =
-            $this->certificateRepository->whereForSearch(
-                QualificationProfile::query()->from('qualification_profiles as profiles')
-                    ->select('profiles.*'), $program, $category, $keyword
-            )
-                ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
-                ->with('file')
-                ->offset($perPage * ($page - 1))
-                ->limit($perPage)
-                ->get();
-
-        if ($Q_profileCollection->isEmpty()) {
-            return null;
-        }
-
         $qualification = $program->certificateQualification;
-        $Q_categories = QualificationCategory::all(['id', 'name']);
 
         Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         $folderName = Str::random();
         $pdfImages = new PdfImages();
 
-        foreach ($Q_profileCollection as $Q_profile) {
-            $categoryName = $Q_categories->find($qualification->category_id)->name;
-            $pdf = new QualificationPdf($qualification, $Q_profile, $categoryName, $pdfImages);
+        if ($completion != null) {
+            $C_categories = CompletionCategory::all();
+            $C_categoryName = $C_categories->find($completion->category_id)->name;
 
-            $filename = $pdf->getFileName();
-            Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
+            foreach ($result as $profile) {
+                if ($profile->type == '수료증') {
+                    $this->saveTempCompletion($completion, $profile, $C_categoryName, $pdfImages, $folderName);
+                }
+            }
+        }
+
+        if ($qualification != null) {
+            $Q_categories = QualificationCategory::all();
+            $Q_categoryName = $Q_categories->find($qualification->category_id)->name;
+
+            foreach ($result as $profile) {
+                if ($profile->type == '자격증') {
+                    $this->saveTempQualification($qualification, $profile, $Q_categoryName, $pdfImages, $folderName);
+                }
+            }
         }
 
         return $this->makeZipWithFiles($folderName);
@@ -197,5 +164,33 @@ class CertificatePdfService
             }
         } catch (\Exception $exception) {
         }
+    }
+
+    /**
+     * @param $completion
+     * @param $C_profile
+     * @param $categoryName
+     * @param PdfImages $pdfImages
+     * @param string $folderName
+     */
+    private function saveTempCompletion($completion, $C_profile, $categoryName, PdfImages $pdfImages, string $folderName): void
+    {
+        $pdf = new CompletionPdf($completion, $C_profile, $categoryName, $pdfImages);
+        $filename = $pdf->getFileName();
+        Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
+    }
+
+    /**
+     * @param $qualification
+     * @param $Q_profile
+     * @param $categoryName
+     * @param PdfImages $pdfImages
+     * @param string $folderName
+     */
+    private function saveTempQualification($qualification, $Q_profile, $categoryName, PdfImages $pdfImages, string $folderName): void
+    {
+        $pdf = new QualificationPdf($qualification, $Q_profile, $categoryName, $pdfImages);
+        $filename = $pdf->getFileName();
+        Storage::put("temp/pdfs/$folderName/$filename", $pdf->getPdf()->output());
     }
 }

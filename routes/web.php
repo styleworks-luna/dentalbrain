@@ -533,8 +533,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
                     Route::put('/', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'passAll']);
                     Route::put('/issue', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'issueAll']);
                     Route::get('/excel', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'excel']);
-                    Route::get('/pdf/completions', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'pdfCompletion']);
-                    Route::get('/pdf/qualifications', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'pdfQualification']);
+                    Route::get('/pdf', [\App\Http\Controllers\Admin\Certificate\ProgramCertificationController::class, 'pdfAll']);
 
                     // EDIT form
                     Route::get('/completions/{profile}', [\App\Http\Controllers\Admin\Certificate\CertificateProfileController::class, 'getCompletionProfile']);
