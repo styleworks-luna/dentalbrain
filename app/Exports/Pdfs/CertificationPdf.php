@@ -13,11 +13,12 @@ abstract class CertificationPdf
 
     abstract function getFileName(): string;
 
-    protected static function encodeToBase64(File $file): string
+    /**
+     * @param File|mixed|null $file
+     * @return ?string
+     */
+    protected static function profileImageSrc($file): ?string
     {
-        $path = storage_path('app/' . $file->path);
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $file != null ? "file://" . storage_path("app/" . $file->path) : null;
     }
 }

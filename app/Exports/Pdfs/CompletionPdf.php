@@ -41,7 +41,7 @@ class CompletionPdf extends CertificationPdf
             'certification' => $this->certification,
             'categories' => $this->categories,
             'profile' => $this->profile,
-            'profile_image' => $this->profile->file != null ? $this->encodeToBase64($this->profile->file) : '',
+            'profile_image' => self::profileImageSrc($this->profile->file),
             'staticImages' => $this->staticImages,
         ];
     }

@@ -214,7 +214,8 @@ Route::group(['prefix' => 'lectures', 'as' => 'lectures.'], function () {
         // 강의 신청
         Route::group(['middleware' => 'auth'], function () {
             // 강의 신청 폼
-            Route::get('apply', [\App\Http\Controllers\Lecture\ApplyController::class, 'showApplyForm'])->name('apply.form');
+            Route::get('apply', [\App\Http\Controllers\Lecture\ApplyController::class, 'showApplyForm'])->name('apply.form')
+            ->middleware('optimize');
             // 강의 신청
             Route::post('apply', [\App\Http\Controllers\Lecture\ApplyController::class, 'apply'])->name('apply');
             // 강의 계좌입금
@@ -363,7 +364,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
             // 이력서 사진 업로드용
             Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadResume'])->name('image-upload');
         });
-        Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => 'auth'], function () {
+        Route::group(['prefix' => 'recruit', 'as' => 'recruit.', 'middleware' => ['auth', 'optimize']], function () {
             // 구인공고 사진 업로드용
             Route::post('upload-thumbnail', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitThumbnail'])->name('image-upload');
             Route::post('editor/image', [\App\Http\Controllers\Albatalk\AlbatalkFileController::class, 'uploadRecruitEditorImage'])->name('editor.image-upload');
@@ -381,7 +382,7 @@ Route::group(['prefix' => 'api', 'as' => 'api.'], function () {
     Route::get('map/reverse-geocode', 'MapController@reverse_geocode');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
-        Route::group(['prefix' => 'upload', 'as' => 'upload.'], function () {
+        Route::group(['prefix' => 'upload', 'as' => 'upload.', 'middleware' => 'optimize'], function () {
             Route::post('file', [\App\Http\Controllers\Admin\FileController::class, 'uploadFile'])->name('file');
             Route::post('image', [\App\Http\Controllers\Admin\FileController::class, 'uploadImage'])->name('image');
         });
