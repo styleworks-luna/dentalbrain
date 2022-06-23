@@ -130,13 +130,13 @@ class ProgramCertificationController extends Controller
      */
     public function pdfCompletion(Request $request, Program $program)
     {
-        $validated = $request->validate([
-            'keyword' => ['nullable', 'string']
-        ]);
+        $validated = $this->validatePdfExportRequest($request);
 
         $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+        $page = $validated['page'] ?? 1;
 
-        $path = $this->pdfService->pdfCompletions($program, $keyword);
+        $path = $this->pdfService->pdfCompletions($program, $keyword, $category, $page);
         if ($path == null) {
             return redirect('/admin')->with('alert', '다운로드할 수료증이 없습니다.');
         }
@@ -149,16 +149,29 @@ class ProgramCertificationController extends Controller
      */
     public function pdfQualification(Request $request, Program $program)
     {
-        $validated = $request->validate([
-            'keyword' => ['nullable', 'string']
-        ]);
+        $validated = $this->validatePdfExportRequest($request);
 
         $keyword = $validated['keyword'] ?? null;
+        $category = $validated['category'] ?? null;
+        $page = $validated['page'] ?? 1;
 
-        $path = $this->pdfService->pdfQualifications($program, $keyword);
+        $path = $this->pdfService->pdfQualifications($program, $keyword, $category, $page);
         if ($path == null) {
             return redirect('/admin')->with('alert', '다운로드할 자격증이 없습니다.');
         }
         return \response()->download($path, sanitizeForFileName($program->title . '_자격증_' . now()->format('y_m_d_Gi') . '.zip'));
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    private function validatePdfExportRequest(Request $request): array
+    {
+        return $request->validate([
+            'category' => ['nullable', Rule::in('ongoing', 'ended')],
+            'keyword' => ['nullable', 'string'],
+            'page' => ['required', 'numeric', 'min:1'],
+        ]);
     }
 }

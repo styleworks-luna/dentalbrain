@@ -7,6 +7,7 @@ use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use App\Traits\HasCertificateStatus;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class CertificateRepository
@@ -39,22 +40,41 @@ class CertificateRepository
      * @param string|null $keyword
      * @return int
      */
-    public function getCount(Program $program, $category, ?string $keyword): int
+    public function getCountAll(Program $program, $category, ?string $keyword): int
     {
-        $qualificationCount = $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
-        $completionCount = $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
-
-        return $qualificationCount + $completionCount;
+        return $this->getCountOfQualifications($program, $category, $keyword) + $this->getCountOfCompletions($program, $category, $keyword);
     }
 
     /**
-     * @param $query
-     * @param $program
+     * @param Program $program
      * @param $category
-     * @param $keyword
+     * @param string|null $keyword
+     * @return int
+     */
+    public function getCountOfQualifications(Program $program, $category, ?string $keyword): int
+    {
+        return $this->whereForSearch(QualificationProfile::query()->from('qualification_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
+    }
+
+    /**
+     * @param Program $program
+     * @param $category
+     * @param string|null $keyword
+     * @return int
+     */
+    public function getCountOfCompletions(Program $program, $category, ?string $keyword): int
+    {
+        return $this->whereForSearch(CompletionProfile::query()->from('completion_profiles as profiles'), $program, $category, $keyword)->count('profiles.id');
+    }
+
+    /**
+     * @param Builder|\Illuminate\Database\Query\Builder $query
+     * @param Program|Model $program
+     * @param ?string $category
+     * @param ?string $keyword
      * @return Builder|\Illuminate\Database\Query\Builder
      */
-    public function whereForSearch($query, $program, $category, $keyword)
+    public function whereForSearch($query, $program, ?string $category, $keyword)
     {
         $query
             ->leftJoin('users', 'profiles.user_id', '=', 'users.id')

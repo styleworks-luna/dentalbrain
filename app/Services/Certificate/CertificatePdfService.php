@@ -11,6 +11,7 @@ use App\Models\Certificate\QualificationCategory;
 use App\Models\Certificate\QualificationProfile;
 use App\Models\Program\Program;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -30,17 +31,30 @@ class CertificatePdfService
     }
 
 
-    public function pdfCompletions(Program $program, $keyword)
+    /**
+     * 수료증 일괄 다운로드
+     * @param Program $program
+     * @param ?string $keyword
+     * @param ?string $category
+     * @param int $page
+     * @return string|null
+     */
+    public function pdfCompletions(Program $program, ?string $keyword, ?string $category, int $page): ?string
     {
         $this->cleanUpTempPdfs();
+
+        $perPage = 10;
+
 
         $C_profileCollection =
             $this->certificateRepository->whereForSearch(
                 CompletionProfile::query()->from('completion_profiles as profiles')
-                    ->select('profiles.*'), $program, 'ended', $keyword
+                    ->select('profiles.*'), $program, $category, $keyword
             )
                 ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
                 ->with('file')
+                ->offset($perPage * ($page - 1))
+                ->limit($perPage)
                 ->get();
 
         if ($C_profileCollection->isEmpty()) {
@@ -64,17 +78,29 @@ class CertificatePdfService
         return $this->makeZipWithFiles($folderName);
     }
 
-    public function pdfQualifications(Program $program, $keyword)
+    /**
+     *  자격증 일괄 다운로드
+     * @param Program $program
+     * @param ?string $keyword
+     * @param ?string $category
+     * @param int $page
+     * @return string|null returns null if empty
+     */
+    public function pdfQualifications(Program $program, ?string $keyword, ?string $category, int $page): ?string
     {
         $this->cleanUpTempPdfs();
+
+        $perPage = 10;
 
         $Q_profileCollection =
             $this->certificateRepository->whereForSearch(
                 QualificationProfile::query()->from('qualification_profiles as profiles')
-                    ->select('profiles.*'), $program, 'ended', $keyword
+                    ->select('profiles.*'), $program, $category, $keyword
             )
                 ->where('status', '=', CompletionProfile::$PASS)->where('is_issued', '=', true)
                 ->with('file')
+                ->offset($perPage * ($page - 1))
+                ->limit($perPage)
                 ->get();
 
         if ($Q_profileCollection->isEmpty()) {
@@ -82,7 +108,7 @@ class CertificatePdfService
         }
 
         $qualification = $program->certificateQualification;
-        $Q_categories = QualificationCategory::all();
+        $Q_categories = QualificationCategory::all(['id', 'name']);
 
         Pdf::setOptions(['isFontSubsettingEnabled' => true]);
         $folderName = Str::random();
@@ -98,6 +124,41 @@ class CertificatePdfService
 
         return $this->makeZipWithFiles($folderName);
     }
+
+    /**
+     * 단일 자격증 생성
+     * @param $certificateQualification
+     * @param Model $profile
+     * @return \Barryvdh\DomPDF\PDF
+     */
+    public function exportQualificationPdf($certificateQualification, Model $profile): \Barryvdh\DomPDF\PDF
+    {
+        $category = QualificationCategory::query()->findOrFail($certificateQualification->category_id);
+
+        $pdfImages = new PdfImages();
+
+        $qualificationPdf = new QualificationPdf($certificateQualification, $profile, $category->name, $pdfImages);
+
+        return $qualificationPdf->getPdf();
+    }
+
+    /**
+     * 단일 수료증 생성
+     * @param $certificateCompletion
+     * @param Model $profile
+     * @return \Barryvdh\DomPDF\PDF
+     */
+    public function exportCompletionPdf($certificateCompletion, Model $profile): \Barryvdh\DomPDF\PDF
+    {
+        $category = CompletionCategory::query()->findOrFail($certificateCompletion->category_id);
+
+        $pdfImages = new PdfImages();
+
+        $completionPdf = new CompletionPdf($certificateCompletion, $profile, $category->name, $pdfImages);
+
+        return $completionPdf->getPdf();
+    }
+
 
     private function makeZipWithFiles(string $folderName): ?string
     {

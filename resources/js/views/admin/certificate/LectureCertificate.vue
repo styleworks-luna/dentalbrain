@@ -1,7 +1,8 @@
 <template>
     <layout :title="`${lectureTitle} 증명서 신청 현황`">
         <template v-slot:button>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/excel?keyword=${keyword}&category=${category_id}`" class="btn btn-lg btn-info" target="_blank">
+            <a :href="`/api/admin/lecture/${program_id}/certificate/excel?keyword=${keyword}&category=${category_id}`"
+               class="btn btn-lg btn-info" target="_blank">
                 엑셀 다운로드
             </a>
             <button class="btn btn-lg btn-info" @click.prevent="allPass">
@@ -10,11 +11,13 @@
             <button class="btn btn-lg btn-info" @click.prevent="allIssue">
                 일괄 발급
             </button>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/completions?keyword=${keyword}`" class="btn btn-lg btn-info" target="_blank">
-                수료증 일괄 다운로드
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/completions?keyword=${keyword}&category=${category_id}&page=${page}`"
+               class="btn btn-lg btn-info" target="_blank">
+                수료증 p.{{page}} 다운로드
             </a>
-            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/qualifications?keyword=${keyword}`" class="btn btn-lg btn-info" target="_blank">
-                자격증 일괄 다운로드
+            <a :href="`/api/admin/lecture/${program_id}/certificate/pdf/qualifications?keyword=${keyword}&category=${category_id}&page=${page}`"
+               class="btn btn-lg btn-info" target="_blank">
+                자격증 p.{{page}} 다운로드
             </a>
         </template>
         <template v-slot:search>
@@ -64,14 +67,16 @@
                             <template v-else-if="slotProps.row.status == 3">불합격</template>
                             <template v-else-if="slotProps.row.status == 4">합격</template>
                             <template v-if="slotProps.row.type == '자격증'">
-                                <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control" v-model="slotProps.row.status">
+                                <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control"
+                                        v-model="slotProps.row.status">
                                     <option value=2>대기중</option>
                                     <option value=3>불합격</option>
                                     <option value=4>합격</option>
                                 </select>
                             </template>
                             <template v-if="slotProps.row.type =='수료증'">
-                                <select @change="handleCompletionPass(slotProps.row.id, $event)" class="form-control" v-model="slotProps.row.status">
+                                <select @change="handleCompletionPass(slotProps.row.id, $event)" class="form-control"
+                                        v-model="slotProps.row.status">
                                     <option value=2>대기중</option>
                                     <option value=3>불합격</option>
                                     <option value=4>합격</option>
@@ -87,16 +92,19 @@
                             </template>
                             <template v-else>
                                 <template v-if="slotProps.row.type == '자격증'">
-                                    <button class="btn btn-info" @click="handleCertificateIssue(slotProps.row.id)">발급</button>
+                                    <button class="btn btn-info" @click="handleCertificateIssue(slotProps.row.id)">발급
+                                    </button>
                                 </template>
                                 <template v-if="slotProps.row.type == '수료증'">
-                                    <button class="btn btn-info"  @click="handleCompletionIssue(slotProps.row.id)">발급</button>
+                                    <button class="btn btn-info" @click="handleCompletionIssue(slotProps.row.id)">발급
+                                    </button>
                                 </template>
                             </template>
                         </template>
                     </td>
                     <td>
-                        <button class="btn btn-danger" @click="popupControl(slotProps.row.id, slotProps.row.type)">수정</button>
+                        <button class="btn btn-danger" @click="popupControl(slotProps.row.id, slotProps.row.type)">수정
+                        </button>
                     </td>
                     <td>
                         <template v-if="slotProps.row.type == '자격증'">
@@ -119,7 +127,8 @@
 
             <div class="paging-wrap text-center">
                 <nav class="d-inline-block">
-                    <pagination :data="lectureCertificationList" :limit=3 @pagination-change-page="getData" class="mb-0">
+                    <pagination :data="lectureCertificationList" :limit=3 @pagination-change-page="getData"
+                                class="mb-0">
                         <span slot="prev-nav">‹</span>
                         <span slot="next-nav">›</span>
                     </pagination>
@@ -128,7 +137,8 @@
         </template>
 
         <template v-slot:footer>
-            <LectureCertificatePopup v-if="showPopup" :id="popupId" :type="popType" :program_id="program_id" @close="popupClose"/>
+            <LectureCertificatePopup v-if="showPopup" :id="popupId" :type="popType" :program_id="program_id"
+                                     @close="popupClose"/>
         </template>
     </layout>
 </template>
@@ -286,20 +296,20 @@ export default {
                 category: this.category_id,
                 page: page,
             }
-            LectureCertificates.getData(this.program_id,params).then(res => {
+            LectureCertificates.getData(this.program_id, params).then(res => {
                 this.lectureTitle = res.data.programTitle;
                 this.lectureCertificationList = res.data[0];
             })
         },
         allPass() {
-          let params = {
-              keyword: this.keyword,
-              category: this.category_id,
-          }
-          LectureCertificates.handleAllPass(this.program_id, params).then(res => {
-              alert(res.data.msg);
-              this.getData();
-          })
+            let params = {
+                keyword: this.keyword,
+                category: this.category_id,
+            }
+            LectureCertificates.handleAllPass(this.program_id, params).then(res => {
+                alert(res.data.msg);
+                this.getData();
+            })
         },
         handleCertificatePass(certificate_id, event) {
             let params = {

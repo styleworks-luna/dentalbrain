@@ -41,7 +41,7 @@ class ProgramCertificateService
 
         $unionized = $completionQuery->union($qualificationQuery)->orderByDesc('created_at')->orderByDesc('type');
 
-        $total = $this->certificateRepository->getCount($program, $category, $keyword);
+        $total = $this->certificateRepository->getCountAll($program, $category, $keyword);
         $perPage = 10;
         $page = Paginator::resolveCurrentPage();
         $num = $total - (($page - 1) * $perPage);
