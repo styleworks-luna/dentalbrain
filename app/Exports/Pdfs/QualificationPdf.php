@@ -53,6 +53,6 @@ class QualificationPdf extends CertificationPdf
 
     function getFileName(): string
     {
-        return sanitizeForFileName($this->profile->name . ".pdf");
+        return sanitizeForFileName($this->profile->name . "_자격증.pdf");
     }
 }
