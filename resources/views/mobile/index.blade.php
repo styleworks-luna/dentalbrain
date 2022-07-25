@@ -90,6 +90,18 @@
                 </div>
             </section>
 
+            <section class="ad">
+                @if($bar)
+                    <a href="{{ route('banner-redirect',$bar->id) }}">
+                        <img src="{{ $bar->mobileFile->url }}" alt="바배너">
+                    </a>
+                @else
+                    <a href="">
+                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
+                    </a>
+                @endif
+            </section>
+
             <section class="middle-banner">
                 <h2>{{ $titles[1] }}</h2>
                 <div class="m-middle-swiper-container2">
@@ -140,19 +152,6 @@
                 <h2 class="lecture_title">{{ $titles[3] }}</h2>
                 <lecture-all :is_main="true" :is_pagination="false" :per_page="16" :mobile="false"></lecture-all>
             </div>
-
-            <section class="ad">
-                @if($bar)
-                    <a href="{{ route('banner-redirect',$bar->id) }}">
-                        <img src="{{ $bar->mobileFile->url }}" alt="바배너">
-                    </a>
-                @else
-                    <a href="">
-                        <img src="{{ asset('images/dummy/test2.jpg') }}" alt="바배너">
-                    </a>
-                @endif
-            </section>
-
 
             <section class="bottom-banner">
                 <div class="banner-wrap">
