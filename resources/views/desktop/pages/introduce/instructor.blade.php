@@ -181,10 +181,11 @@
                         <div class="instructor-description">
                             <h2 class="instructor-name">김수지</h2>
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
                                 <li>월야치과 팀장</li>
-                                <li>SWISS DENTAL ACADEMY 일본 연수</li>
-                                <li>분야 : 계속구강관리</li>
+                                <li>브레인스펙 전문강사</li>
+                                <li>SDA 스위스덴탈아카데미 강사</li>
+                                <li>SWISS DENTAL ACADEMY 일본연수</li>
+                                <li>분야: 계속구강관리, 구강스캐너</li>
                             </ul>
                         </div>
                     </li>
@@ -253,7 +254,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/desktop/instructor/instructor_16.png?20220106') }}" alt="이연아" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_16.png?20220106') }}" alt="김민정" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김민정</h2>
                             <ul class="instructor-career">
@@ -266,16 +267,41 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/desktop/instructor/instructor_17.png?20220106') }}" alt="이연아" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_17.png?20220830') }}" alt="윤경희" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">윤경희</h2>
                             <ul class="instructor-career">
-                                <li>(전)대한치과건강보험협회 공인강사</li>
-                                <li>(현)브레인스펙 치과보험청구 전문강사</li>
-                                <li>치과건강보험청구3급 실무이론 공동저자</li>
-                                <li>대원대학교 치위생과 겸임교수</li>
                                 <li>이즈치과 실장</li>
-                                <li>전문분야 : 치과건강보험청구</li>
+                                <li>브레인스펙 치과건강보험청구 강사</li>
+                                <li>대원대학교 치위생과 겸임교수</li>
+                                <li>치과건강보험 핵심이론과실무(의학교육) 공동저자</li>
+                                <li>(전)대한치과건강보험협회 공인강사</li>
+                                <li>분야: 치과건강보험청구</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_18.png?20220830') }}" alt="이유리" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">이유리</h2>
+                            <ul class="instructor-career">
+                                <li>닥터이치과 총괄실장</li>
+                                <li>브레인스펙 치과건강보험청구 강사</li>
+                                <li>브레인스펙 덴트웹 강사</li>
+                                <li>분야: 치과건강보험청구, 데스크업무</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <img src="{{ asset('images/desktop/instructor/instructor_19.png?20220830') }}" alt="박수영" class="instructor-photo">
+                        <div class="instructor-description">
+                            <h2 class="instructor-name">박수영</h2>
+                            <ul class="instructor-career">
+                                <li>OHCSHOP 과장</li>
+                                <li>브레인스펙 강사</li>
+                                <li>OHCSHOP 공식 인스타그램 관리</li>
+                                <li>치카푸카수영 유튜브 채널 운영</li>
+                                <li>분야: 구강관리용품소개, 인스타그램</li>
                             </ul>
                         </div>
                     </li>
