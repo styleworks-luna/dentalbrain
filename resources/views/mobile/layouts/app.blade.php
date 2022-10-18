@@ -16,6 +16,17 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+
+    <!-- 네이버 애널리틱스 -->
+
+    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+
+    <script type="text/javascript">
+        if(!wcs_add) var wcs_add = {};
+        wcs_add["wa"] = "1567bbf9ce89e3";
+        if(window.wcs) { wcs_do(); }
+    </script>
+
     <script>
         window.onpageshow = function (event) {
             if (!(event.persisted || (window.performance && window.performance.navigation.type === 2))) {
