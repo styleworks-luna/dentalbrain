@@ -11,6 +11,7 @@ use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Models\Program\Survey\SurveyAnswer;
 use App\Models\Program\UserLike;
+use App\Models\Resume\Resume;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -102,6 +103,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Program::class, 'user_likes')
             ->using(UserLike::class);
+    }
+
+    public function resumes()
+    {
+        return $this->hasOne(Resume::class, 'user_id', 'id');
     }
 
     public function qualificationProfiles(): \Illuminate\Database\Eloquent\Relations\HasMany

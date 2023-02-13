@@ -51,6 +51,7 @@ class SecessionController extends Controller
                     $user->lectureQuestions()->delete();
                     $user->likes()->delete();
                     $user->comments()->delete();
+                    $user->resumes()->delete();
 
                     $programStudent = ProgramStudent::query()->where('user_id', Auth::id());
                     foreach ($programStudent->get() as $student) {
