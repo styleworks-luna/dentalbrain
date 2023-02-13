@@ -26,7 +26,7 @@
                     <td>{{ slotProps.row.id }}</td>
                     <td>
                         <router-link :to="`/admin/user/user/${slotProps.row.user_id}/1`">
-                            {{ slotProps.row.user.user_id }}
+                            {{ slotProps.row.user_id }}
                         </router-link>
                     </td>
                     <td>
