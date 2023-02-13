@@ -38,7 +38,8 @@
                         </router-link>
                     </td>
                     <td>{{ slotProps.row.phone }}</td>
-                    <td>{{ slotProps.row.user.job_name }}</td>
+                    <td v-if="slotProps.row.user.job_name">{{ slotProps.row.user.job_name }}</td>
+                    <td v-else></td>
                     <td>
                         <a :href="`/api/admin/resume/${slotProps.row.id}/pdf`"
                            class="btn btn-info" target="_blank">
