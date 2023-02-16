@@ -478,21 +478,34 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @if($resume->career_started_at_1 != null)
                             <tr>
-                                <td>2020년 3월 ~ 2021년 2월</td>
-                                <td>온오프믹스치과</td>
-                                <td>충치치료</td>
+                                <td>{{$resume->career_started_at_1}} ~ {{$resume->career_ended_at_1}}</td>
+                                <td>{{$resume->career_company_1}}</td>
+                                <td>{{$resume->career_task_1}}</td>
                             </tr>
+                        @endif
+                        @if($resume->career_started_at_2 != null)
                             <tr>
-                                <td>2020년 3월 ~ 2021년 2월</td>
-                                <td>온오프믹스치과</td>
-                                <td>충치치료</td>
+                                <td>{{$resume->career_started_at_2}} ~ {{$resume->career_ended_at_2}}</td>
+                                <td>{{$resume->career_company_2}}</td>
+                                <td>{{$resume->career_task_2}}</td>
                             </tr>
+                        @endif
+                        @if($resume->career_started_at_3 != null)
                             <tr>
-                                <td>2020년 3월 ~ 2021년 2월</td>
-                                <td>온오프믹스치과</td>
-                                <td>충치치료</td>
+                                <td>{{$resume->career_started_at_3}} ~ {{$resume->career_ended_at_3}}</td>
+                                <td>{{$resume->career_company_3}}</td>
+                                <td>{{$resume->career_task_3}}</td>
                             </tr>
+                        @endif
+                        @if($resume->career_started_at_4 != null)
+                            <tr>
+                                <td>{{$resume->career_started_at_4}} ~ {{$resume->career_ended_at_4}}</td>
+                                <td>{{$resume->career_company_4}}</td>
+                                <td>{{$resume->career_task_4}}</td>
+                            </tr>
+                        @endif
                         </tbody>
                     </table>
                 </div>
