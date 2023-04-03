@@ -1,5 +1,8 @@
 @extends('desktop.layouts.frames.basic_frame')
 
+@section('og_title', $program->title)
+@section('og_image', asset($program->thumbnail->url))
+
 @section('script')
     <script type="text/javascript"
             src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId={{ env('NAVER_CLOUD_ID') }}&submodules=geocoder"></script>

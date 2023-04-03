@@ -11,8 +11,8 @@
     <meta name="google" content="notranslate">
 
     <!-- og tag -->
-    <meta property="og:title" content="덴탈브레인" />
-    <meta property="og:image" content="{{ asset('ogtag-image.png') }}" />
+    <meta property="og:title" content="{{ ! empty(trim($__env->yieldContent('og_title'))) ? $__env->yieldContent('og_title') : '덴탈브레인' }}">
+    <meta property="og:image" content="{{ ! empty(trim($__env->yieldContent('og_image'))) ? $__env->yieldContent('og_image') : asset('ogtag-image.png') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
