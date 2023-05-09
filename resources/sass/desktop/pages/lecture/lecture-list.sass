@@ -88,6 +88,10 @@
         +margin(top 30px)
         overflow: hidden
 
+        ul
+            display: grid
+            grid-template-columns: repeat(4, 1fr)
+
         .lecture-card
             +margin(50px 32px 0 0)
             +box-sizing(border-box)
@@ -100,10 +104,10 @@
                 +border(1px solid rgba(0, 0, 0, 0.1))
                 +border-radius(8px)
                 +box-sizing(border-box)
-            
+
             .lecture-image-box
                 position: relative
-                
+
                 .certificate-mark
                     +border(1px solid rgba(255, 255, 255, 0.8))
                     +border-radius(16px)
