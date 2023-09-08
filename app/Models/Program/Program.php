@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @method static Builder main ()
@@ -411,14 +412,21 @@ class Program extends Model
             ->withCount('students');
 
         if ($keyword != null) {
+            $keyword = str_replace('+', ' ', $keyword);
+
             $programs->where(/**
              * @param Builder $query
              */
-                function ($query) use ($keyword) {
-                    $query->where('title', 'LIKE', '%' . $keyword . '%')
-                        ->orWhere('description', 'LIKE', '%' . $keyword . '%');
+                function (Builder $query) use ($keyword) {
+                    $splitWords = explode(' ', $keyword);
+                    foreach ($splitWords as $key) {
+                        $query->where('title', 'LIKE', '%' . $key . '%');
+                    }
                 });
+            $programs->orWhere('description', 'LIKE', '%' . $keyword . '%');
+            $programs->orWhereRaw("replace(title, ' ', '') like '%".$keyword."%'");
         }
+        logger(json_encode($programs->getQuery()));
 
         if ((int)$category !== 0) {
             // NULL 과 0 일때는 검색 안함.
