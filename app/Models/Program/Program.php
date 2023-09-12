@@ -424,10 +424,9 @@ class Program extends Model
                     }
                     $query->orWhereRaw("replace(title, ' ', '') like '%".$keyword."%'");
                 });
-            $programs->where('description', 'LIKE', '%' . $keyword . '%');
+            $programs->orWhere('description', 'LIKE', '%' . $keyword . '%');
+            $programs->where('is_open', '=', 1);
         }
-
-        logger(json_encode($programs->getQuery()));
 
         if ((int)$category !== 0) {
             // NULL 과 0 일때는 검색 안함.
