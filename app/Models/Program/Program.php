@@ -422,10 +422,11 @@ class Program extends Model
                     foreach ($splitWords as $key) {
                         $query->where('title', 'LIKE', '%' . $key . '%');
                     }
+                    $query->orWhereRaw("replace(title, ' ', '') like '%".$keyword."%'");
                 });
-            $programs->orWhere('description', 'LIKE', '%' . $keyword . '%');
-            $programs->orWhereRaw("replace(title, ' ', '') like '%".$keyword."%'");
+            $programs->where('description', 'LIKE', '%' . $keyword . '%');
         }
+
         logger(json_encode($programs->getQuery()));
 
         if ((int)$category !== 0) {
