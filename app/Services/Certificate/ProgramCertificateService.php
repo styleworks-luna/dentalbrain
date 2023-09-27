@@ -127,7 +127,7 @@ class ProgramCertificateService
         $qualificationIds = $qualificationQuery->pluck('profiles.id');
 
         QualificationProfile::query()->whereIn('id', $qualificationIds)
-            ->whereIn('status', [QualificationProfile::$PASS, CompletionProfile::$FAILED])
+            ->whereIn('status', [QualificationProfile::$PASS])
             ->update([
                 'is_issued' => true,
             ]);

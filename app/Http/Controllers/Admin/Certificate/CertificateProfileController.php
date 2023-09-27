@@ -179,7 +179,7 @@ class CertificateProfileController extends Controller
 
     public function issueQualification(QualificationProfile $profile): JsonResponse
     {
-        if ($profile->status != QualificationProfile::$PASS && $profile->status != QualificationProfile::$FAILED) {
+        if ($profile->status != QualificationProfile::$PASS) {
             return response()->json([
                 'msg' => '발급 할 수 없는 합격 여부입니다.'
             ]);
