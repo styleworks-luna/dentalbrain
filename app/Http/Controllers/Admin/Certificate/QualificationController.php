@@ -42,7 +42,7 @@ class QualificationController extends Controller
     private function validateCreate(Request $request): array
     {
         return $request->validate([
-            'category_id' => ['required', Rule::in([QualificationCategory::QUALIFICATION_CATEGORY_01, QualificationCategory::QUALIFICATION_CATEGORY_02])],
+            'category_id' => ['required', Rule::exists("qualification_categories", "id")],
             'title' => ['required', 'string', 'max:80',],
             'certification_number' => ['required', 'numeric',],
             'grade' => ['required', 'string', 'max:80',],
@@ -57,7 +57,7 @@ class QualificationController extends Controller
     private function validateUpdate(Request $request): array
     {
         return $request->validate([
-            'category_id' => ['required', Rule::in([QualificationCategory::QUALIFICATION_CATEGORY_01, QualificationCategory::QUALIFICATION_CATEGORY_02])],
+            'category_id' => ['required', Rule::exists("qualification_categories", "id")],
             'title' => ['required', 'string', 'max:80',],
             'grade' => ['required', 'string', 'max:80',],
             'content' => ['required', 'max:80'],
