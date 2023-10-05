@@ -91,7 +91,6 @@
                                 </template>
                             </template>
                             <template v-if="lecture.programs_qualification_id != null">
-                                <template v-if="lecture.qualification_profiles_is_issued != 0">
                                     <!--발급된 경우-->
                                     <template v-if="lecture.qualification_status == 3">
                                         <!--불합격-->
@@ -105,11 +104,6 @@
                                         <!--그 외-->
                                         <button class="btn-lecture fail" disabled>자격증 대기중</button>
                                     </template>
-                                </template>
-                                <template v-else>
-                                    <!--미발급 된 경우-->
-                                    <button class="btn-lecture fail" disabled>자격증 대기중</button>
-                                </template>
                             </template>
                             <!-- <a class="btn-lecture fail">불합격</a> -->
                             <!-- 대기중 -->
