@@ -55,29 +55,24 @@
                     <td>{{ slotProps.row.student_number }}</td>
                     <td>{{ slotProps.row.score }}</td>
                     <td>
-                        <template v-if="slotProps.row.is_issued">
-                            발급완료
+                        <template v-if="slotProps.row.status == 2">대기중</template>
+                        <template v-else-if="slotProps.row.status == 3">불합격</template>
+                        <template v-else-if="slotProps.row.status == 4">합격</template>
+                        <template v-if="slotProps.row.type == '자격증'">
+                            <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control"
+                                    v-model="slotProps.row.status">
+                                <option value=2>대기중</option>
+                                <option value=3>불합격</option>
+                                <option value=4>합격</option>
+                            </select>
                         </template>
-                        <template v-else>
-                            <template v-if="slotProps.row.status == 2">대기중</template>
-                            <template v-else-if="slotProps.row.status == 3">불합격</template>
-                            <template v-else-if="slotProps.row.status == 4">합격</template>
-                            <template v-if="slotProps.row.type == '자격증'">
-                                <select @change="handleCertificatePass(slotProps.row.id, $event)" class="form-control"
-                                        v-model="slotProps.row.status">
-                                    <option value=2>대기중</option>
-                                    <option value=3>불합격</option>
-                                    <option value=4>합격</option>
-                                </select>
-                            </template>
-                            <template v-if="slotProps.row.type =='수료증'">
-                                <select @change="handleCompletionPass(slotProps.row.id, $event)" class="form-control"
-                                        v-model="slotProps.row.status">
-                                    <option value=2>대기중</option>
-                                    <option value=3>불합격</option>
-                                    <option value=4>합격</option>
-                                </select>
-                            </template>
+                        <template v-if="slotProps.row.type =='수료증'">
+                            <select @change="handleCompletionPass(slotProps.row.id, $event)" class="form-control"
+                                    v-model="slotProps.row.status">
+                                <option value=2>대기중</option>
+                                <option value=3>미수료</option>
+                                <option value=4>수료</option>
+                            </select>
                         </template>
                     </td>
                     <td>
