@@ -56,7 +56,10 @@
                     <td>{{ slotProps.row.score }}</td>
                     <td>
                         <template v-if="slotProps.row.status == 2">대기중</template>
-                        <template v-else-if="slotProps.row.status == 3">불합격</template>
+                        <template v-else-if="slotProps.row.status == 3">
+                            <template v-if="slotProps.row.type == '자격증'">불합격</template>
+                            <template v-else>미수료</template>
+                        </template>
                         <template v-else-if="slotProps.row.status == 4">
                             <template v-if="slotProps.row.type == '자격증'">합격</template>
                             <template v-else>수료</template>
