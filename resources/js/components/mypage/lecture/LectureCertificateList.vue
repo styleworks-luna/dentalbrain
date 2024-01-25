@@ -73,11 +73,11 @@
                                 <template v-if="lecture.completion_profiles_is_issued != 0">
                                     <!--발급된 경우-->
                                     <template v-if="lecture.completion_status == 3">
-                                        <!--불합격-->
-                                        <button class="btn-lecture fail" disabled>불합격</button>
+                                        <!--미수료-->
+                                        <button class="btn-lecture fail" disabled>미수료</button>
                                     </template>
                                     <template v-else-if="lecture.completion_status == 4">
-                                        <!--합격-->
+                                        <!--수료-->
                                         <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture btn-complete" target="_blank">수료증 보기</a>
                                     </template>
                                     <template v-else>
