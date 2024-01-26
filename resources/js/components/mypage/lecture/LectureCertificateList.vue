@@ -70,40 +70,32 @@
                     <div class="lecture-under">
                         <div class="btn-zone" :class="(lecture.programs_qualification_id != null && lecture.programs_completion_id  != null) ? ''  : 'btn-zone-one'">
                             <template v-if="lecture.programs_completion_id != null">
-                                <template v-if="lecture.completion_profiles_is_issued != 0">
-                                    <!--발급된 경우-->
-                                    <template v-if="lecture.completion_status == 3">
-                                        <!--미수료-->
-                                        <button class="btn-lecture fail" disabled>미수료</button>
-                                    </template>
-                                    <template v-else-if="lecture.completion_status == 4">
-                                        <!--수료-->
-                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture btn-complete" target="_blank">수료증 보기</a>
-                                    </template>
-                                    <template v-else>
-                                        <!--그 외-->
-                                        <button class="btn-lecture fail" disabled>수료증 대기중</button>
-                                    </template>
+                                <!--발급된 경우-->
+                                <template v-if="lecture.completion_status == 3">
+                                    <!--미수료-->
+                                    <button class="btn-lecture fail" disabled>미수료</button>
+                                </template>
+                                <template v-else-if="lecture.completion_status == 4">
+                                    <!--수료-->
+                                    <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/completion`" class="btn-lecture btn-complete" target="_blank">수료증 보기</a>
                                 </template>
                                 <template v-else>
-                                    <!--미발급 된 경우-->
-                                    <template><button class="btn-lecture fail" disabled>수료증 대기중</button></template>
+                                    <!--그 외-->
+                                    <button class="btn-lecture fail" disabled>수료증 대기중</button>
                                 </template>
                             </template>
-                            <template v-if="lecture.programs_qualification_id != null">
-                                    <!--발급된 경우-->
-                                    <template v-if="lecture.qualification_status == 3">
-                                        <!--불합격-->
-                                        <button class="btn-lecture fail" disabled>불합격</button>
-                                    </template>
-                                    <template v-else-if="lecture.qualification_status == 4">
-                                        <!--합격-->
-                                        <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/qualification`" class="btn-lecture btn-complete" target="_blank">자격증 보기</a>
-                                    </template>
-                                    <template v-else>
-                                        <!--그 외-->
-                                        <button class="btn-lecture fail" disabled>자격증 대기중</button>
-                                    </template>
+                            <!--발급된 경우-->
+                            <template v-if="lecture.qualification_status == 3">
+                                <!--불합격-->
+                                <button class="btn-lecture fail" disabled>불합격</button>
+                            </template>
+                            <template v-else-if="lecture.qualification_status == 4">
+                                <!--합격-->
+                                <a :href="`/certificate/pdf/program/${lecture.program_id}/user/${lecture.user_id}/qualification`" class="btn-lecture btn-complete" target="_blank">자격증 보기</a>
+                            </template>
+                            <template v-else>
+                                <!--그 외-->
+                                <button class="btn-lecture fail" disabled>자격증 대기중</button>
                             </template>
                             <!-- <a class="btn-lecture fail">불합격</a> -->
                             <!-- 대기중 -->
