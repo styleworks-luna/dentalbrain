@@ -190,7 +190,7 @@
                         </div>
                     </li>
                     <li class="instructor-content">
-                        <img src="{{ asset('images/desktop/instructor/instructor_11.jpg') }}" alt="김진" class="instructor-photo">
+                        <img src="{{ asset('images/desktop/instructor/instructor_11.png') }}" alt="김진" class="instructor-photo">
                         <div class="instructor-description">
                             <h2 class="instructor-name">김진</h2>
                             <ul class="instructor-career">

@@ -224,7 +224,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_11.jpg') }}" alt="김진"
+                            <img src="{{ asset('images/desktop/instructor/instructor_11.png') }}" alt="김진"
                                  class="instructor-photo">
 
                             <h2 class="instructor-name">김진</h2>
