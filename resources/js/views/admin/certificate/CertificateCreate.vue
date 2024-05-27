@@ -87,16 +87,16 @@
                     </div>
                     <pre class="certificate-content">{{ content }}</pre>
                     <p class="certificate-date">{{ date }}</p>
-                    <template v-if="categoryId === 1">
+                    <template v-if="categoryId == 1">
                         <div class="certificate-associate"><span>대한치과위생사협회</span> <span>대한치과의료관리학회</span></div>
                     </template>
-                    <template v-else-if="categoryId === 2" >
+                    <template v-else-if="categoryId == 2" >
                         <div class="certificate-associate"><span style="margin:0">한국치위생감염관리학회</span></div>
                     </template>
-                    <template v-else-if="categoryId === 3" >
+                    <template v-else-if="categoryId == 3" >
                         <div class="certificate-associate"><span style="margin:0">Oral Rehabilitation Society</span></div>
                     </template>
-                    <template v-else-if="categoryId === 4" >
+                    <template v-else-if="categoryId == 4" >
                         <div class="certificate-associate"><span style="margin:0">(주) 브레인스펙</span></div>
                     </template>
                     <div class="certificate-main-associate-wrap">
