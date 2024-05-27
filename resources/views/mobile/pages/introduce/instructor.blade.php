@@ -231,9 +231,10 @@
                         </div>
                         <div class="instructor-description">
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
+                                <li>㈜브레인스펙 전문강사</li>
+                                <li>전)전주미르치과병원 예방센터 센터장</li>
                                 <li>전)한림성심대학교 치위생과 교수</li>
-                                <li>분야 : 전문가구강관리프로그램</li>
+                                <li>저서 및 논문: 치위생과정에 근거한 임상치위생 실습서, 임상치위생학</li>
                             </ul>
                         </div>
                     </li>

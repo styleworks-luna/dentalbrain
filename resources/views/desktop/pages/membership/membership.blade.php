@@ -184,16 +184,16 @@
                 <div class="container">
                     <div class="membership-information-title">
                         <h2><em>유료 멤버십 회원</em>이 되면<br>어떤점이 달라지나요?</h2>
-                        <p>유료회원의 혜택(유료 멤버십 회원)을 위한 특별 혜택입니다.<br>
-                            브레인스펙이 운영하는 온라인교육원 덴탈브레인의 전 교육 과정은 계속 업데이트 되며 혜택을 받을 수 있습니다. </p>
+                        <p>덴탈브레인 유료 멤버십 회원에게 제공되는 특별 혜택입니다.<br>
+                            ㈜브레인스펙이 운영하는 치과 온 · 오프라인 교육 플랫폼 덴탈브레인의 전 교육 과정은 계속 업데이트 되며 혜택을 받을 수 있습니다. </p>
                     </div>
                     <div class="membership-information-content-wrap">
                         <div class="membership-information-content">
                             <div class="membership-information-content-item">
                                 <img src="{{ asset('images/desktop/membership/membership_icon_01.svg') }}"
                                      alt="membership_icon_1">
-                                <p>모든 강의를 1년 동안<br>
-                                    특별 할인가에 수강 가능!</p>
+                                <p>다양한 온 · 오프라인 강의를 1년 동안<br>
+                                최대 50% 할인된 특별 할인가에 수강 가능!</p>
                             </div>
                             <div class="membership-information-content-item">
                                 <img src="{{ asset('images/desktop/membership/membership_icon_02.svg') }}"
@@ -204,8 +204,8 @@
                             <div class="membership-information-content-item">
                                 <img src="{{ asset('images/desktop/membership/membership_icon_03.svg') }}"
                                      alt="membership_icon_3">
-                                <p>브레인스펙의<br>
-                                    각종 행사와 특강 초대!</p>
+                                <p>유료 회원만을 위한<br>
+                                    다양한 연간 무료 구독 강의 제공</p>
                             </div>
                         </div>
                         <div class="membership-information-content">
