@@ -20,12 +20,8 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-        // 'paid' 조건을 확인
-        $paidQuery = (clone $query)->paid();
-
-        // 합계와 개수 계산
-        $sum = $paidQuery->sum('totalAmount');
-        $count = $paidQuery->count();
+        $sum = (clone $query)->paid()->sum('totalAmount');
+        $count = (clone $query)->paid()->count();
 
         return response()->json([
             'payments' => (clone $query)->paginate(10),
