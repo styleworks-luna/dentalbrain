@@ -22,12 +22,12 @@ class PaymentController extends Controller
     {
         $query = $this->search($request);
 
-        // 서브쿼리를 사용하여 sum과 count 계산
-        $sumAndCount = DB::table(DB::raw("({$query->toSql()}) as sub"))
-            ->mergeBindings($query->getQuery())
-            ->selectRaw('SUM(totalAmount) as total, COUNT(*) as count')
-            ->where('status', 'in', [Payment::$DONE, Payment::$ANOTHER_DONE])
-            ->first();
+        // 원본 쿼리에서 필요한 조건만 포함하는 새 쿼리 생성
+        $sumQuery = $query->clone()
+            ->selectRaw('SUM(payments.totalAmount) as total, COUNT(*) as count')
+            ->whereIn('payments.status', [Payment::$DONE, Payment::$ANOTHER_DONE]);
+
+        $sumAndCount = $sumQuery->first();
 
         $sum = $sumAndCount->total ?? 0;
         $count = $sumAndCount->count ?? 0;
