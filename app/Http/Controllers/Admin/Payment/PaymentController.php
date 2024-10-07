@@ -25,8 +25,10 @@ class PaymentController extends Controller
         // 페이지네이션과 집계를 동시에 수행
         $pagedResults = $query->paginate(10);
 
-        // 전체 결과에 대한 합계와 개수를 계산
-        $totals = $query->selectRaw('SUM(CASE WHEN status IN (?, ?) THEN totalAmount ELSE 0 END) as total_sum, COUNT(CASE WHEN status IN (?, ?) THEN 1 END) as total_count', [
+        $totals = $query->selectRaw('
+            SUM(CASE WHEN status IN (?, ?) THEN totalAmount ELSE 0 END) as total_sum,
+            COUNT(CASE WHEN status IN (?, ?) THEN 1 ELSE NULL END) as total_count
+        ', [
             Payment::$DONE, Payment::$ANOTHER_DONE,
             Payment::$DONE, Payment::$ANOTHER_DONE
         ])->first();
