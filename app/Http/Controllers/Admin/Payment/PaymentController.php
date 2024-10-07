@@ -21,23 +21,13 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-
-        // 페이지네이션과 집계를 동시에 수행
-        $pagedResults = $query->paginate(10);
-
-        $totals = $query->selectRaw('
-            SUM(CASE WHEN status IN (?, ?) THEN totalAmount ELSE 0 END) as total_sum,
-            COUNT(CASE WHEN status IN (?, ?) THEN 1 ELSE NULL END) as total_count
-        ', [
-            Payment::$DONE, Payment::$ANOTHER_DONE,
-            Payment::$DONE, Payment::$ANOTHER_DONE
-        ])
-            ->groupBy('payments.id')->first();
+        $sum = (clone $query)->paid()->sum('totalAmount');
+        $count = (clone $query)->paid()->count();
 
         return response()->json([
-            'payments' => $pagedResults,
-            'sum' => number_format($totals->total_sum ?? 0),
-            'count' => $totals->total_count ?? 0,
+            'payments' => (clone $query)->paginate(10),
+            'sum' => number_format($sum),
+            'count' => $count,
         ]);
     }
 
