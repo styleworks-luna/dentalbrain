@@ -29,15 +29,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (env('APP_ENV') == 'local') {
-            DB::listen(function ($query) {
-                Log::info("DB QUERIED", [
-                    $query->sql,
-                    $query->bindings,
-                    $query->time
-                ]);
-            });
-        }
+        DB::listen(function ($query) {
+            Log::info("DB QUERIED", [
+                $query->sql,
+                $query->bindings,
+                $query->time
+            ]);
+        });
 
         if (env('APP_ENV') == 'production') {
             URL::forceScheme('https');
