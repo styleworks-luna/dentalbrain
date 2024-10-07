@@ -22,23 +22,19 @@ class PaymentController extends Controller
     {
         $query = $this->search($request);
 
-        // 원본 쿼리에서 필요한 조건만 포함하는 새 쿼리 생성
-        $sumQuery = $query->clone()
-            ->selectRaw('SUM(payments.totalAmount) as total, COUNT(*) as count')
-            ->whereIn('payments.status', [Payment::$DONE, Payment::$ANOTHER_DONE]);
+        // 페이지네이션과 집계를 동시에 수행
+        $pagedResults = $query->paginate(10);
 
-        $sumAndCount = $sumQuery->first();
-
-        $sum = $sumAndCount->total ?? 0;
-        $count = $sumAndCount->count ?? 0;
-
-        // 페이지네이션 적용
-        $payments = $query->paginate(10);
+        // 전체 결과에 대한 합계와 개수를 계산
+        $totals = $query->selectRaw('SUM(CASE WHEN status IN (?, ?) THEN totalAmount ELSE 0 END) as total_sum, COUNT(CASE WHEN status IN (?, ?) THEN 1 END) as total_count', [
+            Payment::$DONE, Payment::$ANOTHER_DONE,
+            Payment::$DONE, Payment::$ANOTHER_DONE
+        ])->first();
 
         return response()->json([
-            'payments' => $payments,
-            'sum' => number_format($sum),
-            'count' => $count,
+            'payments' => $pagedResults,
+            'sum' => number_format($totals->total_sum ?? 0),
+            'count' => $totals->total_count ?? 0,
         ]);
     }
 
