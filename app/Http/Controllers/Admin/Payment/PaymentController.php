@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,11 +21,22 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-        $sum = (clone $query)->paid()->sum('totalAmount');
-        $count = (clone $query)->paid()->count();
+
+        // 서브쿼리를 사용하여 sum과 count 계산
+        $sumAndCount = DB::table(DB::raw("({$query->toSql()}) as sub"))
+            ->mergeBindings($query->getQuery())
+            ->selectRaw('SUM(totalAmount) as total, COUNT(*) as count')
+            ->where('status', 'in', [Payment::$DONE, Payment::$ANOTHER_DONE])
+            ->first();
+
+        $sum = $sumAndCount->total ?? 0;
+        $count = $sumAndCount->count ?? 0;
+
+        // 페이지네이션 적용
+        $payments = $query->paginate(10);
 
         return response()->json([
-            'payments' => (clone $query)->paginate(10),
+            'payments' => $payments,
             'sum' => number_format($sum),
             'count' => $count,
         ]);
