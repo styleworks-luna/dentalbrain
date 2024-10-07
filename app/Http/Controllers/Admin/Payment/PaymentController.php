@@ -20,8 +20,12 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-        $sum = (clone $query)->paid()->sum('totalAmount');
-        $count = (clone $query)->paid()->count();
+        // 'paid' 조건을 확인
+        $paidQuery = (clone $query)->paid();
+
+        // 합계와 개수 계산
+        $sum = $paidQuery->sum('totalAmount');
+        $count = $paidQuery->count();
 
         return response()->json([
             'payments' => (clone $query)->paginate(10),
@@ -40,28 +44,16 @@ class PaymentController extends Controller
 
         $payments = Payment::query()
             ->select(
-                'payments.id',
-                'payments.totalAmount',
-                'payments.receiptUrl',
-                'payments.method',
-                'payments.status',
-                'payments.requestedAt',
-                'payments.approvedAt',
-                'programs.is_online',
-                'programs.title',
-                'programs.id as program_id',
-                'program_students.id as student_id',
-                'program_students.user_id',
-                'program_students.pay_status as program_pay_status',
-                'memberships.id as membership_id',
-                'memberships.pay_status as membership_pay_status',
-                'memberships.applied_days',
-                'recruits.id as recruit_id',
-                'recruits.company_name as recruit_company_name',
-                'recruits.pay_status as recruit_pay_status',
-                'users.name',
-                'users.email',
-                'users.phone'
+                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
+
+                'programs.is_online', 'programs.title', 'programs.id as program_id',
+                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
+
+                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
+
+                'recruits.id as recruit_id', 'recruits.company_name as recruit_company_name', 'recruits.pay_status as recruit_pay_status',
+
+                'users.name', 'users.email', 'users.phone'
             )
             ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
             ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
@@ -69,10 +61,9 @@ class PaymentController extends Controller
             ->leftJoin('recruits', 'recruits.payment_id', '=', 'payments.id')
             ->leftJoin('users', function (JoinClause $join) {
                 $join->on('users.id', '=', 'program_students.user_id')
-                    ->orWhere('users.id', '=', 'memberships.user_id')
-                    ->orWhere('users.id', '=', 'recruits.user_id');
+                    ->orOn('users.id', '=', 'memberships.user_id')
+                    ->orOn('users.id', '=', 'recruits.user_id');
             });
-
 
 
         if ($category == '온라인') {
