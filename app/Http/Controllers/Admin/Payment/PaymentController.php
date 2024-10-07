@@ -21,16 +21,15 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-        $results = $query
-            ->selectRaw('SUM(totalAmount) as total_sum, COUNT(*) as total_count')
+        $payments = $query
             ->paid()
-            ->first();
+            ->get();
 
-        $sum = $results->total_sum;
-        $count = $results->total_count;
+        $sum = $payments->sum('totalAmount');
+        $count = $payments->count();
 
         return response()->json([
-            'payments' => (clone $query)->paginate(10),
+            'payments' => $query->paginate(10),
             'sum' => number_format($sum),
             'count' => $count,
         ]);
