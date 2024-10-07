@@ -31,7 +31,8 @@ class PaymentController extends Controller
         ', [
             Payment::$DONE, Payment::$ANOTHER_DONE,
             Payment::$DONE, Payment::$ANOTHER_DONE
-        ])->first();
+        ])
+            ->groupBy('payments.id')->first();
 
         return response()->json([
             'payments' => $pagedResults,
