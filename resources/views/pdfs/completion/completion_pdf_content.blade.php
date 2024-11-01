@@ -8,11 +8,17 @@
     <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
-    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
+    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(), 'Y년 M월 D일') }}</p>
     <div class="certificate-associate">
-        @foreach($categories as $category)
-            <span>{{ $category }}</span>
-        @endforeach
+        @if ($categories === ['Oral RehabilitationSociety', '대한구강위생관리학회'])
+            @foreach($categories as $category)
+                <span class="font-28">{{$category}}</span>
+            @endforeach
+        @else
+            @foreach($categories as $category)
+                <span>{{$category}}</span>
+            @endforeach
+        @endif
     </div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>

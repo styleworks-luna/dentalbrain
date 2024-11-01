@@ -138,6 +138,14 @@
         margin-right: 50px;
     }
 
+    .certification-wrap .certificate-associate .font-28 {
+        font-size: 33px;
+    }
+
+    .certification-wrap .certificate-associate .font-28:first-child {
+        margin-right: 30px;
+    }
+
     .certification-wrap .certificate-main-associate {
         position: relative;
         text-align: center;
