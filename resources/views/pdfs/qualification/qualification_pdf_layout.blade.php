@@ -163,23 +163,15 @@
     }
 
     .certification-wrap .certificate-associate {
-        margin-top: 150px;
+        margin-top: 70px;
         text-align: center;
     }
 
     .certification-wrap .certificate-associate span {
-        font-size: 38px;
-    }
-
-    .certification-wrap .certificate-associate span:first-child {
-        margin-right: 50px;
-    }
-
-    .certification-wrap .certificate-associate .font-28 {
         font-size: 33px;
     }
 
-    .certification-wrap .certificate-associate .font-28:first-child {
+    .certification-wrap .certificate-associate span:first-child {
         margin-right: 30px;
     }
 
