@@ -142,8 +142,8 @@
         margin-left: 30px;
     }
 
-    .certification-wrap .certificate-associate span:first-child {
-        margin-left: 30px;
+    .certification-wrap .certificate-associate span:last-child {
+        margin-left: o;
     }
 
     .certification-wrap .certificate-main-associate {
