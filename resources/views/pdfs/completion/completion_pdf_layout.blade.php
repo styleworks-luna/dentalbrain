@@ -132,9 +132,6 @@
     }
 
     .certification-wrap .certificate-associate {
-        display: flex;
-        justify-content: center;
-        gap: 33px;
         margin-top: 75px;
         margin-bottom: 75px;
         text-align: center;
@@ -142,9 +139,10 @@
 
     .certification-wrap .certificate-associate span {
         font-size: 33px;
+        margin-left: 30px;
     }
 
-    .certification-wrap .certificate-associate span:not(:first-child) {
+    .certification-wrap .certificate-associate span:first-child {
         margin-left: 30px;
     }
 
