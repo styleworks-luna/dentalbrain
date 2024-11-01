@@ -177,6 +177,10 @@
         margin-left: 0;
     }
 
+    .certification-wrap .certificate-associate span:first-child {
+        margin-left: 10px;
+    }
+
     .certification-wrap .certificate-main-associate {
         position: relative;
         text-align: center;
