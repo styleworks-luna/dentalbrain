@@ -19,6 +19,7 @@
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(), 'Y년 M월 D일') }}</p>
     <div class="certificate-associate">
+        {{$categories}}
         @if ($categories === ['Oral RehabilitationSociety', '대한구강위생관리학회'])
             @foreach($categories as $category)
                 <span class="font-28">{{$category}}</span>
