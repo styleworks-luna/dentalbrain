@@ -1,4 +1,3 @@
-
 <div class="certification-wrap">
     <img src="{{ $staticImages['certification_back'] }}" class="background-image" alt="background-image">
     <div class="img-wrap">
@@ -10,7 +9,7 @@
     <div class="certificate-information-wrap">
         <div class="certificate-text-wrap">
             <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
-            <p class="certificate-birth">생년월일 : {{ carbonDate($profile->birthday,'Y-MM-DD') }}</p>
+            <p class="certificate-birth">생년월일 : {{ carbonDate($profile->birthday, 'Y-MM-DD') }}</p>
             <p class="certificate-grade">자격등급 : {{ $certification->grade }}</p>
         </div>
         <div class="certificate-image-wrap">
@@ -18,11 +17,17 @@
         </div>
     </div>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
-    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
+    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(), 'Y년 M월 D일') }}</p>
     <div class="certificate-associate">
-        @foreach($categories as $category)
-            <span>{{$category}}</span>
-        @endforeach
+        @if ($categories === ['Oral RehabilitationSociety', '대한구강위생관리학회'])
+            @foreach($categories as $category)
+                <span class="font-28">{{$category}}</span>
+            @endforeach
+        @else
+            @foreach($categories as $category)
+                <span>{{$category}}</span>
+            @endforeach
+        @endif
     </div>
     <div class="certificate-main-associate-wrap">
         <p class="certificate-main-associate">대한치과경영관리협회</p>
