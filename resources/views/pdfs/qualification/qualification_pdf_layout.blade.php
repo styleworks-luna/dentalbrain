@@ -177,7 +177,7 @@
         margin-left: 0;
     }
 
-    .certification-wrap .certificate-associate span:first-child {
+    .certification-wrap .certificate-associate span:last-child {
         margin-left: 10px;
     }
 
