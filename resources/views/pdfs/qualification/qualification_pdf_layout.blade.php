@@ -172,8 +172,8 @@
         font-size: 33px;
     }
 
-    .certification-wrap .certificate-associate span:not(:last-child) {
-        margin-right: 30px;
+    .certification-wrap .certificate-associate span:not(:first-child) {
+        margin-left: 30px;
     }
 
     .certification-wrap .certificate-main-associate {
