@@ -163,6 +163,9 @@
     }
 
     .certification-wrap .certificate-associate {
+        display: flex;
+        justify-content: center;
+        gap: 33px;
         margin-top: 75px;
         margin-bottom: 75px;
         text-align: center;
