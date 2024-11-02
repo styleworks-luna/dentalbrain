@@ -173,7 +173,7 @@
     }
 
     .certification-wrap .certificate-associate .margin-left {
-        margin-left: 100px;
+        margin-left: 30px;
     }
 
     .certification-wrap .certificate-main-associate {
