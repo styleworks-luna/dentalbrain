@@ -173,9 +173,9 @@
         margin-left: 5px;
     }
 
-    .certification-wrap .certificate-associate .margin-left {
+    /* .certification-wrap .certificate-associate .margin-left {
         margin-left: 100px;
-    }
+    } */
 
     .certification-wrap .certificate-associate span:first-child {
         margin-left: 0;
