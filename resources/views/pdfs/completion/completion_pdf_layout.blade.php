@@ -138,8 +138,7 @@
     }
 
     .certification-wrap .certificate-associate span {
-        font-size: 33px;
-        margin: 0;
+        font-size: 38px;
     }
 
     .certification-wrap .certificate-associate .margin-left {
