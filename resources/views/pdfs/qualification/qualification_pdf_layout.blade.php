@@ -170,7 +170,7 @@
 
     .certification-wrap .certificate-associate span {
         font-size: 33px;
-        margin-left: 10px;
+        margin-left: 0 !important;
     }
 
     .certification-wrap .certificate-associate .margin-left {
