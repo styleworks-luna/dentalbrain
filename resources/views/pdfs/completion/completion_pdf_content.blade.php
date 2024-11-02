@@ -11,9 +11,15 @@
     <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(), 'Y년 M월 D일') }}</p>
     <div class="certificate-associate">
         @foreach($categories as $category)
-            <span class="{{ in_array($category, ['대한치과의료관리학회', '대한구강위생관리학회']) ? 'margin-left' : '' }}">
-                {{$category}}
-            </span>
+            @if (in_array($category, ['대한치과의료관리학회', '대한구강위생관리학회']))
+                <span class="margin-left">
+                    {{ $category }}
+                </span>
+            @else
+                <span>
+                    {{ $category }}
+                </span>
+            @endif
         @endforeach
     </div>
     <div class="certificate-main-associate-wrap">
