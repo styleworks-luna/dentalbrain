@@ -141,9 +141,9 @@
         font-size: 33px;
     }
 
-    /* .certification-wrap .certificate-associate .margin-left {
+    .certification-wrap .certificate-associate .margin-left {
         margin-left: 100px;
-    } */
+    }
 
     .certification-wrap .certificate-main-associate {
         position: relative;
