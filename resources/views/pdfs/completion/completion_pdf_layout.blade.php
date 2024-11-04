@@ -139,17 +139,17 @@
     }
 
     .certification-wrap .certificate-associate span {
-        font-size: 38px;
+        font-size: 42px;
     }
 
     .certification-wrap .certificate-associate span:last-child {
-        margin-left: 40px;
+        margin-left: 50px;
     }
 
     .certification-wrap .certificate-main-associate {
         position: relative;
         text-align: center;
-        font-size: 50px;
+        font-size: 55px;
         color: #1d1d1b;
         z-index: 10;
     }
