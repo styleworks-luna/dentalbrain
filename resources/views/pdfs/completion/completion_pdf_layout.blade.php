@@ -138,7 +138,7 @@
     }
 
     .certification-wrap .certificate-associate span {
-        font-size: 35px;
+        font-size: 33px;
     }
 
     .certification-wrap .certificate-associate span:last-child {
