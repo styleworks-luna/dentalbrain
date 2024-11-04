@@ -166,6 +166,7 @@
         margin-top: 75px;
         margin-bottom: 75px;
         text-align: center;
+        white-space: nowrap;
     }
 
     .certification-wrap .certificate-associate span {
