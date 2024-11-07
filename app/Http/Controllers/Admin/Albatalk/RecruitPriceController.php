@@ -23,7 +23,6 @@ class RecruitPriceController extends Controller
 
     public function updateNormal(Request $request)
     {
-        logger($request->all());
         $request->validate([
             'price' => ['required', 'numeric']
         ]);

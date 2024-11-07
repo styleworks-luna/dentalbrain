@@ -8,8 +8,6 @@ use App\Models\Payments\Payment;
 use App\Models\Program\Program;
 use App\Models\Program\ProgramStudent;
 use App\Services\Program\ProgramTemplate;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +19,8 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $query = $this->search($request);
-        $sum = (clone $query)->paid()->sum('totalAmount');
-        $count = (clone $query)->paid()->count();
+        $sum = (clone $query)->whereIn('status', [Payment::$ANOTHER_DONE, Payment::$DONE])->sum('totalAmount');
+        $count = (clone $query)->whereIn('status', [Payment::$ANOTHER_DONE, Payment::$DONE])->count();
 
         return response()->json([
             'payments' => (clone $query)->paginate(10),
@@ -39,34 +37,135 @@ class PaymentController extends Controller
         $start_date = $request->get('start_date');
         $end_date = $request->get('end_date');
 
-        $payments = Payment::query()
-            ->select(
-                'payments.id', 'payments.totalAmount', 'payments.receiptUrl', 'payments.method', 'payments.status', 'payments.requestedAt', 'payments.approvedAt',
+        $payments = DB::table(DB::raw("(
+        SELECT payments.id,
+            payments.totalAmount,
+            payments.receiptUrl,
+            payments.method,
+            payments.status,
+            payments.requestedAt,
+            payments.approvedAt,
+            programs.is_online,
+            programs.title,
+            programs.id as program_id,
+            program_students.id as student_id,
+            program_students.user_id,
+            program_students.pay_status as program_pay_status,
+            NULL as membership_id,
+            NULL as membership_pay_status,
+            NULL as applied_days,
+            NULL as recruit_id,
+            NULL as recruit_company_name,
+            NULL as recruit_pay_status,
+            users.name,
+            users.email,
+            users.phone
+        FROM payments
+        JOIN program_students ON program_students.payment_id = payments.id
+        JOIN programs ON programs.id = program_students.program_id
+        JOIN users ON users.id = program_students.user_id
+        WHERE payments.deleted_at IS NULL
 
-                'programs.is_online', 'programs.title', 'programs.id as program_id',
-                'program_students.id as student_id', 'program_students.user_id', 'program_students.pay_status as program_pay_status',
+        UNION ALL
 
-                'memberships.id as membership_id', 'memberships.pay_status as membership_pay_status', 'memberships.applied_days',
+        SELECT payments.id,
+            payments.totalAmount,
+            payments.receiptUrl,
+            payments.method,
+            payments.status,
+            payments.requestedAt,
+            payments.approvedAt,
+            NULL as is_online,
+            NULL as title,
+            NULL as program_id,
+            NULL as student_id,
+            NULL as user_id,
+            NULL as program_pay_status,
+            memberships.id as membership_id,
+            memberships.pay_status as membership_pay_status,
+            memberships.applied_days,
+            NULL as recruit_id,
+            NULL as recruit_company_name,
+            NULL as recruit_pay_status,
+            users.name,
+            users.email,
+            users.phone
+        FROM payments
+        JOIN memberships ON memberships.payment_id = payments.id
+        JOIN users ON users.id = memberships.user_id
+        WHERE payments.deleted_at IS NULL
 
-                'recruits.id as recruit_id', 'recruits.company_name as recruit_company_name', 'recruits.pay_status as recruit_pay_status',
+        UNION ALL
 
-                'users.name', 'users.email', 'users.phone'
-            )
-            ->leftJoin('program_students', 'program_students.payment_id', '=', 'payments.id')
-            ->leftJoin('memberships', 'memberships.payment_id', '=', 'payments.id')
-            ->leftJoin('programs', 'programs.id', '=', 'program_students.program_id')
-            ->leftJoin('recruits', 'recruits.payment_id', '=', 'payments.id')
-            ->leftJoin('users', function (JoinClause $join) {
-                $join->on('users.id', '=', 'program_students.user_id')
-                    ->orOn('users.id', '=', 'memberships.user_id')
-                    ->orOn('users.id', '=', 'recruits.user_id');
-            });
+        SELECT payments.id,
+            payments.totalAmount,
+            payments.receiptUrl,
+            payments.method,
+            payments.status,
+            payments.requestedAt,
+            payments.approvedAt,
+            NULL as is_online,
+            NULL as title,
+            NULL as program_id,
+            NULL as student_id,
+            NULL as user_id,
+            NULL as program_pay_status,
+            NULL as membership_id,
+            NULL as membership_pay_status,
+            NULL as applied_days,
+            recruits.id as recruit_id,
+            recruits.company_name as recruit_company_name,
+            recruits.pay_status as recruit_pay_status,
+            users.name,
+            users.email,
+            users.phone
+        FROM payments
+        JOIN recruits ON recruits.payment_id = payments.id
+        JOIN users ON users.id = recruits.user_id
+        WHERE payments.deleted_at IS NULL
 
+        UNION ALL
 
+        SELECT payments.id,
+            payments.totalAmount,
+            payments.receiptUrl,
+            payments.method,
+            payments.status,
+            payments.requestedAt,
+            payments.approvedAt,
+            NULL as is_online,
+            NULL as title,
+            NULL as program_id,
+            NULL as student_id,
+            NULL as user_id,
+            NULL as program_pay_status,
+            NULL as membership_id,
+            NULL as membership_pay_status,
+            NULL as applied_days,
+            recruits.id as recruit_id,
+            recruits.company_name as recruit_company_name,
+            recruits.pay_status as recruit_pay_status,
+            users.name,
+            users.email,
+            users.phone
+        FROM payments
+        LEFT JOIN program_students ON program_students.payment_id = payments.id
+        LEFT JOIN programs ON programs.id = program_students.program_id
+        LEFT JOIN memberships ON memberships.payment_id = payments.id
+        LEFT JOIN recruits ON recruits.payment_id = payments.id
+        LEFT JOIN users ON users.id = recruits.user_id
+        WHERE payments.deleted_at IS NULL
+            AND program_students.id IS NULL
+            AND memberships.id IS NULL
+            AND recruits.id IS NULL
+        ) as combined"))
+            ->orderBy('id', 'desc');
+
+        // 조건 추가
         if ($category == '온라인') {
-            $payments->where('programs.is_online', '=', 1);
+            $payments->where('is_online', '=', 1);
         } elseif ($category == '오프라인') {
-            $payments->where('programs.is_online', '=', 0);
+            $payments->where('is_online', '=', 0);
         } elseif ($category == '유료회원') {
             $payments->whereHas('membership');
         } elseif ($category == '알바톡') {
@@ -74,36 +173,37 @@ class PaymentController extends Controller
         }
 
         if ($status == Payment::$DONE) {
-            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
-                $query->orWhere('payments.status', '=', Payment::$DONE)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_DONE);
+            $payments->where(function ($query) use ($status) {
+                $query->orWhere('status', '=', Payment::$DONE)
+                    ->orWhere('status', '=', Payment::$ANOTHER_DONE);
             });
 
         } elseif ($status == Payment::$CANCELED) {
-            $payments->where(/* @param Builder $query */ function ($query) use ($status) {
-                $query->orWhere('payments.status', '=', Payment::$CANCELED)
-                    ->orWhere('payments.status', '=', Payment::$ANOTHER_REJECTED);
+            $payments->where(function ($query) use ($status) {
+                $query->orWhere('status', '=', Payment::$CANCELED)
+                    ->orWhere('status', '=', Payment::$ANOTHER_REJECTED);
             });
         }
 
         if ($keyword !== null) {
             $payments->where(function ($query) use ($keyword) {
-                $query->orWhere('programs.title', 'like', '%' . $keyword . '%')
-                    ->orWhere('users.name', 'like', '%' . $keyword . '%')
-                    ->orWhere('users.email', 'like', '%' . $keyword . '%')
-                    ->orWhere('payments.totalAmount', '=', $keyword);
+                $query->orWhere('title', 'like', '%' . $keyword . '%')
+                    ->orWhere('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('email', 'like', '%' . $keyword . '%')
+                    ->orWhere('totalAmount', '=', $keyword);
             });
         }
 
         if ($start_date !== null) {
-            $payments->where('payments.requestedAt', '>', $start_date);
+            $payments->where('requestedAt', '>', $start_date);
         }
 
         if ($end_date !== null) {
-            $payments->where('payments.requestedAt', '<', $end_date);
+            $payments->where('requestedAt', '<', $end_date);
         }
 
-        return $payments->orderBy('payments.id', 'desc');
+        // 결과 정렬 및 반환
+        return $payments;
     }
 
     public function paymentExport(Request $request)
