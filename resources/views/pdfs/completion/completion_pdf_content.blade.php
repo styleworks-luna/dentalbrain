@@ -8,10 +8,12 @@
     <p class="certificate-name">성<span class="for-margin"></span>명 : {{ $profile->name }}</p>
     <pre class="certificate-content">{!! $certification->content !!}</pre>
     <p class="certificate-sub-content">{{ $certification->bottom_content }}</p>
-    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(),'Y년 M월 D일') }}</p>
+    <p class="certificate-date"> {{ carbonDate($profile->passed_at ?? time(), 'Y년 M월 D일') }}</p>
     <div class="certificate-associate">
         @foreach($categories as $category)
-            <span>{{ $category }}</span>
+            <span>
+                {{ trim($category) }}
+            </span>
         @endforeach
     </div>
     <div class="certificate-main-associate-wrap">

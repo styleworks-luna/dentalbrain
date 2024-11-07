@@ -1,10 +1,16 @@
 <html>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
-    html, body, div, span,
-    h1, h2, h3,
-    p, pre,
+    html,
+    body,
+    div,
+    span,
+    h1,
+    h2,
+    h3,
+    p,
+    pre,
     img {
         margin: 0;
         padding: 0;
@@ -126,22 +132,24 @@
     }
 
     .certification-wrap .certificate-associate {
-        margin-top: 150px;
+        margin-top: 75px;
+        margin-bottom: 75px;
         text-align: center;
+        white-space: nowrap;
     }
 
     .certification-wrap .certificate-associate span {
-        font-size: 38px;
+        font-size: 42px;
     }
 
-    .certification-wrap .certificate-associate span:first-child {
-        margin-right: 50px;
+    .certification-wrap .certificate-associate span:last-child {
+        margin-left: 50px;
     }
 
     .certification-wrap .certificate-main-associate {
         position: relative;
         text-align: center;
-        font-size: 50px;
+        font-size: 55px;
         color: #1d1d1b;
         z-index: 10;
     }
@@ -178,9 +186,10 @@
     .certificate-background-logo {
         z-index: -97;
     }
-
 </style>
+
 <body>
-@yield('content')
+    @yield('content')
 </body>
+
 </html>

@@ -99,6 +99,9 @@
                     <template v-else-if="categoryId == 4" >
                         <div class="certificate-associate"><span style="margin:0">(주) 브레인스펙</span></div>
                     </template>
+                    <template v-else-if="categoryId == 5" >
+                        <div class="certificate-associate"><span class="font-28">Oral Rehabilitation Society</span> <span class="font-28">대한구강위생관리학회</span></div>
+                    </template>
                     <div class="certificate-main-associate-wrap">
                         <p class="certificate-main-associate">대한치과경영관리협회</p>
                         <img src="/images/admin/sign.png" class="sign" alt="SIGN">

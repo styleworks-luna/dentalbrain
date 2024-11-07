@@ -30,7 +30,7 @@ class QualificationPdf extends CertificationPdf
         $this->profile = $profile;
 
         // 협회 이름이 여러 개일 가능성이 있어서 ' '기준으로 나눠 배열에 담음
-        $this->categories = explode(" ", $categoryName);
+        $this->categories = explode("/", $categoryName);
         $this->staticImages = $pdfImages->getStaticImages();
     }
 
