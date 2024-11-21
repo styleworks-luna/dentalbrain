@@ -221,19 +221,13 @@
                     </div>
                     <div class="membership-information-content-wrap">
                         <div class="membership-information-content">
-                            <div class="membership-information-content-item">
+                            <div class="membership-information-content-item item-wide">
                                 <img src="{{ asset('images/desktop/membership/membership_icon_01.svg') }}"
                                      alt="membership_icon_1">
                                 <p>다양한 온 · 오프라인 강의를 1년 동안<br>
                                     최대 50% 할인된 특별 할인가에 수강 가능!</p>
                             </div>
-                            <div class="membership-information-content-item">
-                                <img src="{{ asset('images/desktop/membership/membership_icon_02.svg') }}"
-                                     alt="membership_icon_2">
-                                <p>유료 멤버십 회원 가입시<br>
-                                    웰컴 기프트 증정!</p>
-                            </div>
-                            <div class="membership-information-content-item">
+                            <div class="membership-information-content-item item-wide">
                                 <img src="{{ asset('images/desktop/membership/membership_icon_03.svg') }}"
                                      alt="membership_icon_3">
                                 <p>유료 회원만을 위한<br>
