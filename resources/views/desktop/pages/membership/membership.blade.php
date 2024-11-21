@@ -231,7 +231,7 @@
                         <div class="membership-price-item">
                             <h3>연간 유료 멤버십 결제</h3>
                             <span class="price">99,000원/연</span>
-                            <p class="price-tip">덴탈브레인 연간 유료 멤버십 가입 시 덴탈브레인의 다양한 강의를 최대 50% 할인된 비용으로 수강하실 수 있으며,<br>유료 회원만을 위한 무료 강의들을 보실 수 있습니다.
+                            <p class="price-tip">덴탈브레인 연간 유료 멤버십 가입 시 덴탈브레인의 다양한 강의를 최대 50% 할인된 비용으로 수강하실 수 있으며, 유료 회원만을 위한 무료 강의들을 보실 수 있습니다.
                                 <em>연간 유료 멤버십 유지 기간은 결제일로부터 1년입니다.</em></p>
                             <div class="yearly-membership-hidden">
                                 <div class="membership-payment-method">
