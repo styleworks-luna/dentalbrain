@@ -255,7 +255,7 @@
             <div class="membership-price-wrap">
                 <div class="m-container">
                     <div class="m-row">
-                        <h2>1년 365일 내내<br><em>유료회원</em> 가입 환영합니다!</h2>
+                        <h2>1년 365일 내내<br><em>유료 멤버십</em> 가입을 환영합니다!</h2>
                         @if($hasMembership)
                             <div class="membership-left-days">
                                 회원님의 유료회원 잔여기간은 <em>{{ $membershipLeftDays }}</em>일 입니다.
@@ -263,11 +263,11 @@
                         @endif
                         <div class="membership-price-content">
                             <div class="membership-price-item">
-                                <h3>유료회원 연 결제</h3>
+                                <h3>연간 유료 멤버십 결제</h3>
                                 <div class="price-item-row">
                                     <span class="price">99,000원/연</span>
-                                    <p class="price-tip">연 회비 99,000원을 결제하면 자동으로 유료회원이 되고, 결제일로부터
-                                        <em>1년 동안 무료강의와 할인 된 강의를 자유롭게 수강</em>하실 수 있습니다.</p>
+                                    <p class="price-tip">덴탈브레인 연간 유료 멤버십 가입 시 덴탈브레인의 다양한 강의를 최대 50% 할인된 비용으로 수강하실 수 있으며,<br>유료 회원만을 위한 무료 강의들을 보실 수 있습니다.
+                                    <em>연간 유료 멤버십 유지 기간은 결제일로부터 1년입니다.</em></p>
                                     <div class="yearly-membership-hidden">
                                         <div class="membership-payment-method">
                                             <span class=" border-line">결제방식</span>
