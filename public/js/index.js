@@ -2,38 +2,38 @@ $(function () {
     let mobileCheck = mobile_check()
 
     // header banner event in desktop
-    if (!mobileCheck) {
-        var cookieData = document.cookie;
-        if (cookieData.indexOf("close=Y") < 0) {
-            $('.header-banner').addClass('active');
-        } else {
-            $('.header-banner').removeClass('active');
-        }
+    // if (!mobileCheck) {
+    //     var cookieData = document.cookie;
+    //     if (cookieData.indexOf("close=Y") < 0) {
+    //         $('.header-banner').addClass('active');
+    //     } else {
+    //         $('.header-banner').removeClass('active');
+    //     }
 
-        if ($('.header-banner').hasClass('active')) {
-            $('.header').css({
-                'padding-top': '51px',
-                'transition': 'padding .5s ease-in-out',
-            });
-            $('.header-banner').slideDown(500);
-        } else {
-            $('.header').css({
-                'padding-top': 0,
-                'transition': 'padding .5s ease-in-out'
-            });
-            $('.header-banner').slideUp(500);
-        }
+    //     if ($('.header-banner').hasClass('active')) {
+    //         $('.header').css({
+    //             'padding-top': '51px',
+    //             'transition': 'padding .5s ease-in-out',
+    //         });
+    //         $('.header-banner').slideDown(500);
+    //     } else {
+    //         $('.header').css({
+    //             'padding-top': 0,
+    //             'transition': 'padding .5s ease-in-out'
+    //         });
+    //         $('.header-banner').slideUp(500);
+    //     }
 
-        $('.btn-close-banner').click(function (e) {
-            e.preventDefault();
-            setCookie("close", "Y", 0.125);
-            $('.header').css({
-                'padding-top': 0,
-                'transition': 'padding .5s ease-in-out'
-            });
-            $('.header-banner').slideUp(500);
-        })
-    }
+    //     $('.btn-close-banner').click(function (e) {
+    //         e.preventDefault();
+    //         setCookie("close", "Y", 0.125);
+    //         $('.header').css({
+    //             'padding-top': 0,
+    //             'transition': 'padding .5s ease-in-out'
+    //         });
+    //         $('.header-banner').slideUp(500);
+    //     })
+    // }
 
     function numFormat(variable) {
         variable = Number(variable).toString();

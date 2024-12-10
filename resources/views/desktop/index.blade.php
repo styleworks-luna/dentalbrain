@@ -18,7 +18,7 @@
 @endsection
 
 @section('content')
-    <article class="header-banner">
+    <article class="header-banner active">
         <a href="https://dentalbrain.co.kr/customer/notices/35">
             <img src="{{ asset('images/desktop/popup/header_banner.png') }}" alt="헤더 베너"/>
             {{--<a href="" class="btn-close-banner">닫기</a>--}}
