@@ -19,7 +19,7 @@
                 </ul>
                 <ul class="footer-information">
                     <li>
-                        <p>상호 : 주식회사 브레인스펙병원교육개발원 </p>
+                        <p>상호 : 주식회사 브레인스펙 </p>
                     </li>
                     <li>
                         <p>대표 : 김민정</p>
@@ -37,7 +37,7 @@
                         <p>사업장 소재지 : 서울특별시 서초구 효령로 140 (방배동,3층)</p>
                     </li>
                     <li>
-                        <p>TEL : 02-6747-6520</p>
+                        <p>TEL : 02-3676-2080</p>
                     </li>
                 </ul>
                 <div class="office-address">© BRAINSPEC. ALL RIGHTS RESERVED.</div>
