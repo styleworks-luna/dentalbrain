@@ -363,7 +363,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="김순남"
+                            <img src="{{ asset('images/desktop/instructor/instructor_19.png') }}" alt="김순남"
                                  class="instructor-photo">
                             <h2 class="instructor-name">김순남</h2>
                         </div>
@@ -377,7 +377,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="유진희"
+                            <img src="{{ asset('images/desktop/instructor/instructor_20.png') }}" alt="유진희"
                                  class="instructor-photo">
                             <h2 class="instructor-name">유진희</h2>
                         </div>
@@ -393,7 +393,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="조한나"
+                            <img src="{{ asset('images/desktop/instructor/instructor_21.png') }}" alt="조한나"
                                  class="instructor-photo">
                             <h2 class="instructor-name">조한나</h2>
                         </div>
@@ -411,7 +411,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="권민선"
+                            <img src="{{ asset('images/desktop/instructor/instructor_22.png') }}" alt="권민선"
                                  class="instructor-photo">
                             <h2 class="instructor-name">권민선</h2>
                         </div>
