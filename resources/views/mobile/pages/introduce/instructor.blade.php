@@ -240,17 +240,18 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_12.png') }}" alt="연태림"
+                            <img src="{{ asset('images/desktop/instructor/instructor_12.png') }}" alt="송지영"
                                  class="instructor-photo">
 
-                            <h2 class="instructor-name">연태림</h2>
+                            <h2 class="instructor-name">송지영</h2>
                         </div>
                         <div class="instructor-description">
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
-                                <li>서울이오스치과 실장</li>
-                                <li>보험청구협회 1급 자격증</li>
-                                <li>분야 : 데스크업무,치과보험청구, 고객관리</li>
+                                <li>㈜브레인스펙 전문강사</li>
+                                <li>보아치과 구강관리센터 담당 치과위생사</li>
+                                <li>대한치과위생학회 치위생과정 패컬티</li>
+                                <li>DA 스위스덴탈아카데미 강사</li>
+                                <li>분야: 계속구강관리</li>
                             </ul>
                         </div>
                     </li>
@@ -276,7 +277,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_14.png?20220106') }}" alt="변지은"
+                            <img src="{{ asset('images/desktop/instructor/instructor_14.png') }}" alt="변지은"
                                  class="instructor-photo">
                             <h2 class="instructor-name">변지은</h2>
                         </div>
@@ -293,22 +294,28 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_15.png?20220106') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_15.png') }}" alt="송고은"
                                  class="instructor-photo">
 
-                            <h2 class="instructor-name">이연아</h2>
+                            <h2 class="instructor-name">송고은</h2>
                         </div>
                         <div class="instructor-description">
                             <ul class="instructor-career">
-                                <li>㈜브레인스펙병원교육개발원 전문강사</li>
-                                <li>서울이오스치과 총괄실장</li>
-                                <li>분야: 치과매출분석관리, 고객상담, 데스크업무</li>
+                                <li>㈜브레인스펙 전문강사</li>
+                                <li>㈜바이럴비즈 대표이사</li>
+                                <li>㈜퍼포먼스웨이컨설팅 경영전략연구팀 책임연구원</li>
+                                <li>신용보증기금 전문컨설턴트</li>
+                                <li>소상공인시장진흥공단 전문위원</li>
+                                <li>전) (사)한국스마트컨설팅협회 전문위원</li>
+                                <li>전) ㈜씨스톤컨설팅 경영전략팀 팀장</li>
+                                <li>전) 인하대학교 기술혁신사업단 연구원</li>
+                                <li>분야: 진료권 분석 및 병의원 마케팅 개선 컨설팅</li>
                             </ul>
                         </div>
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_16.png?20220106') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_16.png') }}" alt="김민정"
                                  class="instructor-photo">
                             <h2 class="instructor-name">김민정</h2>
                         </div>
@@ -324,7 +331,7 @@
                     </li>
                     <li class="instructor-content">
                         <div class="instructor-head">
-                            <img src="{{ asset('images/desktop/instructor/instructor_17.png?20220106') }}" alt="이연아"
+                            <img src="{{ asset('images/desktop/instructor/instructor_17.png') }}" alt="윤경희"
                                  class="instructor-photo">
                             <h2 class="instructor-name">윤경희</h2>
                         </div>
@@ -336,6 +343,89 @@
                                 <li>대원대학교 치위생과 겸임교수</li>
                                 <li>이즈치과 실장</li>
                                 <li>전문분야 : 치과건강보험청구</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <div class="instructor-head">
+                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="이유리"
+                                 class="instructor-photo">
+                            <h2 class="instructor-name">이유리</h2>
+                        </div>
+                        <div class="instructor-description">
+                            <ul class="instructor-career">
+                                <li>닥터이치과 총괄실장</li>
+                                <li>브레인스펙 치과건강보험청구 강사</li>
+                                <li>브레인스펙 덴트웹 강사</li>
+                                <li>분야: 치과건강보험청구, 데스크업무</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <div class="instructor-head">
+                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="김순남"
+                                 class="instructor-photo">
+                            <h2 class="instructor-name">김순남</h2>
+                        </div>
+                        <div class="instructor-description">
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙 전문강사</li>
+                                <li>연세신치과 실장</li>
+                                <li>분야: 치과임상</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <div class="instructor-head">
+                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="유진희"
+                                 class="instructor-photo">
+                            <h2 class="instructor-name">유진희</h2>
+                        </div>
+                        <div class="instructor-description">
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙 치아보험 전문강사</li>
+                                <li>iFA 종합금융 보험 설계사</li>
+                                <li>보험설계사 대상의 치아보험 강사</li>
+                                <li>전) 다수 치과 총괄실장</li>
+                                <li>분야: 치아보험</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <div class="instructor-head">
+                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="조한나"
+                                 class="instructor-photo">
+                            <h2 class="instructor-name">조한나</h2>
+                        </div>
+                        <div class="instructor-description">
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙 CS강사</li>
+                                <li>한국바른채용인증원 외부 면접관</li>
+                                <li>전문면접관 1급 자격취득</li>
+                                <li>CiC역량면접코치 자격취득</li>
+                                <li>10년 이상 병원 인사담당자</li>
+                                <li>공기업, 공공기관 면접 다수진행</li>
+                                <li>분야: 직원면접코치</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="instructor-content">
+                        <div class="instructor-head">
+                            <img src="{{ asset('images/desktop/instructor/instructor_18.png') }}" alt="권민선"
+                                 class="instructor-photo">
+                            <h2 class="instructor-name">권민선</h2>
+                        </div>
+                        <div class="instructor-description">
+                            <ul class="instructor-career">
+                                <li>㈜브레인스펙 전문강사</li>
+                                <li>한국중앙교육센터KCLC 에니어그램 인증 강사</li>
+                                <li>브레인스펙 병원 컨설턴트 과정 이수</li>
+                                <li>CS 전문 강사 1급</li>
+                                <li>국가공인 CS Leaders (관리사)</li>
+                                <li>병원코디네이터 1급</li>
+                                <li>치과보험청구사 3급</li>
+                                <li>사회복지사 2급</li>
+                                <li>분야: 에니어그램</li>
                             </ul>
                         </div>
                     </li>
