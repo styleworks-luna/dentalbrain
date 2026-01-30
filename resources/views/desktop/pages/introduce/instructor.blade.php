@@ -158,6 +158,7 @@
                             </ul>
                         </div>
                     </li>
+                    <!-- //2026-01-31 수정 요청  dentalbrain-1 
                     <li class="instructor-content">
                         <img src="{{ asset('images/desktop/instructor/instructor_9.png') }}" alt="최규영" class="instructor-photo">
                         <div class="instructor-description">
@@ -176,6 +177,7 @@
                             </ul>
                         </div>
                     </li>
+                    -->
                     <li class="instructor-content">
                         <img src="{{ asset('images/desktop/instructor/instructor_10.png') }}" alt="김수지" class="instructor-photo">
                         <div class="instructor-description">
