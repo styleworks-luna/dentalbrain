@@ -170,12 +170,24 @@ class ResumeService
             return $answer->ability->category_id > 5;
         });
 
+        $completedPrograms = $resume->user->students()
+        ->whereIn('pay_status', [
+            \App\Models\Program\ProgramStudent::$PAY_PAID, 
+            \App\Models\Program\ProgramStudent::$PAY_ANOTHER_PAID
+        ])
+        ->whereHas('program.majorCategory', function ($query) {
+            $query->whereNotIn('name', ['라이프', '스토어']);
+        })
+        ->with(['program.majorCategory'])
+        ->get();
+
         return Pdf::loadView('pdfs.resume_pdf', [
             'resume' => $resume,
             'leftList' => $leftList,
             'rightList' => $rightList,
             'categories' => $categories,
             'thumbnail' => $resume->file != null ? $this->encodeToBase64($resume->file) : '',
+            'completedPrograms' => $completedPrograms,
         ]);
     }
 
