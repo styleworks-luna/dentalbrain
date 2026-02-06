@@ -170,20 +170,40 @@ class ResumeService
             return $answer->ability->category_id > 5;
         });
 
+        $completedPrograms = $resume->user->students()
+        ->whereIn('pay_status', [
+            \App\Models\Program\ProgramStudent::$PAY_PAID, 
+            \App\Models\Program\ProgramStudent::$PAY_ANOTHER_PAID
+        ])
+        ->whereHas('program', function ($query) {
+            $query->whereHas('minorCategory', function ($q) {
+                $q->whereRaw("TRIM(name) NOT IN ('라이프', '스토어')");
+            })->whereHas('majorCategory', function ($q) {
+                $q->whereRaw("TRIM(name) NOT IN ('라이프', '스토어')");
+            });
+        })
+        ->with(['program.minorCategory', 'program.majorCategory'])
+        ->get();
+
         return Pdf::loadView('pdfs.resume_pdf', [
             'resume' => $resume,
             'leftList' => $leftList,
             'rightList' => $rightList,
             'categories' => $categories,
             'thumbnail' => $resume->file != null ? $this->encodeToBase64($resume->file) : '',
+            'completedPrograms' => $completedPrograms,
         ]);
     }
 
     private function encodeToBase64(File $file): string
     {
         $path = storage_path('app/' . $file->path);
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        return 'data:image/' . $type . ';base64,' . base64_encode($data);
+        if (file_exists($path)) {
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            return 'data:image/' . $type . ';base64,' . base64_encode($data);
+        }else{
+            return '';
+        }
     }
 }
