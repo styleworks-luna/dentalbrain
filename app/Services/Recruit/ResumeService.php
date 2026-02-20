@@ -176,13 +176,11 @@ class ResumeService
             \App\Models\Program\ProgramStudent::$PAY_ANOTHER_PAID
         ])
         ->whereHas('program', function ($query) {
-            $query->whereHas('minorCategory', function ($q) {
-                $q->whereRaw("TRIM(name) NOT IN ('라이프', '스토어')");
-            })->whereHas('majorCategory', function ($q) {
+            $query->whereHas('majorCategory', function ($q) {
                 $q->whereRaw("TRIM(name) NOT IN ('라이프', '스토어')");
             });
         })
-        ->with(['program.minorCategory', 'program.majorCategory'])
+        ->with(['program.majorCategory'])
         ->get();
 
         return Pdf::loadView('pdfs.resume_pdf', [

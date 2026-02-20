@@ -674,7 +674,7 @@
                         <tbody>
                         @forelse($completedPrograms as $index => $applied)
                             <tr>
-                                <td>{{ $applied->program->major_category_name ?? '구분없음' }}</td>
+                                <td>{{ $applied->program->minor_category_name ?? '구분없음' }}</td>
                                 
                                 <td style="text-align: left; padding-left: 15px;">
                                     {{ $applied->program->title }}
