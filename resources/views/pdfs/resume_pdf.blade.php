@@ -656,6 +656,50 @@
                     </div>
                 </div>
             </section>
+            @if($completedPrograms && $completedPrograms->count() > 0)
+            <div style="clear: both;">
+            <section class="certification-information-wrap">
+                <div class="information-title">
+                    <h2>직무 역량 교육 이수 현황</h2>
+                </div>
+                <div class="certification-information-content">
+                    <table class="certificate">
+                        <thead>
+                        <tr>
+                            <th style="width: 200px;" class="first-child">핵심역량</th>
+                            <th style="width: 450px">교육과정명</th>
+                            <th style="width: 200px">이수연월</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($completedPrograms as $index => $applied)
+                            <tr>
+                                <td>{{ $applied->program->minor_category_name ?? '구분없음' }}</td>
+                                
+                                <td style="text-align: left; padding-left: 15px;">
+                                    {{ $applied->program->title }}
+                                </td>
+                                
+                                <td>
+                                    @if($applied->applied_at instanceof \Carbon\Carbon)
+                                        {{ $applied->applied_at->format('Y.m') }}
+                                    @elseif($applied->applied_at)
+                                        {{ date('Y.m', strtotime($applied->applied_at)) }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3" style="padding: 20px 0; color: #666;">직무 역량 교육 이수 현황이 없습니다.</td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            @endif
         </div>
     </div>
 </section>
