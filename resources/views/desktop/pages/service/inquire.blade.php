@@ -4,11 +4,20 @@
     <script type="text/javascript" src="{{ asset('js/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.ui.emailbox.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/parsley.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/pages/service/inquire.js') }}"></script>
+    {{-- 파일 수정 시각을 버전으로 붙여 브라우저 캐시를 갱신한다 --}}
+    <script type="text/javascript" src="{{ asset('js/pages/service/inquire.js') }}?v={{ filemtime(public_path('js/pages/service/inquire.js')) }}"></script>
 @endsection
 
 @section('style')
     <link rel="stylesheet" href="{{ mix('css/desktop/pages/service/inquire.css') }}">
+    {{-- 보안문자 스타일: mix 산출물 재빌드 없이 적용되도록 인라인으로 둔다 --}}
+    <style>
+        .captcha-wrap .captcha-box { display: flex; align-items: center; gap: 8px; }
+        .captcha-wrap .captcha-image { width: 150px; height: 50px; border: 1px solid #ddd; background: #f5f6f8; vertical-align: middle; }
+        .captcha-wrap .btn-captcha-reload { height: 32px; padding: 0 12px; border: 1px solid #ccc; background: #fff; color: #333; font-size: 13px; cursor: pointer; }
+        .captcha-wrap .captcha-input { width: 160px; }
+        .captcha-wrap .captcha-guide { margin-top: 6px; }
+    </style>
 @endsection
 
 @section('content')
@@ -93,8 +102,37 @@
                                                   class="inquire-content"
                                                   placeholder="문의내용을 입력해주세요."
                                                   data-parsley-required="true"
-                                                  data-parsley-required-message="※ 문의내용을 입력해주세요."
-                                                  value="{{old('content')}}"></textarea>
+                                                  data-parsley-required-message="※ 문의내용을 입력해주세요.">{{old('content')}}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>보안문자</th>
+                                    <td class="captcha-wrap" colspan="3">
+                                        <div class="captcha-box">
+                                            <img src="{{ route('customer.inquiries.captcha') }}"
+                                                 alt="보안문자 이미지"
+                                                 id="captcha-image"
+                                                 class="captcha-image">
+                                            <button type="button" class="btn-captcha-reload" id="btn-captcha-reload">새로고침</button>
+                                            <input type="text"
+                                                   id="captcha"
+                                                   name="captcha"
+                                                   class="captcha-input"
+                                                   placeholder="보안문자 입력"
+                                                   maxlength="5"
+                                                   autocomplete="off"
+                                                   data-parsley-required="true"
+                                                   data-parsley-required-message="※ 보안문자를 입력해주세요."
+                                                   data-parsley-errors-container=".captcha-error-wrap">
+                                        </div>
+                                        <p class="captcha-guide">※ 이미지에 보이는 문자를 입력해주세요. (대소문자 구분 없음)</p>
+                                        <div class="captcha-error-wrap error-wrap-common">
+                                            <div class="error">
+                                                @error('captcha')
+                                                {{$message}}
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

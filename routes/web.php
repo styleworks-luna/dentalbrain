@@ -182,7 +182,15 @@ Route::group(['prefix' => 'customer', 'as' => 'customer.'], function () {
         //고객센터 문의 (임시)
         Route::get('/', 'Customer\InquiryController@index')->name('index');
 
-        Route::post('/', 'Customer\InquiryController@store')->name('store');
+        // 문의하기 보안문자 이미지 (남용 방지를 위해 분당 요청 수 제한)
+        Route::get('captcha', 'Customer\InquiryController@captcha')
+            ->name('captcha')
+            ->middleware('throttle:60,1');
+
+        // 문의 접수 (스팸 방지를 위해 IP 당 분당 5회로 제한)
+        Route::post('/', 'Customer\InquiryController@store')
+            ->name('store')
+            ->middleware('throttle:5,1');
     });
 
     Route::group(['prefix' => 'faqs', 'as' => 'faqs.'], function () {
