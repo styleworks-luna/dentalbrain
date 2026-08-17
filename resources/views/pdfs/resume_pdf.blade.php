@@ -657,7 +657,7 @@
                 </div>
             </section>
             @if($completedPrograms && $completedPrograms->count() > 0)
-            <div style="clear: both;">
+            <div style="clear: both;"></div>
             <section class="certification-information-wrap">
                 <div class="information-title">
                     <h2>직무 역량 교육 이수 현황</h2>

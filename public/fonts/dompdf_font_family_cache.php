@@ -79,8 +79,8 @@ return array (
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'sourcehansanskr' => array(
-    'normal' => $fontDir . '/sourcehansanskr_normal_5cc9ed0c1a6a9ccbe6b8224fec09c7da',
-    'bold' => $fontDir . '/sourcehansanskr_bold_0045fde3ee6dc192a2b2eaff1015aa3f',
+    'normal' => $fontDir . '/sourcehansanskr_normal_324fa13eded74a10938fbd06fa5df198',
+    'bold' => $fontDir . '/sourcehansanskr_bold_05c13dc00fc31e82166b7f10ed743fec',
   ),
   'chosungs' => array(
     'normal' => $fontDir . '/chosungs_normal_906ce08a002d6ad4872d508d4e09950b',
